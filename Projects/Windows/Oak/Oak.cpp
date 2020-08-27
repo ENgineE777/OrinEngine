@@ -1,6 +1,8 @@
 
 #include <SDKDDKVer.h>
 
+#include "Root/Root.h"
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdlib.h>
@@ -29,7 +31,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
         case WM_DESTROY:
             PostQuitMessage(0);
-        break;
+            break;
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
     }
@@ -37,10 +39,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int       nCmdShow)
 {
     WCHAR szTitle[MAX_LOADSTRING];
     WCHAR szWindowClass[MAX_LOADSTRING];
@@ -73,6 +72,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    Oak::root.Init();
+
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
@@ -87,5 +88,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
-    return (int) msg.wParam;
+    return (int)msg.wParam;
 }

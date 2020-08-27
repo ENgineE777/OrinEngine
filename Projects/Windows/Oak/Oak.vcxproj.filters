@@ -5,6 +5,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ENgine">
+      <UniqueIdentifier>{1fc6e991-1ec1-4520-94d2-e8f73c03c996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Root">
+      <UniqueIdentifier>{cb699a75-3020-429d-92e5-adc52009f7ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Support">
+      <UniqueIdentifier>{8a7c89f7-cd92-46d0-88ad-a574d8e06132}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -21,10 +30,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Oak.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
+      <Filter>ENgine\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Root.cpp">
+      <Filter>ENgine\Root</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp">
+      <Filter>ENgine\Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
+      <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Root.h">
+      <Filter>ENgine\Root</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h">
+      <Filter>ENgine\Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
