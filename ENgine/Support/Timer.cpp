@@ -1,7 +1,7 @@
 #include "Timer.h"
 #include <stdio.h>
 
-namespace Oak
+namespace Oak::Timer
 {
 	#ifdef PLATFORM_WIN
 	static BOOL g_first_time = 1;
@@ -33,19 +33,19 @@ namespace Oak
 	}
 	#endif
 
-	struct timespec Timer::lastTimeSpec;
-	double Timer::lastTime = -1.0;
-	float  Timer::deltaTime = 0.0f;
-	int    Timer::lastFps = 0;
-	int    Timer::curFps = 0;
-	float  Timer::fpsTimer = 0.0f;
-	double Timer::totalTime = 0.0;
+	struct timespec lastTimeSpec;
+	double lastTime = -1.0;
+	float  deltaTime = 0.0f;
+	int    lastFps = 0;
+	int    curFps = 0;
+	float  fpsTimer = 0.0f;
+	double totalTime = 0.0;
 
-	int   Timer::stampMin = 0;
-	float Timer::stampSec = 0;
-	char  Timer::stampStr[32] = "00:00 - ";
+	int   stampMin = 0;
+	float stampSec = 0;
+	char  stampStr[32] = "00:00 - ";
 
-	float Timer::CountDeltaTime()
+	float CountDeltaTime()
 	{
 		struct timespec currTime;
 
@@ -96,17 +96,17 @@ namespace Oak
 		return deltaTime;
 	}
 
-	int Timer::GetFPS()
+	int GetFPS()
 	{
 		return lastFps;
 	}
 
-	float Timer::GetDeltaTime()
+	float GetDeltaTime()
 	{
 		return deltaTime;
 	}
 
-	const char* Timer::GetTimeStamp()
+	const char* GetTimeStamp()
 	{
 		return stampStr;
 	}

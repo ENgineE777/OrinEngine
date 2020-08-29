@@ -2,33 +2,33 @@
 #include "StringUtils.h"
 #include <stdarg.h>
 
-namespace Oak
+namespace Oak::StringUtils
 {
-	char StringUtils::tempStr[1024];
+	char tempStr[1024];
 
-	int StringUtils::GetLen(const char* str)
+	int GetLen(const char* str)
 	{
 		return (int)strlen(str);
 	}
 
-	bool StringUtils::IsEmpty(const char* str)
+	bool IsEmpty(const char* str)
 	{
 		return !str || !str[0];
 	}
 
-	const char* StringUtils::StrStr(const char* str, const char* sub_str)
+	const char* StrStr(const char* str, const char* sub_str)
 	{
 		return strstr(str, sub_str);
 	}
 
-	bool StringUtils::IsEqual(const char* str1, const char* str2)
+	bool IsEqual(const char* str1, const char* str2)
 	{ 
 		#ifdef PLATFORM_WIN
 		return (_stricmp(str1, str2) == 0);
 		#endif
 	}
 
-	void StringUtils::Copy(char* str1, int len, const char* str2)
+	void Copy(char* str1, int len, const char* str2)
 	{
 		int size = GetLen(str2)+1;
 		int mv = size;
@@ -42,14 +42,14 @@ namespace Oak
 		}
 	}
 
-	void StringUtils::Cat(char* str1, int len, const char* str2)
+	void Cat(char* str1, int len, const char* str2)
 	{
 		#ifdef PLATFORM_WIN
 		strcat_s(str1, len, str2);
 		#endif
 	}
 
-	void StringUtils::Printf(char* str, int len, const char* format, ...)
+	void Printf(char* str, int len, const char* format, ...)
 	{
 		va_list args;
 		va_start(args, format);
@@ -59,7 +59,7 @@ namespace Oak
 		va_end(args);
 	}
 
-	const char* StringUtils::PrintTemp(const char* format, ...)
+	const char* PrintTemp(const char* format, ...)
 	{
 		va_list args;
 		va_start(args, format);
@@ -71,7 +71,7 @@ namespace Oak
 		return tempStr;
 	}
 
-	void StringUtils::RemoveSlashes(char* fullPath)
+	void RemoveSlashes(char* fullPath)
 	{
 		static char buffer[1024];
 		Copy(buffer, 1023, fullPath);
@@ -102,7 +102,7 @@ namespace Oak
 		fullPath[index] = 0;
 	}
 
-	void StringUtils::GetFileName(const char* fullPath, char* fileName)
+	void GetFileName(const char* fullPath, char* fileName)
 	{
 		int index = GetLen(fullPath)-1;
 
@@ -121,7 +121,7 @@ namespace Oak
 		fileName[len - index - 1] = 0;
 	}
 
-	bool StringUtils::GetPath(const char* fullPath, char* path)
+	bool GetPath(const char* fullPath, char* path)
 	{
 		int index = GetLen(fullPath)-1;
 
@@ -145,7 +145,7 @@ namespace Oak
 		return false;
 	}
 
-	void StringUtils::GetCropPath(const char* relativePath, const char* fullPath, char* path, int len)
+	void GetCropPath(const char* relativePath, const char* fullPath, char* path, int len)
 	{
 		if (fullPath[1] != ':')
 		{
@@ -170,7 +170,7 @@ namespace Oak
 		path[len1 - len2] = 0;
 	}
 
-	void StringUtils::GetRootPath(const char* path1, const char* path2, char* root)
+	void GetRootPath(const char* path1, const char* path2, char* root)
 	{
 		char rt[512];
 		int len = GetLen(path1);
@@ -194,7 +194,7 @@ namespace Oak
 		GetPath(rt,root);
 	}
 
-	void StringUtils::RemoveFirstChar(char* str)
+	void RemoveFirstChar(char* str)
 	{
 		for(int i = 0;i < (int)strlen(str) - 1; i++)
 		{
@@ -204,7 +204,7 @@ namespace Oak
 		str[strlen(str) - 1]=0;
 	}
 
-	void StringUtils::FixSlashes(char * str)
+	void FixSlashes(char * str)
 	{
 		int len = GetLen(str);
 
@@ -231,7 +231,7 @@ namespace Oak
 		}
 	}
 
-	void StringUtils::GetExtension(const char* str, char* ext, int ext_lenght)
+	void GetExtension(const char* str, char* ext, int ext_lenght)
 	{
 		ext[0] = 0;
 
@@ -257,7 +257,7 @@ namespace Oak
 		ext[i - index - 1]=0;
 	}
 
-	void StringUtils::RemoveExtension(char* str)
+	void RemoveExtension(char* str)
 	{
 		int index = GetLen(str) - 1;
 
@@ -272,7 +272,7 @@ namespace Oak
 		}
 	}
 
-	void StringUtils::Replace(string& str, const char* from, const char* to)
+	void Replace(string& str, const char* from, const char* to)
 	{
 		auto pos = str.find(from);
 		auto len = strlen(from);
@@ -285,7 +285,7 @@ namespace Oak
 		}
 	}
 
-	int StringUtils::GetNameNumber(const char* str, char* wo_n_str, int len)
+	int GetNameNumber(const char* str, char* wo_n_str, int len)
 	{
 		Copy(wo_n_str,len,str);
 		int number = 0;
@@ -311,7 +311,7 @@ namespace Oak
 		return number;
 	}
 
-	void StringUtils::EscapeChars(const char* in, char* out, int len)
+	void EscapeChars(const char* in, char* out, int len)
 	{
 		int index = 0;
 		int in_len = GetLen(in);
@@ -353,7 +353,7 @@ namespace Oak
 		out[index] = 0;
 	}
 
-	void StringUtils::Utf16toUtf8(string& dest, const wchar_t* src)
+	void Utf16toUtf8(string& dest, const wchar_t* src)
 	{
 		dest.clear();
 
@@ -391,7 +391,7 @@ namespace Oak
 		}
 	}
 
-	bool StringUtils::BuildUtf16fromUtf8(char c, int& bytes, int& w)
+	bool BuildUtf16fromUtf8(char c, int& bytes, int& w)
 	{
 		if (c <= 0x7f)
 		{
@@ -444,7 +444,7 @@ namespace Oak
 		return false;
 	}
 
-	void StringUtils::BuildUtf8fromUtf16(int c, string& dest)
+	void BuildUtf8fromUtf16(int c, string& dest)
 	{
 		dest.clear();
 
@@ -475,7 +475,7 @@ namespace Oak
 		}
 	}
 
-	void StringUtils::Utf8toUtf16(wstring& dest, const char* src)
+	void Utf8toUtf16(wstring& dest, const char* src)
 	{
 		dest.clear();
 		wchar_t w = 0;
