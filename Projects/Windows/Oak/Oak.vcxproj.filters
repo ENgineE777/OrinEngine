@@ -14,6 +14,9 @@
     <Filter Include="ENgine\Support">
       <UniqueIdentifier>{8a7c89f7-cd92-46d0-88ad-a574d8e06132}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Support\Math">
+      <UniqueIdentifier>{93faa772-3936-464b-bdf3-1b4b64d61c70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -39,6 +42,9 @@
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp">
       <Filter>ENgine\Support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp">
+      <Filter>ENgine\Support\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -52,6 +58,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h">
+      <Filter>ENgine\Support\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h">
+      <Filter>ENgine\Support\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h">
+      <Filter>ENgine\Support\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector2.h">
+      <Filter>ENgine\Support\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector3.h">
+      <Filter>ENgine\Support\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h">
+      <Filter>ENgine\Support\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

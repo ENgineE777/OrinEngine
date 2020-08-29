@@ -148,12 +148,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Root\Root.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector2.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector3.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h" />
     <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Root\Root.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />
     <ClCompile Include="Oak.cpp" />
