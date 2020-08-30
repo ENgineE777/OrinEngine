@@ -1,11 +1,10 @@
 
-#include "Root/Root.h"
-
 #ifdef PLATFORM_WIN
 #include "Windows.h"
 #include <sys/stat.h>
 #endif
 
+#include "Root/Root.h"
 #include "Support/StringUtils.h"
 
 namespace Oak

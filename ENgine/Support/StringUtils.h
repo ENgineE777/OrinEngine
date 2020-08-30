@@ -6,6 +6,7 @@ using namespace std;
 
 namespace Oak::StringUtils
 {
+	void Init();
 	int  GetLen(const char* str);
 	bool IsEmpty(const char* str);
 	const char* StrStr(const char* str, const char* sub_str);
@@ -30,4 +31,7 @@ namespace Oak::StringUtils
 	void BuildUtf8fromUtf16(int c, string& dest);
 	void Utf8toUtf16(wstring& dest, const char* src);
 	void Utf16toUtf8(string& dest, const wchar_t* src);
+	void LowerCase(string& str);
+	void UpperCase(string& str);
+	bool CompareABC(const char* str1, const char* str2);
 }

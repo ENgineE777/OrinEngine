@@ -1,10 +1,37 @@
 
 #include "StringUtils.h"
+#include "Root/Files/JSONReader.h"
 #include <stdarg.h>
+#include <map>
 
 namespace Oak::StringUtils
 {
 	char tempStr[1024];
+	map<wchar_t, int> upper2lower;
+	map<wchar_t, int> lower2upper;
+
+	void Init()
+	{
+		JSONReader reader;
+
+		reader.Parse("ENgine/low2hi.dat");
+
+		string str;
+
+		while (reader.EnterBlock("table"))
+		{
+			reader.Read("lo", str);
+			unsigned int lo = std::stoul(str.c_str(), nullptr, 16);
+
+			reader.Read("hi", str);
+			unsigned int hi = std::stoul(str.c_str(), nullptr, 16);
+
+			upper2lower[lo] = hi;
+			lower2upper[hi] = lo;
+
+			reader.LeaveBlock();
+		}
+	}
 
 	int GetLen(const char* str)
 	{
@@ -541,6 +568,171 @@ namespace Oak::StringUtils
 		}
 
 		if (bytes) dest.push_back(err);
+	}
+
+	void LowerCase(string& str)
+	{
+		string text = str;
+		str.clear();
+
+		int w = 0;
+		int bytes = 0;
+
+		int len = (int)text.size();
+
+		string tmp;
+		map<wchar_t, int>::iterator it;
+
+
+		for (int i = 0; i < len; i++)
+		{
+			if (!BuildUtf16fromUtf8(text[i], bytes, w))
+			{
+				continue;
+			}
+
+			it = upper2lower.find(w);
+
+			if (it != upper2lower.end())
+			{
+				w = it->second;
+			}
+
+			BuildUtf8fromUtf16(w, tmp);
+			str += tmp;
+		}
+	}
+
+	void UpperCase(string& str)
+	{
+		string text = str;
+		str.clear();
+
+		int w = 0;
+		int bytes = 0;
+
+		int len = (int)text.size();
+
+		string tmp;
+		map<wchar_t, int>::iterator it;
+
+		for (int i = 0; i < len; i++)
+		{
+			if (!BuildUtf16fromUtf8(text[i], bytes, w))
+			{
+				continue;
+			}
+
+			it = lower2upper.find(w);
+
+			if (it != lower2upper.end())
+			{
+				w = it->second;
+			}
+
+			BuildUtf8fromUtf16(w, tmp);
+			str += tmp;
+		}
+	}
+
+	bool CompareABC(const char* str1, const char* str2)
+	{
+		int bytes = 0;
+
+		int w1 = 0;
+		int len1 = (int)strlen(str1);
+		int index1 = 0;
+
+		int w2 = 0;
+		int len2 = (int)strlen(str2);
+		int index2 = 0;
+
+		map<wchar_t, int>::iterator it;
+
+		bool finished = false;
+		int stage = 0;
+
+		while (!finished)
+		{
+			if (stage == 0)
+			{
+				if (BuildUtf16fromUtf8(str1[index1], bytes, w1))
+				{
+					it = upper2lower.find(w1);
+
+					if (it != upper2lower.end())
+					{
+						w1 = it->second;
+					}
+
+					stage++;
+				}
+				else
+				{
+					if (index1 + 1 >= len1)
+					{
+						return true;
+					}
+				}
+
+				index1++;
+			}
+			else
+				if (stage == 1)
+				{
+					if (BuildUtf16fromUtf8(str2[index2], bytes, w2))
+					{
+						it = upper2lower.find(w2);
+
+						if (it != upper2lower.end())
+						{
+							w2 = it->second;
+						}
+
+						stage++;
+					}
+					else
+					{
+						if (index2 + 1 >= len2)
+						{
+							break;
+						}
+					}
+
+					index2++;
+				}
+				else
+				{
+					if (w1 != w2)
+					{
+						if (w1 > 128 && w2 < 128)
+						{
+							return true;
+						}
+
+						if (w2 > 128 && w1 < 128)
+						{
+							return false;
+						}
+
+						return (w1 < w2);
+					}
+
+					if (index1 >= len1 && index2 < len2)
+					{
+						return true;
+					}
+
+					if (index2 >= len2 && index1 < len1)
+					{
+						break;
+					}
+
+					stage = 0;
+				}
+		}
+
+		return false;
 	}
 }
 

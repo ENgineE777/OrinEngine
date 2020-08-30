@@ -153,8 +153,10 @@
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonReader.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Root.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Delegate.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h" />
@@ -175,6 +177,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonReader.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Root.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />

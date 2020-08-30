@@ -26,6 +26,9 @@
     <Filter Include="Libs\vjson">
       <UniqueIdentifier>{745e19cb-ee68-4327-b669-1f7e8cc62ed0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\TaskExecutor">
+      <UniqueIdentifier>{5c1ffedd-4fff-40e4-8b4a-273b587dfbeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -74,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp">
       <Filter>ENgine\Root\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp">
+      <Filter>ENgine\Root\TaskExecutor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h">
       <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h">
+      <Filter>ENgine\Root\TaskExecutor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Delegate.h">
+      <Filter>ENgine\Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Root/Files/Files.h"
+#include "Root/TaskExecutor/TaskExecutor.h"
 
 namespace Oak
 {
@@ -15,6 +16,7 @@ namespace Oak
 	public:
 
 		Files files;
+		TaskExecutor taskExecutor;
 
 		Root();
 		~Root() = default;
