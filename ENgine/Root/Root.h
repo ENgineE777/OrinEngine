@@ -3,7 +3,6 @@
 
 #include "Root/Files/Files.h"
 
-
 namespace Oak
 {
 	class Root

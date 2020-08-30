@@ -47,7 +47,7 @@ namespace Oak
 		return size;
 	}
 
-	void* FileInMemory::GetPtr()
+	uint8_t* FileInMemory::GetPtr()
 	{
 		return ptr;
 	}

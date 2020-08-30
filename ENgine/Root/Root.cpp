@@ -40,6 +40,8 @@ namespace Oak
 
 		files.Init();
 
+		StringUtils::Init();
+
 		Timer::CountDeltaTime();
 	}
 

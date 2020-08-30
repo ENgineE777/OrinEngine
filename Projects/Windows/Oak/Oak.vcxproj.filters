@@ -69,10 +69,10 @@
     <ClCompile Include="..\..\..\Libs\vjson\json.cpp">
       <Filter>Libs\vjson</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONReader.cpp">
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JsonReader.cpp">
       <Filter>ENgine\Root\Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONWriter.cpp">
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp">
       <Filter>ENgine\Root\Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,12 +122,6 @@
     <ClInclude Include="..\..\..\Libs\vjson\json.h">
       <Filter>Libs\vjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONReader.h">
-      <Filter>ENgine\Root\Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONWriter.h">
-      <Filter>ENgine\Root\Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Color.h">
       <Filter>ENgine\Support</Filter>
     </ClInclude>
@@ -136,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Support.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JsonReader.h">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h">
+      <Filter>ENgine\Root\Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@ namespace Oak
 	{
 		friend class File;
 		friend class FileInMemory;
-		friend class JSONWriter;
+		friend class JsonWriter;
 
 	public:
 

@@ -27,7 +27,7 @@ namespace Oak
 		void Read(void* dest, int len);
 		void Skip(int len);
 
-		void* GetPtr();
+		uint8_t* GetPtr();
 
 	protected:
 		void Release();

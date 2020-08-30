@@ -150,8 +150,8 @@
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
-    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONReader.h" />
-    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONWriter.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JsonReader.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Root.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
@@ -172,8 +172,8 @@
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp" />
-    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONReader.cpp" />
-    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONWriter.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JsonReader.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Root.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
