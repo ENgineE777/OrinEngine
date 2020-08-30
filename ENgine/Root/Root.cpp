@@ -38,6 +38,8 @@ namespace Oak
 		CreateDirectoryA(logsDir, nullptr);
 		#endif
 
+		files.Init();
+
 		Timer::CountDeltaTime();
 	}
 

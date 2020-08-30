@@ -17,6 +17,9 @@
     <Filter Include="ENgine\Support\Math">
       <UniqueIdentifier>{93faa772-3936-464b-bdf3-1b4b64d61c70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Files">
+      <UniqueIdentifier>{964983e8-fa2d-4b80-81c5-e703fe3ca080}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -44,6 +47,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp">
       <Filter>ENgine\Support\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp">
+      <Filter>ENgine\Root\Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h">
       <Filter>ENgine\Support\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\File.h">
+      <Filter>ENgine\Root\Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

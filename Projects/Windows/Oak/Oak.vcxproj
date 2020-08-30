@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Root.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h" />
@@ -159,6 +162,9 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Root.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />

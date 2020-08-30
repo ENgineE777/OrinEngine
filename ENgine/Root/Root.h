@@ -1,6 +1,9 @@
 
 #pragma once
 
+#include "Root/Files/Files.h"
+
+
 namespace Oak
 {
 	class Root
@@ -11,6 +14,8 @@ namespace Oak
 		#endif
 
 	public:
+
+		Files files;
 
 		Root();
 		~Root() = default;
