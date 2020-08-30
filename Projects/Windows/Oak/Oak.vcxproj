@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;PLATFORM_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,7 +137,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;PLATFORM_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,7 +150,11 @@
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONReader.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONWriter.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Root.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h" />
@@ -158,17 +162,24 @@
     <ClInclude Include="..\..\..\ENgine\Support\Math\Vector3.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h" />
     <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Support.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h" />
+    <ClInclude Include="..\..\..\Libs\vjson\block_allocator.h" />
+    <ClInclude Include="..\..\..\Libs\vjson\json.h" />
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONReader.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONWriter.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Root.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />
+    <ClCompile Include="..\..\..\Libs\vjson\block_allocator.cpp" />
+    <ClCompile Include="..\..\..\Libs\vjson\json.cpp" />
     <ClCompile Include="Oak.cpp" />
   </ItemGroup>
   <ItemGroup>

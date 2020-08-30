@@ -20,6 +20,12 @@
     <Filter Include="ENgine\Root\Files">
       <UniqueIdentifier>{964983e8-fa2d-4b80-81c5-e703fe3ca080}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs">
+      <UniqueIdentifier>{5f2e6ccd-2903-4835-a7f3-3ec9a674ad6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\vjson">
+      <UniqueIdentifier>{745e19cb-ee68-4327-b669-1f7e8cc62ed0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -55,6 +61,18 @@
       <Filter>ENgine\Root\Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\vjson\block_allocator.cpp">
+      <Filter>Libs\vjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\vjson\json.cpp">
+      <Filter>Libs\vjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONReader.cpp">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Files\JSONWriter.cpp">
       <Filter>ENgine\Root\Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,6 +115,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h">
       <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\vjson\block_allocator.h">
+      <Filter>Libs\vjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\vjson\json.h">
+      <Filter>Libs\vjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONReader.h">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Files\JSONWriter.h">
+      <Filter>ENgine\Root\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Color.h">
+      <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Defines.h">
+      <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Support.h">
+      <Filter>ENgine\Support</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
