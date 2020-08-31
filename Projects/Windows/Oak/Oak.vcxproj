@@ -121,11 +121,12 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;PLATFORM_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,23 +138,50 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;PLATFORM_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonReader.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Font.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugPrograms.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugSpheres.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugSprites.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Device.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\DataBufferDX11.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\DeviceDX11.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Program.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Render.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Shader.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Texture.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\VertexDecl.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Root.h" />
     <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Delegate.h" />
@@ -171,11 +199,32 @@
     <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonReader.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Font.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugPrograms.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugSpheres.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugSprites.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\DataBufferDX11.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\DeviceDX11.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Program.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Render.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Texture.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Root.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
@@ -183,7 +232,6 @@
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />
     <ClCompile Include="..\..\..\Libs\vjson\block_allocator.cpp" />
     <ClCompile Include="..\..\..\Libs\vjson\json.cpp" />
-    <ClCompile Include="Oak.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc" />

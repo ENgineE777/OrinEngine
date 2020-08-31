@@ -2,6 +2,8 @@
 #pragma once
 
 #include "Root/Files/Files.h"
+#include "Root/Fonts/Fonts.h"
+#include "Root/Render/Render.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 
 namespace Oak
@@ -16,6 +18,8 @@ namespace Oak
 	public:
 
 		Files files;
+		Fonts fonts;
+		Render render;
 		TaskExecutor taskExecutor;
 
 		Root();

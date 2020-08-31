@@ -1,8 +1,6 @@
 
 #include <SDKDDKVer.h>
 
-#include "Root/Root.h"
-
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <stdlib.h>
@@ -10,9 +8,13 @@
 #include <memory.h>
 #include <tchar.h>
 
+#include "Editor/Editor.h"
+
 #include "resource.h"
 
 #define MAX_LOADSTRING 100
+
+bool running = true;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -22,15 +24,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
         }
         break;
-        case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            EndPaint(hWnd, &ps);
-        }
-        break;
         case WM_DESTROY:
             PostQuitMessage(0);
+            running = false;
             break;
         default:
             return DefWindowProc(hWnd, message, wParam, lParam);
@@ -65,27 +61,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     RegisterClassExW(&wcex);
 
-    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, 800, 600, nullptr, nullptr, hInstance, nullptr);
 
     if (!hWnd)
     {
         return FALSE;
     }
 
-    Oak::root.Init();
+    Oak::Editor editor;
+    editor.Init(hWnd);
 
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
 
     MSG msg;
 
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (running)
     {
-        if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+        editor.Update();
     }
 
     return (int)msg.wParam;

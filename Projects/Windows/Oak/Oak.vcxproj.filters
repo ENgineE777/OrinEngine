@@ -29,6 +29,27 @@
     <Filter Include="ENgine\Root\TaskExecutor">
       <UniqueIdentifier>{5c1ffedd-4fff-40e4-8b4a-273b587dfbeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Render">
+      <UniqueIdentifier>{b43779a7-158f-4b98-82bd-2819f9b8b888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Root\Render\Debug">
+      <UniqueIdentifier>{eed1eee6-1f8c-47d1-9a17-d0cdb657b7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Root\Render\DX11">
+      <UniqueIdentifier>{cb133488-17fc-4e45-8189-f3f5060fd33b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Root\Fonts">
+      <UniqueIdentifier>{8c17a77d-4582-4e6f-95e5-94dc2541b000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Editor">
+      <UniqueIdentifier>{55e9d59d-c8a8-4755-82a8-5a73491b7dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Platform">
+      <UniqueIdentifier>{1719761c-68d3-4f42-8861-c7373fb7aa94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Platform\Win">
+      <UniqueIdentifier>{be6a7cfb-edf8-4fee-be24-aa9bc793325d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -44,7 +65,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Oak.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
       <Filter>ENgine\Support</Filter>
     </ClCompile>
@@ -80,6 +100,69 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp">
       <Filter>ENgine\Root\TaskExecutor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Program.cpp">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Render.cpp">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Texture.cpp">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\DataBufferDX11.cpp">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\DeviceDX11.cpp">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.cpp">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.cpp">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.cpp">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugPrograms.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugSpheres.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugSprites.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.cpp">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Font.cpp">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp">
+      <Filter>ENgine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp">
+      <Filter>ENgine\Platform\Win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +231,84 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Delegate.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Device.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Program.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Render.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Shader.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Texture.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\VertexDecl.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\DataBufferDX11.h">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\DeviceDX11.h">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.h">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.h">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.h">
+      <Filter>ENgine\Root\Render\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugPrograms.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugSpheres.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugSprites.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.h">
+      <Filter>ENgine\Root\Render\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h">
+      <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Font.h">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\Editor.h">
+      <Filter>ENgine\Editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

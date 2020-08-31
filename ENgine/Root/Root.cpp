@@ -40,6 +40,8 @@ namespace Oak
 
 		files.Init();
 
+		render.Init("DX11", nullptr);
+
 		StringUtils::Init();
 
 		Timer::CountDeltaTime();
@@ -83,6 +85,7 @@ namespace Oak
 
 	void Root::Update()
 	{
+		render.Execute(dt);
 	}
 
 	float Root::GetDeltaTime()

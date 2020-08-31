@@ -2,8 +2,6 @@
 
 #include <string>
 
-using namespace std;
-
 namespace Oak::StringUtils
 {
 	void Init();
@@ -24,14 +22,14 @@ namespace Oak::StringUtils
 	void GetRootPath(const char* path1, const char* path2, char* root);
 	void GetExtension(const char* str, char* ext, int ext_lenght);
 	void RemoveExtension(char* str);
-	void Replace(string& str, const char* from, const char* to);
+	void Replace(std::string& str, const char* from, const char* to);
 	int  GetNameNumber(const char* str, char* wo_n_str, int len);
 	void EscapeChars(const char* in, char* out, int len);
 	bool BuildUtf16fromUtf8(char c, int& bytes, int& w);
-	void BuildUtf8fromUtf16(int c, string& dest);
-	void Utf8toUtf16(wstring& dest, const char* src);
-	void Utf16toUtf8(string& dest, const wchar_t* src);
-	void LowerCase(string& str);
-	void UpperCase(string& str);
+	void BuildUtf8fromUtf16(int c, std::string& dest);
+	void Utf8toUtf16(std::wstring& dest, const char* src);
+	void Utf16toUtf8(std::string& dest, const wchar_t* src);
+	void LowerCase(std::string& str);
+	void UpperCase(std::string& str);
 	bool CompareABC(const char* str1, const char* str2);
 }

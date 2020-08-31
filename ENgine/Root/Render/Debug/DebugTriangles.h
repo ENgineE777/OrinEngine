@@ -1,0 +1,35 @@
+
+#pragma once
+
+#include "Root/Render/Render.h"
+
+namespace Oak
+{
+	class DebugTriangles : public Object
+	{
+		struct Triangle
+		{
+			Math::Vector3 p[3];
+			uint32_t color;
+		};
+
+		struct Vertex
+		{
+			Math::Vector3 pos;
+			Math::Vector3 normal;
+			uint32_t color;
+		};
+
+		std::vector<Triangle> triangles;
+		Program* prg;
+		VertexDecl* vdecl;
+		DataBuffer* vbuffer;
+
+	public:
+	
+		void Init(TaskExecutor::SingleTaskPool* debugTaskPool);
+		void AddTriangle(Math::Vector3 p1, Math::Vector3 p2, Math::Vector3 p3, Color color);
+		void Draw(float dt);
+		void Release();
+	};
+}
