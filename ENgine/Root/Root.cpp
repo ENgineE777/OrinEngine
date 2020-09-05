@@ -40,6 +40,9 @@ namespace Oak
 
 		files.Init();
 
+		controls.Init("ENgine/Controls/hardware_win", true);
+		controls.LoadAliases("ENgine/Controls/engine_aliases");
+
 		render.Init("DX11", nullptr);
 
 		StringUtils::Init();
@@ -85,6 +88,7 @@ namespace Oak
 
 	void Root::Update()
 	{
+		controls.Update(dt);
 		render.Execute(dt);
 	}
 

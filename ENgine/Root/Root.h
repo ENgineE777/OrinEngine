@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Root/Controls/Controls.h"
 #include "Root/Files/Files.h"
 #include "Root/Fonts/Fonts.h"
 #include "Root/Render/Render.h"
@@ -17,6 +18,7 @@ namespace Oak
 
 	public:
 
+		Controls controls;
 		Files files;
 		Fonts fonts;
 		Render render;
