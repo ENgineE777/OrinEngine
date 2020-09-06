@@ -3,9 +3,9 @@
 
 namespace Oak
 {
-	std::map<std::string, Math::Vector4> Program::vectors;
-	std::map<std::string, Math::Matrix> Program::matrixes;
-	std::map<std::string, Texture*> Program::textures;
+	eastl::map<eastl::string, Math::Vector4> Program::vectors;
+	eastl::map<eastl::string, Math::Matrix> Program::matrixes;
+	eastl::map<eastl::string, Texture*> Program::textures;
 
 	void Program::SetVector(const char* param, Math::Vector4* v)
 	{

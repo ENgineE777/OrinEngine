@@ -190,7 +190,7 @@ namespace Oak
 			}
 		}
 
-		typedef std::map<std::string, ShaderParamInfo>::iterator it_type;
+		typedef eastl::map<eastl::string, ShaderParamInfo>::iterator it_type;
 
 		for (it_type iterator = samplersInfo.begin(); iterator != samplersInfo.end(); iterator++)
 		{

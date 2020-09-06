@@ -138,7 +138,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, std::string& val)
+	bool JSONReader::Read(const char* name, eastl::string& val)
 	{
 		json_value* node = FindValue(name);
 

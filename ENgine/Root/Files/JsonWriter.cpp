@@ -1,6 +1,5 @@
 
 #include "JsonWriter.h"
-#include <string>
 #include <stdarg.h>
 #include "Root/Root.h"
 
@@ -84,7 +83,7 @@ namespace Oak
 		depth--;
 	}
 
-	void JsonWriter::Write(const char* name, std::string& val)
+	void JsonWriter::Write(const char* name, eastl::string& val)
 	{
 		Write(name, val.c_str());
 	}

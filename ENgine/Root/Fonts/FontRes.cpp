@@ -127,7 +127,7 @@ namespace Oak
 		return &glyphs[code];
 	}
 
-	float FontRes::GetLineBreak(std::vector<FontRes::LineBreak>& line_breaks, const char* text, int width)
+	float FontRes::GetLineBreak(eastl::vector<FontRes::LineBreak>& line_breaks, const char* text, int width)
 	{
 		float scr_y =(float) height;
 
@@ -193,7 +193,7 @@ namespace Oak
 		return scr_y;
 	}
 
-	void FontRes::Print(std::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text)
+	void FontRes::Print(eastl::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text)
 	{
 		if (!tex) return;
 

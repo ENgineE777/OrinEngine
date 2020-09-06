@@ -2,13 +2,14 @@
 #include "StringUtils.h"
 #include "Root/Files/JSONReader.h"
 #include <stdarg.h>
-#include <map>
+#include <eastl/map.h>
+#include <string> 
 
 namespace Oak::StringUtils
 {
 	char tempStr[1024];
-	std::map<wchar_t, int> upper2lower;
-	std::map<wchar_t, int> lower2upper;
+	eastl::map<wchar_t, int> upper2lower;
+	eastl::map<wchar_t, int> lower2upper;
 
 	void Init()
 	{
@@ -16,7 +17,7 @@ namespace Oak::StringUtils
 
 		reader.Parse("ENgine/low2hi.dat");
 
-		std::string str;
+		eastl::string str;
 
 		while (reader.EnterBlock("table"))
 		{
@@ -299,13 +300,13 @@ namespace Oak::StringUtils
 		}
 	}
 
-	void Replace(std::string& str, const char* from, const char* to)
+	void Replace(eastl::string& str, const char* from, const char* to)
 	{
 		auto pos = str.find(from);
 		auto len = strlen(from);
 		auto len2 = strlen(to);
 
-		while (pos != std::string::npos)
+		while (pos != eastl::string::npos)
 		{
 			str.replace(pos, len, to);
 			pos = str.find(from, pos + len2);
@@ -380,7 +381,7 @@ namespace Oak::StringUtils
 		out[index] = 0;
 	}
 
-	void Utf16toUtf8(std::string& dest, const wchar_t* src)
+	void Utf16toUtf8(eastl::string& dest, const wchar_t* src)
 	{
 		dest.clear();
 
@@ -471,7 +472,7 @@ namespace Oak::StringUtils
 		return false;
 	}
 
-	void BuildUtf8fromUtf16(int c, std::string& dest)
+	void BuildUtf8fromUtf16(int c, eastl::string& dest)
 	{
 		dest.clear();
 
@@ -502,7 +503,7 @@ namespace Oak::StringUtils
 		}
 	}
 
-	void Utf8toUtf16(std::wstring& dest, const char* src)
+	void Utf8toUtf16(eastl::wstring& dest, const char* src)
 	{
 		dest.clear();
 		wchar_t w = 0;
@@ -570,9 +571,9 @@ namespace Oak::StringUtils
 		if (bytes) dest.push_back(err);
 	}
 
-	void LowerCase(std::string& str)
+	void LowerCase(eastl::string& str)
 	{
-		std::string text = str;
+		eastl::string text = str;
 		str.clear();
 
 		int w = 0;
@@ -580,8 +581,8 @@ namespace Oak::StringUtils
 
 		int len = (int)text.size();
 
-		std::string tmp;
-		std::map<wchar_t, int>::iterator it;
+		eastl::string tmp;
+		eastl::map<wchar_t, int>::iterator it;
 
 
 		for (int i = 0; i < len; i++)
@@ -603,9 +604,9 @@ namespace Oak::StringUtils
 		}
 	}
 
-	void UpperCase(std::string& str)
+	void UpperCase(eastl::string& str)
 	{
-		std::string text = str;
+		eastl::string text = str;
 		str.clear();
 
 		int w = 0;
@@ -613,8 +614,8 @@ namespace Oak::StringUtils
 
 		int len = (int)text.size();
 
-		std::string tmp;
-		std::map<wchar_t, int>::iterator it;
+		eastl::string tmp;
+		eastl::map<wchar_t, int>::iterator it;
 
 		for (int i = 0; i < len; i++)
 		{
@@ -647,7 +648,7 @@ namespace Oak::StringUtils
 		int len2 = (int)strlen(str2);
 		int index2 = 0;
 
-		std::map<wchar_t, int>::iterator it;
+		eastl::map<wchar_t, int>::iterator it;
 
 		bool finished = false;
 		int stage = 0;

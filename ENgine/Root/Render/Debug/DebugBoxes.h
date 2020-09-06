@@ -20,7 +20,7 @@ namespace Oak
 			uint32_t color;
 		};
 
-		std::vector<Box> boxes;
+		eastl::vector<Box> boxes;
 
 		Program* prg;
 		DataBuffer* vbuffer;

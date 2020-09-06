@@ -69,7 +69,7 @@ namespace Oak
 
 	void VertexDeclDX11::Release()
 	{
-		typedef std::map<ShaderDX11*, ID3D11InputLayout*>::iterator it_type;
+		typedef eastl::map<ShaderDX11*, ID3D11InputLayout*>::iterator it_type;
 
 		for (it_type iterator = layouts.begin(); iterator != layouts.end(); iterator++)
 		{

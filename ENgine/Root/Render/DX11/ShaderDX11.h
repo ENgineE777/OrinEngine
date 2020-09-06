@@ -3,8 +3,8 @@
 
 #include "Root/Render/Shader.h"
 #include "Root/Files/FileInMemory.h"
-#include <vector>
-#include <map>
+#include <eastl/vector.h>
+#include <eastl/map.h>
 #include <stdint.h>
 
 struct ID3D11VertexShader;
@@ -36,9 +36,9 @@ namespace Oak
 			int size = 0;
 		};
 
-		std::vector<ConstantBuffer> buffers;
-		std::map<std::string, ShaderParamInfo> constantsInfo;
-		std::map<std::string, ShaderParamInfo> samplersInfo;
+		eastl::vector<ConstantBuffer> buffers;
+		eastl::map<eastl::string, ShaderParamInfo> constantsInfo;
+		eastl::map<eastl::string, ShaderParamInfo> samplersInfo;
 
 		FileInMemory buffer;
 		class TextureDX11* textures[16];

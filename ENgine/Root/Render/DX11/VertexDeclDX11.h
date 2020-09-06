@@ -11,9 +11,9 @@ namespace Oak
 	{
 	public:
 
-		std::vector<D3D11_INPUT_ELEMENT_DESC> layoutDesc;
+		eastl::vector<D3D11_INPUT_ELEMENT_DESC> layoutDesc;
 
-		std::map<ShaderDX11*, ID3D11InputLayout*> layouts;
+		eastl::map<ShaderDX11*, ID3D11InputLayout*> layouts;
 
 		VertexDeclDX11(int count, VertexDecl::ElemDesc* elems);
 		void Apply(ShaderDX11* shader);

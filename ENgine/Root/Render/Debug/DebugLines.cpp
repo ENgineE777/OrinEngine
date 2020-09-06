@@ -18,7 +18,7 @@ namespace Oak
 
 	void DebugLines::AddLine(Math::Vector3 from, Color from_clr, Math::Vector3 to, Color to_clr, bool use_depth)
 	{
-		std::vector<Vertex>* ln;
+		eastl::vector<Vertex>* ln;
 
 		if (use_depth)
 		{
@@ -83,7 +83,7 @@ namespace Oak
 		}
 	}
 
-	void DebugLines::DrawLines(Program* prog, std::vector<Vertex>& lines, bool is2d)
+	void DebugLines::DrawLines(Program* prog, eastl::vector<Vertex>& lines, bool is2d)
 	{
 		if (lines.size()==0) return;
 

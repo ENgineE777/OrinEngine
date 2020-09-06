@@ -3,7 +3,7 @@
 
 #include "Shader.h"
 #include "Texture.h"
-#include <map>
+#include <eastl/map.h>
 #include "Support/ClassFactory.h"
 
 namespace Oak
@@ -17,9 +17,9 @@ namespace Oak
 		friend class DeviceDX11;
 		friend class DeviceGLES;
 
-		static std::map<std::string, Math::Vector4> vectors;
-		static std::map<std::string, Math::Matrix> matrixes;
-		static std::map<std::string, Texture*> textures;
+		static eastl::map<eastl::string, Math::Vector4> vectors;
+		static eastl::map<eastl::string, Math::Matrix> matrixes;
+		static eastl::map<eastl::string, Texture*> textures;
 
 	public:
 

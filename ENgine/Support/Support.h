@@ -1,9 +1,9 @@
 
 #pragma once
 
-#include <string>
-#include <string.h>
-#include <vector>
+#include <eastl/string.h>
+#include <eastl/vector.h>
+#include <eastl/map.h>
 
 #include "Defines.h"
 #include "Color.h"

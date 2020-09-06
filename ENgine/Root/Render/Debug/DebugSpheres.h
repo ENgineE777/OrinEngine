@@ -28,7 +28,7 @@ namespace Oak
 			uint32_t color;
 		};
 
-		std::vector<Sphere> spheres;
+		eastl::vector<Sphere> spheres;
 
 		Program* prg;
 		VertexDecl* vdecl;

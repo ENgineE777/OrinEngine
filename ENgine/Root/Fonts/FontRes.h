@@ -28,7 +28,7 @@ namespace Oak
 			int   skip;
 		};
 
-		std::string fileName;
+		eastl::string fileName;
 
 		struct LineBreak
 		{
@@ -56,7 +56,7 @@ namespace Oak
 		bool need_update_tex;
 		FileInMemory font_fb;
 
-		std::map<int, Glyph> glyphs;
+		eastl::map<int, Glyph> glyphs;
 
 	public:
 
@@ -65,8 +65,8 @@ namespace Oak
 		Glyph* GenerateChar(int ch);
 		class Font* CreateReference();
 
-		float GetLineBreak(std::vector<FontRes::LineBreak>& line_breaks, const char* text, int width);
-		void Print(std::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text);
+		float GetLineBreak(eastl::vector<FontRes::LineBreak>& line_breaks, const char* text, int width);
+		void Print(eastl::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text);
 
 		int GetHeight();
 		int GetCharHeight();

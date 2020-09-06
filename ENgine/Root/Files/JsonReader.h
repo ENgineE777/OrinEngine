@@ -3,7 +3,7 @@
 
 #include "json.h"
 #include "Support/Support.h"
-#include "string"
+#include <EASTL/string.h>
 #include "FileInMemory.h"
 
 namespace Oak
@@ -31,7 +31,7 @@ namespace Oak
 
 		bool IsString(const char* name);
 		bool Read(const char* name, char* val, int valLen);
-		bool Read(const char* name, std::string& val);
+		bool Read(const char* name, eastl::string& val);
 		bool Read(const char* name, bool& val);
 		bool Read(const char* name, float& val);
 		bool Read(const char* name, uint16_t& val);

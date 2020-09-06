@@ -4,8 +4,8 @@
 #include "Root/Render/Device.h"
 #include "Root/Render/Program.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
-#include <vector>
-#include <map>
+#include <eastl/vector.h>
+#include <eastl/map.h>
 
 namespace Oak
 {
@@ -32,9 +32,9 @@ namespace Oak
 			Texture* texture;
 		};
 
-		std::map<std::string, TextureRef> textures;
+		eastl::map<eastl::string, TextureRef> textures;
 
-		std::map<std::string, Program*> programs;
+		eastl::map<eastl::string, Program*> programs;
 
 		class DebugLines*       lines;
 		class DebugSpheres*     spheres;

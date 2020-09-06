@@ -49,9 +49,9 @@ public:\
 		}\
 		return nullptr;\
 	}\
-	static std::vector<ClassFactory##baseClass*>& Decls()\
+	static eastl::vector<ClassFactory##baseClass*>& Decls()\
 	{\
-		static std::vector<ClassFactory##baseClass*> decls;\
+		static eastl::vector<ClassFactory##baseClass*> decls;\
 		return decls;\
 	}
 

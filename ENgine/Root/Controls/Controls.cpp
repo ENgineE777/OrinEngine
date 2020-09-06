@@ -208,7 +208,7 @@ namespace Oak
 
 			while (reader.EnterBlock("Aliases"))
 			{
-				std::string name;
+				eastl::string name;
 				reader.Read("name", name);
 
 				int index = GetAlias(name.c_str());
@@ -236,7 +236,7 @@ namespace Oak
 
 					while (reader.EnterBlock("names"))
 					{
-						std::string name;
+						eastl::string name;
 
 						if (reader.IsString("") && reader.Read("", name))
 						{

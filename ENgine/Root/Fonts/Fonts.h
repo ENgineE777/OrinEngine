@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Font.h"
-#include <map>
+#include <eastl/map.h>
 
 namespace Oak
 {
 	class Fonts
 	{
 		friend class FontRes;
-		std::map<std::string, FontRes*> fonts;
+		eastl::map<eastl::string, FontRes*> fonts;
 
 		struct FontVertex
 		{

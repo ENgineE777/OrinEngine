@@ -2,10 +2,10 @@
 #pragma once
 
 #include <cinttypes>
+#include <EASTL/string.h>
+#include <EASTL/vector.h>
+#include <EASTL/map.h>
 
-#include <string>
-#include <vector>
-#include <map>
 
 #ifdef PLATFORM_WIN
 
@@ -44,7 +44,7 @@ namespace Oak
 
 		bool focused = true;
 
-		std::vector<int> supressed_aliases;
+		eastl::vector<int> supressed_aliases;
 
 	#ifdef PLATFORM_WIN
 		uint8_t                 btns[256];
@@ -81,7 +81,7 @@ namespace Oak
 
 		struct HardwareAlias
 		{
-			std::string name;
+			eastl::string name;
 			Device device;
 			int index;
 			float value;
@@ -89,7 +89,7 @@ namespace Oak
 
 		struct AliasRefState
 		{
-			std::string name;
+			eastl::string name;
 			int         aliasIndex = -1;
 			bool        refer2hardware = false;
 			int         device_index = -1;
@@ -98,22 +98,22 @@ namespace Oak
 		struct AliasRef
 		{
 			float       modifier = 1.0f;
-			std::vector<AliasRefState> refs;
+			eastl::vector<AliasRefState> refs;
 		};
 
 		struct Alias
 		{
-			std::string name;
+			eastl::string name;
 			bool visited = false;
-			std::vector<AliasRef> aliasesRef;
+			eastl::vector<AliasRef> aliasesRef;
 		};
 
 		bool allowDebugKeys = false;
-		std::vector<HardwareAlias> haliases;
-		std::map<std::string, int> debeugMap;
+		eastl::vector<HardwareAlias> haliases;
+		eastl::map<eastl::string, int> debeugMap;
 
-		std::vector<Alias> aliases;
-		std::map<std::string, int> aliasesMap;
+		eastl::vector<Alias> aliases;
+		eastl::map<eastl::string, int> aliasesMap;
 
 		void  ResolveAliases();
 		void  CheckDeadEnds(Alias& alias);
@@ -136,16 +136,16 @@ namespace Oak
 
 		struct AliasMappig
 		{
-			std::string name;
+			eastl::string name;
 			int    alias = -1;
 
 			struct BindName
 			{
 				int device_index = -1;
-				std::string name;
+				eastl::string name;
 			};
 
-			std::vector<std::vector<BindName>> bindedNames;
+			eastl::vector<eastl::vector<BindName>> bindedNames;
 
 			AliasMappig(const char* name);
 			bool IsContainHAlias(const char* halias);

@@ -38,7 +38,7 @@ namespace Oak
 			IDXGISwapChain*           swapChain = nullptr;
 		};
 
-		std::vector<WindowBackBufferHolder> backbuffer_holders;
+		eastl::vector<WindowBackBufferHolder> backbuffer_holders;
 
 		D3D11_BLEND_DESC*  blend_desc;
 		ID3D11BlendState*  blend_state;

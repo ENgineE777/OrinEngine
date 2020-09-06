@@ -22,7 +22,7 @@ namespace Oak
 		return true;
 	}
 
-	void DebugFont::AddText(std::vector<Text>& texts, Math::Vector3 pos, ScreenCorner corner, float dist, Color color, const char* text)
+	void DebugFont::AddText(eastl::vector<Text>& texts, Math::Vector3 pos, ScreenCorner corner, float dist, Color color, const char* text)
 	{
 		if (texts.size()>1000) return;
 
@@ -66,7 +66,7 @@ namespace Oak
 
 		textsIn3d.clear();
 
-		std::vector<FontRes::LineBreak> line_breaks;
+		eastl::vector<FontRes::LineBreak> line_breaks;
 		mat.Pos().z = 0.0f;
 
 		Math::Vector2 screen = Math::Vector2((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight());

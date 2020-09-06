@@ -2,8 +2,8 @@
 #pragma once
 
 #include "Support/Support.h"
-#include <vector>
-#include <map>
+#include <eastl/vector.h>
+#include <eastl/map.h>
 
 namespace Oak
 {
@@ -34,12 +34,12 @@ namespace Oak
 			struct TaskList
 			{
 				int  level;
-				std::vector<Task> list;
+				eastl::vector<Task> list;
 			};
 
 		private:
 
-			std::vector<TaskList*> lists;
+			eastl::vector<TaskList*> lists;
 
 			bool active;
 			int changeMark;
@@ -71,13 +71,13 @@ namespace Oak
 			struct GroupList
 			{
 				int level;
-				std::vector<TaskList> taskLists;
+				eastl::vector<TaskList> taskLists;
 			};
 
-			std::vector<GroupList> groupLists;
-			std::vector<SingleTaskPool*> taskPools;
-			std::vector<int> changeMarks;
-			std::vector<int> filter;
+			eastl::vector<GroupList> groupLists;
+			eastl::vector<SingleTaskPool*> taskPools;
+			eastl::vector<int> changeMarks;
+			eastl::vector<int> filter;
 
 			void FillList();
 			void Execute(GroupList& groupList, float dt);

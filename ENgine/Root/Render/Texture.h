@@ -40,7 +40,7 @@ namespace Oak
 			Volume
 		};
 
-		std::string name;
+		eastl::string name;
 
 		Texture(int w, int h, Format f, int l, Type tp)
 		{

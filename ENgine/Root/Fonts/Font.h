@@ -12,9 +12,9 @@ namespace Oak
 
 		Font(FontRes* res);
 
-		float GetLineBreak(std::vector<FontRes::LineBreak>& line_breaks, const char* text, int width);
+		float GetLineBreak(eastl::vector<FontRes::LineBreak>& line_breaks, const char* text, int width);
 
-		void Print(std::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text);
+		void Print(eastl::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text);
 
 		void Print(Math::Matrix& transform, float font_scale, Color color,  const char* text);
 

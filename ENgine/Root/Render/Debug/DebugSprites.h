@@ -27,7 +27,7 @@ namespace Oak
 			float    angle = 0.0f;
 		};
 
-		std::vector<Sprite> sprites; 
+		eastl::vector<Sprite> sprites;
 
 	public:
 

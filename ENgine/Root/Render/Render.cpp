@@ -164,7 +164,7 @@ namespace Oak
 
 	bool Render::TexRefIsEmpty(Texture* texture)
 	{
-		typedef std::map<std::string, TextureRef>::iterator it_type;
+		typedef eastl::map<eastl::string, TextureRef>::iterator it_type;
 
 		for (it_type iterator = textures.begin(); iterator != textures.end(); iterator++)
 		{

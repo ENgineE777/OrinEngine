@@ -19,7 +19,7 @@ namespace Oak
 			uint32_t color;
 		};
 
-		std::vector<Triangle> triangles;
+		eastl::vector<Triangle> triangles;
 		Program* prg;
 		VertexDecl* vdecl;
 		DataBuffer* vbuffer;

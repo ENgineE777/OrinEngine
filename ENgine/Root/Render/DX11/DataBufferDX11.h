@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Root/Render/DataBuffer.h"
-#include <vector>
+#include <eastl/vector.h>
 
 struct ID3D11Buffer;
 
