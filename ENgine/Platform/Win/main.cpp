@@ -83,7 +83,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     while (running)
     {
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);

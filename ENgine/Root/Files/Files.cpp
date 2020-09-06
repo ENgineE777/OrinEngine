@@ -84,7 +84,7 @@ namespace Oak
 
 				StringUtils::Copy(FullPath, 512, FolderTo);
 
-				CreateDirectoryA(FullPath, NULL);
+				CreateDirectoryA(FullPath, nullptr);
 				index++;
 			}
 		}

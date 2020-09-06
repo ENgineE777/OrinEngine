@@ -68,15 +68,15 @@ namespace Oak
 			joy_active[i] = false;
 		}
 
-		HWND hwnd = NULL;
+		HWND hwnd = nullptr;
 
-		if (FAILED(DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION,
-			IID_IDirectInput8, (VOID**)&pDI, NULL)))
+		if (FAILED(DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION,
+			IID_IDirectInput8, (VOID**)&pDI, nullptr)))
 		{
 			return false;
 		}
 
-		if (FAILED(pDI->CreateDevice(GUID_SysKeyboard, &pKeyboard, NULL)))
+		if (FAILED(pDI->CreateDevice(GUID_SysKeyboard, &pKeyboard, nullptr)))
 		{
 			return false;
 		}
