@@ -45,7 +45,7 @@ namespace Oak
 
 	public:
 
-		ShaderDX11(Type tp, const char* name);
+		ShaderDX11(ShaderType tp, const char* name);
 
 		virtual bool SetVector(const char* param, Math::Vector4* v, int count);
 		virtual bool SetMatrix(const char* param, Math::Matrix* m, int count);

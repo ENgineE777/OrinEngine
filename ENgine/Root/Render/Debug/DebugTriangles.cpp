@@ -5,7 +5,7 @@ namespace Oak
 {
 	void DebugTriangles::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
-		VertexDecl::ElemDesc desc[] = { { VertexDecl::Float3, VertexDecl::Position, 0 },{ VertexDecl::Float3, VertexDecl::Texcoord, 0 },{ VertexDecl::Ubyte4, VertexDecl::Color, 0 } };
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float3, ElementSemantic::Texcoord, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc);
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex));
@@ -40,21 +40,21 @@ namespace Oak
 
 		Math::Matrix view_proj;
 		Math::Matrix tmp;
-		root.render.SetTransform(Render::World, tmp);
-		root.render.GetTransform(Render::WrldViewProj, view_proj);
+		root.render.SetTransform(TransformStage::World, tmp);
+		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
 
 		Math::Matrix view;
-		root.render.GetTransform(Render::View, view);
+		root.render.GetTransform(TransformStage::View, view);
 		view.Inverse();
 		Math::Vector4 vz = Math::Vector4(-view.Vz());
 
-		prg->SetMatrix(Shader::Type::Vertex, "view_proj", &view_proj, 1);
-		prg->SetVector(Shader::Type::Pixel, "lightDir", &vz, 1);
+		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
+		prg->SetVector(ShaderType::Pixel, "lightDir", &vz, 1);
 
 		Math::Matrix trans;
 		Color color = COLOR_WHITE;
-		prg->SetMatrix(Shader::Type::Vertex, "trans", &trans, 1);
-		prg->SetVector(Shader::Type::Pixel, "color", (Math::Vector4*)&color, 1);
+		prg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
+		prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&color, 1);
 
 		int index = 0;
 		Vertex* vertices = (Vertex*)vbuffer->Lock();
@@ -79,7 +79,7 @@ namespace Oak
 			if (index > 330)
 			{
 				vbuffer->Unlock();
-				root.render.GetDevice()->Draw(Device::TrianglesList, 0, index);
+				root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, index);
 
 				index = 0;
 				vertices = (Vertex*)vbuffer->Lock();
@@ -90,7 +90,7 @@ namespace Oak
 
 		if (index > 0)
 		{
-			root.render.GetDevice()->Draw(Device::TrianglesList, 0, index);
+			root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, index);
 		}
 
 		triangles.clear();

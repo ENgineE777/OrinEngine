@@ -385,37 +385,37 @@ namespace Oak
 		immediateContext->IASetIndexBuffer(ib, fmt, 0);
 	}
 
-	Shader* DeviceDX11::CreateShader(Shader::Type type, const char* name)
+	Shader* DeviceDX11::CreateShader(ShaderType type, const char* name)
 	{
 		return new ShaderDX11(type, name);
 	}
 
-	Texture* DeviceDX11::CreateTexture(int w, int h, Texture::Format f, int l, bool rt, Texture::Type tp)
+	Texture* DeviceDX11::CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp)
 	{
 		return new TextureDX11(w, h, f, l, rt, tp);
 	}
 
-	int DeviceDX11::GetPrimitiveType(Primitive type)
+	int DeviceDX11::GetPrimitiveType(PrimitiveTopology type)
 	{
 		int tp = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		switch (type)
 		{
-			case LineStrip:
+			case PrimitiveTopology::LineStrip:
 			{
 				tp = D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP;
 			}
 			break;
-			case LinesList:
+			case PrimitiveTopology::LinesList:
 			{
 				tp = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
 			}
 			break;
-			case TriangleStrip:
+			case PrimitiveTopology::TriangleStrip:
 			{
 				tp = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 			}
 			break;
-			case TrianglesList:
+			case PrimitiveTopology::TrianglesList:
 			{
 				tp = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 			}
@@ -425,28 +425,28 @@ namespace Oak
 		return tp;
 	}
 
-	int DeviceDX11::CalcPrimCount(Primitive type, int primCount)
+	int DeviceDX11::CalcPrimCount(PrimitiveTopology type, int primCount)
 	{
 		int tp = primCount;
 
 		switch (type)
 		{
-			case LineStrip:
+			case PrimitiveTopology::LineStrip:
 			{
 				tp = primCount + 1;
 			}
 			break;
-			case LinesList:
+			case PrimitiveTopology::LinesList:
 			{
 				tp = primCount * 2;
 			}
 			break;
-			case TriangleStrip:
+			case PrimitiveTopology::TriangleStrip:
 			{
 				tp = primCount + 2;
 			}
 			break;
-			case TrianglesList:
+			case PrimitiveTopology::TrianglesList:
 			{
 				tp = primCount * 3;
 			}
@@ -456,7 +456,7 @@ namespace Oak
 		return tp;
 	}
 
-	void DeviceDX11::Draw(Primitive prim, int startVertex, int primCount)
+	void DeviceDX11::Draw(PrimitiveTopology prim, int startVertex, int primCount)
 	{
 		UpdateStates();
 
@@ -464,7 +464,7 @@ namespace Oak
 		immediateContext->Draw(CalcPrimCount(prim, primCount), startVertex);
 	}
 
-	void DeviceDX11::DrawIndexed(Primitive prim, int startVertex, int startIndex, int primCount)
+	void DeviceDX11::DrawIndexed(PrimitiveTopology prim, int startVertex, int startIndex, int primCount)
 	{
 		UpdateStates();
 
@@ -482,15 +482,15 @@ namespace Oak
 
 	void DeviceDX11::SetBlendFunc(BlendArg src, BlendArg dest)
 	{
-		blend_desc->RenderTarget[0].SrcBlend = (D3D11_BLEND)(src + 1);
-		blend_desc->RenderTarget[0].DestBlend = (D3D11_BLEND)(dest + 1);
+		blend_desc->RenderTarget[0].SrcBlend = (D3D11_BLEND)((int)src + 1);
+		blend_desc->RenderTarget[0].DestBlend = (D3D11_BLEND)((int)dest + 1);
 
 		blend_changed = true;
 	}
 
 	void DeviceDX11::SetBlendOperation(BlendOp op)
 	{
-		blend_desc->RenderTarget[0].BlendOp = (D3D11_BLEND_OP)(op + 1);
+		blend_desc->RenderTarget[0].BlendOp = (D3D11_BLEND_OP)((int)op + 1);
 
 		blend_changed = true;
 	}
@@ -517,13 +517,13 @@ namespace Oak
 
 	void DeviceDX11::SetDepthFunc(CompareFunc func)
 	{
-		ds_desc->DepthFunc = (D3D11_COMPARISON_FUNC)(func + 1);
+		ds_desc->DepthFunc = (D3D11_COMPARISON_FUNC)((int)func + 1);
 		ds_changed = true;
 	}
 
 	void DeviceDX11::SetCulling(CullMode mode)
 	{
-		raster_desc->CullMode = (D3D11_CULL_MODE)(mode + 1);
+		raster_desc->CullMode = (D3D11_CULL_MODE)((int)mode + 1);
 		raster_changed = true;
 	}
 
@@ -598,8 +598,8 @@ namespace Oak
 				SetAlphaBlend(false);
 				SetDepthTest(true);
 				SetDepthWriting(true);
-				SetBlendFunc(Device::ArgSrcAlpha, Device::ArgInvSrcAlpha);
-				SetCulling(Device::CullCCW);
+				SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgInvSrcAlpha);
+				SetCulling(CullMode::CullCCW);
 
 				cur_program->ApplyStates();
 				need_apply_prog = false;

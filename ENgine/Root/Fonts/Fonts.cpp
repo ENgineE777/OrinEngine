@@ -30,7 +30,7 @@ namespace Oak
 
 			vbuffer = root.render.GetDevice()->CreateBuffer(6 * 1000, sizeof(Fonts::FontVertex));
 
-			VertexDecl::ElemDesc desc[] = {{ VertexDecl::Float3, VertexDecl::Position, 0 }, { VertexDecl::Float2, VertexDecl::Texcoord, 0 }};
+			VertexDecl::ElemDesc desc[] = {{ ElementType::Float3, ElementSemantic::Position, 0 }, { ElementType::Float2, ElementSemantic::Texcoord, 0 }};
 			vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
 		}
 

@@ -39,8 +39,8 @@ namespace Oak
 			return false;
 		}
 
-		device->SetCulling(Device::CullCCW);
-		device->SetBlendFunc(Device::ArgSrcAlpha, Device::ArgInvSrcAlpha);
+		device->SetCulling(CullMode::CullCCW);
+		device->SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgInvSrcAlpha);
 		device->SetDepthTest(true);
 
 		spheres = new DebugSpheres();
@@ -64,7 +64,7 @@ namespace Oak
 		font = new DebugFont();
 		font->Init(debugTaskPool);
 
-		white_tex = device->CreateTexture(2, 2, Texture::FMT_A8R8G8B8, 0, false, Texture::Tex2D);
+		white_tex = device->CreateTexture(2, 2, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D);
 
 		uint8_t white_tex_data[4 * 4];
 		memset(white_tex_data, 255, 16);
@@ -79,23 +79,23 @@ namespace Oak
 		return device;
 	}
 
-	void Render::SetTransform(Transform _trans, Math::Matrix mat)
+	void Render::SetTransform(TransformStage stage, Math::Matrix mat)
 	{
-		if (_trans != WrldViewProj)
+		if (stage != TransformStage::WrldViewProj)
 		{
-			trans[_trans] = mat;
+			trans[(int)stage] = mat;
 			need_calc_trans = true;
 		}
 	}
 
-	void Render::GetTransform(Transform _trans, Math::Matrix& mat)
+	void Render::GetTransform(TransformStage stage, Math::Matrix& mat)
 	{
-		if (_trans == WrldViewProj && need_calc_trans)
+		if (stage == TransformStage::WrldViewProj && need_calc_trans)
 		{
 			CalcTrans();
 		}
 
-		mat = trans[_trans];
+		mat = trans[(int)stage];
 	}
 
 	void Render::CalcTrans()
@@ -145,7 +145,7 @@ namespace Oak
 		int height;
 		uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
 
-		Texture* texture = device->CreateTexture(width, height, Texture::FMT_A8R8G8B8, 0, false, Texture::Tex2D);
+		Texture* texture = device->CreateTexture(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D);
 		texture->name = name;
 
 		texture->Update(0, 0, data, width * 4);
@@ -288,10 +288,10 @@ namespace Oak
 	Math::Vector3 Render::TransformToScreen(Math::Vector3 pos, int type)
 	{
 		Math::Matrix view;
-		GetTransform(Render::View, view);
+		GetTransform(TransformStage::View, view);
 
 		Math::Matrix view_proj;
-		GetTransform(Render::WrldViewProj, view_proj);
+		GetTransform(TransformStage::WrldViewProj, view_proj);
 
 		Math::Vector3 pre_ps = pos * view;
 		Math::Vector4 ps2 = view_proj.MulVertex4(pos);

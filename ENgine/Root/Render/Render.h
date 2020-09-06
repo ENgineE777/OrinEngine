@@ -17,6 +17,14 @@ namespace Oak
 		RightBottom
 	};
 
+	enum class TransformStage
+	{
+		World = 0,
+		View,
+		Projection,
+		WrldViewProj
+	};
+
 	class Render
 	{
 		friend class TextureDX11;
@@ -51,14 +59,6 @@ namespace Oak
 
 	public:
 
-		enum Transform
-		{
-			World = 0,
-			View,
-			Projection,
-			WrldViewProj
-		};
-
 		Render();
 
 		bool Init(const char* device, void* external_device);
@@ -67,9 +67,9 @@ namespace Oak
 
 		Device* GetDevice();
 
-		void SetTransform(Transform trans, Math::Matrix mat);
+		void SetTransform(TransformStage trans, Math::Matrix mat);
 
-		void GetTransform(Transform trans, Math::Matrix& mat);
+		void GetTransform(TransformStage trans, Math::Matrix& mat);
 
 		Program* GetProgram(const char* name);
 

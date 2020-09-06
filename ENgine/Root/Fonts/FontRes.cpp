@@ -105,7 +105,7 @@ namespace Oak
 
 		stbtt_PackBegin(context, tex_buffer, tex_w, tex_h, 0, 1, nullptr);
 
-		tex = root.render.GetDevice()->CreateTexture(tex_w, tex_h, Texture::FMT_A8, 1, false, Texture::Tex2D);
+		tex = root.render.GetDevice()->CreateTexture(tex_w, tex_h, TextureFormat::FMT_A8, 1, false, TextureType::Tex2D);
 
 		return true;
 	}
@@ -219,23 +219,23 @@ namespace Oak
 
 		params[0] = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0.5f, 0.0f);
 
-		root.fonts.fntProg->SetVector(Shader::Type::Vertex, "desc", &params[0], 1);
-		root.fonts.fntProg->SetMatrix(Shader::Type::Vertex, "transform", &tmp, 1);
+		root.fonts.fntProg->SetVector(ShaderType::Vertex, "desc", &params[0], 1);
+		root.fonts.fntProg->SetMatrix(ShaderType::Vertex, "transform", &tmp, 1);
 
 		if (font_scale > 1.01f)
 		{
-			tex->SetFilters(Texture::Linear, Texture::Linear);
+			tex->SetFilters(TextureFilter::Linear, TextureFilter::Linear);
 		}
 		else
 		{
-			tex->SetFilters(Texture::Point, Texture::Point);
+			tex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 		}
 
 		root.render.GetDevice()->SetVertexDecl(root.fonts.vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, root.fonts.vbuffer);
 
-		root.fonts.fntProg->SetTexture(Shader::Type::Pixel, "diffuseMap", tex);
-		root.fonts.fntProg->SetVector(Shader::Type::Pixel, "color", (Math::Vector4*)&color, 1);
+		root.fonts.fntProg->SetTexture(ShaderType::Pixel, "diffuseMap", tex);
+		root.fonts.fntProg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&color, 1);
 
 		float scr_x = 0;
 
@@ -324,7 +324,7 @@ namespace Oak
 
 				if (need_update_tex) UpdateTexture();
 
-				root.render.GetDevice()->Draw(Device::TrianglesList, 0, 2 * dr_index);
+				root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, 2 * dr_index);
 
 				dr_index = 0;
 
@@ -338,7 +338,7 @@ namespace Oak
 		{
 			if (need_update_tex) UpdateTexture();
 
-			root.render.GetDevice()->Draw(Device::TrianglesList, 0, 2 * dr_index);
+			root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, 2 * dr_index);
 		}
 	}
 

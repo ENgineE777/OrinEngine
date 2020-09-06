@@ -5,7 +5,7 @@ namespace Oak
 {
 	void DebugSprites::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
-		VertexDecl::ElemDesc desc[] = { { VertexDecl::Float3, VertexDecl::Position, 0 },{ VertexDecl::Float2, VertexDecl::Texcoord, 0 } };
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float2, ElementSemantic::Texcoord, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
 
 		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugSprites::Draw);
@@ -79,15 +79,15 @@ namespace Oak
 
 		for (auto& sprite : sprites)
 		{
-			prg->SetTexture(Shader::Type::Pixel, "diffuseMap", sprite.texture ? sprite.texture : root.render.GetWhiteTexture());
-			prg->SetVector(Shader::Type::Pixel, "color", (Math::Vector4*)&sprite.color.r, 1);
+			prg->SetTexture(ShaderType::Pixel, "diffuseMap", sprite.texture ? sprite.texture : root.render.GetWhiteTexture());
+			prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&sprite.color.r, 1);
 
 			params[1] = Math::Vector4(sprite.pos.x, sprite.pos.y, sprite.size.x, sprite.size.y);
 			params[2] = Math::Vector4(sprite.offset.x, sprite.offset.y, sprite.angle, 0.0f);
 
-			prg->SetVector(Shader::Type::Vertex, "desc", params, 3);
+			prg->SetVector(ShaderType::Vertex, "desc", params, 3);
 
-			root.render.GetDevice()->Draw(Device::TriangleStrip, 0, 2);
+			root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 		}
 
 		sprites.clear();

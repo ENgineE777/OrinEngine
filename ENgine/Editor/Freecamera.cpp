@@ -20,7 +20,7 @@ namespace Oak
 
 	void FreeCamera::Update(float dt)
 	{
-		if (root.controls.GetAliasState(alias_rotate_active, Controls::AliasAction::Active))
+		if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Active))
 		{
 			angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.01f;
 			angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.01f;
@@ -50,9 +50,9 @@ namespace Oak
 
 		view.BuildView(pos, pos + Math::Vector3(cosf(angles.x), sinf(angles.y), sinf(angles.x)), Math::Vector3(0, 1, 0));
 
-		root.render.SetTransform(Render::View, view);
+		root.render.SetTransform(TransformStage::View, view);
 
 		proj.BuildProjection(45.0f * Math::Radian, (float)root.render.GetDevice()->GetHeight() / (float)root.render.GetDevice()->GetWidth(), 1.0f, 1000.0f);
-		root.render.SetTransform(Render::Projection, proj);
+		root.render.SetTransform(TransformStage::Projection, proj);
 	}
 }

@@ -9,7 +9,7 @@
 
 namespace Oak
 {
-	ShaderDX11::ShaderDX11(Type tp, const char* name) : Shader(tp)
+	ShaderDX11::ShaderDX11(ShaderType tp, const char* name) : Shader(tp)
 	{
 		char path[1024];
 		StringUtils::Printf(path, 1024, "ENgine/Shaders/PC/%s", name);
@@ -18,7 +18,7 @@ namespace Oak
 			return;
 		}
 
-		if (tp == Shader::Vertex)
+		if (tp == ShaderType::Vertex)
 		{
 			DeviceDX11::instance->pd3dDevice->CreateVertexShader(buffer.GetData(), buffer.GetSize(), nullptr, &vshader);
 		}
@@ -157,7 +157,7 @@ namespace Oak
 
 	void ShaderDX11::Apply()
 	{
-		if (sdr_type == Shader::Vertex)
+		if (shaderType == ShaderType::Vertex)
 		{
 			DeviceDX11::instance->immediateContext->VSSetShader(vshader, 0, 0);
 		}
@@ -180,7 +180,7 @@ namespace Oak
 				buffer->dirty = false;
 			}
 
-			if (sdr_type == Pixel)
+			if (shaderType == ShaderType::Pixel)
 			{
 				DeviceDX11::instance->immediateContext->PSSetConstantBuffers(i, 1, &buffer->buffer);
 			}

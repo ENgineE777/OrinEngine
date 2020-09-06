@@ -13,9 +13,9 @@ namespace Oak
 			Math::Vector2 Texcoords;
 		};
 
-		Program* prg;
-		VertexDecl* vdecl;
-		DataBuffer* vbuffer;
+		Program* prg = nullptr;
+		VertexDecl* vdecl = nullptr;
+		DataBuffer* vbuffer = nullptr;
 
 		struct Sprite
 		{

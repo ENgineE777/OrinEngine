@@ -28,10 +28,10 @@ namespace Oak
 		eastl::vector<Vertex> lines_with_depth;
 		eastl::vector<Vertex> lines_2d;
 
-		Program*    prg;
-		Program*    prg_depth;
-		VertexDecl* vdecl;
-		DataBuffer* buffer;
+		Program* prg = nullptr;
+		Program* prg_depth = nullptr;
+		VertexDecl* vdecl = nullptr;
+		DataBuffer* buffer = nullptr;
 
 	public:
 

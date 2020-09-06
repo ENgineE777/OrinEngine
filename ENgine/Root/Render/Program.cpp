@@ -28,51 +28,51 @@ namespace Oak
 	{
 		if (GetVsName())
 		{
-			vshader = root.render.GetDevice()->CreateShader(Shader::Vertex, GetVsName());
+			vshader = root.render.GetDevice()->CreateShader(ShaderType::Vertex, GetVsName());
 		}
 
 		if (GetPsName())
 		{
-			pshader = root.render.GetDevice()->CreateShader(Shader::Pixel, GetPsName());
+			pshader = root.render.GetDevice()->CreateShader(ShaderType::Pixel, GetPsName());
 		}
 
 		return true;
 	}
 
-	void Program::SetVector(Shader::Type shader_type, const char* param, Math::Vector4* v, int count)
+	void Program::SetVector(ShaderType shader_type, const char* param, Math::Vector4* v, int count)
 	{
-		if (shader_type == Shader::Type::Vertex)
+		if (shader_type == ShaderType::Vertex)
 		{
 			if (vshader) vshader->SetVector(param, v, count);
 		}
 
-		if (shader_type == Shader::Type::Pixel)
+		if (shader_type == ShaderType::Pixel)
 		{
 			if (pshader) pshader->SetVector(param, v, count);
 		}
 	}
 
-	void Program::SetMatrix(Shader::Type shader_type, const char* param, Math::Matrix* mat, int count)
+	void Program::SetMatrix(ShaderType shader_type, const char* param, Math::Matrix* mat, int count)
 	{
-		if (shader_type == Shader::Type::Vertex)
+		if (shader_type == ShaderType::Vertex)
 		{
 			if (vshader) vshader->SetMatrix(param, mat, count);
 		}
 
-		if (shader_type == Shader::Type::Pixel)
+		if (shader_type == ShaderType::Pixel)
 		{
 			if (pshader) pshader->SetMatrix(param, mat, count);
 		}
 	}
 
-	void Program::SetTexture(Shader::Type shader_type, const char* param, Texture* texture)
+	void Program::SetTexture(ShaderType shader_type, const char* param, Texture* texture)
 	{
-		if (shader_type == Shader::Type::Vertex)
+		if (shader_type == ShaderType::Vertex)
 		{
 			if (vshader) vshader->SetTexture(param, texture);
 		}
 
-		if (shader_type == Shader::Type::Pixel)
+		if (shader_type == ShaderType::Pixel)
 		{
 			if (pshader) pshader->SetTexture(param, texture);
 		}

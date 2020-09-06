@@ -70,7 +70,7 @@ namespace Oak
 		void PrepareProgram(Program* program) override;
 		void Release() override;
 
-		Shader* CreateShader(Shader::Type type, const char* name) override;
+		Shader* CreateShader(ShaderType type, const char* name) override;
 		void UpdateStates();
 
 	public:
@@ -95,12 +95,12 @@ namespace Oak
 		void SetVertexBuffer(int slot, DataBuffer* buffer) override;
 		void SetIndexBuffer(DataBuffer* buffer) override;
 
-		Texture* CreateTexture(int w, int h, Texture::Format f, int l, bool rt, Texture::Type tp) override;
+		Texture* CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp) override;
 
-		int GetPrimitiveType(Primitive type);
-		int CalcPrimCount(Primitive type, int primCount);
-		void Draw(Primitive prim, int startVertex, int primCount) override;
-		void DrawIndexed(Primitive prim, int startVertex, int startIndex, int primCount) override;
+		int GetPrimitiveType(PrimitiveTopology type);
+		int CalcPrimCount(PrimitiveTopology type, int primCount);
+		void Draw(PrimitiveTopology prim, int startVertex, int primCount) override;
+		void DrawIndexed(PrimitiveTopology prim, int startVertex, int startIndex, int primCount) override;
 
 		void SetAlphaBlend(bool enable) override;
 		void SetBlendFunc(BlendArg src, BlendArg dest) override;

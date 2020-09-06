@@ -23,13 +23,13 @@ namespace Oak
 
 			switch (elems[i].semantic)
 			{
-				case Position:
+				case ElementSemantic::Position:
 					elementDesc.SemanticName = "POSITION";
 					break;
-				case Texcoord:
+				case ElementSemantic::Texcoord:
 					elementDesc.SemanticName = "TEXCOORD";
 					break;
-				case Color:
+				case ElementSemantic::Color:
 					elementDesc.SemanticName = "COLOR";
 					break;
 			}
@@ -40,7 +40,7 @@ namespace Oak
 			elementDesc.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 			elementDesc.InstanceDataStepRate = 0;
 
-			int index = elems[i].type;
+			int index = (int)elems[i].type;
 			elementDesc.Format = formats[index];
 			offset += offsets[index];
 		}

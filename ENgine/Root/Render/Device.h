@@ -10,6 +10,56 @@
 
 namespace Oak
 {
+	enum class PrimitiveTopology
+	{
+		LineStrip = 0,
+		LinesList,
+		TriangleStrip,
+		TrianglesList
+	};
+
+	enum class CullMode
+	{
+		CullNone = 0,
+		CullCW,
+		CullCCW
+	};
+
+	enum class BlendOp
+	{
+		BlendAdd = 0,
+		BlendSub,
+		BlendRevSub,
+		BlendMin,
+		BlendMax
+	};
+
+	enum class CompareFunc
+	{
+		CmpNever = 0,
+		CmpLess,
+		CmpEqual,
+		CmpLessEqual,
+		CmpGreater,
+		CmpNotequal,
+		CmpGreaterqual,
+		CmpAlways
+	};
+
+	enum class BlendArg
+	{
+		ArgZero = 0,
+		ArgOne,
+		ArgSrcColor,
+		ArgInvSrcColor,
+		ArgSrcAlpha,
+		ArgInvSrcAlpha,
+		ArgDestAlpha,
+		ArgInvDestAlpha,
+		ArgDestColor,
+		ArgInvDestColor
+	};
+
 	class Device
 	{
 		friend class Render;
@@ -44,56 +94,6 @@ namespace Oak
 			int top, bottom;
 		};
 
-		enum Primitive
-		{
-			LineStrip = 0,
-			LinesList,
-			TriangleStrip,
-			TrianglesList
-		};
-
-		enum CullMode
-		{
-			CullNone = 0,
-			CullCW,
-			CullCCW
-		};
-
-		enum BlendOp
-		{
-			BlendAdd = 0,
-			BlendSub,
-			BlendRevSub,
-			BlendMin,
-			BlendMax
-		};
-
-		enum CompareFunc
-		{
-			CmpNever = 0,
-			CmpLess,
-			CmpEqual,
-			CmpLessEqual,
-			CmpGreater,
-			CmpNotequal,
-			CmpGreaterqual,
-			CmpAlways
-		};
-
-		enum BlendArg
-		{
-			ArgZero = 0,
-			ArgOne,
-			ArgSrcColor,
-			ArgInvSrcColor,
-			ArgSrcAlpha,
-			ArgInvSrcAlpha,
-			ArgDestAlpha,
-			ArgInvDestAlpha,
-			ArgDestColor,
-			ArgInvDestColor
-		};
-
 		virtual void  SetVideoMode(int wgt, int hgt, void* data) = 0;
 		virtual void* GetBackBuffer() { return nullptr; };
 		virtual int   GetWidth() = 0;
@@ -107,9 +107,9 @@ namespace Oak
 		virtual DataBuffer* CreateBuffer(int count, int stride) = 0;
 		virtual void SetVertexBuffer(int slot, DataBuffer* buffer) = 0;
 		virtual void SetIndexBuffer(DataBuffer* buffer) = 0;
-		virtual Texture* CreateTexture(int w, int h, Texture::Format f, int l, bool rt, Texture::Type tp) = 0;
-		virtual void Draw(Primitive prim, int startVertex, int primCount) = 0;
-		virtual void DrawIndexed(Primitive prim, int startVertex, int startIndex, int primCount) = 0;
+		virtual Texture* CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp) = 0;
+		virtual void Draw(PrimitiveTopology prim, int startVertex, int primCount) = 0;
+		virtual void DrawIndexed(PrimitiveTopology prim, int startVertex, int startIndex, int primCount) = 0;
 		virtual void SetAlphaBlend(bool enable) = 0;
 		virtual void SetBlendFunc(BlendArg src, BlendArg dest) = 0;
 		virtual void SetBlendOperation(BlendOp op) = 0;
@@ -127,6 +127,6 @@ namespace Oak
 		virtual void RestoreRenderTarget() = 0;
 
 	protected:
-		virtual Shader* CreateShader(Shader::Type type, const char* name) = 0;
+		virtual Shader* CreateShader(ShaderType type, const char* name) = 0;
 	};
 }

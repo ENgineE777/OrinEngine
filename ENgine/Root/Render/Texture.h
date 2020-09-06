@@ -5,44 +5,44 @@
 
 namespace Oak
 {
+	enum class TextureFormat
+	{
+		FMT_A8R8G8B8 = 0,
+		FMT_A8R8,
+		FMT_A8,
+		FMT_R16_FLOAT,
+		FMT_D16
+	};
+
+	enum class TextureFilter
+	{
+		Point = 0,
+		Linear
+	};
+
+	enum class TextureAddress
+	{
+		Wrap = 0,
+		Mirror,
+		Clamp,
+		Border
+	};
+
+	enum class TextureType
+	{
+		Tex2D = 0,
+		Array,
+		Cube,
+		Volume
+	};
+
 	class Texture
 	{
 	public:
 
-		enum Format
-		{
-			FMT_A8R8G8B8 = 0,
-			FMT_A8R8,
-			FMT_A8,
-			FMT_R16_FLOAT,
-			FMT_D16
-		};
-
-		enum FilterType
-		{
-			Point = 0,
-			Linear
-		};
-
-		enum TextureAddress
-		{
-			Wrap = 0,
-			Mirror,
-			Clamp,
-			Border
-		};
-
-		enum Type
-		{
-			Tex2D = 0,
-			Array,
-			Cube,
-			Volume
-		};
-
 		eastl::string name;
 
-		Texture(int w, int h, Format f, int l, Type tp)
+		Texture(int w, int h, TextureFormat f, int l, TextureType tp)
 		{
 			width = w;
 			height = h;
@@ -50,12 +50,12 @@ namespace Oak
 			lods = l;
 			type = tp;
 
-			magminf = Linear;
-			mipmapf = Linear;
+			magminf = TextureFilter::Linear;
+			mipmapf = TextureFilter::Linear;
 
-			adressU = Wrap;
-			adressV = Wrap;
-			adressW = Wrap;
+			adressU = TextureAddress::Wrap;
+			adressV = TextureAddress::Wrap;
+			adressW = TextureAddress::Wrap;
 		};
 
 		static void NextMip(int& width, int& height, int block_size);
@@ -68,10 +68,10 @@ namespace Oak
 
 		virtual int GetWidth() { return width; };
 		virtual int GetHeight() { return height; };
-		virtual int GetFormat() { return format; };
+		virtual TextureFormat GetFormat() { return format; };
 		virtual int GetLods() { return lods; };
-		virtual int GetType() { return type; };
-		virtual void SetFilters(FilterType magmin, FilterType mipmap)
+		virtual TextureType GetType() { return type; };
+		virtual void SetFilters(TextureFilter magmin, TextureFilter mipmap)
 		{
 			magminf = magmin;
 			mipmapf = mipmap;
@@ -107,14 +107,14 @@ namespace Oak
 
 		int width;
 		int height;
-		Format format;
+		TextureFormat format;
 		int lods;
 
-		FilterType magminf;
-		FilterType mipmapf;
+		TextureFilter magminf;
+		TextureFilter mipmapf;
 		TextureAddress adressU;
 		TextureAddress adressV;
 		TextureAddress adressW;
-		Type type;
+		TextureType type;
 	};
 }

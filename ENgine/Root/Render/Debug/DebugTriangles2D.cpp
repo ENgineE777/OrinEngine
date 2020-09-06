@@ -5,7 +5,7 @@ namespace Oak
 {
 	void DebugTriangles2D::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
-		VertexDecl::ElemDesc desc[] = { { VertexDecl::Float2, VertexDecl::Position, 0 },{ VertexDecl::Ubyte4, VertexDecl::Color, 0 } };
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float2, ElementSemantic::Position, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex));
@@ -39,7 +39,7 @@ namespace Oak
 		root.render.GetDevice()->SetVertexBuffer(0, vbuffer);
 
 		Math::Vector4 param = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0, 0);
-		prg->SetVector(Shader::Type::Vertex, "param", &param, 1);
+		prg->SetVector(ShaderType::Vertex, "param", &param, 1);
 
 		int index = 0;
 		Vertex* vertices = (Vertex*)vbuffer->Lock();
@@ -59,7 +59,7 @@ namespace Oak
 			if (index > 330)
 			{
 				vbuffer->Unlock();
-				root.render.GetDevice()->Draw(Device::TrianglesList, 0, index);
+				root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, index);
 
 				index = 0;
 				vertices = (Vertex*)vbuffer->Lock();
@@ -70,7 +70,7 @@ namespace Oak
 
 		if (index > 0)
 		{
-			root.render.GetDevice()->Draw(Device::TrianglesList, 0, index);
+			root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, index);
 		}
 
 		triangles.clear();

@@ -23,11 +23,11 @@ namespace Oak
 		ID3D11RenderTargetView* rt;
 		ID3D11DepthStencilView* depth;
 	
-		static int GetFormat(Format fmt);
+		static int GetFormat(TextureFormat fmt);
 
-		TextureDX11(int w, int h, Format f, int l, bool rt, Type tp);
+		TextureDX11(int w, int h, TextureFormat f, int l, bool rt, TextureType tp);
 
-		virtual void SetFilters(FilterType magmin, FilterType mipmap);
+		virtual void SetFilters(TextureFilter magmin, TextureFilter mipmap);
 		virtual void SetAdress(TextureAddress adress);
 		virtual void SetAdressU(TextureAddress adress);
 		virtual void SetAdressV(TextureAddress adress);

@@ -17,15 +17,15 @@
 
 namespace Oak
 {
+	enum class AliasAction
+	{
+		Active,
+		Activated
+	};
+
 	class Controls
 	{
 	public:
-
-		enum class AliasAction
-		{
-			Active,
-			Activated
-		};
 
 	private:
 

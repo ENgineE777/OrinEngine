@@ -7,21 +7,21 @@
 
 namespace Oak
 {
-	int TextureDX11::GetFormat(Format fmt)
+	int TextureDX11::GetFormat(TextureFormat fmt)
 	{
 		switch (fmt)
 		{
-			case FMT_A8R8G8B8: return DXGI_FORMAT_R8G8B8A8_UNORM;
-			case FMT_A8R8: return DXGI_FORMAT_R8G8_UNORM;
-			case FMT_A8: return DXGI_FORMAT_R8_UNORM;
-			case FMT_R16_FLOAT: return DXGI_FORMAT_R16_FLOAT;
-			case FMT_D16: return DXGI_FORMAT_R16_TYPELESS;
+			case TextureFormat::FMT_A8R8G8B8: return DXGI_FORMAT_R8G8B8A8_UNORM;
+			case TextureFormat::FMT_A8R8: return DXGI_FORMAT_R8G8_UNORM;
+			case TextureFormat::FMT_A8: return DXGI_FORMAT_R8_UNORM;
+			case TextureFormat::FMT_R16_FLOAT: return DXGI_FORMAT_R16_FLOAT;
+			case TextureFormat::FMT_D16: return DXGI_FORMAT_R16_TYPELESS;
 		}
 
 		return 0;
 	}
 
-	TextureDX11::TextureDX11(int w, int h, Format f, int l, bool is_rt, Type tp) : Texture(w, h, f, l, tp)
+	TextureDX11::TextureDX11(int w, int h, TextureFormat f, int l, bool is_rt, TextureType tp) : Texture(w, h, f, l, tp)
 	{
 		texture = nullptr;
 
@@ -82,7 +82,7 @@ namespace Oak
 		depth = nullptr;
 	}
 
-	void TextureDX11::SetFilters(FilterType magmin, FilterType mipmap)
+	void TextureDX11::SetFilters(TextureFilter magmin, TextureFilter mipmap)
 	{
 		Texture::SetFilters(magmin, mipmap);
 
@@ -135,30 +135,30 @@ namespace Oak
 
 			D3D11_FILTER filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 
-			if (magminf == Point && mipmapf == Point)
+			if (magminf == TextureFilter::Point && mipmapf == TextureFilter::Point)
 			{
 				filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 			}
 			else
-			if (magminf == Point && mipmapf == Linear)
+			if (magminf == TextureFilter::Point && mipmapf == TextureFilter::Linear)
 			{
 				filter = D3D11_FILTER_MIN_MAG_POINT_MIP_LINEAR;
 			}
 			else
-			if (magminf == Linear && mipmapf == Point)
+			if (magminf == TextureFilter::Linear && mipmapf == TextureFilter::Point)
 			{
 				filter = D3D11_FILTER_MIN_MAG_LINEAR_MIP_POINT;
 			}
 			else
-			if (magminf == Linear && mipmapf == Linear)
+			if (magminf == TextureFilter::Linear && mipmapf == TextureFilter::Linear)
 			{
 				filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 			}
 
 			sampDesc.Filter = filter;
-			sampDesc.AddressU = (D3D11_TEXTURE_ADDRESS_MODE)(adressU + 1);
-			sampDesc.AddressV = (D3D11_TEXTURE_ADDRESS_MODE)(adressV + 1);
-			sampDesc.AddressW = (D3D11_TEXTURE_ADDRESS_MODE)(adressW + 1);
+			sampDesc.AddressU = (D3D11_TEXTURE_ADDRESS_MODE)((int)adressU + 1);
+			sampDesc.AddressV = (D3D11_TEXTURE_ADDRESS_MODE)((int)adressV + 1);
+			sampDesc.AddressW = (D3D11_TEXTURE_ADDRESS_MODE)((int)adressW + 1);
 			sampDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 			sampDesc.MinLOD = 0;
 			sampDesc.MaxLOD = D3D11_FLOAT32_MAX;

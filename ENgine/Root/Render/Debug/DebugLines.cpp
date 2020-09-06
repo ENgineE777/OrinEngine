@@ -5,7 +5,7 @@ namespace Oak
 {
 	void DebugLines::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
-		VertexDecl::ElemDesc desc[] = { { VertexDecl::Float3, VertexDecl::Position, 0 }, { VertexDecl::Ubyte4, VertexDecl::Color, 0 } };
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 }, { ElementType::Ubyte4, ElementSemantic::Color, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
 
 		buffer = root.render.GetDevice()->CreateBuffer(MaxSize * 2, sizeof(Vertex));
@@ -93,21 +93,21 @@ namespace Oak
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 
 		Math::Matrix view_proj;
-		root.render.SetTransform(Render::World, Math::Matrix());
-		root.render.GetTransform(Render::WrldViewProj, view_proj);
+		root.render.SetTransform(TransformStage::World, Math::Matrix());
+		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
 
 		Math::Matrix view, proj, inv_view;
 
 		if (is2d)
 		{
-			root.render.GetTransform(Render::View, view);
-			root.render.GetTransform(Render::Projection, proj);
+			root.render.GetTransform(TransformStage::View, view);
+			root.render.GetTransform(TransformStage::Projection, proj);
 
 			inv_view = view;
 			inv_view.Inverse();
 		}
 
-		prog->SetMatrix(Shader::Type::Vertex, "view_proj", &view_proj, 1);
+		prog->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
 
 		Vertex* v = (Vertex*)buffer->Lock();
 
@@ -139,7 +139,7 @@ namespace Oak
 			{
 				buffer->Unlock();
 
-				root.render.GetDevice()->Draw(Device::LinesList, 0, MaxSize);
+				root.render.GetDevice()->Draw(PrimitiveTopology::LinesList, 0, MaxSize);
 
 				count = 0;
 				v = (Vertex*)buffer->Lock();
@@ -150,7 +150,7 @@ namespace Oak
 
 		if (count > 0)
 		{
-			root.render.GetDevice()->Draw(Device::LinesList, 0, count);
+			root.render.GetDevice()->Draw(PrimitiveTopology::LinesList, 0, count);
 		}
 
 		lines.clear();

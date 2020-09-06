@@ -6,16 +6,17 @@
 
 namespace Oak
 {
+	enum class ShaderType
+	{
+		Vertex = 0,
+		Pixel = 1
+	};
+
 	class Shader
 	{
 	public:
-		enum Type
-		{
-			Vertex = 0,
-			Pixel  = 1
-		};
 
-		Shader(Type tp) { sdr_type = tp; };
+		Shader(ShaderType tp) { shaderType = tp; };
 
 		virtual void UpdateConstants() = 0;
 		virtual void Apply() = 0;
@@ -28,6 +29,6 @@ namespace Oak
 		virtual void Release() = 0;
 
 	protected:
-		Type sdr_type;
+		ShaderType shaderType;
 	};
 }

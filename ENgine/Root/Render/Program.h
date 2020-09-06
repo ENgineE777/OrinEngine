@@ -31,9 +31,9 @@ namespace Oak
 		virtual const char* GetVsName() = 0;
 		virtual const char* GetPsName() = 0;
 		virtual void ApplyStates() {};
-		void SetVector(Shader::Type shader_type, const char* param, Math::Vector4* v, int count);
-		void SetMatrix(Shader::Type shader_type, const char* param, Math::Matrix* mat, int count);
-		void SetTexture(Shader::Type shader_type, const char* param, Texture* texture);
+		void SetVector(ShaderType shader_type, const char* param, Math::Vector4* v, int count);
+		void SetMatrix(ShaderType shader_type, const char* param, Math::Matrix* mat, int count);
+		void SetTexture(ShaderType shader_type, const char* param, Texture* texture);
 	};
 
 	CLASSFACTORYDEF(Program)

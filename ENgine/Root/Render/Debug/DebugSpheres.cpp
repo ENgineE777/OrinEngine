@@ -5,7 +5,7 @@ namespace Oak
 {
 	void DebugSpheres::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
-		VertexDecl::ElemDesc desc[] = { { VertexDecl::Float3, VertexDecl::Position, 0 },{ VertexDecl::Float3, VertexDecl::Texcoord, 0 },{ VertexDecl::Ubyte4, VertexDecl::Color, 0 } };
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float3, ElementSemantic::Texcoord, 0 }, { ElementType::Ubyte4, ElementSemantic::Color, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc);
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(SidesCount * (RigsCount + 1), sizeof(Vertex));
@@ -96,16 +96,16 @@ namespace Oak
 
 		Math::Matrix view_proj;
 		Math::Matrix tmp;
-		root.render.SetTransform(Render::World, tmp);
-		root.render.GetTransform(Render::WrldViewProj, view_proj);
+		root.render.SetTransform(TransformStage::World, tmp);
+		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
 
 		Math::Matrix view;
-		root.render.GetTransform(Render::View, view);
+		root.render.GetTransform(TransformStage::View, view);
 		view.Inverse();
 		Math::Vector4 vz = Math::Vector4(-view.Vz());
 
-		prg->SetMatrix(Shader::Type::Vertex, "view_proj", &view_proj, 1);
-		prg->SetVector(Shader::Type::Pixel, "lightDir", &vz, 1);
+		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
+		prg->SetVector(ShaderType::Pixel, "lightDir", &vz, 1);
 
 		root.render.GetDevice()->SetAlphaBlend(true);
 
@@ -118,10 +118,10 @@ namespace Oak
 			mat.Scale(scale);
 			mat.Pos() = sphere.pos;
 
-			prg->SetMatrix(Shader::Type::Vertex, "trans", &mat, 1);
-			prg->SetVector(Shader::Type::Pixel, "color", (Math::Vector4*)&sphere.color, 1);
+			prg->SetMatrix(ShaderType::Vertex, "trans", &mat, 1);
+			prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&sphere.color, 1);
 
-			root.render.GetDevice()->DrawIndexed(Device::TrianglesList, 0, 0, PrimCount);
+			root.render.GetDevice()->DrawIndexed(PrimitiveTopology::TrianglesList, 0, 0, PrimCount);
 		}
 
 		root.render.GetDevice()->SetAlphaBlend(false);
