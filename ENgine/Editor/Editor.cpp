@@ -2,19 +2,28 @@
 
 namespace Oak
 {
-	void Editor::Init(HWND setHwnd)
+	bool Editor::Init(HWND setHwnd)
 	{
 		hwnd = setHwnd;
-		root.Init();
+
+		if (!root.Init())
+		{
+			return false;
+		}
 
 		root.render.AddExecutedLevelPool(1);
 
 		renderTaskPool = root.render.AddTaskPool();
 		renderTaskPool->AddTask(1, this, (Object::Delegate) & Editor::Render);
 
-		root.render.GetDevice()->SetVideoMode(800, 600, &hwnd);
+		if (!root.render.GetDevice()->SetVideoMode(800, 600, &hwnd))
+		{
+			return false;
+		}
 
 		freeCamera.Init();
+
+		return true;
 	}
 
 	void Editor::Update()

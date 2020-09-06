@@ -74,7 +74,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return FALSE;
     }
 
-    editor.Init(hWnd);
+    if (!editor.Init(hWnd))
+    {
+        return 0;
+    }
 
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
@@ -92,5 +95,5 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         editor.Update();
     }
 
-    return (int)msg.wParam;
+    return 0;
 }

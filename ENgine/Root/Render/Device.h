@@ -94,10 +94,10 @@ namespace Oak
 			int top, bottom;
 		};
 
-		virtual void  SetVideoMode(int wgt, int hgt, void* data) = 0;
+		virtual bool SetVideoMode(int wgt, int hgt, void* data) = 0;
 		virtual void* GetBackBuffer() { return nullptr; };
-		virtual int   GetWidth() = 0;
-		virtual int   GetHeight() = 0;
+		virtual int GetWidth() = 0;
+		virtual int GetHeight() = 0;
 		virtual float GetAspect() = 0;
 		virtual void Clear(bool renderTarget, Color color, bool zbuffer, float zValue) = 0;
 		virtual void Present() = 0;

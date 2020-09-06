@@ -9,8 +9,9 @@
 
 namespace Oak
 {
-	void Files::Init()
+	bool Files::Init()
 	{
+		return true;
 	}
 
 	FILE* Files::FileOpen(const char* path, const char* mode)

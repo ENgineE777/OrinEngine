@@ -35,9 +35,9 @@ namespace Oak
 
 		Fonts();
 
-		virtual bool Init();
+		bool Init();
 
-		virtual void DeleteRes(FontRes* res);
-		virtual void Release();
+		void DeleteRes(FontRes* res);
+		void Release();
 	};
 }

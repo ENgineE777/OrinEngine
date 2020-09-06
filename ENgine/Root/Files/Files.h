@@ -13,7 +13,7 @@ namespace Oak
 
 	public:
 
-		void Init();
+		bool Init();
 
 		#ifdef PLATFORM_WIN
 		bool IsFileExist(const char* name);

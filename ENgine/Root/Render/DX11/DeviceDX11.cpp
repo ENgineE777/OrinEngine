@@ -127,13 +127,25 @@ namespace Oak
 				}
 			}
 
-			CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void**)(&factory));
+			if (pd3dDevice == nullptr)
+			{
+				OAK_ALERT("Can't create any DX11Device");
+				return false;
+			}
+
+			hr = CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void**)(&factory));
+
+			if (hr < 0)
+			{
+				OAK_ALERT("CreateDXGIFactory1 failed with error");
+				return false;
+			}
 		}
 
 		return true;
 	}
 
-	void DeviceDX11::SetVideoMode(int wgt, int hgt, void* data)
+	bool DeviceDX11::SetVideoMode(int wgt, int hgt, void* data)
 	{
 		HWND handle = *((HWND*)data);
 		HRESULT hr;
@@ -189,11 +201,31 @@ namespace Oak
 				sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 				sd.Windowed = TRUE;
 
-				factory->CreateSwapChain(pd3dDevice, &sd, &backbuffer_holder->swapChain);
+				hr = factory->CreateSwapChain(pd3dDevice, &sd, &backbuffer_holder->swapChain);
+
+				if (hr < 0)
+				{
+					OAK_ALERT("factory->CreateSwapChain failed with error");
+					return false;
+				}
 
 				ID3D11Texture2D* pBackBuffer = nullptr;
 				hr = backbuffer_holder->swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+
+				if (hr < 0)
+				{
+					OAK_ALERT("backbuffer_holder->swapChain->GetBuffer failed with error");
+					return false;
+				}
+
 				hr = pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &backbuffer_holder->renderTargetView);
+
+				if (hr < 0)
+				{
+					OAK_ALERT("pd3dDevice->CreateRenderTargetView failed with error");
+					return false;
+				}
+
 				pBackBuffer->Release();
 
 				swapChain = backbuffer_holder->swapChain;
@@ -260,6 +292,8 @@ namespace Oak
 		renderTargetShaderView = backbuffer_holder->renderTargetShaderView;
 
 		RestoreRenderTarget();
+
+		return true;
 	}
 
 	void* DeviceDX11::GetBackBuffer()

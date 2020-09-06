@@ -14,6 +14,12 @@
 		MessageBoxA(nullptr, description, "Assert", MB_ICONERROR);\
 	}
 
+#define OAK_ALERT(description) \
+	{\
+		root.Log("Alert", description);\
+		MessageBoxA(nullptr, description, "Alert", MB_ICONERROR);\
+	}
+
 #ifdef EDITOR
 #define MESSAGE_BOX(caption, text) MessageBox(nullptr, text, caption, MB_ICONERROR);
 #else

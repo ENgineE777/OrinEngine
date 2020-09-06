@@ -16,7 +16,7 @@ namespace Oak
 
 	public:
 
-		void Init(HWND hwnd);
+		bool Init(HWND hwnd);
 		void Update();
 		void Render(float dt);
 		void OnMouseMove(int msx, int msy);

@@ -30,7 +30,7 @@ namespace Oak
 		logsDir[0] = 0;
 	}
 
-	void Root::Init()
+	bool Root::Init()
 	{
 		srand((unsigned int)time(nullptr));
 
@@ -48,16 +48,33 @@ namespace Oak
 		CreateDirectoryA(logsDir, nullptr);
 		#endif
 
-		files.Init();
+		if (!files.Init())
+		{
+			return false;
+		}
 
-		controls.Init("ENgine/Controls/hardware_win", true);
-		controls.LoadAliases("ENgine/Controls/engine_aliases");
+		if (!controls.Init("ENgine/Controls/hardware_win", true))
+		{
+			return false;
+		}
 
-		render.Init("DX11", nullptr);
+		if (!controls.LoadAliases("ENgine/Controls/engine_aliases"))
+		{
+			OAK_ALERT("controls.LoadAliases(\"ENgine/Controls/engine_aliases\") failed");
+
+			return false;
+		}
+
+		if (!render.Init("DX11", nullptr))
+		{
+			return false;
+		}
 
 		StringUtils::Init();
 
 		Timer::CountDeltaTime();
+
+		return true;
 	}
 
 	void Root::Log(const char* name, const char* text, ...)

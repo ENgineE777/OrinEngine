@@ -68,25 +68,45 @@ namespace Oak
 			joy_active[i] = false;
 		}
 
-		HWND hwnd = nullptr;
+		HWND hwnd = 0;
 
-		if (FAILED(DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION,
-			IID_IDirectInput8, (VOID**)&pDI, nullptr)))
+		HRESULT res;
+
+		res = DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDI, nullptr);
+
+		if (res < 0)
 		{
+			OAK_ALERT("DirectInput8Create failed with error");
 			return false;
 		}
 
-		if (FAILED(pDI->CreateDevice(GUID_SysKeyboard, &pKeyboard, nullptr)))
+		res = pDI->CreateDevice(GUID_SysKeyboard, &pKeyboard, nullptr);
+
+		if (res < 0)
 		{
+			OAK_ALERT("pDI->CreateDevice failed with error");
 			return false;
 		}
 
-		if (FAILED(pKeyboard->SetDataFormat(&c_dfDIKeyboard)))
+		res = pKeyboard->SetDataFormat(&c_dfDIKeyboard);
+
+		if (res < 0)
 		{
+			OAK_ALERT("pKeyboard->SetDataFormat failed with error");
 			return false;
 		}
 
-		pKeyboard->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+		if (hwnd != 0)
+		{
+			res = pKeyboard->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+
+			if (res < 0)
+			{
+				OAK_ALERT("pKeyboard->SetCooperativeLevel failed with error");
+
+				return false;
+			}
+		}
 
 		DIPROPDWORD dipdw;
 
@@ -96,24 +116,42 @@ namespace Oak
 		dipdw.diph.dwHow = DIPH_DEVICE;
 		dipdw.dwData = 16;
 
-		if (FAILED(pKeyboard->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph)))
+		res = pKeyboard->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+
+		if (res < 0)
 		{
+			OAK_ALERT("pKeyboard->SetProperty failed with error");
 			return false;
 		}
 
 		pKeyboard->Acquire();
 
-		if (FAILED(pDI->CreateDevice(GUID_SysMouse, &pMouse, NULL)))
+		res = pDI->CreateDevice(GUID_SysMouse, &pMouse, nullptr);
+
+		if (res < 0)
 		{
+			OAK_ALERT("pKeyboard->SetProperty failed with error");
 			return false;
 		}
 
-		if (FAILED(pMouse->SetDataFormat(&c_dfDIMouse2)))
+		res = pMouse->SetDataFormat(&c_dfDIMouse2);
+		
+		if (res < 0)
 		{
+			OAK_ALERT("pMouse->SetDataFormat failed with error");
 			return false;
 		}
 
-		pMouse->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+		if (hwnd != 0)
+		{
+			res = pMouse->SetCooperativeLevel(hwnd, DISCL_EXCLUSIVE | DISCL_FOREGROUND);
+
+			if (res < 0)
+			{
+				OAK_ALERT("pMouse->SetCooperativeLevel failed with error");
+				return false;
+			}
+		}
 
 		dipdw.diph.dwSize = sizeof(DIPROPDWORD);
 		dipdw.diph.dwHeaderSize = sizeof(DIPROPHEADER);
@@ -121,8 +159,11 @@ namespace Oak
 		dipdw.diph.dwHow = DIPH_DEVICE;
 		dipdw.dwData = 16;
 
-		if (FAILED(pMouse->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph)))
+		res = pMouse->SetProperty(DIPROP_BUFFERSIZE, &dipdw.diph);
+
+		if (res < 0)
 		{
+			OAK_ALERT("pMouse->SetProperty failed with error");
 			return false;
 		}
 
@@ -191,6 +232,11 @@ namespace Oak
 
 				reader.LeaveBlock();
 			}
+		}
+		else
+		{
+			OAK_ALERT("Controls: can't load name_haliases");
+			return false;
 		}
 
 		return true;

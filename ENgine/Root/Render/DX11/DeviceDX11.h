@@ -77,10 +77,10 @@ namespace Oak
 
 		static DeviceDX11* instance;
 
-		void  SetVideoMode(int wgt, int hgt, void* data) override;
+		bool SetVideoMode(int wgt, int hgt, void* data) override;
 		void* GetBackBuffer() override;
-		int   GetWidth() override;
-		int   GetHeight() override;
+		int GetWidth() override;
+		int GetHeight() override;
 		float GetAspect() override;
 
 		void Clear(bool renderTarget, Color color, bool zbuffer, float zValue) override;
