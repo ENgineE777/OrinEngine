@@ -1,20 +1,24 @@
 #pragma once
 
 #include "Root/Root.h"
+#include "FreeCamera.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
 namespace Oak
 {
-    class Editor : Object
-    {
-        TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
+	class Editor : Object
+	{
+		HWND hwnd;
+		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
+		FreeCamera freeCamera;
 
-    public:
+	public:
 
-        void Init(HWND hwnd);
-        void Update();
-        void Render(float dt);
-    };
+		void Init(HWND hwnd);
+		void Update();
+		void Render(float dt);
+		void OnMouseMove(int msx, int msy);
+	};
 }

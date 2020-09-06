@@ -150,6 +150,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
+    <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
@@ -200,7 +202,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp" />

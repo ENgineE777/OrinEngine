@@ -15,6 +15,7 @@
 #define MAX_LOADSTRING 100
 
 bool running = true;
+Oak::Editor editor;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -22,6 +23,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         case WM_COMMAND:
         {
+        }
+        break;
+        case WM_MOUSEMOVE:
+        {
+            editor.OnMouseMove(LOWORD(lParam), HIWORD(lParam));
         }
         break;
         case WM_DESTROY:
@@ -68,7 +74,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return FALSE;
     }
 
-    Oak::Editor editor;
     editor.Init(hWnd);
 
     ShowWindow(hWnd, nCmdShow);

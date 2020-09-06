@@ -50,6 +50,9 @@
     <Filter Include="ENgine\Platform\Win">
       <UniqueIdentifier>{be6a7cfb-edf8-4fee-be24-aa9bc793325d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Controls">
+      <UniqueIdentifier>{7987f5a7-6656-4ee5-b28a-9a10fbc0a48b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -163,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp">
       <Filter>ENgine\Platform\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp">
+      <Filter>ENgine\Root\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp">
+      <Filter>ENgine\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +317,12 @@
       <Filter>ENgine\Root\Fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h">
+      <Filter>ENgine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h">
+      <Filter>ENgine\Root\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h">
       <Filter>ENgine\Editor</Filter>
     </ClInclude>
   </ItemGroup>
