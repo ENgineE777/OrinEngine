@@ -6,6 +6,14 @@
 #define DELETE_PTR(p) if (p) { delete p; p = nullptr; }
 #define DELETE_ARRAY(p) if (p) { delete[] p; p = nullptr; }
 
+
+
+#define OAK_ASSERT(expression, description) \
+	if (!(expression))\
+	{\
+		MessageBoxA(nullptr, description, "Assert", MB_ICONERROR);\
+	}
+
 #ifdef EDITOR
 #define MESSAGE_BOX(caption, text) MessageBox(nullptr, text, caption, MB_ICONERROR);
 #else
