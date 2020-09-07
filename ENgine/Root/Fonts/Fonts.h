@@ -24,18 +24,10 @@ namespace Oak
 
 		Font* LoadFont(const char* file_name, bool is_bold, bool is_italic, int height);
 
-		class FontProgram : public Program
-		{
-		public:
-			virtual const char* GetVsName() { return "font_vs.shd"; };
-			virtual const char* GetPsName() { return "font_ps.shd"; };
-
-			virtual void ApplyStates();
-		};
-
-		Fonts();
-
-		void DeleteRes(FontRes* res);
+		bool Init();
 		void Release();
+
+	protected:
+		void DeleteRes(FontRes* res);
 	};
 }

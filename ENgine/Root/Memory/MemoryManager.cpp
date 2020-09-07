@@ -90,7 +90,14 @@ namespace Oak
 		allocation->prev = nullptr;
 		allocation->next = nullptr;
 
-		usedMemory += size;
+		if (file)
+		{
+			trackedUsedMemory += size;
+		}
+		else
+		{
+			untrackedUsedMemory += size;
+		}
 
 		if (head == nullptr)
 		{
@@ -113,7 +120,14 @@ namespace Oak
 
 		Allocation* allocation = (Allocation*)ptr;
 
-		usedMemory -= allocation->size;
+		if (allocation->file)
+		{
+			trackedUsedMemory -= allocation->size;
+		}
+		else
+		{
+			untrackedUsedMemory -= allocation->size;
+		}
 
 		Allocation* prev = allocation->prev;
 		Allocation* next = allocation->next;
@@ -148,11 +162,10 @@ namespace Oak
 	{
 		Allocation* allocation = head;
 
-		float usedMB = (float)usedMemory / (1024 * 1024);
+		float trackedMB = (float)trackedUsedMemory / (1024 * 1024);
+		float untrackedMB = (float)untrackedUsedMemory / (1024 * 1024);
 
-		root.Log("Memory", "Total used memory: %4.3f MB", usedMB);
-
-		int index = 0;
+		root.Log("Memory", "Total used memory: %4.3f MB (tracked %4.3f MB / untracked %4.3f MB)", (trackedMB + untrackedMB), trackedMB, untrackedMB);
 
 		while (allocation)
 		{

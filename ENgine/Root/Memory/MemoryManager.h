@@ -18,7 +18,8 @@ namespace Oak
 		Allocation* head = nullptr;
 		Allocation* tail = nullptr;
 
-		size_t usedMemory = 0;
+		size_t trackedUsedMemory = 0;
+		size_t untrackedUsedMemory = 0;
 
 	public:
 

@@ -6,9 +6,9 @@ namespace Oak
 	void DebugTriangles2D::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float2, ElementSemantic::Position, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
-		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
+		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc, _FL_);
 
-		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex));
+		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex), _FL_);
 
 		prg = root.render.GetProgram("DbgTriangle2D");
 
@@ -79,5 +79,9 @@ namespace Oak
 	void DebugTriangles2D::Release()
 	{
 		RELEASE(vbuffer)
+		RELEASE(vdecl)
+		RELEASE(prg)
+
+		delete this;
 	}
 }

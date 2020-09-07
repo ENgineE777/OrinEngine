@@ -6,9 +6,9 @@ namespace Oak
 	void DebugTriangles::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float3, ElementSemantic::Texcoord, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
-		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc);
+		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc, _FL_);
 
-		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex));
+		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex), _FL_);
 
 		prg = root.render.GetProgram("DbgTriangle");
 
@@ -99,5 +99,9 @@ namespace Oak
 	void DebugTriangles::Release()
 	{
 		RELEASE(vbuffer)
+		RELEASE(vdecl)
+		RELEASE(prg)
+
+		delete this;
 	}
 }

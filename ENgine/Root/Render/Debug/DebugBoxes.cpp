@@ -6,9 +6,9 @@ namespace Oak
 	void DebugBoxes::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float3, ElementSemantic::Texcoord, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
-		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc);
+		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc, _FL_);
 
-		vbuffer = root.render.GetDevice()->CreateBuffer(24, sizeof(Vertex));
+		vbuffer = root.render.GetDevice()->CreateBuffer(24, sizeof(Vertex), _FL_);
 
 		Vertex* vertices = (Vertex*)vbuffer->Lock();
 
@@ -70,7 +70,7 @@ namespace Oak
 
 		vbuffer->Unlock();
 
-		ibuffer = root.render.GetDevice()->CreateBuffer(12 * 3, sizeof(int));
+		ibuffer = root.render.GetDevice()->CreateBuffer(12 * 3, sizeof(int), _FL_);
 
 		int* indices = (int*)ibuffer->Lock();
 
@@ -142,5 +142,9 @@ namespace Oak
 	{
 		RELEASE(vbuffer)
 		RELEASE(ibuffer)
+		RELEASE(vdecl)
+		RELEASE(prg)
+
+		delete this;
 	}
 }

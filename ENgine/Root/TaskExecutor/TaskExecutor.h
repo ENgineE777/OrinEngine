@@ -41,15 +41,15 @@ namespace Oak
 
 			eastl::vector<TaskList*> lists;
 
-			bool active;
-			int changeMark;
+			bool active = true;
+			int changeMark = 0;
 
 			TaskList* FindTaskList(int level);
 			static void ExecuteList(TaskList* list, float dt);
 
 		public:
 
-			SingleTaskPool();
+			~SingleTaskPool();
 
 			void SetActive(bool set);
 			virtual void Execute(float dt);
@@ -86,7 +86,7 @@ namespace Oak
 
 			void AddFilter(int level);
 
-			SingleTaskPool* AddTaskPool();
+			SingleTaskPool* AddTaskPool(const char* file, int line);
 
 			void DelTaskPool(SingleTaskPool* pool);
 
@@ -95,8 +95,8 @@ namespace Oak
 			void ExecutePool(int level, float dt);
 		};
 
-		SingleTaskPool* CreateSingleTaskPool();
+		SingleTaskPool* CreateSingleTaskPool(const char* file, int line);
 
-		GroupTaskPool* CreateGroupTaskPool();
+		GroupTaskPool* CreateGroupTaskPool(const char* file, int line);
 	};
 }

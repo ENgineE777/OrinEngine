@@ -30,7 +30,7 @@ namespace Oak
 
 	void Font::Release()
 	{
-		//res->DecRef();
+		RELEASE(res)
 		delete this;
 	}
 }

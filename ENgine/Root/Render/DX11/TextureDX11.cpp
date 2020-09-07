@@ -179,7 +179,7 @@ namespace Oak
 
 	void TextureDX11::Release()
 	{
-		if (!root.render.TexRefIsEmpty(this))
+		if (!root.render.TextureRefIsEmpty(this))
 		{
 			return;
 		}

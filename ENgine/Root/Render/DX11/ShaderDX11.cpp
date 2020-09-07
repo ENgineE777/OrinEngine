@@ -213,6 +213,9 @@ namespace Oak
 
 	void ShaderDX11::Release()
 	{
+		RELEASE(vshader);
+		RELEASE(pshader);
 
+		delete this;
 	}
 }

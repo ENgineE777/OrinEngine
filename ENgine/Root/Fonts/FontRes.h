@@ -56,6 +56,7 @@ namespace Oak
 		bool need_update_tex;
 		FileInMemory font_fb;
 
+		int refCounter = 0;
 		eastl::map<int, Glyph> glyphs;
 
 	public:

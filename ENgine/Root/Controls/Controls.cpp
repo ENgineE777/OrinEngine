@@ -1113,6 +1113,8 @@ namespace Oak
 
 	void Controls::Release()
 	{
-
+		RELEASE(pKeyboard);
+		RELEASE(pMouse);
+		RELEASE(pDI);
 	}
 }

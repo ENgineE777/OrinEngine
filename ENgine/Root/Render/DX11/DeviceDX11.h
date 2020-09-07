@@ -88,14 +88,14 @@ namespace Oak
 
 		void SetProgram(Program* program) override;
 
-		VertexDecl* CreateVertexDecl(int count, VertexDecl::ElemDesc* elems) override;
+		VertexDecl* CreateVertexDecl(int count, VertexDecl::ElemDesc* elems, const char* file, int line) override;
 		void SetVertexDecl(VertexDecl* vdecl) override;
 
-		DataBuffer* CreateBuffer(int count, int stride) override;
+		DataBuffer* CreateBuffer(int count, int stride, const char* file, int line) override;
 		void SetVertexBuffer(int slot, DataBuffer* buffer) override;
 		void SetIndexBuffer(DataBuffer* buffer) override;
 
-		Texture* CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp) override;
+		Texture* CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp, const char* file, int line) override;
 
 		int GetPrimitiveType(PrimitiveTopology type);
 		int CalcPrimCount(PrimitiveTopology type, int primCount);

@@ -6,9 +6,9 @@ namespace Oak
 	void DebugLines::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 }, { ElementType::Ubyte4, ElementSemantic::Color, 0 } };
-		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
+		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc, _FL_);
 
-		buffer = root.render.GetDevice()->CreateBuffer(MaxSize * 2, sizeof(Vertex));
+		buffer = root.render.GetDevice()->CreateBuffer(MaxSize * 2, sizeof(Vertex), _FL_);
 
 		prg = root.render.GetProgram("DbgLine");
 		prg_depth = root.render.GetProgram("DbgLineWithDepth");
@@ -166,5 +166,10 @@ namespace Oak
 	void DebugLines::Release()
 	{
 		RELEASE(buffer)
+		RELEASE(vdecl)
+		RELEASE(prg)
+		RELEASE(prg_depth)
+
+		delete this;
 	}
 }

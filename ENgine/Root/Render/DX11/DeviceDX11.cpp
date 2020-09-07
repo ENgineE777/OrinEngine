@@ -368,9 +368,9 @@ namespace Oak
 		}
 	}
 
-	VertexDecl* DeviceDX11::CreateVertexDecl(int count, VertexDecl::ElemDesc* elems)
+	VertexDecl* DeviceDX11::CreateVertexDecl(int count, VertexDecl::ElemDesc* elems, const char* file, int line)
 	{
-		return NEW VertexDeclDX11(count, elems);
+		return new(file, line) VertexDeclDX11(count, elems);
 	}
 
 	void DeviceDX11::SetVertexDecl(VertexDecl* vdecl)
@@ -382,9 +382,9 @@ namespace Oak
 		}
 	}
 
-	DataBuffer* DeviceDX11::CreateBuffer(int count, int stride)
+	DataBuffer* DeviceDX11::CreateBuffer(int count, int stride, const char* file, int line)
 	{
-		return NEW DataBufferDX11(count, stride);
+		return new(file, line) DataBufferDX11(count, stride);
 	}
 
 	void DeviceDX11::SetVertexBuffer(int slot, DataBuffer* buffer)
@@ -424,9 +424,9 @@ namespace Oak
 		return NEW ShaderDX11(type, name);
 	}
 
-	Texture* DeviceDX11::CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp)
+	Texture* DeviceDX11::CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp, const char* file, int line)
 	{
-		return NEW TextureDX11(w, h, f, l, rt, tp);
+		return new(file, line) TextureDX11(w, h, f, l, rt, tp);
 	}
 
 	int DeviceDX11::GetPrimitiveType(PrimitiveTopology type)
@@ -844,6 +844,10 @@ namespace Oak
 
 	void DeviceDX11::Release()
 	{
+		delete blend_desc;
+		delete ds_desc;
+		delete raster_desc;
+
 		delete this;
 	}
 }

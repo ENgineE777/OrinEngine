@@ -105,15 +105,14 @@ namespace Oak
 
 		stbtt_PackBegin(context, tex_buffer, tex_w, tex_h, 0, 1, nullptr);
 
-		tex = root.render.GetDevice()->CreateTexture(tex_w, tex_h, TextureFormat::FMT_A8, 1, false, TextureType::Tex2D);
+		tex = root.render.GetDevice()->CreateTexture(tex_w, tex_h, TextureFormat::FMT_A8, 1, false, TextureType::Tex2D, _FL_);
 
 		return true;
 	}
 
 	Font* FontRes::CreateReference()
 	{
-		//AddRef();
-
+		refCounter++;
 		return NEW Font(this);
 	}
 
@@ -360,12 +359,22 @@ namespace Oak
 
 	void FontRes::Release()
 	{
-		DELETE_PTR(context)
+		refCounter--;
+
+		if (refCounter > 0)
+		{
+			return;
+		}
+
+		root.fonts.DeleteRes(this);
+
 		if (tex_buffer)
 		{
-			free(tex_buffer);
+			delete[] tex_buffer;
 			stbtt_PackEnd(context);
 		}
+
+		DELETE_PTR(context)
 
 		RELEASE(tex)
 

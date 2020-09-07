@@ -77,5 +77,18 @@ namespace Oak
 			if (pshader) pshader->SetTexture(param, texture);
 		}
 	}
+
+	void Program::Release()
+	{
+		if (!root.render.ProgramRefIsEmpty(this))
+		{
+			return;
+		}
+
+		RELEASE(vshader)
+		RELEASE(pshader)
+
+		delete this;
+	}
 }
 

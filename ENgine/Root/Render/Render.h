@@ -27,6 +27,7 @@ namespace Oak
 
 	class Render
 	{
+		friend class Program;
 		friend class TextureDX11;
 		friend class TextureGLES;
 
@@ -36,13 +37,19 @@ namespace Oak
 
 		struct TextureRef
 		{
-			int count;
-			Texture* texture;
+			int refCount = 0;
+			Texture* texture = nullptr;
 		};
 
 		eastl::map<eastl::string, TextureRef> textures;
 
-		eastl::map<eastl::string, Program*> programs;
+		struct ProgramRef
+		{
+			int refCount = 0;
+			Program* program = nullptr;
+		};
+
+		eastl::map<eastl::string, ProgramRef> programs;
 
 		class DebugLines*       lines;
 		class DebugSpheres*     spheres;
@@ -75,7 +82,7 @@ namespace Oak
 
 		Texture* LoadTexture(const char* name);
 
-		TaskExecutor::SingleTaskPool* AddTaskPool();
+		TaskExecutor::SingleTaskPool* AddTaskPool(const char* file, int line);
 
 		void DelTaskPool(TaskExecutor::SingleTaskPool* pool);
 		void AddExecutedLevelPool(int level);
@@ -100,6 +107,7 @@ namespace Oak
 
 	protected:
 		void CalcTrans();
-		bool TexRefIsEmpty(Texture* texture);
+		bool TextureRefIsEmpty(Texture* texture);
+		bool ProgramRefIsEmpty(Program* program);
 	};
 }

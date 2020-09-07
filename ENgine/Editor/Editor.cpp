@@ -13,7 +13,7 @@ namespace Oak
 
 		root.render.AddExecutedLevelPool(1);
 
-		renderTaskPool = root.render.AddTaskPool();
+		renderTaskPool = root.render.AddTaskPool(_FL_);
 		renderTaskPool->AddTask(1, this, (Object::Delegate) & Editor::Render);
 
 		if (!root.render.GetDevice()->SetVideoMode(800, 600, &hwnd))
@@ -64,6 +64,7 @@ namespace Oak
 
 	void Editor::Release()
 	{
+		root.render.DelTaskPool(renderTaskPool);
 		root.Release();
 	}
 }

@@ -31,8 +31,8 @@ namespace Oak
 		device = NEW DeviceDX11();
 		#endif
 
-		groupTaskPool = root.taskExecutor.CreateGroupTaskPool();
-		debugTaskPool = groupTaskPool->AddTaskPool();
+		groupTaskPool = root.taskExecutor.CreateGroupTaskPool(_FL_);
+		debugTaskPool = groupTaskPool->AddTaskPool(_FL_);
 
 		if (!device->Init(external_device))
 		{
@@ -64,7 +64,7 @@ namespace Oak
 		font = NEW DebugFont();
 		font->Init(debugTaskPool);
 
-		white_tex = device->CreateTexture(2, 2, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D);
+		white_tex = device->CreateTexture(2, 2, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
 
 		uint8_t white_tex_data[4 * 4];
 		memset(white_tex_data, 255, 16);
@@ -108,17 +108,23 @@ namespace Oak
 	{
 		if (programs.count(name) > 0)
 		{
-			return programs[name];
+			ProgramRef& ref = programs[name];
+
+			ref.refCount++;
+			return ref.program;
 		}
 
 		auto decls = ClassFactoryProgram::Decls();
-		Program * prg = ClassFactoryProgram::Create(name);
-		prg->Init();
-		device->PrepareProgram(prg);
+		Program * program = ClassFactoryProgram::Create(name);
+		program->Init();
+		device->PrepareProgram(program);
 
-		programs[name] = prg;
+		ProgramRef& ref = programs[name];
 
-		return prg;
+		ref.refCount = 1;
+		ref.program = program;
+
+		return program;
 	}
 
 	Texture* Render::LoadTexture(const char* name)
@@ -127,7 +133,7 @@ namespace Oak
 		{
 			TextureRef& ref = textures[name];
 
-			ref.count++;
+			ref.refCount++;
 			return ref.texture;
 		}
 
@@ -145,7 +151,7 @@ namespace Oak
 		int height;
 		uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
 
-		Texture* texture = device->CreateTexture(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D);
+		Texture* texture = device->CreateTexture(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
 		texture->name = name;
 
 		texture->Update(0, 0, data, width * 4);
@@ -156,13 +162,13 @@ namespace Oak
 
 		TextureRef& ref = textures[name];
 
-		ref.count = 1;
+		ref.refCount = 1;
 		ref.texture = texture;
 
 		return texture;
 	}
 
-	bool Render::TexRefIsEmpty(Texture* texture)
+	bool Render::TextureRefIsEmpty(Texture* texture)
 	{
 		typedef eastl::map<eastl::string, TextureRef>::iterator it_type;
 
@@ -170,11 +176,34 @@ namespace Oak
 		{
 			if (iterator->second.texture == texture)
 			{
-				iterator->second.count--;
+				iterator->second.refCount--;
 
-				if (iterator->second.count == 0)
+				if (iterator->second.refCount == 0)
 				{
 					textures.erase(iterator);
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	bool Render::ProgramRefIsEmpty(Program* program)
+	{
+		typedef eastl::map<eastl::string, ProgramRef>::iterator it_type;
+
+		for (it_type iterator = programs.begin(); iterator != programs.end(); iterator++)
+		{
+			if (iterator->second.program == program)
+			{
+				iterator->second.refCount--;
+
+				if (iterator->second.refCount == 0)
+				{
+					programs.erase(iterator);
 					return true;
 				}
 
@@ -195,9 +224,9 @@ namespace Oak
 		groupTaskPool->ExecutePool(level, dt);
 	}
 
-	TaskExecutor::SingleTaskPool* Render::AddTaskPool()
+	TaskExecutor::SingleTaskPool* Render::AddTaskPool(const char* file, int line)
 	{
-		return groupTaskPool->AddTaskPool();
+		return groupTaskPool->AddTaskPool(file, line);
 	}
 
 	void Render::DelTaskPool(TaskExecutor::SingleTaskPool* pool)
@@ -326,6 +355,18 @@ namespace Oak
 
 	void Render::Release()
 	{
+		groupTaskPool->DelTaskPool(debugTaskPool);
+		delete groupTaskPool;
+
+		RELEASE(white_tex)
+		RELEASE(lines)
+		RELEASE(spheres)
+		RELEASE(boxes)
+		RELEASE(triangles)
+		RELEASE(font)
+		RELEASE(sprites)
+		RELEASE(triangles2D)
+
 		device->Release();
 	}
 }

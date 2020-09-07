@@ -90,9 +90,8 @@ namespace Oak
 
 	void DebugFont::Release()
 	{
-		if (font)
-		{
-			RELEASE(font)
-		}
+		RELEASE(font)
+
+		delete this;
 	}
 }

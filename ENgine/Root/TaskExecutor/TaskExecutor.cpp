@@ -3,10 +3,12 @@
 
 namespace Oak
 {
-	TaskExecutor::SingleTaskPool::SingleTaskPool()
+	TaskExecutor::SingleTaskPool::~SingleTaskPool()
 	{
-		active = true;
-		changeMark = 0;
+		for (int j = 0; j < lists.size(); j++)
+		{
+			delete lists[j];
+		}
 	}
 
 	void TaskExecutor::SingleTaskPool::SetActive(bool set)
@@ -207,9 +209,9 @@ namespace Oak
 		}
 	}
 
-	TaskExecutor::SingleTaskPool* TaskExecutor::GroupTaskPool::AddTaskPool()
+	TaskExecutor::SingleTaskPool* TaskExecutor::GroupTaskPool::AddTaskPool(const char* file, int line)
 	{
-		SingleTaskPool* pool = NEW SingleTaskPool();
+		SingleTaskPool* pool = new(file, line) SingleTaskPool();
 
 		taskPools.push_back(pool);
 
@@ -223,6 +225,7 @@ namespace Oak
 			if (taskPools[i] == pool)
 			{
 				taskPools.erase(taskPools.begin() + i);
+				delete pool;
 				return;
 			}
 		}
@@ -288,13 +291,13 @@ namespace Oak
 		}
 	}
 
-	TaskExecutor::SingleTaskPool* TaskExecutor::CreateSingleTaskPool()
+	TaskExecutor::SingleTaskPool* TaskExecutor::CreateSingleTaskPool(const char* file, int line)
 	{
-		return NEW SingleTaskPool();
+		return new(file, line) SingleTaskPool();
 	}
 
-	TaskExecutor::GroupTaskPool* TaskExecutor::CreateGroupTaskPool()
+	TaskExecutor::GroupTaskPool* TaskExecutor::CreateGroupTaskPool(const char* file, int line)
 	{
-		return NEW GroupTaskPool();
+		return new(file, line) GroupTaskPool();
 	}
 }

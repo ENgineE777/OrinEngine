@@ -102,12 +102,12 @@ namespace Oak
 		virtual void Clear(bool renderTarget, Color color, bool zbuffer, float zValue) = 0;
 		virtual void Present() = 0;
 		virtual void SetProgram(Program* program) = 0;
-		virtual VertexDecl* CreateVertexDecl(int count, VertexDecl::ElemDesc* elems) = 0;
+		virtual VertexDecl* CreateVertexDecl(int count, VertexDecl::ElemDesc* elems, const char* file, int line) = 0;
 		virtual void SetVertexDecl(VertexDecl* vdecl) = 0;
-		virtual DataBuffer* CreateBuffer(int count, int stride) = 0;
+		virtual DataBuffer* CreateBuffer(int count, int stride, const char* file, int line) = 0;
 		virtual void SetVertexBuffer(int slot, DataBuffer* buffer) = 0;
 		virtual void SetIndexBuffer(DataBuffer* buffer) = 0;
-		virtual Texture* CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp) = 0;
+		virtual Texture* CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp, const char* file, int line) = 0;
 		virtual void Draw(PrimitiveTopology prim, int startVertex, int primCount) = 0;
 		virtual void DrawIndexed(PrimitiveTopology prim, int startVertex, int startIndex, int primCount) = 0;
 		virtual void SetAlphaBlend(bool enable) = 0;

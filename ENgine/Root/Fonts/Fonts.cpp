@@ -3,32 +3,37 @@
 
 namespace Oak
 {
-	CLASSREGEX(Program, FontProgram, Fonts::FontProgram, "FontProgram")
-	CLASSREGEX_END(Program, FontProgram)
-
-	void Fonts::FontProgram::ApplyStates()
+	class FontProgram : public Program
 	{
-		root.render.GetDevice()->SetAlphaBlend(true);
-		root.render.GetDevice()->SetDepthWriting(false);
-		root.render.GetDevice()->SetDepthTest(false);
+	public:
+		virtual const char* GetVsName() { return "font_vs.shd"; };
+		virtual const char* GetPsName() { return "font_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetDepthTest(false);
+		}
 	};
 
-	Fonts::Fonts()
+	CLASSREGEX(Program, FontProgram, FontProgram, "FontProgram")
+	CLASSREGEX_END(Program, FontProgram)
+
+	bool Fonts::Init()
 	{
+		fntProg = root.render.GetProgram("FontProgram");
+
+		vbuffer = root.render.GetDevice()->CreateBuffer(6 * 1000, sizeof(Fonts::FontVertex), _FL_);
+
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 }, { ElementType::Float2, ElementSemantic::Texcoord, 0 } };
+		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc, _FL_);
+
+		return true;
 	}
 
 	Font* Fonts::LoadFont(const char* file_name, bool is_bold, bool is_italic, int height)
 	{
-		if (!vbuffer)
-		{
-			fntProg = root.render.GetProgram("FontProgram");
-
-			vbuffer = root.render.GetDevice()->CreateBuffer(6 * 1000, sizeof(Fonts::FontVertex));
-
-			VertexDecl::ElemDesc desc[] = {{ ElementType::Float3, ElementSemantic::Position, 0 }, { ElementType::Float2, ElementSemantic::Texcoord, 0 }};
-			vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc);
-		}
-
 		if (!file_name[0]) return nullptr;
 
 		if (height > 100)
@@ -88,11 +93,23 @@ namespace Oak
 
 	void Fonts::DeleteRes(FontRes* res)
 	{
-		//fonts.Delete(res,false);
+		typedef eastl::map<eastl::string, FontRes*>::iterator it_type;
+
+		for (it_type iterator = fonts.begin(); iterator != fonts.end(); iterator++)
+		{
+			if (iterator->second == res)
+			{
+				fonts.erase(iterator);
+				return;
+			}
+		}
 	}
 
 	void Fonts::Release()
 	{
+		RELEASE(fntProg)
+		RELEASE(vbuffer)
+		RELEASE(vdecl)
 	}
 }
 

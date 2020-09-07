@@ -34,6 +34,8 @@ namespace Oak
 		void SetVector(ShaderType shader_type, const char* param, Math::Vector4* v, int count);
 		void SetMatrix(ShaderType shader_type, const char* param, Math::Matrix* mat, int count);
 		void SetTexture(ShaderType shader_type, const char* param, Texture* texture);
+
+		void Release();
 	};
 
 	CLASSFACTORYDEF(Program)

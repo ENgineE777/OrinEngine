@@ -60,6 +60,11 @@ namespace Oak
 			return false;
 		}
 
+		if (!fonts.Init())
+		{
+			return false;
+		}
+
 		StringUtils::Init();
 
 		Timer::CountDeltaTime();
@@ -121,6 +126,7 @@ namespace Oak
 
 	void Root::Release()
 	{
+		fonts.Release();
 		render.Release();
 		controls.Release();
 
