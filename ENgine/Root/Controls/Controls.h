@@ -181,6 +181,8 @@ namespace Oak
 		void TouchUpdate(int index, int x, int y);
 		void TouchEnd(int index);
 
-		void  Update(float dt);
+		void Update(float dt);
+
+		void Release();
 	};
 }

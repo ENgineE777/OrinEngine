@@ -14,17 +14,17 @@ namespace Oak
 	{
 		instance = this;
 
-		blend_desc = new D3D11_BLEND_DESC();
+		blend_desc = NEW D3D11_BLEND_DESC();
 		ZeroMemory(blend_desc, sizeof(D3D11_BLEND_DESC));
 		blend_state = nullptr;
 		blend_changed = true;
 
-		ds_desc = new D3D11_DEPTH_STENCIL_DESC();
+		ds_desc = NEW D3D11_DEPTH_STENCIL_DESC();
 		ZeroMemory(ds_desc, sizeof(D3D11_DEPTH_STENCIL_DESC));
 		ds_state = nullptr;
 		ds_changed = true;
 
-		raster_desc = new D3D11_RASTERIZER_DESC();
+		raster_desc = NEW D3D11_RASTERIZER_DESC();
 		ZeroMemory(raster_desc, sizeof(D3D11_RASTERIZER_DESC));
 		raster_state = nullptr;
 		raster_changed = true;
@@ -370,7 +370,7 @@ namespace Oak
 
 	VertexDecl* DeviceDX11::CreateVertexDecl(int count, VertexDecl::ElemDesc* elems)
 	{
-		return new VertexDeclDX11(count, elems);
+		return NEW VertexDeclDX11(count, elems);
 	}
 
 	void DeviceDX11::SetVertexDecl(VertexDecl* vdecl)
@@ -384,7 +384,7 @@ namespace Oak
 
 	DataBuffer* DeviceDX11::CreateBuffer(int count, int stride)
 	{
-		return new DataBufferDX11(count, stride);
+		return NEW DataBufferDX11(count, stride);
 	}
 
 	void DeviceDX11::SetVertexBuffer(int slot, DataBuffer* buffer)
@@ -421,12 +421,12 @@ namespace Oak
 
 	Shader* DeviceDX11::CreateShader(ShaderType type, const char* name)
 	{
-		return new ShaderDX11(type, name);
+		return NEW ShaderDX11(type, name);
 	}
 
 	Texture* DeviceDX11::CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp)
 	{
-		return new TextureDX11(w, h, f, l, rt, tp);
+		return NEW TextureDX11(w, h, f, l, rt, tp);
 	}
 
 	int DeviceDX11::GetPrimitiveType(PrimitiveTopology type)

@@ -33,7 +33,7 @@ namespace Oak
 		need_update_tex = false;
 		tex_buffer = nullptr;
 
-		context = new stbtt_pack_context();
+		context = NEW stbtt_pack_context();
 	}
 
 	FontRes::Glyph* FontRes::GenerateChar(int ch)
@@ -100,7 +100,7 @@ namespace Oak
 		cur_tex_y = 1;
 		cur_tex_row_height = 0;
 
-		tex_buffer = new uint8_t[tex_w * tex_h];
+		tex_buffer = NEW uint8_t[tex_w * tex_h];
 		memset(tex_buffer, 0, tex_w * tex_h);
 
 		stbtt_PackBegin(context, tex_buffer, tex_w, tex_h, 0, 1, nullptr);
@@ -114,7 +114,7 @@ namespace Oak
 	{
 		//AddRef();
 
-		return new Font(this);
+		return NEW Font(this);
 	}
 
 	FontRes::Glyph* FontRes::GetGlyph(int code)

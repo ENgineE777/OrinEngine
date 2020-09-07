@@ -61,4 +61,9 @@ namespace Oak
 	{
 		root.controls.OverrideMousePos(msx, msy);
 	}
+
+	void Editor::Release()
+	{
+		root.Release();
+	}
 }

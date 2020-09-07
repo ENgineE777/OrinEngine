@@ -62,7 +62,7 @@ namespace Oak
 
 		if (!list)
 		{
-			lists.push_back(new TaskList());
+			lists.push_back(NEW TaskList());
 			list = lists[lists.size() - 1];
 			list->level = level;
 
@@ -209,7 +209,7 @@ namespace Oak
 
 	TaskExecutor::SingleTaskPool* TaskExecutor::GroupTaskPool::AddTaskPool()
 	{
-		SingleTaskPool* pool = new SingleTaskPool();
+		SingleTaskPool* pool = NEW SingleTaskPool();
 
 		taskPools.push_back(pool);
 
@@ -290,11 +290,11 @@ namespace Oak
 
 	TaskExecutor::SingleTaskPool* TaskExecutor::CreateSingleTaskPool()
 	{
-		return new SingleTaskPool();
+		return NEW SingleTaskPool();
 	}
 
 	TaskExecutor::GroupTaskPool* TaskExecutor::CreateGroupTaskPool()
 	{
-		return new GroupTaskPool();
+		return NEW GroupTaskPool();
 	}
 }

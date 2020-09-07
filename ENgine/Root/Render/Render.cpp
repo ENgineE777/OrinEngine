@@ -28,7 +28,7 @@ namespace Oak
 	bool Render::Init(const char* device_name, void* external_device)
 	{
 		#ifdef PLATFORM_WIN
-		device = new DeviceDX11();
+		device = NEW DeviceDX11();
 		#endif
 
 		groupTaskPool = root.taskExecutor.CreateGroupTaskPool();
@@ -43,25 +43,25 @@ namespace Oak
 		device->SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgInvSrcAlpha);
 		device->SetDepthTest(true);
 
-		spheres = new DebugSpheres();
+		spheres = NEW DebugSpheres();
 		spheres->Init(debugTaskPool);
 
-		boxes = new DebugBoxes();
+		boxes = NEW DebugBoxes();
 		boxes->Init(debugTaskPool);
 
-		triangles = new DebugTriangles();
+		triangles = NEW DebugTriangles();
 		triangles->Init(debugTaskPool);
 
-		lines = new DebugLines();
+		lines = NEW DebugLines();
 		lines->Init(debugTaskPool);
 
-		sprites = new DebugSprites();
+		sprites = NEW DebugSprites();
 		sprites->Init(debugTaskPool);
 
-		triangles2D = new DebugTriangles2D();
+		triangles2D = NEW DebugTriangles2D();
 		triangles2D->Init(debugTaskPool);
 
-		font = new DebugFont();
+		font = NEW DebugFont();
 		font->Init(debugTaskPool);
 
 		white_tex = device->CreateTexture(2, 2, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D);

@@ -35,8 +35,6 @@ namespace Oak
 
 		Fonts();
 
-		bool Init();
-
 		void DeleteRes(FontRes* res);
 		void Release();
 	};

@@ -1110,4 +1110,9 @@ namespace Oak
 		}
 	#endif
 	}
+
+	void Controls::Release()
+	{
+
+	}
 }

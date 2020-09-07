@@ -65,6 +65,18 @@
     <Filter Include="Libs\eastl\source">
       <UniqueIdentifier>{92563e23-aef1-46d4-8091-e599f0051123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Memory">
+      <UniqueIdentifier>{a6416540-89d9-4bb1-992a-ddf2a986d3ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\jemalloc">
+      <UniqueIdentifier>{d5ea55af-219e-4ff8-9cce-6f306a1dae4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\jemalloc\include">
+      <UniqueIdentifier>{a77d28a9-33c3-4c9e-8ce6-461a389ae69c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libs\jemalloc\src">
+      <UniqueIdentifier>{93707235-edbe-4c82-8b1a-27306be09667}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -211,6 +223,99 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Libs\eastl\source\thread_support.cpp">
       <Filter>Libs\eastl\source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Memory\MemoryManager.cpp">
+      <Filter>ENgine\Root\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\arena.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\background_thread.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\base.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\bin.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\bitmap.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\ckh.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\ctl.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\div.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent_dss.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent_mmap.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\hash.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\hooks.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\jemalloc.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\large.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\log.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\malloc_io.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\mutex.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\mutex_pool.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\nstime.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\pages.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\prng.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\prof.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\rtree.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\stats.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\sz.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\tcache.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\ticker.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\tsd.c">
+      <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\witness.c">
+      <Filter>Libs\jemalloc\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -628,5 +733,58 @@
     <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\tuple_vector.h">
       <Filter>Libs\eastl\include\bonus</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h">
+      <Filter>ENgine\Root\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle_jet.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos_jet.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h">
+      <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.sh">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h.in">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h.in">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle.sh">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h.in">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.sh">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h.in">
+      <Filter>Libs\jemalloc\include</Filter>
+    </None>
   </ItemGroup>
 </Project>

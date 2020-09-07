@@ -118,10 +118,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;PLATFORM_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,10 +135,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;PLATFORM_WIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,6 +160,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Font.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.h" />
@@ -284,6 +285,15 @@
     <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_set.h" />
     <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\version.h" />
     <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\weak_ptr.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle_jet.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos_jet.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.h" />
+    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h" />
     <ClInclude Include="..\..\..\Libs\vjson\block_allocator.h" />
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
     <ClInclude Include="Resource.h" />
@@ -301,6 +311,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\Font.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Memory\MemoryManager.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.cpp" />
@@ -331,6 +342,36 @@
     <ClCompile Include="..\..\..\Libs\eastl\source\red_black_tree.cpp" />
     <ClCompile Include="..\..\..\Libs\eastl\source\string.cpp" />
     <ClCompile Include="..\..\..\Libs\eastl\source\thread_support.cpp" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\arena.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\background_thread.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\base.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\bin.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\bitmap.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\ckh.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\ctl.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\div.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent_dss.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent_mmap.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\hash.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\hooks.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\jemalloc.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\large.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\log.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\malloc_io.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\mutex.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\mutex_pool.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\nstime.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\pages.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\prng.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\prof.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\rtree.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\stats.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\sz.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\tcache.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\ticker.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\tsd.c" />
+    <ClCompile Include="..\..\..\Libs\jemalloc\src\witness.c" />
     <ClCompile Include="..\..\..\Libs\vjson\block_allocator.cpp" />
     <ClCompile Include="..\..\..\Libs\vjson\json.cpp" />
   </ItemGroup>
@@ -340,6 +381,15 @@
   <ItemGroup>
     <Image Include="Oak.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.sh" />
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h.in" />
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h.in" />
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle.sh" />
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h.in" />
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.sh" />
+    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

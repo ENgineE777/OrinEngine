@@ -63,7 +63,7 @@ class ClassFactory##shortClassName##baseClass : public ClassFactory##baseClass\
 {\
 	virtual const char* GetName() { return #shortClassName; };\
 	virtual const char* GetShortName() { return shortName; };\
-	virtual baseClass* Create() { return new fullClassName(); };
+	virtual baseClass* Create() { return NEW fullClassName(); };
 
 #define CLASSREGEX_END(baseClass, shortClassName)\
 };\

@@ -20,5 +20,6 @@ namespace Oak
 		void Update();
 		void Render(float dt);
 		void OnMouseMove(int msx, int msy);
+		void Release();
 	};
 }

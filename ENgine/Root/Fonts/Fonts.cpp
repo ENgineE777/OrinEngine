@@ -17,11 +17,6 @@ namespace Oak
 	{
 	}
 
-	bool Fonts::Init()
-	{
-		return true;
-	}
-
 	Font* Fonts::LoadFont(const char* file_name, bool is_bold, bool is_italic, int height)
 	{
 		if (!vbuffer)
@@ -76,7 +71,7 @@ namespace Oak
 
 		if (!res)
 		{
-			res = new FontRes(file_name, height);
+			res = NEW FontRes(file_name, height);
 
 			if (!res->Load())
 			{
