@@ -1,5 +1,7 @@
-
+﻿
 #include <SDKDDKVer.h>
+
+#include "Editor/Editor.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -8,37 +10,36 @@
 #include <memory.h>
 #include <tchar.h>
 
-#include "Editor/Editor.h"
-
 #include "resource.h"
 
 #define MAX_LOADSTRING 100
 
-bool running = true;
 Oak::Editor editor;
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)
+    if (editor.ProcHandler(hWnd, msg, wParam, lParam))
     {
-        case WM_COMMAND:
-        {
-        }
-        break;
-        case WM_MOUSEMOVE:
-        {
-            editor.OnMouseMove(LOWORD(lParam), HIWORD(lParam));
-        }
-        break;
-        case WM_DESTROY:
-            PostQuitMessage(0);
-            running = false;
-            break;
-        default:
-            return DefWindowProc(hWnd, message, wParam, lParam);
+        return true;
     }
 
-    return 0;
+    switch (msg)
+    {
+    case WM_SIZE:
+        if (wParam != SIZE_MINIMIZED)
+        {
+            editor.OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
+        }
+        return 0;
+    case WM_SYSCOMMAND:
+        if ((wParam & 0xfff0) == SC_KEYMENU)
+            return 0;
+        break;
+    case WM_DESTROY:
+        ::PostQuitMessage(0);
+        return 0;
+    }
+    return ::DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR    lpCmdLine, _In_ int       nCmdShow)
@@ -67,35 +68,40 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     RegisterClassExW(&wcex);
 
-    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, 800, 600, nullptr, nullptr, hInstance, nullptr);
+    HWND hwnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, 800, 600, nullptr, nullptr, hInstance, nullptr);
 
-    if (!hWnd)
+    if (!hwnd)
     {
-        return FALSE;
+        return 1;
     }
 
-    if (!editor.Init(hWnd))
+    if (!editor.Init(hwnd))
     {
-        return 0;
+        UnregisterClass(wcex.lpszClassName, wcex.hInstance);
+        return 1;
     }
 
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
+    ShowWindow(hwnd, SW_MAXIMIZE);
+    UpdateWindow(hwnd);
 
     MSG msg;
-
-    while (running)
+    ZeroMemory(&msg, sizeof(msg));
+    while (msg.message != WM_QUIT)
     {
-        while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        if (::PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            ::TranslateMessage(&msg);
+            ::DispatchMessage(&msg);
+            continue;
         }
 
         editor.Update();
     }
 
     editor.Release();
+
+    DestroyWindow(hwnd);
+    UnregisterClass(wcex.lpszClassName, wcex.hInstance);
 
     return 0;
 }

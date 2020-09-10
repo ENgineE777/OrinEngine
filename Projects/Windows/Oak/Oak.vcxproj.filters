@@ -77,6 +77,9 @@
     <Filter Include="Libs\jemalloc\src">
       <UniqueIdentifier>{93707235-edbe-4c82-8b1a-27306be09667}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libs\imgui">
+      <UniqueIdentifier>{ed4bf8b4-850d-4f30-9eb1-122b1c9102b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -316,6 +319,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Libs\jemalloc\src\witness.c">
       <Filter>Libs\jemalloc\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\imgui\imgui.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\imgui\imgui_draw.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\imgui\imgui_widgets.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\imgui\imgui_impl_win32.cpp">
+      <Filter>Libs\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Libs\imgui\imgui_impl_dx11.cpp">
+      <Filter>Libs\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -762,6 +780,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h">
       <Filter>Libs\jemalloc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imgui.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imgui_internal.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imstb_rectpack.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imstb_textedit.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imstb_truetype.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_win32.h">
+      <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_dx11.h">
+      <Filter>Libs\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace Oak
 		logsDir[0] = 0;
 	}
 
-	bool Root::Init()
+	bool Root::Init(void* renderData)
 	{
 		srand((unsigned int)time(nullptr));
 
@@ -55,7 +55,7 @@ namespace Oak
 			return false;
 		}
 
-		if (!render.Init("DX11", nullptr))
+		if (!render.Init("DX11", renderData))
 		{
 			return false;
 		}

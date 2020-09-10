@@ -28,7 +28,7 @@ namespace Oak
 
 		Root();
 		~Root() = default;
-		bool Init();
+		bool Init(void* renderData);
 
 		void Log(const char* name, const char* text, ...);
 
