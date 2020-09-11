@@ -1,15 +1,13 @@
 
 #pragma once
 
-#include "Root/Render/Render.h"
+#include "Root/Fonts/FontRef.h"
 
 namespace Oak
 {
-	class Font;
-
 	class DebugFont : public Object
 	{
-		Font* font;
+		FontRef font;
 		int font_size = 11;
 
 		struct Text

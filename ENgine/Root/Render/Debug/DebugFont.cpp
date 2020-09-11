@@ -5,7 +5,6 @@ namespace Oak
 {
 	DebugFont::DebugFont()
 	{
-		font = nullptr;
 		texts.reserve(32);
 	}
 
@@ -17,7 +16,7 @@ namespace Oak
 	{
 		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugFont::Draw);
 
-		font = root.fonts.LoadFont("ENgine/helvetica", false, false, font_size);
+		font = root.fonts.LoadFont("ENgine/helvetica", false, false, font_size, _FL_);
 
 		return true;
 	}
@@ -60,7 +59,7 @@ namespace Oak
 			if (pos.z>0 && pos.z<txt->dist)
 			{
 				mat.Pos() = Math::Vector3(pos.x * root.render.GetDevice()->GetWidth(), pos.y * root.render.GetDevice()->GetHeight(), 0);
-				font->Print(mat, 1.0f, txt->color, txt->text);
+				font.Print(mat, 1.0f, txt->color, txt->text);
 			}
 		}
 
@@ -75,14 +74,14 @@ namespace Oak
 		{
 			Text* txt = &texts[i];
 
-			font->GetLineBreak(line_breaks, txt->text, 1000);
+			font.GetLineBreak(line_breaks, txt->text, 1000);
 
 			mat.Pos().x = (txt->corner == ScreenCorner::LeftTop || txt->corner == ScreenCorner::LeftBottom) ? (txt->pos.x + 1) : (screen.x - txt->pos.x - line_breaks[0].width);
 			mat.Pos().y = (txt->corner == ScreenCorner::LeftTop || txt->corner == ScreenCorner::RightTop) ? (txt->pos.y + 1) : (screen.y - txt->pos.y - font_size);
-			font->Print(mat, 1.0f, COLOR_BLACK, txt->text);
+			font.Print(mat, 1.0f, COLOR_BLACK, txt->text);
 
 			mat.Pos() -= 1.0f;
-			font->Print(mat, 1.0f, txt->color, txt->text);
+			font.Print(mat, 1.0f, txt->color, txt->text);
 		}
 
 		texts.clear();
@@ -90,8 +89,6 @@ namespace Oak
 
 	void DebugFont::Release()
 	{
-		RELEASE(font)
-
 		delete this;
 	}
 }

@@ -10,7 +10,7 @@ namespace Oak
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex), _FL_);
 
-		prg = root.render.GetProgram("DbgTriangle2D");
+		prg = root.render.GetProgram("DbgTriangle2D", _FL_);
 
 		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugTriangles2D::Draw);
 	}
@@ -33,7 +33,7 @@ namespace Oak
 			return;
 		}
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetProgram(prg.Get());
 
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, vbuffer);
@@ -80,7 +80,6 @@ namespace Oak
 	{
 		RELEASE(vbuffer)
 		RELEASE(vdecl)
-		RELEASE(prg)
 
 		delete this;
 	}

@@ -13,7 +13,7 @@ namespace Oak
 			Math::Vector2 Texcoords;
 		};
 
-		Program* prg = nullptr;
+		ProgramRef prg;
 		VertexDecl* vdecl = nullptr;
 		DataBuffer* vbuffer = nullptr;
 

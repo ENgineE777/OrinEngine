@@ -30,7 +30,7 @@ namespace Oak
 
 		eastl::vector<Sphere> spheres;
 
-		Program* prg;
+		ProgramRef prg;
 		VertexDecl* vdecl;
 		DataBuffer* vbuffer;
 		DataBuffer* ibuffer;

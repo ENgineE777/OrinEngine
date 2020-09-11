@@ -179,9 +179,6 @@
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.cpp">
       <Filter>ENgine\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Font.cpp">
-      <Filter>ENgine\Root\Fonts</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp">
       <Filter>ENgine\Root\Fonts</Filter>
     </ClCompile>
@@ -335,6 +332,9 @@
     <ClCompile Include="..\..\..\Libs\imgui\imgui_impl_dx11.cpp">
       <Filter>Libs\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRef.cpp">
+      <Filter>ENgine\Root\Fonts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -468,9 +468,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h">
       <Filter>ENgine\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Font.h">
-      <Filter>ENgine\Root\Fonts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h">
       <Filter>ENgine\Root\Fonts</Filter>
@@ -801,6 +798,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_dx11.h">
       <Filter>Libs\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRef.h">
+      <Filter>ENgine\Root\Fonts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

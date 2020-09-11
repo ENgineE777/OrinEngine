@@ -10,7 +10,13 @@ namespace Oak
 {
 	class Program
 	{
+		friend class Render;
+		friend class ProgramRef;
+
 	protected:
+		eastl::string name;
+		int refCounter = 0;
+
 		Shader* vshader = nullptr;
 		Shader* pshader = nullptr;
 
@@ -40,4 +46,27 @@ namespace Oak
 
 	CLASSFACTORYDEF(Program)
 	CLASSFACTORYDEF_END()
+
+	class ProgramRef
+	{
+		friend class Render;
+		friend class Fonts;
+
+		Program* program = nullptr;
+		const char* file = nullptr;
+		int line = 0;
+		ProgramRef* flMarker = nullptr;
+
+	public:
+
+		ProgramRef() = default;
+		ProgramRef(const ProgramRef& ref);
+		~ProgramRef();
+		Program* Get();
+		Program* operator->() const;
+		ProgramRef& operator=(const ProgramRef& ref);
+
+	protected:
+		void ReleaseRef();
+	};
 }

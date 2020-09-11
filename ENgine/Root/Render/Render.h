@@ -28,28 +28,19 @@ namespace Oak
 	class Render
 	{
 		friend class Program;
+		friend class ProgramRef;
+		friend class Texture;
+		friend class TextureRef;
 		friend class TextureDX11;
 		friend class TextureGLES;
 
-		Device* device;
+		Device* device = nullptr;
 		Math::Matrix trans[4];
-		bool   need_calc_trans;
+		bool needCalcTrans = true;
 
-		struct TextureRef
-		{
-			int refCount = 0;
-			Texture* texture = nullptr;
-		};
+		eastl::map<eastl::string, Texture*> textures;
 
-		eastl::map<eastl::string, TextureRef> textures;
-
-		struct ProgramRef
-		{
-			int refCount = 0;
-			Program* program = nullptr;
-		};
-
-		eastl::map<eastl::string, ProgramRef> programs;
+		eastl::map<eastl::string, Program*> programs;
 
 		class DebugLines*       lines;
 		class DebugSpheres*     spheres;
@@ -62,11 +53,9 @@ namespace Oak
 		TaskExecutor::GroupTaskPool* groupTaskPool;
 		TaskExecutor::SingleTaskPool* debugTaskPool;
 
-		Texture* white_tex = nullptr;
+		Texture* whiteTex = nullptr;
 
 	public:
-
-		Render();
 
 		bool Init(const char* device, void* external_device);
 		void Execute(float dt);
@@ -78,9 +67,9 @@ namespace Oak
 
 		void GetTransform(TransformStage trans, Math::Matrix& mat);
 
-		Program* GetProgram(const char* name);
+		ProgramRef GetProgram(const char* name, const char* file, int line);
 
-		Texture* LoadTexture(const char* name);
+		TextureRef LoadTexture(const char* name, const char* file, int line);
 
 		TaskExecutor::SingleTaskPool* AddTaskPool(const char* file, int line);
 
@@ -100,14 +89,12 @@ namespace Oak
 
 		inline Texture* GetWhiteTexture()
 		{
-			return white_tex;
+			return whiteTex;
 		}
 
 		Math::Vector3 TransformToScreen(Math::Vector3 pos, int type);
 
 	protected:
 		void CalcTrans();
-		bool TextureRefIsEmpty(Texture* texture);
-		bool ProgramRefIsEmpty(Program* program);
 	};
 }

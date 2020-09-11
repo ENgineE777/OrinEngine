@@ -21,7 +21,7 @@ namespace Oak
 		};
 
 		eastl::vector<Triangle> triangles;
-		Program* prg;
+		ProgramRef prg;
 		VertexDecl* vdecl;
 		DataBuffer* vbuffer;
 

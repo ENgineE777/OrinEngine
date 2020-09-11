@@ -1,5 +1,5 @@
 
-#include "Texture.h"
+#include "Root/Root.h"
 
 namespace Oak
 {
@@ -23,5 +23,67 @@ namespace Oak
 		}
 
 		return levels;
+	}
+
+	TextureRef::TextureRef(const TextureRef& ref)
+	{
+		texture = ref.texture;
+
+		if (texture)
+		{
+			texture->refCounter++;
+		}
+
+		file = ref.file;
+		line = ref.line;
+		flMarker = new(file, line) TextureRef();
+	}
+
+	TextureRef::~TextureRef()
+	{
+		ReleaseRef();
+	}
+
+	Texture* TextureRef::Get()
+	{
+		return texture;
+	}
+
+	Texture* TextureRef::operator->() const
+	{
+		return texture;
+	}
+
+	TextureRef& TextureRef::operator=(const TextureRef& ref)
+	{
+		texture = ref.texture;
+
+		if (texture)
+		{
+			texture->refCounter++;
+		}
+
+		file = ref.file;
+		line = ref.line;
+		flMarker = new(file, line) TextureRef();
+
+		return *this;
+	}
+
+	void TextureRef::ReleaseRef()
+	{
+		DELETE_PTR(flMarker)
+
+		if (texture)
+		{
+			texture->refCounter--;
+
+			if (texture->refCounter == 0)
+			{
+				texture->Release();
+			}
+
+			texture = nullptr;
+		}
 	}
 }

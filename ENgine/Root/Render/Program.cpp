@@ -80,15 +80,74 @@ namespace Oak
 
 	void Program::Release()
 	{
-		if (!root.render.ProgramRefIsEmpty(this))
-		{
-			return;
-		}
-
 		RELEASE(vshader)
 		RELEASE(pshader)
 
+		root.render.programs.erase(name);
+
 		delete this;
+	}
+
+	ProgramRef::ProgramRef(const ProgramRef& ref)
+	{
+		program = ref.program;
+
+		if (program)
+		{
+			program->refCounter++;
+		}
+
+		file = ref.file;
+		line = ref.line;
+		flMarker = new(file, line) ProgramRef();
+	}
+
+	ProgramRef::~ProgramRef()
+	{
+		ReleaseRef();
+	}
+
+	Program* ProgramRef::Get()
+	{
+		return program;
+	}
+
+	Program* ProgramRef::operator->() const
+	{
+		return program;
+	}
+
+	ProgramRef& ProgramRef::operator=(const ProgramRef& ref)
+	{
+		program = ref.program;
+
+		if (program)
+		{
+			program->refCounter++;
+		}
+
+		file = ref.file;
+		line = ref.line;
+		flMarker = new(file, line) ProgramRef();
+
+		return *this;
+	}
+
+	void ProgramRef::ReleaseRef()
+	{
+		DELETE_PTR(flMarker)
+
+		if (program)
+		{
+			program->refCounter--;
+
+			if (program->refCounter == 0)
+			{
+				program->Release();
+			}
+
+			program = nullptr;
+		}
 	}
 }
 

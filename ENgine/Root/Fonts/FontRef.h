@@ -4,13 +4,23 @@
 
 namespace Oak
 {
-	class Font
+	class FontRef
 	{
+		friend class Fonts;
+
 		FontRes* res;
+
+		const char* file = nullptr;
+		int line = 0;
+		FontRef* flMarker = nullptr;
 
 	public: 
 
-		Font(FontRes* res);
+		FontRef() = default;
+		FontRef(const FontRef& ref);
+		~FontRef();
+
+		FontRef& operator=(const FontRef& ref);
 
 		float GetLineBreak(eastl::vector<FontRes::LineBreak>& line_breaks, const char* text, int width);
 
@@ -18,6 +28,7 @@ namespace Oak
 
 		void Print(Math::Matrix& transform, float font_scale, Color color,  const char* text);
 
-		virtual void Release();
+	protected:
+		void ReleaseRef();
 	};
 }

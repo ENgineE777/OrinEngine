@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Font.h"
+#include "FontRef.h"
 #include <eastl/map.h>
 
 namespace Oak
@@ -16,18 +16,15 @@ namespace Oak
 			Math::Vector2 uv;
 		};
 
-		Program* fntProg = nullptr;
+		ProgramRef fntProg;
 		DataBuffer* vbuffer = nullptr;
 		VertexDecl* vdecl = nullptr;
 
 	public:
 
-		Font* LoadFont(const char* file_name, bool is_bold, bool is_italic, int height);
+		FontRef LoadFont(const char* file_name, bool is_bold, bool is_italic, int height, const char* file, int line);
 
 		bool Init();
 		void Release();
-
-	protected:
-		void DeleteRes(FontRes* res);
 	};
 }

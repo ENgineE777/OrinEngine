@@ -38,6 +38,9 @@ namespace Oak
 
 	class Texture
 	{
+		friend class Render;
+		friend class TextureRef;
+
 	public:
 
 		eastl::string name;
@@ -116,5 +119,29 @@ namespace Oak
 		TextureAddress adressV;
 		TextureAddress adressW;
 		TextureType type;
+		int refCounter = 0;
 	};
+
+	class TextureRef
+	{
+		friend class Render;
+
+		Texture* texture = nullptr;
+		const char* file = nullptr;
+		int line = 0;
+		TextureRef* flMarker = nullptr;
+
+	public:
+
+		TextureRef() = default;
+		TextureRef(const TextureRef& ref);
+		~TextureRef();
+		Texture* Get();
+		Texture* operator->() const;
+		TextureRef& operator=(const TextureRef& ref);
+
+	protected:
+		void ReleaseRef();
+	};
+
 }

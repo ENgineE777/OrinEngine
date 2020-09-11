@@ -41,7 +41,7 @@ namespace Oak
 
 		vbuffer->Unlock();
 
-		prg = root.render.GetProgram("DbgSprite");
+		prg = root.render.GetProgram("DbgSprite", _FL_);
 	}
 
 	void DebugSprites::AddSprite(Texture* texture, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float angle, Color color)
@@ -72,7 +72,7 @@ namespace Oak
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer( 0, vbuffer);
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetProgram(prg.Get());
 		Math::Vector4 params[3];
 
 		params[0] = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0, 0);
@@ -97,7 +97,6 @@ namespace Oak
 	{
 		RELEASE(vbuffer)
 		RELEASE(vdecl)
-		RELEASE(prg)
 
 		delete this;
 	}

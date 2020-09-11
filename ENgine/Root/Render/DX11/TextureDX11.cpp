@@ -179,9 +179,9 @@ namespace Oak
 
 	void TextureDX11::Release()
 	{
-		if (!root.render.TextureRefIsEmpty(this))
+		if (root.render.textures.count(name) > 0)
 		{
-			return;
+			root.render.textures.erase(name);
 		}
 
 		RELEASE(sampler)

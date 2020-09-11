@@ -11,7 +11,7 @@ namespace Oak
 		#ifndef DOXYGEN_SKIP
 		uint8_t* buffer = nullptr;
 		int32_t size = 0;
-		uint8_t* ptr;
+		uint8_t* ptr = nullptr;
 		#endif
 
 	public:

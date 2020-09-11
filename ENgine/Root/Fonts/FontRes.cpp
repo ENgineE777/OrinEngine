@@ -19,8 +19,9 @@ namespace Oak
 		return 1024;
 	}
 
-	FontRes::FontRes(const char* fl_name, int hgt)
+	FontRes::FontRes(const char* setName, const char* fl_name, int hgt)
 	{
+		name = setName;
 		fileName = fl_name;
 
 		tex_w = -1;
@@ -108,12 +109,6 @@ namespace Oak
 		tex = root.render.GetDevice()->CreateTexture(tex_w, tex_h, TextureFormat::FMT_A8, 1, false, TextureType::Tex2D, _FL_);
 
 		return true;
-	}
-
-	Font* FontRes::CreateReference()
-	{
-		refCounter++;
-		return NEW Font(this);
 	}
 
 	FontRes::Glyph* FontRes::GetGlyph(int code)
@@ -204,7 +199,7 @@ namespace Oak
 
 		if (len == 0) return;
 
-		root.render.GetDevice()->SetProgram(root.fonts.fntProg);
+		root.render.GetDevice()->SetProgram(root.fonts.fntProg.Get());
 
 		Math::Matrix tmp;
 
@@ -366,7 +361,7 @@ namespace Oak
 			return;
 		}
 
-		root.fonts.DeleteRes(this);
+		root.fonts.fonts.erase(name);
 
 		if (tex_buffer)
 		{

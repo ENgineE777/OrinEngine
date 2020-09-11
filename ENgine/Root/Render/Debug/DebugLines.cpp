@@ -10,8 +10,8 @@ namespace Oak
 
 		buffer = root.render.GetDevice()->CreateBuffer(MaxSize * 2, sizeof(Vertex), _FL_);
 
-		prg = root.render.GetProgram("DbgLine");
-		prg_depth = root.render.GetProgram("DbgLineWithDepth");
+		prg = root.render.GetProgram("DbgLine", _FL_);
+		prgDepth = root.render.GetProgram("DbgLineWithDepth", _FL_);
 
 		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugLines::Draw);
 	}
@@ -158,17 +158,15 @@ namespace Oak
 
 	void DebugLines::Draw(float dt)
 	{
-		DrawLines(prg_depth, lines_with_depth, false);
-		DrawLines(prg, lines, false);
-		DrawLines(prg, lines_2d, true);
+		DrawLines(prgDepth.Get(), lines_with_depth, false);
+		DrawLines(prg.Get(), lines, false);
+		DrawLines(prg.Get(), lines_2d, true);
 	}
 
 	void DebugLines::Release()
 	{
 		RELEASE(buffer)
 		RELEASE(vdecl)
-		RELEASE(prg)
-		RELEASE(prg_depth)
 
 		delete this;
 	}

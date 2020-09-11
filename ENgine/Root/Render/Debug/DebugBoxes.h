@@ -22,7 +22,7 @@ namespace Oak
 
 		eastl::vector<Box> boxes;
 
-		Program* prg;
+		ProgramRef prg;
 		DataBuffer* vbuffer;
 		VertexDecl* vdecl;
 		DataBuffer* ibuffer;

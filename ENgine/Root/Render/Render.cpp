@@ -19,12 +19,6 @@
 
 namespace Oak
 {
-	Render::Render()
-	{
-		device = nullptr;
-		need_calc_trans = false;
-	}
-
 	bool Render::Init(const char* device_name, void* external_device)
 	{
 		#ifdef PLATFORM_WIN
@@ -64,12 +58,12 @@ namespace Oak
 		font = NEW DebugFont();
 		font->Init(debugTaskPool);
 
-		white_tex = device->CreateTexture(2, 2, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
+		whiteTex = device->CreateTexture(2, 2, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
 
 		uint8_t white_tex_data[4 * 4];
 		memset(white_tex_data, 255, 16);
 
-		white_tex->Update(0, 0, white_tex_data, 2 * 4);
+		whiteTex->Update(0, 0, white_tex_data, 2 * 4);
 
 		return true;
 	}
@@ -84,13 +78,13 @@ namespace Oak
 		if (stage != TransformStage::WrldViewProj)
 		{
 			trans[(int)stage] = mat;
-			need_calc_trans = true;
+			needCalcTrans = true;
 		}
 	}
 
 	void Render::GetTransform(TransformStage stage, Math::Matrix& mat)
 	{
-		if (stage == TransformStage::WrldViewProj && need_calc_trans)
+		if (stage == TransformStage::WrldViewProj && needCalcTrans)
 		{
 			CalcTrans();
 		}
@@ -101,117 +95,84 @@ namespace Oak
 	void Render::CalcTrans()
 	{
 		trans[3] = trans[0] * trans[1] * trans[2];
-		need_calc_trans = false;
+		needCalcTrans = false;
 	}
 
-	Program* Render::GetProgram(const char* name)
+	ProgramRef Render::GetProgram(const char* name, const char* file, int line)
 	{
+		Program* program = nullptr;
+
 		if (programs.count(name) > 0)
 		{
-			ProgramRef& ref = programs[name];
+			program = programs[name];
+		}
+		else
+		{
+			auto decls = ClassFactoryProgram::Decls();
+			program = ClassFactoryProgram::Create(name);
+			program->Init();
+			program->name = name;
+			device->PrepareProgram(program);
 
-			ref.refCount++;
-			return ref.program;
+			programs[name] = program;
 		}
 
-		auto decls = ClassFactoryProgram::Decls();
-		Program * program = ClassFactoryProgram::Create(name);
-		program->Init();
-		device->PrepareProgram(program);
+		program->refCounter++;
 
-		ProgramRef& ref = programs[name];
-
-		ref.refCount = 1;
+		ProgramRef ref;
+		ref.file = file;
+		ref.line = line;
+		ref.flMarker = new(file, line) ProgramRef();
 		ref.program = program;
-
-		return program;
+	
+		return ref;
 	}
 
-	Texture* Render::LoadTexture(const char* name)
+	TextureRef Render::LoadTexture(const char* name, const char* file, int line)
 	{
+		Texture* texture = nullptr; 
+
 		if (textures.count(name) > 0)
 		{
-			TextureRef& ref = textures[name];
-
-			ref.refCount++;
-			return ref.texture;
+			texture = textures[name];
 		}
-
-		FileInMemory buffer;
-
-		if (!buffer.Load(name))
+		else
 		{
-			return nullptr;
+			FileInMemory buffer;
+
+			if (!buffer.Load(name))
+			{
+				return TextureRef();
+			}
+
+			uint8_t* ptr = buffer.GetData();
+
+			int bytes;
+			int width;
+			int height;
+			uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
+
+			texture = device->CreateTexture(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
+			texture->name = name;
+
+			texture->Update(0, 0, data, width * 4);
+
+			free(data);
+
+			texture->GenerateMips();
+
+			textures[name] = texture;
 		}
 
-		uint8_t* ptr = buffer.GetData();
+		texture->refCounter++;
 
-		int bytes;
-		int width;
-		int height;
-		uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
-
-		Texture* texture = device->CreateTexture(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
-		texture->name = name;
-
-		texture->Update(0, 0, data, width * 4);
-
-		free(data);
-
-		texture->GenerateMips();
-
-		TextureRef& ref = textures[name];
-
-		ref.refCount = 1;
+		TextureRef ref;
+		ref.file = file;
+		ref.line = line;
+		ref.flMarker = new(file, line) TextureRef();
 		ref.texture = texture;
 
-		return texture;
-	}
-
-	bool Render::TextureRefIsEmpty(Texture* texture)
-	{
-		typedef eastl::map<eastl::string, TextureRef>::iterator it_type;
-
-		for (it_type iterator = textures.begin(); iterator != textures.end(); iterator++)
-		{
-			if (iterator->second.texture == texture)
-			{
-				iterator->second.refCount--;
-
-				if (iterator->second.refCount == 0)
-				{
-					textures.erase(iterator);
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	bool Render::ProgramRefIsEmpty(Program* program)
-	{
-		typedef eastl::map<eastl::string, ProgramRef>::iterator it_type;
-
-		for (it_type iterator = programs.begin(); iterator != programs.end(); iterator++)
-		{
-			if (iterator->second.program == program)
-			{
-				iterator->second.refCount--;
-
-				if (iterator->second.refCount == 0)
-				{
-					programs.erase(iterator);
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return true;
+		return ref;
 	}
 
 	void Render::AddExecutedLevelPool(int level)
@@ -358,7 +319,7 @@ namespace Oak
 		groupTaskPool->DelTaskPool(debugTaskPool);
 		delete groupTaskPool;
 
-		RELEASE(white_tex)
+		RELEASE(whiteTex)
 		RELEASE(lines)
 		RELEASE(spheres)
 		RELEASE(boxes)

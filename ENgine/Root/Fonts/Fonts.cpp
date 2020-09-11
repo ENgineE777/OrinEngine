@@ -22,7 +22,7 @@ namespace Oak
 
 	bool Fonts::Init()
 	{
-		fntProg = root.render.GetProgram("FontProgram");
+		fntProg = root.render.GetProgram("FontProgram", _FL_);
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(6 * 1000, sizeof(Fonts::FontVertex), _FL_);
 
@@ -32,9 +32,9 @@ namespace Oak
 		return true;
 	}
 
-	Font* Fonts::LoadFont(const char* file_name, bool is_bold, bool is_italic, int height)
+	FontRef Fonts::LoadFont(const char* file_name, bool is_bold, bool is_italic, int height, const char* file, int line)
 	{
-		if (!file_name[0]) return nullptr;
+		if (!file_name[0]) return FontRef();
 
 		if (height > 100)
 		{
@@ -72,44 +72,38 @@ namespace Oak
 			res = fonts[nm];
 		}
 
-		file_name = font_path;
-
 		if (!res)
 		{
-			res = NEW FontRes(file_name, height);
+			res = NEW FontRes(nm, font_path, height);
 
 			if (!res->Load())
 			{
 				res->Release();
 
-				return nullptr;
+				return FontRef();
 			}
 
 			fonts[nm] = res;
 		}
 
-		return res->CreateReference();
-	}
+		res->refCounter++;
 
-	void Fonts::DeleteRes(FontRes* res)
-	{
-		typedef eastl::map<eastl::string, FontRes*>::iterator it_type;
+		FontRef ref;
 
-		for (it_type iterator = fonts.begin(); iterator != fonts.end(); iterator++)
-		{
-			if (iterator->second == res)
-			{
-				fonts.erase(iterator);
-				return;
-			}
-		}
+		ref.file = file;
+		ref.line = line;
+		ref.flMarker = new(file, line) FontRef();
+		ref.res = res;
+
+		return ref;
 	}
 
 	void Fonts::Release()
 	{
-		RELEASE(fntProg)
 		RELEASE(vbuffer)
 		RELEASE(vdecl)
+
+		fntProg.ReleaseRef();
 	}
 }
 

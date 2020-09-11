@@ -14,10 +14,13 @@ namespace Oak
 	{
 	public:
 
+		friend class Fonts;
+		friend class FontRef;
+
 		struct Glyph
 		{
-			int   width;
-			int   height;
+			int width;
+			int height;
 			float x_offset;
 			float y_offset;
 			float x_advance;
@@ -28,6 +31,7 @@ namespace Oak
 			int   skip;
 		};
 
+		eastl::string name;
 		eastl::string fileName;
 
 		struct LineBreak
@@ -61,10 +65,9 @@ namespace Oak
 
 	public:
 
-		FontRes(const char* fl_name, int hgt);
+		FontRes(const char* name, const char* fl_name, int hgt);
 		virtual bool Load();
 		Glyph* GenerateChar(int ch);
-		class Font* CreateReference();
 
 		float GetLineBreak(eastl::vector<FontRes::LineBreak>& line_breaks, const char* text, int width);
 		void Print(eastl::vector<FontRes::LineBreak>& line_breaks, Math::Matrix& transform, float font_scale, Color color, const char* text);

@@ -157,7 +157,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonReader.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h" />
-    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Font.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRef.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h" />
@@ -315,7 +315,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonReader.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp" />
-    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Font.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRef.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Memory\MemoryManager.cpp" />
