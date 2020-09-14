@@ -5,10 +5,77 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
+#include "Support\MetaData.h"
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace Oak
 {
+	class TestItem
+	{
+	public:
+
+		bool boolProp = false;
+		int intProp = 50;
+		float floatProp = 1.0f;
+
+		META_DATA_DECL_BASE(TestItem)
+	};
+
+	META_DATA_DESC(TestItem)
+		BOOL_PROP(TestItem, boolProp, false, "Values", "Bool value", "sdfdsf")
+		INT_PROP(TestItem, intProp, 80, "Values", "Int value", "sdfdsf")
+		FLOAT_PROP(TestItem, floatProp, 1.0f, "Values", "Float value", "sdfdsf")
+	META_DATA_DESC_END()
+
+	class TestProperties
+	{
+	public:
+
+		enum Shape
+		{
+			Box,
+			Sphere,
+			Cylinder
+		};
+
+		bool boolProp = false;
+		int intProp = 50;
+		float floatProp = 1.0f;
+		float floatProp2 = 1.0f;
+		eastl::string strProp;
+		eastl::string filenameProp;
+		Color colorProp;
+		Shape enumProp;
+		eastl::vector<TestItem> itemsProp;
+
+		META_DATA_DECL_BASE(TestProperties)
+	};
+
+	void CallbackTest(void* owner)
+	{
+		TestProperties* jkl = (TestProperties*)owner;
+	}
+
+	META_DATA_DESC(TestProperties)
+		BOOL_PROP(TestProperties, boolProp, false, "Category1", "Bool value", "sdfdsf")
+		INT_PROP(TestProperties, intProp, 80, "Category1", "Int value", "sdfdsf")
+		FLOAT_PROP(TestProperties, floatProp, 1.0f, "Category1", "Float value", "sdfdsf")
+		FLOAT_PROP(TestProperties, floatProp2, 5.0f, "Category2", "Another float value", "sdfdsf")
+		STRING_PROP(TestProperties, strProp, "ABC", "Category2", "String value")
+		FILENAME_PROP(TestProperties, filenameProp, "", "Category2", "File Name")
+		COLOR_PROP(TestProperties, colorProp, COLOR_GREEN, "Category3", "Color value")
+		ENUM_PROP(TestProperties, enumProp, TestProperties::Shape::Box, "Category3", "Enum value", "brief")
+			ENUM_ELEM("Box", 0)
+			ENUM_ELEM("Sphere", 1)
+			ENUM_ELEM("Cylinder", 2)
+		ENUM_END
+		CALLBACK_PROP(TestProperties, CallbackTest, "Values", "Callaback")
+		ARRAY_PROP(TestProperties, itemsProp, TestItem, "Values", "Items array")
+	META_DATA_DESC_END()
+
+	TestProperties test;
+
 	bool Editor::Init(HWND setHwnd)
 	{
 		ImGui_ImplWin32_EnableDpiAwareness();
@@ -39,6 +106,36 @@ namespace Oak
 		freeCamera.Init();
 
 		SetupImGUI();
+
+		{
+			TestItem item;
+			item.boolProp = true;
+			item.intProp = 7;
+			item.floatProp = 2.0f;
+
+			test.itemsProp.push_back(item);
+		}
+
+		{
+			TestItem item;
+			item.boolProp = false;
+			item.intProp = 9;
+			item.floatProp = 6.0f;
+
+			test.itemsProp.push_back(item);
+		}
+
+		{
+			TestItem item;
+			item.boolProp = true;
+			item.intProp = 30;
+			item.floatProp = 20.0f;
+
+			test.itemsProp.push_back(item);
+		}
+
+		test.meta_data.Prepare(&test);
+		test.meta_data.SetDefValues();
 
 		return true;
 	}
@@ -92,7 +189,7 @@ namespace Oak
 
 		UpdateOak();
 
-		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), ImVec2(ImGui::GetWindowContentRegionWidth(), size.y - 30));
+		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), ImGui::GetContentRegionAvail());
 
 		ImGui::End();
 	}
@@ -211,7 +308,7 @@ namespace Oak
 			ImGuiID dock_main_id = dockspaceID;
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 
-			ImGui::DockBuilderDockWindow("Hello, world!", dock_left_id);
+			ImGui::DockBuilderDockWindow("Properties", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
@@ -237,21 +334,14 @@ namespace Oak
 		ImGui::End();
 
 		{
-			static float f = 0.0f;
-			static int counter = 0;
+			ImGui::Begin("Properties");
 
-			ImGui::Begin("Hello, world!");
+			ImGui::Columns(2);
 
-			ImGui::Text("This is some useful text.");
+			test.meta_data.ImGuiWidgets();
 
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
+			ImGui::Columns(1);
 
-			if (ImGui::Button("Button"))
-				counter++;
-			ImGui::SameLine();
-			ImGui::Text("counter = %d", counter);
-
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 			ImGui::End();
 		}
 

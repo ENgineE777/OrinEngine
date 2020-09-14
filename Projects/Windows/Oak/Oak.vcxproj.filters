@@ -335,6 +335,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRef.cpp">
       <Filter>ENgine\Root\Fonts</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp">
+      <Filter>ENgine\Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -801,6 +804,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRef.h">
       <Filter>ENgine\Root\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\MetaData.h">
+      <Filter>ENgine\Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

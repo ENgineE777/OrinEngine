@@ -14,6 +14,8 @@ void operator delete[](void* ptr, const char* file, int line);
 
 #define NEW new(__FILE__, __LINE__)
 
+#ifdef OAK_EDITOR
+
 #define OAK_ASSERT(expression, description) \
 	if (!(expression))\
 	{\
@@ -26,10 +28,11 @@ void operator delete[](void* ptr, const char* file, int line);
 		MessageBoxA(nullptr, description, "Alert", MB_ICONERROR);\
 	}
 
-#ifdef EDITOR
-#define MESSAGE_BOX(caption, text) MessageBox(nullptr, text, caption, MB_ICONERROR);
 #else
-#define MESSAGE_BOX(caption, text)
+
+#define OAK_ASSERT(expression, description)
+#define OAK_ALERT(description)
+
 #endif
 
 #define _FL_ __FILE__ , __LINE__
