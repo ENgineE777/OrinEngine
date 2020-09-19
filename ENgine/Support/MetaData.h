@@ -340,7 +340,7 @@ namespace Oak
 		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
-		prop.adapter = new ArrayAdapterImpl<structType>;\
+		prop.adapter = new(nullptr, 0) ArrayAdapterImpl<structType>;\
 		properties.push_back(prop);\
 	}
 }
