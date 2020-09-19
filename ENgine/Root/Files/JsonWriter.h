@@ -8,6 +8,17 @@
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_root_files
+	*/
+
+	/**
+	\brief JsonWriter
+
+	This is a helper class for reading kson file
+
+	*/
+
 	class JsonWriter
 	{
 		FILE* file = nullptr;
@@ -19,6 +30,14 @@ namespace Oak
 
 		JsonWriter();
 		~JsonWriter();
+
+		/**
+		\brief Start writing a json file
+
+		\param[in] name Full path of a file
+
+		\return True will be returned if file was successfully opened for writing. Otherwise it returns false.
+		*/
 
 		bool Start(const char* name);
 
@@ -44,10 +63,14 @@ namespace Oak
 
 	protected:
 
+		#ifndef DOXYGEN_SKIP
+
 		void Close();
 		void AddComma();
 		void WriteFormatedStr(bool addComa, const char* str, ...);
 		void WriteStr(const char* str);
+
+		#endif
 	};
 }
 

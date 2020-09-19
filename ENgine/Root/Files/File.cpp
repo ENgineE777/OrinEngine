@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	bool File::Load(const char* name, File::ModeType mode)
+	bool File::Open(const char* name, File::ModeType mode)
 	{
 		Release();
 
@@ -15,10 +15,10 @@ namespace Oak
 
 		if (file)
 		{
-			Seek(0, SeekType::seekEnd);
+			Seek(0, SeekType::SeekEnd);
 			size = GetCurrentPos();
 
-			Seek(0, SeekType::seekSet);
+			Seek(0, SeekType::SeekSet);
 
 			return true;
 		}
@@ -98,7 +98,7 @@ namespace Oak
 
 	uint32_t File::Seek(uint32_t fl_offset, File::SeekType seek)
 	{
-		return file ? fseek(file, fl_offset, (seek == SeekType::seekSet) ? SEEK_SET : ((seek == SeekType::seekCur) ? SEEK_CUR : SEEK_END) ) : -1;
+		return file ? fseek(file, fl_offset, (seek == SeekType::SeekSet) ? SEEK_SET : ((seek == SeekType::SeekCur) ? SEEK_CUR : SEEK_END) ) : -1;
 	}
 
 	uint32_t File::GetCurrentPos()

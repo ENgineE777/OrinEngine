@@ -10,32 +10,83 @@
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_root_root
+	*/
+
+	/**
+	\brief Root
+
+	This is a main object which allows to access to every subsytem of the engine.
+	Engine supports multi logs, i.e logs from differentent entities can be targeted to a seprated
+	log file. Logs on Windows stored in subfolder "From dd_mm_yyyy hh_mm" in directore Logs.
+
+	*/
+
 	class Root
 	{
+		#ifndef DOXYGEN_SKIP
+
 		#ifdef PLATFORM_WIN
 		char  logsDir[1024];
 		float dt = 0.0f;
 		#endif
 
+		#endif
+
 	public:
 
+		/**
+		\brief Access to controls service
+		*/
 		Controls controls;
+
+		/**
+		\brief Access to files service
+		*/
 		Files files;
+
+		/**
+		\brief Access to fonts service
+		*/
 		Fonts fonts;
+
+		/**
+		\brief Access to memory manger
+		*/
 		MemoryManager memory;
+
+		/**
+		\brief Access to render service
+		*/
 		Render render;
+
+		/**
+		\brief Access to task executor service
+		*/
 		TaskExecutor taskExecutor;
+
+		/**
+		\brief Should be childs clipped by size of a widget
+
+		\param[in] name a name of log file
+		\param[in] text formated string of output message
+
+		*/
+		void Log(const char* name, const char* text, ...);
+
+		#ifndef DOXYGEN_SKIP
 
 		Root();
 		~Root() = default;
 		bool Init(void* renderData);
 
-		void Log(const char* name, const char* text, ...);
-
 		void Update();
 		void CountDeltaTime();
 		float GetDeltaTime();
 		int GetFPS();
+
+		#endif
 
 		void Release();
 	};

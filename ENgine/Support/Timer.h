@@ -1,5 +1,9 @@
 #pragma once
 
+/**
+\ingroup gr_code_common
+*/
+
 namespace Oak::Timer
 {
 	float CountDeltaTime();

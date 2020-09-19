@@ -8,8 +8,20 @@
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_root_files
+	*/
+
+	/**
+	\brief JSONReader
+
+	This is a helper class for reading kson file
+
+	*/
+
 	class JSONReader
 	{
+		#ifndef DOXYGEN_SKIP
 		block_allocator allocator;
 		json_value* root = nullptr;
 
@@ -18,12 +30,20 @@ namespace Oak
 		int curDepth = 0;
 		json_value* nodes[32];
 		json_value* curNode = nullptr;
+		#endif
 
 	public:
 
 		JSONReader();
 		~JSONReader();
 
+		/**
+		\brief Parse json file
+
+		\param[in] name Full path of a file
+
+		\return True will be returned if file successfully opened and parsed. Otherwise it returns false.
+		*/
 		bool Parse(const char* name);
 
 		bool EnterBlock(const char* name);
@@ -46,7 +66,9 @@ namespace Oak
 
 	protected:
 
+		#ifndef DOXYGEN_SKIP
 		json_value* FindValue(const char* name);
+		#endif
 	};
 }
 

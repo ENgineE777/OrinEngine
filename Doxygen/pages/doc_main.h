@@ -34,17 +34,11 @@
       \defgroup gr_code_root_font Font
       \{
       \}
-      \defgroup gr_code_root_font Memory
+      \defgroup gr_code_root_memory Memory
       \{
       \}
       \defgroup gr_code_root_render Render
       \{
-         \defgroup gr_code_root_render_debug Debug
-         \{
-         \}
-         \defgroup gr_code_root_render_dx11 DX11
-         \{
-         \}
       \}
       \defgroup gr_code_root_task_executor Task executor
       \{

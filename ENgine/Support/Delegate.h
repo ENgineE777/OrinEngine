@@ -2,6 +2,10 @@
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_common
+	*/
+
 	class Object
 	{
 	public:

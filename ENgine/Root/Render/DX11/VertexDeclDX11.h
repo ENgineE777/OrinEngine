@@ -9,6 +9,8 @@ namespace Oak
 {
 	class VertexDeclDX11 : public VertexDecl
 	{
+		virtual void Release();
+
 	public:
 
 		eastl::vector<D3D11_INPUT_ELEMENT_DESC> layoutDesc;
@@ -17,7 +19,5 @@ namespace Oak
 
 		VertexDeclDX11(int count, VertexDecl::ElemDesc* elems);
 		void Apply(ShaderDX11* shader);
-
-		virtual void Release();
 	};
 }

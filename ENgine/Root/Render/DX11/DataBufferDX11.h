@@ -10,6 +10,7 @@ namespace Oak
 {
 	class DataBufferDX11 : public DataBuffer
 	{
+		virtual void Release();
 	public:
 
 		ID3D11Buffer* buffer = nullptr;
@@ -18,6 +19,5 @@ namespace Oak
 
 		virtual void* Lock();
 		virtual void Unlock();
-		virtual void Release();
 	};
 }

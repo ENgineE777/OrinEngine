@@ -42,6 +42,7 @@ namespace Oak
 
 		FileInMemory buffer;
 		class TextureDX11* textures[16];
+		virtual void Release();
 
 	public:
 
@@ -53,7 +54,5 @@ namespace Oak
 
 		virtual void Apply();
 		virtual void UpdateConstants();
-
-		virtual void Release();
 	};
 }

@@ -5,6 +5,10 @@
 #include "Vector4.h"
 #include "Quaternion.h"
 
+/**
+\ingroup gr_code_common_math
+*/
+
 namespace Oak::Math
 {
 	constexpr static float Radian = 0.01745329f;

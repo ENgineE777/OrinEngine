@@ -13,10 +13,14 @@ namespace Oak
 {
 	class TextureDX11 : public Texture
 	{
+		friend class DeviceDX11;
+		friend class ShaderDX11;
+
 		ID3D11SamplerState* sampler;
 		bool sampler_need_recrete;
 
-	public:
+		virtual void Release();
+
 		ID3D11Texture2D* texture;
 		ID3D11ShaderResourceView* srview;
 
@@ -27,6 +31,8 @@ namespace Oak
 
 		TextureDX11(int w, int h, TextureFormat f, int l, bool rt, TextureType tp);
 
+		public:
+
 		virtual void SetFilters(TextureFilter magmin, TextureFilter mipmap);
 		virtual void SetAdress(TextureAddress adress);
 		virtual void SetAdressU(TextureAddress adress);
@@ -34,9 +40,11 @@ namespace Oak
 		virtual void SetAdressW(TextureAddress adress);
 	
 		virtual void GenerateMips();
-		virtual void Apply(int slot);
 
 		virtual void Update(int level, int layer, uint8_t* data, int stride);
-		virtual void Release();
+
+		protected:
+
+		virtual void Apply(int slot);
 	};
 }

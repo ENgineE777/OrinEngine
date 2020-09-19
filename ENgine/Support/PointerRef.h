@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include "Defines.h"
 
+/**
+\ingroup gr_code_common
+*/
+
 namespace Oak
 {
 	template<class T>

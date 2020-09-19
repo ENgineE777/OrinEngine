@@ -6,6 +6,10 @@
 #include "Root/Files/JSONReader.h"
 #include "Root/Files/JSONWriter.h"
 
+/**
+\ingroup gr_code_common
+*/
+
 namespace Oak
 {
 	struct MetaDataEnum
@@ -15,6 +19,13 @@ namespace Oak
 		eastl::vector<eastl::string> names;
 		eastl::vector<int> values;
 	};
+
+	/**
+	\brief MetaData
+
+	Class for storing class meta data which used in serialization/desirialization and editiong property
+
+	*/
 
 	class MetaData
 	{

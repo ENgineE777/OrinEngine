@@ -3,6 +3,10 @@
 
 #include <stdint.h>
 
+/**
+\ingroup gr_code_common
+*/
+
 namespace Oak
 {
 	#define COLOR_WHITE Color()
@@ -34,6 +38,13 @@ namespace Oak
 
 	#define COLOR_CYAN Color(0.0f, 1.0f, 1.0f)
 	#define COLOR_CYAN_A(alpha) Color(0.0f, 1.0f, 1.0f, alpha)
+
+	/**
+	\brief Color
+
+	This is representation of a color.
+
+	*/
 
 	class Color
 	{

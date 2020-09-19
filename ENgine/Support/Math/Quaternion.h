@@ -6,6 +6,10 @@
 
 namespace Oak::Math
 {
+	/**
+	\ingroup gr_code_common_math
+	*/
+
 	class Quaternion
 	{
 	public:

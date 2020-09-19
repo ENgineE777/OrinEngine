@@ -113,7 +113,7 @@ namespace Oak
 		void SetupSlopeZBias(bool enable, float slopeZBias, float depthOffset) override;
 
 		void SetScissors(bool enable) override;
-		void SetScissorRect(Rect rec) override;
+		void SetScissorRect(Rect rect) override;
 
 		void SetViewport(const Viewport& viewport) override;
 		void GetViewport(Viewport& viewport) override;

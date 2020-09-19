@@ -2,6 +2,10 @@
 
 #include <eastl/string.h>
 
+/**
+\ingroup gr_code_common
+*/
+
 namespace Oak::StringUtils
 {
 	void Init();
