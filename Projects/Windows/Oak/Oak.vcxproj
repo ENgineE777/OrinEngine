@@ -195,6 +195,7 @@
     <ClInclude Include="..\..\..\ENgine\Support\Math\Vector3.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h" />
     <ClInclude Include="..\..\..\ENgine\Support\MetaData.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\PointerRef.h" />
     <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Support.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h" />

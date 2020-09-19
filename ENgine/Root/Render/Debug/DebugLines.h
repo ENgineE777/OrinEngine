@@ -30,8 +30,8 @@ namespace Oak
 
 		ProgramRef prg;
 		ProgramRef prgDepth;
-		VertexDecl* vdecl = nullptr;
-		DataBuffer* buffer = nullptr;
+		VertexDeclRef vdecl;
+		DataBufferRef buffer;
 
 	public:
 

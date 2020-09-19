@@ -23,9 +23,9 @@ namespace Oak
 		eastl::vector<Box> boxes;
 
 		ProgramRef prg;
-		DataBuffer* vbuffer;
-		VertexDecl* vdecl;
-		DataBuffer* ibuffer;
+		DataBufferRef vbuffer;
+		VertexDeclRef vdecl;
+		DataBufferRef ibuffer;
 
 	public:
 	

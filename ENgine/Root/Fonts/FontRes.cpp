@@ -29,8 +29,6 @@ namespace Oak
 
 		height = hgt;
 
-		tex = nullptr;
-
 		need_update_tex = false;
 		tex_buffer = nullptr;
 
@@ -76,11 +74,8 @@ namespace Oak
 
 	bool FontRes::Load()
 	{
-		RELEASE(tex)
-
 		tex_w = -1;
 		tex_h = -1;
-		tex = nullptr;
 
 		if (!font_fb.Load(fileName.c_str()))
 		{
@@ -199,7 +194,7 @@ namespace Oak
 
 		if (len == 0) return;
 
-		root.render.GetDevice()->SetProgram(root.fonts.fntProg.Get());
+		root.render.GetDevice()->SetProgram(root.fonts.fntProg);
 
 		Math::Matrix tmp;
 
@@ -354,13 +349,6 @@ namespace Oak
 
 	void FontRes::Release()
 	{
-		refCounter--;
-
-		if (refCounter > 0)
-		{
-			return;
-		}
-
 		root.fonts.fonts.erase(name);
 
 		if (tex_buffer)
@@ -370,8 +358,6 @@ namespace Oak
 		}
 
 		DELETE_PTR(context)
-
-		RELEASE(tex)
 
 		delete this;
 	}

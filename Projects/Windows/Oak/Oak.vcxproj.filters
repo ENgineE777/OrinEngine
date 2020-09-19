@@ -808,6 +808,9 @@
     <ClInclude Include="..\..\..\ENgine\Support\MetaData.h">
       <Filter>ENgine\Support</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\PointerRef.h">
+      <Filter>ENgine\Support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.sh">

@@ -17,8 +17,8 @@ namespace Oak
 		};
 
 		ProgramRef fntProg;
-		DataBuffer* vbuffer = nullptr;
-		VertexDecl* vdecl = nullptr;
+		DataBufferRef vbuffer;
+		VertexDeclRef vdecl;
 
 	public:
 

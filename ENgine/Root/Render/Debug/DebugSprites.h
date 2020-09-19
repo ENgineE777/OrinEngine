@@ -14,8 +14,8 @@ namespace Oak
 		};
 
 		ProgramRef prg;
-		VertexDecl* vdecl = nullptr;
-		DataBuffer* vbuffer = nullptr;
+		VertexDeclRef vdecl;
+		DataBufferRef vbuffer;
 
 		struct Sprite
 		{

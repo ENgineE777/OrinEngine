@@ -31,9 +31,9 @@ namespace Oak
 		eastl::vector<Sphere> spheres;
 
 		ProgramRef prg;
-		VertexDecl* vdecl;
-		DataBuffer* vbuffer;
-		DataBuffer* ibuffer;
+		VertexDeclRef vdecl;
+		DataBufferRef vbuffer;
+		DataBufferRef ibuffer;
 
 	public:
 	

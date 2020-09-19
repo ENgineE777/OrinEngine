@@ -72,7 +72,7 @@ namespace Oak
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer( 0, vbuffer);
 
-		root.render.GetDevice()->SetProgram(prg.Get());
+		root.render.GetDevice()->SetProgram(prg);
 		Math::Vector4 params[3];
 
 		params[0] = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0, 0);
@@ -95,9 +95,6 @@ namespace Oak
 
 	void DebugSprites::Release()
 	{
-		RELEASE(vbuffer)
-		RELEASE(vdecl)
-
 		delete this;
 	}
 }

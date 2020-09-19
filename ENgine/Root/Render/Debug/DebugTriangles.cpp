@@ -33,7 +33,7 @@ namespace Oak
 			return;
 		}
 
-		root.render.GetDevice()->SetProgram(prg.Get());
+		root.render.GetDevice()->SetProgram(prg);
 
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, vbuffer);
@@ -98,9 +98,6 @@ namespace Oak
 
 	void DebugTriangles::Release()
 	{
-		RELEASE(vbuffer)
-		RELEASE(vdecl)
-
 		delete this;
 	}
 }

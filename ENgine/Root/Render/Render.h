@@ -28,9 +28,7 @@ namespace Oak
 	class Render
 	{
 		friend class Program;
-		friend class ProgramRef;
 		friend class Texture;
-		friend class TextureRef;
 		friend class TextureDX11;
 		friend class TextureGLES;
 
@@ -53,7 +51,7 @@ namespace Oak
 		TaskExecutor::GroupTaskPool* groupTaskPool;
 		TaskExecutor::SingleTaskPool* debugTaskPool;
 
-		Texture* whiteTex = nullptr;
+		TextureRef whiteTex;
 
 	public:
 
@@ -89,7 +87,7 @@ namespace Oak
 
 		inline Texture* GetWhiteTexture()
 		{
-			return whiteTex;
+			return whiteTex.Get();
 		}
 
 		Math::Vector3 TransformToScreen(Math::Vector3 pos, int type);

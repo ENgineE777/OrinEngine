@@ -117,15 +117,7 @@ namespace Oak
 			programs[name] = program;
 		}
 
-		program->refCounter++;
-
-		ProgramRef ref;
-		ref.file = file;
-		ref.line = line;
-		ref.flMarker = new(file, line) ProgramRef();
-		ref.program = program;
-	
-		return ref;
+		return ProgramRef(program, file, line);
 	}
 
 	TextureRef Render::LoadTexture(const char* name, const char* file, int line)
@@ -152,7 +144,7 @@ namespace Oak
 			int height;
 			uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
 
-			texture = device->CreateTexture(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
+			texture = device->CreateTextureInner(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
 			texture->name = name;
 
 			texture->Update(0, 0, data, width * 4);
@@ -164,15 +156,7 @@ namespace Oak
 			textures[name] = texture;
 		}
 
-		texture->refCounter++;
-
-		TextureRef ref;
-		ref.file = file;
-		ref.line = line;
-		ref.flMarker = new(file, line) TextureRef();
-		ref.texture = texture;
-
-		return ref;
+		return TextureRef(texture, file, line);
 	}
 
 	void Render::AddExecutedLevelPool(int level)
@@ -319,7 +303,7 @@ namespace Oak
 		groupTaskPool->DelTaskPool(debugTaskPool);
 		delete groupTaskPool;
 
-		RELEASE(whiteTex)
+		whiteTex.ReleaseRef();
 		RELEASE(lines)
 		RELEASE(spheres)
 		RELEASE(boxes)

@@ -158,16 +158,13 @@ namespace Oak
 
 	void DebugLines::Draw(float dt)
 	{
-		DrawLines(prgDepth.Get(), lines_with_depth, false);
-		DrawLines(prg.Get(), lines, false);
-		DrawLines(prg.Get(), lines_2d, true);
+		DrawLines(prgDepth, lines_with_depth, false);
+		DrawLines(prg, lines, false);
+		DrawLines(prg, lines_2d, true);
 	}
 
 	void DebugLines::Release()
 	{
-		RELEASE(buffer)
-		RELEASE(vdecl)
-
 		delete this;
 	}
 }

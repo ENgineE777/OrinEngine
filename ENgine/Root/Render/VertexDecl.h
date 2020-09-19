@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Support/Support.h"
+#include "Support/PointerRef.h"
 
 namespace Oak
 {
@@ -31,6 +32,9 @@ namespace Oak
 
 	class VertexDecl
 	{
+		friend class PointerRef<VertexDecl>;
+		int refCounter = 0;
+
 	public:
 
 		struct ElemDesc
@@ -42,4 +46,6 @@ namespace Oak
 
 		virtual void Release() = 0;
 	};
+
+	typedef PointerRef<VertexDecl> VertexDeclRef;
 }

@@ -368,9 +368,9 @@ namespace Oak
 		}
 	}
 
-	VertexDecl* DeviceDX11::CreateVertexDecl(int count, VertexDecl::ElemDesc* elems, const char* file, int line)
+	VertexDeclRef DeviceDX11::CreateVertexDecl(int count, VertexDecl::ElemDesc* elems, const char* file, int line)
 	{
-		return new(file, line) VertexDeclDX11(count, elems);
+		return VertexDeclRef(new(file, line) VertexDeclDX11(count, elems), file, line);
 	}
 
 	void DeviceDX11::SetVertexDecl(VertexDecl* vdecl)
@@ -382,9 +382,9 @@ namespace Oak
 		}
 	}
 
-	DataBuffer* DeviceDX11::CreateBuffer(int count, int stride, const char* file, int line)
+	DataBufferRef DeviceDX11::CreateBuffer(int count, int stride, const char* file, int line)
 	{
-		return new(file, line) DataBufferDX11(count, stride);
+		return DataBufferRef(new(file, line) DataBufferDX11(count, stride), file, line);
 	}
 
 	void DeviceDX11::SetVertexBuffer(int slot, DataBuffer* buffer)
@@ -424,9 +424,14 @@ namespace Oak
 		return NEW ShaderDX11(type, name);
 	}
 
-	Texture* DeviceDX11::CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp, const char* file, int line)
+	Texture* DeviceDX11::CreateTextureInner(int w, int h, TextureFormat f, int l, bool rt, TextureType tp, const char* file, int line)
 	{
 		return new(file, line) TextureDX11(w, h, f, l, rt, tp);
+	}
+
+	TextureRef DeviceDX11::CreateTexture(int w, int h, TextureFormat f, int l, bool rt, TextureType tp, const char* file, int line)
+	{
+		return TextureRef(CreateTextureInner(w, h, f, l, rt, tp, file, line), file, line);
 	}
 
 	int DeviceDX11::GetPrimitiveType(PrimitiveTopology type)

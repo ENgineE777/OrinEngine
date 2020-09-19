@@ -2,15 +2,19 @@
 #pragma once
 
 #include "Support/Support.h"
+#include "Support/PointerRef.h"
 
 namespace Oak
 {
 	class DataBuffer
 	{
+		friend class PointerRef<DataBuffer>;
+
 	protected:
 
 		int size;
 		int stride;
+		int refCounter = 0;
 
 	public:
 
@@ -26,4 +30,6 @@ namespace Oak
 
 		virtual void Release() = 0;
 	};
+
+	typedef PointerRef<DataBuffer> DataBufferRef;
 }

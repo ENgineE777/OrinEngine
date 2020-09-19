@@ -5,13 +5,14 @@
 #include "Texture.h"
 #include <eastl/map.h>
 #include "Support/ClassFactory.h"
+#include "Support/PointerRef.h"
 
 namespace Oak
 {
 	class Program
 	{
 		friend class Render;
-		friend class ProgramRef;
+		friend class PointerRef<Program>;
 
 	protected:
 		eastl::string name;
@@ -47,26 +48,5 @@ namespace Oak
 	CLASSFACTORYDEF(Program)
 	CLASSFACTORYDEF_END()
 
-	class ProgramRef
-	{
-		friend class Render;
-		friend class Fonts;
-
-		Program* program = nullptr;
-		const char* file = nullptr;
-		int line = 0;
-		ProgramRef* flMarker = nullptr;
-
-	public:
-
-		ProgramRef() = default;
-		ProgramRef(const ProgramRef& ref);
-		~ProgramRef();
-		Program* Get();
-		Program* operator->() const;
-		ProgramRef& operator=(const ProgramRef& ref);
-
-	protected:
-		void ReleaseRef();
-	};
+	typedef PointerRef<Program> ProgramRef;
 }

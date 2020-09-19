@@ -86,23 +86,13 @@ namespace Oak
 			fonts[nm] = res;
 		}
 
-		res->refCounter++;
-
-		FontRef ref;
-
-		ref.file = file;
-		ref.line = line;
-		ref.flMarker = new(file, line) FontRef();
-		ref.res = res;
-
-		return ref;
+		return FontRef(res, file, line);
 	}
 
 	void Fonts::Release()
 	{
-		RELEASE(vbuffer)
-		RELEASE(vdecl)
-
+		vbuffer.ReleaseRef();
+		vdecl.ReleaseRef();
 		fntProg.ReleaseRef();
 	}
 }

@@ -15,7 +15,7 @@ namespace Oak
 	public:
 
 		friend class Fonts;
-		friend class FontRef;
+		friend class PointerRef<FontRes>;
 
 		struct Glyph
 		{
@@ -43,7 +43,7 @@ namespace Oak
 
 	protected:
 
-		Texture* tex;
+		TextureRef tex;
 		int      cur_tex_x;
 		int      cur_tex_y;
 		int      cur_tex_row_height;
