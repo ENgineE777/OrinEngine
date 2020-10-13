@@ -39,13 +39,13 @@ public:\
 	}\
 	virtual const char* GetName() = 0;\
 	virtual const char* GetShortName() = 0;\
-	virtual baseClass* Create() = 0;\
-	static baseClass* Create(const char* name)\
+	virtual baseClass* Create(const char* file, int line) = 0;\
+	static baseClass* Create(const char* name, const char* file, int line)\
 	{\
 		ClassFactory##baseClass* decl = Find(name);\
 		if (decl)\
 		{\
-			return decl->Create();\
+			return decl->Create(file, line);\
 		}\
 		return nullptr;\
 	}\
@@ -63,7 +63,7 @@ class ClassFactory##shortClassName##baseClass : public ClassFactory##baseClass\
 {\
 	virtual const char* GetName() { return #shortClassName; };\
 	virtual const char* GetShortName() { return shortName; };\
-	virtual baseClass* Create() { return NEW fullClassName(); };
+	virtual baseClass* Create(const char* file, int line) { return new(file, line) fullClassName(); };
 
 #define CLASSREGEX_END(baseClass, shortClassName)\
 };\

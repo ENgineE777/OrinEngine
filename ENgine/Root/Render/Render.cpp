@@ -109,7 +109,7 @@ namespace Oak
 		else
 		{
 			auto decls = ClassFactoryProgram::Decls();
-			program = ClassFactoryProgram::Create(name);
+			program = ClassFactoryProgram::Create(name, file, line);
 			program->Init();
 			program->name = name;
 			device->PrepareProgram(program);
