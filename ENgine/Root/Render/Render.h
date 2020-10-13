@@ -21,6 +21,10 @@ namespace Oak
 		RightBottom
 	};
 
+	/**
+	\ingroup gr_code_root_render
+	*/
+
 	enum class TransformStage
 	{
 		World = 0 /*!< World trasformation */,
@@ -28,6 +32,10 @@ namespace Oak
 		Projection /*!< Projection trasformation */,
 		WrldViewProj /*!< Final transformation */
 	};
+
+	/**
+	\ingroup gr_code_root_render
+	*/
 
 	/**
 	\brief Render

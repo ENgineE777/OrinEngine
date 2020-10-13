@@ -6,6 +6,10 @@
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_root_render
+	*/
+
 	enum class ShaderType
 	{
 		Vertex = 0 /*!< Vertex shader */,
