@@ -1,5 +1,6 @@
 #include "Timer.h"
 #include <stdio.h>
+#include "stb_sprintf.h"
 
 #ifdef PLATFORM_WIN
 #define WIN32_LEAN_AND_MEAN
@@ -81,7 +82,7 @@ namespace Oak::Timer
 			stampSec -= num * 60.0f;
 		}
 
-		sprintf_s(stampStr, 32, "%i:%2.3f - ", stampMin, stampSec);
+		stbsp_snprintf(stampStr, 32, "%i:%2.3f - ", stampMin, stampSec);
 
 		if (deltaTime < 0.0f) deltaTime = 0.0f;
 

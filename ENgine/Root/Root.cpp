@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include "stb_sprintf.h"
 
 #ifdef PLATFORM_WIN
 #include <windows.h>
@@ -78,7 +79,7 @@ namespace Oak
 		va_list args;
 		va_start(args, text);
 
-		vsnprintf(buffer, sizeof(buffer) - 4, text, args);
+		stbsp_vsnprintf(buffer, sizeof(buffer) - 4, text, args);
 
 		va_end(args);
 

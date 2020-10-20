@@ -5,6 +5,8 @@
 #include "Debug/Debug.h"
 #include <memory>
 
+#include "stb_sprintf.h"
+
 #ifdef PLATFORM_WIN
 #include "DX11/DeviceDX11.h"
 #endif
@@ -108,7 +110,6 @@ namespace Oak
 		}
 		else
 		{
-			auto decls = ClassFactoryProgram::Decls();
 			program = ClassFactoryProgram::Create(name, file, line);
 			program->Init();
 			program->name = name;
@@ -236,7 +237,7 @@ namespace Oak
 		char buffer[256];
 		va_list args;
 		va_start(args, text);
-		vsnprintf(buffer, 256, text, args);
+		stbsp_vsnprintf(buffer, 256, text, args);
 		va_end(args);
 
 		font->AddText(pos, corner, color, buffer);
@@ -247,7 +248,7 @@ namespace Oak
 		char buffer[256];
 		va_list args;
 		va_start(args, text);
-		vsnprintf(buffer, 256, text, args);
+		stbsp_vsnprintf(buffer, 256, text, args);
 		perror(buffer);
 		va_end(args);
 

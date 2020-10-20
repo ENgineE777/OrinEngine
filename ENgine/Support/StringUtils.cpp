@@ -5,6 +5,9 @@
 #include <eastl/map.h>
 #include <string> 
 
+#define STB_SPRINTF_IMPLEMENTATION
+#include "stb_sprintf.h"
+
 namespace Oak::StringUtils
 {
 	char tempStr[1024];
@@ -82,7 +85,7 @@ namespace Oak::StringUtils
 		va_list args;
 		va_start(args, format);
 
-		vsnprintf(str, len - 1, format, args);
+		stbsp_vsnprintf(str, len - 1, format, args);
 
 		va_end(args);
 	}
@@ -92,7 +95,7 @@ namespace Oak::StringUtils
 		va_list args;
 		va_start(args, format);
 
-		vsnprintf(tempStr, 1023, format, args);
+		stbsp_vsnprintf(tempStr, 1023, format, args);
 
 		va_end(args);
 

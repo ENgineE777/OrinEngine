@@ -2,6 +2,7 @@
 #include "File.h"
 #include "stdarg.h"
 #include <stdlib.h> 
+#include "stb_sprintf.h"
 
 namespace Oak
 {
@@ -55,7 +56,7 @@ namespace Oak
 		va_list args;
 		va_start( args, format );
 
-		int len = vsnprintf(0, 0, format, args);
+		int len = stbsp_vsnprintf(0, 0, format, args);
 
 		if (len > bufLen + 1)
 		{
@@ -65,7 +66,7 @@ namespace Oak
 
 		buf[0] = 0;
 
-		vsnprintf( buf, bufLen, format, args );
+		stbsp_vsnprintf( buf, bufLen, format, args );
 		va_end( args );
 	
 		fprintf(file,"%s",buf);

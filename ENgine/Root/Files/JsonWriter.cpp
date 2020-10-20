@@ -2,6 +2,7 @@
 #include "JsonWriter.h"
 #include <stdarg.h>
 #include "Root/Root.h"
+#include "stb_sprintf.h"
 
 namespace Oak
 {
@@ -265,7 +266,7 @@ namespace Oak
 			char dest[1024];
 			va_list argptr;
 			va_start(argptr, format);
-			vsnprintf(dest, 1024, format, argptr);
+			stbsp_vsnprintf(dest, 1024, format, argptr);
 			va_end(argptr);
 
 			for (int i=0; i<offset; i++)
