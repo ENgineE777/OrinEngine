@@ -206,7 +206,7 @@ namespace Oak
 		FinishBlock();
 	}
 
-	void JsonWriter::Write(const char* name, Math::Matrix* val)
+	void JsonWriter::Write(const char* name, Math::Matrix& val)
 	{
 		StartBlock(name);
 
@@ -214,7 +214,7 @@ namespace Oak
 		{
 			char tmp[16];
 			StringUtils::Printf(tmp, 16, "m%i", i);
-			Write(tmp, val->matrix[i]);
+			Write(tmp, val.matrix[i]);
 		}
 
 		FinishBlock();
