@@ -6,6 +6,7 @@
 #include "Root/Fonts/Fonts.h"
 #include "Root/Memory/MemoryManager.h"
 #include "Root/Render/Render.h"
+#include "Root/Scenes/SceneManager.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 
 namespace Oak
@@ -60,6 +61,11 @@ namespace Oak
 		\brief Access to render service
 		*/
 		Render render;
+
+		/**
+		\brief Access to scene manager
+		*/
+		SceneManager scenes;
 
 		/**
 		\brief Access to task executor service

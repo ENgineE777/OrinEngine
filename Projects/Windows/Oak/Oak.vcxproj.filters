@@ -80,6 +80,12 @@
     <Filter Include="Libs\imgui">
       <UniqueIdentifier>{ed4bf8b4-850d-4f30-9eb1-122b1c9102b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Scenes">
+      <UniqueIdentifier>{57a969e5-1214-48e9-9a38-5dd51eff646d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\SceneEntities">
+      <UniqueIdentifier>{dc103d28-c185-44bd-a1f1-5ff137295566}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -337,6 +343,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp">
       <Filter>ENgine\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneEntity.cpp">
+      <Filter>ENgine\Root\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneManager.cpp">
+      <Filter>ENgine\Root\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Scenes\Scene.cpp">
+      <Filter>ENgine\Root\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity.cpp">
+      <Filter>ENgine\SceneEntities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -810,6 +828,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\PointerRef.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneEntity.h">
+      <Filter>ENgine\Root\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneManager.h">
+      <Filter>ENgine\Root\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Scenes\Scene.h">
+      <Filter>ENgine\Root\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\Transform.h">
+      <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity.h">
+      <Filter>ENgine\SceneEntities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
