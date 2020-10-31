@@ -19,7 +19,7 @@ namespace Oak
 
 	*/
 
-	class JSONReader
+	class JsonReader
 	{
 		#ifndef DOXYGEN_SKIP
 		block_allocator allocator;
@@ -34,8 +34,8 @@ namespace Oak
 
 	public:
 
-		JSONReader();
-		~JSONReader();
+		JsonReader();
+		~JsonReader();
 
 		/**
 		\brief Parse json file

@@ -173,7 +173,7 @@ namespace Oak
 		prev_ms_x = prev_ms_y = prev_ms_z = -1000;
 	#endif
 
-		JSONReader reader;
+		JsonReader reader;
 
 		if (reader.Parse(name_haliases))
 		{
@@ -244,7 +244,7 @@ namespace Oak
 
 	bool Controls::LoadAliases(const char* name_aliases)
 	{
-		JSONReader reader;
+		JsonReader reader;
 
 		bool res = false;
 

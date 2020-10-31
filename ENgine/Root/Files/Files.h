@@ -2,6 +2,8 @@
 #pragma once
 
 #include <stdio.h>
+#include "JsonReader.h"
+#include "JsonWriter.h"
 
 namespace Oak
 {

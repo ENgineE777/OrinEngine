@@ -57,7 +57,7 @@ namespace Oak
 		void Write(const char* name, int64_t val);
 		void Write(const char* name, Math::Vector2& val);
 		void Write(const char* name, Math::Vector3& val);
-		void Write(const char* name, Math::Matrix* val);
+		void Write(const char* name, Math::Matrix& val);
 		void Write(const char* name, Color& val);
 		void Write(const char* name, Math::Quaternion& val);
 

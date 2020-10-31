@@ -159,7 +159,7 @@ namespace Oak
 
 		void Prepare(void* owner, void* root = nullptr);
 		void SetDefValues();
-		void Load(JSONReader& reader);
+		void Load(JsonReader& reader);
 		void PostLoad();
 		void Save(JsonWriter& writer);
 

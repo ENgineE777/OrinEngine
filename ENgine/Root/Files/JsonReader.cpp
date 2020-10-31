@@ -1,5 +1,5 @@
 
-#include "JSONReader.h"
+#include "JsonReader.h"
 #include "Support/StringUtils.h"
 #include "stdio.h"
 #include <string.h>
@@ -8,16 +8,16 @@
 
 namespace Oak
 {
-	JSONReader::JSONReader() : allocator(1 << 10)
+	JsonReader::JsonReader() : allocator(1 << 10)
 	{
 	}
 
-	JSONReader::~JSONReader()
+	JsonReader::~JsonReader()
 	{
 		allocator.free();
 	}
 
-	bool JSONReader::Parse(const char* name)
+	bool JsonReader::Parse(const char* name)
 	{
 		if (file.Load(name))
 		{
@@ -46,7 +46,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::EnterBlock(const char* name)
+	bool JsonReader::EnterBlock(const char* name)
 	{
 		nodes[curDepth +1] = FindValue(name);
 
@@ -76,7 +76,7 @@ namespace Oak
 		return false;
 	}
 
-	void JSONReader::LeaveBlock()
+	void JsonReader::LeaveBlock()
 	{
 		if (curDepth == 0) return;
 
@@ -89,7 +89,7 @@ namespace Oak
 		curNode = nodes[curDepth];
 	}
 
-	bool JSONReader::IsString(const char* name)
+	bool JsonReader::IsString(const char* name)
 	{
 		json_value* node = FindValue(name);
 
@@ -104,7 +104,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, char* val, int valLen)
+	bool JsonReader::Read(const char* name, char* val, int valLen)
 	{
 		json_value* node = FindValue(name);
 	
@@ -138,7 +138,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, eastl::string& val)
+	bool JsonReader::Read(const char* name, eastl::string& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -178,7 +178,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, bool& val)
+	bool JsonReader::Read(const char* name, bool& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -223,7 +223,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, float& val)
+	bool JsonReader::Read(const char* name, float& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -251,7 +251,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, uint16_t& val)
+	bool JsonReader::Read(const char* name, uint16_t& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -281,7 +281,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, int& val)
+	bool JsonReader::Read(const char* name, int& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -311,7 +311,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, uint32_t& val)
+	bool JsonReader::Read(const char* name, uint32_t& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -341,7 +341,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, int64_t& val)
+	bool JsonReader::Read(const char* name, int64_t& val)
 	{
 		json_value* node = FindValue(name);
 
@@ -370,7 +370,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, Math::Vector2& val)
+	bool JsonReader::Read(const char* name, Math::Vector2& val)
 	{
 		if (EnterBlock(name))
 		{
@@ -385,7 +385,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, Math::Vector3& val)
+	bool JsonReader::Read(const char* name, Math::Vector3& val)
 	{
 		if (EnterBlock(name))
 		{
@@ -401,7 +401,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, Math::Matrix& val)
+	bool JsonReader::Read(const char* name, Math::Matrix& val)
 	{
 		if (EnterBlock(name))
 		{
@@ -420,7 +420,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, Color& val)
+	bool JsonReader::Read(const char* name, Color& val)
 	{
 		if (EnterBlock(name))
 		{
@@ -437,7 +437,7 @@ namespace Oak
 		return false;
 	}
 
-	bool JSONReader::Read(const char* name, Math::Quaternion& val)
+	bool JsonReader::Read(const char* name, Math::Quaternion& val)
 	{
 		if (EnterBlock(name))
 		{
@@ -454,7 +454,7 @@ namespace Oak
 		return false;
 	}
 
-	json_value* JSONReader::FindValue(const char* name)
+	json_value* JsonReader::FindValue(const char* name)
 	{
 		if (!root)
 		{

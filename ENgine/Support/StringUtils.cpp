@@ -16,7 +16,7 @@ namespace Oak::StringUtils
 
 	void Init()
 	{
-		JSONReader reader;
+		JsonReader reader;
 
 		reader.Parse("ENgine/low2hi.dat");
 

@@ -88,7 +88,7 @@ namespace Oak
 		}
 	}
 
-	void MetaData::Load(JSONReader& reader)
+	void MetaData::Load(JsonReader& reader)
 	{
 		for (int i = 0; i < properties.size(); i++)
 		{
