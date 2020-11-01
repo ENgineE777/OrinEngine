@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include "Root/Files/JsonReader.h"
 #include "Root/Files/JsonWriter.h"
 
