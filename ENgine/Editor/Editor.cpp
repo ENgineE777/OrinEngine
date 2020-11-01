@@ -5,76 +5,13 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
-#include "Support\MetaData.h"
+#include "SceneEntities\TestEntity.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace Oak
 {
-	class TestItem
-	{
-	public:
-
-		bool boolProp = false;
-		int intProp = 50;
-		float floatProp = 1.0f;
-
-		META_DATA_DECL_BASE(TestItem)
-	};
-
-	META_DATA_DESC(TestItem)
-		BOOL_PROP(TestItem, boolProp, false, "Values", "Bool value", "sdfdsf")
-		INT_PROP(TestItem, intProp, 80, "Values", "Int value", "sdfdsf")
-		FLOAT_PROP(TestItem, floatProp, 1.0f, "Values", "Float value", "sdfdsf")
-	META_DATA_DESC_END()
-
-	class TestProperties
-	{
-	public:
-
-		enum Shape
-		{
-			Box,
-			Sphere,
-			Cylinder
-		};
-
-		bool boolProp = false;
-		int intProp = 50;
-		float floatProp = 1.0f;
-		float floatProp2 = 1.0f;
-		eastl::string strProp;
-		eastl::string filenameProp;
-		Color colorProp;
-		Shape enumProp;
-		eastl::vector<TestItem> itemsProp;
-
-		META_DATA_DECL_BASE(TestProperties)
-	};
-
-	void CallbackTest(void* owner)
-	{
-		TestProperties* jkl = (TestProperties*)owner;
-	}
-
-	META_DATA_DESC(TestProperties)
-		BOOL_PROP(TestProperties, boolProp, false, "Category1", "Bool value", "sdfdsf")
-		INT_PROP(TestProperties, intProp, 80, "Category1", "Int value", "sdfdsf")
-		FLOAT_PROP(TestProperties, floatProp, 1.0f, "Category1", "Float value", "sdfdsf")
-		FLOAT_PROP(TestProperties, floatProp2, 5.0f, "Category2", "Another float value", "sdfdsf")
-		STRING_PROP(TestProperties, strProp, "ABC", "Category2", "String value")
-		FILENAME_PROP(TestProperties, filenameProp, "", "Category2", "File Name")
-		COLOR_PROP(TestProperties, colorProp, COLOR_GREEN, "Category3", "Color value")
-		ENUM_PROP(TestProperties, enumProp, TestProperties::Shape::Box, "Category3", "Enum value", "brief")
-			ENUM_ELEM("Box", 0)
-			ENUM_ELEM("Sphere", 1)
-			ENUM_ELEM("Cylinder", 2)
-		ENUM_END
-		CALLBACK_PROP(TestProperties, CallbackTest, "Values", "Callaback")
-		ARRAY_PROP(TestProperties, itemsProp, TestItem, "Values", "Items array")
-	META_DATA_DESC_END()
-
-	TestProperties test;
+	TestEntity* entity = nullptr;
 
 	bool Editor::Init(HWND setHwnd)
 	{
@@ -107,13 +44,15 @@ namespace Oak
 
 		SetupImGUI();
 
+		entity = (TestEntity*)ClassFactorySceneEntity::Create("TestEntity", _FL_);
+
 		{
 			TestItem item;
 			item.boolProp = true;
 			item.intProp = 7;
 			item.floatProp = 2.0f;
 
-			test.itemsProp.push_back(item);
+			entity->itemsProp.push_back(item);
 		}
 
 		{
@@ -122,7 +61,7 @@ namespace Oak
 			item.intProp = 9;
 			item.floatProp = 6.0f;
 
-			test.itemsProp.push_back(item);
+			entity->itemsProp.push_back(item);
 		}
 
 		{
@@ -131,11 +70,11 @@ namespace Oak
 			item.intProp = 30;
 			item.floatProp = 20.0f;
 
-			test.itemsProp.push_back(item);
+			entity->itemsProp.push_back(item);
 		}
 
-		test.meta_data.Prepare(&test);
-		test.meta_data.SetDefValues();
+		entity->GetMetaData()->Prepare(entity);
+		entity->GetMetaData()->SetDefValues();
 
 		return true;
 	}
@@ -338,7 +277,7 @@ namespace Oak
 
 			ImGui::Columns(2);
 
-			test.meta_data.ImGuiWidgets();
+			entity->GetMetaData()->ImGuiWidgets();
 
 			ImGui::Columns(1);
 
