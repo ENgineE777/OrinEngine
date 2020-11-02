@@ -22,6 +22,9 @@ namespace Oak
 
 		bool showAbout = false;
 
+		SceneEntity* selectedEntity = nullptr;
+		bool sceneTreePopup = false; 
+
 	public:
 
 		bool Init(HWND hwnd);
@@ -36,6 +39,9 @@ namespace Oak
 		void SetupImGUI();
 		void ShowAbout();
 		void ShowViewport();
+		void SceneTreePopup(bool contextItem);
+
+		void SelectEntity(SceneEntity* entity);
 
 		bool CreateDeviceD3D();
 		void CleanupDeviceD3D();

@@ -11,7 +11,29 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 
 namespace Oak
 {
-	TestEntity* entity = nullptr;
+	Scene scene;
+
+	void AddEntity()
+	{
+		TestEntity * entity = (TestEntity*)scene.CreateEntity("TestEntity");
+
+		int count = Math::RandRange(1.0f, 5.0f);
+
+		for (int i = 0; i < count; i++)
+		{
+			TestItem item;
+			item.boolProp = true;
+			item.intProp = Math::RandRange(0.0f, 100.0f);
+			item.floatProp = Math::RandRange(0.0f, 100.0f);
+
+			entity->itemsProp.push_back(item);
+		}
+
+		entity->intProp = Math::RandRange(0.0f, 100.0f);
+		entity->floatProp = Math::RandRange(0.0f, 100.0f);
+		entity->floatProp2 = Math::RandRange(0.0f, 100.0f);
+		entity->SetName(StringUtils::PrintTemp("TestEntity%i", scene.GetEntityCount()));
+	}
 
 	bool Editor::Init(HWND setHwnd)
 	{
@@ -44,37 +66,7 @@ namespace Oak
 
 		SetupImGUI();
 
-		entity = (TestEntity*)ClassFactorySceneEntity::Create("TestEntity", _FL_);
-
-		{
-			TestItem item;
-			item.boolProp = true;
-			item.intProp = 7;
-			item.floatProp = 2.0f;
-
-			entity->itemsProp.push_back(item);
-		}
-
-		{
-			TestItem item;
-			item.boolProp = false;
-			item.intProp = 9;
-			item.floatProp = 6.0f;
-
-			entity->itemsProp.push_back(item);
-		}
-
-		{
-			TestItem item;
-			item.boolProp = true;
-			item.intProp = 30;
-			item.floatProp = 20.0f;
-
-			entity->itemsProp.push_back(item);
-		}
-
-		entity->GetMetaData()->Prepare(entity);
-		entity->GetMetaData()->SetDefValues();
+		scene.Init();
 
 		return true;
 	}
@@ -152,6 +144,21 @@ namespace Oak
 		ImGui::End();
 	}
 
+	void Editor::SelectEntity(SceneEntity* entity)
+	{
+		if (selectedEntity)
+		{
+			selectedEntity->SetEditMode(false);
+		}
+
+		selectedEntity = entity;
+
+		if (selectedEntity)
+		{
+			selectedEntity->SetEditMode(true);
+		}
+	}
+
 	bool Editor::CreateDeviceD3D()
 	{
 		DXGI_SWAP_CHAIN_DESC sd;
@@ -209,6 +216,56 @@ namespace Oak
 		RELEASE(mainRenderTargetView)
 	}
 
+	void Editor::SceneTreePopup(bool contextItem)
+	{
+		if (sceneTreePopup)
+		{
+			return;
+		}
+
+		if ((contextItem && ImGui::BeginPopupContextItem("CreateEntity")) ||
+			(!contextItem && ImGui::BeginPopupContextWindow("CreateEntity")))
+		{
+			sceneTreePopup = true;
+
+			if (ImGui::BeginMenu("Create Entity"))
+			{
+				auto& decls = ClassFactorySceneEntity::Decls();
+
+				for (auto& decl : decls)
+				{
+					if (ImGui::MenuItem(decl->GetShortName()))
+					{
+						AddEntity();
+					}
+				}
+
+				ImGui::EndMenu();
+			}
+
+			if (selectedEntity && ImGui::MenuItem("Duplicate"))
+			{
+				SceneEntity* copy = scene.CreateEntity(selectedEntity->className);
+				scene.GenerateUID(copy);
+				copy->Copy(selectedEntity);
+
+				eastl::string name = selectedEntity->GetName();
+				name += "_copy";
+
+				copy->SetName(name.c_str());
+			}
+
+			if (selectedEntity && ImGui::MenuItem("Delete"))
+			{
+				SceneEntity* entity = selectedEntity;
+				SelectEntity(nullptr);
+				scene.DeleteObject(entity, true);
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
 	void Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
@@ -246,9 +303,11 @@ namespace Oak
 
 			ImGuiID dock_main_id = dockspaceID;
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
+			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
 
-			ImGui::DockBuilderDockWindow("Properties", dock_left_id);
+			ImGui::DockBuilderDockWindow("Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
+			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
 		}
@@ -272,12 +331,59 @@ namespace Oak
 
 		ImGui::End();
 
+		//ImGui::ShowDemoWindow();
+
+		sceneTreePopup = false;
+
+		{
+			ImGui::Begin("Scene");
+
+			if (scene.GetEntityCount() > 0)
+			{
+				for (int i = 0; i < scene.GetEntityCount(); i++)
+				{
+					SceneEntity* entity = scene.GetEntity(i);
+
+					ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+
+					if (selectedEntity == entity)
+					{
+						node_flags |= ImGuiTreeNodeFlags_Selected;
+					}
+
+					ImGui::TreeNodeEx(entity, node_flags, entity->GetName());
+
+					if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+					{
+						selectedEntity = entity;
+					}
+
+					SceneTreePopup(true);
+
+					if (ImGui::BeginDragDropSource())
+					{
+						ImGui::SetDragDropPayload("_TREENODE", nullptr, 0);
+						ImGui::Text("This is a drag and drop source");
+						ImGui::EndDragDropSource();
+					}
+				}
+			}
+
+			SceneTreePopup(false);
+
+			ImGui::End();
+		}
+
 		{
 			ImGui::Begin("Properties");
 
 			ImGui::Columns(2);
 
-			entity->GetMetaData()->ImGuiWidgets();
+			if (selectedEntity)
+			{
+				selectedEntity->GetMetaData()->Prepare(selectedEntity);
+				selectedEntity->GetMetaData()->ImGuiWidgets();
+			}
 
 			ImGui::Columns(1);
 

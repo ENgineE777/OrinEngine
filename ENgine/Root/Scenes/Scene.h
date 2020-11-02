@@ -89,6 +89,9 @@ namespace Oak
 		void AddPostPlay(int level, Object* entity, Object::DelegateSimple call);
 
 	#ifdef OAK_EDITOR
+		SceneEntity* GetEntity(int index);
+		int GetEntityCount();
+
 		void Export();
 	#endif
 

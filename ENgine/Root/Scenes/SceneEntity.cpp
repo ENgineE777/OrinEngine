@@ -28,6 +28,42 @@ namespace Oak
 		scene = setScene;
 		scene->AddEntity(this);
 	}
+
+	void SceneEntity::EnableTasks(bool enable)
+	{
+		if (taskPool)
+		{
+			taskPool->SetActive(enable);
+		}
+
+		if (renderTaskPool)
+		{
+			renderTaskPool->SetActive(enable);
+		}
+	}
+
+	bool SceneEntity::HasOwnTasks()
+	{
+		return taskPool || renderTaskPool;
+	}
+
+	void SceneEntity::SetEditMode(bool ed)
+	{
+		edited = ed;
+	}
+
+	bool SceneEntity::IsEditMode()
+	{
+		return edited;
+	}
+
+	void SceneEntity::Copy(SceneEntity* source)
+	{
+		source->GetMetaData()->Copy(source);
+
+		ApplyProperties();
+
+	}
 	#endif
 
 	const char* SceneEntity::GetName()

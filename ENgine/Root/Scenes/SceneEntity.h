@@ -153,7 +153,42 @@ namespace Oak
 
 		\param[in] setScene new scene
 		*/
-		void SetScene(Scene * setScene);
+		void SetScene(Scene* setScene);
+
+		/**
+		\brief Enable entity's task pools
+
+		\param[in] enable 
+		*/
+		virtual void EnableTasks(bool enable);
+
+		/**
+		\brief Check if entity has own task pools
+
+		\return if entity has own task pools
+		*/
+		virtual bool HasOwnTasks();
+
+		/**
+		\brief Copy data from source entity
+
+		\param[in] sorce Source entity
+		*/
+		virtual void Copy(SceneEntity* sorce);
+
+		/**
+		\brief Enable or disable editor mode
+
+		\param[in] ed Editor mode value
+		*/
+		virtual void SetEditMode(bool ed);
+
+		/**
+		\brief Check if entity in editor mode
+
+		\return if entity in editor mode
+		*/
+		virtual bool IsEditMode();
 
 		/**
 		\brief This method called when scene resoources are exporting

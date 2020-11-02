@@ -252,6 +252,16 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
+	SceneEntity* Scene::GetEntity(int index)
+	{
+		return entities[index];
+	}
+
+	int Scene::GetEntityCount()
+	{
+		return (int)entities.size();
+	}
+
 	void Scene::Export()
 	{
 		for (auto* entity : entities)
