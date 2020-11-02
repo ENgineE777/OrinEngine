@@ -2,15 +2,22 @@
 
 #include "Root/Root.h"
 #include "FreeCamera.h"
+#include "Project.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <d3d11.h>
 
+/**
+\ingroup gr_code_editor
+*/
+
 namespace Oak
 {
 	class Editor : Object
 	{
+		friend class Project;
+
 		HWND hwnd;
 		ID3D11Device* d3dDevice = nullptr;
 		ID3D11DeviceContext* d3dDeviceContext = nullptr;
@@ -21,14 +28,16 @@ namespace Oak
 		FreeCamera freeCamera;
 
 		bool showAbout = false;
-
 		SceneEntity* selectedEntity = nullptr;
+		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
 
 	public:
 
+		Project project;
+
 		bool Init(HWND hwnd);
-		void Update();
+		bool Update();
 		void Render(float dt);
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		void OnResize(int width, int height);
@@ -39,6 +48,7 @@ namespace Oak
 		void SetupImGUI();
 		void ShowAbout();
 		void ShowViewport();
+		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
 
 		void SelectEntity(SceneEntity* entity);
@@ -50,4 +60,6 @@ namespace Oak
 
 		void UpdateOak();
 	};
+
+	extern Editor editor;
 }

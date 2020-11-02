@@ -19,6 +19,7 @@ namespace Oak
 	CLASSREG(SceneEntity, TestEntity, "TestEntity")
 
 	META_DATA_DESC(TestEntity)
+		BASE_SCENE_ENTITY_PROP(TestEntity)
 		BOOL_PROP(TestEntity, boolProp, false, "Category1", "Bool value", "sdfdsf")
 		INT_PROP(TestEntity, intProp, 80, "Category1", "Int value", "sdfdsf")
 		FLOAT_PROP(TestEntity, floatProp, 1.0f, "Category1", "Float value", "sdfdsf")

@@ -9,30 +9,34 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+#ifdef OAK_EDITOR
+extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
+#endif
+
 namespace Oak
 {
-	Scene scene;
+	Editor editor;
 
-	void AddEntity()
+	void AddEntity(Scene* scene)
 	{
-		TestEntity * entity = (TestEntity*)scene.CreateEntity("TestEntity");
+		TestEntity * entity = (TestEntity*)scene->CreateEntity("TestEntity");
 
-		int count = Math::RandRange(1.0f, 5.0f);
+		int count = (int)Math::RandRange(1.0f, 5.0f);
 
 		for (int i = 0; i < count; i++)
 		{
 			TestItem item;
 			item.boolProp = true;
-			item.intProp = Math::RandRange(0.0f, 100.0f);
+			item.intProp = (int)Math::RandRange(0.0f, 100.0f);
 			item.floatProp = Math::RandRange(0.0f, 100.0f);
 
 			entity->itemsProp.push_back(item);
 		}
 
-		entity->intProp = Math::RandRange(0.0f, 100.0f);
+		entity->intProp = (int)Math::RandRange(0.0f, 100.0f);
 		entity->floatProp = Math::RandRange(0.0f, 100.0f);
 		entity->floatProp2 = Math::RandRange(0.0f, 100.0f);
-		entity->SetName(StringUtils::PrintTemp("TestEntity%i", scene.GetEntityCount()));
+		entity->SetName(StringUtils::PrintTemp("TestEntity%i", scene->GetEntityCount()));
 	}
 
 	bool Editor::Init(HWND setHwnd)
@@ -65,8 +69,6 @@ namespace Oak
 		freeCamera.Init();
 
 		SetupImGUI();
-
-		scene.Init();
 
 		return true;
 	}
@@ -216,6 +218,54 @@ namespace Oak
 		RELEASE(mainRenderTargetView)
 	}
 
+	void Editor::ProjectTreePopup(bool contextItem)
+	{
+		if (projectTreePopup)
+		{
+			return;
+		}
+
+		if ((contextItem && ImGui::BeginPopupContextItem("CreateScene")) ||
+			(!contextItem && ImGui::BeginPopupContextWindow("CreateScene")))
+		{
+			projectTreePopup = true;
+
+			if (ImGui::MenuItem("Add new scene"))
+			{
+				const char* fileName = OpenFileDialog("Scene file", "sca", false);
+
+				if (fileName)
+				{
+					project.AddScene(fileName);
+				}
+			}
+
+			if (ImGui::MenuItem("Add scene"))
+			{
+				const char* fileName = OpenFileDialog("Scene file", "sca", true);
+
+				if (fileName)
+				{
+					project.AddScene(fileName);
+				}
+			}
+
+			if (project.selectedScene && ImGui::MenuItem("Mark as start scne"))
+			{
+				project.SetStartScene(project.selectedScene->path.c_str());
+			}
+
+			if (project.selectedScene && ImGui::MenuItem("Delete"))
+			{
+				auto* scene = project.selectedScene;
+				project.SelectScene(nullptr);
+				project.DeleteScene(scene);
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
 	void Editor::SceneTreePopup(bool contextItem)
 	{
 		if (sceneTreePopup)
@@ -236,7 +286,7 @@ namespace Oak
 				{
 					if (ImGui::MenuItem(decl->GetShortName()))
 					{
-						AddEntity();
+						AddEntity(project.selectedScene->scene);
 					}
 				}
 
@@ -245,8 +295,8 @@ namespace Oak
 
 			if (selectedEntity && ImGui::MenuItem("Duplicate"))
 			{
-				SceneEntity* copy = scene.CreateEntity(selectedEntity->className);
-				scene.GenerateUID(copy);
+				SceneEntity* copy = project.selectedScene->scene->CreateEntity(selectedEntity->className);
+				project.selectedScene->scene->GenerateUID(copy);
 				copy->Copy(selectedEntity);
 
 				eastl::string name = selectedEntity->GetName();
@@ -259,14 +309,14 @@ namespace Oak
 			{
 				SceneEntity* entity = selectedEntity;
 				SelectEntity(nullptr);
-				scene.DeleteObject(entity, true);
+				project.selectedScene->scene->DeleteObject(entity, true);
 			}
 
 			ImGui::EndPopup();
 		}
 	}
 
-	void Editor::Update()
+	bool Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
@@ -305,6 +355,7 @@ namespace Oak
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
 
+			ImGui::DockBuilderDockWindow("Project", dock_left_id);
 			ImGui::DockBuilderDockWindow("Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
@@ -316,6 +367,62 @@ namespace Oak
 
 		if (ImGui::BeginMenuBar())
 		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("New"))
+				{
+					project.Reset();
+				}
+
+				if (ImGui::MenuItem("Load"))
+				{
+					const char* fileName = OpenFileDialog("Project file", "pra", true);
+
+					if (fileName)
+					{
+						project.Load(fileName);
+					}
+				}
+
+				bool saveProjectAs = false;;
+
+				if (ImGui::MenuItem("Save"))
+				{
+					if (project.projectName.empty())
+					{
+						saveProjectAs = true;
+					}
+					else
+					{
+						project.Save();
+					}
+				}
+
+				if (ImGui::MenuItem("Save as"))
+				{
+					saveProjectAs = true;
+				}
+
+				if (saveProjectAs)
+				{
+					const char* fileName = OpenFileDialog("Project file", "pra", false);
+
+					if (fileName)
+					{
+						project.Save(fileName);
+					}
+				}
+
+				ImGui::Separator();
+
+				if (ImGui::MenuItem("Exit"))
+				{
+					return false;
+				}
+
+				ImGui::EndMenu();
+			}
+
 			if (ImGui::BeginMenu("Help"))
 			{
 				if (ImGui::MenuItem("About") && !showAbout)
@@ -333,43 +440,76 @@ namespace Oak
 
 		//ImGui::ShowDemoWindow();
 
+		projectTreePopup = false;
 		sceneTreePopup = false;
+
+		{
+			ImGui::Begin("Project");
+
+			for (int i = 0; i < project.scenes.size(); i++)
+			{
+				auto* scene = project.scenes[i];
+
+				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
+
+				if (project.selectedScene == scene)
+				{
+					node_flags |= ImGuiTreeNodeFlags_Selected;
+				}
+
+				ImGui::TreeNodeEx(scene, node_flags, (project.startScene == i) ? StringUtils::PrintTemp("%s (Start)", scene->name.c_str()) : scene->name.c_str());
+
+				if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+				{
+					project.SelectScene(scene);
+				}
+
+				ProjectTreePopup(true);
+			}
+
+			ProjectTreePopup(false);
+
+			ImGui::End();
+		}
 
 		{
 			ImGui::Begin("Scene");
 
-			if (scene.GetEntityCount() > 0)
+			if (project.selectedScene)
 			{
-				for (int i = 0; i < scene.GetEntityCount(); i++)
+				if (project.selectedScene->scene->GetEntityCount() > 0)
 				{
-					SceneEntity* entity = scene.GetEntity(i);
-
-					ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
-
-					if (selectedEntity == entity)
+					for (int i = 0; i < project.selectedScene->scene->GetEntityCount(); i++)
 					{
-						node_flags |= ImGuiTreeNodeFlags_Selected;
-					}
+						SceneEntity* entity = project.selectedScene->scene->GetEntity(i);
 
-					ImGui::TreeNodeEx(entity, node_flags, entity->GetName());
+						ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
 
-					if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
-					{
-						selectedEntity = entity;
-					}
+						if (selectedEntity == entity)
+						{
+							node_flags |= ImGuiTreeNodeFlags_Selected;
+						}
 
-					SceneTreePopup(true);
+						ImGui::TreeNodeEx(entity, node_flags, entity->GetName());
 
-					if (ImGui::BeginDragDropSource())
-					{
-						ImGui::SetDragDropPayload("_TREENODE", nullptr, 0);
-						ImGui::Text("This is a drag and drop source");
-						ImGui::EndDragDropSource();
+						if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+						{
+							SelectEntity(entity);
+						}
+
+						SceneTreePopup(true);
+
+						if (ImGui::BeginDragDropSource())
+						{
+							ImGui::SetDragDropPayload("_TREENODE", nullptr, 0);
+							ImGui::Text("This is a drag and drop source");
+							ImGui::EndDragDropSource();
+						}
 					}
 				}
-			}
 
-			SceneTreePopup(false);
+				SceneTreePopup(false);
+			}
 
 			ImGui::End();
 		}
@@ -403,6 +543,8 @@ namespace Oak
 		ImGui::RenderPlatformWindowsDefault();
 
 		swapChain->Present(0, 0);
+
+		return true;
 	}
 
 	void Editor::UpdateOak()

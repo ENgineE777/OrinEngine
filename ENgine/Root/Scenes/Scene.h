@@ -21,6 +21,7 @@ namespace Oak
 
 	class Scene
 	{
+		friend class Project;
 		friend class SceneEntity;
 		friend class SceneManager;
 

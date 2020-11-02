@@ -3,6 +3,10 @@
 
 #include "Support/Support.h"
 
+/**
+\ingroup gr_code_editor
+*/
+
 namespace Oak
 {
 	class FreeCamera

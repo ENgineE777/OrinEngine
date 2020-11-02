@@ -356,6 +356,9 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity.cpp">
       <Filter>ENgine\SceneEntities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp">
+      <Filter>ENgine\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -843,6 +846,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity.h">
       <Filter>ENgine\SceneEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\Project.h">
+      <Filter>ENgine\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -246,4 +246,15 @@ namespace Oak
 
 	CLASSFACTORYDEF(SceneEntity)
 	CLASSFACTORYDEF_END()
+
+	#define BASE_SCENE_ENTITY_STATE_PROP(className)\
+	ENUM_PROP(className, state, 2, "Common", "State", "State of a object")\
+		ENUM_ELEM("Invisible", 0)\
+		ENUM_ELEM("Inactive", 1)\
+		ENUM_ELEM("Active", 2)\
+	ENUM_END
+
+	#define BASE_SCENE_ENTITY_PROP(className)\
+	STRING_PROP(className, name, "", "Common", "Name")\
+	BASE_SCENE_ENTITY_STATE_PROP(className)
 }
