@@ -48,22 +48,12 @@ namespace Oak
 					StringUtils::GetFileName(name, inclName);
 					StringUtils::RemoveExtension(inclName);
 
-					scn.includedPathes.push_back(inclName);
-
 					reader.LeaveBlock();
 				}
 
 				reader.LeaveBlock();
 
 				index++;
-			}
-
-			for (auto& scn : scenes)
-			{
-				for (auto& incl : scn.includedPathes)
-				{
-					scn.included.push_back(scenesSearch[incl.c_str()]);
-				}
 			}
 
 			LoadScene(&scenes[startScene]);
@@ -89,16 +79,6 @@ namespace Oak
 
 		holder->refCounter++;
 
-		for (auto& incl : holder->included)
-		{
-			LoadScene(incl);
-
-			if (failureOnScenePlay)
-			{
-				return;
-			}
-		}
-
 		if (holder->scene)
 		{
 			return;
@@ -106,11 +86,6 @@ namespace Oak
 
 		holder->scene = new Scene();
 		holder->scene->Init();
-
-		for (auto& incl : holder->included)
-		{
-			holder->scene->includedScenes.push_back(incl->scene);
-		}
 
 		char path[1024];
 		StringUtils::Printf(path, 1024, "%s%s", projectPath, holder->path.c_str());
@@ -208,13 +183,6 @@ namespace Oak
 		if (holder->refCounter == 0)
 		{
 			RELEASE(holder->scene)
-		}
-
-		for (auto& incl : holder->included)
-		{
-			incl->refCounter--;
-
-			UnloadScene(incl);
 		}
 	}
 

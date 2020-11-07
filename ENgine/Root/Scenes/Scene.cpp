@@ -56,19 +56,6 @@ namespace Oak
 			}
 		}
 
-		if (!res)
-		{
-			for (auto& incl : includedScenes)
-			{
-				res = incl->FindByUID(uid);
-
-				if (res)
-				{
-					break;
-				}
-			}
-		}
-
 		return res;
 	}
 
@@ -139,9 +126,11 @@ namespace Oak
 						GenerateUID(obj);
 					}
 
-					if (obj->Trans())
+					auto* transform = obj->GetTransform();
+
+					if (transform)
 					{
-						obj->Trans()->Load(reader, "transform");
+						transform->Load(reader, "transform");
 					}
 
 					obj->Load(reader);
@@ -177,9 +166,11 @@ namespace Oak
 				writer.Write("type", entity->className);
 				writer.Write("uid", entity->GetUID());
 
-				if (entity->Trans())
+				auto* transform = entity->GetTransform();
+
+				if (transform)
 				{
-					writer.Write("transform", entity->Trans());
+					transform->Save(writer, "transform");
 				}
 
 				entity->Save(writer);
@@ -282,26 +273,6 @@ namespace Oak
 		renderTaskPool->SetActive(enable);
 	}
 
-	#ifdef OAK_EDITOR
-	bool Scene::DependFromScene(Scene* scene)
-	{
-		if (scene == this)
-		{
-			return true;
-		}
-
-		for (auto& incl : includedScenes)
-		{
-			if (incl->DependFromScene(scene))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-	#endif
-
 	void Scene::GenerateUID(SceneEntity* obj)
 	{
 		union UID32
@@ -353,11 +324,6 @@ namespace Oak
 		if (groups.find(name) != groups.end())
 		{
 			outGroups.push_back(&groups[name]);
-		}
-
-		for (auto& incl : includedScenes)
-		{
-			incl->GetGroup(outGroups, name);
 		}
 	}
 

@@ -27,9 +27,6 @@ namespace Oak
 			eastl::string path;
 			Scene* scene = nullptr;
 			int refCounter = 0;
-
-			eastl::vector<SceneHolder*> included;
-			eastl::vector<eastl::string> includedPathes;
 		};
 
 		char projectPath[1024];

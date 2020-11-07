@@ -39,8 +39,6 @@ namespace Oak
 		char projectScenePath[512];
 	#endif
 
-		eastl::vector<Scene*> includedScenes;
-
 		TaskExecutor::SingleTaskPool* taskPool = nullptr;
 		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
 
@@ -185,10 +183,6 @@ namespace Oak
 		bool Playing();
 
 	#ifndef DOXYGEN_SKIP
-
-	#ifdef OAK_EDITOR
-		bool DependFromScene(Scene* scene);
-	#endif
 
 		void GenerateUID(SceneEntity* obj);
 

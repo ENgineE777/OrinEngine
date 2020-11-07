@@ -103,7 +103,7 @@ namespace Oak
 		return state;
 	}
 
-	Transform* SceneEntity::Trans()
+	Transform* SceneEntity::GetTransform()
 	{
 		return nullptr;
 	}
