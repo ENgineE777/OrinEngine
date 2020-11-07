@@ -40,6 +40,6 @@ namespace Oak
 
 		META_DATA_DECL_BASE(TestEntity)
 
-		virtual void Init() {};
+		void Init() override {};
 	};
 }
