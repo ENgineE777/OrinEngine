@@ -50,8 +50,6 @@ namespace Oak
 
 		freeCamera.Init();
 
-		gizmo.Init();
-
 		editorDrawer.Init();
 
 		SetupImGUI();
@@ -166,11 +164,11 @@ namespace Oak
 			{
 				if (selectedEntity->GetTransform()->Is2D())
 				{
-					gizmo.SetTrans2D(*((Transform2D*)selectedEntity->GetTransform()));
+					gizmo.SetTransform2D(selectedEntity->GetTransform());
 				}
 				else
 				{
-					gizmo.SetTrans3D(&selectedEntity->GetTransform()->local);
+					gizmo.SetTransform3D(selectedEntity->GetTransform());
 				}
 			}
 		}

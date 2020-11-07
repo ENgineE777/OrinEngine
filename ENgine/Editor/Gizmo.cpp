@@ -6,99 +6,37 @@
 
 namespace Oak
 {
-	Gizmo* Gizmo::inst = nullptr;
-
-	Gizmo::Transform2D::Transform2D(Math::Vector2* set_pos, Math::Vector2* set_size, Math::Vector2* set_offset, float* set_depth, float* set_rotation, Math::Vector2* set_axis, Math::Matrix* set_mat_parent)
+	void Gizmo::SetTransform2D(Transform* set_transform, int actions, bool ignore_2d_camera)
 	{
-		pos = set_pos;
-		size = set_size;
-		offset = set_offset;
-		rotation = set_rotation;
-		depth = set_depth;
-		axis = set_axis;
-		mat_parent = set_mat_parent;
-	}
-
-	Gizmo::Transform2D::Transform2D(Oak::Transform2D& trans)
-	{
-		pos = &trans.pos;
-		size = &trans.size;
-		offset = &trans.offset;
-		rotation = &trans.rotation;
-		depth = &trans.depth;
-		axis = &trans.axis;
-		mat_parent = trans.parent;
-	}
-
-	void Gizmo::Transform2D::BuildMatrices()
-	{
-		mat_local.Identity();
-
-		if (rotation)
-		{
-			mat_local.RotateZ(*rotation);
-		}
-
-		mat_local.Pos() = Math::Vector3((!axis || axis->x > 0.0f) ? pos->x : -pos->x - size->x,
-			(!axis || axis->y > 0.0f) ? pos->y : -pos->y - size->y,
-			depth ? *depth : 0.5f);
-
-		mat_global = mat_parent ? (mat_local * (*mat_parent)) : mat_local;
-	}
-
-	void Gizmo::Init()
-	{
-		inst = this;
-	}
-
-	bool Gizmo::IsTrans2D()
-	{
-		return use_trans2D;
-	}
-
-	void Gizmo::SetTrans2D(Transform2D trans, int actions, bool set_ignore_2d_camera)
-	{
-		use_trans2D = true;
-
-		trans2D = trans;
-		pos2d = *trans2D.pos;
-		size2d = *trans2D.size;
-
-		trans2D_actions = actions;
-		ignore_2d_camera = set_ignore_2d_camera;
-		enabled = true;
-
-		delta_move = 0.0f;
-	}
-
-	void Gizmo::SetTrans2D(Math::Vector2 set_pos)
-	{
-		if (!trans2D.pos || !enabled)
-		{
-			return;
-		}
-
-		set_pos = MakeAligned(set_pos);
-		*(trans2D.pos) = set_pos;
-		pos2d = set_pos;
-	}
-
-	void Gizmo::SetTrans3D(Math::Matrix* set_transform)
-	{
-		use_trans2D = false;
+		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform2d == null")
+		OAK_ASSERT(set_transform->Is2D(), "Gizmo::set_transform2d not 2D")
 
 		transform = set_transform;
-		enabled = true;
+
+		pos2d = ((Transform2D*)transform)->pos;
+
+		transform2DActions = actions;
+		ignore2DCamera = ignore_2d_camera;
+
+		deltaMove = 0.0f;
+	}
+
+	void Gizmo::SetTransform3D(Transform* set_transform)
+	{
+		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform3d == null")
+		OAK_ASSERT(!set_transform->Is2D(), "Gizmo::set_transform3d not 3D")
+
+		transform = set_transform;
 	}
 
 	bool Gizmo::IsEnabled()
 	{
-		return enabled;
+		return transform != nullptr;
 	}
 
 	void Gizmo::Disable()
 	{
-		enabled = false;
+		transform = nullptr;
 	}
 
 	Color Gizmo::CheckColor(int axis)
@@ -131,7 +69,7 @@ namespace Oak
 
 	void Gizmo::DrawAxis(int axis)
 	{
-		Math::Vector3 tr = transform->Pos();
+		Math::Vector3 tr = transform->local.Pos();
 
 		Color color = CheckColor(axis);
 		Math::Vector3 dir;
@@ -153,7 +91,7 @@ namespace Oak
 
 		if (useLocalSpace)
 		{
-			dir = transform->MulNormal(dir);
+			dir = transform->local.MulNormal(dir);
 		}
 
 		dir += tr;
@@ -187,7 +125,7 @@ namespace Oak
 
 			if (useLocalSpace)
 			{
-				pos = transform->MulNormal(pos);
+				pos = transform->local.MulNormal(pos);
 			}
 
 			root.render.DebugLine(dir, color, pos + tr, color, false);
@@ -202,11 +140,11 @@ namespace Oak
 		Math::Matrix mat;
 		if (useLocalSpace)
 		{
-			mat = *transform;
+			mat = transform->local;
 		}
 		else
 		{
-			mat.Pos() = transform->Pos();
+			mat.Pos() = transform->local.Pos();
 		}
 
 		Math::Matrix view;
@@ -276,11 +214,11 @@ namespace Oak
 	{
 		if (useLocalSpace)
 		{
-			pos = transform->MulNormal(pos);
-			pos2 = transform->MulNormal(pos2);
+			pos = transform->local.MulNormal(pos);
+			pos2 = transform->local.MulNormal(pos2);
 		}
 
-		Math::Vector3 tr = transform->Pos();
+		Math::Vector3 tr = transform->local.Pos();
 
 		pos += tr;
 		pos2 += tr;
@@ -317,8 +255,8 @@ namespace Oak
 			if (x1 < ms.x && ms.x < x2 &&
 				y1 < ms.y && ms.y < y2)
 			{
-				ms_dir = Math::Vector2(pos2_post.x - pos_post.x, pos2_post.y - pos_post.y);
-				ms_dir.Normalize();
+				mousesDir = Math::Vector2(pos2_post.x - pos_post.x, pos2_post.y - pos_post.y);
+				mousesDir.Normalize();
 
 				return true;
 			}
@@ -329,7 +267,9 @@ namespace Oak
 
 	void Gizmo::CheckSelectionTrans2D(Math::Vector2 ms)
 	{
-		if (trans2D_actions & trans_2d_scale)
+		Transform2D* transform2D = (Transform2D*)transform;
+
+		if (transform2DActions & TransformType::Scale)
 		{
 			for (int i = 0; i < 8; i++)
 			{
@@ -342,13 +282,13 @@ namespace Oak
 			}
 		}
 
-		if (trans2D_actions & trans_2d_anchorn)
+		if (transform2DActions & TransformType::Anchorn)
 		{
-			if (origin.x - 7 < ms.x && ms.x < origin.x + 7 &&
-				origin.y - 7 < ms.y && ms.y < origin.y + 7)
+			if (transform2D->offset.x - 7 < ms.x && ms.x < transform2D->offset.x + 7 &&
+				transform2D->offset.y - 7 < ms.y && ms.y < transform2D->offset.y + 7)
 			{
 				selAxis = 10;
-				moved_origin = origin;
+				movedOrigin = transform2D->offset;
 			}
 		}
 
@@ -359,7 +299,7 @@ namespace Oak
 			{
 				//SetCursor(cr_move);
 
-				if (trans2D_actions & trans_2d_move)
+				if (transform2DActions & TransformType::Move)
 				{
 					selAxis = 0;
 				}
@@ -368,7 +308,7 @@ namespace Oak
 			{
 				//SetCursor(cr_rotate);
 
-				if (trans2D_actions & trans_2d_rotate)
+				if (transform2DActions & TransformType::Rotate)
 				{
 					selAxis = 9;
 				}
@@ -385,7 +325,7 @@ namespace Oak
 		root.render.GetTransform(TransformStage::Projection, view_proj);
 		view_proj = view * view_proj;
 
-		if (mode == 0)
+		if (mode == TransformType::Move)
 		{
 			Math::Vector3 dir;
 			dir = 0.0f;
@@ -419,9 +359,9 @@ namespace Oak
 			}
 		}
 		else
-		if (mode == 1)
+		if (mode == TransformType::Rotate)
 		{
-			Math::Vector3 trans = transform->Pos() * view;
+			Math::Vector3 trans = transform->local.Pos() * view;
 
 			float r = scale;
 			float last_dx = -r * 2;
@@ -485,6 +425,8 @@ namespace Oak
 
 	void Gizmo::MoveTrans2D(Math::Vector2 ms)
 	{
+		Transform2D* transform2D = (Transform2D*)transform;
+
 		ms *= (1024.0f / root.render.GetDevice()->GetHeight()) / Sprite::edCamZoom;
 
 		if (ms.Length() < 0.001f)
@@ -494,12 +436,12 @@ namespace Oak
 
 		if (selAxis == 0)
 		{
-			pos2d.x += (!trans2D.axis || trans2D.axis->x > 0.0f) ? ms.x : -ms.x;
-			pos2d.y += (!trans2D.axis || trans2D.axis->y > 0.0f) ? ms.y : -ms.y;
+			pos2d.x += (transform2D->axis.x > 0.0f) ? ms.x : -ms.x;
+			pos2d.y += (transform2D->axis.y > 0.0f) ? ms.y : -ms.y;
 
-			Math::Vector2 prev_pos = *trans2D.pos;
-			*trans2D.pos = MakeAligned(pos2d);
-			delta_move += *trans2D.pos - prev_pos;
+			Math::Vector2 prev_pos = transform2D->pos;
+			transform2D->pos = MakeAligned(pos2d);
+			deltaMove += transform2D->pos - prev_pos;
 		}
 		else
 		if (selAxis == 9)
@@ -509,10 +451,10 @@ namespace Oak
 				return;
 			}
 
-			Math::Vector2 p1 = prev_ms + ms - origin;
+			Math::Vector2 p1 = prevMouse + ms - origin;
 			p1.Normalize();
 
-			Math::Vector2 p2 = prev_ms - origin;
+			Math::Vector2 p2 = prevMouse - origin;
 			p2.Normalize();
 
 			float k = p1.x * p2.x + p1.y * p2.y;
@@ -530,16 +472,13 @@ namespace Oak
 					k *= -1.0f;
 				}
 
-				if (trans2D.rotation)
-				{
-					*trans2D.rotation += k;
-				}
+				transform2D->rotation += k;
 			}
 		}
 		else
 		if (selAxis == 10)
 		{
-			moved_origin += ms * Sprite::screenMul;
+			movedOrigin += ms * Sprite::screenMul;
 		}
 		else
 		if (selAxis > 0)
@@ -574,43 +513,41 @@ namespace Oak
 			float dot1 = 0.0f;
 			float dot2 = 0.0f;
 
-			dot1 = ms.x * trans2D.mat_global.Vx().x + ms.y * trans2D.mat_global.Vx().y;
-			dot2 = ms.x * trans2D.mat_global.Vy().x + ms.y * trans2D.mat_global.Vy().y;
+			dot1 = ms.x * transform2D->global.Vx().x + ms.y * transform2D->global.Vx().y;
+			dot2 = ms.x * transform2D->global.Vy().x + ms.y * transform2D->global.Vy().y;
 
 			float delta = dist * k1 * dot1;
 
-			size2d.x += delta;
+			transform2D->size.x += delta;
 
 			if (selAxis == 1 || selAxis == 4 || selAxis == 8)
 			{
-				pos2d.x -= (1.0f - trans2D.offset->x) * delta;
+				pos2d.x -= (1.0f - transform2D->offset.x) * delta;
 			}
 			else
 			if (selAxis == 2 || selAxis == 3 || selAxis == 6)
 			{
-				pos2d.x += trans2D.offset->x * delta;
+				pos2d.x += transform2D->offset.x * delta;
 			}
 
 			delta = dist * k2 * dot2;
 
-			size2d.y += delta;
+			transform2D->size.y += delta;
 
 			if (selAxis == 1 || selAxis == 2 || selAxis == 5)
 			{
-				pos2d.y -= delta * (1.0f - trans2D.offset->y);
+				pos2d.y -= delta * (1.0f - transform2D->offset.y);
 			}
 			else
 			if (selAxis == 3 || selAxis == 4 || selAxis == 7)
 			{
-				pos2d.y += delta * trans2D.offset->y;
+				pos2d.y += delta * transform2D->offset.y;
 			}
 
-			*trans2D.size = size2d;
+			Math::Vector2 prev_pos = transform2D->pos;
+			transform2D->pos = pos2d;
 
-			Math::Vector2 prev_pos = *trans2D.pos;
-			*trans2D.pos = pos2d;
-
-			delta_move += *trans2D.pos - prev_pos;
+			deltaMove += transform2D->pos - prev_pos;
 		}
 	}
 
@@ -625,28 +562,28 @@ namespace Oak
 		float da = cur_dir.Length();
 		cur_dir.Normalize();
 
-		da *= cur_dir.Dot(ms_dir);
+		da *= cur_dir.Dot(mousesDir);
 
-		if (mode == 0)
+		if (mode == TransformType::Move)
 		{
 			da *= scale * 16;
 
 			if (selAxis == 0)
 			{
-				transform->_41 += da;
+				transform->local._41 += da;
 			}
 			else
 			if (selAxis == 1)
 			{
-				transform->_42 += da;
+				transform->local._42 += da;
 			}
 			else
 			{
-				transform->_43 += da;
+				transform->local._43 += da;
 			}
 		}
 		else
-		if (mode == 1)
+		if (mode == TransformType::Rotate)
 		{
 			da *= -5.0f;
 
@@ -668,20 +605,22 @@ namespace Oak
 
 			if (useLocalSpace)
 			{
-				(*transform) = rot * (*transform);
+				transform->local = rot * transform->local;
 			}
 			else
 			{
-				Math::Vector3 tr = transform->Pos();
-				(*transform) = (*transform) * rot;
-				transform->Pos() = tr;
+				Math::Vector3 tr = transform->local.Pos();
+				transform->local = transform->local * rot;
+				transform->local.Pos() = tr;
 			}
 		}
 	}
 
 	void Gizmo::RenderTrans2D()
 	{
-		trans2D.BuildMatrices();
+		Transform2D* transform2D = (Transform2D*)transform;
+
+		transform2D->BuildMatrices();
 
 		Math::Vector3 p1, p2;
 
@@ -692,53 +631,53 @@ namespace Oak
 				if (i == 0)
 				{
 					p1 = Math::Vector3(0, 0, 0);
-					p2 = Math::Vector3(trans2D.size->x, 0, 0);
+					p2 = Math::Vector3(transform2D->size.x, 0, 0);
 				}
 				else
 				if (i == 1)
 				{
-					p1 = Math::Vector3(trans2D.size->x, 0, 0);
-					p2 = Math::Vector3(trans2D.size->x, trans2D.size->y, 0);
+					p1 = Math::Vector3(transform2D->size.x, 0, 0);
+					p2 = Math::Vector3(transform2D->size.x, transform2D->size.y, 0);
 				}
 				else
 				if (i == 2)
 				{
-					p1 = Math::Vector3(trans2D.size->x, trans2D.size->y, 0);
-					p2 = Math::Vector3(0, trans2D.size->y, 0);
+					p1 = Math::Vector3(transform2D->size.x, transform2D->size.y, 0);
+					p2 = Math::Vector3(0, transform2D->size.y, 0);
 				}
 				else
 				if (i == 3)
 				{
-					p1 = Math::Vector3(0, trans2D.size->y, 0);
+					p1 = Math::Vector3(0, transform2D->size.y, 0);
 					p2 = Math::Vector3(0, 0, 0);
 				}
 				else
 				if (i == 4)
 				{
-					p1 = Math::Vector3(trans2D.size->x * 0.5f, 0, 0);
+					p1 = Math::Vector3(transform2D->size.x * 0.5f, 0, 0);
 				}
 				else
 				if (i == 5)
 				{
-					p1 = Math::Vector3(trans2D.size->x, trans2D.size->y * 0.5f, 0);
+					p1 = Math::Vector3(transform2D->size.x, transform2D->size.y * 0.5f, 0);
 				}
 				else
 				if (i == 6)
 				{
-					p1 = Math::Vector3(trans2D.size->x * 0.5f, trans2D.size->y, 0);
+					p1 = Math::Vector3(transform2D->size.x * 0.5f, transform2D->size.y, 0);
 				}
 				else
 				if (i == 7)
 				{
-					p1 = Math::Vector3(0, trans2D.size->y * 0.5f, 0);
+					p1 = Math::Vector3(0, transform2D->size.y * 0.5f, 0);
 				}
 
-				p1 -= Math::Vector3((trans2D.offset ? trans2D.offset->x : 0.5f) * trans2D.size->x, (trans2D.offset ? trans2D.offset->y : 0.5f) * trans2D.size->y, 0);
-				p1 = p1 * trans2D.mat_global;
-				p2 -= Math::Vector3((trans2D.offset ? trans2D.offset->x : 0.5f) * trans2D.size->x, (trans2D.offset ? trans2D.offset->y : 0.5f) * trans2D.size->y, 0);
-				p2 = p2 * trans2D.mat_global;
+				p1 -= Math::Vector3(transform2D->offset.x * transform2D->size.x, transform2D->offset.y * transform2D->size.y, 0);
+				p1 = p1 * transform2D->global;
+				p2 -= Math::Vector3(transform2D->offset.x * transform2D->size.x, transform2D->offset.y * transform2D->size.y, 0);
+				p2 = p2 * transform2D->global;
 
-				if (!ignore_2d_camera)
+				if (!ignore2DCamera)
 				{
 					Math::Vector2 tmp = Sprite::MoveToCamera(Math::Vector2(p1.x, p1.y));
 					p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
@@ -765,9 +704,9 @@ namespace Oak
 		}
 
 		p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
-		p1 = p1 * trans2D.mat_global;
+		p1 = p1 * transform2D->global;
 
-		if (!ignore_2d_camera)
+		if (!ignore2DCamera)
 		{
 			Math::Vector2 tmp = Sprite::MoveToCamera(Math::Vector2(p1.x, p1.y));
 			p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
@@ -779,7 +718,7 @@ namespace Oak
 
 		origin = Math::Vector2(p1.x, p1.y);
 
-		root.render.DebugSprite(editorDrawer.center, ((selAxis == 10) ? moved_origin : origin) - Math::Vector2(4.0f), Math::Vector2(8.0f));
+		root.render.DebugSprite(editorDrawer.center, ((selAxis == 10) ? movedOrigin : origin) - Math::Vector2(4.0f), Math::Vector2(8.0f));
 	}
 
 	void Gizmo::RenderTrans3D()
@@ -791,13 +730,13 @@ namespace Oak
 		root.render.GetTransform(TransformStage::Projection, view_proj);
 		view_proj = view * view_proj;
 
-		Math::Vector3 pos = transform->Pos();
+		Math::Vector3 pos = transform->local.Pos();
 		float z = pos.x*view_proj._13 + pos.y*view_proj._23 + pos.z*view_proj._33 + view_proj._43;
 
 		scale = 0.1f * (1.0f + z);
 		scale = fabsf(scale);
 
-		if (mode == 0)
+		if (mode == TransformType::Move)
 		{
 			DrawAxis(0);
 			DrawAxis(1);
@@ -823,15 +762,14 @@ namespace Oak
 			pos.y -= align2d.y;
 		}
 
-		return Math::Vector2((align2d.x > 0.01f) ? (align2d.x * ((int)(pos.x / align2d.x))) : pos.x,
-					   (align2d.y > 0.01f) ? (align2d.y * ((int)(pos.y / align2d.y))) : pos.y);
+		return Math::Vector2((align2d.x > 0.01f) ? (align2d.x * ((int)(pos.x / align2d.x))) : pos.x, (align2d.y > 0.01f) ? (align2d.y * ((int)(pos.y / align2d.y))) : pos.y);
 	}
 
 	void Gizmo::Render()
 	{
-		if (!enabled) return;
+		if (!transform) return;
 
-		if (IsTrans2D())
+		if (transform->Is2D())
 		{
 			RenderTrans2D();
 		}
@@ -843,24 +781,24 @@ namespace Oak
 
 	void Gizmo::OnMouseMove(Math::Vector2 ms)
 	{
-		if (!enabled) return;
+		if (!transform) return;
 
 		if (mousedPressed)
 		{
-			if (IsTrans2D())
+			if (transform->Is2D())
 			{
-				MoveTrans2D(ms - prev_ms);
+				MoveTrans2D(ms - prevMouse);
 			}
 			else
 			{
-				MoveTrans3D(ms - prev_ms);
+				MoveTrans3D(ms - prevMouse);
 			}
 		}
 		else
 		{
 			selAxis = -1;
 
-			if (IsTrans2D())
+			if (transform->Is2D())
 			{
 				CheckSelectionTrans2D(ms);
 			}
@@ -870,7 +808,7 @@ namespace Oak
 			}
 		}
 
-		prev_ms = ms;
+		prevMouse = ms;
 	}
 
 	void Gizmo::OnLeftMouseDown()
@@ -885,22 +823,26 @@ namespace Oak
 	{
 		mousedPressed = false;
 
-		if (selAxis == 10 && IsTrans2D())
+		if (!transform) return;
+
+		if (selAxis == 10 && transform->Is2D())
 		{
-			Math::Matrix inv = trans2D.mat_global;
+			Transform2D* transform2D = (Transform2D*)transform;
+
+			Math::Matrix inv = transform2D->global;
 			inv.Inverse();
 
-			moved_origin /= Sprite::screenMul;
+			movedOrigin /= Sprite::screenMul;
 
-			if (!ignore_2d_camera)
+			if (!ignore2DCamera)
 			{
-				moved_origin += (Sprite::edCamPos - Sprite::halfScreen) * Sprite::invScreenMul;
+				movedOrigin += (Sprite::edCamPos - Sprite::halfScreen) * Sprite::invScreenMul;
 			}
 
-			Math::Vector3 pos = Math::Vector3(moved_origin.x, moved_origin.y, 0.0f) * inv / Math::Vector3(trans2D.size->x, trans2D.size->y, 1.0f);
-			*trans2D.offset += Math::Vector2(pos.x, pos.y);
-			*trans2D.pos += Math::Vector2(pos.x, pos.y) * (*trans2D.size);
-			pos2d = *trans2D.pos;
+			Math::Vector3 pos = Math::Vector3(movedOrigin.x, movedOrigin.y, 0.0f) * inv / Math::Vector3(transform2D->size.x, transform2D->size.y, 1.0f);
+			transform2D->offset += Math::Vector2(pos.x, pos.y);
+			transform2D->pos += Math::Vector2(pos.x, pos.y) * transform2D->size;
+			pos2d = transform2D->pos;
 
 			selAxis = -1;
 		}
