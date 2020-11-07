@@ -17,28 +17,6 @@ namespace Oak
 {
 	Editor editor;
 
-	void AddEntity(Scene* scene)
-	{
-		TestEntity * entity = (TestEntity*)scene->CreateEntity("TestEntity");
-
-		int count = (int)Math::RandRange(1.0f, 5.0f);
-
-		for (int i = 0; i < count; i++)
-		{
-			TestItem item;
-			item.boolProp = true;
-			item.intProp = (int)Math::RandRange(0.0f, 100.0f);
-			item.floatProp = Math::RandRange(0.0f, 100.0f);
-
-			entity->itemsProp.push_back(item);
-		}
-
-		entity->intProp = (int)Math::RandRange(0.0f, 100.0f);
-		entity->floatProp = Math::RandRange(0.0f, 100.0f);
-		entity->floatProp2 = Math::RandRange(0.0f, 100.0f);
-		entity->SetName(StringUtils::PrintTemp("TestEntity%i", scene->GetEntityCount()));
-	}
-
 	bool Editor::Init(HWND setHwnd)
 	{
 		ImGui_ImplWin32_EnableDpiAwareness();
@@ -286,7 +264,20 @@ namespace Oak
 				{
 					if (ImGui::MenuItem(decl->GetShortName()))
 					{
-						AddEntity(project.selectedScene->scene);
+						auto* entity = project.selectedScene->scene->CreateEntity(decl->GetName());
+						entity->SetName(decl->GetShortName());
+
+						auto* transform = entity->GetTransform();
+
+						if (transform)
+						{
+							if (!transform->Is2D())
+							{
+								transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+							}
+						}
+
+						SelectEntity(entity);
 					}
 				}
 
@@ -298,6 +289,8 @@ namespace Oak
 				SceneEntity* copy = project.selectedScene->scene->CreateEntity(selectedEntity->className);
 				project.selectedScene->scene->GenerateUID(copy);
 				copy->Copy(selectedEntity);
+
+				SelectEntity(copy);
 
 				eastl::string name = selectedEntity->GetName();
 				name += "_copy";
@@ -568,11 +561,26 @@ namespace Oak
 		freeCamera.Update(dt);
 
 		root.Update();
+
+		if (project.selectedScene)
+		{
+			if (selectedEntity && selectedEntity->HasOwnTasks())
+			{
+				project.EnableScene(project.selectedScene, false);
+				selectedEntity->Tasks(true)->Execute(dt);
+			}
+			else
+			{
+				project.EnableScene(project.selectedScene, true);
+				project.selectedScene->scene->Execute(dt);
+			}
+		}
 	}
 
 	void Editor::Render(float dt)
 	{
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
+		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);
 		root.render.GetDevice()->Present();
