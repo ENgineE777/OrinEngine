@@ -181,4 +181,17 @@ namespace Oak::Math
 
 		return true;
 	}
+
+	bool IsInsideTriangle(Math::Vector2 s, Math::Vector2 a, Math::Vector2 b, Math::Vector2 c)
+	{
+		float as_x = s.x - a.x;
+		float as_y = s.y - a.y;
+
+		bool s_ab = (b.x - a.x) * as_y - (b.y - a.y) * as_x > 0;
+
+		if ((c.x - a.x) * as_y - (c.y - a.y) * as_x > 0 == s_ab) return false;
+		if ((c.x - b.x) * (s.y - b.y) - (c.y - b.y) * (s.x - b.x) > 0 != s_ab) return false;
+
+		return true;
+	}
 }

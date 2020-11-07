@@ -31,6 +31,7 @@ namespace Oak
 		SceneEntity* selectedEntity = nullptr;
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
+		bool viewportCaptured = false;
 
 	public:
 

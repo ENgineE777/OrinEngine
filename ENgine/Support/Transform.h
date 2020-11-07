@@ -168,7 +168,7 @@ namespace Oak
 		*/
 		virtual bool Is2D()
 		{
-			return false;
+			return true;
 		}
 	};
 }

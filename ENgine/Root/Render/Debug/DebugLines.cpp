@@ -114,7 +114,7 @@ namespace Oak
 		int count = 0;
 
 		float screenWidth = (float)root.render.GetDevice()->GetWidth();
-		float screenHeight = (float)root.render.GetDevice()->GetWidth();
+		float screenHeight = (float)root.render.GetDevice()->GetHeight();
 
 		for (int i=0; i<lines.size(); i+=2)
 		{

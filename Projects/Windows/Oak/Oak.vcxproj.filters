@@ -368,6 +368,12 @@
     <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp">
       <Filter>ENgine\Support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp">
+      <Filter>ENgine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp">
+      <Filter>ENgine\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -867,6 +873,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Sprite.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h">
+      <Filter>ENgine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\Gizmo.h">
+      <Filter>ENgine\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

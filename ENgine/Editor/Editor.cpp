@@ -5,6 +5,9 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
+#include "Gizmo.h"
+#include "EditorDrawer.h"
+
 #include "SceneEntities\TestEntity.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -16,6 +19,7 @@ extern const char* OpenFileDialog(const char* extName, const char* ext, bool ope
 namespace Oak
 {
 	Editor editor;
+	Gizmo gizmo;
 
 	bool Editor::Init(HWND setHwnd)
 	{
@@ -45,6 +49,10 @@ namespace Oak
 		}
 
 		freeCamera.Init();
+
+		gizmo.Init();
+
+		editorDrawer.Init();
 
 		SetupImGUI();
 
@@ -85,22 +93,38 @@ namespace Oak
 	{
 		ImGui::Begin("Game", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-		ImVec2 size = ImGui::GetWindowContentRegionMax();
-		size.x = ImGui::GetWindowContentRegionWidth();
-		size.y += 4;
-
-		if (size.x != Oak::root.render.GetDevice()->GetWidth() || size.y != Oak::root.render.GetDevice()->GetHeight())
-		{
-			Oak::root.render.GetDevice()->SetVideoMode((int)size.x, (int)size.y, &hwnd);
-		}
-
 		ImGuiIO& io = ImGui::GetIO();
 
 		Oak::root.controls.OverrideMousePos((int)io.MousePos.x, (int)io.MousePos.y);
 
 		UpdateOak();
 
-		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), ImGui::GetContentRegionAvail());
+		ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
+
+		ImVec2 size = ImGui::GetContentRegionAvail();
+
+		if (size.x != Oak::root.render.GetDevice()->GetWidth() || size.y != Oak::root.render.GetDevice()->GetHeight())
+		{
+			Oak::root.render.GetDevice()->SetVideoMode((int)size.x, (int)size.y, &hwnd);
+			Sprite::Update();
+		}
+
+		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDown(0))
+		{
+			gizmo.OnLeftMouseDown();
+			viewportCaptured = true;
+		}
+
+		gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+
+		if (viewportCaptured && ImGui::IsMouseReleased(0))
+		{
+			gizmo.OnLeftMouseUp();
+			viewportCaptured = false;
+		}
+
 
 		ImGui::End();
 	}
@@ -129,6 +153,7 @@ namespace Oak
 		if (selectedEntity)
 		{
 			selectedEntity->SetEditMode(false);
+			gizmo.Disable();
 		}
 
 		selectedEntity = entity;
@@ -136,6 +161,18 @@ namespace Oak
 		if (selectedEntity)
 		{
 			selectedEntity->SetEditMode(true);
+
+			if (selectedEntity->GetTransform())
+			{
+				if (selectedEntity->GetTransform()->Is2D())
+				{
+					gizmo.SetTrans2D(*((Transform2D*)selectedEntity->GetTransform()));
+				}
+				else
+				{
+					gizmo.SetTrans3D(&selectedEntity->GetTransform()->local);
+				}
+			}
 		}
 	}
 
@@ -559,6 +596,8 @@ namespace Oak
 		root.controls.SetFocused(GetActiveWindow() == hwnd && ImGui::IsWindowFocused());
 
 		freeCamera.Update(dt);
+
+		gizmo.Render();
 
 		root.Update();
 

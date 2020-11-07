@@ -25,4 +25,5 @@ namespace Oak::Math
 	bool IsSameAngles(float angle, float target_angle);
 	bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir);
 	bool IntersectBBoxRay(Vector3 vmin, Vector3 vmax, Vector3 start, Vector3 dir);
+	bool IsInsideTriangle(Math::Vector2 s, Math::Vector2 a, Math::Vector2 b, Math::Vector2 c);
 }

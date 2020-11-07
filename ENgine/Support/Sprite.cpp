@@ -237,7 +237,7 @@ namespace Oak::Sprite
 		return pos;
 	}
 
-	void Draw(TextureRef& texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped)
+	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 		root.render.GetDevice()->SetVertexDecl(vdecl);
