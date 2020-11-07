@@ -2,6 +2,8 @@
 #include "Root.h"
 #include "Support/Timer.h"
 #include "Support/StringUtils.h"
+#include "Support/Sprite.h"
+
 #include <ctime>
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,6 +68,10 @@ namespace Oak
 			return false;
 		}
 
+		Sprite::Init();
+
+		scenes.Init();
+
 		StringUtils::Init();
 
 		Timer::CountDeltaTime();
@@ -112,6 +118,9 @@ namespace Oak
 	void Root::Update()
 	{
 		controls.Update(dt);
+
+		scenes.Execute(dt);
+
 		render.Execute(dt);
 	}
 

@@ -25,8 +25,11 @@ namespace Oak
 
 			uint32_t selectedEntity = -1;
 
-			eastl::vector<SceneHolder*> included;
-			eastl::vector<eastl::string> includedPathes;
+			Math::Vector2 camera3DAngles = Math::Vector2(0.0f, -0.5f);
+			Math::Vector3 camera3DPos = Math::Vector3(0.0f, 6.0f, 0.0f);
+
+			Math::Vector2 camera2DPos = 0.0;
+			float camera2DZoom = 1.0f;
 
 			void SetPath(const char* set_path)
 			{
@@ -65,8 +68,6 @@ namespace Oak
 		Scene* GetScene(const char* path);
 		void AddScene(const char* path);
 		void DeleteScene(SceneHolder* holder);
-
-		bool HaveDepenecy(const char* str, SceneHolder* holder);
 
 		void EnableScene(SceneHolder* holder, bool enable);
 

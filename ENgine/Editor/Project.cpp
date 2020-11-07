@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "Support/Sprite.h"
 
 namespace Oak
 {
@@ -31,33 +32,12 @@ namespace Oak
 				scn->SetPath(str.c_str());
 
 				reader.Read("selected_entity", scn->selectedEntity);
-
-				while (reader.EnterBlock("include"))
-				{
-					reader.Read("path", str);
-
-					scn->includedPathes.push_back(str);
-
-					reader.LeaveBlock();
-				}
+				reader.Read("camera3DAngles", scn->camera3DAngles);
+				reader.Read("camera3DPos", scn->camera3DPos);
+				reader.Read("camera2DPos", scn->camera2DPos);
+				reader.Read("camera2DZoom", scn->camera2DZoom);
 
 				reader.LeaveBlock();
-			}
-
-			for (auto& scn : scenes)
-			{
-				for (auto& incl : scn->includedPathes)
-				{
-					for (auto& sub_scn : scenes)
-					{
-						if (StringUtils::IsEqual(sub_scn->path.c_str(), incl.c_str()))
-						{
-							scn->included.push_back(sub_scn);
-
-							break;
-						}
-					}
-				}
 			}
 
 			eastl::string edScene;
@@ -79,18 +59,8 @@ namespace Oak
 			return;
 		}
 
-		for (auto& incl : holder->included)
-		{
-			LoadScene(incl);
-		}
-
 		holder->scene = new Scene();
 		holder->scene->Init();
-
-		for (auto& incl : holder->included)
-		{
-			holder->scene->includedScenes.push_back(incl->scene);
-		}
 
 		char path[1024];
 		StringUtils::Printf(path, 1024, "%s%s", projectPath, holder->path.c_str());
@@ -152,21 +122,11 @@ namespace Oak
 			writer.StartBlock(nullptr);
 
 			writer.Write("path", scn->path.c_str());
-
-			writer.Write("selected_object", scn->selectedEntity);
-
-			writer.StartArray("include");
-
-			for (auto& incl : scn->included) 
-			{
-				writer.StartBlock(nullptr);
-
-				writer.Write("path", incl->path.c_str());
-
-				writer.FinishBlock();
-			}
-
-			writer.FinishArray();
+			writer.Write("selected_entity", scn->selectedEntity);
+			writer.Write("camera3DAngles", scn->camera3DAngles);
+			writer.Write("camera3DPos", scn->camera3DPos);
+			writer.Write("camera2DPos", scn->camera2DPos);
+			writer.Write("camera2DZoom", scn->camera2DZoom);
 
 			writer.FinishBlock();
 		}
@@ -235,6 +195,12 @@ namespace Oak
 			{
 				LoadScene(selectedScene);
 			}
+
+			editor.freeCamera.angles = selectedScene->camera3DAngles;
+			editor.freeCamera.pos = selectedScene->camera3DPos;
+
+			Sprite::edCamPos = selectedScene->camera2DPos;
+			Sprite::edCamZoom = selectedScene->camera2DZoom;
 
 			EnableScene(selectedScene, true);
 
@@ -354,33 +320,8 @@ namespace Oak
 		}
 	}
 
-	bool Project::HaveDepenecy(const char* str, Project::SceneHolder* holder)
-	{
-		if (StringUtils::IsEqual(holder->path.c_str(), str))
-		{
-			return true;
-		}
-
-		for (auto& incl : holder->included)
-		{
-			bool res = HaveDepenecy(str, incl);
-
-			if (res)
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	void Project::EnableScene(SceneHolder* holder, bool enable)
 	{
-		for (auto& incl : holder->included)
-		{
-			EnableScene(incl, enable);
-		}
-
 		holder->scene->EnableTasks(enable);
 	}
 
@@ -443,5 +384,10 @@ namespace Oak
 
 	void Project::SaveCameraPos(SceneHolder* holder)
 	{
+		holder->camera3DAngles = editor.freeCamera.angles;
+		holder->camera3DPos = editor.freeCamera.pos;
+
+		holder->camera2DPos = Sprite::edCamPos;
+		holder->camera2DZoom = Sprite::edCamZoom;
 	}
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -189,6 +189,8 @@
     <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneManager.h" />
     <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity2D.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity3D.h" />
     <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
@@ -201,6 +203,7 @@
     <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h" />
     <ClInclude Include="..\..\..\ENgine\Support\MetaData.h" />
     <ClInclude Include="..\..\..\ENgine\Support\PointerRef.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\Sprite.h" />
     <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Support.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h" />
@@ -350,8 +353,11 @@
     <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneManager.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity2D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity3D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />
     <ClCompile Include="..\..\..\Libs\eastl\source\allocator_eastl.cpp" />
