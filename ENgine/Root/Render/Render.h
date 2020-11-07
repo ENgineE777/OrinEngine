@@ -276,9 +276,9 @@ namespace Oak
 
 		\return Pointer to texture filled by white color
 		*/
-		inline Texture* GetWhiteTexture()
+		inline TextureRef GetWhiteTexture()
 		{
-			return whiteTex.Get();
+			return whiteTex;
 		}
 
 		/**
