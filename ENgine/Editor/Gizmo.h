@@ -19,11 +19,6 @@ namespace Oak
 
 	class Gizmo
 	{
-		Transform* transform = nullptr;
-
-		TransformType mode = TransformType::Move;
-		bool useLocalSpace = false;
-
 		float scale = 1.0f;
 		Math::Vector2 align2d = 0.0f;
 		int transform2DActions = 0;
@@ -60,6 +55,10 @@ namespace Oak
 		void RenderTrans3D();
 
 	public:
+
+		Transform* transform = nullptr;
+		TransformType mode = TransformType::Move;
+		bool useLocalSpace = false;
 
 		void SetTransform2D(Transform* transform, int actions = 0xffff, bool ignore_2d_camera = false);
 		void SetTransform3D(Transform* transform);

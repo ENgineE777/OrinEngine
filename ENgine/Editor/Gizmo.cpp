@@ -743,6 +743,7 @@ namespace Oak
 			DrawAxis(2);
 		}
 		else
+		if (mode == TransformType::Rotate)
 		{
 			DrawCircle(0);
 			DrawCircle(1);

@@ -3,6 +3,7 @@
 #include "Root/Root.h"
 #include "FreeCamera.h"
 #include "Project.h"
+#include "Gizmo.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -36,6 +37,7 @@ namespace Oak
 	public:
 
 		Project project;
+		Gizmo gizmo;
 
 		bool Init(HWND hwnd);
 		bool Update();
@@ -52,6 +54,7 @@ namespace Oak
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
 
+		void GizmoButtonMode(const char* label, TransformType type);
 		void SelectEntity(SceneEntity* entity);
 
 		bool CreateDeviceD3D();

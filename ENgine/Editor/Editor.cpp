@@ -5,7 +5,6 @@
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 
-#include "Gizmo.h"
 #include "EditorDrawer.h"
 
 #include "SceneEntities\TestEntity.h"
@@ -19,7 +18,6 @@ extern const char* OpenFileDialog(const char* extName, const char* ext, bool ope
 namespace Oak
 {
 	Editor editor;
-	Gizmo gizmo;
 
 	bool Editor::Init(HWND setHwnd)
 	{
@@ -344,6 +342,35 @@ namespace Oak
 		}
 	}
 
+	void Editor::GizmoButtonMode(const char* label, TransformType type)
+	{
+		float b = 1.0f;
+		float c = 0.5f;
+		int i = 4;
+		bool needPopStyle = false;
+
+		if (gizmo.mode == type)
+		{
+			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, c, c));
+			needPopStyle = true;
+		}
+
+		if (ImGui::Button(label, ImVec2(50.0f, 25.0f)))
+		{
+			gizmo.mode = type;
+		}
+
+		if (needPopStyle)
+		{
+			ImGui::PopStyleColor(3);
+			needPopStyle = false;
+		}
+
+		ImGui::SameLine();
+	}
+
 	bool Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
@@ -380,17 +407,24 @@ namespace Oak
 			ImGui::DockBuilderAddNode(dockspaceID, ImGuiDockNodeFlags_None);
 
 			ImGuiID dock_main_id = dockspaceID;
+			ImGuiID dock_top_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.05f, nullptr, &dock_main_id);
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
 
+			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
 			ImGui::DockBuilderDockWindow("Project", dock_left_id);
 			ImGui::DockBuilderDockWindow("Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
+
+			ImGuiDockNode* node = ImGui::DockBuilderGetNode(dock_top_id);
+			node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
+			node->LocalFlags |= ImGuiDockNodeFlags_NoResize | ImGuiDockNodeFlags_NoResizeY | ImGuiDockNodeFlags_NoResizeX;
 		}
-		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags | ImGuiDockNodeFlags_NoCloseButton);
+
+		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags | ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoWindowMenuButton);
 
 
 		if (ImGui::BeginMenuBar())
@@ -470,6 +504,33 @@ namespace Oak
 
 		projectTreePopup = false;
 		sceneTreePopup = false;
+
+		{
+			ImGui::Begin("Toolbar");
+
+			if (gizmo.IsEnabled())
+			{
+				if (gizmo.transform->Is2D())
+				{
+
+				}
+				else
+				{
+					GizmoButtonMode("Move", TransformType::Move);
+					GizmoButtonMode("Rotate", TransformType::Rotate);
+					GizmoButtonMode("Scale", TransformType::Scale);
+
+					if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
+					{
+						gizmo.useLocalSpace = !gizmo.useLocalSpace;
+					}
+
+					ImGui::SameLine();
+				}
+			}
+
+			ImGui::End();
+		}
 
 		{
 			ImGui::Begin("Project");
