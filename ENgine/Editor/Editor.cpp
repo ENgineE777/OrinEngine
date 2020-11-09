@@ -1,6 +1,5 @@
 #include "Editor.h"
 
-#include "imgui.h"
 #include "imgui_internal.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -107,7 +106,9 @@ namespace Oak
 
 		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
 
-		if (ImGui::IsItemHovered() && ImGui::IsMouseDown(0))
+		vireportHowered = ImGui::IsItemHovered();
+
+		if (vireportHowered && ImGui::IsMouseDown(0))
 		{
 			gizmo.OnLeftMouseDown();
 			viewportCaptured = true;
@@ -342,35 +343,6 @@ namespace Oak
 		}
 	}
 
-	void Editor::GizmoButtonMode(const char* label, TransformType type)
-	{
-		float b = 1.0f;
-		float c = 0.5f;
-		int i = 4;
-		bool needPopStyle = false;
-
-		if (gizmo.mode == type)
-		{
-			ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
-			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
-			ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, c, c));
-			needPopStyle = true;
-		}
-
-		if (ImGui::Button(label, ImVec2(50.0f, 25.0f)))
-		{
-			gizmo.mode = type;
-		}
-
-		if (needPopStyle)
-		{
-			ImGui::PopStyleColor(3);
-			needPopStyle = false;
-		}
-
-		ImGui::SameLine();
-	}
-
 	bool Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
@@ -508,6 +480,20 @@ namespace Oak
 		{
 			ImGui::Begin("Toolbar");
 
+			PushButton("2D", freeCamera.mode_2d, [this]() {freeCamera.mode_2d = true; });
+			PushButton("3D", !freeCamera.mode_2d, [this]() {freeCamera.mode_2d = false; });
+
+			if (freeCamera.mode_2d)
+			{
+				ImGui::Text("Zoom");
+				ImGui::SameLine();
+
+				ImGui::SetNextItemWidth(60.0f);
+				ImGui::InputFloat("##Zoom2D", &Sprite::edCamZoom);
+				Sprite::edCamZoom = Math::Clamp(Sprite::edCamZoom, 0.2f, 2.0f);
+				ImGui::SameLine();
+			}
+
 			if (gizmo.IsEnabled())
 			{
 				if (gizmo.transform->Is2D())
@@ -538,9 +524,9 @@ namespace Oak
 				}
 				else
 				{
-					GizmoButtonMode("Move", TransformType::Move);
-					GizmoButtonMode("Rotate", TransformType::Rotate);
-					GizmoButtonMode("Scale", TransformType::Scale);
+					PushButton("Move", gizmo.mode == TransformType::Move, [this]() {gizmo.mode = TransformType::Move; });
+					PushButton("Rotate", gizmo.mode == TransformType::Rotate, [this]() {gizmo.mode = TransformType::Rotate; });
+					PushButton("Scale", gizmo.mode == TransformType::Scale, [this]() {gizmo.mode = TransformType::Scale; });
 
 					if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 					{
@@ -676,12 +662,15 @@ namespace Oak
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
-		for (int i = 0; i <= 20; i++)
+		if (!freeCamera.mode_2d)
 		{
-			float pos = (float)i - 10.0f;
+			for (int i = 0; i <= 20; i++)
+			{
+				float pos = (float)i - 10.0f;
 
-			root.render.DebugLine(Math::Vector3(pos, 0.0f, -10.0f), COLOR_WHITE, Math::Vector3(pos, 0.0f, 10.0f), COLOR_WHITE);
-			root.render.DebugLine(Math::Vector3(-10.0f, 0.0f, pos), COLOR_WHITE, Math::Vector3(10.0f, 0.0f, pos), COLOR_WHITE);
+				root.render.DebugLine(Math::Vector3(pos, 0.0f, -10.0f), COLOR_WHITE, Math::Vector3(pos, 0.0f, 10.0f), COLOR_WHITE);
+				root.render.DebugLine(Math::Vector3(-10.0f, 0.0f, pos), COLOR_WHITE, Math::Vector3(10.0f, 0.0f, pos), COLOR_WHITE);
+			}
 		}
 
 		float dt = root.GetDeltaTime();

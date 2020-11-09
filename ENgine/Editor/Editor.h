@@ -5,6 +5,8 @@
 #include "Project.h"
 #include "Gizmo.h"
 
+#include "imgui.h"
+
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <d3d11.h>
@@ -18,6 +20,7 @@ namespace Oak
 	class Editor : Object
 	{
 		friend class Project;
+		friend class FreeCamera;
 
 		HWND hwnd;
 		ID3D11Device* d3dDevice = nullptr;
@@ -33,6 +36,7 @@ namespace Oak
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
 		bool viewportCaptured = false;
+		bool vireportHowered = false;
 
 	public:
 
@@ -54,7 +58,36 @@ namespace Oak
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
 
-		void GizmoButtonMode(const char* label, TransformType type);
+		template<typename Func>
+		void PushButton(const char* label, bool pushed, Func callback)
+		{
+			float b = 1.0f;
+			float c = 0.5f;
+			int i = 4;
+			bool needPopStyle = false;
+
+			if (pushed)
+			{
+				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
+				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
+				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, c, c));
+				needPopStyle = true;
+			}
+
+			if (ImGui::Button(label, ImVec2(50.0f, 25.0f)))
+			{
+				callback();
+			}
+
+			if (needPopStyle)
+			{
+				ImGui::PopStyleColor(3);
+				needPopStyle = false;
+			}
+
+			ImGui::SameLine();
+		}
+
 		void SelectEntity(SceneEntity* entity);
 
 		bool CreateDeviceD3D();
