@@ -309,11 +309,11 @@ namespace Oak
 
 		if (transform2DActions & TransformType::Anchorn)
 		{
-			if (transform2D->offset.x - 7 < ms.x && ms.x < transform2D->offset.x + 7 &&
-				transform2D->offset.y - 7 < ms.y && ms.y < transform2D->offset.y + 7)
+			if (origin.x - 7 < ms.x && ms.x < origin.x + 7 &&
+				origin.y - 7 < ms.y && ms.y < origin.y + 7)
 			{
 				selAxis = 10;
-				movedOrigin = transform2D->offset;
+				movedOrigin = origin;
 			}
 		}
 
@@ -802,7 +802,7 @@ namespace Oak
 
 		origin = Math::Vector2(p1.x, p1.y);
 
-		root.render.DebugSprite(editorDrawer.center, ((selAxis == 10) ? movedOrigin : origin) - Math::Vector2(4.0f), Math::Vector2(8.0f));
+		root.render.DebugSprite(editorDrawer.center, ((selAxis == 10) ? movedOrigin : origin) - Math::Vector2(4.0f), Math::Vector2(8.0f), (selAxis == 10 ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE));
 	}
 
 	void Gizmo::RenderTrans3D()
