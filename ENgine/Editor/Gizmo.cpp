@@ -21,6 +21,31 @@ namespace Oak
 		deltaMove = 0.0f;
 	}
 
+	void Gizmo::SetTransform2D(Math::Vector2 set_pos)
+	{
+		if (!transform)
+		{
+			return;
+		}
+
+		Transform2D* transform2D = (Transform2D*)transform;
+
+		set_pos = MakeAligned(set_pos);
+		transform2D->pos = set_pos;
+		pos2d = set_pos;
+	}
+
+	Math::Vector2 Gizmo::GetTransform2D()
+	{
+		if (!transform)
+		{
+			return 0.0f;
+		}
+
+		Transform2D* transform2D = (Transform2D*)transform;
+		return transform2D->pos;
+	}
+
 	void Gizmo::SetTransform3D(Transform* set_transform)
 	{
 		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform3d == null")

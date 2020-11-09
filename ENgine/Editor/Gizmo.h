@@ -61,6 +61,9 @@ namespace Oak
 		Math::Vector2 align2D = 0.0f;
 
 		void SetTransform2D(Transform* transform, int actions = 0xffff, bool ignore_2d_camera = false);
+		void SetTransform2D(Math::Vector2 set_pos);
+		Math::Vector2 GetTransform2D();
+
 		void SetTransform3D(Transform* transform);
 
 		bool IsEnabled();

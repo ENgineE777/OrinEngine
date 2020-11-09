@@ -514,12 +514,20 @@ namespace Oak
 
 					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
 					{
+						float scale = 1024.0f / root.render.GetDevice()->GetHeight();
+						Sprite::edCamPos = gizmo.GetTransform2D() / scale;
 					}
+
 					ImGui::SameLine();
 
 					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)))
 					{
+						float scale = 1024.0f / root.render.GetDevice()->GetHeight();
+
+						Math::Vector2 pos2d = Sprite::edCamPos * scale;
+						gizmo.SetTransform2D(pos2d);
 					}
+
 					ImGui::SameLine();
 				}
 				else
@@ -537,12 +545,30 @@ namespace Oak
 
 					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
 					{
+						auto* transform = selectedEntity->GetTransform();
+
+						if (transform)
+						{
+							if (!transform->Is2D())
+							{
+								freeCamera.pos = transform->local.Pos() - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+							}
+						}
 					}
 
 					ImGui::SameLine();
 
-					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)))
+					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)) && selectedEntity)
 					{
+						auto* transform = selectedEntity->GetTransform();
+
+						if (transform)
+						{
+							if (!transform->Is2D())
+							{
+								transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+							}
+						}
 					}
 
 					ImGui::SameLine();
