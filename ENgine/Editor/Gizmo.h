@@ -53,6 +53,8 @@ namespace Oak
 		void RenderTrans2D();
 		void RenderTrans3D();
 
+		Math::Vector3 TransformVetcor(Math::Vector3 pos);
+
 	public:
 
 		Transform* transform = nullptr;

@@ -114,9 +114,9 @@ namespace Oak
 			dir.z = scale;
 		}
 
-		if (useLocalSpace)
+		if (useLocalSpace || mode == TransformType::Scale)
 		{
-			dir = transform->local.MulNormal(dir);
+			dir = TransformVetcor(dir);
 		}
 
 		dir += tr;
@@ -148,9 +148,9 @@ namespace Oak
 				pos = Math::Vector3(dx, dz, hgt);
 			}
 
-			if (useLocalSpace)
+			if (useLocalSpace || mode == TransformType::Scale)
 			{
-				pos = transform->local.MulNormal(pos);
+				pos = TransformVetcor(pos);
 			}
 
 			root.render.DebugLine(dir, color, pos + tr, color, false);
@@ -237,10 +237,10 @@ namespace Oak
 								 Math::Vector3 trans, bool check_trans,
 								 Math::Matrix view, Math::Matrix view_proj)
 	{
-		if (useLocalSpace)
+		if (useLocalSpace || mode == TransformType::Scale)
 		{
-			pos = transform->local.MulNormal(pos);
-			pos2 = transform->local.MulNormal(pos2);
+			pos = TransformVetcor(pos);
+			pos2 = TransformVetcor(pos2);
 		}
 
 		Math::Vector3 tr = transform->local.Pos();
@@ -428,6 +428,40 @@ namespace Oak
 
 				last_dx = dx;
 				last_dz = dz;
+			}
+		}
+		else
+		if (mode == TransformType::Scale)
+		{
+			Math::Vector3 dir;
+			dir = 0.0f;
+
+			if (axis == 0)
+			{
+				dir.x = scale;
+			}
+			else
+			if (axis == 1)
+			{
+				dir.y = scale;
+			}
+			else
+			{
+				dir.z = scale;
+			}
+
+			int count = 7;
+
+			for (int i = 0; i < count; i++)
+			{
+				Math::Vector3 pos = dir * (float)i * (1.0f / (float)count);
+				Math::Vector3 pos2 = dir * (float)(i + 1) * (1.0f / (float)count);
+				Math::Vector3 tr(0.0f);
+
+				if (CheckInersection(pos, pos2, ms, tr, false, view, view_proj))
+				{
+					return true;
+				}
 			}
 		}
 
@@ -639,6 +673,31 @@ namespace Oak
 				transform->local.Pos() = tr;
 			}
 		}
+		else
+		if (mode == TransformType::Scale)
+		{
+			da *= scale * 16;
+
+			if (selAxis == 0)
+			{
+				float length = transform->local.Vx().Normalize();
+				length += da;
+				transform->local.Vx() *= fmaxf(length, 0.1f);
+			}
+			else
+			if (selAxis == 1)
+			{
+				float length = transform->local.Vy().Normalize();
+				length += da;
+				transform->local.Vy() *= fmaxf(length, 0.1f);
+			}
+			else
+			{
+				float length = transform->local.Vz().Normalize();
+				length += da;
+				transform->local.Vz() *= fmaxf(length, 0.1f);
+			}
+		}
 	}
 
 	void Gizmo::RenderTrans2D()
@@ -774,6 +833,21 @@ namespace Oak
 			DrawCircle(1);
 			DrawCircle(2);
 		}
+		else
+		if (mode == TransformType::Scale)
+		{
+			DrawAxis(0);
+			DrawAxis(1);
+			DrawAxis(2);
+		}
+	}
+
+	Math::Vector3 Gizmo::TransformVetcor(Math::Vector3 pos)
+	{
+		Math::Matrix matrix = transform->local;
+		matrix.RemoveScale();
+
+		return matrix.MulNormal(pos);
 	}
 
 	Math::Vector2 Gizmo::MakeAligned(Math::Vector2 pos)

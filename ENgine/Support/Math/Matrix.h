@@ -373,6 +373,13 @@ namespace Oak::Math
 			return true;
 		}
 
+		void RemoveScale()
+		{
+			Vx().Normalize();
+			Vy().Normalize();
+			Vz().Normalize();
+		}
+
 		void Transpose()
 		{
 			float tmp;

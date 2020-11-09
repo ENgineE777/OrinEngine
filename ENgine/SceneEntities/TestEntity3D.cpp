@@ -22,6 +22,6 @@ namespace Oak
 
 	void TestEntity3D::Draw(float dt)
 	{
-		root.render.DebugSphere(tranform.local.Pos(), COLOR_GREEN, 1.0f);
+		root.render.DebugBox(tranform.local, COLOR_GREEN, 1.0f);
 	}
 }

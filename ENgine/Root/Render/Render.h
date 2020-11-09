@@ -212,7 +212,7 @@ namespace Oak
 		\param[in] scale Size of a box
 
 		*/
-		void DebugBox(Math::Matrix pos, Color color, Math::Vector3 scale);
+		void DebugBox(Math::Matrix transform, Color color, Math::Vector3 scale);
 
 		/**
 		\brief Draw debug triangle in 3D space
