@@ -31,6 +31,8 @@ namespace Oak
 			Math::Vector2 camera2DPos = 0.0;
 			float camera2DZoom = 1.0f;
 
+			Math::Vector2 gizmoAlign2D = 0.0f;
+
 			void SetPath(const char* set_path)
 			{
 				path = set_path;

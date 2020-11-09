@@ -20,7 +20,6 @@ namespace Oak
 	class Gizmo
 	{
 		float scale = 1.0f;
-		Math::Vector2 align2d = 0.0f;
 		int transform2DActions = 0;
 		Math::Vector2 pos2d = 0.0f;
 
@@ -59,6 +58,7 @@ namespace Oak
 		Transform* transform = nullptr;
 		TransformType mode = TransformType::Move;
 		bool useLocalSpace = false;
+		Math::Vector2 align2D = 0.0f;
 
 		void SetTransform2D(Transform* transform, int actions = 0xffff, bool ignore_2d_camera = false);
 		void SetTransform3D(Transform* transform);

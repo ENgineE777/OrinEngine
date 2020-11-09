@@ -36,6 +36,8 @@ namespace Oak
 				reader.Read("camera3DPos", scn->camera3DPos);
 				reader.Read("camera2DPos", scn->camera2DPos);
 				reader.Read("camera2DZoom", scn->camera2DZoom);
+				reader.Read("gizmoAlign2D", scn->gizmoAlign2D);
+
 
 				reader.LeaveBlock();
 			}
@@ -127,6 +129,7 @@ namespace Oak
 			writer.Write("camera3DPos", scn->camera3DPos);
 			writer.Write("camera2DPos", scn->camera2DPos);
 			writer.Write("camera2DZoom", scn->camera2DZoom);
+			writer.Write("gizmoAlign2D", scn->gizmoAlign2D);
 
 			writer.FinishBlock();
 		}
@@ -201,6 +204,8 @@ namespace Oak
 
 			Sprite::edCamPos = selectedScene->camera2DPos;
 			Sprite::edCamZoom = selectedScene->camera2DZoom;
+
+			editor.gizmo.align2D = selectedScene->gizmoAlign2D;
 
 			EnableScene(selectedScene, true);
 
@@ -389,5 +394,7 @@ namespace Oak
 
 		holder->camera2DPos = Sprite::edCamPos;
 		holder->camera2DZoom = Sprite::edCamZoom;
+
+		holder->gizmoAlign2D = editor.gizmo.align2D;
 	}
 }

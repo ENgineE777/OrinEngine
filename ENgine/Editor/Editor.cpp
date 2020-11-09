@@ -512,7 +512,29 @@ namespace Oak
 			{
 				if (gizmo.transform->Is2D())
 				{
+					ImGui::Text("AlignX");
+					ImGui::SameLine();
 
+					ImGui::SetNextItemWidth(60.0f);
+					ImGui::InputFloat("##AlignXID", &gizmo.align2D.x);
+					ImGui::SameLine();
+
+					ImGui::Text("AlignY");
+					ImGui::SameLine();
+
+					ImGui::SetNextItemWidth(60.0f);
+					ImGui::InputFloat("##AlignYID", &gizmo.align2D.y);
+					ImGui::SameLine();
+
+					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
+					{
+					}
+					ImGui::SameLine();
+
+					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)))
+					{
+					}
+					ImGui::SameLine();
 				}
 				else
 				{
@@ -523,6 +545,18 @@ namespace Oak
 					if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 					{
 						gizmo.useLocalSpace = !gizmo.useLocalSpace;
+					}
+
+					ImGui::SameLine();
+
+					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
+					{
+					}
+
+					ImGui::SameLine();
+
+					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)))
+					{
 					}
 
 					ImGui::SameLine();

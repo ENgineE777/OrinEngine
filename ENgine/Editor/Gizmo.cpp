@@ -753,17 +753,17 @@ namespace Oak
 
 	Math::Vector2 Gizmo::MakeAligned(Math::Vector2 pos)
 	{
-		if (align2d.x > 0.01f && pos.x < 0.0f)
+		if (align2D.x > 0.01f && pos.x < 0.0f)
 		{
-			pos.x -= align2d.x;
+			pos.x -= align2D.x;
 		}
 
-		if (align2d.y > 0.01f && pos.y < 0.0f)
+		if (align2D.y > 0.01f && pos.y < 0.0f)
 		{
-			pos.y -= align2d.y;
+			pos.y -= align2D.y;
 		}
 
-		return Math::Vector2((align2d.x > 0.01f) ? (align2d.x * ((int)(pos.x / align2d.x))) : pos.x, (align2d.y > 0.01f) ? (align2d.y * ((int)(pos.y / align2d.y))) : pos.y);
+		return Math::Vector2((align2D.x > 0.01f) ? (align2D.x * ((int)(pos.x / align2D.x))) : pos.x, (align2D.y > 0.01f) ? (align2D.y * ((int)(pos.y / align2D.y))) : pos.y);
 	}
 
 	void Gizmo::Render()
