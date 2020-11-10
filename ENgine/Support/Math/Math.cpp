@@ -218,6 +218,23 @@ namespace Oak::Math
 		return true;
 	}
 
+	bool IntersectPlaneRay(Math::Vector3 planeP, Math::Vector3 planeN, Math::Vector3 rayP, Math::Vector3 rayD, Math::Vector3& intersection)
+	{
+		float d = planeP.Dot(-planeN);
+		float det = (rayD.z * planeN.z + rayD.y * planeN.y + rayD.x * planeN.x);
+
+		if (fabsf(det) < Epsilon)
+		{
+			intersection = 0.0f;
+			return false;
+		}
+
+		float t = -(d + rayP.z * planeN.z + rayP.y * planeN.y + rayP.x * planeN.x) / det;
+		intersection = rayP + t * rayD;
+
+		return true;
+	}
+
 	bool IsInsideTriangle(Math::Vector2 s, Math::Vector2 a, Math::Vector2 b, Math::Vector2 c)
 	{
 		float as_x = s.x - a.x;

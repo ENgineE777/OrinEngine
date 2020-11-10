@@ -34,6 +34,8 @@ namespace Oak
 		{
 			Axis type;
 
+			Math::Vector3 axis;
+
 			Math::Vector3 from;
 			Math::Vector3 to;
 
@@ -77,6 +79,7 @@ namespace Oak
 		AxisData axises[3];
 		Math::Vector3 mouseOrigin;
 		Math::Vector3 mouseDirection;
+		Math::Vector3 selectionOffset;
 
 		int transform2DActions = 0;
 		Math::Vector2 pos2d = 0.0f;
@@ -111,6 +114,10 @@ namespace Oak
 		void RenderTrans3D();
 
 		Math::Vector3 TransformVetcor(Math::Vector3 pos);
+
+		void AxisTranslation(AxisData& axis);
+		void PlaneTranslation(AxisData& axisData);
+		void PlaneTranslation(Math::Vector3& plane_normal, Math::Vector3& point);
 
 	public:
 

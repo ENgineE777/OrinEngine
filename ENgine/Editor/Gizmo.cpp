@@ -236,6 +236,9 @@ namespace Oak
 
 		axis.AdjustData();
 
+		axis.axis = axis.to - axis.from;
+		axis.axis.Normalize();
+
 		root.render.DebugLine(axis.from, color, axis.to, color, false);
 
 		bool needHighlight = ((axis.type == Axis::X && (selAxis == (int)Axis::XY || selAxis == (int)Axis::XYZ)) ||
@@ -585,31 +588,29 @@ namespace Oak
 		ms.x /= (float)root.render.GetDevice()->GetWidth();
 		ms.y /= (float)root.render.GetDevice()->GetHeight();
  
-		Math::Matrix view;
-		root.render.GetTransform(TransformStage::View, view);
-
-		Math::Matrix view_proj;
-		root.render.GetTransform(TransformStage::Projection, view_proj);
-
-		Math::Vector3 v;
-		v.x = (2.0f * ms.x - 1) / view_proj._11;
-		v.y = -(2.0f * ms.y - 1) / view_proj._22;
-		v.z = 1.0f;
-
-		Math::Matrix inv_view = view;
-		inv_view.Inverse();
-		mouseOrigin = inv_view.Pos();
-
-		mouseDirection.x = v.x * inv_view._11 + v.y * inv_view._21 + v.z * inv_view._31;
-		mouseDirection.y = v.x * inv_view._12 + v.y * inv_view._22 + v.z * inv_view._32;
-		mouseDirection.z = v.x * inv_view._13 + v.y * inv_view._23 + v.z * inv_view._33;
-		mouseDirection.Normalize();
-
 		for (int i = 0; i < 3; i++)
 		{
 			if (CheckSelectionTrans3D(axises[i], ms))
 			{
 				selAxis = (int)axises[i].type;
+
+				if (axises[i].type == Axis::X)
+				{
+					Math::IntersectPlaneRay(transform->local.Pos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= transform->local.Pos();
+				}
+
+				if (axises[i].type == Axis::Y)
+				{
+					Math::IntersectPlaneRay(transform->local.Pos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= transform->local.Pos();
+				}
+
+				if (axises[i].type == Axis::Z)
+				{
+					Math::IntersectPlaneRay(transform->local.Pos(), axises[1].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= transform->local.Pos();
+				}
 			}
 		}
 
@@ -619,18 +620,24 @@ namespace Oak
 				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
 			{
 				selAxis = (int)Axis::XZ;
+				Math::IntersectPlaneRay(transform->local.Pos(), axises[1].axis, mouseOrigin, mouseDirection,selectionOffset);
+				selectionOffset -= transform->local.Pos();
 			}
 
 			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
 				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
 			{
 				selAxis = (int)Axis::XY;
+				Math::IntersectPlaneRay(transform->local.Pos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
+				selectionOffset -= transform->local.Pos();
 			}
 
 			if (Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
 			{
 				selAxis = (int)Axis::YZ;
+				Math::IntersectPlaneRay(transform->local.Pos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
+				selectionOffset -= transform->local.Pos();
 			}
 		}
 
@@ -800,6 +807,42 @@ namespace Oak
 		}
 	}
 
+	void Gizmo::AxisTranslation(AxisData& axisData)
+	{
+		Math::Vector3 original_point = transform->local.Pos() + selectionOffset;
+		Math::Vector3 point = original_point;
+
+		Math::Vector3 plane_tangent = axisData.axis.Cross(point - mouseOrigin);
+		Math::Vector3 plane_normal = axisData.axis.Cross(plane_tangent);
+		PlaneTranslation(plane_normal, point);
+
+		point = original_point + axisData.axis * (point - original_point).Dot(axisData.axis);
+
+		transform->local.Pos() = point - selectionOffset;
+	}
+
+	void Gizmo::PlaneTranslation(AxisData& axisData)
+	{
+		const float denom = mouseDirection.Dot(axisData.axis);
+		if (std::abs(denom) == 0) return;
+
+		const float t = (transform->local.Pos() + selectionOffset - mouseOrigin).Dot(axisData.axis) / denom;
+		if (t < 0) return;
+
+		transform->local.Pos() = mouseOrigin + mouseDirection * t - selectionOffset;
+	}
+
+	void Gizmo::PlaneTranslation(Math::Vector3& plane_normal, Math::Vector3& point)
+	{
+		const float denom = mouseDirection.Dot(plane_normal);
+		if (std::abs(denom) == 0) return;
+
+		const float t = (point - mouseOrigin).Dot(plane_normal) / denom;
+		if (t < 0) return;
+
+		point = mouseOrigin + mouseDirection * t;
+	}
+
 	void Gizmo::MoveTrans3D(Math::Vector2 ms)
 	{
 		if (selAxis == -1)
@@ -815,21 +858,34 @@ namespace Oak
 
 		if (mode == TransformType::Move)
 		{
-			da *= scale * 16;
-
-			if (selAxis & (int)Axis::X)
+			if (selAxis == (int)Axis::X)
 			{
-				transform->local._41 += da;
+				AxisTranslation(axises[0]);
 			}
 
-			if (selAxis & (int)Axis::Y)
+			if (selAxis == (int)Axis::Y)
 			{
-				transform->local._42 += da;
+				AxisTranslation(axises[1]);
 			}
 
-			if (selAxis & (int)Axis::Z)
+			if (selAxis == (int)Axis::Z)
 			{
-				transform->local._43 += da;
+				AxisTranslation(axises[2]);
+			}
+
+			if (selAxis == (int)Axis::YZ)
+			{
+				PlaneTranslation(axises[0]);
+			}
+
+			if (selAxis == (int)Axis::XZ)
+			{
+				PlaneTranslation(axises[1]);
+			}
+
+			if (selAxis == (int)Axis::XY)
+			{
+				PlaneTranslation(axises[2]);
 			}
 		}
 		else
@@ -1068,6 +1124,30 @@ namespace Oak
 	void Gizmo::OnMouseMove(Math::Vector2 ms)
 	{
 		if (!transform) return;
+
+		Math::Vector2 msConv = ms;
+		msConv.x /= (float)root.render.GetDevice()->GetWidth();
+		msConv.y /= (float)root.render.GetDevice()->GetHeight();
+
+		Math::Matrix view;
+		root.render.GetTransform(TransformStage::View, view);
+
+		Math::Matrix view_proj;
+		root.render.GetTransform(TransformStage::Projection, view_proj);
+
+		Math::Vector3 v;
+		v.x = (2.0f * msConv.x - 1) / view_proj._11;
+		v.y = -(2.0f * msConv.y - 1) / view_proj._22;
+		v.z = 1.0f;
+
+		Math::Matrix inv_view = view;
+		inv_view.Inverse();
+		mouseOrigin = inv_view.Pos();
+
+		mouseDirection.x = v.x * inv_view._11 + v.y * inv_view._21 + v.z * inv_view._31;
+		mouseDirection.y = v.x * inv_view._12 + v.y * inv_view._22 + v.z * inv_view._32;
+		mouseDirection.z = v.x * inv_view._13 + v.y * inv_view._23 + v.z * inv_view._33;
+		mouseDirection.Normalize();
 
 		if (mousedPressed)
 		{
