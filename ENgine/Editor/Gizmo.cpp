@@ -75,7 +75,7 @@ namespace Oak
 	{
 		Color color;
 
-		if ((int)axis == selAxis && !ignoreSelection)
+		if (!ignoreSelection && selAxis != -1 && (int)axis & selAxis)
 		{
 			color = COLOR_YELLOW;
 		}
@@ -108,10 +108,10 @@ namespace Oak
 
 		Color color = CheckColor(axis.type);
 
-		float subScale = scale * 0.4f;
-
 		if (mode == TransformType::Move)
 		{
+			float subScale = scale * 0.4f;
+
 			if (axis.type == Axis::X)
 			{
 				axis.to.x = scale;
@@ -151,6 +151,75 @@ namespace Oak
 				axis.subPointRight.x = subScale;
 			}
 		}
+		else
+		if (mode == TransformType::Scale)
+		{
+			float subScale = scale * 0.625f;
+			float subScale2 = scale * 0.4f;
+
+			if (axis.type == Axis::X)
+			{
+				axis.to.x = scale;
+
+				axis.subPointFrom.x = subScale;
+
+				axis.subPointLeft.x = subScale * 0.5f;
+				axis.subPointLeft.y = subScale * 0.5f;
+
+				axis.subPointRight.x = subScale * 0.5f;
+				axis.subPointRight.z = subScale * 0.5f;
+
+				axis.subPointFrom2.x = subScale2;
+
+				axis.subPointLeft2.x = subScale2 * 0.5f;
+				axis.subPointLeft2.y = subScale2 * 0.5f;
+
+				axis.subPointRight2.x = subScale2 * 0.5f;
+				axis.subPointRight2.z = subScale2 * 0.5f;
+			}
+			else
+			if (axis.type == Axis::Y)
+			{
+				axis.to.y = scale;
+
+				axis.subPointFrom.y = subScale;
+
+				axis.subPointLeft.y = subScale * 0.5f;
+				axis.subPointLeft.x = subScale * 0.5f;
+
+				axis.subPointRight.y = subScale * 0.5f;
+				axis.subPointRight.z = subScale * 0.5f;
+
+				axis.subPointFrom2.y = subScale2;
+
+				axis.subPointLeft2.y = subScale2 * 0.5f;
+				axis.subPointLeft2.x = subScale2 * 0.5f;
+
+				axis.subPointRight2.y = subScale2 * 0.5f;
+				axis.subPointRight2.z = subScale2 * 0.5f;
+			}
+			else
+			if (axis.type == Axis::Z)
+			{
+				axis.to.z = scale;
+
+				axis.subPointFrom.z = subScale;
+
+				axis.subPointLeft.z = subScale * 0.5f;
+				axis.subPointLeft.y = subScale * 0.5f;
+
+				axis.subPointRight.z = subScale * 0.5f;
+				axis.subPointRight.x = subScale * 0.5f;
+
+				axis.subPointFrom2.z = subScale2;
+
+				axis.subPointLeft2.z = subScale2 * 0.5f;
+				axis.subPointLeft2.y = subScale2 * 0.5f;
+
+				axis.subPointRight2.z = subScale2 * 0.5f;
+				axis.subPointRight2.x = subScale2 * 0.5f;
+			}
+		}
 
 		if (useLocalSpace || mode == TransformType::Scale)
 		{
@@ -169,28 +238,30 @@ namespace Oak
 
 		root.render.DebugLine(axis.from, color, axis.to, color, false);
 
-		bool needHighlight = ((axis.type == Axis::X && selAxis == (int)Axis::XY) ||
-		                      (axis.type == Axis::Y && selAxis == (int)Axis::XY) ||
-		                      (axis.type == Axis::Z && selAxis == (int)Axis::YZ));
+		bool needHighlight = ((axis.type == Axis::X && (selAxis == (int)Axis::XY || selAxis == (int)Axis::XYZ)) ||
+		                      (axis.type == Axis::Y && (selAxis == (int)Axis::XY || selAxis == (int)Axis::XYZ)) ||
+		                      (axis.type == Axis::Z && (selAxis == (int)Axis::YZ || selAxis == (int)Axis::XYZ)));
 
 		color = needHighlight ? COLOR_YELLOW : CheckColor(axis.type, true);
+
 		root.render.DebugLine(axis.subPointLeft, color, axis.subPointFrom, color, false);
 
-		if (needHighlight)
+		if (mode == TransformType::Scale)
 		{
-			root.render.DebugLine(axis.from, color, axis.subPointFrom, color, false);
+			root.render.DebugLine(axis.subPointLeft2, color, axis.subPointFrom2, needHighlight ? color : CheckColor(axis.type, true), false);
 		}
 
-		needHighlight = ((axis.type == Axis::X && selAxis == (int)Axis::XZ) ||
-		                 (axis.type == Axis::Y && selAxis == (int)Axis::YZ) ||
-		                 (axis.type == Axis::Z && selAxis == (int)Axis::XZ));
+		needHighlight = ((axis.type == Axis::X && (selAxis == (int)Axis::XZ || selAxis == (int)Axis::XYZ)) ||
+		                 (axis.type == Axis::Y && (selAxis == (int)Axis::YZ || selAxis == (int)Axis::XYZ)) ||
+		                 (axis.type == Axis::Z && (selAxis == (int)Axis::XZ || selAxis == (int)Axis::XYZ)));
 
 		color = needHighlight ? COLOR_YELLOW : CheckColor(axis.type, true);
+
 		root.render.DebugLine(axis.subPointRight, color, axis.subPointFrom , color, false);
 
-		if (needHighlight)
+		if (mode == TransformType::Scale)
 		{
-			root.render.DebugLine(axis.from, color, axis.subPointFrom, color, false);
+			root.render.DebugLine(axis.subPointRight2, color, axis.subPointFrom2, needHighlight ? color : CheckColor(axis.type, true), false);
 		}
 
 		color = CheckColor(axis.type, true);
@@ -244,6 +315,8 @@ namespace Oak
 		{
 			mat.Pos() = transform->local.Pos();
 		}
+
+		mat.RemoveScale();
 
 		Math::Matrix view;
 		root.render.GetTransform(TransformStage::View, view);
@@ -423,12 +496,24 @@ namespace Oak
 		root.render.GetTransform(TransformStage::Projection, view_proj);
 		view_proj = view * view_proj;
 
-		if (mode == TransformType::Move)
+		if (mode == TransformType::Move || mode == TransformType::Scale)
 		{
 			Math::Vector3 dir;
-			dir = axis.to - axis.from;
-			dir.Normalize();
-			dir *= scale;
+
+			if (axis.type == Axis::X)
+			{
+				dir.x = scale;
+			}
+			else
+			if (axis.type == Axis::Y)
+			{
+				dir.y = scale;
+			}
+			else
+			if (axis.type == Axis::Z)
+			{
+				dir.z = scale;
+			}
 
 			int count = 7;
 
@@ -491,40 +576,6 @@ namespace Oak
 				last_dz = dz;
 			}
 		}
-		else
-		if (mode == TransformType::Scale)
-		{
-			Math::Vector3 dir;
-			dir = 0.0f;
-
-			if (axis.type == Axis::X)
-			{
-				dir.x = scale;
-			}
-			else
-			if (axis.type == Axis::Y)
-			{
-				dir.y = scale;
-			}
-			else
-			{
-				dir.z = scale;
-			}
-
-			int count = 7;
-
-			for (int i = 0; i < count; i++)
-			{
-				Math::Vector3 pos = dir * (float)i * (1.0f / (float)count);
-				Math::Vector3 pos2 = dir * (float)(i + 1) * (1.0f / (float)count);
-				Math::Vector3 tr(0.0f);
-
-				if (CheckInersection(pos, pos2, ms, tr, false, view, view_proj))
-				{
-					return true;
-				}
-			}
-		}
 
 		return false;
 	}
@@ -583,6 +634,42 @@ namespace Oak
 			}
 		}
 
+		if (mode == TransformType::Scale)
+		{
+			if (Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[0].subPointRight2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].subPointRight2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::XZ;
+			}
+
+			if (Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[0].subPointLeft2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[1].subPointLeft2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::XY;
+			}
+
+			if (Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[1].subPointRight2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].subPointLeft2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::YZ;
+			}
+
+			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom2, axises[0].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom2, axises[2].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom2, axises[0].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom2, axises[1].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom2, axises[1].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom2, axises[2].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::XYZ;
+			}
+		}
 	}
 
 	void Gizmo::MoveTrans2D(Math::Vector2 ms)
@@ -739,7 +826,7 @@ namespace Oak
 			{
 				transform->local._42 += da;
 			}
-			
+
 			if (selAxis & (int)Axis::Z)
 			{
 				transform->local._43 += da;
@@ -782,20 +869,21 @@ namespace Oak
 		{
 			da *= scale * 16;
 
-			if (selAxis == (int)Axis::X)
+			if (selAxis & (int)Axis::X)
 			{
 				float length = transform->local.Vx().Normalize();
 				length += da;
 				transform->local.Vx() *= fmaxf(length, 0.1f);
 			}
-			else
-			if (selAxis == (int)Axis::Z)
+
+			if (selAxis & (int)Axis::Y)
 			{
 				float length = transform->local.Vy().Normalize();
 				length += da;
 				transform->local.Vy() *= fmaxf(length, 0.1f);
 			}
-			else
+
+			if (selAxis & (int)Axis::Z)
 			{
 				float length = transform->local.Vz().Normalize();
 				length += da;

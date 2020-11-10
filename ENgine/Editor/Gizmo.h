@@ -26,7 +26,8 @@ namespace Oak
 			Z = 4,
 			XY = X | Y,
 			XZ = X | Z,
-			YZ = Y | Z
+			YZ = Y | Z,
+			XYZ = X | Y | Z
 		};
 
 		struct AxisData
