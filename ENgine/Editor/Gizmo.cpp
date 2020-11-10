@@ -911,7 +911,10 @@ namespace Oak
 
 			if (useLocalSpace)
 			{
-				transform->local = rot * transform->local;
+				Math::Matrix scaleMat;
+				scaleMat.Scale(Math::Vector3(transform->local.Vx().Normalize(), transform->local.Vy().Normalize(), transform->local.Vz().Normalize()));
+
+				transform->local = scaleMat * rot * transform->local;
 			}
 			else
 			{
