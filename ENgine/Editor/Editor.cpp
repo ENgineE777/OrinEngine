@@ -494,6 +494,12 @@ namespace Oak
 				ImGui::SameLine();
 			}
 
+			ImGui::Separator();
+			ImGui::SameLine();
+
+			ImGui::Separator();
+			ImGui::SameLine();
+
 			if (gizmo.IsEnabled())
 			{
 				if (gizmo.transform->Is2D())
@@ -510,6 +516,9 @@ namespace Oak
 
 					ImGui::SetNextItemWidth(60.0f);
 					ImGui::InputFloat("##AlignYID", &gizmo.align2D.y);
+					ImGui::SameLine();
+
+					ImGui::Separator();
 					ImGui::SameLine();
 
 					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
@@ -541,6 +550,9 @@ namespace Oak
 						gizmo.useLocalSpace = !gizmo.useLocalSpace;
 					}
 
+					ImGui::SameLine();
+
+					ImGui::Separator();
 					ImGui::SameLine();
 
 					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
