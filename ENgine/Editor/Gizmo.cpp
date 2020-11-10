@@ -6,6 +6,13 @@
 
 namespace Oak
 {
+	Gizmo::Gizmo()
+	{
+		axises[0].type = Axis::X;
+		axises[1].type = Axis::Y;
+		axises[2].type = Axis::Z;
+	}
+
 	void Gizmo::SetTransform2D(Transform* set_transform, int actions, bool ignore_2d_camera)
 	{
 		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform2d == null")
@@ -64,26 +71,27 @@ namespace Oak
 		transform = nullptr;
 	}
 
-	Color Gizmo::CheckColor(int axis)
+	Color Gizmo::CheckColor(Axis axis, bool ignoreSelection)
 	{
 		Color color;
 
-		if (axis == selAxis)
+		if ((int)axis == selAxis && !ignoreSelection)
 		{
 			color = COLOR_YELLOW;
 		}
 		else
 		{
-			if (axis == 0)
+			if (axis == Axis::X)
 			{
 				color = COLOR_RED;
 			}
 			else
-			if (axis == 1)
+			if (axis == Axis::Y)
 			{
 				color = COLOR_GREEN;
 			}
 			else
+			if (axis == Axis::Z)
 			{
 				color = COLOR_BLUE;
 			}
@@ -92,39 +100,103 @@ namespace Oak
 		return color;
 	}
 
-	void Gizmo::DrawAxis(int axis)
+	void Gizmo::DrawAxis(AxisData& axis)
 	{
-		Math::Vector3 tr = transform->local.Pos();
+		axis.ResetData();
 
-		Color color = CheckColor(axis);
-		Math::Vector3 dir;
-		dir = 0.0f;
+		axis.from = transform->local.Pos();
 
-		if (axis == 0)
+		Color color = CheckColor(axis.type);
+
+		float subScale = scale * 0.4f;
+
+		if (mode == TransformType::Move)
 		{
-			dir.x = scale;
-		}
-		else
-		if (axis == 1)
-		{
-			dir.y = scale;
-		}
-		else
-		{
-			dir.z = scale;
+			if (axis.type == Axis::X)
+			{
+				axis.to.x = scale;
+
+				axis.subPointFrom.x = subScale;
+
+				axis.subPointLeft.x = axis.subPointFrom.x;
+				axis.subPointLeft.y = subScale;
+
+				axis.subPointRight.x = axis.subPointFrom.x;
+				axis.subPointRight.z = subScale;
+			}
+			else
+			if (axis.type == Axis::Y)
+			{
+				axis.to.y = scale;
+
+				axis.subPointFrom.y = subScale;
+
+				axis.subPointLeft.y = axis.subPointFrom.y;
+				axis.subPointLeft.x = subScale;
+
+				axis.subPointRight.y = axis.subPointFrom.y;
+				axis.subPointRight.z = subScale;
+			}
+			else
+			if (axis.type == Axis::Z)
+			{
+				axis.to.z = scale;
+
+				axis.subPointFrom.z = subScale;
+
+				axis.subPointLeft.z = axis.subPointFrom.z;
+				axis.subPointLeft.y = subScale;
+
+				axis.subPointRight.z = axis.subPointFrom.z;
+				axis.subPointRight.x = subScale;
+			}
 		}
 
 		if (useLocalSpace || mode == TransformType::Scale)
 		{
-			dir = TransformVetcor(dir);
+			axis.to = TransformVetcor(axis.to);
+
+			axis.subPointFrom = TransformVetcor(axis.subPointFrom);
+			axis.subPointLeft = TransformVetcor(axis.subPointLeft);
+			axis.subPointRight = TransformVetcor(axis.subPointRight);
+			
+			axis.subPointFrom2 = TransformVetcor(axis.subPointFrom2);
+			axis.subPointLeft2 = TransformVetcor(axis.subPointLeft2);
+			axis.subPointRight2 = TransformVetcor(axis.subPointRight2);
 		}
 
-		dir += tr;
+		axis.AdjustData();
 
-		root.render.DebugLine(dir, color, tr, color, false);
+		root.render.DebugLine(axis.from, color, axis.to, color, false);
 
-		float hgt = 0.85f * scale;
-		float r = 0.05f * scale;
+		bool needHighlight = ((axis.type == Axis::X && selAxis == (int)Axis::XY) ||
+		                      (axis.type == Axis::Y && selAxis == (int)Axis::XY) ||
+		                      (axis.type == Axis::Z && selAxis == (int)Axis::YZ));
+
+		color = needHighlight ? COLOR_YELLOW : CheckColor(axis.type, true);
+		root.render.DebugLine(axis.subPointLeft, color, axis.subPointFrom, color, false);
+
+		if (needHighlight)
+		{
+			root.render.DebugLine(axis.from, color, axis.subPointFrom, color, false);
+		}
+
+		needHighlight = ((axis.type == Axis::X && selAxis == (int)Axis::XZ) ||
+		                 (axis.type == Axis::Y && selAxis == (int)Axis::YZ) ||
+		                 (axis.type == Axis::Z && selAxis == (int)Axis::XZ));
+
+		color = needHighlight ? COLOR_YELLOW : CheckColor(axis.type, true);
+		root.render.DebugLine(axis.subPointRight, color, axis.subPointFrom , color, false);
+
+		if (needHighlight)
+		{
+			root.render.DebugLine(axis.from, color, axis.subPointFrom, color, false);
+		}
+
+		color = CheckColor(axis.type, true);
+
+		float hgt = 0.15f * scale;
+		float r = 0.035f * scale;
 		int nums = 64;
 
 		for (int i = 0; i < nums; i++)
@@ -134,16 +206,17 @@ namespace Oak
 
 			Math::Vector3 pos;
 
-			if (axis == 0)
+			if (axis.type == Axis::X)
 			{
 				pos = Math::Vector3(hgt, dx, dz);
 			}
 			else
-			if (axis == 1)
+			if (axis.type == Axis::Y)
 			{
 				pos = Math::Vector3(dx, hgt, dz);
 			}
 			else
+			if (axis.type == Axis::Z)
 			{
 				pos = Math::Vector3(dx, dz, hgt);
 			}
@@ -153,11 +226,11 @@ namespace Oak
 				pos = TransformVetcor(pos);
 			}
 
-			root.render.DebugLine(dir, color, pos + tr, color, false);
+			root.render.DebugLine(axis.to, color, axis.to - pos, color, false);
 		}
 	}
 
-	void Gizmo::DrawCircle(int axis)
+	void Gizmo::DrawCircle(Axis axis)
 	{
 		Color color = CheckColor(axis);
 		Color color_gray = Color(color.r * 0.4f, color.g * 0.4f, color.b * 0.4f);
@@ -192,13 +265,13 @@ namespace Oak
 				Math::Vector3 pos;
 				Math::Vector3 pos2;
 
-				if (axis == 0)
+				if (axis == Axis::X)
 				{
 					pos.Set(0.0f, last_dx, last_dz);
 					pos2.Set(0.0f, dx, dz);
 				}
 				else
-				if (axis == 1)
+				if (axis == Axis::Y)
 				{
 					pos.Set(last_dx, 0.0f, last_dz);
 					pos2.Set(dx, 0.0f, dz);
@@ -294,7 +367,7 @@ namespace Oak
 	{
 		Transform2D* transform2D = (Transform2D*)transform;
 
-		if (transform2DActions & TransformType::Scale)
+		if (transform2DActions & (int)TransformType::Scale)
 		{
 			for (int i = 0; i < 8; i++)
 			{
@@ -307,7 +380,7 @@ namespace Oak
 			}
 		}
 
-		if (transform2DActions & TransformType::Anchorn)
+		if (transform2DActions & (int)TransformType::Anchorn)
 		{
 			if (origin.x - 7 < ms.x && ms.x < origin.x + 7 &&
 				origin.y - 7 < ms.y && ms.y < origin.y + 7)
@@ -324,7 +397,7 @@ namespace Oak
 			{
 				//SetCursor(cr_move);
 
-				if (transform2DActions & TransformType::Move)
+				if (transform2DActions & (int)TransformType::Move)
 				{
 					selAxis = 0;
 				}
@@ -333,7 +406,7 @@ namespace Oak
 			{
 				//SetCursor(cr_rotate);
 
-				if (transform2DActions & TransformType::Rotate)
+				if (transform2DActions & (int)TransformType::Rotate)
 				{
 					selAxis = 9;
 				}
@@ -341,7 +414,7 @@ namespace Oak
 		}
 	}
 
-	bool Gizmo::CheckSelectionTrans3D(int axis, Math::Vector2 ms)
+	bool Gizmo::CheckSelectionTrans3D(AxisData& axis, Math::Vector2 ms)
 	{
 		Math::Matrix view;
 		root.render.GetTransform(TransformStage::View, view);
@@ -353,21 +426,9 @@ namespace Oak
 		if (mode == TransformType::Move)
 		{
 			Math::Vector3 dir;
-			dir = 0.0f;
-
-			if (axis == 0)
-			{
-				dir.x = scale;
-			}
-			else
-			if (axis == 1)
-			{
-				dir.y = scale;
-			}
-			else
-			{
-				dir.z = scale;
-			}
+			dir = axis.to - axis.from;
+			dir.Normalize();
+			dir *= scale;
 
 			int count = 7;
 
@@ -403,13 +464,13 @@ namespace Oak
 					Math::Vector3 pos;
 					Math::Vector3 pos2;
 
-					if (axis == 0)
+					if (axis.type == Axis::X)
 					{
 						pos = Math::Vector3(0.0f, last_dx, last_dz);
 						pos2 = Math::Vector3(0.0f, dx, dz);
 					}
 					else
-					if (axis == 1)
+					if (axis.type == Axis::Y)
 					{
 						pos = Math::Vector3(last_dx, 0.0f, last_dz);
 						pos2 = Math::Vector3(dx, 0.0f, dz);
@@ -436,12 +497,12 @@ namespace Oak
 			Math::Vector3 dir;
 			dir = 0.0f;
 
-			if (axis == 0)
+			if (axis.type == Axis::X)
 			{
 				dir.x = scale;
 			}
 			else
-			if (axis == 1)
+			if (axis.type == Axis::Y)
 			{
 				dir.y = scale;
 			}
@@ -472,14 +533,56 @@ namespace Oak
 	{
 		ms.x /= (float)root.render.GetDevice()->GetWidth();
 		ms.y /= (float)root.render.GetDevice()->GetHeight();
+ 
+		Math::Matrix view;
+		root.render.GetTransform(TransformStage::View, view);
+
+		Math::Matrix view_proj;
+		root.render.GetTransform(TransformStage::Projection, view_proj);
+
+		Math::Vector3 v;
+		v.x = (2.0f * ms.x - 1) / view_proj._11;
+		v.y = -(2.0f * ms.y - 1) / view_proj._22;
+		v.z = 1.0f;
+
+		Math::Matrix inv_view = view;
+		inv_view.Inverse();
+		mouseOrigin = inv_view.Pos();
+
+		mouseDirection.x = v.x * inv_view._11 + v.y * inv_view._21 + v.z * inv_view._31;
+		mouseDirection.y = v.x * inv_view._12 + v.y * inv_view._22 + v.z * inv_view._32;
+		mouseDirection.z = v.x * inv_view._13 + v.y * inv_view._23 + v.z * inv_view._33;
+		mouseDirection.Normalize();
 
 		for (int i = 0; i < 3; i++)
 		{
-			if (CheckSelectionTrans3D(i, ms))
+			if (CheckSelectionTrans3D(axises[i], ms))
 			{
-				selAxis = i;
+				selAxis = (int)axises[i].type;
 			}
 		}
+
+		if (mode == TransformType::Move)
+		{
+			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::XZ;
+			}
+
+			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::XY;
+			}
+
+			if (Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			{
+				selAxis = (int)Axis::YZ;
+			}
+		}
+
 	}
 
 	void Gizmo::MoveTrans2D(Math::Vector2 ms)
@@ -627,16 +730,17 @@ namespace Oak
 		{
 			da *= scale * 16;
 
-			if (selAxis == 0)
+			if (selAxis & (int)Axis::X)
 			{
 				transform->local._41 += da;
 			}
-			else
-			if (selAxis == 1)
+
+			if (selAxis & (int)Axis::Y)
 			{
 				transform->local._42 += da;
 			}
-			else
+			
+			if (selAxis & (int)Axis::Z)
 			{
 				transform->local._43 += da;
 			}
@@ -648,12 +752,12 @@ namespace Oak
 
 			Math::Matrix rot;
 
-			if (selAxis == 0)
+			if (selAxis == (int)Axis::X)
 			{
 				rot.RotateX(da);
 			}
 			else
-			if (selAxis == 1)
+			if (selAxis == (int)Axis::Y)
 			{
 				rot.RotateY(-da);
 			}
@@ -678,14 +782,14 @@ namespace Oak
 		{
 			da *= scale * 16;
 
-			if (selAxis == 0)
+			if (selAxis == (int)Axis::X)
 			{
 				float length = transform->local.Vx().Normalize();
 				length += da;
 				transform->local.Vx() *= fmaxf(length, 0.1f);
 			}
 			else
-			if (selAxis == 1)
+			if (selAxis == (int)Axis::Z)
 			{
 				float length = transform->local.Vy().Normalize();
 				length += da;
@@ -820,25 +924,19 @@ namespace Oak
 		scale = 0.1f * (1.0f + z);
 		scale = fabsf(scale);
 
-		if (mode == TransformType::Move)
+		if (mode == TransformType::Move || mode == TransformType::Scale)
 		{
-			DrawAxis(0);
-			DrawAxis(1);
-			DrawAxis(2);
+			for (int i = 0; i < 3; i++)
+			{
+				DrawAxis(axises[i]);
+			}
 		}
 		else
 		if (mode == TransformType::Rotate)
 		{
-			DrawCircle(0);
-			DrawCircle(1);
-			DrawCircle(2);
-		}
-		else
-		if (mode == TransformType::Scale)
-		{
-			DrawAxis(0);
-			DrawAxis(1);
-			DrawAxis(2);
+			DrawCircle(Axis::X);
+			DrawCircle(Axis::Y);
+			DrawCircle(Axis::Z);
 		}
 	}
 

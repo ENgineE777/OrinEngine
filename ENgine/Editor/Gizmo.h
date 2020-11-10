@@ -9,7 +9,7 @@
 
 namespace Oak
 {
-	enum TransformType
+	enum class TransformType
 	{
 		Move = 1,
 		Scale = 2,
@@ -19,11 +19,66 @@ namespace Oak
 
 	class Gizmo
 	{
+		enum class Axis
+		{
+			X = 1,
+			Y = 2,
+			Z = 4,
+			XY = X | Y,
+			XZ = X | Z,
+			YZ = Y | Z
+		};
+
+		struct AxisData
+		{
+			Axis type;
+
+			Math::Vector3 from;
+			Math::Vector3 to;
+
+			Math::Vector3 subPointFrom;
+			Math::Vector3 subPointLeft;
+			Math::Vector3 subPointRight;
+
+			Math::Vector3 subPointFrom2;
+			Math::Vector3 subPointLeft2;
+			Math::Vector3 subPointRight2;
+
+			void ResetData()
+			{
+				from = 0.0f;
+				to = 0.0f;
+
+				subPointFrom = 0.0f;
+				subPointLeft = 0.0f;
+				subPointRight = 0.0f;
+
+				subPointFrom2 = 0.0f;
+				subPointLeft2 = 0.0f;
+				subPointRight2 = 0.0f;
+			};
+
+			void AdjustData()
+			{
+				to += from;
+
+				subPointFrom += from;
+				subPointLeft += from;
+				subPointRight += from;
+
+				subPointFrom2 += from;
+				subPointLeft2 += from;
+				subPointRight2 += from;
+			};
+		};
+
 		float scale = 1.0f;
+		AxisData axises[3];
+		Math::Vector3 mouseOrigin;
+		Math::Vector3 mouseDirection;
+
 		int transform2DActions = 0;
 		Math::Vector2 pos2d = 0.0f;
-
-		bool mousedPressed = false;
 
 		bool ignore2DCamera = true;
 		Math::Vector2 origin;
@@ -31,20 +86,21 @@ namespace Oak
 		Math::Vector2 ancorns[8];
 
 		int selAxis = -1;
+		bool mousedPressed = false;
 		Math::Vector2 mousesDir = 0.0f;
 		Math::Vector2 prevMouse = 0.0f;
 
 		Math::Vector2 deltaMove = 0.0;
 
-		Color CheckColor(int axis);
-		void DrawAxis(int axis);
-		void DrawCircle(int axis);
+		Color CheckColor(Axis axis, bool ignoreSelection = false);
+		void DrawAxis(AxisData& axis);
+		void DrawCircle(Axis axis);
 		bool CheckInersection(Math::Vector3 pos, Math::Vector3 pos2, Math::Vector2 ms,
 		                      Math::Vector3 trans, bool check_trans,
 		                      Math::Matrix view, Math::Matrix view_proj);
 
 		void CheckSelectionTrans2D(Math::Vector2 ms);
-		bool CheckSelectionTrans3D(int axis, Math::Vector2 ms);
+		bool CheckSelectionTrans3D(AxisData& axis, Math::Vector2 ms);
 		void CheckSelectionTrans3D(Math::Vector2 ms);
 
 		void MoveTrans2D(Math::Vector2 ms);
@@ -61,6 +117,8 @@ namespace Oak
 		TransformType mode = TransformType::Move;
 		bool useLocalSpace = false;
 		Math::Vector2 align2D = 0.0f;
+
+		Gizmo();
 
 		void SetTransform2D(Transform* transform, int actions = 0xffff, bool ignore_2d_camera = false);
 		void SetTransform2D(Math::Vector2 set_pos);
