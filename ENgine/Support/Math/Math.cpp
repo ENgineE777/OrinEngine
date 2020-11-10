@@ -182,6 +182,42 @@ namespace Oak::Math
 		return true;
 	}
 
+	bool IntersectTrianglrRay(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 orig, Vector3 dir, float distance)
+	{
+		Vector3 e1, e2, pvec, qvec, tvec;
+
+		e1 = v2 - v1;
+		e2 = v3 - v1;
+
+		pvec = dir.Cross(e2);
+
+		float det = pvec.Dot(e1);
+
+		if (det < Epsilon && det > -Epsilon)
+		{
+			return false;
+		}
+
+		float invDet = 1.0f / det;
+		tvec = orig - v1;
+
+		float u = invDet * tvec.Dot(pvec);
+		if (u < 0.0f || u > 1.0f)
+		{
+			return false;
+		}
+
+		qvec = tvec.Cross(e1);
+
+		float v = invDet * qvec.Dot(dir);
+		if (v < 0.0f || u + v > 1.0f)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	bool IsInsideTriangle(Math::Vector2 s, Math::Vector2 a, Math::Vector2 b, Math::Vector2 c)
 	{
 		float as_x = s.x - a.x;
