@@ -211,7 +211,7 @@ namespace Oak
 
 			if (selectedScene->selectedEntity != -1)
 			{
-				editor.SelectEntity(selectedScene->scene->FindByUID(selectedScene->selectedEntity));
+				editor.SelectEntity(selectedScene->scene->FindEntity(selectedScene->selectedEntity));
 			}
 		}
 	}

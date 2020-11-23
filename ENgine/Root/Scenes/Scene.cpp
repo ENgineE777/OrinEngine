@@ -31,35 +31,51 @@ namespace Oak
 
 			entity->GetMetaData()->Prepare(entity);
 			entity->GetMetaData()->SetDefValues();
-
-			AddEntity(entity);
 		}
 
 		return entity;
 	}
 
-	void Scene::AddEntity(SceneEntity* entity)
+	void Scene::AddEntity(SceneEntity* entity, SceneEntity* entityBefore)
 	{
-		entities.push_back(entity);
+		if (entityBefore)
+		{
+			for (int i = 0; i < entities.size(); i++)
+			{
+				if (entities[i] == entityBefore)
+				{
+					entities.insert(entities.begin() + i + 1, entity);
+					return;
+				}
+			}
+		}
+		else
+		{
+			entities.push_back(entity);
+		}
 	}
 
-	SceneEntity* Scene::FindByUID(uint32_t uid)
+	SceneEntity* Scene::FindEntity(uint32_t uid)
 	{
-		SceneEntity* res = nullptr;
-
-		for (auto obj : entities)
+		for (auto entity : entities)
 		{
-			if (obj && obj->GetUID() == uid)
+			if (entity && entity->GetUID() == uid)
 			{
-				res = obj;
-				break;
+				return entity;
+			}
+
+			SceneEntity* child = entity->GetChild(uid);
+
+			if (child)
+			{
+				return child;
 			}
 		}
 
-		return res;
+		return nullptr;
 	}
 
-	void Scene::DeleteObject(SceneEntity* obj, bool releaseObj)
+	void Scene::DeleteEntity(SceneEntity* obj, bool releaseObj)
 	{
 		for (int i = 0; i < entities.size(); i++)
 		{
@@ -96,6 +112,57 @@ namespace Oak
 		entities.clear();
 	}
 
+	void Scene::LoadEntities(JsonReader& reader, const char* name, eastl::vector<SceneEntity*>& entities)
+	{
+		while (reader.EnterBlock(name))
+		{
+			char type[512];
+			reader.Read("type", type, 512);
+
+			SceneEntity* entity = nullptr;
+
+			entity = CreateEntity(type);
+
+			if (entity)
+			{
+				entities.push_back(entity);
+
+				reader.Read("uid", entity->uid);
+
+				if (entity->uid == 0)
+				{
+					GenerateUID(entity);
+				}
+
+				auto* transform = entity->GetTransform();
+
+				if (transform)
+				{
+					transform->Load(reader, "transform");
+				}
+
+				entity->Load(reader);
+
+				LoadEntities(reader, "childs", entity->childs);
+
+				for (auto child : entity->childs)
+				{
+					child->parent = entity;
+				}
+			}
+
+			reader.LeaveBlock();
+		}
+
+		for (auto entity : entities)
+		{
+			entity->GetMetaData()->Prepare(entity);
+			entity->GetMetaData()->PostLoad();
+
+			entity->ApplyProperties();
+		}
+	}
+
 	void Scene::Load(const char* name)
 	{
 		JsonReader reader;
@@ -108,45 +175,39 @@ namespace Oak
 			StringUtils::RemoveExtension(sceneName);
 
 			reader.Read("uid", uid);
-			while (reader.EnterBlock("entities"))
-			{
-				char type[512];
-				reader.Read("type", type, 512);
-
-				SceneEntity* obj = nullptr;
-
-				obj = CreateEntity(type);
-
-				if (obj)
-				{
-					reader.Read("uid", obj->uid);
-
-					if (obj->uid == 0)
-					{
-						GenerateUID(obj);
-					}
-
-					auto* transform = obj->GetTransform();
-
-					if (transform)
-					{
-						transform->Load(reader, "transform");
-					}
-
-					obj->Load(reader);
-				}
-
-				reader.LeaveBlock();
-			}
-
-			for (auto entity : entities)
-			{
-				entity->GetMetaData()->Prepare(entity);
-				entity->GetMetaData()->PostLoad();
-
-				entity->ApplyProperties();
-			}
+			LoadEntities(reader, "entities", entities);
 		}
+	}
+
+	void Scene::SaveEntities(JsonWriter& writer, const char* name, eastl::vector<SceneEntity*>& entities)
+	{
+		writer.StartArray(name);
+
+		for (auto& entity : entities)
+		{
+			writer.StartBlock(nullptr);
+
+			writer.Write("type", entity->className);
+			writer.Write("uid", entity->GetUID());
+
+			auto* transform = entity->GetTransform();
+
+			if (transform)
+			{
+				transform->Save(writer, "transform");
+			}
+
+			entity->Save(writer);
+
+			if (entity->childs.size() > 0)
+			{
+				SaveEntities(writer, "childs", entity->childs);
+			}
+
+			writer.FinishBlock();
+		}
+
+		writer.FinishArray();
 	}
 
 	void Scene::Save(const char* name)
@@ -157,29 +218,7 @@ namespace Oak
 		{
 			writer.Write("uid", uid);
 
-			writer.StartArray("entities");
-
-			for (auto& entity : entities)
-			{
-				writer.StartBlock(nullptr);
-
-				writer.Write("type", entity->className);
-				writer.Write("uid", entity->GetUID());
-
-				auto* transform = entity->GetTransform();
-
-				if (transform)
-				{
-					transform->Save(writer, "transform");
-				}
-
-				entity->Save(writer);
-
-				writer.FinishBlock();
-			}
-
-			writer.FinishArray();
-
+			SaveEntities(writer, "entities", entities);
 		}
 	}
 
@@ -243,14 +282,9 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
-	SceneEntity* Scene::GetEntity(int index)
+	const eastl::vector<SceneEntity*>& Scene::GetEntities()
 	{
-		return entities[index];
-	}
-
-	int Scene::GetEntityCount()
-	{
-		return (int)entities.size();
+		return entities;
 	}
 
 	void Scene::Export()
@@ -293,7 +327,7 @@ namespace Oak
 			float koef = Math::Rand() * 0.99f;
 			objUid.id = (uint32_t)(koef * 1048576);
 			objUid.id1 |= uid;
-			objUid.id = FindByUID(objUid.id) ? 0 : objUid.id;
+			objUid.id = FindEntity(objUid.id) ? 0 : objUid.id;
 		}
 
 		obj->SetUID(objUid.id);

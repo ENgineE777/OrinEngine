@@ -68,6 +68,9 @@ namespace Oak
 		char scenePath[512];
 		char sceneName[512];
 
+		void LoadEntities(JsonReader& reader, const char* name, eastl::vector<SceneEntity*>& entities);
+		void SaveEntities(JsonWriter& writer, const char* name, eastl::vector<SceneEntity*>& entities);
+
 	public:
 
 	#ifndef DOXYGEN_SKIP
@@ -88,8 +91,7 @@ namespace Oak
 		void AddPostPlay(int level, Object* entity, Object::DelegateSimple call);
 
 	#ifdef OAK_EDITOR
-		SceneEntity* GetEntity(int index);
-		int GetEntityCount();
+		const eastl::vector<SceneEntity*>& GetEntities();
 
 		void Export();
 	#endif
@@ -111,10 +113,10 @@ namespace Oak
 
 		\param[in] entity Pointer to an entity
 		*/
-		void AddEntity(SceneEntity* entity);
+		void AddEntity(SceneEntity* entity, SceneEntity* entityBefore = nullptr);
 
 		/**
-		\brief Find a scene object by UID
+		\brief Find a scene entity by UID
 
 		\param[in] uid UID of a scene object
 		\param[in] child_uid UID of a child scene object (0 if neede only parent)
@@ -122,7 +124,7 @@ namespace Oak
 
 		\return Pointer to a scene object
 		*/
-		SceneEntity* FindByUID(uint32_t uid);
+		SceneEntity* FindEntity(uint32_t uid);
 
 		/**
 		\brief Delete a scene object from a scene
@@ -130,7 +132,7 @@ namespace Oak
 		\param[in] obj Pointer to a scene object
 		\param[in] release_obj Should Release be called during deletion
 		*/
-		void DeleteObject(SceneEntity* obj, bool releaseObj);
+		void DeleteEntity(SceneEntity* obj, bool releaseObj);
 
 		/**
 		\brief Find a scene object in group by name

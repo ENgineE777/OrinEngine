@@ -57,6 +57,7 @@ namespace Oak
 		void ShowViewport();
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
+		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 
 		template<typename Func>
 		void PushButton(const char* label, bool pushed, Func callback)

@@ -43,6 +43,10 @@ namespace Oak
 		eastl::string layerName;
 		uint32_t uid = 0;
 		State state = State::Active;
+
+		SceneEntity* parent = nullptr;
+		eastl::vector<SceneEntity*> childs;
+
 	#ifdef OAK_EDITOR
 		bool edited = false;
 		TaskExecutor::SingleTaskPool* taskPool = nullptr;
@@ -191,6 +195,15 @@ namespace Oak
 		virtual bool IsEditMode();
 
 		/**
+			\brief Check recursevly if an entity is a child
+
+			\param[in] ed Editor mode value
+
+			\return Retirn trun if an entity is a child
+		*/
+		virtual bool ContainEntity(SceneEntity* entity);
+
+		/**
 		\brief This method called when scene resoources are exporting
 		*/
 		virtual void Export();
@@ -207,11 +220,28 @@ namespace Oak
 		}
 
 		/**
-		\brief Get child scene object by UID
+			\brief Set parent
+			\param[in] Pointer to a parent
+		*/
+		virtual void SetParent(SceneEntity* parent, SceneEntity* entityBefore = nullptr);
 
-		\param[in] uid UID of a child scene object
+		/**
+			\brief Get parent
+			\return Pointer to a parent
+		*/
+		virtual SceneEntity* GetParent();
 
-		\return Pointer to a child scene object
+		/**
+			\brief Get list of childs
+
+			\return return list of childs
+		*/
+		virtual const eastl::vector<SceneEntity*>& GetChilds();
+
+		/**
+			\brief Fin a child by UID
+			\param[in] uid UID of a child
+			\return Return pointer to a child
 		*/
 		virtual SceneEntity* GetChild(uint32_t uid);
 

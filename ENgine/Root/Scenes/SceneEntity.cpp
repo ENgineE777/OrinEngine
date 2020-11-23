@@ -17,7 +17,7 @@ namespace Oak
 			return;
 		}
 
-		scene->DeleteObject(this, false);
+		scene->DeleteEntity(this, false);
 
 		scene->taskPool->DelAllTasks(this, setScene->taskPool);
 
@@ -166,6 +166,19 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
+	bool SceneEntity::ContainEntity(SceneEntity* entity)
+	{
+		for (auto* child : childs)
+		{
+			if (child == entity || child->ContainEntity(entity))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	void SceneEntity::Export()
 	{
 
@@ -204,8 +217,69 @@ namespace Oak
 		delete this;
 	}
 
+	void SceneEntity::SetParent(SceneEntity* setParent, SceneEntity* entityBefore)
+	{
+		if (parent)
+		{
+			for (int i = 0; i < parent->childs.size(); i++)
+			{
+				if (parent->childs[i] == this)
+				{
+					parent->childs.erase(parent->childs.begin() + i);
+					break;
+				}
+			}
+		}
+
+		parent = setParent;
+
+		if (parent)
+		{
+			if (entityBefore)
+			{
+				for (int i = 0; i < parent->childs.size(); i++)
+				{
+					if (parent->childs[i] == entityBefore)
+					{
+						parent->childs.insert(parent->childs.begin() + i + 1, this);
+						return;
+					}
+				}
+			}
+			else
+			{
+				parent->childs.push_back(this);
+			}
+		}
+	}
+
+	SceneEntity* SceneEntity::GetParent()
+	{
+		return parent;
+	}
+
+	const eastl::vector<SceneEntity*>& SceneEntity::GetChilds()
+	{
+		return childs;
+	}
+
 	SceneEntity* SceneEntity::GetChild(uint32_t uid)
 	{
+		for (auto entity : childs)
+		{
+			if (entity && entity->GetUID() == uid)
+			{
+				return entity;
+			}
+
+			SceneEntity* child = entity->GetChild(uid);
+
+			if (child)
+			{
+				return child;
+			}
+		}
+
 		return nullptr;
 	}
 

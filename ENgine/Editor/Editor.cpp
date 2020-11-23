@@ -299,19 +299,48 @@ namespace Oak
 					if (ImGui::MenuItem(decl->GetShortName()))
 					{
 						auto* entity = project.selectedScene->scene->CreateEntity(decl->GetName());
-						entity->SetName(decl->GetShortName());
 
-						auto* transform = entity->GetTransform();
-
-						if (transform)
+						if (selectedEntity)
 						{
-							if (!transform->Is2D())
+							auto* parent = selectedEntity->GetParent();
+
+							if (parent)
 							{
-								transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+								if (!entity->GetTransform() || entity->GetTransform()->Is2D() != parent->GetTransform()->Is2D())
+								{
+									RELEASE(entity)
+								}
+								else
+								{
+									entity->SetParent(parent, selectedEntity);
+								}
+							}
+							else
+							{
+								project.selectedScene->scene->AddEntity(entity, selectedEntity);
 							}
 						}
+						else
+						{
+							project.selectedScene->scene->AddEntity(entity);
+						}
 
-						SelectEntity(entity);
+						if (entity)
+						{
+							entity->SetName(decl->GetShortName());
+
+							auto* transform = entity->GetTransform();
+
+							if (transform)
+							{
+								if (!transform->Is2D())
+								{
+									transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+								}
+							}
+
+							SelectEntity(entity);
+						}
 					}
 				}
 
@@ -321,6 +350,18 @@ namespace Oak
 			if (selectedEntity && ImGui::MenuItem("Duplicate"))
 			{
 				SceneEntity* copy = project.selectedScene->scene->CreateEntity(selectedEntity->className);
+
+				auto* parent = selectedEntity->GetParent();
+
+				if (parent)
+				{
+					copy->SetParent(parent, selectedEntity);
+				}
+				else
+				{
+					project.selectedScene->scene->AddEntity(copy, selectedEntity);
+				}
+
 				project.selectedScene->scene->GenerateUID(copy);
 				copy->Copy(selectedEntity);
 
@@ -336,10 +377,131 @@ namespace Oak
 			{
 				SceneEntity* entity = selectedEntity;
 				SelectEntity(nullptr);
-				project.selectedScene->scene->DeleteObject(entity, true);
+				project.selectedScene->scene->DeleteEntity(entity, true);
 			}
 
 			ImGui::EndPopup();
+		}
+	}
+
+	void Editor::EntitiesTreeView(const eastl::vector<SceneEntity*>& entities)
+	{
+		ImGuiContext* context = ImGui::GetCurrentContext();
+		ImGuiWindow* window = context->CurrentWindow;
+
+		if (entities.size() > 0)
+		{
+			for (int i = 0; i < entities.size(); i++)
+			{
+				SceneEntity* entity = entities[i];
+
+				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
+
+				if (entity->GetChilds().size() > 0)
+				{
+					nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+				}
+
+				if (selectedEntity == entity)
+				{
+					nodeFlags |= ImGuiTreeNodeFlags_Selected;
+				}
+
+				//bool open = ImGui::TreeNode(entity, entity->GetName());
+				bool open = ImGui::TreeNodeEx(entity, nodeFlags, entity->GetName());
+
+				if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+				{
+					SelectEntity(entity);
+				}
+
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+				{
+					uint64_t temp = (uint64_t)entity;
+					ImGui::SetDragDropPayload("_TREENODE", &entity, sizeof(SceneEntity*));
+					ImGui::EndDragDropSource();
+				}
+
+				if (ImGui::BeginDragDropTarget())
+				{
+					SceneEntity* dragged = nullptr;
+					ImGuiPayload& payload = context->DragDropPayload;
+
+					if (payload.IsDataType("_TREENODE"))
+					{
+						uint64_t temp = *((uint64_t*)payload.Data);
+						dragged = (SceneEntity*)temp;
+					}
+
+					auto rect = window->DC.LastItemRect;
+					bool asChild = false;
+
+					if (context->IO.MousePos.y > (rect.Min.y + rect.Max.y) * 0.5f)
+					{
+						rect.Min.x += 20;
+						rect.Min.y = (rect.Min.y + rect.Max.y) * 0.5f;
+						asChild = true;
+					}
+
+					bool transformMatches = false;
+
+					SceneEntity* transformEntity = entity;
+
+					if (!asChild)
+					{
+						transformEntity = transformEntity->GetParent();
+					}
+
+					transformMatches = transformEntity ? (transformEntity->GetTransform() && (!dragged->GetTransform() || dragged->GetTransform()->Is2D() == transformEntity->GetTransform()->Is2D())) : true;
+
+					if (!dragged->ContainEntity(entity) && transformMatches)
+					{
+						if (ImGui::AcceptDragDropPayload("_TREENODE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+						{
+							if (dragged->GetParent())
+							{
+								dragged->SetParent(nullptr);
+							}
+							else
+							{
+								project.selectedScene->scene->DeleteEntity(dragged, false);
+							}
+
+							if (asChild)
+							{
+								dragged->SetParent(entity);
+							}
+							else
+							{
+								SceneEntity* parent = entity->GetParent();
+
+								if (parent)
+								{
+									dragged->SetParent(parent, entity);
+								}
+								else
+								{
+									project.selectedScene->scene->AddEntity(dragged);
+								}
+							}
+
+							ImGui::EndDragDropTarget();
+						}
+						else
+						{
+							window->DrawList->AddRect(rect.Min, rect.Max /*- ImVec2(10.0f, 10.0f)*/, ImGui::GetColorU32(ImGuiCol_DragDropTarget), 0.0f, ~0, 2.0f);
+						}
+					}
+				}
+
+				SceneTreePopup(true);
+
+				if (open)
+				{
+					EntitiesTreeView(entity->GetChilds());
+					ImGui::TreePop();
+				}
+			}
 		}
 	}
 
@@ -624,36 +786,7 @@ namespace Oak
 
 			if (project.selectedScene)
 			{
-				if (project.selectedScene->scene->GetEntityCount() > 0)
-				{
-					for (int i = 0; i < project.selectedScene->scene->GetEntityCount(); i++)
-					{
-						SceneEntity* entity = project.selectedScene->scene->GetEntity(i);
-
-						ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
-
-						if (selectedEntity == entity)
-						{
-							node_flags |= ImGuiTreeNodeFlags_Selected;
-						}
-
-						ImGui::TreeNodeEx(entity, node_flags, entity->GetName());
-
-						if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
-						{
-							SelectEntity(entity);
-						}
-
-						SceneTreePopup(true);
-
-						if (ImGui::BeginDragDropSource())
-						{
-							ImGui::SetDragDropPayload("_TREENODE", nullptr, 0);
-							ImGui::Text("This is a drag and drop source");
-							ImGui::EndDragDropSource();
-						}
-					}
-				}
+				EntitiesTreeView(project.selectedScene->scene->GetEntities());
 
 				SceneTreePopup(false);
 			}
