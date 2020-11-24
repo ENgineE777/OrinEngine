@@ -219,6 +219,8 @@ namespace Oak
 
 	void SceneEntity::SetParent(SceneEntity* setParent, SceneEntity* entityBefore)
 	{
+		auto* transform = GetTransform();
+
 		if (parent)
 		{
 			for (int i = 0; i < parent->childs.size(); i++)
@@ -229,6 +231,9 @@ namespace Oak
 					break;
 				}
 			}
+
+			transform->parent = nullptr;
+			transform->local = transform->global;
 		}
 
 		parent = setParent;
@@ -249,6 +254,17 @@ namespace Oak
 			else
 			{
 				parent->childs.push_back(this);
+			}
+
+			auto* tranform = GetTransform();
+
+			if (tranform)
+			{
+				tranform->parent = &parent->GetTransform()->global;
+				Math::Matrix inverse = parent->GetTransform()->global;
+				inverse.Inverse();
+
+				tranform->local = tranform->global * inverse;
 			}
 		}
 	}
