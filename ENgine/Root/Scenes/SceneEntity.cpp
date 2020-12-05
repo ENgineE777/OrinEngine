@@ -256,15 +256,15 @@ namespace Oak
 				parent->childs.push_back(this);
 			}
 
-			auto* tranform = GetTransform();
+			auto* transform = GetTransform();
 
-			if (tranform)
+			if (transform)
 			{
-				tranform->parent = &parent->GetTransform()->global;
+				transform->parent = &parent->GetTransform()->global;
 				Math::Matrix inverse = parent->GetTransform()->global;
 				inverse.Inverse();
 
-				tranform->local = tranform->global * inverse;
+				transform->local = transform->global * inverse;
 			}
 		}
 	}
