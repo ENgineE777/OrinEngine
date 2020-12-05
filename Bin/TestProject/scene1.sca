@@ -1,0 +1,154 @@
+﻿{
+
+	"uid" : 1968,
+	"entities" : [
+		{
+			"type" : "TestEntity3D",
+			"uid" : 350138,
+			"transform" :
+			{
+				"m0" : 0.161848,
+				"m1" : 0.118936,
+				"m2" : 0.979621,
+				"m3" : 0.000000,
+				"m4" : 0.659690,
+				"m5" : 0.725249,
+				"m6" : -0.197043,
+				"m7" : 0.000000,
+				"m8" : -0.733905,
+				"m9" : 0.678138,
+				"m10" : 0.038920,
+				"m11" : 0.000000,
+				"m12" : -4.059755,
+				"m13" : 8.934164,
+				"m14" : -10.880774,
+				"m15" : 1.000000
+			},
+			"name" : "TestEntity3D",
+			"state" : 2,
+			"childs" : [
+				{
+					"type" : "TestEntity3D",
+					"uid" : 741372,
+					"transform" :
+					{
+						"m0" : -0.846831,
+						"m1" : 0.171076,
+						"m2" : -0.503597,
+						"m3" : 0.000000,
+						"m4" : 0.340511,
+						"m5" : 0.901750,
+						"m6" : -0.266260,
+						"m7" : 0.000000,
+						"m8" : 0.408567,
+						"m9" : -0.396958,
+						"m10" : -0.821883,
+						"m11" : 0.000000,
+						"m12" : 1.553405,
+						"m13" : 1.464208,
+						"m14" : 3.018221,
+						"m15" : 1.000000
+					},
+					"name" : "TestEntity3D",
+					"state" : 2
+				}
+			]
+		},
+		{
+			"type" : "TestEntity2D",
+			"uid" : 1009658,
+			"name" : "TestEntity2D",
+			"state" : 2,
+			"transform.pos.x" : -36.070747,
+			"transform.pos.y" : 267.013184,
+			"transform.size.x" : 465.346558,
+			"transform.size.y" : 532.240906,
+			"color" :
+			{
+				"r" : 0.745174,
+				"g" : 0.163996,
+				"b" : 0.163996,
+				"a" : 1.000000
+			},
+			"childs" : [
+				{
+					"type" : "TestEntity",
+					"uid" : 247796,
+					"name" : "TestEntity1",
+					"state" : 2,
+					"boolProp" : false,
+					"intProp" : 98,
+					"floatProp" : 53.920101,
+					"floatProp2" : 3.073214,
+					"strProp" : "ABC",
+					"filenameProp" : "",
+					"colorProp" :
+					{
+						"r" : 0.000000,
+						"g" : 1.000000,
+						"b" : 0.000000,
+						"a" : 1.000000
+					},
+					"enumProp" : 0,
+					"itemsProp" :
+					{
+						"count" : 1,
+						"Elem" : [
+							{
+								"boolProp" : true,
+								"intProp" : 50,
+								"floatProp" : 82.229065
+							}
+						]
+					}
+				},
+				{
+					"type" : "TestEntity",
+					"uid" : 278520,
+					"name" : "TestEntity2",
+					"state" : 2,
+					"boolProp" : false,
+					"intProp" : 39,
+					"floatProp" : 16.373177,
+					"floatProp2" : 1.232948,
+					"strProp" : "ABC",
+					"filenameProp" : "",
+					"colorProp" :
+					{
+						"r" : 0.000000,
+						"g" : 1.000000,
+						"b" : 0.000000,
+						"a" : 1.000000
+					},
+					"enumProp" : 0,
+					"itemsProp" :
+					{
+						"count" : 4,
+						"Elem" : [
+							{
+								"boolProp" : true,
+								"intProp" : 65,
+								"floatProp" : 28.080080
+							},
+							{
+								"boolProp" : true,
+								"intProp" : 22,
+								"floatProp" : 94.167915
+							},
+							{
+								"boolProp" : true,
+								"intProp" : 80,
+								"floatProp" : 72.707298
+							},
+							{
+								"boolProp" : true,
+								"intProp" : 21,
+								"floatProp" : 10.223701
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
