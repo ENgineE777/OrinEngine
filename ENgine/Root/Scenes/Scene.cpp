@@ -148,6 +148,13 @@ namespace Oak
 				for (auto child : entity->childs)
 				{
 					child->parent = entity;
+
+					auto* tranformChild = child->GetTransform();
+
+					if (tranformChild)
+					{
+						tranformChild->parent = &transform->global;
+					}
 				}
 			}
 
