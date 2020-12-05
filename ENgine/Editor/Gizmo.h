@@ -119,6 +119,8 @@ namespace Oak
 		void PlaneTranslation(AxisData& axisData);
 		void PlaneTranslation(Math::Vector3& plane_normal, Math::Vector3& point);
 
+		void CaclLocalMatrix();
+
 	public:
 
 		Transform* transform = nullptr;
