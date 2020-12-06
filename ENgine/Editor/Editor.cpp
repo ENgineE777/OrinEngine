@@ -505,6 +505,38 @@ namespace Oak
 		}
 	}
 
+	void Editor::CaptureLog(const char* name, const char* text)
+	{
+		LogCategory* category = nullptr;
+
+		if (logCategories.count(name) > 0)
+		{
+			category = logCategories[name];
+		}
+		else
+		{
+			category = NEW LogCategory();
+
+			logCategories[name] = category;
+		}
+
+		category->logs.push_front();
+		category->logs.front() = text;
+
+		if (category->logs.size() <= 128)
+		{
+			category->logsPtr.push_back();
+		}
+
+		int index = 0;
+
+		for (auto& item : category->logs)
+		{
+			category->logsPtr[index] = item.c_str();
+			index++;
+		}
+	}
+
 	bool Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
@@ -542,14 +574,17 @@ namespace Oak
 
 			ImGuiID dock_main_id = dockspaceID;
 			ImGuiID dock_top_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.05f, nullptr, &dock_main_id);
-			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
+			ImGuiID dock_bottom_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.2f, nullptr, &dock_main_id);
+			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
 			ImGui::DockBuilderDockWindow("Project", dock_left_id);
 			ImGui::DockBuilderDockWindow("Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
+			ImGui::DockBuilderDockWindow("Assets", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
 
@@ -806,6 +841,33 @@ namespace Oak
 			}
 
 			ImGui::Columns(1);
+
+			ImGui::End();
+		}
+
+		{
+			ImGui::Begin("Console");
+
+			if (ImGui::BeginTabBar("##Logs", ImGuiTabBarFlags_None))
+			{
+				for (auto& log : logCategories)
+				{
+					if (ImGui::BeginTabItem(log.first.c_str()))
+					{
+						ImGui::SetNextItemWidth(-1);
+
+						ImVec2 size = ImGui::GetContentRegionAvail();
+
+						ImGui::ListBox("##listbox2", &log.second->selItem, &log.second->logsPtr[0], (int)log.second->logs.size(), (int)(size.y / 23));
+
+						ImGui::SetScrollHereY(1.0f);
+
+						ImGui::EndTabItem();
+					}
+				}
+
+				ImGui::EndTabBar();
+			}
 
 			ImGui::End();
 		}

@@ -10,6 +10,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <d3d11.h>
+#include "eastl/bonus/ring_buffer.h"
 
 /**
 \ingroup gr_code_editor
@@ -21,6 +22,7 @@ namespace Oak
 	{
 		friend class Project;
 		friend class FreeCamera;
+		friend class Root;
 
 		HWND hwnd;
 		ID3D11Device* d3dDevice = nullptr;
@@ -37,6 +39,22 @@ namespace Oak
 		bool sceneTreePopup = false; 
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
+
+		struct LogCategory
+		{
+			int selItem = -1;
+			eastl::ring_buffer<eastl::string, eastl::vector<eastl::string>> logs;
+			eastl::vector<const char*> logsPtr;
+
+			LogCategory() : logs(128)
+			{
+				logsPtr.reserve(128);
+			}
+		};
+
+		eastl::map<eastl::string, LogCategory*> logCategories;
+
+		void CaptureLog(const char* name, const char* text);
 
 	public:
 

@@ -14,6 +14,10 @@
 #include <windows.h>
 #endif
 
+#ifdef OAK_EDITOR
+#include "Editor/Editor.h"
+#endif
+
 namespace Oak
 {
 	Root root;
@@ -82,10 +86,15 @@ namespace Oak
 	void Root::Log(const char* name, const char* text, ...)
 	{
 		static char buffer[4096];
+
+		int timeStampLen = (int)strlen(Timer::GetTimeStamp());
+		memcpy(buffer, Timer::GetTimeStamp(), timeStampLen);
+		buffer[timeStampLen];
+
 		va_list args;
 		va_start(args, text);
 
-		stbsp_vsnprintf(buffer, sizeof(buffer) - 4, text, args);
+		stbsp_vsnprintf(&buffer[timeStampLen], sizeof(buffer) - 4 - timeStampLen, text, args);
 
 		va_end(args);
 
@@ -96,12 +105,15 @@ namespace Oak
 		char path[1024];
 		StringUtils::Printf(path, 1024, "%s/%s.txt", logsDir, name);
 
+#ifdef OAK_EDITOR
+		editor.CaptureLog(name, buffer);
+#endif
+
 		FILE* f = nullptr;
 		fopen_s(&f, path, "a");
 
 		if (f)
 		{
-			fwrite(Timer::GetTimeStamp(), strlen(Timer::GetTimeStamp()), 1, f);
 			fwrite(buffer, strlen(buffer), 1, f);
 			fwrite("\n", strlen("\n"), 1, f);
 			fclose(f);
