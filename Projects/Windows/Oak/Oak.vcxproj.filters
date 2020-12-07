@@ -383,6 +383,9 @@
     <ClCompile Include="..\..\..\ENgine\Support\ThreadExecutor.cpp">
       <Filter>ENgine\Support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -894,6 +897,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\ThreadExecutor.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h">
+      <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

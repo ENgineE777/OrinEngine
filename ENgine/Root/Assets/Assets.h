@@ -4,6 +4,7 @@
 #include <EASTL/vector.h>
 #include "Support/ThreadExecutor.h"
 #include <atomic>
+#include "Asset.h"
 
 namespace Oak
 {
@@ -11,8 +12,9 @@ namespace Oak
 	{
 	public:
 
-		struct Asset
+		struct AssetRef
 		{
+			Asset* asset = nullptr;
 			eastl::string name;
 			eastl::string ext;
 			eastl::string fullName;
@@ -23,7 +25,7 @@ namespace Oak
 			eastl::string name;
 			eastl::string fullName;
 			eastl::vector<Folder> folders;
-			eastl::vector<Asset> assets;
+			eastl::vector<AssetRef> assets;
 		};
 
 		eastl::string rootPath;
@@ -35,7 +37,7 @@ namespace Oak
 
 		ThreadExecutor executor;
 		Folder* selFolder = nullptr;
-		Asset* selAsset = nullptr;
+		AssetRef* selAsset = nullptr;
 		#endif
 
 		void Init();
