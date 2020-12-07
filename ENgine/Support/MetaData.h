@@ -63,6 +63,7 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		typedef void(*Callback)(void* owner);
 		typedef void(*EnumStringCallback)(void* owner, void** strings);
+		static eastl::string rootPath;
 		#endif
 
 		struct ArrayAdapter
@@ -130,6 +131,7 @@ namespace Oak
 			eastl::string brief;
 			Callback callback;
 			EnumStringCallback enum_callback;
+			bool changed = false;
 			#endif
 
 			ArrayAdapter*  adapter = nullptr;

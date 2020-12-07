@@ -15,10 +15,12 @@ namespace Oak
 		Transform2D transform;
 		Sprite::FrameState state;
 		Color color;
+		eastl::string texName;
 
 		META_DATA_DECL_BASE(TestEntity2D)
 
 		void Init() override;
+		void ApplyProperties() override;
 		Transform* GetTransform() override;
 
 		void Draw(float dt);

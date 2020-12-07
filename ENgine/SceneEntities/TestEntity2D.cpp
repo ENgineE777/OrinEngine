@@ -8,6 +8,7 @@ namespace Oak
 
 	META_DATA_DESC(TestEntity2D)
 		BASE_SCENE_ENTITY_PROP(TestEntity2D)
+		FILENAME_PROP(TestEntity2D, texName, "", "Prop", "texName")
 		FLOAT_PROP(TestEntity2D, transform.pos.x, 0.0f, "Prop", "x", "X coordinate of a camera position")
 		FLOAT_PROP(TestEntity2D, transform.pos.y, 0.0f, "Prop", "y", "Y coordinate of a camera position")
 		FLOAT_PROP(TestEntity2D, transform.size.x, 100.0f, "Prop", "width", "Width of a sprite")
@@ -17,9 +18,13 @@ namespace Oak
 
 	void TestEntity2D::Init()
 	{
-		data.texture = root.render.GetWhiteTexture();
 		data.frames.push_back(Sprite::Frame());
 		RenderTasks(false)->AddTask(0, this, (Object::Delegate) & TestEntity2D::Draw);
+	}
+
+	void TestEntity2D::ApplyProperties()
+	{
+		data.texture = root.render.LoadTexture(texName.c_str(), _FL_);
 	}
 
 	Transform* TestEntity2D::GetTransform()

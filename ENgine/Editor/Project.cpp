@@ -15,6 +15,8 @@ namespace Oak
 		projectName = fileName;
 		StringUtils::GetPath(projectName.c_str(), projectPath);
 
+		MetaData::rootPath = projectPath;
+
 		root.assets.LoadAssets(projectPath);
 
 		JsonReader reader;

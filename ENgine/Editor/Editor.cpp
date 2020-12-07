@@ -977,6 +977,11 @@ namespace Oak
 
 		if (project.selectedScene)
 		{
+			if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
+			{
+				selectedEntity->ApplyProperties();
+			}
+
 			if (selectedEntity && selectedEntity->HasOwnTasks())
 			{
 				project.EnableScene(project.selectedScene, false);

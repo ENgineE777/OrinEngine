@@ -8,6 +8,10 @@ extern const char* OpenFileDialog(const char* extName, const char* ext, bool ope
 
 namespace Oak
 {
+	#ifdef OAK_EDITOR
+	eastl::string MetaData::rootPath;
+	#endif
+
 	void MetaData::Prepare(void* set_owner, void* set_root)
 	{
 		if (!inited)
@@ -470,9 +474,14 @@ namespace Oak
 
 								if (fileName)
 								{
-									str->assign(fileName);
+									char relativeName[512];
+									StringUtils::GetCropPath(rootPath.c_str(), fileName, relativeName, 512);
+
+									str->assign(relativeName);
+									prop.changed = true;
 								}
 							}
+
 							if (str->c_str()[0] && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
 							{
 								ImGui::SetTooltip(str->c_str());
@@ -560,25 +569,18 @@ namespace Oak
 	{
 		bool res = false;
 
-		/*for (auto& prop : properties)
+		for (auto& prop : properties)
 		{
-			for (auto& widget : prop.widgets)
+			if (prop.type == Type::Array)
 			{
-				if (!widget.second->panel->IsVisible())
-				{
-					continue;
-				}
-
-				res |= widget.second->changed;
-				widget.second->changed = false;
-
-				if (prop.type == Type::Array)
-				{
-					res |= prop.adapter->GetMetaData()->IsValueWasChanged();
-					continue;
-				}
+				res |= prop.adapter->GetMetaData()->IsValueWasChanged();
 			}
-		}*/
+			else
+			{
+				res |= prop.changed;
+				prop.changed = false;
+			}
+		}
 
 		return res;
 	}
