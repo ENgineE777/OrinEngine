@@ -15,6 +15,8 @@ namespace Oak
 		projectName = fileName;
 		StringUtils::GetPath(projectName.c_str(), projectPath);
 
+		root.assets.LoadAssets(projectPath);
+
 		JsonReader reader;
 
 		if (reader.Parse(projectName.c_str()))
@@ -377,6 +379,8 @@ namespace Oak
 		}
 
 		scenes.clear();
+
+		root.assets.Clear();
 
 		projectName.clear();
 		exportDir.clear();

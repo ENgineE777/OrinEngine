@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "Root/Assets/Assets.h"
 #include "Root/Controls/Controls.h"
 #include "Root/Files/Files.h"
 #include "Root/Fonts/Fonts.h"
@@ -36,6 +37,11 @@ namespace Oak
 		#endif
 
 	public:
+
+		/**
+			\brief Access to Assets
+		*/
+		Assets assets;
 
 		/**
 		\brief Access to controls service

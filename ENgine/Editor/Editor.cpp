@@ -537,6 +537,57 @@ namespace Oak
 		}
 	}
 
+	void Editor::AssetsFolder(Assets::Folder& folder)
+	{
+		for (auto& item : folder.folders)
+		{
+			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+
+			if (&item == root.assets.selFolder)
+			{
+				nodeFlags |= ImGuiTreeNodeFlags_Selected;
+			}
+
+			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item.name.c_str());
+
+			if (ImGui::IsItemClicked())
+			{
+				root.assets.selFolder = &item;
+				root.assets.selAsset = nullptr;
+			}
+
+			if (open)
+			{
+				AssetsFolder(item);
+
+				ImGui::TreePop();
+			}
+		}
+
+		for (auto& item : folder.assets)
+		{
+			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
+
+			if (&item == root.assets.selAsset)
+			{
+				nodeFlags |= ImGuiTreeNodeFlags_Selected;
+			}
+
+			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item.name.c_str());
+
+			if (ImGui::IsItemClicked())
+			{
+				root.assets.selFolder = nullptr;
+				root.assets.selAsset = &item;
+			}
+
+			if (open)
+			{
+				ImGui::TreePop();
+			}
+		}
+	}
+
 	bool Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
@@ -841,6 +892,14 @@ namespace Oak
 			}
 
 			ImGui::Columns(1);
+
+			ImGui::End();
+		}
+
+		{
+			ImGui::Begin("Assets");
+
+			AssetsFolder(root.assets.rootFolder);
 
 			ImGui::End();
 		}

@@ -154,6 +154,7 @@
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Gizmo.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="..\..\..\ENgine\Support\Sprite.h" />
     <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Support.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\ThreadExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Transform.h" />
     <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\algorithm.h" />
@@ -325,6 +327,7 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
@@ -363,6 +366,7 @@
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\ThreadExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />
     <ClCompile Include="..\..\..\Libs\eastl\source\allocator_eastl.cpp" />
     <ClCompile Include="..\..\..\Libs\eastl\source\assert.cpp" />

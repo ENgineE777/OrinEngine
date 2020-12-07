@@ -74,6 +74,8 @@ namespace Oak
 
 		Sprite::Init();
 
+		assets.Init();
+
 		scenes.Init();
 
 		StringUtils::Init();
@@ -129,6 +131,8 @@ namespace Oak
 
 	void Root::Update()
 	{
+		assets.Update();
+
 		controls.Update(dt);
 
 		scenes.Execute(dt);
@@ -148,6 +152,8 @@ namespace Oak
 
 	void Root::Release()
 	{
+		assets.Release();
+
 		fonts.Release();
 		render.Release();
 		controls.Release();

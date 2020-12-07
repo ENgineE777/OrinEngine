@@ -86,6 +86,9 @@
     <Filter Include="ENgine\SceneEntities">
       <UniqueIdentifier>{dc103d28-c185-44bd-a1f1-5ff137295566}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Assets">
+      <UniqueIdentifier>{6dbbb2eb-94d7-49f4-b1a8-58c6aec721ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -373,6 +376,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp">
       <Filter>ENgine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Support\ThreadExecutor.cpp">
+      <Filter>ENgine\Support</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -879,6 +888,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Editor\Gizmo.h">
       <Filter>ENgine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\ThreadExecutor.h">
+      <Filter>ENgine\Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
