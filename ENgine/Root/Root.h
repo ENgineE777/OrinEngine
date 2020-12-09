@@ -34,6 +34,10 @@ namespace Oak
 		float dt = 0.0f;
 		#endif
 
+		#ifdef PLATFORM_WIN
+		eastl::string rootPath;
+		#endif
+
 		#endif
 
 	public:
@@ -97,6 +101,9 @@ namespace Oak
 		void CountDeltaTime();
 		float GetDeltaTime();
 		int GetFPS();
+
+		void SetRootPath(eastl::string rootPath);
+		const char* GetRootPath();
 
 		#endif
 

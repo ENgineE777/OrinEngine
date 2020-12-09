@@ -25,6 +25,8 @@ namespace Oak
 		friend class FileInMemory;
 		friend class JsonWriter;
 
+		FILE* FileOpenInner(const char* path, const char* mode);
+
 	public:
 
 		#ifndef DOXYGEN_SKIP
@@ -76,6 +78,7 @@ namespace Oak
 
 		*/
 		bool CpyFile(const char* srcPath, const char* destPath);
+
 		#endif
 
 	private:

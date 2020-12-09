@@ -150,6 +150,16 @@ namespace Oak
 		return Timer::GetFPS();
 	}
 
+	void Root::SetRootPath(eastl::string setRootPath)
+	{
+		rootPath = setRootPath;
+	}
+
+	const char* Root::GetRootPath()
+	{
+		return rootPath.c_str();
+	}
+
 	void Root::Release()
 	{
 		assets.Release();

@@ -14,16 +14,47 @@ namespace Oak
 		return true;
 	}
 
-	FILE* Files::FileOpen(const char* path, const char* mode)
+	FILE* Files::FileOpenInner(const char* path, const char* mode)
 	{
 		FILE* file = nullptr;
 		#ifdef PLATFORM_WIN
 		fopen_s(&file, path, mode);
 		#endif
 
+		return file;
+	}
+
+	FILE* Files::FileOpen(const char* name, const char* mode)
+	{
+		if (!name[0])
+		{
+			return nullptr;
+		}
+
+		FILE* file = nullptr;
+
+		#ifdef PLATFORM_WIN
+		const char* rootPath = root.GetRootPath();
+
+		if (rootPath[0])
+		{
+			char path[1024];
+			StringUtils::Printf(path, 1024, "%s%s", rootPath, name);
+
+			file = FileOpenInner(path, mode);
+
+			if (file)
+			{
+				return file;
+			}
+		}
+		#endif
+
+		file = FileOpenInner(name, mode);
+
 		if (!file)
 		{
-			root.Log("Files", "File not found %s", path);
+			root.Log("Files", "File not found %s", name);
 		}
 
 		return file;

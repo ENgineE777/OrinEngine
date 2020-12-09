@@ -17,7 +17,8 @@ namespace Oak
 
 		MetaData::rootPath = projectPath;
 
-		root.assets.LoadAssets(projectPath);
+		root.SetRootPath(projectPath);
+		root.assets.LoadAssets();
 
 		JsonReader reader;
 

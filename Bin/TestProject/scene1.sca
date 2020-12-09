@@ -20,7 +20,7 @@
 				"m10" : 0.038920,
 				"m11" : 0.000000,
 				"m12" : -4.059755,
-				"m13" : 8.934164,
+				"m13" : 8.934161,
 				"m14" : -10.880774,
 				"m15" : 1.000000
 			},
@@ -59,15 +59,16 @@
 			"uid" : 1009658,
 			"name" : "TestEntity2D",
 			"state" : 2,
-			"transform.pos.x" : -36.070747,
-			"transform.pos.y" : 267.013184,
+			"texName" : "Texture2D/penitent_climbledge_reviewed.png",
+			"transform.pos.x" : -43.256718,
+			"transform.pos.y" : 263.420227,
 			"transform.size.x" : 465.346558,
 			"transform.size.y" : 532.240906,
 			"color" :
 			{
-				"r" : 0.745174,
-				"g" : 0.163996,
-				"b" : 0.163996,
+				"r" : 0.100386,
+				"g" : 1.000000,
+				"b" : 0.000000,
 				"a" : 1.000000
 			},
 			"childs" : [

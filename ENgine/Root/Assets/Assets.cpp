@@ -37,7 +37,7 @@ namespace Oak
 					StringUtils::Printf(fileName, 512, "%s//%s", path, ffd.cFileName);
 
 					char relativeName[512];
-					StringUtils::GetCropPath(rootPath.c_str(), fileName, relativeName, 512);
+					StringUtils::GetCropPath(root.GetRootPath(), fileName, relativeName, 512);
 
 					folder.assets.push_back();
 					folder.assets.back().name = ffd.cFileName;
@@ -51,7 +51,7 @@ namespace Oak
 					StringUtils::Printf(subPath, 512, "%s//%s", path, ffd.cFileName);
 
 					char relativePath[512];
-					StringUtils::GetCropPath(rootPath.c_str(), subPath, relativePath, 512);
+					StringUtils::GetCropPath(root.GetRootPath(), subPath, relativePath, 512);
 
 					folder.folders.push_back();
 					folder.folders.back().name = ffd.cFileName;
@@ -68,10 +68,16 @@ namespace Oak
 #endif
 	}
 
-	void Assets::LoadAssets(const char* path)
+	void Assets::LoadAssets()
 	{
-		rootPath = path;
-		LoadAssets(path, rootFolder);
+		const char* rootPath = root.GetRootPath();
+
+		if (rootPath[0] == 0)
+		{
+			return;
+		}
+
+		LoadAssets(rootPath, rootFolder);
 
 		scanning = true;
 
@@ -86,7 +92,7 @@ namespace Oak
 		DWORD waitStatus;
 		HANDLE changeHandles;
 
-		changeHandles = FindFirstChangeNotificationA(rootPath.c_str(), true, FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME);
+		changeHandles = FindFirstChangeNotificationA(root.GetRootPath(), true, FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME);
 
 		/*if (changeHandles == INVALID_HANDLE_VALUE || changeHandles == NULL)
 		{
@@ -121,7 +127,7 @@ namespace Oak
 			rootFolder.assets.clear();
 			rootFolder.folders.clear();
 
-			LoadAssets(rootPath.c_str(), rootFolder);
+			LoadAssets(root.GetRootPath(), rootFolder);
 
 			needRescan.store(false, std::memory_order_release);
 		}
@@ -140,8 +146,6 @@ namespace Oak
 
 		rootFolder.assets.clear();
 		rootFolder.folders.clear();
-
-		rootPath.clear();
 	}
 
 	void Assets::Release()

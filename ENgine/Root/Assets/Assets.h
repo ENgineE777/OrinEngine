@@ -28,7 +28,6 @@ namespace Oak
 			eastl::vector<AssetRef> assets;
 		};
 
-		eastl::string rootPath;
 		Folder rootFolder;
 
 		#ifdef OAK_EDITOR
@@ -44,7 +43,7 @@ namespace Oak
 
 		void LoadAssets(const char* path, Folder& folder);
 
-		void LoadAssets(const char* path);
+		void LoadAssets();
 
 		#ifdef OAK_EDITOR
 		void ObserveRoot();
