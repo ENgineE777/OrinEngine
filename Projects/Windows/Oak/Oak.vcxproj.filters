@@ -383,7 +383,7 @@
     <ClCompile Include="..\..\..\ENgine\Support\ThreadExecutor.cpp">
       <Filter>ENgine\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp">
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
   </ItemGroup>
@@ -899,6 +899,9 @@
       <Filter>ENgine\Support</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h">
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
   </ItemGroup>

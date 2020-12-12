@@ -2,6 +2,9 @@
 
 namespace Oak
 {
+	eastl::map<eastl::string, eastl::string> Assets::assetCreation = { {"jpg", "AssetTexture"}, {"bmp", "AssetTexture"}, {"png", "AssetTexture"}, {"tga", "AssetTexture"},
+	                                                                   {"psd", "AssetTexture"} };
+
 	void Assets::Init()
 	{
 
@@ -33,16 +36,23 @@ namespace Oak
 					char extension[64];
 					StringUtils::GetExtension(ffd.cFileName, extension, 64);
 
-					char fileName[512];
-					StringUtils::Printf(fileName, 512, "%s//%s", path, ffd.cFileName);
+					if (assetCreation.count(extension) > 0)
+					{
+						char fileName[512];
+						StringUtils::Printf(fileName, 512, "%s//%s", path, ffd.cFileName);
 
-					char relativeName[512];
-					StringUtils::GetCropPath(root.GetRootPath(), fileName, relativeName, 512);
+						char relativeName[512];
+						StringUtils::GetCropPath(root.GetRootPath(), fileName, relativeName, 512);
 
-					folder.assets.push_back();
-					folder.assets.back().name = ffd.cFileName;
-					folder.assets.back().ext = extension;
-					folder.assets.back().fullName = relativeName;
+						folder.assets.push_back();
+
+						AssetRef* ref = &folder.assets.back();
+						ref->name = ffd.cFileName;
+						ref->ext = extension;
+						ref->fullName = relativeName;
+
+						assetsMap[relativeName] = ref;
+					}
 				}
 				else
 				if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && strcmp(ffd.cFileName, ".") != 0 && strcmp(ffd.cFileName, "..") != 0)
@@ -144,6 +154,7 @@ namespace Oak
 		selAsset = nullptr;
 		#endif
 
+		assetsMap.clear();
 		rootFolder.assets.clear();
 		rootFolder.folders.clear();
 	}

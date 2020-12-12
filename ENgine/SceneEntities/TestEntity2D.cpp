@@ -24,7 +24,9 @@ namespace Oak
 
 	void TestEntity2D::ApplyProperties()
 	{
-		data.texture = root.render.LoadTexture(texName.c_str(), _FL_);
+		//data.texture = root.render.LoadTexture(texName.c_str(), _FL_);
+		eastl::string str = "//Texture2D//penitent_jumping_attack_noslashes.png";
+		texture = root.assets.GetAsset<AssetTexture>(str);
 	}
 
 	Transform* TestEntity2D::GetTransform()
@@ -35,6 +37,7 @@ namespace Oak
 	void TestEntity2D::Draw(float dt)
 	{
 		transform.BuildMatrices();
+		data.texture = texture ? texture->GetTexture() : root.render.GetWhiteTexture();
 		Sprite::Draw(&transform, color, &data, &state, false, false);
 	}
 }

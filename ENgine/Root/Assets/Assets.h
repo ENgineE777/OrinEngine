@@ -4,12 +4,14 @@
 #include <EASTL/vector.h>
 #include "Support/ThreadExecutor.h"
 #include <atomic>
-#include "Asset.h"
+#include "AssetTexture.h"
 
 namespace Oak
 {
 	class Assets : public ThreadCaller
 	{
+		static eastl::map<eastl::string, eastl::string> assetCreation;
+
 	public:
 
 		struct AssetRef
@@ -18,6 +20,21 @@ namespace Oak
 			eastl::string name;
 			eastl::string ext;
 			eastl::string fullName;
+
+			template<class T>
+			T* GetAsset()
+			{
+				if (asset == nullptr)
+				{
+					ClassFactoryAsset* decl = ClassFactoryAsset::Find(assetCreation[ext].c_str());
+
+					asset = decl->Create(_FL_);
+					asset->path = fullName;
+					asset->Reload();
+				}
+
+				return (T*)asset;
+			}
 		};
 
 		struct Folder
@@ -29,6 +46,7 @@ namespace Oak
 		};
 
 		Folder rootFolder;
+		eastl::map<eastl::string, AssetRef*> assetsMap;
 
 		#ifdef OAK_EDITOR
 		std::atomic<bool> scanning;
@@ -44,6 +62,17 @@ namespace Oak
 		void LoadAssets(const char* path, Folder& folder);
 
 		void LoadAssets();
+
+		template<class T>
+		T* GetAsset(eastl::string& path)
+		{
+			if (assetsMap.count(path) > 0)
+			{
+				return assetsMap[path]->GetAsset<T>();
+			}
+
+			return nullptr;
+		};
 
 		#ifdef OAK_EDITOR
 		void ObserveRoot();
