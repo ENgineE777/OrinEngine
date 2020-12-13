@@ -23,16 +23,19 @@ namespace Oak
 
 	TextureDX11::TextureDX11(int w, int h, TextureFormat f, int l, bool is_rt, TextureType tp) : Texture(w, h, f, l, tp)
 	{
-		texture = nullptr;
-
-		DXGI_FORMAT fmt = (DXGI_FORMAT)GetFormat(f);
-
-		D3D11_TEXTURE2D_DESC desc;
-
 		if (lods == 0)
 		{
 			lods = GetLevels(width, height, 1);
 		}
+
+		CreateTexture();
+	}
+
+	void TextureDX11::CreateTexture()
+	{
+		DXGI_FORMAT fmt = (DXGI_FORMAT)GetFormat(format);
+
+		D3D11_TEXTURE2D_DESC desc;
 
 		desc.Width = width;
 		desc.Height = height;
@@ -77,9 +80,20 @@ namespace Oak
 		sampler_need_recrete = true;
 
 		DeviceDX11::instance->pd3dDevice->CreateShaderResourceView(texture, &srvDesc, &srview);
+	}
 
-		rt = nullptr;
-		depth = nullptr;
+	void TextureDX11::Resize(int setWidth, int setHeight)
+	{
+		RELEASE(rt);
+		RELEASE(depth);
+
+		RELEASE(srview)
+		RELEASE(texture)
+
+		width = setWidth;
+		height = setHeight;
+
+		CreateTexture();
 	}
 
 	void TextureDX11::SetFilters(TextureFilter magmin, TextureFilter mipmap)
@@ -185,9 +199,13 @@ namespace Oak
 		}
 
 		RELEASE(sampler)
-		RELEASE(texture)
+
+		RELEASE(rt);
+		RELEASE(depth);
+
 		RELEASE(srview)
-	
+		RELEASE(texture)
+
 		delete this;
 	}
 }

@@ -21,30 +21,34 @@ namespace Oak
 
 		virtual void Release();
 
-		ID3D11Texture2D* texture;
-		ID3D11ShaderResourceView* srview;
+		ID3D11Texture2D* texture = nullptr;
+		ID3D11ShaderResourceView* srview = nullptr;
 
-		ID3D11RenderTargetView* rt;
-		ID3D11DepthStencilView* depth;
+		ID3D11RenderTargetView* rt = nullptr;
+		ID3D11DepthStencilView* depth = nullptr;
 	
 		static int GetFormat(TextureFormat fmt);
 
 		TextureDX11(int w, int h, TextureFormat f, int l, bool rt, TextureType tp);
 
+		void CreateTexture();
+
 		public:
 
-		virtual void SetFilters(TextureFilter magmin, TextureFilter mipmap);
-		virtual void SetAdress(TextureAddress adress);
-		virtual void SetAdressU(TextureAddress adress);
-		virtual void SetAdressV(TextureAddress adress);
-		virtual void SetAdressW(TextureAddress adress);
-	
-		virtual void GenerateMips();
+		void Resize(int width, int height) override;
 
-		virtual void Update(int level, int layer, uint8_t* data, int stride);
+		void SetFilters(TextureFilter magmin, TextureFilter mipmap) override;
+		void SetAdress(TextureAddress adress) override;
+		void SetAdressU(TextureAddress adress) override;
+		 void SetAdressV(TextureAddress adress) override;
+		void SetAdressW(TextureAddress adress) override;
+	
+		void GenerateMips() override;
+
+		void Update(int level, int layer, uint8_t* data, int stride) override;
 
 		protected:
 
-		virtual void Apply(int slot);
+		void Apply(int slot) override;
 	};
 }

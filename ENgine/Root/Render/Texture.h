@@ -83,23 +83,31 @@ namespace Oak
 
 		public:
 
-			Texture(int w, int h, TextureFormat f, int l, TextureType tp)
-			{
-				width = w;
-				height = h;
-				format = f;
-				lods = l;
-				type = tp;
+		Texture(int w, int h, TextureFormat f, int l, TextureType tp)
+		{
+			width = w;
+			height = h;
+			format = f;
+			lods = l;
+			type = tp;
 
-				magminf = TextureFilter::Linear;
-				mipmapf = TextureFilter::Linear;
+			magminf = TextureFilter::Linear;
+			mipmapf = TextureFilter::Linear;
 
-				adressU = TextureAddress::Wrap;
-				adressV = TextureAddress::Wrap;
-				adressW = TextureAddress::Wrap;
-			};
+			adressU = TextureAddress::Wrap;
+			adressV = TextureAddress::Wrap;
+			adressW = TextureAddress::Wrap;
+		};
 		virtual ~Texture() {};
 		#endif
+
+		/**
+			\brief Resize Texture
+
+			\param[in] width Set width
+			\param[in] height Set height
+		*/
+		virtual void Resize(int width, int height) = 0;
 
 		/**
 		\brief Get width of a texture
