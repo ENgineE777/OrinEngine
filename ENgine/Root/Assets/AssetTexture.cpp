@@ -11,7 +11,14 @@ namespace Oak
 
 	void AssetTexture::Reload()
 	{
-		texture = root.render.LoadTexture(path.c_str(), _FL_);
+		if (texture.Get())
+		{
+			root.render.LoadTexture(texture, path.c_str());
+		}
+		else
+		{
+			texture = root.render.LoadTexture(path.c_str(), _FL_);
+		}
 	}
 
 	void AssetTexture::Release()

@@ -329,6 +329,7 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />

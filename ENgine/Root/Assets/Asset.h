@@ -1,24 +1,35 @@
 #pragma once
 
-#include <EASTL/string.h>
-#include <EASTL/vector.h>
-#include "Support/ThreadExecutor.h"
-#include <atomic>
-#include "root/Render/Render.h"
+#include "Support/StringUtils.h"
+#include "Support/ClassFactory.h"
+
+#ifdef OAK_EDITOR
+#include <sys/stat.h>
+#endif
 
 namespace Oak
 {
 	class Asset
 	{
-		friend class Assets;
-
 	protected:
+
+		#ifdef OAK_EDITOR
+		struct stat  fileInfo;
+		eastl::string fullPath;
+		#endif
 
 		eastl::string path;
 
 	public:
 
-		virtual void Reload() = 0;
+		void SetPath(const char* setPath);
+
+		#ifdef OAK_EDITOR
+		bool WasChanged();
+		#endif
+
+		virtual void Reload();
+
 		virtual void Release() = 0;
 	};
 

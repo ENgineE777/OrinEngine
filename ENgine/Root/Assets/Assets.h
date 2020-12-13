@@ -29,7 +29,7 @@ namespace Oak
 					ClassFactoryAsset* decl = ClassFactoryAsset::Find(assetCreation[ext].c_str());
 
 					asset = decl->Create(_FL_);
-					asset->path = fullName;
+					asset->SetPath(fullName.c_str());
 					asset->Reload();
 				}
 
@@ -59,8 +59,6 @@ namespace Oak
 
 		void Init();
 
-		void LoadAssets(const char* path, Folder& folder);
-
 		void LoadAssets();
 
 		template<class T>
@@ -75,6 +73,7 @@ namespace Oak
 		};
 
 		#ifdef OAK_EDITOR
+		void LoadAssets(const char* path, Folder& folder, bool update);
 		void ObserveRoot();
 		#endif
 

@@ -386,6 +386,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">

@@ -10,9 +10,27 @@ namespace Oak
 
 	}
 
-	void Assets::LoadAssets(const char* path, Folder& folder)
+	void Assets::LoadAssets()
 	{
-#ifdef OAK_EDITOR
+		const char* rootPath = root.GetRootPath();
+
+		if (rootPath[0] == 0)
+		{
+			return;
+		}
+
+		#ifdef OAK_EDITOR
+		LoadAssets(rootPath, rootFolder, false);
+
+		scanning = true;
+
+		executor.Execute(this, (ThreadCaller::Delegate)&Assets::ObserveRoot);
+		#endif
+	}
+
+	#ifdef OAK_EDITOR
+	void Assets::LoadAssets(const char* path, Folder& folder, bool update)
+	{
 		WIN32_FIND_DATAA ffd;
 		HANDLE hFile;
 		CHAR serarchDir[256];
@@ -44,14 +62,36 @@ namespace Oak
 						char relativeName[512];
 						StringUtils::GetCropPath(root.GetRootPath(), fileName, relativeName, 512);
 
-						folder.assets.push_back();
+						bool found = false;
 
-						AssetRef* ref = &folder.assets.back();
-						ref->name = ffd.cFileName;
-						ref->ext = extension;
-						ref->fullName = relativeName;
+						if (update)
+						{
+							for (auto& item : folder.assets)
+							{
+								if (StringUtils::IsEqual(item.fullName.c_str(), relativeName))
+								{
+									if (item.asset && item.asset->WasChanged())
+									{
+										item.asset->Reload();
+									}
 
-						assetsMap[relativeName] = ref;
+									found = true;
+									break;
+								}
+							}
+						}
+
+						if (!found)
+						{
+							folder.assets.push_back();
+
+							AssetRef* ref = &folder.assets.back();
+							ref->name = ffd.cFileName;
+							ref->ext = extension;
+							ref->fullName = relativeName;
+
+							assetsMap[relativeName] = ref;
+						}
 					}
 				}
 				else
@@ -63,11 +103,30 @@ namespace Oak
 					char relativePath[512];
 					StringUtils::GetCropPath(root.GetRootPath(), subPath, relativePath, 512);
 
-					folder.folders.push_back();
-					folder.folders.back().name = ffd.cFileName;
-					folder.folders.back().fullName = relativePath;
+					bool found = false;
 
-					LoadAssets(subPath, folder.folders.back());
+					if (update)
+					{
+						for (auto& item : folder.folders)
+						{
+							if (StringUtils::IsEqual(item.fullName.c_str(), relativePath))
+							{
+								LoadAssets(subPath, item, update);
+
+								found = true;
+								break;
+							}
+						}
+					}
+
+					if (!found)
+					{
+						folder.folders.push_back();
+						folder.folders.back().name = ffd.cFileName;
+						folder.folders.back().fullName = relativePath;
+
+						LoadAssets(subPath, folder.folders.back(), update);
+					}
 				}
 
 				fFile = FindNextFileA(hFile, &ffd);
@@ -75,28 +134,8 @@ namespace Oak
 
 			FindClose(hFile);
 		}
-#endif
 	}
 
-	void Assets::LoadAssets()
-	{
-		const char* rootPath = root.GetRootPath();
-
-		if (rootPath[0] == 0)
-		{
-			return;
-		}
-
-		LoadAssets(rootPath, rootFolder);
-
-		scanning = true;
-
-		#ifdef OAK_EDITOR
-		executor.Execute(this, (ThreadCaller::Delegate)&Assets::ObserveRoot);
-		#endif
-	}
-
-	#ifdef OAK_EDITOR
 	void Assets::ObserveRoot()
 	{
 		DWORD waitStatus;
@@ -115,6 +154,8 @@ namespace Oak
 
 			if (waitStatus == WAIT_OBJECT_0)
 			{
+				ThreadExecutor::Sleep(500);
+
 				needRescan.store(true, std::memory_order_release);
 
 				if (FindNextChangeNotification(changeHandles) == FALSE)
@@ -131,13 +172,7 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		if (needRescan.load(std::memory_order_acquire))
 		{
-			selFolder = nullptr;
-			selAsset = nullptr;
-
-			rootFolder.assets.clear();
-			rootFolder.folders.clear();
-
-			LoadAssets(root.GetRootPath(), rootFolder);
+			LoadAssets(root.GetRootPath(), rootFolder, true);
 
 			needRescan.store(false, std::memory_order_release);
 		}
