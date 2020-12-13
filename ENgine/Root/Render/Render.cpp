@@ -160,6 +160,39 @@ namespace Oak
 		return TextureRef(texture, file, line);
 	}
 
+	void Render::LoadTexture(TextureRef& texture, const char* name)
+	{
+		if (!texture.Get())
+		{
+			return;
+		}
+
+		FileInMemory buffer;
+
+		if (!buffer.Load(name))
+		{
+			return;
+		}
+
+		uint8_t* ptr = buffer.GetData();
+
+		int bytes;
+		int width;
+		int height;
+		uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
+
+		if (texture->GetWidth() != width || texture->GetHeight() != height)
+		{
+			texture->Resize(width, height);
+		}
+
+		texture->Update(0, 0, data, width * 4);
+
+		free(data);
+
+		texture->GenerateMips();
+	}
+
 	void Render::AddExecutedLevelPool(int level)
 	{
 		groupTaskPool->AddFilter(level);

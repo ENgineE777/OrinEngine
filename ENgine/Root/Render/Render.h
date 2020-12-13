@@ -130,6 +130,14 @@ namespace Oak
 		TextureRef LoadTexture(const char* name, const char* file, int line);
 
 		/**
+		\brief Load texture
+
+			\param[in] texture Texture reference
+			\param[in] name Full path to a texture
+		*/
+		void LoadTexture(TextureRef& texture, const char* name);
+
+		/**
 		\brief Creates new task pool in group render task pool
 		\param[in] file Name of a file from which ctreation was requested
 		\param[in] line Number of a line from which ctreation was requested
