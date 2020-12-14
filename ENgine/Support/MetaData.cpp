@@ -516,6 +516,7 @@ namespace Oak
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
 								str->assign("");
+								prop.changed = true;
 							}
 						}
 						else
@@ -576,9 +577,8 @@ namespace Oak
 
 							StringUtils::Printf(propGuiID, 256, "%s###%s%i", texture[0] ? texture[0]->GetName().c_str() : "None", guiID, i);
 
-							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
 							{
-								//prop.callback(owner);
 							}
 
 							if (texture[0] && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
@@ -597,6 +597,16 @@ namespace Oak
 									texture[0] = ref->GetAsset<AssetTexture>();
 									prop.changed = true;
 								}
+							}
+
+							ImGui::SameLine();
+
+							StringUtils::Printf(propGuiID, 256, "Del###%sDel%i", guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							{
+								texture[0] = nullptr;
+								prop.changed = true;
 							}
 						}
 						else

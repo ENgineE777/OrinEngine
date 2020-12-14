@@ -20,7 +20,7 @@ namespace Oak
 		}
 
 		#ifdef OAK_EDITOR
-		LoadAssets(rootPath, rootFolder, false);
+		LoadAssets(rootPath, &rootFolder, false);
 
 		scanning = true;
 
@@ -29,7 +29,7 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
-	void Assets::LoadAssets(const char* path, Folder& folder, bool update)
+	void Assets::LoadAssets(const char* path, Folder* folder, bool update)
 	{
 		WIN32_FIND_DATAA ffd;
 		HANDLE hFile;
@@ -66,13 +66,13 @@ namespace Oak
 
 						if (update)
 						{
-							for (auto& item : folder.assets)
+							for (auto* item : folder->assets)
 							{
-								if (StringUtils::IsEqual(item.fullName.c_str(), relativeName))
+								if (StringUtils::IsEqual(item->fullName.c_str(), relativeName))
 								{
-									if (item.asset && item.asset->WasChanged())
+									if (item->asset && item->asset->WasChanged())
 									{
-										item.asset->Reload();
+										item->asset->Reload();
 									}
 
 									found = true;
@@ -83,9 +83,9 @@ namespace Oak
 
 						if (!found)
 						{
-							folder.assets.push_back();
+							folder->assets.push_back(NEW AssetRef());
 
-							AssetRef* ref = &folder.assets.back();
+							AssetRef* ref = folder->assets.back();
 							ref->name = ffd.cFileName;
 							ref->ext = extension;
 							ref->fullName = relativeName;
@@ -107,9 +107,9 @@ namespace Oak
 
 					if (update)
 					{
-						for (auto& item : folder.folders)
+						for (auto* item : folder->folders)
 						{
-							if (StringUtils::IsEqual(item.fullName.c_str(), relativePath))
+							if (StringUtils::IsEqual(item->fullName.c_str(), relativePath))
 							{
 								LoadAssets(subPath, item, update);
 
@@ -121,11 +121,12 @@ namespace Oak
 
 					if (!found)
 					{
-						folder.folders.push_back();
-						folder.folders.back().name = ffd.cFileName;
-						folder.folders.back().fullName = relativePath;
+						folder->folders.push_back(NEW Folder());
+						Folder* subFolder = folder->folders.back();
+						subFolder->name = ffd.cFileName;
+						subFolder->fullName = relativePath;
 
-						LoadAssets(subPath, folder.folders.back(), update);
+						LoadAssets(subPath, subFolder, update);
 					}
 				}
 
@@ -172,7 +173,7 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		if (needRescan.load(std::memory_order_acquire))
 		{
-			LoadAssets(root.GetRootPath(), rootFolder, true);
+			LoadAssets(root.GetRootPath(), &rootFolder, true);
 
 			needRescan.store(false, std::memory_order_release);
 		}
@@ -190,8 +191,7 @@ namespace Oak
 		#endif
 
 		assetsMap.clear();
-		rootFolder.assets.clear();
-		rootFolder.folders.clear();
+		rootFolder.Clear();
 	}
 
 	void Assets::Release()

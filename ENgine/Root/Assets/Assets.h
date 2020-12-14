@@ -41,8 +41,26 @@ namespace Oak
 		{
 			eastl::string name;
 			eastl::string fullName;
-			eastl::vector<Folder> folders;
-			eastl::vector<AssetRef> assets;
+			eastl::vector<Folder*> folders;
+			eastl::vector<AssetRef*> assets;
+
+			void Clear()
+			{
+				for (auto* folder : folders)
+				{
+					folder->Clear();
+					delete folder;
+				}
+
+				folders.clear();
+
+				for (auto* asset : assets)
+				{
+					delete asset;
+				}
+
+				assets.clear();
+			}
 		};
 
 		Folder rootFolder;
@@ -73,7 +91,7 @@ namespace Oak
 		};
 
 		#ifdef OAK_EDITOR
-		void LoadAssets(const char* path, Folder& folder, bool update);
+		void LoadAssets(const char* path, Folder* folder, bool update);
 		void ObserveRoot();
 		#endif
 

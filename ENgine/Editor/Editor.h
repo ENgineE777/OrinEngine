@@ -76,7 +76,7 @@ namespace Oak
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
-		void AssetsFolder(Assets::Folder& folder);
+		void AssetsFolder(Assets::Folder* folder);
 
 		template<typename Func>
 		void PushButton(const char* label, bool pushed, Func callback)

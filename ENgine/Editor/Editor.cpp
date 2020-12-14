@@ -536,22 +536,22 @@ namespace Oak
 		}
 	}
 
-	void Editor::AssetsFolder(Assets::Folder& folder)
+	void Editor::AssetsFolder(Assets::Folder* folder)
 	{
-		for (auto& item : folder.folders)
+		for (auto* item : folder->folders)
 		{
 			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
 
-			if (&item == root.assets.selFolder)
+			if (item == root.assets.selFolder)
 			{
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
 
-			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item.name.c_str());
+			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item->name.c_str());
 
 			if (ImGui::IsItemClicked())
 			{
-				root.assets.selFolder = &item;
+				root.assets.selFolder = item;
 				root.assets.selAsset = nullptr;
 			}
 
@@ -563,26 +563,26 @@ namespace Oak
 			}
 		}
 
-		for (auto& item : folder.assets)
+		for (auto* item : folder->assets)
 		{
 			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
 
-			if (&item == root.assets.selAsset)
+			if (item == root.assets.selAsset)
 			{
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
 
-			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item.name.c_str());
+			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item->name.c_str());
 
 			if (ImGui::IsItemClicked())
 			{
 				root.assets.selFolder = nullptr;
-				root.assets.selAsset = &item;
+				root.assets.selAsset = item;
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 			{
-				Assets::AssetRef* ptr = &item;
+				Assets::AssetRef* ptr = item;
 				ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(Assets::AssetRef*));
 				ImGui::EndDragDropSource();
 			}
@@ -905,7 +905,7 @@ namespace Oak
 		{
 			ImGui::Begin("Assets");
 
-			AssetsFolder(root.assets.rootFolder);
+			AssetsFolder(&root.assets.rootFolder);
 
 			ImGui::End();
 		}
