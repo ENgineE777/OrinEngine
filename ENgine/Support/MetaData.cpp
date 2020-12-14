@@ -1,6 +1,7 @@
 
 #include "MetaData.h"
 #include "imgui.h"
+#include "Root/Root.h"
 
 #ifdef OAK_EDITOR
 extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
@@ -8,10 +9,6 @@ extern const char* OpenFileDialog(const char* extName, const char* ext, bool ope
 
 namespace Oak
 {
-	#ifdef OAK_EDITOR
-	eastl::string MetaData::rootPath;
-	#endif
-
 	void MetaData::Prepare(void* set_owner, void* set_root)
 	{
 		if (!inited)
@@ -135,6 +132,16 @@ namespace Oak
 				reader.Read(prop.name.c_str(), *((Oak::Color*)prop.value));
 			}
 			else
+			if (prop.type == Type::AssetTexture)
+			{
+				eastl::string path;
+				if (reader.Read(prop.name.c_str(), path))
+				{
+					AssetTexture** texture = reinterpret_cast<AssetTexture**>(prop.value);
+					texture[0] = Oak::root.assets.GetAsset<AssetTexture>(path);
+				}
+			}
+			else
 			if (prop.type == Type::Array)
 			{
 				if (reader.EnterBlock(prop.name.c_str()))
@@ -207,6 +214,16 @@ namespace Oak
 				writer.Write(prop.name.c_str(), *((Oak::Color*)prop.value));
 			}
 			else
+			if (prop.type == Type::AssetTexture)
+			{
+				AssetTexture** texture = reinterpret_cast<AssetTexture**>(prop.value);
+
+				if (texture[0])
+				{
+					writer.Write(prop.name.c_str(), texture[0]->GetPath().c_str());
+				}
+			}
+			else
 			if (prop.type == Type::Array)
 			{
 				writer.StartBlock(prop.name.c_str());
@@ -262,6 +279,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				memcpy(prop.value, src, sizeof(float) * 4);
+			}
+			else
+			if (prop.type == Type::AssetTexture)
+			{
+				memcpy(prop.value, src, sizeof(AssetTexture*));
 			}
 			else
 			if (prop.type == Type::Array)
@@ -475,7 +497,7 @@ namespace Oak
 								if (fileName)
 								{
 									char relativeName[512];
-									StringUtils::GetCropPath(rootPath.c_str(), fileName, relativeName, 512);
+									StringUtils::GetCropPath(Oak::root.GetRootPath(), fileName, relativeName, 512);
 
 									str->assign(relativeName);
 									prop.changed = true;
@@ -546,6 +568,23 @@ namespace Oak
 						if (prop.type == Type::EnumString)
 						{
 							//FIX ME!!!
+						}
+						else
+						if (prop.type == Type::AssetTexture)
+						{
+							AssetTexture** texture = reinterpret_cast<AssetTexture**>(prop.value);
+
+							StringUtils::Printf(propGuiID, 256, "%s###%s%i", texture[0] ? texture[0]->GetName().c_str() : "None", guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+							{
+								//prop.callback(owner);
+							}
+
+							if (texture[0] && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+							{
+								ImGui::SetTooltip(texture[0]->GetPath().c_str());
+							}
 						}
 						else
 						if (prop.type == Type::Callback)

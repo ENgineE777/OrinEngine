@@ -150,7 +150,7 @@ namespace Oak
 		return Timer::GetFPS();
 	}
 
-	void Root::SetRootPath(eastl::string setRootPath)
+	void Root::SetRootPath(const char* setRootPath)
 	{
 		rootPath = setRootPath;
 	}

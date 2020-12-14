@@ -102,7 +102,7 @@ namespace Oak
 		float GetDeltaTime();
 		int GetFPS();
 
-		void SetRootPath(eastl::string rootPath);
+		void SetRootPath(const char* rootPath);
 		const char* GetRootPath();
 
 		#endif

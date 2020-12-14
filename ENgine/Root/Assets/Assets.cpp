@@ -57,7 +57,7 @@ namespace Oak
 					if (assetCreation.count(extension) > 0)
 					{
 						char fileName[512];
-						StringUtils::Printf(fileName, 512, "%s//%s", path, ffd.cFileName);
+						StringUtils::Printf(fileName, 512, "%s%s", path, ffd.cFileName);
 
 						char relativeName[512];
 						StringUtils::GetCropPath(root.GetRootPath(), fileName, relativeName, 512);
@@ -98,7 +98,7 @@ namespace Oak
 				if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && strcmp(ffd.cFileName, ".") != 0 && strcmp(ffd.cFileName, "..") != 0)
 				{
 					char subPath[512];
-					StringUtils::Printf(subPath, 512, "%s//%s", path, ffd.cFileName);
+					StringUtils::Printf(subPath, 512, "%s%s/", path, ffd.cFileName);
 
 					char relativePath[512];
 					StringUtils::GetCropPath(root.GetRootPath(), subPath, relativePath, 512);

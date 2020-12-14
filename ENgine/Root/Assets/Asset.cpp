@@ -8,6 +8,10 @@ namespace Oak
 		path = setPath;
 
 #ifdef OAK_EDITOR
+		char strName[512];
+		StringUtils::GetFileName(path.c_str(), strName);
+		name = strName;
+
 		fullPath = root.GetRootPath() + path;
 
 		if (!fullPath.empty())
@@ -17,7 +21,17 @@ namespace Oak
 #endif
 	}
 
+	const eastl::string& Asset::GetPath()
+	{
+		return path;
+	}
+
 	#ifdef OAK_EDITOR
+	const eastl::string& Asset::GetName()
+	{
+		return name;
+	}
+
 	bool Asset::WasChanged()
 	{
 		struct stat info;

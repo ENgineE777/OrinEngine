@@ -16,6 +16,7 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		struct stat  fileInfo;
 		eastl::string fullPath;
+		eastl::string name;
 		#endif
 
 		eastl::string path;
@@ -23,8 +24,10 @@ namespace Oak
 	public:
 
 		void SetPath(const char* setPath);
+		const eastl::string& GetPath();
 
 		#ifdef OAK_EDITOR
+		const eastl::string& GetName();
 		bool WasChanged();
 		#endif
 

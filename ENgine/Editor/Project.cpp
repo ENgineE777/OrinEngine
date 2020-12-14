@@ -14,8 +14,7 @@ namespace Oak
 
 		projectName = fileName;
 		StringUtils::GetPath(projectName.c_str(), projectPath);
-
-		MetaData::rootPath = projectPath;
+		StringUtils::FixSlashes(projectPath);
 
 		root.SetRootPath(projectPath);
 		root.assets.LoadAssets();

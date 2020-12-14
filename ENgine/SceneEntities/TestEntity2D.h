@@ -16,7 +16,6 @@ namespace Oak
 		Transform2D transform;
 		Sprite::FrameState state;
 		Color color;
-		eastl::string texName;
 
 		AssetTexture* texture;
 

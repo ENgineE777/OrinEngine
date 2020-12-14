@@ -44,6 +44,7 @@ namespace Oak
 			Enum,
 			EnumString,
 			Callback,
+			AssetTexture,
 			Array
 		};
 
@@ -63,7 +64,6 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		typedef void(*Callback)(void* owner);
 		typedef void(*EnumStringCallback)(void* owner, void** strings);
-		static eastl::string rootPath;
 		#endif
 
 		struct ArrayAdapter
@@ -354,6 +354,17 @@ namespace Oak
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		prop.adapter = new(nullptr, 0) ArrayAdapterImpl<structType>;\
+		properties.push_back(prop);\
+	}
+
+	#define ASSET_TEXTURE_PROP(className, classMember, strCatName, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::AssetTexture;\
+		prop.name = strPropName;\
+		prop.catName = strCatName;\
+		prop.propName = strPropName;\
 		properties.push_back(prop);\
 	}
 }
