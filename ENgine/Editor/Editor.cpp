@@ -572,7 +572,7 @@ namespace Oak
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
 
-			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item->name.c_str());
+			bool open = ImGui::TreeNodeEx(item, nodeFlags, item->name.c_str());
 
 			if (ImGui::IsItemClicked())
 			{
