@@ -585,6 +585,19 @@ namespace Oak
 							{
 								ImGui::SetTooltip(texture[0]->GetPath().c_str());
 							}
+
+							if (ImGui::BeginDragDropTarget())
+							{
+								const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+								if (payload)
+								{
+									Assets::AssetRef* ref = reinterpret_cast<Assets::AssetRef**>(payload->Data)[0];
+
+									texture[0] = ref->GetAsset<AssetTexture>();
+									prop.changed = true;
+								}
+							}
 						}
 						else
 						if (prop.type == Type::Callback)

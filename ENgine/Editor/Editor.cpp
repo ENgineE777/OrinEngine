@@ -417,7 +417,6 @@ namespace Oak
 
 				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 				{
-					uint64_t temp = (uint64_t)entity;
 					ImGui::SetDragDropPayload("_TREENODE", &entity, sizeof(SceneEntity*));
 					ImGui::EndDragDropSource();
 				}
@@ -579,6 +578,13 @@ namespace Oak
 			{
 				root.assets.selFolder = nullptr;
 				root.assets.selAsset = &item;
+			}
+
+			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+			{
+				Assets::AssetRef* ptr = &item;
+				ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(Assets::AssetRef*));
+				ImGui::EndDragDropSource();
 			}
 
 			if (open)
