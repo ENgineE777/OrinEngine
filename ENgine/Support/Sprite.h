@@ -170,5 +170,7 @@ namespace Oak::Sprite
 	Math::Vector2 MoveFromCamera(Math::Vector2 pos, bool abs_units = true);
 	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped = false);
 	void Draw(Transform2D* trans, Color clr, Sprite::Data* sprite, FrameState* state, bool use_depth, bool ignore_camera);
+
+	void Release();
 }
 #endif

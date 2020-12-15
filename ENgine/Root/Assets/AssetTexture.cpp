@@ -4,7 +4,7 @@ namespace Oak
 {
 	CLASSREG(Asset, AssetTexture, "AssetTexture")
 
-	const TextureRef& AssetTexture::GetTexture()
+	TextureRef AssetTexture::GetTexture()
 	{
 		return texture;
 	}

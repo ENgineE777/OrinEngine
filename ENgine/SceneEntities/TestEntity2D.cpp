@@ -24,9 +24,6 @@ namespace Oak
 
 	void TestEntity2D::ApplyProperties()
 	{
-		//eastl::string str = "Texture2D/penitent_jumping_attack_noslashes.png";
-		//texture = root.assets.GetAsset<AssetTexture>(str);
-
 		data.texture = texture ? texture->GetTexture() : root.render.GetWhiteTexture();
 	}
 

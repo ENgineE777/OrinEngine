@@ -25,6 +25,8 @@ namespace Oak
 
 	public:
 
+		virtual ~Asset() = default;
+
 		void SetPath(const char* setPath);
 		const eastl::string& GetPath();
 

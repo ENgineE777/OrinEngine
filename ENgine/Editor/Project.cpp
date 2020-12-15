@@ -372,12 +372,8 @@ namespace Oak
 
 		for (auto& scn : scenes)
 		{
-			if (scn->scene)
-			{
-				scn->scene->Clear();
-				delete scn->scene;
-				delete scn;
-			}
+			RELEASE(scn->scene)
+			delete scn;
 		}
 
 		scenes.clear();

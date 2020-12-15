@@ -397,6 +397,14 @@ namespace Oak::Sprite
 				}
 		}
 	}
+
+	void Release()
+	{
+		vdecl.ReleaseRef();
+		buffer.ReleaseRef();
+		quadPrgDepth.ReleaseRef();
+		quadPrgNoDepth.ReleaseRef();
+	}
 }
 
 

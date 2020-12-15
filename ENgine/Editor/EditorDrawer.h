@@ -30,6 +30,8 @@ namespace Oak
 		void PrintText(Math::Vector2 pos, Color color, const char* text);
 		void DrawLine(Math::Vector2 from, Math::Vector2 to, Color color);
 		void DrawCurve(Math::Vector2 from, Math::Vector2 to, Color color);
+
+		void Release();
 	};
 
 	extern EditorDrawer editorDrawer;

@@ -36,6 +36,7 @@ namespace Oak
 
 		#ifdef PLATFORM_WIN
 		eastl::string rootPath;
+		bool redirectLog = true;
 		#endif
 
 		#endif

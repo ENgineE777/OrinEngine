@@ -112,4 +112,15 @@ namespace Oak
 			last = pos;
 		}
 	}
+
+	void EditorDrawer::Release()
+	{
+		font.ReleaseRef();
+		anchorn.ReleaseRef();
+		center.ReleaseRef();
+		node_tex.ReleaseRef();
+		arrow_tex.ReleaseRef();
+		checker_texture.ReleaseRef();
+
+	}
 }

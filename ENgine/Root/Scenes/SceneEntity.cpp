@@ -187,6 +187,11 @@ namespace Oak
 
 	void SceneEntity::Release()
 	{
+		for (auto* child : childs)
+		{
+			RELEASE(child)
+		}
+
 		if (scene)
 		{
 			scene->taskPool->DelAllTasks(this);

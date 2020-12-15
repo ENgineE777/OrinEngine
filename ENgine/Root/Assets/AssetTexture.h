@@ -13,7 +13,7 @@ namespace Oak
 
 	public:
 
-		const TextureRef& GetTexture();
+		TextureRef GetTexture();
 		void Reload() override;
 	};
 

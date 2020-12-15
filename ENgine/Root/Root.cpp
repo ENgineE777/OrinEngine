@@ -108,7 +108,10 @@ namespace Oak
 		StringUtils::Printf(path, 1024, "%s/%s.txt", logsDir, name);
 
 #ifdef OAK_EDITOR
-		editor.CaptureLog(name, buffer);
+		if (redirectLog)
+		{
+			editor.CaptureLog(name, buffer);
+		}
 #endif
 
 		FILE* f = nullptr;
@@ -164,9 +167,13 @@ namespace Oak
 	{
 		assets.Release();
 
+		Sprite::Release();
+
 		fonts.Release();
 		render.Release();
 		controls.Release();
+
+		redirectLog = false;
 
 		memory.LogMemory();
 	}

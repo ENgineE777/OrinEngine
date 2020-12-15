@@ -98,7 +98,7 @@ namespace Oak
 			adressV = TextureAddress::Wrap;
 			adressW = TextureAddress::Wrap;
 		};
-		virtual ~Texture() {};
+		virtual ~Texture() = default;
 		#endif
 
 		/**

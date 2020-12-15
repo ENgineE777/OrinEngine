@@ -1041,6 +1041,16 @@ namespace Oak
 
 	void Editor::Release()
 	{
+		for (auto& item : logCategories)
+		{
+			delete item.second;
+		}
+		logCategories.clear();
+
+		editorDrawer.Release();
+
+		project.Reset();
+
 		root.render.DelTaskPool(renderTaskPool);
 		root.Release();
 
