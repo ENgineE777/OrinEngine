@@ -54,5 +54,15 @@ namespace Oak
 	void Asset::Reload()
 	{
 
-	};
+	}
+
+	void Asset::Release()
+	{
+		if (root.assets.assetsMap.count(path) > 0)
+		{
+			root.assets.assetsMap[path]->asset = nullptr;
+		}
+
+		delete this;
+	}
 }

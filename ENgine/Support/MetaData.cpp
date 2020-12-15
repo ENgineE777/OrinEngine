@@ -137,8 +137,8 @@ namespace Oak
 				eastl::string path;
 				if (reader.Read(prop.name.c_str(), path))
 				{
-					AssetTexture** texture = reinterpret_cast<AssetTexture**>(prop.value);
-					texture[0] = Oak::root.assets.GetAsset<AssetTexture>(path);
+					AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
+					*ref = Oak::root.assets.GetAsset<AssetTexture>(path);
 				}
 			}
 			else
@@ -216,11 +216,11 @@ namespace Oak
 			else
 			if (prop.type == Type::AssetTexture)
 			{
-				AssetTexture** texture = reinterpret_cast<AssetTexture**>(prop.value);
+				AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
 
-				if (texture[0])
+				if (ref->Get())
 				{
-					writer.Write(prop.name.c_str(), texture[0]->GetPath().c_str());
+					writer.Write(prop.name.c_str(), ref->Get()->GetPath().c_str());
 				}
 			}
 			else
@@ -283,7 +283,7 @@ namespace Oak
 			else
 			if (prop.type == Type::AssetTexture)
 			{
-				memcpy(prop.value, src, sizeof(AssetTexture*));
+				memcpy(prop.value, src, sizeof(AssetTextureRef));
 			}
 			else
 			if (prop.type == Type::Array)
@@ -573,17 +573,17 @@ namespace Oak
 						else
 						if (prop.type == Type::AssetTexture)
 						{
-							AssetTexture** texture = reinterpret_cast<AssetTexture**>(prop.value);
+							AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
 
-							StringUtils::Printf(propGuiID, 256, "%s###%s%i", texture[0] ? texture[0]->GetName().c_str() : "None", guiID, i);
+							StringUtils::Printf(propGuiID, 256, "%s###%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
 							{
 							}
 
-							if (texture[0] && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+							if (ref->Get() && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
 							{
-								ImGui::SetTooltip(texture[0]->GetPath().c_str());
+								ImGui::SetTooltip(ref->Get()->GetPath().c_str());
 							}
 
 							if (ImGui::BeginDragDropTarget())
@@ -592,9 +592,9 @@ namespace Oak
 
 								if (payload)
 								{
-									Assets::AssetRef* ref = reinterpret_cast<Assets::AssetRef**>(payload->Data)[0];
+									Assets::AssetRef* assetRef = reinterpret_cast<Assets::AssetRef**>(payload->Data)[0];
 
-									texture[0] = ref->GetAsset<AssetTexture>();
+									*ref = assetRef->GetAsset<AssetTexture>();
 									prop.changed = true;
 								}
 							}
@@ -605,7 +605,7 @@ namespace Oak
 
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
-								texture[0] = nullptr;
+								*ref = AssetTextureRef();
 								prop.changed = true;
 							}
 						}

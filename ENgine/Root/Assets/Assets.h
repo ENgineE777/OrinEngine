@@ -10,7 +10,7 @@ namespace Oak
 {
 	class Assets : public ThreadCaller
 	{
-		static eastl::map<eastl::string, eastl::string> assetCreation;
+		friend class Asset;
 
 	public:
 
@@ -22,7 +22,7 @@ namespace Oak
 			eastl::string fullName;
 
 			template<class T>
-			T* GetAsset()
+			PointerRef<T> GetAsset()
 			{
 				if (asset == nullptr)
 				{
@@ -31,9 +31,13 @@ namespace Oak
 					asset = decl->Create(_FL_);
 					asset->SetPath(fullName.c_str());
 					asset->Reload();
+
+					PointerRef<T> ref(dynamic_cast<T*>(asset), _FL_);
+
+					return ref;
 				}
 
-				return (T*)asset;
+				return PointerRef<T>();
 			}
 		};
 
@@ -63,7 +67,10 @@ namespace Oak
 			}
 		};
 
-		Folder rootFolder;
+	protected:
+
+		static eastl::map<eastl::string, eastl::string> assetCreation;
+
 		eastl::map<eastl::string, AssetRef*> assetsMap;
 
 		#ifdef OAK_EDITOR
@@ -71,6 +78,13 @@ namespace Oak
 		std::atomic<bool> needRescan;
 
 		ThreadExecutor executor;
+		#endif
+
+	public:
+
+		Folder rootFolder;
+
+		#ifdef OAK_EDITOR
 		Folder* selFolder = nullptr;
 		AssetRef* selAsset = nullptr;
 		#endif
@@ -80,14 +94,14 @@ namespace Oak
 		void LoadAssets();
 
 		template<class T>
-		T* GetAsset(eastl::string& path)
+		PointerRef<T> GetAsset(eastl::string& path)
 		{
 			if (assetsMap.count(path) > 0)
 			{
 				return assetsMap[path]->GetAsset<T>();
 			}
 
-			return nullptr;
+			return PointerRef<T>();
 		};
 
 		#ifdef OAK_EDITOR

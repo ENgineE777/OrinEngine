@@ -20,9 +20,4 @@ namespace Oak
 			texture = root.render.LoadTexture(path.c_str(), _FL_);
 		}
 	}
-
-	void AssetTexture::Release()
-	{
-
-	}
 };

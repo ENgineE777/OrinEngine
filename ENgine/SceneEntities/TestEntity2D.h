@@ -17,7 +17,7 @@ namespace Oak
 		Sprite::FrameState state;
 		Color color;
 
-		AssetTexture* texture = nullptr;
+		AssetTextureRef texture;
 
 		META_DATA_DECL_BASE(TestEntity2D)
 

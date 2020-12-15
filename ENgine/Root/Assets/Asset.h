@@ -2,6 +2,7 @@
 
 #include "Support/StringUtils.h"
 #include "Support/ClassFactory.h"
+#include "Support/PointerRef.h"
 
 #ifdef OAK_EDITOR
 #include <sys/stat.h>
@@ -20,6 +21,7 @@ namespace Oak
 		#endif
 
 		eastl::string path;
+		int refCounter = 0;
 
 	public:
 
@@ -33,7 +35,7 @@ namespace Oak
 
 		virtual void Reload();
 
-		virtual void Release() = 0;
+		virtual void Release();
 	};
 
 	CLASSFACTORYDEF(Asset)

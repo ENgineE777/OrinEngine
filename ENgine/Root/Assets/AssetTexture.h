@@ -7,12 +7,15 @@ namespace Oak
 {
 	class AssetTexture : public Asset
 	{
+		friend class PointerRef<AssetTexture>;
+
 		TextureRef texture;
 
 	public:
 
 		const TextureRef& GetTexture();
-		virtual void Reload();
-		virtual void Release();
+		void Reload() override;
 	};
+
+	typedef PointerRef<AssetTexture> AssetTextureRef;
 }
