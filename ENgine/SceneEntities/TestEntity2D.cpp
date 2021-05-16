@@ -35,6 +35,6 @@ namespace Oak
 	void TestEntity2D::Draw(float dt)
 	{
 		transform.BuildMatrices();
-		Sprite::Draw(&transform, color, &data, &state, false, false);
+		Sprite::Draw(&transform, color, &data, &frameState, false, false);
 	}
 }

@@ -14,7 +14,7 @@ namespace Oak
 
 		Sprite::Data data;
 		Transform2D transform;
-		Sprite::FrameState state;
+		Sprite::FrameState frameState;
 		Color color;
 
 		AssetTextureRef texture;
