@@ -365,9 +365,6 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp">
       <Filter>ENgine\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity2D.cpp">
-      <Filter>ENgine\SceneEntities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity3D.cpp">
       <Filter>ENgine\SceneEntities</Filter>
     </ClCompile>
@@ -888,9 +885,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h">
       <Filter>ENgine\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity2D.h">
-      <Filter>ENgine\SceneEntities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity3D.h">
       <Filter>ENgine\SceneEntities</Filter>
