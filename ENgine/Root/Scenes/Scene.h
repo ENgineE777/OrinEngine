@@ -103,10 +103,11 @@ namespace Oak
 		\brief Create a scene entity
 
 		\param[in] name Name of a type
+		\param[in] setNameAndUDID Controls if set name and UDID is needed
 
 		\return Pointer to a scene object
 		*/
-		SceneEntity* CreateEntity(const char* name);
+		SceneEntity* CreateEntity(const char* name, bool setNameAndUDID = true);
 
 		/**
 		\brief Add entity to a scene

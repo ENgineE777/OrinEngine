@@ -10,7 +10,7 @@ namespace Oak
 		renderTaskPool = root.render.AddTaskPool(_FL_);
 	}
 
-	SceneEntity* Scene::CreateEntity(const char* name)
+	SceneEntity* Scene::CreateEntity(const char* name, bool setNameAndUDID)
 	{
 		ClassFactorySceneEntity* decl = ClassFactorySceneEntity::Find(name);
 
@@ -31,6 +31,12 @@ namespace Oak
 
 			entity->GetMetaData()->Prepare(entity);
 			entity->GetMetaData()->SetDefValues();
+
+			if (setNameAndUDID)
+			{
+				entity->SetName(decl->GetShortName());
+				GenerateUID(entity);
+			}
 		}
 
 		return entity;
@@ -121,18 +127,13 @@ namespace Oak
 
 			SceneEntity* entity = nullptr;
 
-			entity = CreateEntity(type);
+			entity = CreateEntity(type, false);
 
 			if (entity)
 			{
 				entities.push_back(entity);
 
 				reader.Read("uid", entity->uid);
-
-				if (entity->uid == 0)
-				{
-					GenerateUID(entity);
-				}
 
 				auto* transform = entity->GetTransform();
 
