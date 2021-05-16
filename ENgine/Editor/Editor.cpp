@@ -415,7 +415,7 @@ namespace Oak
 				//bool open = ImGui::TreeNode(entity, entity->GetName());
 				bool open = ImGui::TreeNodeEx(entity, nodeFlags, entity->GetName());
 
-				if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+				if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 				{
 					SelectEntity(entity);
 				}
@@ -554,7 +554,7 @@ namespace Oak
 
 			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item->name.c_str());
 
-			if (ImGui::IsItemClicked())
+			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
 				root.assets.selFolder = item;
 				root.assets.selAsset = nullptr;
@@ -580,7 +580,7 @@ namespace Oak
 
 			bool open = ImGui::TreeNodeEx(item, nodeFlags, item->name.c_str());
 
-			if (ImGui::IsItemClicked())
+			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
 				root.assets.selFolder = nullptr;
 				root.assets.selAsset = item;
@@ -905,7 +905,7 @@ namespace Oak
 				selectedEntity->GetMetaData()->Prepare(selectedEntity);
 				selectedEntity->GetMetaData()->ImGuiWidgets();
 			}
-			
+
 			if (selAsset.Get())
 			{
 				selAsset->GetMetaData()->Prepare(selAsset.Get());
