@@ -46,7 +46,6 @@ namespace Oak::Sprite
 		eastl::string   texName;
 		Color color = COLOR_WHITE;
 		TextureAddress mode = TextureAddress::Wrap;
-		TextureFilter filter = TextureFilter::Linear;
 
 		Type type = Type::Image;
 		int width = 32, height = 32;

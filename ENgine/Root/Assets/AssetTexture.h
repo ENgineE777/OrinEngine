@@ -9,9 +9,12 @@ namespace Oak
 	{
 		friend class PointerRef<AssetTexture>;
 
+		TextureFilter textureFilter = TextureFilter::Linear;
 		TextureRef texture;
 
 	public:
+
+		META_DATA_DECL_BASE(AssetTexture)
 
 		TextureRef GetTexture();
 		void Reload() override;

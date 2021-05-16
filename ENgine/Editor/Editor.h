@@ -11,6 +11,7 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include "eastl/bonus/ring_buffer.h"
+#include "Root/Assets/Assets.h"
 
 /**
 \ingroup gr_code_editor
@@ -35,6 +36,7 @@ namespace Oak
 
 		bool showAbout = false;
 		SceneEntity* selectedEntity = nullptr;
+		AssetTextureRef selAsset;
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
 		bool viewportCaptured = false;

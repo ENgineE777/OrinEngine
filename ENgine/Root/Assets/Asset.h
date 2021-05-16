@@ -3,6 +3,7 @@
 #include "Support/StringUtils.h"
 #include "Support/ClassFactory.h"
 #include "Support/PointerRef.h"
+#include "Support/MetaData.h"
 
 #ifdef OAK_EDITOR
 #include <sys/stat.h>
@@ -33,7 +34,10 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		const eastl::string& GetName();
 		bool WasChanged();
+		void SaveMetaData();
 		#endif
+
+		virtual MetaData* GetMetaData() = 0;
 
 		virtual void Reload();
 

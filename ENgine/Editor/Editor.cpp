@@ -147,6 +147,11 @@ namespace Oak
 
 	void Editor::SelectEntity(SceneEntity* entity)
 	{
+		if (entity != nullptr && selAsset.Get())
+		{
+			selAsset.ReleaseRef();
+		}
+
 		if (selectedEntity)
 		{
 			selectedEntity->SetEditMode(false);
@@ -553,6 +558,7 @@ namespace Oak
 			{
 				root.assets.selFolder = item;
 				root.assets.selAsset = nullptr;
+				selAsset.ReleaseRef();
 			}
 
 			if (open)
@@ -578,6 +584,9 @@ namespace Oak
 			{
 				root.assets.selFolder = nullptr;
 				root.assets.selAsset = item;
+				selAsset = item->GetAsset<AssetTexture>();
+
+				SelectEntity(nullptr);
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
@@ -896,6 +905,17 @@ namespace Oak
 				selectedEntity->GetMetaData()->Prepare(selectedEntity);
 				selectedEntity->GetMetaData()->ImGuiWidgets();
 			}
+			
+			if (selAsset.Get())
+			{
+				selAsset->GetMetaData()->Prepare(selAsset.Get());
+				selAsset->GetMetaData()->ImGuiWidgets();
+				if (selAsset->GetMetaData()->IsValueWasChanged())
+				{
+					selAsset->Reload();
+					selAsset->SaveMetaData();
+				}
+			}
 
 			ImGui::Columns(1);
 
@@ -1045,6 +1065,7 @@ namespace Oak
 		{
 			delete item.second;
 		}
+
 		logCategories.clear();
 
 		editorDrawer.Release();

@@ -18,6 +18,23 @@ namespace Oak
 		{
 			stat(fullPath.c_str(), &fileInfo);
 		}
+
+		JsonReader reader;
+
+		StringUtils::Copy(strName, 512, path.c_str());
+		StringUtils::RemoveExtension(strName);
+		StringUtils::Copy(strName, 512, StringUtils::PrintTemp("%s.meta", strName));
+
+		GetMetaData()->Prepare(this);
+
+		if (reader.Parse(strName))
+		{
+			GetMetaData()->Load(reader);
+		}
+		else
+		{
+			SaveMetaData();
+		}
 #endif
 	}
 
@@ -48,6 +65,21 @@ namespace Oak
 		}
 
 		return false;
+	}
+
+	void Asset::SaveMetaData()
+	{
+		char strName[512];
+
+		StringUtils::Copy(strName, 512, path.c_str());
+		StringUtils::RemoveExtension(strName);
+		StringUtils::Copy(strName, 512, StringUtils::PrintTemp("%s.meta", strName));
+
+		JsonWriter writer;
+
+		writer.Start(strName);
+		GetMetaData()->Prepare(this);
+		GetMetaData()->Save(writer);
 	}
 	#endif
 

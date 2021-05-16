@@ -5,6 +5,7 @@
 #include "Support/ThreadExecutor.h"
 #include <atomic>
 #include "AssetTexture.h"
+#include "AssetPrefab.h"
 
 namespace Oak
 {
@@ -37,7 +38,7 @@ namespace Oak
 					return ref;
 				}
 
-				return PointerRef<T>();
+				return PointerRef<T>(dynamic_cast<T*>(asset), _FL_);
 			}
 		};
 

@@ -63,7 +63,6 @@ namespace Oak::Sprite
 
 			loader.Read("texName", sprite->texName);
 			loader.Read("texMode", (int&)sprite->mode);
-			loader.Read("texFilter", (int&)sprite->filter);
 
 			if (sprite->type == Type::Frames) loader.Read("frame_time", sprite->frameTime);
 
@@ -108,7 +107,6 @@ namespace Oak::Sprite
 
 		saver.Write("texName", sprite->texName.c_str());
 		saver.Write("texMode", (int)sprite->mode);
-		saver.Write("texFilter", (int)sprite->filter);
 
 		if (sprite->type == Type::Frames) saver.Write("frame_time", sprite->frameTime);
 
@@ -147,7 +145,6 @@ namespace Oak::Sprite
 		dest->color = src->color;
 
 		dest->mode = src->mode;
-		dest->filter = src->filter;
 		dest->texName = src->texName;
 
 		dest->frameTime = src->frameTime;
@@ -272,7 +269,6 @@ namespace Oak::Sprite
 		if (sprite->texture)
 		{
 			sprite->texture->SetAdress(sprite->mode);
-			sprite->texture->SetFilters(sprite->filter, sprite->filter);
 		}
 
 		Math::Matrix local_trans = trans->global;
