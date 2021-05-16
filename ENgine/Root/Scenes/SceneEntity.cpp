@@ -237,8 +237,11 @@ namespace Oak
 				}
 			}
 
-			transform->parent = nullptr;
-			transform->local = transform->global;
+			if (transform)
+			{
+				transform->parent = nullptr;
+				transform->local = transform->global;
+			}
 		}
 
 		parent = setParent;
