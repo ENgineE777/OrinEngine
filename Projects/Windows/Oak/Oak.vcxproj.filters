@@ -89,6 +89,9 @@
     <Filter Include="ENgine\Root\Assets">
       <UniqueIdentifier>{6dbbb2eb-94d7-49f4-b1a8-58c6aec721ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\SceneEntities\2D">
+      <UniqueIdentifier>{59941c46-96f9-4802-a797-ce956c114903}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -388,6 +391,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp">
       <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -906,6 +915,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h">
       <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
