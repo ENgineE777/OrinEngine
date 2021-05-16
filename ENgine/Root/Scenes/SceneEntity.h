@@ -285,6 +285,6 @@ namespace Oak
 	ENUM_END
 
 	#define BASE_SCENE_ENTITY_PROP(className)\
-	STRING_PROP(className, name, "", "Common", "Name")\
+	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\
 	BASE_SCENE_ENTITY_STATE_PROP(className)
 }
