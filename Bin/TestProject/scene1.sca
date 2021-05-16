@@ -20,7 +20,7 @@
 				"m10" : 0.038920,
 				"m11" : 0.000000,
 				"m12" : -4.059755,
-				"m13" : 8.934148,
+				"m13" : 8.934141,
 				"m14" : -10.880774,
 				"m15" : 1.000000
 			},
@@ -55,99 +55,49 @@
 			]
 		},
 		{
-			"type" : "TestEntity2D",
-			"uid" : 1009658,
-			"name" : "TestEntity2D",
+			"type" : "SpriteEntity",
+			"uid" : 1011636,
+			"name" : "Sprite",
 			"state" : 2,
-			"transform.pos.x" : 83.395844,
-			"transform.pos.y" : -31.204302,
-			"transform.size.x" : 1670.792114,
-			"transform.size.y" : 862.795288,
-			"color" :
-			{
-				"r" : 0.888029,
-				"g" : 1.000000,
-				"b" : 0.000000,
-				"a" : 1.000000
-			},
-			"Texture" : "Texture2D/penitent_running_anim.png",
+			"transform.pos.x" : -144.360580,
+			"transform.pos.y" : -188.059982,
+			"transform.size.x" : 1247.277710,
+			"transform.size.y" : 358.014893,
+			"transform.offset.x" : 0.500000,
+			"transform.offset.y" : 0.515038,
+			"sourceScale.x" : 1.000000,
+			"sourceScale.y" : 1.000000,
+			"Texture" : "Texture2D/penintent_idle_anim 1.png",
 			"childs" : [
 				{
-					"type" : "TestEntity",
-					"uid" : 247796,
-					"name" : "TestEntity1",
+					"type" : "SpriteEntity",
+					"uid" : 419839,
+					"name" : "Sprite",
 					"state" : 2,
-					"boolProp" : false,
-					"intProp" : 98,
-					"floatProp" : 53.920101,
-					"floatProp2" : 3.073214,
-					"strProp" : "ABC",
-					"filenameProp" : "",
-					"colorProp" :
-					{
-						"r" : 0.000000,
-						"g" : 1.000000,
-						"b" : 0.000000,
-						"a" : 1.000000
-					},
-					"enumProp" : 0,
-					"itemsProp" :
-					{
-						"count" : 1,
-						"Elem" : [
-							{
-								"boolProp" : true,
-								"intProp" : 50,
-								"floatProp" : 82.229065
-							}
-						]
-					}
+					"transform.pos.x" : 581.293457,
+					"transform.pos.y" : 186.707062,
+					"transform.size.x" : 512.000000,
+					"transform.size.y" : 256.000000,
+					"transform.offset.x" : 0.500000,
+					"transform.offset.y" : 0.500000,
+					"sourceScale.x" : 1.000000,
+					"sourceScale.y" : 1.000000,
+					"Texture" : "Texture2D/penitent_dodge_anim.png"
 				},
 				{
-					"type" : "TestEntity",
-					"uid" : 278520,
-					"name" : "TestEntity2",
+					"type" : "SpriteEntity",
+					"uid" : 491515,
+					"name" : "Sprite",
 					"state" : 2,
-					"boolProp" : false,
-					"intProp" : 39,
-					"floatProp" : 16.373177,
-					"floatProp2" : 1.232948,
-					"strProp" : "ABC",
-					"filenameProp" : "",
-					"colorProp" :
-					{
-						"r" : 0.000000,
-						"g" : 1.000000,
-						"b" : 0.000000,
-						"a" : 1.000000
-					},
-					"enumProp" : 0,
-					"itemsProp" :
-					{
-						"count" : 4,
-						"Elem" : [
-							{
-								"boolProp" : true,
-								"intProp" : 65,
-								"floatProp" : 28.080080
-							},
-							{
-								"boolProp" : true,
-								"intProp" : 22,
-								"floatProp" : 94.167915
-							},
-							{
-								"boolProp" : true,
-								"intProp" : 80,
-								"floatProp" : 72.707298
-							},
-							{
-								"boolProp" : true,
-								"intProp" : 21,
-								"floatProp" : 10.223701
-							}
-						]
-					}
+					"transform.pos.x" : -234.827225,
+					"transform.pos.y" : 332.992340,
+					"transform.size.x" : 512.000000,
+					"transform.size.y" : 256.000000,
+					"transform.offset.x" : 0.500000,
+					"transform.offset.y" : 0.500000,
+					"sourceScale.x" : 1.000000,
+					"sourceScale.y" : 1.000000,
+					"Texture" : "Texture2D/penitent_running_anim.png"
 				}
 			]
 		}

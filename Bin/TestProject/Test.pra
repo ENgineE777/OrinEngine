@@ -6,7 +6,7 @@
 	"scenes" : [
 		{
 			"path" : "scene1.sca",
-			"selected_entity" : -1,
+			"selected_entity" : 1011636,
 			"camera3DAngles" :
 			{
 				"x" : -2.899999,
