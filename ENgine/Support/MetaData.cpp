@@ -383,7 +383,7 @@ namespace Oak
 
 					if (prop.type != Type::FileName && prop.type != Type::Callback && prop.type != Type::Array)
 					{
-						StringUtils::Printf(propGuiID, 256, "###%s%i", guiID, i);
+						StringUtils::Printf(propGuiID, 256, "###%s%s%i", categoriesData[j].name.c_str(), guiID, i);
 					}
 
 					if (prop.type == Type::Array)
