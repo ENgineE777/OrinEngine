@@ -429,7 +429,6 @@ namespace Oak
 								{
 									prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem(i), root);
 									prop.adapter->GetMetaData()->ImGuiWidgets();
-									prop.changed |= prop.adapter->GetMetaData()->IsValueWasChanged();
 
 									ImGui::TreePop();
 								}
