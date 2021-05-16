@@ -495,16 +495,16 @@ namespace Oak
 
 						if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 						{
-							auto* entity = project.selectedScene->scene->CreateEntity(textureRef->GetSceneEntityType());
+							auto* assetEntity = project.selectedScene->scene->CreateEntity(textureRef->GetSceneEntityType());
 
-							if (entity)
+							if (assetEntity)
 							{
-								textureRef->SetupCreatedSceneEntity(entity);
-								entity->ApplyProperties();
+								textureRef->SetupCreatedSceneEntity(assetEntity);
+								assetEntity->ApplyProperties();
 
 								if (asChild)
 								{
-									entity->SetParent(entity);
+									assetEntity->SetParent(entity);
 								}
 								else
 								{
@@ -512,11 +512,11 @@ namespace Oak
 
 									if (parent)
 									{
-										entity->SetParent(parent, entity);
+										assetEntity->SetParent(parent, entity);
 									}
 									else
 									{
-										project.selectedScene->scene->AddEntity(entity);
+										project.selectedScene->scene->AddEntity(assetEntity);
 									}
 								}
 
