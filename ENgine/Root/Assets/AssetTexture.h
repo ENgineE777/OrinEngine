@@ -18,6 +18,11 @@ namespace Oak
 
 		TextureRef GetTexture();
 		void Reload() override;
+
+		#ifdef OAK_EDITOR
+		virtual const char* GetSceneEntityType();
+		virtual void SetupCreatedSceneEntity(SceneEntity* entity);
+		#endif
 	};
 
 	typedef PointerRef<AssetTexture> AssetTextureRef;

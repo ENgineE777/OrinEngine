@@ -1,4 +1,5 @@
 #include "Root/Root.h"
+#include "SceneEntities/2D/SpriteEntity.h"
 
 namespace Oak
 {
@@ -32,4 +33,21 @@ namespace Oak
 			texture->SetFilters(textureFilter, textureFilter);
 		}
 	}
+
+	#ifdef OAK_EDITOR
+	const char* AssetTexture::GetSceneEntityType()
+	{
+		return "Sprite";
+	}
+
+	void AssetTexture::SetupCreatedSceneEntity(SceneEntity* entity)
+	{
+		SpriteEntity* sprite = reinterpret_cast<SpriteEntity*>(entity);
+
+		if (sprite)
+		{
+			sprite->texture = PointerRef<AssetTexture>(this, _FL_);
+		}
+	}
+	#endif
 };

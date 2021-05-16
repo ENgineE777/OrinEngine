@@ -11,6 +11,8 @@
 
 namespace Oak
 {
+	class SceneEntity;
+
 	class Asset
 	{
 	protected:
@@ -35,6 +37,8 @@ namespace Oak
 		const eastl::string& GetName();
 		bool WasChanged();
 		void SaveMetaData();
+		virtual const char* GetSceneEntityType() = 0;
+		virtual void SetupCreatedSceneEntity(SceneEntity* entity) = 0;
 		#endif
 
 		virtual MetaData* GetMetaData() = 0;

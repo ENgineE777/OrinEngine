@@ -332,8 +332,6 @@ namespace Oak
 
 						if (entity)
 						{
-							entity->SetName(decl->GetShortName());
-
 							auto* transform = entity->GetTransform();
 
 							if (transform)
@@ -367,7 +365,6 @@ namespace Oak
 					project.selectedScene->scene->AddEntity(copy, selectedEntity);
 				}
 
-				project.selectedScene->scene->GenerateUID(copy);
 				copy->Copy(selectedEntity);
 
 				SelectEntity(copy);
@@ -428,15 +425,6 @@ namespace Oak
 
 				if (ImGui::BeginDragDropTarget())
 				{
-					SceneEntity* dragged = nullptr;
-					ImGuiPayload& payload = context->DragDropPayload;
-
-					if (payload.IsDataType("_TREENODE"))
-					{
-						uint64_t temp = *((uint64_t*)payload.Data);
-						dragged = (SceneEntity*)temp;
-					}
-
 					auto rect = window->DC.LastItemRect;
 					bool asChild = false;
 
@@ -447,8 +435,6 @@ namespace Oak
 						asChild = true;
 					}
 
-					bool transformMatches = false;
-
 					SceneEntity* transformEntity = entity;
 
 					if (!asChild)
@@ -456,45 +442,98 @@ namespace Oak
 						transformEntity = transformEntity->GetParent();
 					}
 
-					transformMatches = transformEntity ? (transformEntity->GetTransform() && (!dragged->GetTransform() || dragged->GetTransform()->Is2D() == transformEntity->GetTransform()->Is2D())) : true;
+					ImGuiPayload& payload = context->DragDropPayload;
+					bool dragFinished = false;
 
-					if (!dragged->ContainEntity(entity) && transformMatches)
+					if (payload.IsDataType("_TREENODE"))
 					{
-						if (ImGui::AcceptDragDropPayload("_TREENODE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+						uint64_t temp = *((uint64_t*)payload.Data);
+						SceneEntity* dragged = (SceneEntity*)temp;					
+
+						bool transformMatches = transformEntity ? (transformEntity->GetTransform() && (!dragged->GetTransform() || dragged->GetTransform()->Is2D() == transformEntity->GetTransform()->Is2D())) : true;
+
+						if (!dragged->ContainEntity(entity) && transformMatches)
 						{
-							if (dragged->GetParent())
+							if (ImGui::AcceptDragDropPayload("_TREENODE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 							{
-								dragged->SetParent(nullptr);
-							}
-							else
-							{
-								project.selectedScene->scene->DeleteEntity(dragged, false);
-							}
-
-							if (asChild)
-							{
-								dragged->SetParent(entity);
-							}
-							else
-							{
-								SceneEntity* parent = entity->GetParent();
-
-								if (parent)
+								if (dragged->GetParent())
 								{
-									dragged->SetParent(parent, entity);
+									dragged->SetParent(nullptr);
 								}
 								else
 								{
-									project.selectedScene->scene->AddEntity(dragged);
+									project.selectedScene->scene->DeleteEntity(dragged, false);
 								}
-							}
 
-							ImGui::EndDragDropTarget();
+								if (asChild)
+								{
+									dragged->SetParent(entity);
+								}
+								else
+								{
+									SceneEntity* parent = entity->GetParent();
+
+									if (parent)
+									{
+										dragged->SetParent(parent, entity);
+									}
+									else
+									{
+										project.selectedScene->scene->AddEntity(dragged);
+									}
+								}
+
+								dragFinished = true;
+							}
 						}
-						else
+					}
+					else
+					if (payload.IsDataType("_ASSET_TEX"))
+					{
+						Assets::AssetRef* assetRef = reinterpret_cast<Assets::AssetRef**>(payload.Data)[0];
+						auto textureRef = assetRef->GetAsset<AssetTexture>();
+
+						if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 						{
-							window->DrawList->AddRect(rect.Min, rect.Max /*- ImVec2(10.0f, 10.0f)*/, ImGui::GetColorU32(ImGuiCol_DragDropTarget), 0.0f, ~0, 2.0f);
+							auto* entity = project.selectedScene->scene->CreateEntity(textureRef->GetSceneEntityType());
+
+							if (entity)
+							{
+								textureRef->SetupCreatedSceneEntity(entity);
+								entity->ApplyProperties();
+
+								if (asChild)
+								{
+									entity->SetParent(entity);
+								}
+								else
+								{
+									SceneEntity* parent = entity->GetParent();
+
+									if (parent)
+									{
+										entity->SetParent(parent, entity);
+									}
+									else
+									{
+										project.selectedScene->scene->AddEntity(entity);
+									}
+								}
+
+								SelectEntity(entity);
+
+								dragFinished = true;
+							}
 						}
+					}
+
+					if (dragFinished)
+					{
+						ImGui::EndDragDropTarget();
+					}
+					else
+					{
+						window->DrawList->AddRect(rect.Min, rect.Max /*- ImVec2(10.0f, 10.0f)*/, ImGui::GetColorU32(ImGuiCol_DragDropTarget), 0.0f, ~0, 2.0f);
 					}
 				}
 
