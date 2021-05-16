@@ -27,7 +27,7 @@ namespace Oak
 		/**
 		\brief Matrix of a parent
 		*/
-		Math::Matrix* parent;
+		Math::Matrix* parent = nullptr;
 
 		/**
 		\brief Final matrix
