@@ -400,6 +400,7 @@ namespace Oak
 							prop.adapter->PushBack();
 							prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem((int)prop.adapter->GetSize() - 1));
 							prop.adapter->GetMetaData()->SetDefValues();
+							prop.changed = true;
 						}
 
 						ImGui::NextColumn();
@@ -428,6 +429,7 @@ namespace Oak
 								{
 									prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem(i), root);
 									prop.adapter->GetMetaData()->ImGuiWidgets();
+									prop.changed |= prop.adapter->GetMetaData()->IsValueWasChanged();
 
 									ImGui::TreePop();
 								}
@@ -436,6 +438,7 @@ namespace Oak
 							if (index2delete != -1)
 							{
 								prop.adapter->Delete(index2delete);
+								prop.changed = true;
 							}
 
 							ImGui::TreePop();
@@ -450,17 +453,26 @@ namespace Oak
 
 						if (prop.type == Type::Boolean)
 						{
-							ImGui::Checkbox(propGuiID, (bool*)prop.value);
+							if (ImGui::Checkbox(propGuiID, (bool*)prop.value))
+							{
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::Integer)
 						{
-							ImGui::InputInt(propGuiID, (int*)prop.value);
+							if (ImGui::InputInt(propGuiID, (int*)prop.value))
+							{
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::Float)
 						{
-							ImGui::InputFloat(propGuiID, (float*)prop.value);
+							if (ImGui::InputFloat(propGuiID, (float*)prop.value))
+							{
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::String)
@@ -481,7 +493,10 @@ namespace Oak
 								}
 							};
 
-							ImGui::InputText(propGuiID, str->begin(), (size_t)str->size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)str);
+							if (ImGui::InputText(propGuiID, str->begin(), (size_t)str->size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)str))
+							{
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::FileName)
@@ -522,7 +537,10 @@ namespace Oak
 						else
 						if (prop.type == Type::Color)
 						{
-							ImGui::ColorEdit4(propGuiID, (float*)prop.value);
+							if (ImGui::ColorEdit4(propGuiID, (float*)prop.value))
+							{
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::Enum)
@@ -562,8 +580,11 @@ namespace Oak
 								}
 							}
 
-							ImGui::Combo(propGuiID, &index, enumData.enumList.c_str());
-							*((int*)prop.value) = enumData.values[index];
+							if (ImGui::Combo(propGuiID, &index, enumData.enumList.c_str()))
+							{
+								*((int*)prop.value) = enumData.values[index];
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::EnumString)
