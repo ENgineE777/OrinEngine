@@ -409,8 +409,7 @@ namespace Oak
 					nodeFlags |= ImGuiTreeNodeFlags_Selected;
 				}
 
-				//bool open = ImGui::TreeNode(entity, entity->GetName());
-				bool open = ImGui::TreeNodeEx(entity, nodeFlags, entity->GetName());
+				bool open = ImGui::TreeNodeEx(entity, nodeFlags, entity->GetName()[0] == 0 ? "[Name not set]" : entity->GetName());
 
 				if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 				{
