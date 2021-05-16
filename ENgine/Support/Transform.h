@@ -161,6 +161,8 @@ namespace Oak
 			local.Pos() = Math::Vector3(axis.x > 0.0f ? pos.x : -pos.x - size.x, axis.y > 0.0f ? pos.y : -pos.y - size.y, depth);
 
 			Transform::BuildMatrices();
+
+			global.Pos().z = 0.5f;
 		}
 
 		/**
