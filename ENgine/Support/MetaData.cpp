@@ -357,7 +357,7 @@ namespace Oak
 				ImGui::Columns(1);
 			}
 
-			bool is_open = ImGui::CollapsingHeader(propGuiID);
+			bool is_open = ImGui::CollapsingHeader(propGuiID, ImGuiTreeNodeFlags_DefaultOpen);
 			
 			if (root == owner)
 			{
