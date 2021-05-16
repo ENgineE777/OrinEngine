@@ -20,7 +20,7 @@
 				"m10" : 0.038920,
 				"m11" : 0.000000,
 				"m12" : -4.059755,
-				"m13" : 8.934157,
+				"m13" : 8.934148,
 				"m14" : -10.880774,
 				"m15" : 1.000000
 			},
@@ -59,18 +59,18 @@
 			"uid" : 1009658,
 			"name" : "TestEntity2D",
 			"state" : 2,
-			"transform.pos.x" : -43.256721,
-			"transform.pos.y" : 263.420227,
-			"transform.size.x" : 465.346558,
-			"transform.size.y" : 532.240906,
+			"transform.pos.x" : 83.395844,
+			"transform.pos.y" : -31.204302,
+			"transform.size.x" : 1670.792114,
+			"transform.size.y" : 862.795288,
 			"color" :
 			{
-				"r" : 0.100386,
+				"r" : 0.888029,
 				"g" : 1.000000,
 				"b" : 0.000000,
 				"a" : 1.000000
 			},
-			"Texture" : "Texture2D/penitent_jumping_attack_noslashes.png",
+			"Texture" : "Texture2D/penitent_running_anim.png",
 			"childs" : [
 				{
 					"type" : "TestEntity",
