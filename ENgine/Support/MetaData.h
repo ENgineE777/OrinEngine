@@ -270,11 +270,11 @@ namespace Oak
 		prop.type = Type::Enum;\
 		prop.brief = doxy_brief;\
 		MetaDataEnum enm;\
-		enm.defIndex = defValue;
+		enm.defIndex = (int)defValue;
 
 	#define ENUM_ELEM(name, value)\
 		enm.names.push_back(name);\
-		enm.values.push_back(value);
+		enm.values.push_back((int)value);
 
 	#define ENUM_END\
 		enums.push_back(enm);\
