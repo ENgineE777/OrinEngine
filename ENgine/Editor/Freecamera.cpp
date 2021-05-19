@@ -29,16 +29,14 @@ namespace Oak
 		{
 			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Active))
 			{
-				auto scale = 1.0f / Sprite::edCamZoom;
-				Sprite::edCamPos.x -= root.controls.GetAliasValue(alias_rotate_x, true) * scale;
-				Sprite::edCamPos.y -= root.controls.GetAliasValue(alias_rotate_y, true) * scale;
+				pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) * Sprite::pixelsPerUnitInvert * 2.0f / zoom2D;
+				pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) * Sprite::pixelsPerUnitInvert * 2.0f / zoom2D;
 			}
 
 			if (editor.vireportHowered)
 			{
-				prev_ed_zoom = Sprite::edCamZoom;
-				Sprite::edCamZoom += root.controls.GetAliasValue(alias_move2d_zoom, true) * 0.025f;
-				Sprite::edCamZoom = Math::Clamp(Sprite::edCamZoom, 0.2f, 2.0f);
+				zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * 0.05f;
+				ClampZoom2D();
 			}
 		}
 		else
@@ -72,11 +70,25 @@ namespace Oak
 			pos += dir_strafe * speed * strafe;
 		}
 
-		view.BuildView(pos, pos + Math::Vector3(cosf(angles.x), sinf(angles.y), sinf(angles.x)), Math::Vector3(0, 1, 0));
+		if (mode_2d)
+		{
+			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom2D);
+
+			view.BuildView(Math::Vector3(pos2D.x, pos2D.y, -dist), Math::Vector3(pos2D.x, pos2D.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
+		}
+		else
+		{
+			view.BuildView(pos, pos + Math::Vector3(cosf(angles.x), sinf(angles.y), sinf(angles.x)), Math::Vector3(0, 1, 0));
+		}
 
 		root.render.SetTransform(TransformStage::View, view);
 
 		proj.BuildProjection(45.0f * Math::Radian, (float)root.render.GetDevice()->GetHeight() / (float)root.render.GetDevice()->GetWidth(), 1.0f, 1000.0f);
 		root.render.SetTransform(TransformStage::Projection, proj);
+	}
+
+	void FreeCamera::ClampZoom2D()
+	{
+		zoom2D = Math::Clamp(zoom2D, 0.1f, 5.0f);
 	}
 }

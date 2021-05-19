@@ -158,11 +158,9 @@ namespace Oak
 		{
 			local.Identity();
 			local.RotateZ(rotation);
-			local.Pos() = Math::Vector3(axis.x > 0.0f ? pos.x : -pos.x - size.x, axis.y > 0.0f ? pos.y : -pos.y - size.y, depth);
+			local.Pos() = Math::Vector3(axis.x > 0.0f ? pos.x : -pos.x - size.x, axis.y > 0.0f ? pos.y : -pos.y - size.y, 0.0f);
 
 			Transform::BuildMatrices();
-
-			global.Pos().z = 0.5f;
 		}
 
 		/**

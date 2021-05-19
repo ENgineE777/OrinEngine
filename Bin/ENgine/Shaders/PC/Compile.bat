@@ -38,4 +38,7 @@ fxc /E PS /T ps_4_0 /Zi /Od /Fo debug_triangle2d_ps.shd debug_triangle2d.shader
 fxc /E VS /T vs_4_0 /Zi /Od /Fo particle_vs.shd particle.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo particle_ps.shd particle.shader
 
+fxc /E VS /T vs_4_0 /Zi /Od /Fo sprite_vs.shd sprite.shader
+fxc /E PS /T ps_4_0 /Zi /Od /Fo sprite_ps.shd sprite.shader
+
 pause

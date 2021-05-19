@@ -13,13 +13,9 @@ namespace Oak::Sprite
 {
 #ifndef DOXYGEN_SKIP
 
-	extern bool useEdCam;
-	extern Math::Vector2 edCamPos;
-	extern Math::Vector2 camPos;
-	extern float edCamZoom;
-	extern Math::Vector2 halfScreen;
-	extern float screenMul;
-	extern float invScreenMul;
+	extern float pixelsPerUnit;
+	extern float pixelsPerUnitInvert;
+	extern float pixelsHeight;
 
 	enum class Type
 	{
@@ -71,7 +67,7 @@ namespace Oak::Sprite
 	void Load(JsonReader& loader, Sprite::Data* sprite, const char* name);
 	void Save(JsonWriter& saver, Sprite::Data* sprite, const char* name);
 	void Copy(Sprite::Data* src, Sprite::Data* dest);
-
+ 
 	template<typename Func>
 	static void UpdateFrame(Sprite::Data* data, FrameState* state, float dt, Func callback)
 	{
@@ -162,11 +158,8 @@ namespace Oak::Sprite
 	}
 
 	void Init();
-	void Update();
 	void UpdateFrame(Sprite::Data* data, FrameState* state, float dt);
-	Math::Vector2 MoveToCamera(Math::Vector2 pos, bool abs_units = true);
-	float ScaleToAbs(float size);
-	Math::Vector2 MoveFromCamera(Math::Vector2 pos, bool abs_units = true);
+
 	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped = false);
 	void Draw(Transform2D* trans, Color clr, Sprite::Data* sprite, FrameState* state, bool use_depth, bool ignore_camera);
 

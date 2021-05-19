@@ -101,7 +101,6 @@ namespace Oak
 		if (size.x != Oak::root.render.GetDevice()->GetWidth() || size.y != Oak::root.render.GetDevice()->GetHeight())
 		{
 			Oak::root.render.GetDevice()->SetVideoMode((int)size.x, (int)size.y, &hwnd);
-			Sprite::Update();
 		}
 
 		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
@@ -790,8 +789,10 @@ namespace Oak
 				ImGui::SameLine();
 
 				ImGui::SetNextItemWidth(60.0f);
-				ImGui::InputFloat("##Zoom2D", &Sprite::edCamZoom);
-				Sprite::edCamZoom = Math::Clamp(Sprite::edCamZoom, 0.2f, 2.0f);
+				if (ImGui::InputFloat("##Zoom2D", &freeCamera.zoom2D))
+				{
+					freeCamera.ClampZoom2D();
+				}
 				ImGui::SameLine();
 			}
 
@@ -824,18 +825,18 @@ namespace Oak
 
 					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
 					{
-						float scale = 1024.0f / root.render.GetDevice()->GetHeight();
-						Sprite::edCamPos = gizmo.GetTransform2D() / scale;
+						//float scale = 1024.0f / root.render.GetDevice()->GetHeight();
+						//Sprite::edCamPos = gizmo.GetTransform2D() / scale;
 					}
 
 					ImGui::SameLine();
 
 					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)))
 					{
-						float scale = 1024.0f / root.render.GetDevice()->GetHeight();
+						//float scale = 1024.0f / root.render.GetDevice()->GetHeight();
 
-						Math::Vector2 pos2d = Sprite::edCamPos * scale;
-						gizmo.SetTransform2D(pos2d);
+						//Math::Vector2 pos2d = Sprite::edCamPos * scale;
+						//gizmo.SetTransform2D(pos2d);
 					}
 
 					ImGui::SameLine();

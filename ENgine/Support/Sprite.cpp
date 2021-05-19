@@ -4,46 +4,29 @@
 
 namespace Oak::Sprite
 {
-	class QuadProgramDepth : public Program
+	class QuadProgram : public Program
 	{
 	public:
-		virtual const char* GetVsName() { return "screen_vs.shd"; };
-		virtual const char* GetPsName() { return "screen_ps.shd"; };
+		virtual const char* GetVsName() { return "sprite_vs.shd"; };
+		virtual const char* GetPsName() { return "sprite_ps.shd"; };
 
 		virtual void ApplyStates()
 		{
 			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
 		};
 	};
 
-	class QuadProgramNoDepth : public QuadProgramDepth
-	{
-	public:
+	CLASSREGEX(Program, QuadProgram, QuadProgram, "QuadProgram")
+	CLASSREGEX_END(Program, QuadProgram)
 
-		virtual void ApplyStates()
-		{
-			root.render.GetDevice()->SetAlphaBlend(true);
-			root.render.GetDevice()->SetDepthTest(false);
-		};
-	};
-
-	CLASSREGEX(Program, QuadProgramDepth, QuadProgramDepth, "QuadProgramDepth")
-	CLASSREGEX_END(Program, QuadProgramDepth)
-	CLASSREGEX(Program, QuadProgramNoDepth, QuadProgramNoDepth, "QuadProgramNoDepth")
-	CLASSREGEX_END(Program, QuadProgramNoDepth)
-
-	bool useEdCam = true;
-	Math::Vector2 camPos = 0.0f;
-	Math::Vector2 edCamPos = 0.0f;
-	float edCamZoom = 1.0f;
-	Math::Vector2 halfScreen = 0.0f;
-	float screenMul = 1.0f;
-	float invScreenMul = 1.0f;
-
-	ProgramRef quadPrgDepth;
-	ProgramRef quadPrgNoDepth;
+	ProgramRef quadPrg;
 	VertexDeclRef vdecl;
 	DataBufferRef buffer;
+
+	float pixelsPerUnit = 50.0f;
+	float pixelsPerUnitInvert = 1.0f / pixelsPerUnit;
+	float pixelsHeight = 1080.0f;
 
 	void Data::LoadTexture()
 	{
@@ -171,14 +154,13 @@ namespace Oak::Sprite
 		Math::Vector2* v = (Math::Vector2*)buffer->Lock();
 
 		v[0] = Math::Vector2(0.0f, 1.0f);
-		v[1] = Math::Vector2(0.0f, 0.0f);
-		v[2] = Math::Vector2(1.0f, 1.0f);
+		v[1] = Math::Vector2(1.0f, 1.0f);
+		v[2] = Math::Vector2(0.0f, 0.0f);
 		v[3] = Math::Vector2(1.0f, 0.0f);
 
 		buffer->Unlock();
 
-		quadPrgDepth = root.render.GetProgram("QuadProgramDepth", _FL_);
-		quadPrgNoDepth = root.render.GetProgram("QuadProgramNoDepth", _FL_);
+		quadPrg = root.render.GetProgram("QuadProgram", _FL_);
 	}
 
 	void UpdateFrame(Sprite::Data* data, FrameState* state, float dt)
@@ -186,61 +168,12 @@ namespace Oak::Sprite
 		UpdateFrame(data, state, dt, [](float from, float to) {});
 	}
 
-	void Update()
-	{
-		halfScreen = Math::Vector2(root.render.GetDevice()->GetWidth() * 0.5f, root.render.GetDevice()->GetHeight() * 0.5f);
-		screenMul = root.render.GetDevice()->GetHeight() / 1024.0f;
-		invScreenMul = 1.0f / screenMul;
-	}
-
-	Math::Vector2 MoveToCamera(Math::Vector2 pos, bool abs_units)
-	{
-		if (abs_units)
-		{
-			pos *= screenMul;
-		}
-
-		if (useEdCam)
-		{
-			pos -= edCamPos;
-			pos *= edCamZoom;
-		}
-		else
-		{
-			pos -= camPos * screenMul;
-		}
-
-		pos += halfScreen;
-
-		return pos;
-	}
-
-	float ScaleToAbs(float size)
-	{
-		return size / screenMul;
-	}
-
-	Math::Vector2 MoveFromCamera(Math::Vector2 pos, bool abs_units)
-	{
-		pos -= halfScreen;
-		pos /= edCamZoom;
-		pos += edCamPos;
-
-		if (abs_units)
-		{
-			pos /= screenMul;
-		}
-
-		return pos;
-	}
-
 	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 
-		Program* quad_prg = use_depth ? quadPrgDepth : quadPrgNoDepth;
-		root.render.GetDevice()->SetProgram(quad_prg);
+		root.render.GetDevice()->SetProgram(quadPrg);
 
 		Device::Viewport viewport;
 		root.render.GetDevice()->GetViewport(viewport);
@@ -254,12 +187,18 @@ namespace Oak::Sprite
 			params[1] = Math::Vector4(uv.x + duv.x, uv.y, -duv.x, duv.y);
 		}
 
-		params[2] = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0.5f, 0);
+		params[2] = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0.5f, pixelsPerUnitInvert);
 
-		quad_prg->SetVector(ShaderType::Vertex, "desc", &params[0], 3);
-		quad_prg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
-		quad_prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
-		quad_prg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
+		Math::Matrix view_proj;
+		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
+
+		trans.Pos() *= pixelsPerUnitInvert;
+
+		quadPrg->SetVector(ShaderType::Vertex, "desc", &params[0], 3);
+		quadPrg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
+		quadPrg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
+		quadPrg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
+		quadPrg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
 
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
@@ -272,41 +211,10 @@ namespace Oak::Sprite
 		}
 
 		Math::Matrix local_trans = trans->global;
+		Math::Vector2 pos = trans->offset * trans->size * Math::Vector2(-1.0f, -1.0f);
+		Math::Vector2 size = trans->size;
 
-		local_trans.Pos().x *= screenMul;
-		local_trans.Pos().y *= screenMul;
-
-		Math::Vector2 pos = trans->offset * trans->size * -1.0f;
-		pos *= screenMul;
-
-		if (!ignore_camera)
-		{
-			if (useEdCam)
-			{
-				local_trans.Pos().x -= edCamPos.x;
-				local_trans.Pos().y -= edCamPos.y;
-			}
-			else
-			{
-				local_trans.Pos().x -= camPos.x * screenMul - halfScreen.x;
-				local_trans.Pos().y -= camPos.y * screenMul - halfScreen.y;
-			}
-		}
-
-		Math::Vector2 size = trans->size * screenMul;
-
-		if (!ignore_camera && useEdCam)
-		{
-			pos *= edCamZoom;
-			local_trans.Pos() *= edCamZoom;
-
-			local_trans.Pos().x -= -halfScreen.x;
-			local_trans.Pos().y -= -halfScreen.y;
-
-			size *= edCamZoom;
-		}
-
-		Math::Vector3 min_pos(10000000.0f);
+		/*Math::Vector3 min_pos(10000000.0f);
 		Math::Vector3 max_pos(-10000000.0f);
 
 		Math::Vector3 tmp[] = { Math::Vector3(pos.x, pos.y, 0), Math::Vector3(pos.x + size.x, pos.y, 0), Math::Vector3(pos.x + size.x, pos.y + size.y, 0), Math::Vector3(pos.x, pos.y + size.y, 0) };
@@ -322,7 +230,7 @@ namespace Oak::Sprite
 			max_pos.y < 0 || min_pos.y > root.render.GetDevice()->GetHeight())
 		{
 			return;
-		}
+		}*/
 
 		clr *= sprite->color;
 
@@ -344,7 +252,7 @@ namespace Oak::Sprite
 
 			Math::Vector2 frameScale = size / startFrame.size;
 			Math::Vector2 sz = frameScale * frame.size;
-			Math::Vector2 dpos = frameScale * frame.offset * screenMul;
+			Math::Vector2 dpos = frameScale * frame.offset;
 
 			if (state->horz_flipped)
 			{
@@ -398,8 +306,7 @@ namespace Oak::Sprite
 	{
 		vdecl.ReleaseRef();
 		buffer.ReleaseRef();
-		quadPrgDepth.ReleaseRef();
-		quadPrgNoDepth.ReleaseRef();
+		quadPrg.ReleaseRef();
 	}
 }
 

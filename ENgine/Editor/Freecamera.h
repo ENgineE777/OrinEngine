@@ -18,6 +18,9 @@ namespace Oak
 		Math::Matrix  view;
 		Math::Matrix  proj;
 
+		Math::Vector2 pos2D;
+		float zoom2D = 1.0f;
+
 		bool mode_2d = false;
 
 		int alias_forward;
@@ -35,5 +38,7 @@ namespace Oak
 		void Init();
 
 		void Update(float dt);
+
+		void ClampZoom2D();
 	};
 }

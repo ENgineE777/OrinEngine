@@ -13,7 +13,7 @@ namespace Oak
 		axises[2].type = Axis::Z;
 	}
 
-	void Gizmo::SetTransform2D(Transform* set_transform, int actions, bool ignore_2d_camera)
+	void Gizmo::SetTransform2D(Transform* set_transform, int actions)
 	{
 		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform2d == null")
 		OAK_ASSERT(set_transform->Is2D(), "Gizmo::set_transform2d not 2D")
@@ -23,7 +23,6 @@ namespace Oak
 		pos2d = ((Transform2D*)transform)->pos;
 
 		transform2DActions = actions;
-		ignore2DCamera = ignore_2d_camera;
 
 		deltaMove = 0.0f;
 	}
@@ -460,7 +459,7 @@ namespace Oak
 				origin.y - 7 < ms.y && ms.y < origin.y + 7)
 			{
 				selAxis = 10;
-				movedOrigin = origin;
+				movedOrigin = trans2DProjection;
 			}
 		}
 
@@ -681,7 +680,12 @@ namespace Oak
 	{
 		Transform2D* transform2D = (Transform2D*)transform;
 
-		ms *= (1024.0f / root.render.GetDevice()->GetHeight()) / Sprite::edCamZoom;
+		Math::Matrix inv = transform->global;
+		inv.Inverse();
+
+		Math::Vector3 delta = trans2DProjection * Sprite::pixelsPerUnit * inv - trans2DPrevProjection * Sprite::pixelsPerUnit * inv;
+
+		ms *= (Sprite::pixelsHeight / root.render.GetDevice()->GetHeight());
 
 		if (ms.Length() < 0.001f)
 		{
@@ -690,8 +694,11 @@ namespace Oak
 
 		if (selAxis == 0)
 		{
-			pos2d.x += (transform2D->axis.x > 0.0f) ? ms.x : -ms.x;
-			pos2d.y += (transform2D->axis.y > 0.0f) ? ms.y : -ms.y;
+			pos2d.x += delta.x * transform->local.Vx().x;
+			pos2d.y += delta.x * transform->local.Vx().y;
+
+			pos2d.x += delta.y * transform->local.Vy().x;
+			pos2d.y += delta.y * transform->local.Vy().y;
 
 			Math::Vector2 prev_pos = transform2D->pos;
 			transform2D->pos = MakeAligned(pos2d);
@@ -704,6 +711,8 @@ namespace Oak
 			{
 				return;
 			}
+
+			float sign = mouseDirection.Dot(transform->global.Vz()) > 0.1f ? -1.0f : 1.0f ;
 
 			Math::Vector2 p1 = prevMouse + ms - origin;
 			p1.Normalize();
@@ -726,20 +735,21 @@ namespace Oak
 					k *= -1.0f;
 				}
 
-				transform2D->rotation += k;
+				transform2D->rotation += k * sign;
 			}
 		}
 		else
 		if (selAxis == 10)
 		{
-			movedOrigin += ms * Sprite::screenMul;
+			movedOrigin = trans2DProjection;
 		}
 		else
 		if (selAxis > 0)
 		{
-			float dist = ms.Length();
+			Math::Matrix inv = transform->global;
+			inv.Inverse();
 
-			ms.Normalize();
+			Math::Vector3 delta = trans2DProjection * Sprite::pixelsPerUnit * inv - trans2DPrevProjection * Sprite::pixelsPerUnit * inv;
 
 			float k1 = 1.0f;
 			float k2 = 1.0f;
@@ -764,38 +774,35 @@ namespace Oak
 				k2 = 0.0f;
 			}
 
-			float dot1 = 0.0f;
-			float dot2 = 0.0f;
+			delta.x *= k1;
+			delta.y *= k2;
 
-			dot1 = ms.x * transform2D->global.Vx().x + ms.y * transform2D->global.Vx().y;
-			dot2 = ms.x * transform2D->global.Vy().x + ms.y * transform2D->global.Vy().y;
-
-			float delta = dist * k1 * dot1;
-
-			transform2D->size.x += delta;
+			transform2D->size.x += delta.x;
 
 			if (selAxis == 1 || selAxis == 4 || selAxis == 8)
 			{
-				pos2d.x -= (1.0f - transform2D->offset.x) * delta;
+				pos2d.x -= (1.0f - transform2D->offset.x) * delta.x * transform->local.Vx().x;
+				pos2d.y -= (1.0f - transform2D->offset.x) * delta.x * transform->local.Vx().y;
 			}
 			else
 			if (selAxis == 2 || selAxis == 3 || selAxis == 6)
 			{
-				pos2d.x += transform2D->offset.x * delta;
+				pos2d.x += transform2D->offset.x * delta.x * transform->local.Vx().x;
+				pos2d.y += transform2D->offset.x * delta.x * transform->local.Vx().y;
 			}
 
-			delta = dist * k2 * dot2;
-
-			transform2D->size.y += delta;
+			transform2D->size.y += delta.y;
 
 			if (selAxis == 1 || selAxis == 2 || selAxis == 5)
 			{
-				pos2d.y -= delta * (1.0f - transform2D->offset.y);
+				pos2d.x -= delta.y * (1.0f - transform2D->offset.y) * transform->local.Vy().x;
+				pos2d.y -= delta.y * (1.0f - transform2D->offset.y) * transform->local.Vy().y;
 			}
 			else
 			if (selAxis == 3 || selAxis == 4 || selAxis == 7)
 			{
-				pos2d.y += delta * transform2D->offset.y;
+				pos2d.x += delta.y * transform2D->offset.y * transform->local.Vy().x;
+				pos2d.y += delta.y * transform2D->offset.y * transform->local.Vy().y;
 			}
 
 			Math::Vector2 prev_pos = transform2D->pos;
@@ -1019,51 +1026,46 @@ namespace Oak
 
 				p1 -= Math::Vector3(transform2D->offset.x * transform2D->size.x, transform2D->offset.y * transform2D->size.y, 0);
 				p1 = p1 * transform2D->global;
+				p1 *= Sprite::pixelsPerUnitInvert;
 				p2 -= Math::Vector3(transform2D->offset.x * transform2D->size.x, transform2D->offset.y * transform2D->size.y, 0);
 				p2 = p2 * transform2D->global;
+				p2 *= Sprite::pixelsPerUnitInvert;
 
-				if (!ignore2DCamera)
-				{
-					Math::Vector2 tmp = Sprite::MoveToCamera(Math::Vector2(p1.x, p1.y));
-					p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
+				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
+				p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
 
-					tmp = Sprite::MoveToCamera(Math::Vector2(p2.x, p2.y));
-					p2 = Math::Vector3(tmp.x, tmp.y, p1.z);
-				}
-				else
-				{
-					p1 *= Sprite::screenMul;
-					p2 *= Sprite::screenMul;
-				}
+				tmp = Math::Vector2(p2.x, p2.y);
+				p2 = Math::Vector3(tmp.x, tmp.y, p1.z);
 
 				if (phase == 1)
 				{
-					root.render.DebugLine2D(Math::Vector2(p1.x, p1.y), COLOR_WHITE, Math::Vector2(p2.x, p2.y), COLOR_WHITE);
+					root.render.DebugLine(p1, COLOR_WHITE, p2, COLOR_WHITE, false);
 				}
 				else
 				{
-					ancorns[i] = Math::Vector2(p1.x, p1.y);
+					Math::Vector3 pos = root.render.TransformToScreen(p1, 2);
+					ancorns[i] = Math::Vector2(pos.x, pos.y);
 					root.render.DebugSprite(editorDrawer.anchorn, ancorns[i] - Math::Vector2(4.0f), Math::Vector2(8.0f), selAxis == (i + 1) ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE);
 				}
 			}
 		}
 
-		p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
-		p1 = p1 * transform2D->global;
-
-		if (!ignore2DCamera)
+		if (selAxis == 10 && mousedPressed)
 		{
-			Math::Vector2 tmp = Sprite::MoveToCamera(Math::Vector2(p1.x, p1.y));
-			p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
+			p1 = movedOrigin;
 		}
 		else
 		{
-			p1 *= Sprite::screenMul;
+			p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
+			p1 = p1 * transform2D->global;
+			p1 *= Sprite::pixelsPerUnitInvert;
 		}
+
+		p1 = root.render.TransformToScreen(p1, 2);
 
 		origin = Math::Vector2(p1.x, p1.y);
 
-		root.render.DebugSprite(editorDrawer.center, ((selAxis == 10) ? movedOrigin : origin) - Math::Vector2(4.0f), Math::Vector2(8.0f), (selAxis == 10 ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE));
+		root.render.DebugSprite(editorDrawer.center, origin - Math::Vector2(4.0f), Math::Vector2(8.0f), (selAxis == 10 ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE));
 	}
 
 	void Gizmo::RenderTrans3D()
@@ -1162,6 +1164,8 @@ namespace Oak
 		mouseDirection.z = v.x * inv_view._13 + v.y * inv_view._23 + v.z * inv_view._33;
 		mouseDirection.Normalize();
 
+		Math::IntersectPlaneRay(transform->global.Pos() * Sprite::pixelsPerUnitInvert, Math::Vector3(0.0f, 0.0f, -1.0f), mouseOrigin, mouseDirection, trans2DProjection);
+
 		if (mousedPressed)
 		{
 			if (transform->Is2D())
@@ -1188,6 +1192,8 @@ namespace Oak
 		}
 
 		prevMouse = ms;
+
+		trans2DPrevProjection = trans2DProjection;
 	}
 
 	void Gizmo::OnLeftMouseDown()
@@ -1211,16 +1217,16 @@ namespace Oak
 			Math::Matrix inv = transform2D->global;
 			inv.Inverse();
 
-			movedOrigin /= Sprite::screenMul;
-
-			if (!ignore2DCamera)
-			{
-				movedOrigin += (Sprite::edCamPos - Sprite::halfScreen) * Sprite::invScreenMul;
-			}
-
-			Math::Vector3 pos = Math::Vector3(movedOrigin.x, movedOrigin.y, 0.0f) * inv / Math::Vector3(transform2D->size.x, transform2D->size.y, 1.0f);
+			Math::Vector3 pos = movedOrigin * Sprite::pixelsPerUnit * inv / Math::Vector3(transform2D->size.x, transform2D->size.y, 1.0f);
 			transform2D->offset += Math::Vector2(pos.x, pos.y);
-			transform2D->pos += Math::Vector2(pos.x, pos.y) * transform2D->size;
+
+			transform2D->pos.x += pos.x * transform->local.Vx().x * transform2D->size.x;
+			transform2D->pos.y += pos.x * transform->local.Vx().y * transform2D->size.x;
+
+			transform2D->pos.x += pos.y * transform->local.Vy().x * transform2D->size.y;
+			transform2D->pos.y += pos.y * transform->local.Vy().y * transform2D->size.y;
+
+
 			pos2d = transform2D->pos;
 
 			selAxis = -1;

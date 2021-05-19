@@ -206,8 +206,8 @@ namespace Oak
 			editor.freeCamera.angles = selectedScene->camera3DAngles;
 			editor.freeCamera.pos = selectedScene->camera3DPos;
 
-			Sprite::edCamPos = selectedScene->camera2DPos;
-			Sprite::edCamZoom = selectedScene->camera2DZoom;
+			editor.freeCamera.pos2D = selectedScene->camera2DPos;
+			editor.freeCamera.zoom2D = selectedScene->camera2DZoom;
 
 			editor.gizmo.align2D = selectedScene->gizmoAlign2D;
 
@@ -394,8 +394,8 @@ namespace Oak
 		holder->camera3DAngles = editor.freeCamera.angles;
 		holder->camera3DPos = editor.freeCamera.pos;
 
-		holder->camera2DPos = Sprite::edCamPos;
-		holder->camera2DZoom = Sprite::edCamZoom;
+		holder->camera2DPos = editor.freeCamera.pos2D;
+		holder->camera2DZoom = editor.freeCamera.zoom2D;
 
 		holder->gizmoAlign2D = editor.gizmo.align2D;
 	}

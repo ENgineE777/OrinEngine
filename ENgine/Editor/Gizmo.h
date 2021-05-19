@@ -84,10 +84,12 @@ namespace Oak
 		int transform2DActions = 0;
 		Math::Vector2 pos2d = 0.0f;
 
-		bool ignore2DCamera = true;
 		Math::Vector2 origin;
-		Math::Vector2 movedOrigin;
+		Math::Vector3 movedOrigin;
 		Math::Vector2 ancorns[8];
+
+		Math::Vector3 trans2DProjection;
+		Math::Vector3 trans2DPrevProjection;
 
 		int selAxis = -1;
 		bool mousedPressed = false;
@@ -130,7 +132,7 @@ namespace Oak
 
 		Gizmo();
 
-		void SetTransform2D(Transform* transform, int actions = 0xffff, bool ignore_2d_camera = false);
+		void SetTransform2D(Transform* transform, int actions = 0xffff);
 		void SetTransform2D(Math::Vector2 set_pos);
 		Math::Vector2 GetTransform2D();
 

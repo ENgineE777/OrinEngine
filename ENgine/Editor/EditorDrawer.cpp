@@ -30,10 +30,7 @@ namespace Oak
 		Math::Matrix mat;
 		mat.RotateZ(rotate);
 
-		pos = Sprite::MoveToCamera(pos, false);
 		mat.Pos() = Math::Vector3(pos.x, pos.y, 0.01f);
-
-		size *= Sprite::edCamZoom;
 
 		if (pos.x + size.x < 0 || root.render.GetDevice()->GetWidth() < pos.x ||
 			pos.y + size.y < 0 || root.render.GetDevice()->GetHeight() < pos.y)
@@ -41,13 +38,11 @@ namespace Oak
 			return;
 		}
 
-		Sprite::Draw(tex, color, mat, offset * Sprite::edCamZoom, size, 0.0f, 1.0f, false);
+		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f, false);
 	}
 
 	void EditorDrawer::PrintText(Math::Vector2 pos, Color color, const char* text)
 	{
-		pos = Sprite::MoveToCamera(pos, false);
-
 		if (pos.x + 250 < 0 || root.render.GetDevice()->GetWidth() < pos.x ||
 			pos.y + 15 < 0 || root.render.GetDevice()->GetHeight() < pos.y)
 		{
@@ -71,9 +66,6 @@ namespace Oak
 
 	void EditorDrawer::DrawLine(Math::Vector2 from, Math::Vector2 to, Color color)
 	{
-		from = Sprite::MoveToCamera(from, false);
-		to = Sprite::MoveToCamera(to, false);
-
 		Math::Vector2 dir = to - from;
 		Math::Vector2 size(dir.Length(), 2.0f);
 
