@@ -192,51 +192,89 @@ namespace Oak::Math
 
 		void RotateX(float ang)
 		{
-			Matrix m;
-			m.m[1][1] = cosf(ang);
-			m.m[1][2] = sinf(ang);
-			m.m[2][1] = -sinf(ang);
-			m.m[2][2] = cosf(ang);
+			Matrix rot;
+			rot.m[1][1] = cosf(ang);
+			rot.m[1][2] = -sinf(ang);
+			rot.m[2][1] = sinf(ang);
+			rot.m[2][2] = cosf(ang);
 
-			Multiply(Matrix(*this), m);
+			Multiply(Matrix(*this), rot);
 		}
 
 		void RotateY(float ang)
 		{
-			Matrix m;
-			m.m[0][0] = cosf(ang);
-			m.m[0][2] = -sinf(ang);
-			m.m[2][0] = sinf(ang);
-			m.m[2][2] = cosf(ang);
+			Matrix rot;
+			rot.m[0][0] = cosf(ang);
+			rot.m[0][2] = sinf(ang);
+			rot.m[2][0] = -sinf(ang);
+			rot.m[2][2] = cosf(ang);
 
-			Multiply(Matrix(*this), m);
+			Multiply(Matrix(*this), rot);
 		}
 
 		void RotateZ(float ang)
 		{
-			Matrix m;
-			m.m[0][0] = cosf(ang);
-			m.m[0][1] = sinf(ang);
-			m.m[1][0] = -sinf(ang);
-			m.m[1][1] = cosf(ang);
+			Matrix rot;
+			rot.m[0][0] = cosf(ang);
+			rot.m[0][1] = -sinf(ang);
+			rot.m[1][0] = sinf(ang);
+			rot.m[1][1] = cosf(ang);
 
-			Multiply(Matrix(*this), m);
+			Multiply(Matrix(*this), rot);
+		}
+
+		void Rotate(Math::Vector3 rot)
+		{
+			RotateX(rot.x);
+			RotateY(rot.y);
+			RotateZ(rot.z);
+		}
+
+		Math::Vector3 GetRotation()
+		{
+			float cosYangle = sqrtf(powf(Vx().x, 2) + powf(Vx().y, 2));
+
+			bool singular = cosYangle < 1e-6;
+
+			Math::Vector3 rot;
+
+			if (!singular)
+			{
+				rot.x = atan2f(-Vy().z, Vz().z);
+				rot.y = atan2f(Vx().z, cosYangle);
+
+				float sinXangle = sinf(rot.x);
+				float cosXangle = cosf(rot.x);
+
+				rot.z = atan2f(cosXangle * Vy().x + sinXangle * Vz().x, cosXangle * Vy().y + sinXangle * Vz().y);
+			}
+			else
+			{
+				rot.x = atan2f(m[2][1], m[1][1]);
+				rot.y = atan2f(m[0][2], cosYangle);
+				rot.z = 0.0f;
+			}
+
+			return rot;
 		}
 
 		void Scale(const Vector3& scale)
 		{
-			m[0][0] *= scale.x;
-			m[1][0] *= scale.x;
-			m[2][0] *= scale.x;
-			m[3][0] *= scale.x;
-			m[0][1] *= scale.y;
-			m[1][1] *= scale.y;
-			m[2][1] *= scale.y;
-			m[3][1] *= scale.y;
-			m[0][2] *= scale.z;
-			m[1][2] *= scale.z;
-			m[2][2] *= scale.z;
-			m[3][2] *= scale.z;
+			Vx() *= scale.x;
+			Vy() *= scale.y;
+			Vz() *= scale.z;
+		}
+
+		Math::Vector3 GetScale()
+		{
+			return Math::Vector3(Vx().Normalize(), Vy().Normalize(), Vz().Normalize());
+		}
+
+		void RemoveScale()
+		{
+			Vx().Normalize();
+			Vy().Normalize();
+			Vz().Normalize();
 		}
 
 		bool Inverse()
@@ -371,13 +409,6 @@ namespace Oak::Math
 			}
 
 			return true;
-		}
-
-		void RemoveScale()
-		{
-			Vx().Normalize();
-			Vy().Normalize();
-			Vz().Normalize();
 		}
 
 		void Transpose()
