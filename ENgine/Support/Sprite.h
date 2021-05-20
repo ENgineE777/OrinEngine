@@ -161,7 +161,7 @@ namespace Oak::Sprite
 	void UpdateFrame(Sprite::Data* data, FrameState* state, float dt);
 
 	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped = false);
-	void Draw(Transform2D* trans, Color clr, Sprite::Data* sprite, FrameState* state, bool use_depth, bool ignore_camera);
+	void Draw(Transform* trans, Color clr, Sprite::Data* sprite, FrameState* state, bool use_depth, bool ignore_camera);
 
 	void Release();
 }

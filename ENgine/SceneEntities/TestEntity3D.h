@@ -10,7 +10,7 @@ namespace Oak
 	{
 	public:
 
-		Transform3D tranform;
+		Transform transform;
 
 		META_DATA_DECL_BASE(TestEntity3D)
 

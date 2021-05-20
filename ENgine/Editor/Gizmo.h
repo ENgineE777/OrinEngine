@@ -9,12 +9,12 @@
 
 namespace Oak
 {
-	enum class TransformType
+	enum class TransformMode
 	{
-		Move = 1,
-		Scale = 2,
-		Rotate = 4,
-		Anchorn = 8
+		Move,
+		Scale,
+		Rotate,
+		Rectangle
 	};
 
 	class Gizmo
@@ -81,9 +81,6 @@ namespace Oak
 		Math::Vector3 mouseDirection;
 		Math::Vector3 selectionOffset;
 
-		int transform2DActions = 0;
-		Math::Vector2 pos2d = 0.0f;
-
 		Math::Vector2 origin;
 		Math::Vector3 movedOrigin;
 		Math::Vector2 ancorns[8];
@@ -96,8 +93,6 @@ namespace Oak
 		Math::Vector2 mousesDir = 0.0f;
 		Math::Vector2 prevMouse = 0.0f;
 
-		Math::Vector2 deltaMove = 0.0;
-
 		Color CheckColor(Axis axis, bool ignoreSelection = false);
 		void DrawAxis(AxisData& axis);
 		void DrawCircle(Axis axis);
@@ -105,14 +100,14 @@ namespace Oak
 		                      Math::Vector3 trans, bool check_trans,
 		                      Math::Matrix view, Math::Matrix view_proj);
 
-		void CheckSelectionTrans2D(Math::Vector2 ms);
+		void CheckSelectionTransRect(Math::Vector2 ms);
 		bool CheckSelectionTrans3D(AxisData& axis, Math::Vector2 ms);
 		void CheckSelectionTrans3D(Math::Vector2 ms);
 
-		void MoveTrans2D(Math::Vector2 ms);
+		void MoveTransRect(Math::Vector2 ms);
 		void MoveTrans3D(Math::Vector2 ms);
 
-		void RenderTrans2D();
+		void RenderTransRect();
 		void RenderTrans3D();
 
 		Math::Vector3 TransformVetcor(Math::Vector3 pos);
@@ -126,17 +121,13 @@ namespace Oak
 	public:
 
 		Transform* transform = nullptr;
-		TransformType mode = TransformType::Move;
+		TransformMode mode = TransformMode::Move;
 		bool useLocalSpace = false;
 		Math::Vector2 align2D = 0.0f;
 
 		Gizmo();
 
-		void SetTransform2D(Transform* transform, int actions = 0xffff);
-		void SetTransform2D(Math::Vector2 set_pos);
-		Math::Vector2 GetTransform2D();
-
-		void SetTransform3D(Transform* transform);
+		void SetTransform(Transform* transform);
 
 		bool IsEnabled();
 		void Disable();
@@ -145,7 +136,7 @@ namespace Oak
 		void OnLeftMouseDown();
 		void OnLeftMouseUp();
 
-		Math::Vector2 MakeAligned(Math::Vector2 pos);
+		Math::Vector3 MakeAligned(Math::Vector3& pos);
 
 		void Render();
 	};

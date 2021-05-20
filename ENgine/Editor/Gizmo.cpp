@@ -13,50 +13,9 @@ namespace Oak
 		axises[2].type = Axis::Z;
 	}
 
-	void Gizmo::SetTransform2D(Transform* set_transform, int actions)
-	{
-		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform2d == null")
-		OAK_ASSERT(set_transform->Is2D(), "Gizmo::set_transform2d not 2D")
-
-		transform = set_transform;
-
-		pos2d = ((Transform2D*)transform)->pos;
-
-		transform2DActions = actions;
-
-		deltaMove = 0.0f;
-	}
-
-	void Gizmo::SetTransform2D(Math::Vector2 set_pos)
-	{
-		if (!transform)
-		{
-			return;
-		}
-
-		Transform2D* transform2D = (Transform2D*)transform;
-
-		set_pos = MakeAligned(set_pos);
-		transform2D->pos = set_pos;
-		pos2d = set_pos;
-	}
-
-	Math::Vector2 Gizmo::GetTransform2D()
-	{
-		if (!transform)
-		{
-			return 0.0f;
-		}
-
-		Transform2D* transform2D = (Transform2D*)transform;
-		return transform2D->pos;
-	}
-
-	void Gizmo::SetTransform3D(Transform* set_transform)
+	void Gizmo::SetTransform(Transform* set_transform)
 	{
 		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform3d == null")
-		OAK_ASSERT(!set_transform->Is2D(), "Gizmo::set_transform3d not 3D")
-
 		transform = set_transform;
 	}
 
@@ -107,7 +66,7 @@ namespace Oak
 
 		Color color = CheckColor(axis.type);
 
-		if (mode == TransformType::Move)
+		if (mode == TransformMode::Move)
 		{
 			float subScale = scale * 0.4f;
 
@@ -151,7 +110,7 @@ namespace Oak
 			}
 		}
 		else
-		if (mode == TransformType::Scale)
+		if (mode == TransformMode::Scale)
 		{
 			float subScale = scale * 0.625f;
 			float subScale2 = scale * 0.4f;
@@ -220,7 +179,7 @@ namespace Oak
 			}
 		}
 
-		if (useLocalSpace || mode == TransformType::Scale)
+		if (useLocalSpace || mode == TransformMode::Scale)
 		{
 			axis.to = TransformVetcor(axis.to);
 
@@ -248,7 +207,7 @@ namespace Oak
 
 		root.render.DebugLine(axis.subPointLeft, color, axis.subPointFrom, color, false);
 
-		if (mode == TransformType::Scale)
+		if (mode == TransformMode::Scale)
 		{
 			root.render.DebugLine(axis.subPointLeft2, color, axis.subPointFrom2, needHighlight ? color : CheckColor(axis.type, true), false);
 		}
@@ -261,7 +220,7 @@ namespace Oak
 
 		root.render.DebugLine(axis.subPointRight, color, axis.subPointFrom , color, false);
 
-		if (mode == TransformType::Scale)
+		if (mode == TransformMode::Scale)
 		{
 			root.render.DebugLine(axis.subPointRight2, color, axis.subPointFrom2, needHighlight ? color : CheckColor(axis.type, true), false);
 		}
@@ -294,7 +253,7 @@ namespace Oak
 				pos = Math::Vector3(dx, dz, hgt);
 			}
 
-			if (useLocalSpace || mode == TransformType::Scale)
+			if (useLocalSpace || mode == TransformMode::Scale)
 			{
 				pos = TransformVetcor(pos);
 			}
@@ -383,7 +342,7 @@ namespace Oak
 								 Math::Vector3 trans, bool check_trans,
 								 Math::Matrix view, Math::Matrix view_proj)
 	{
-		if (useLocalSpace || mode == TransformType::Scale)
+		if (useLocalSpace || mode == TransformMode::Scale)
 		{
 			pos = TransformVetcor(pos);
 			pos2 = TransformVetcor(pos2);
@@ -436,31 +395,23 @@ namespace Oak
 		return false;
 	}
 
-	void Gizmo::CheckSelectionTrans2D(Math::Vector2 ms)
+	void Gizmo::CheckSelectionTransRect(Math::Vector2 ms)
 	{
-		Transform2D* transform2D = (Transform2D*)transform;
-
-		if (transform2DActions & (int)TransformType::Scale)
+		for (int i = 0; i < 8; i++)
 		{
-			for (int i = 0; i < 8; i++)
+			if (ancorns[i].x - 7 < ms.x && ms.x < ancorns[i].x + 7 &&
+				ancorns[i].y - 7 < ms.y && ms.y < ancorns[i].y + 7)
 			{
-				if (ancorns[i].x - 7 < ms.x && ms.x < ancorns[i].x + 7 &&
-					ancorns[i].y - 7 < ms.y && ms.y < ancorns[i].y + 7)
-				{
-					selAxis = i + 1;
-					break;
-				}
+				selAxis = i + 1;
+				break;
 			}
 		}
 
-		if (transform2DActions & (int)TransformType::Anchorn)
+		if (origin.x - 7 < ms.x && ms.x < origin.x + 7 &&
+			origin.y - 7 < ms.y && ms.y < origin.y + 7)
 		{
-			if (origin.x - 7 < ms.x && ms.x < origin.x + 7 &&
-				origin.y - 7 < ms.y && ms.y < origin.y + 7)
-			{
-				selAxis = 10;
-				movedOrigin = trans2DProjection;
-			}
+			selAxis = 10;
+			movedOrigin = trans2DProjection;
 		}
 
 		if (selAxis == -1)
@@ -470,19 +421,13 @@ namespace Oak
 			{
 				//SetCursor(cr_move);
 
-				if (transform2DActions & (int)TransformType::Move)
-				{
-					selAxis = 0;
-				}
+				selAxis = 0;
 			}
 			else
 			{
 				//SetCursor(cr_rotate);
 
-				if (transform2DActions & (int)TransformType::Rotate)
-				{
-					selAxis = 9;
-				}
+				selAxis = 9;
 			}
 		}
 	}
@@ -496,7 +441,7 @@ namespace Oak
 		root.render.GetTransform(TransformStage::Projection, view_proj);
 		view_proj = view * view_proj;
 
-		if (mode == TransformType::Move || mode == TransformType::Scale)
+		if (mode == TransformMode::Move || mode == TransformMode::Scale)
 		{
 			Math::Vector3 dir;
 
@@ -530,7 +475,7 @@ namespace Oak
 			}
 		}
 		else
-		if (mode == TransformType::Rotate)
+		if (mode == TransformMode::Rotate)
 		{
 			Math::Vector3 trans = transform->global.Pos() * view;
 
@@ -611,7 +556,7 @@ namespace Oak
 			}
 		}
 
-		if (mode == TransformType::Move)
+		if (mode == TransformMode::Move)
 		{
 			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
@@ -638,7 +583,7 @@ namespace Oak
 			}
 		}
 
-		if (mode == TransformType::Scale)
+		if (mode == TransformMode::Scale)
 		{
 			if (Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				Math::IntersectTrianglrRay(axises[0].subPointRight2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
@@ -676,10 +621,8 @@ namespace Oak
 		}
 	}
 
-	void Gizmo::MoveTrans2D(Math::Vector2 ms)
+	void Gizmo::MoveTransRect(Math::Vector2 ms)
 	{
-		Transform2D* transform2D = (Transform2D*)transform;
-
 		Math::Matrix inv = transform->global;
 		inv.Inverse();
 
@@ -694,15 +637,11 @@ namespace Oak
 
 		if (selAxis == 0)
 		{
-			pos2d.x += delta.x * transform->local.Vx().x;
-			pos2d.y += delta.x * transform->local.Vx().y;
+			transform->local.Pos().x += delta.x * transform->local.Vx().x;
+			transform->local.Pos().y += delta.x * transform->local.Vx().y;
 
-			pos2d.x += delta.y * transform->local.Vy().x;
-			pos2d.y += delta.y * transform->local.Vy().y;
-
-			Math::Vector2 prev_pos = transform2D->pos;
-			transform2D->pos = MakeAligned(pos2d);
-			deltaMove += transform2D->pos - prev_pos;
+			transform->local.Pos().x += delta.y * transform->local.Vy().x;
+			transform->local.Pos().y += delta.y * transform->local.Vy().y;
 		}
 		else
 		if (selAxis == 9)
@@ -735,7 +674,14 @@ namespace Oak
 					k *= -1.0f;
 				}
 
-				transform2D->rotation += k * sign;
+				Math::Matrix rot;
+
+				rot.RotateZ(k * sign);
+
+				Math::Matrix scaleMat;
+				scaleMat.Scale(Math::Vector3(transform->local.Vx().Normalize(), transform->local.Vy().Normalize(), transform->local.Vz().Normalize()));
+
+				transform->local = scaleMat * rot * transform->local;
 			}
 		}
 		else
@@ -777,38 +723,37 @@ namespace Oak
 			delta.x *= k1;
 			delta.y *= k2;
 
-			transform2D->size.x += delta.x;
+			transform->size.x += delta.x;
+
+			auto pos = transform->local.Pos();
 
 			if (selAxis == 1 || selAxis == 4 || selAxis == 8)
 			{
-				pos2d.x -= (1.0f - transform2D->offset.x) * delta.x * transform->local.Vx().x;
-				pos2d.y -= (1.0f - transform2D->offset.x) * delta.x * transform->local.Vx().y;
+				pos.x -= (1.0f - transform->offset.x) * delta.x * transform->local.Vx().x;
+				pos.y -= (1.0f - transform->offset.x) * delta.x * transform->local.Vx().y;
 			}
 			else
 			if (selAxis == 2 || selAxis == 3 || selAxis == 6)
 			{
-				pos2d.x += transform2D->offset.x * delta.x * transform->local.Vx().x;
-				pos2d.y += transform2D->offset.x * delta.x * transform->local.Vx().y;
+				pos.x += transform->offset.x * delta.x * transform->local.Vx().x;
+				pos.y += transform->offset.x * delta.x * transform->local.Vx().y;
 			}
 
-			transform2D->size.y += delta.y;
+			transform->size.y += delta.y;
 
 			if (selAxis == 1 || selAxis == 2 || selAxis == 5)
 			{
-				pos2d.x -= delta.y * (1.0f - transform2D->offset.y) * transform->local.Vy().x;
-				pos2d.y -= delta.y * (1.0f - transform2D->offset.y) * transform->local.Vy().y;
+				pos.x -= delta.y * (1.0f - transform->offset.y) * transform->local.Vy().x;
+				pos.y -= delta.y * (1.0f - transform->offset.y) * transform->local.Vy().y;
 			}
 			else
 			if (selAxis == 3 || selAxis == 4 || selAxis == 7)
 			{
-				pos2d.x += delta.y * transform2D->offset.y * transform->local.Vy().x;
-				pos2d.y += delta.y * transform2D->offset.y * transform->local.Vy().y;
+				pos.x += delta.y * transform->offset.y * transform->local.Vy().x;
+				pos.y += delta.y * transform->offset.y * transform->local.Vy().y;
 			}
 
-			Math::Vector2 prev_pos = transform2D->pos;
-			transform2D->pos = pos2d;
-
-			deltaMove += transform2D->pos - prev_pos;
+			transform->local.Pos() = pos;
 		}
 	}
 
@@ -869,7 +814,7 @@ namespace Oak
 
 		da *= cur_dir.Dot(mousesDir);
 
-		if (mode == TransformType::Move)
+		if (mode == TransformMode::Move)
 		{
 			if (selAxis == (int)Axis::X)
 			{
@@ -904,7 +849,7 @@ namespace Oak
 			CaclLocalMatrix();
 		}
 		else
-		if (mode == TransformType::Rotate)
+		if (mode == TransformMode::Rotate)
 		{
 			da *= -5.0f;
 
@@ -941,7 +886,7 @@ namespace Oak
 			}
 		}
 		else
-		if (mode == TransformType::Scale)
+		if (mode == TransformMode::Scale)
 		{
 			da *= scale * 16;
 
@@ -968,11 +913,9 @@ namespace Oak
 		}
 	}
 
-	void Gizmo::RenderTrans2D()
+	void Gizmo::RenderTransRect()
 	{
-		Transform2D* transform2D = (Transform2D*)transform;
-
-		transform2D->BuildMatrices();
+		transform->BuildMatrices();
 
 		Math::Vector3 p1, p2;
 
@@ -983,52 +926,52 @@ namespace Oak
 				if (i == 0)
 				{
 					p1 = Math::Vector3(0, 0, 0);
-					p2 = Math::Vector3(transform2D->size.x, 0, 0);
+					p2 = Math::Vector3(transform->size.x, 0, 0);
 				}
 				else
 				if (i == 1)
 				{
-					p1 = Math::Vector3(transform2D->size.x, 0, 0);
-					p2 = Math::Vector3(transform2D->size.x, transform2D->size.y, 0);
+					p1 = Math::Vector3(transform->size.x, 0, 0);
+					p2 = Math::Vector3(transform->size.x, transform->size.y, 0);
 				}
 				else
 				if (i == 2)
 				{
-					p1 = Math::Vector3(transform2D->size.x, transform2D->size.y, 0);
-					p2 = Math::Vector3(0, transform2D->size.y, 0);
+					p1 = Math::Vector3(transform->size.x, transform->size.y, 0);
+					p2 = Math::Vector3(0, transform->size.y, 0);
 				}
 				else
 				if (i == 3)
 				{
-					p1 = Math::Vector3(0, transform2D->size.y, 0);
+					p1 = Math::Vector3(0, transform->size.y, 0);
 					p2 = Math::Vector3(0, 0, 0);
 				}
 				else
 				if (i == 4)
 				{
-					p1 = Math::Vector3(transform2D->size.x * 0.5f, 0, 0);
+					p1 = Math::Vector3(transform->size.x * 0.5f, 0, 0);
 				}
 				else
 				if (i == 5)
 				{
-					p1 = Math::Vector3(transform2D->size.x, transform2D->size.y * 0.5f, 0);
+					p1 = Math::Vector3(transform->size.x, transform->size.y * 0.5f, 0);
 				}
 				else
 				if (i == 6)
 				{
-					p1 = Math::Vector3(transform2D->size.x * 0.5f, transform2D->size.y, 0);
+					p1 = Math::Vector3(transform->size.x * 0.5f, transform->size.y, 0);
 				}
 				else
 				if (i == 7)
 				{
-					p1 = Math::Vector3(0, transform2D->size.y * 0.5f, 0);
+					p1 = Math::Vector3(0, transform->size.y * 0.5f, 0);
 				}
 
-				p1 -= Math::Vector3(transform2D->offset.x * transform2D->size.x, transform2D->offset.y * transform2D->size.y, 0);
-				p1 = p1 * transform2D->global;
+				p1 -= Math::Vector3(transform->offset.x * transform->size.x, transform->offset.y * transform->size.y, 0);
+				p1 = p1 * transform->global;
 				p1 *= Sprite::pixelsPerUnitInvert;
-				p2 -= Math::Vector3(transform2D->offset.x * transform2D->size.x, transform2D->offset.y * transform2D->size.y, 0);
-				p2 = p2 * transform2D->global;
+				p2 -= Math::Vector3(transform->offset.x * transform->size.x, transform->offset.y * transform->size.y, 0);
+				p2 = p2 * transform->global;
 				p2 *= Sprite::pixelsPerUnitInvert;
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
@@ -1057,7 +1000,7 @@ namespace Oak
 		else
 		{
 			p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
-			p1 = p1 * transform2D->global;
+			p1 = p1 * transform->global;
 			p1 *= Sprite::pixelsPerUnitInvert;
 		}
 
@@ -1083,7 +1026,7 @@ namespace Oak
 		scale = 0.1f * (1.0f + z);
 		scale = fabsf(scale);
 
-		if (mode == TransformType::Move || mode == TransformType::Scale)
+		if (mode == TransformMode::Move || mode == TransformMode::Scale)
 		{
 			for (int i = 0; i < 3; i++)
 			{
@@ -1091,7 +1034,7 @@ namespace Oak
 			}
 		}
 		else
-		if (mode == TransformType::Rotate)
+		if (mode == TransformMode::Rotate)
 		{
 			DrawCircle(Axis::X);
 			DrawCircle(Axis::Y);
@@ -1107,9 +1050,9 @@ namespace Oak
 		return matrix.MulNormal(pos);
 	}
 
-	Math::Vector2 Gizmo::MakeAligned(Math::Vector2 pos)
+	Math::Vector3 Gizmo::MakeAligned(Math::Vector3& pos)
 	{
-		if (align2D.x > 0.01f && pos.x < 0.0f)
+		/*if (align2D.x > 0.01f && pos.x < 0.0f)
 		{
 			pos.x -= align2D.x;
 		}
@@ -1119,16 +1062,17 @@ namespace Oak
 			pos.y -= align2D.y;
 		}
 
-		return Math::Vector2((align2D.x > 0.01f) ? (align2D.x * ((int)(pos.x / align2D.x))) : pos.x, (align2D.y > 0.01f) ? (align2D.y * ((int)(pos.y / align2D.y))) : pos.y);
+		return Math::Vector2((align2D.x > 0.01f) ? (align2D.x * ((int)(pos.x / align2D.x))) : pos.x, (align2D.y > 0.01f) ? (align2D.y * ((int)(pos.y / align2D.y))) : pos.y);*/
+		return 0.0f;
 	}
 
 	void Gizmo::Render()
 	{
 		if (!transform) return;
 
-		if (transform->Is2D())
+		if (mode == TransformMode::Rectangle)
 		{
-			RenderTrans2D();
+			RenderTransRect();
 		}
 		else
 		{
@@ -1168,9 +1112,9 @@ namespace Oak
 
 		if (mousedPressed)
 		{
-			if (transform->Is2D())
+			if (mode == TransformMode::Rectangle)
 			{
-				MoveTrans2D(ms - prevMouse);
+				MoveTransRect(ms - prevMouse);
 			}
 			else
 			{
@@ -1181,9 +1125,9 @@ namespace Oak
 		{
 			selAxis = -1;
 
-			if (transform->Is2D())
+			if (mode == TransformMode::Rectangle)
 			{
-				CheckSelectionTrans2D(ms);
+				CheckSelectionTransRect(ms);
 			}
 			else
 			{
@@ -1210,24 +1154,19 @@ namespace Oak
 
 		if (!transform) return;
 
-		if (selAxis == 10 && transform->Is2D())
+		if (selAxis == 10 && mode == TransformMode::Rectangle)
 		{
-			Transform2D* transform2D = (Transform2D*)transform;
-
-			Math::Matrix inv = transform2D->global;
+			Math::Matrix inv = transform->global;
 			inv.Inverse();
 
-			Math::Vector3 pos = movedOrigin * Sprite::pixelsPerUnit * inv / Math::Vector3(transform2D->size.x, transform2D->size.y, 1.0f);
-			transform2D->offset += Math::Vector2(pos.x, pos.y);
+			Math::Vector3 pos = movedOrigin * Sprite::pixelsPerUnit * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
+			transform->offset += Math::Vector3(pos.x, pos.y, 0.0f);
 
-			transform2D->pos.x += pos.x * transform->local.Vx().x * transform2D->size.x;
-			transform2D->pos.y += pos.x * transform->local.Vx().y * transform2D->size.x;
+			transform->local.Pos().x += pos.x * transform->local.Vx().x * transform->size.x;
+			transform->local.Pos().y += pos.x * transform->local.Vx().y * transform->size.x;
 
-			transform2D->pos.x += pos.y * transform->local.Vy().x * transform2D->size.y;
-			transform2D->pos.y += pos.y * transform->local.Vy().y * transform2D->size.y;
-
-
-			pos2d = transform2D->pos;
+			transform->local.Pos().x += pos.y * transform->local.Vy().x * transform->size.y;
+			transform->local.Pos().y += pos.y * transform->local.Vy().y * transform->size.y;
 
 			selAxis = -1;
 		}

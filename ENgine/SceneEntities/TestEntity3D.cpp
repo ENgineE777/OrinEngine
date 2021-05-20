@@ -8,6 +8,9 @@ namespace Oak
 
 	META_DATA_DESC(TestEntity3D)
 		BASE_SCENE_ENTITY_PROP(TestEntity3D)
+		FLOAT_PROP(TestEntity3D, transform.local.Pos().x, 0.0f, "Transform", "x", "X coordinate of an object")
+		FLOAT_PROP(TestEntity3D, transform.local.Pos().y, 0.0f, "Transform", "y", "Y coordinate of an object")
+		FLOAT_PROP(TestEntity3D, transform.local.Pos().z, 0.0f, "Transform", "z", "X coordinate of an object")
 	META_DATA_DESC_END()
 
 	void TestEntity3D::Init()
@@ -17,12 +20,12 @@ namespace Oak
 
 	Transform* TestEntity3D::GetTransform()
 	{
-		return &tranform;
+		return &transform;
 	}
 
 	void TestEntity3D::Draw(float dt)
 	{
-		tranform.BuildMatrices();
-		root.render.DebugBox(tranform.global, COLOR_GREEN, 1.0f);
+		transform.BuildMatrices();
+		root.render.DebugBox(transform.global, COLOR_GREEN, 1.0f);
 	}
 }

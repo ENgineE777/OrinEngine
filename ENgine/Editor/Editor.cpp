@@ -165,14 +165,7 @@ namespace Oak
 
 			if (selectedEntity->GetTransform())
 			{
-				if (selectedEntity->GetTransform()->Is2D())
-				{
-					gizmo.SetTransform2D(selectedEntity->GetTransform());
-				}
-				else
-				{
-					gizmo.SetTransform3D(selectedEntity->GetTransform());
-				}
+				gizmo.SetTransform(selectedEntity->GetTransform());
 			}
 		}
 	}
@@ -310,7 +303,7 @@ namespace Oak
 
 							if (parent)
 							{
-								if (!entity->GetTransform() || entity->GetTransform()->Is2D() != parent->GetTransform()->Is2D())
+								if (!entity->GetTransform())
 								{
 									RELEASE(entity)
 								}
@@ -335,10 +328,7 @@ namespace Oak
 
 							if (transform)
 							{
-								if (!transform->Is2D())
-								{
-									transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-								}
+								transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 							}
 
 							SelectEntity(entity);
@@ -448,7 +438,7 @@ namespace Oak
 						uint64_t temp = *((uint64_t*)payload.Data);
 						SceneEntity* dragged = (SceneEntity*)temp;					
 
-						bool transformMatches = transformEntity ? (transformEntity->GetTransform() && (!dragged->GetTransform() || dragged->GetTransform()->Is2D() == transformEntity->GetTransform()->Is2D())) : true;
+						bool transformMatches = transformEntity ? (transformEntity->GetTransform() && !dragged->GetTransform()) : true;
 
 						if (!dragged->ContainEntity(entity) && transformMatches)
 						{
@@ -804,7 +794,7 @@ namespace Oak
 
 			if (gizmo.IsEnabled())
 			{
-				if (gizmo.transform->Is2D())
+				/*if (gizmo.transform->mode)
 				{
 					ImGui::Text("AlignX");
 					ImGui::SameLine();
@@ -841,11 +831,12 @@ namespace Oak
 
 					ImGui::SameLine();
 				}
-				else
+				else*/
 				{
-					PushButton("Move", gizmo.mode == TransformType::Move, [this]() {gizmo.mode = TransformType::Move; });
-					PushButton("Rotate", gizmo.mode == TransformType::Rotate, [this]() {gizmo.mode = TransformType::Rotate; });
-					PushButton("Scale", gizmo.mode == TransformType::Scale, [this]() {gizmo.mode = TransformType::Scale; });
+					PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
+					PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this]() {gizmo.mode = TransformMode::Rotate; });
+					PushButton("Scale", gizmo.mode == TransformMode::Scale, [this]() {gizmo.mode = TransformMode::Scale; });
+					PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this]() {gizmo.mode = TransformMode::Rectangle; });
 
 					if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 					{
@@ -863,10 +854,7 @@ namespace Oak
 
 						if (transform)
 						{
-							if (!transform->Is2D())
-							{
-								freeCamera.pos = transform->local.Pos() - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-							}
+							freeCamera.pos = transform->local.Pos() - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 						}
 					}
 
@@ -878,10 +866,7 @@ namespace Oak
 
 						if (transform)
 						{
-							if (!transform->Is2D())
-							{
-								transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-							}
+							transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 						}
 					}
 

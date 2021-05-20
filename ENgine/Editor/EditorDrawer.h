@@ -13,7 +13,7 @@ namespace Oak
 {
 	class EditorDrawer
 	{
-		Transform2D trans;
+		Transform trans;
 		Sprite::FrameState state;
 
 	public:

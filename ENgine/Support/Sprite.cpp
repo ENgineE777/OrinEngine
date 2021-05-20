@@ -203,7 +203,7 @@ namespace Oak::Sprite
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
-	void Draw(Transform2D* trans, Color clr, Data* sprite, FrameState* state, bool use_depth, bool ignore_camera)
+	void Draw(Transform* trans, Color clr, Data* sprite, FrameState* state, bool use_depth, bool ignore_camera)
 	{
 		if (sprite->texture)
 		{
@@ -211,8 +211,9 @@ namespace Oak::Sprite
 		}
 
 		Math::Matrix local_trans = trans->global;
-		Math::Vector2 pos = trans->offset * trans->size * Math::Vector2(-1.0f, -1.0f);
-		Math::Vector2 size = trans->size;
+		Math::Vector3 pos3d = trans->offset * trans->size * Math::Vector3(-1.0f, -1.0f, -1.0f);
+		Math::Vector2 pos = Math::Vector2(pos3d.x, pos3d.y);
+		Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);
 
 		/*Math::Vector3 min_pos(10000000.0f);
 		Math::Vector3 max_pos(-10000000.0f);
