@@ -137,11 +137,6 @@ namespace Oak
 
 				auto* transform = entity->GetTransform();
 
-				if (transform)
-				{
-					transform->Load(reader, "transform");
-				}
-
 				entity->Load(reader);
 
 				LoadEntities(reader, "childs", entity->childs);
@@ -197,13 +192,6 @@ namespace Oak
 
 			writer.Write("type", entity->className);
 			writer.Write("uid", entity->GetUID());
-
-			auto* transform = entity->GetTransform();
-
-			if (transform)
-			{
-				transform->Save(writer, "transform");
-			}
 
 			entity->Save(writer);
 

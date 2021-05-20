@@ -81,54 +81,5 @@ namespace Oak
 			scale = matrix.GetScale();
 			rotation = matrix.GetRotation() / Math::Radian;
 		}
-
-		/**
-		\brief Load data of transform
-
-		\param[in] read JSON helper class for read JSON
-		\param[in] name of block
-		*/
-		void Load(JsonReader& reader, const char* name)
-		{
-			if (reader.EnterBlock(name))
-			{
-				if (reader.Read("local", local))
-				{
-					position = local.Pos();
-					scale = local.GetScale();
-					rotation = local.GetRotation();
-				}
-				else
-				{
-					reader.Read("position", position);
-					reader.Read("rotation", rotation);
-					reader.Read("scale", scale);
-				}
-
-				reader.Read("local", local);
-				reader.Read("size", size);
-				reader.Read("offset", offset);
-
-				reader.LeaveBlock();
-			}
-		};
-
-		/**
-		\brief Save data of transform
-
-		\param[in] writer JSON helper class for writing JSON
-		\param[in] name of block
-		*/
-		void Save(JsonWriter& writer, const char* name)
-		{
-			writer.StartBlock(name);
-			writer.Write("position", position);
-			writer.Write("rotation", rotation);
-			writer.Write("scale", scale);
-			writer.Write("local", local);
-			writer.Write("size", size);
-			writer.Write("offset", offset);
-			writer.FinishBlock();
-		};
 	};
 }

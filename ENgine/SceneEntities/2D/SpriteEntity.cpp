@@ -11,9 +11,9 @@ namespace Oak
 
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)
-		FLOAT_PROP(SpriteEntity, transform.local.Pos().x, 0.0f, "Transform", "x", "X coordinate of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.local.Pos().y, 0.0f, "Transform", "y", "Y coordinate of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.local.Pos().z, 0.0f, "Transform", "depth", "Depth from a camera position")
+		FLOAT_PROP(SpriteEntity, transform.position.x, 0.0f, "Transform", "x", "X coordinate of a sprite")
+		FLOAT_PROP(SpriteEntity, transform.position.y, 0.0f, "Transform", "y", "Y coordinate of a sprite")
+		FLOAT_PROP(SpriteEntity, transform.position.z, 0.0f, "Transform", "depth", "Depth from a camera position")
 		FLOAT_PROP(SpriteEntity, transform.rotation.z, 0.0f, "Transform", "rotation", "Rotation of a sprite")
 		FLOAT_PROP(SpriteEntity, transform.size.x, 100.0f, "Transform", "width", "Width of a sprite")
 		FLOAT_PROP(SpriteEntity, transform.size.y, 100.0f, "Transform", "height", "Height of a sprite")
