@@ -20,19 +20,19 @@ namespace Oak
 	struct Transform
 	{
 		/**
-		\brief Calulated local matrix
+			\brief Local position
 		*/
-		Math::Matrix local;
+		Math::Vector3 position;
 
 		/**
-		\brief Matrix of a parent
+			\brief Local rotation position
 		*/
-		Math::Matrix* parent = nullptr;
+		Math::Vector3 rotation;
 
 		/**
-		\brief Final matrix
+			\brief Local rotation position
 		*/
-		Math::Matrix global;
+		Math::Vector3 scale = 1.0f;
 
 		/**
 			\brief Size of object
@@ -45,11 +45,41 @@ namespace Oak
 		Math::Vector3 offset = 0.5f;
 
 		/**
+		\brief Calulated local matrix
+		*/
+		Math::Matrix local;
+
+		/**
+		\brief Final matrix
+		*/
+		Math::Matrix global;
+
+		/**
+		\brief Matrix of a parent
+		*/
+		Math::Matrix* parent = nullptr;
+
+		/**
 		\brief Calculate final matrix
 		*/
 		virtual void BuildMatrices()
 		{
+			local.Identity();
+			local.Rotate(rotation * Math::Radian);
+			local.Scale(scale);
+			local.Pos() = position;
+
 			global = parent ? (local * (*parent)) : local;
+		}
+
+		/**
+			\brief Calculate final matrix
+		*/
+		virtual void SetData(Math::Matrix& matrix)
+		{
+			position = matrix.Pos();
+			scale = matrix.GetScale();
+			rotation = matrix.GetRotation() / Math::Radian;
 		}
 
 		/**
@@ -62,6 +92,19 @@ namespace Oak
 		{
 			if (reader.EnterBlock(name))
 			{
+				if (reader.Read("local", local))
+				{
+					position = local.Pos();
+					scale = local.GetScale();
+					rotation = local.GetRotation();
+				}
+				else
+				{
+					reader.Read("position", position);
+					reader.Read("rotation", rotation);
+					reader.Read("scale", scale);
+				}
+
 				reader.Read("local", local);
 				reader.Read("size", size);
 				reader.Read("offset", offset);
@@ -79,6 +122,9 @@ namespace Oak
 		void Save(JsonWriter& writer, const char* name)
 		{
 			writer.StartBlock(name);
+			writer.Write("position", position);
+			writer.Write("rotation", rotation);
+			writer.Write("scale", scale);
 			writer.Write("local", local);
 			writer.Write("size", size);
 			writer.Write("offset", offset);

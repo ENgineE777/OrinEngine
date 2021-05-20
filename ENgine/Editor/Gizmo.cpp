@@ -637,11 +637,11 @@ namespace Oak
 
 		if (selAxis == 0)
 		{
-			transform->local.Pos().x += delta.x * transform->local.Vx().x;
-			transform->local.Pos().y += delta.x * transform->local.Vx().y;
+			transform->position.x += delta.x * transform->local.Vx().x;
+			transform->position.y += delta.x * transform->local.Vx().y;
 
-			transform->local.Pos().x += delta.y * transform->local.Vy().x;
-			transform->local.Pos().y += delta.y * transform->local.Vy().y;
+			transform->position.x += delta.y * transform->local.Vy().x;
+			transform->position.y += delta.y * transform->local.Vy().y;
 		}
 		else
 		if (selAxis == 9)
@@ -674,14 +674,7 @@ namespace Oak
 					k *= -1.0f;
 				}
 
-				Math::Matrix rot;
-
-				rot.RotateZ(k * sign);
-
-				Math::Matrix scaleMat;
-				scaleMat.Scale(Math::Vector3(transform->local.Vx().Normalize(), transform->local.Vy().Normalize(), transform->local.Vz().Normalize()));
-
-				transform->local = scaleMat * rot * transform->local;
+				transform->rotation.z -= k * sign / Math::Radian;
 			}
 		}
 		else
@@ -725,7 +718,7 @@ namespace Oak
 
 			transform->size.x += delta.x;
 
-			auto pos = transform->local.Pos();
+			auto pos = transform->position;
 
 			if (selAxis == 1 || selAxis == 4 || selAxis == 8)
 			{
@@ -753,7 +746,7 @@ namespace Oak
 				pos.y += delta.y * transform->offset.y * transform->local.Vy().y;
 			}
 
-			transform->local.Pos() = pos;
+			transform->position = pos;
 		}
 	}
 
@@ -799,6 +792,7 @@ namespace Oak
 		inverse.Inverse();
 
 		transform->local = transform->global * inverse;
+		transform->SetData(transform->local);
 	}
 
 	void Gizmo::MoveTrans3D(Math::Vector2 ms)
@@ -851,7 +845,7 @@ namespace Oak
 		else
 		if (mode == TransformMode::Rotate)
 		{
-			da *= -5.0f;
+			da *= 5.0f;
 
 			Math::Matrix rot;
 
@@ -875,6 +869,7 @@ namespace Oak
 				scaleMat.Scale(Math::Vector3(transform->local.Vx().Normalize(), transform->local.Vy().Normalize(), transform->local.Vz().Normalize()));
 
 				transform->local = scaleMat * rot * transform->local;
+				transform->SetData(transform->local);
 			}
 			else
 			{
@@ -892,23 +887,17 @@ namespace Oak
 
 			if (selAxis & (int)Axis::X)
 			{
-				float length = transform->local.Vx().Normalize();
-				length += da;
-				transform->local.Vx() *= fmaxf(length, 0.1f);
+				transform->scale.x = fmaxf(transform->scale.x + da, 0.1f);
 			}
 
 			if (selAxis & (int)Axis::Y)
 			{
-				float length = transform->local.Vy().Normalize();
-				length += da;
-				transform->local.Vy() *= fmaxf(length, 0.1f);
+				transform->scale.y = fmaxf(transform->scale.y + da, 0.1f);
 			}
 
 			if (selAxis & (int)Axis::Z)
 			{
-				float length = transform->local.Vz().Normalize();
-				length += da;
-				transform->local.Vz() *= fmaxf(length, 0.1f);
+				transform->scale.z = fmaxf(transform->scale.z + da, 0.1f);
 			}
 		}
 	}
@@ -1162,11 +1151,11 @@ namespace Oak
 			Math::Vector3 pos = movedOrigin * Sprite::pixelsPerUnit * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
 			transform->offset += Math::Vector3(pos.x, pos.y, 0.0f);
 
-			transform->local.Pos().x += pos.x * transform->local.Vx().x * transform->size.x;
-			transform->local.Pos().y += pos.x * transform->local.Vx().y * transform->size.x;
+			transform->position.x += pos.x * transform->local.Vx().x * transform->size.x;
+			transform->position.y += pos.x * transform->local.Vx().y * transform->size.x;
 
-			transform->local.Pos().x += pos.y * transform->local.Vy().x * transform->size.y;
-			transform->local.Pos().y += pos.y * transform->local.Vy().y * transform->size.y;
+			transform->position.x += pos.y * transform->local.Vy().x * transform->size.y;
+			transform->position.y += pos.y * transform->local.Vy().y * transform->size.y;
 
 			selAxis = -1;
 		}
