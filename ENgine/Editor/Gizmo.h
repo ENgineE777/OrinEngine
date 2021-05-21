@@ -118,6 +118,9 @@ namespace Oak
 
 		void CaclLocalMatrix();
 
+		Math::Vector3 GetGlobalPos();
+		void SetGlobalPos(Math::Vector3 pos);
+
 	public:
 
 		Transform* transform = nullptr;

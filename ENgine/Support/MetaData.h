@@ -44,6 +44,8 @@ namespace Oak
 			Enum,
 			EnumString,
 			Callback,
+			Transform3D,
+			Transform2D,
 			AssetTexture,
 			Array
 		};
@@ -170,6 +172,7 @@ namespace Oak
 		#ifndef DOXYGEN_SKIP
 		#ifdef OAK_EDITOR
 		void ImGuiWidgets();
+		bool ImGuiVector(float* x, float* y, float* z, float* w, const char* name, const char* propID);
 		void ConstructCategoriesData();
 		bool IsValueWasChanged();
 		#endif
@@ -364,6 +367,28 @@ namespace Oak
 		prop.type = Type::AssetTexture;\
 		prop.name = strPropName;\
 		prop.catName = strCatName;\
+		prop.propName = strPropName;\
+		properties.push_back(prop);\
+	}
+
+	#define TRANSFORM3D_PROP(className, classMember, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::Transform3D;\
+		prop.name = strPropName;\
+		prop.catName = strPropName;\
+		prop.propName = strPropName;\
+		properties.push_back(prop);\
+	}
+
+	#define TRANSFORM2D_PROP(className, classMember, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::Transform2D;\
+		prop.name = strPropName;\
+		prop.catName = strPropName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
 	}

@@ -163,9 +163,21 @@ namespace Oak
 		{
 			selectedEntity->SetEditMode(true);
 
-			if (selectedEntity->GetTransform())
+			auto* transform = selectedEntity->GetTransform();
+
+			if (transform)
 			{
 				gizmo.SetTransform(selectedEntity->GetTransform());
+
+				if (!transform->unitsInvScale && gizmo.mode == TransformMode::Rectangle)
+				{
+					gizmo.mode = TransformMode::Move;
+				}
+				else
+				if (transform->unitsInvScale)
+				{
+					gizmo.mode = TransformMode::Rectangle;
+				}
 			}
 		}
 	}
@@ -794,84 +806,36 @@ namespace Oak
 
 			if (gizmo.IsEnabled())
 			{
-				/*if (gizmo.transform->mode)
+				auto* transform = selectedEntity ? selectedEntity->GetTransform() : nullptr;
+
+				PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
+				PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || !transform->unitsInvScale) gizmo.mode = TransformMode::Rotate; });
+				PushButton("Scale", gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || !transform->unitsInvScale)gizmo.mode = TransformMode::Scale; });
+				PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->unitsInvScale) gizmo.mode = TransformMode::Rectangle; });
+
+				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
-					ImGui::Text("AlignX");
-					ImGui::SameLine();
-
-					ImGui::SetNextItemWidth(60.0f);
-					ImGui::InputFloat("##AlignXID", &gizmo.align2D.x);
-					ImGui::SameLine();
-
-					ImGui::Text("AlignY");
-					ImGui::SameLine();
-
-					ImGui::SetNextItemWidth(60.0f);
-					ImGui::InputFloat("##AlignYID", &gizmo.align2D.y);
-					ImGui::SameLine();
-
-					ImGui::Separator();
-					ImGui::SameLine();
-
-					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
-					{
-						//float scale = 1024.0f / root.render.GetDevice()->GetHeight();
-						//Sprite::edCamPos = gizmo.GetTransform2D() / scale;
-					}
-
-					ImGui::SameLine();
-
-					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)))
-					{
-						//float scale = 1024.0f / root.render.GetDevice()->GetHeight();
-
-						//Math::Vector2 pos2d = Sprite::edCamPos * scale;
-						//gizmo.SetTransform2D(pos2d);
-					}
-
-					ImGui::SameLine();
+					gizmo.useLocalSpace = !gizmo.useLocalSpace;
 				}
-				else*/
+
+				ImGui::SameLine();
+
+				ImGui::Separator();
+				ImGui::SameLine();
+
+				if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
 				{
-					PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
-					PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this]() {gizmo.mode = TransformMode::Rotate; });
-					PushButton("Scale", gizmo.mode == TransformMode::Scale, [this]() {gizmo.mode = TransformMode::Scale; });
-					PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this]() {gizmo.mode = TransformMode::Rectangle; });
-
-					if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
-					{
-						gizmo.useLocalSpace = !gizmo.useLocalSpace;
-					}
-
-					ImGui::SameLine();
-
-					ImGui::Separator();
-					ImGui::SameLine();
-
-					if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)))
-					{
-						auto* transform = selectedEntity->GetTransform();
-
-						if (transform)
-						{
-							freeCamera.pos = transform->local.Pos() - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-						}
-					}
-
-					ImGui::SameLine();
-
-					if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)) && selectedEntity)
-					{
-						auto* transform = selectedEntity->GetTransform();
-
-						if (transform)
-						{
-							transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-						}
-					}
-
-					ImGui::SameLine();
+					freeCamera.pos = transform->global.Pos() - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
+
+				ImGui::SameLine();
+
+				if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)) && transform)
+				{
+					transform->position = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+				}
+
+				ImGui::SameLine();
 			}
 
 			ImGui::End();

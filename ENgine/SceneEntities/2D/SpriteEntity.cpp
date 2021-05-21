@@ -11,14 +11,7 @@ namespace Oak
 
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)
-		FLOAT_PROP(SpriteEntity, transform.position.x, 0.0f, "Transform", "x", "X coordinate of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.position.y, 0.0f, "Transform", "y", "Y coordinate of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.position.z, 0.0f, "Transform", "depth", "Depth from a camera position")
-		FLOAT_PROP(SpriteEntity, transform.rotation.z, 0.0f, "Transform", "rotation", "Rotation of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.size.x, 100.0f, "Transform", "width", "Width of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.size.y, 100.0f, "Transform", "height", "Height of a sprite")
-		FLOAT_PROP(SpriteEntity, transform.offset.x, 0.5f, "Transform", "offset X", "X coordinate of anchorn in absolute units")
-		FLOAT_PROP(SpriteEntity, transform.offset.y, 0.5f, "Transform", "offset Y", "Y coordinate of anchorn in absolute units")
+		TRANSFORM2D_PROP(SpriteEntity, transform, "Transform")
 		ASSET_TEXTURE_PROP(SpriteEntity, texture, "Visual", "Texture")
 	META_DATA_DESC_END()
 
@@ -31,6 +24,9 @@ namespace Oak
 
 	void SpriteEntity::Init()
 	{
+		transform.unitsScale = &Sprite::pixelsPerUnit;
+		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+
 		sprite.frames.push_back(Sprite::Frame());
 
 		RenderTasks(false)->AddTask(0, this, (Object::Delegate)& SpriteEntity::Draw);

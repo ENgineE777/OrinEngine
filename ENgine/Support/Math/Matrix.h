@@ -250,8 +250,8 @@ namespace Oak::Math
 			}
 			else
 			{
-				rot.x = atan2f(m[2][1], m[1][1]);
-				rot.y = atan2f(m[0][2], cosYangle);
+				rot.x = atan2f(-Vy().z, Vz().z);
+				rot.y = atan2f(Vx().z, cosYangle);
 				rot.z = 0.0f;
 			}
 

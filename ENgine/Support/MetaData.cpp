@@ -2,6 +2,7 @@
 #include "MetaData.h"
 #include "imgui.h"
 #include "Root/Root.h"
+#include "Transform.h"
 
 #ifdef OAK_EDITOR
 extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
@@ -86,6 +87,21 @@ namespace Oak
 			{
 				*((eastl::string*)prop.value) = "";
 			}
+			else
+			if (prop.type == Type::AssetTexture)
+			{
+				AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
+				ref->ReleaseRef();
+			}
+			else
+			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			{
+				Transform* transform = (Transform*)prop.value;
+				transform->position = 0.0f;
+				transform->rotation = 0.0f;
+				transform->scale = 1.0f;
+				transform->offset = 0.5f;
+			}
 		}
 	}
 
@@ -140,6 +156,12 @@ namespace Oak
 					AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
 					*ref = Oak::root.assets.GetAsset<AssetTexture>(path);
 				}
+			}
+			else
+			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			{
+				Transform* transform = (Transform*)prop.value;
+				transform->Load(reader, prop.propName.c_str());
 			}
 			else
 			if (prop.type == Type::Array)
@@ -224,6 +246,12 @@ namespace Oak
 				}
 			}
 			else
+			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			{
+				Transform* transform = (Transform*)prop.value;
+				transform->Save(writer, prop.propName.c_str());
+			}
+			else
 			if (prop.type == Type::Array)
 			{
 				writer.StartBlock(prop.name.c_str());
@@ -286,6 +314,18 @@ namespace Oak
 				memcpy(prop.value, src, sizeof(AssetTextureRef));
 			}
 			else
+			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			{
+				Transform* transformSrc = (Transform*)src;
+				Transform* transformDest = (Transform*)prop.value;
+
+				transformDest->position = transformSrc->position;
+				transformDest->rotation = transformSrc->rotation;
+				transformDest->scale = transformSrc->scale;
+				transformDest->size = transformSrc->size;
+				transformDest->offset = transformSrc->offset;
+			}
+			else
 			if (prop.type == Type::Array)
 			{
 				prop.adapter->value = src;
@@ -337,6 +377,54 @@ namespace Oak
 				categoriesData[index].indices.push_back(i);
 			}
 		}
+	}
+
+	bool MetaData::ImGuiVector(float* x, float* y, float* z, float* w, const char* name, const char* propID)
+	{
+		bool changed = false;
+
+		ImGui::Text(name);
+		ImGui::NextColumn();
+
+		float* values[] = { x, y, z, w };
+		const char* prefix[] = { "x", "y", "z", "w" };
+
+		float width = 0.0f;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (values[i])
+			{
+				width += 1.0f;
+			}
+		}
+
+		width = ImGui::GetContentRegionAvail().x / width;
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (values[i])
+			{
+				if (i != 0)
+				{
+					ImGui::SameLine();
+				}
+
+				ImGui::SetNextItemWidth(width);
+
+				char propGuiID[256];
+				StringUtils::Printf(propGuiID, 256, "%s%s%s", propID, name, prefix[i]);
+
+				if (ImGui::InputFloat(propGuiID, values[i]))
+				{
+					changed = true;
+				}
+			}
+		}
+
+		ImGui::NextColumn();
+
+		return changed;
 	}
 
 	void MetaData::ImGuiWidgets()
@@ -442,6 +530,25 @@ namespace Oak
 
 							ImGui::TreePop();
 						}
+					}
+					else
+					if (prop.type == Type::Transform3D)
+					{
+						Transform* transform = (Transform*)prop.value;
+
+						ImGuiVector(&transform->position.x, &transform->position.x, &transform->position.z, nullptr, "Position", propGuiID);
+						ImGuiVector(&transform->rotation.x, &transform->rotation.x, &transform->rotation.z, nullptr, "Rotation", propGuiID);
+						ImGuiVector(&transform->scale.x, &transform->scale.x, &transform->scale.z, nullptr, "Scale", propGuiID);
+					}
+					else
+					if (prop.type == Type::Transform2D)
+					{
+						Transform* transform = (Transform*)prop.value;
+
+						ImGuiVector(&transform->position.x, &transform->position.x, &transform->position.z, nullptr, "Position", propGuiID);
+						ImGuiVector(&transform->rotation.z, nullptr, nullptr, nullptr, "Rotation", propGuiID);
+						ImGuiVector(&transform->size.x, &transform->size.y, nullptr, nullptr, "Size", propGuiID);
+						ImGuiVector(&transform->scale.x, &transform->scale.y, nullptr, nullptr, "Scale", propGuiID);
 					}
 					else
 					{

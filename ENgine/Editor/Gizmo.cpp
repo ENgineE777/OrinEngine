@@ -62,7 +62,7 @@ namespace Oak
 	{
 		axis.ResetData();
 
-		axis.from = transform->global.Pos();
+		axis.from = GetGlobalPos();
 
 		Color color = CheckColor(axis.type);
 
@@ -273,7 +273,7 @@ namespace Oak
 			mat = transform->global;
 		}
 		
-		mat.Pos() = transform->global.Pos();
+		mat.Pos() = GetGlobalPos();
 
 		mat.RemoveScale();
 
@@ -348,7 +348,7 @@ namespace Oak
 			pos2 = TransformVetcor(pos2);
 		}
 
-		Math::Vector3 tr = transform->global.Pos();
+		Math::Vector3 tr = GetGlobalPos();
 
 		pos += tr;
 		pos2 += tr;
@@ -477,7 +477,7 @@ namespace Oak
 		else
 		if (mode == TransformMode::Rotate)
 		{
-			Math::Vector3 trans = transform->global.Pos() * view;
+			Math::Vector3 trans = GetGlobalPos() * view;
 
 			float r = scale;
 			float last_dx = -r * 2;
@@ -538,20 +538,20 @@ namespace Oak
 
 				if (axises[i].type == Axis::X)
 				{
-					Math::IntersectPlaneRay(transform->global.Pos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
-					selectionOffset -= transform->global.Pos();
+					Math::IntersectPlaneRay(GetGlobalPos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= GetGlobalPos();
 				}
 
 				if (axises[i].type == Axis::Y)
 				{
-					Math::IntersectPlaneRay(transform->global.Pos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
-					selectionOffset -= transform->global.Pos();
+					Math::IntersectPlaneRay(GetGlobalPos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= GetGlobalPos();
 				}
 
 				if (axises[i].type == Axis::Z)
 				{
-					Math::IntersectPlaneRay(transform->global.Pos(), axises[1].axis, mouseOrigin, mouseDirection, selectionOffset);
-					selectionOffset -= transform->global.Pos();
+					Math::IntersectPlaneRay(GetGlobalPos(), axises[1].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= GetGlobalPos();
 				}
 			}
 		}
@@ -562,24 +562,24 @@ namespace Oak
 				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
 			{
 				selAxis = (int)Axis::XZ;
-				Math::IntersectPlaneRay(transform->global.Pos(), axises[1].axis, mouseOrigin, mouseDirection,selectionOffset);
-				selectionOffset -= transform->global.Pos();
+				Math::IntersectPlaneRay(GetGlobalPos(), axises[1].axis, mouseOrigin, mouseDirection,selectionOffset);
+				selectionOffset -= GetGlobalPos();
 			}
 
 			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
 				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
 			{
 				selAxis = (int)Axis::XY;
-				Math::IntersectPlaneRay(transform->global.Pos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
-				selectionOffset -= transform->global.Pos();
+				Math::IntersectPlaneRay(GetGlobalPos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
+				selectionOffset -= GetGlobalPos();
 			}
 
 			if (Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
 			{
 				selAxis = (int)Axis::YZ;
-				Math::IntersectPlaneRay(transform->global.Pos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
-				selectionOffset -= transform->global.Pos();
+				Math::IntersectPlaneRay(GetGlobalPos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
+				selectionOffset -= GetGlobalPos();
 			}
 		}
 
@@ -626,9 +626,7 @@ namespace Oak
 		Math::Matrix inv = transform->global;
 		inv.Inverse();
 
-		Math::Vector3 delta = trans2DProjection * Sprite::pixelsPerUnit * inv - trans2DPrevProjection * Sprite::pixelsPerUnit * inv;
-
-		ms *= (Sprite::pixelsHeight / root.render.GetDevice()->GetHeight());
+		Math::Vector3 delta = trans2DProjection * (*transform->unitsScale) * inv - trans2DPrevProjection * (*transform->unitsScale) * inv;
 
 		if (ms.Length() < 0.001f)
 		{
@@ -685,11 +683,6 @@ namespace Oak
 		else
 		if (selAxis > 0)
 		{
-			Math::Matrix inv = transform->global;
-			inv.Inverse();
-
-			Math::Vector3 delta = trans2DProjection * Sprite::pixelsPerUnit * inv - trans2DPrevProjection * Sprite::pixelsPerUnit * inv;
-
 			float k1 = 1.0f;
 			float k2 = 1.0f;
 
@@ -752,7 +745,7 @@ namespace Oak
 
 	void Gizmo::AxisTranslation(AxisData& axisData)
 	{
-		Math::Vector3 original_point = transform->global.Pos() + selectionOffset;
+		Math::Vector3 original_point = GetGlobalPos() + selectionOffset;
 		Math::Vector3 point = original_point;
 
 		Math::Vector3 plane_tangent = axisData.axis.Cross(point - mouseOrigin);
@@ -761,7 +754,7 @@ namespace Oak
 
 		point = original_point + axisData.axis * (point - original_point).Dot(axisData.axis);
 
-		transform->global.Pos() = point - selectionOffset;
+		SetGlobalPos(point - selectionOffset);
 	}
 
 	void Gizmo::PlaneTranslation(AxisData& axisData)
@@ -769,10 +762,10 @@ namespace Oak
 		const float denom = mouseDirection.Dot(axisData.axis);
 		if (std::abs(denom) == 0) return;
 
-		const float t = (transform->global.Pos() + selectionOffset - mouseOrigin).Dot(axisData.axis) / denom;
+		const float t = (GetGlobalPos() + selectionOffset - mouseOrigin).Dot(axisData.axis) / denom;
 		if (t < 0) return;
 
-		transform->global.Pos() = mouseOrigin + mouseDirection * t - selectionOffset;
+		SetGlobalPos(mouseOrigin + mouseDirection * t - selectionOffset);
 	}
 
 	void Gizmo::PlaneTranslation(Math::Vector3& plane_normal, Math::Vector3& point)
@@ -793,6 +786,21 @@ namespace Oak
 
 		transform->local = transform->global * inverse;
 		transform->SetData(transform->local);
+	}
+
+	Math::Vector3 Gizmo::GetGlobalPos()
+	{
+		return transform->unitsInvScale ? (transform->global.Pos() * (*transform->unitsInvScale)) : transform->global.Pos();
+	}
+
+	void Gizmo::SetGlobalPos(Math::Vector3 pos)
+	{
+		transform->global.Pos() = pos;
+		
+		if (transform->unitsScale)
+		{
+			transform->global.Pos() *= (*transform->unitsScale);
+		}
 	}
 
 	void Gizmo::MoveTrans3D(Math::Vector2 ms)
@@ -958,10 +966,10 @@ namespace Oak
 
 				p1 -= Math::Vector3(transform->offset.x * transform->size.x, transform->offset.y * transform->size.y, 0);
 				p1 = p1 * transform->global;
-				p1 *= Sprite::pixelsPerUnitInvert;
+				p1 *= *transform->unitsInvScale;
 				p2 -= Math::Vector3(transform->offset.x * transform->size.x, transform->offset.y * transform->size.y, 0);
 				p2 = p2 * transform->global;
-				p2 *= Sprite::pixelsPerUnitInvert;
+				p2 *= *transform->unitsInvScale;
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
 				p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
@@ -990,7 +998,7 @@ namespace Oak
 		{
 			p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
 			p1 = p1 * transform->global;
-			p1 *= Sprite::pixelsPerUnitInvert;
+			p1 *= *transform->unitsInvScale;;
 		}
 
 		p1 = root.render.TransformToScreen(p1, 2);
@@ -1009,8 +1017,9 @@ namespace Oak
 		root.render.GetTransform(TransformStage::Projection, view_proj);
 		view_proj = view * view_proj;
 
-		Math::Vector3 pos = transform->global.Pos();
-		float z = pos.x*view_proj._13 + pos.y*view_proj._23 + pos.z*view_proj._33 + view_proj._43;
+		Math::Vector3 pos = GetGlobalPos();
+
+		float z = pos.x * view_proj._13 + pos.y * view_proj._23 + pos.z * view_proj._33 + view_proj._43;
 
 		scale = 0.1f * (1.0f + z);
 		scale = fabsf(scale);
@@ -1097,7 +1106,7 @@ namespace Oak
 		mouseDirection.z = v.x * inv_view._13 + v.y * inv_view._23 + v.z * inv_view._33;
 		mouseDirection.Normalize();
 
-		Math::IntersectPlaneRay(transform->global.Pos() * Sprite::pixelsPerUnitInvert, Math::Vector3(0.0f, 0.0f, -1.0f), mouseOrigin, mouseDirection, trans2DProjection);
+		Math::IntersectPlaneRay(GetGlobalPos(), Math::Vector3(0.0f, 0.0f, -1.0f), mouseOrigin, mouseDirection, trans2DProjection);
 
 		if (mousedPressed)
 		{
@@ -1148,7 +1157,7 @@ namespace Oak
 			Math::Matrix inv = transform->global;
 			inv.Inverse();
 
-			Math::Vector3 pos = movedOrigin * Sprite::pixelsPerUnit * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
+			Math::Vector3 pos = movedOrigin * (*transform->unitsScale) * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
 			transform->offset += Math::Vector3(pos.x, pos.y, 0.0f);
 
 			transform->position.x += pos.x * transform->local.Vx().x * transform->size.x;
