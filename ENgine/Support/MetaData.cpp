@@ -536,16 +536,16 @@ namespace Oak
 					{
 						Transform* transform = (Transform*)prop.value;
 
-						ImGuiVector(&transform->position.x, &transform->position.x, &transform->position.z, nullptr, "Position", propGuiID);
-						ImGuiVector(&transform->rotation.x, &transform->rotation.x, &transform->rotation.z, nullptr, "Rotation", propGuiID);
-						ImGuiVector(&transform->scale.x, &transform->scale.x, &transform->scale.z, nullptr, "Scale", propGuiID);
+						ImGuiVector(&transform->position.x, &transform->position.y, &transform->position.z, nullptr, "Position", propGuiID);
+						ImGuiVector(&transform->rotation.x, &transform->rotation.y, &transform->rotation.z, nullptr, "Rotation", propGuiID);
+						ImGuiVector(&transform->scale.x, &transform->scale.y, &transform->scale.z, nullptr, "Scale", propGuiID);
 					}
 					else
 					if (prop.type == Type::Transform2D)
 					{
 						Transform* transform = (Transform*)prop.value;
 
-						ImGuiVector(&transform->position.x, &transform->position.x, &transform->position.z, nullptr, "Position", propGuiID);
+						ImGuiVector(&transform->position.x, &transform->position.y, &transform->position.z, nullptr, "Position", propGuiID);
 						ImGuiVector(&transform->rotation.z, nullptr, nullptr, nullptr, "Rotation", propGuiID);
 						ImGuiVector(&transform->size.x, &transform->size.y, nullptr, nullptr, "Size", propGuiID);
 						ImGuiVector(&transform->scale.x, &transform->scale.y, nullptr, nullptr, "Scale", propGuiID);
