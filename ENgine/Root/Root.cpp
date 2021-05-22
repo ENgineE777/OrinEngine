@@ -16,6 +16,7 @@
 
 #ifdef OAK_EDITOR
 #include "Editor/Editor.h"
+#include <filesystem>
 #endif
 
 namespace Oak
@@ -38,11 +39,12 @@ namespace Oak
 		CreateDirectoryA(logsDir, nullptr);
 
 		time_t t = time(0);
-		struct tm now;
-		localtime_s(&now, &t);
 
-		StringUtils::Printf(logsDir, 1024, "%s/Logs/From %i_%i_%i %i_%i", curDir, now.tm_mday, now.tm_mon + 1, now.tm_year + 1900, now.tm_hour, now.tm_min, now.tm_sec);
-		CreateDirectoryA(logsDir, nullptr);
+		for (auto& path : std::filesystem::directory_iterator(logsDir))
+		{
+			std::filesystem::remove_all(path);
+		}
+
 		#endif
 
 		if (!files.Init())

@@ -16,6 +16,18 @@ namespace Oak
 		Transform trans;
 		Sprite::FrameState state;
 
+		struct VertexSkyBox
+		{
+			Math::Vector3 pos;
+			Math::Vector2 uv;
+		};
+
+		ProgramRef skyBoxPrg;
+		DataBufferRef skyBoxVbuffer;
+		VertexDeclRef skyBoxVdecl;
+		DataBufferRef skyBoxIbuffer;
+		TextureRef skyBoxTexture;
+
 	public:
 
 		FontRef font;
@@ -30,6 +42,7 @@ namespace Oak
 		void PrintText(Math::Vector2 pos, Color color, const char* text);
 		void DrawLine(Math::Vector2 from, Math::Vector2 to, Color color);
 		void DrawCurve(Math::Vector2 from, Math::Vector2 to, Color color);
+		void DrawSkyBox();
 
 		void Release();
 	};

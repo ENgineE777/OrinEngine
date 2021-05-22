@@ -23,6 +23,7 @@ namespace Oak
 	{
 		friend class Project;
 		friend class FreeCamera;
+		friend class EditorDrawer;
 		friend class Root;
 
 		HWND hwnd;

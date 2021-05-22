@@ -1035,8 +1035,8 @@ namespace Oak
 
 			if (freeCamera.mode_2d)
 			{
-				numCellsX = Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / root.render.GetDevice()->GetAspect() / freeCamera.zoom2D / step.y + 2;
-				numCellsY = Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / freeCamera.zoom2D / step.y + 2;
+				numCellsX = (int)(Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / root.render.GetDevice()->GetAspect() / freeCamera.zoom2D / step.y + 2);
+				numCellsY = (int)(Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / freeCamera.zoom2D / step.y + 2);
 			}
 			
 			for (int i = -numCellsY; i <= numCellsY; i++)
@@ -1083,6 +1083,12 @@ namespace Oak
 	void Editor::Render(float dt)
 	{
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
+
+		if (!freeCamera.mode_2d)
+		{
+			editorDrawer.DrawSkyBox();
+		}
+
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);

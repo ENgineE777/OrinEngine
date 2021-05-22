@@ -41,4 +41,7 @@ fxc /E PS /T ps_4_0 /Zi /Od /Fo particle_ps.shd particle.shader
 fxc /E VS /T vs_4_0 /Zi /Od /Fo sprite_vs.shd sprite.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo sprite_ps.shd sprite.shader
 
+fxc /E VS /T vs_4_0 /Zi /Od /Fo triangle_simplest_vs.shd triangle_simplest.shader
+fxc /E PS /T ps_4_0 /Zi /Od /Fo triangle_simplest_ps.shd triangle_simplest.shader
+
 pause
