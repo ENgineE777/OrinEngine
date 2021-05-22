@@ -14,6 +14,11 @@ namespace Oak
 		public:
 			virtual const char* GetVsName() { return "debug_line_vs.shd"; };
 			virtual const char* GetPsName() { return "debug_line_ps.shd"; };
+
+			virtual void ApplyStates()
+			{
+				root.render.GetDevice()->SetAlphaBlend(true);
+			}
 		};
 
 		class DbgLine : public DbgLineWithDepth
@@ -22,6 +27,7 @@ namespace Oak
 
 			virtual void ApplyStates()
 			{
+				root.render.GetDevice()->SetAlphaBlend(true);
 				root.render.GetDevice()->SetDepthTest(false);
 				root.render.GetDevice()->SetDepthWriting(false);
 			};
@@ -32,6 +38,11 @@ namespace Oak
 		public:
 			virtual const char* GetVsName() { return "debug_triangle_vs.shd"; };
 			virtual const char* GetPsName() { return "debug_triangle_ps.shd"; };
+
+			virtual void ApplyStates()
+			{
+				root.render.GetDevice()->SetAlphaBlend(true);
+			}
 		};
 
 		class DbgTriangle2D : public Program
