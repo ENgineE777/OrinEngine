@@ -53,6 +53,9 @@ namespace Oak
 
 		int startScene = -1;
 
+		Math::Vector2 alignRect = 32.0f;
+		bool useAlignRect = false;
+
 		eastl::vector<SceneHolder*> scenes;
 
 		bool CanRun();

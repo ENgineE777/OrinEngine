@@ -422,6 +422,8 @@ namespace Oak
 				//SetCursor(cr_move);
 
 				selAxis = 0;
+
+				rectPos = transform->position;
 			}
 			else
 			{
@@ -635,11 +637,13 @@ namespace Oak
 
 		if (selAxis == 0)
 		{
-			transform->position.x += delta.x * transform->local.Vx().x;
-			transform->position.y += delta.x * transform->local.Vx().y;
+			rectPos.x += delta.x * transform->local.Vx().x;
+			rectPos.y += delta.x * transform->local.Vx().y;
 
-			transform->position.x += delta.y * transform->local.Vy().x;
-			transform->position.y += delta.y * transform->local.Vy().y;
+			rectPos.x += delta.y * transform->local.Vy().x;
+			rectPos.y += delta.y * transform->local.Vy().y;
+
+			transform->position = AligneRectPos(rectPos);
 		}
 		else
 		if (selAxis == 9)
@@ -1048,20 +1052,17 @@ namespace Oak
 		return matrix.MulNormal(pos);
 	}
 
-	Math::Vector3 Gizmo::MakeAligned(Math::Vector3& pos)
+	Math::Vector3 Gizmo::AligneRectPos(Math::Vector3& pos)
 	{
-		/*if (align2D.x > 0.01f && pos.x < 0.0f)
+		Math::Vector3 res = pos;
+
+		if (useAlignRect)
 		{
-			pos.x -= align2D.x;
+			res.x = alignRect.x * ((int)(res.x / alignRect.x));
+			res.y = alignRect.y * ((int)(res.y / alignRect.y));
 		}
 
-		if (align2D.y > 0.01f && pos.y < 0.0f)
-		{
-			pos.y -= align2D.y;
-		}
-
-		return Math::Vector2((align2D.x > 0.01f) ? (align2D.x * ((int)(pos.x / align2D.x))) : pos.x, (align2D.y > 0.01f) ? (align2D.y * ((int)(pos.y / align2D.y))) : pos.y);*/
-		return 0.0f;
+		return res;
 	}
 
 	void Gizmo::Render()

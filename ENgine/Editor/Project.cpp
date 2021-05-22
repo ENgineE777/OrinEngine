@@ -26,6 +26,11 @@ namespace Oak
 			reader.Read("start_scene", startScene);
 			reader.Read("export_dir", exportDir);
 
+			reader.Read("alignRect", editor.gizmo.alignRect);
+			reader.Read("useAlignRect", editor.gizmo.useAlignRect);
+
+			bool useAlignRect = false;
+
 			while (reader.EnterBlock("scenes"))
 			{
 				scenes.push_back(new SceneHolder());
@@ -40,8 +45,6 @@ namespace Oak
 				reader.Read("camera3DPos", scn->camera3DPos);
 				reader.Read("camera2DPos", scn->camera2DPos);
 				reader.Read("camera2DZoom", scn->camera2DZoom);
-				reader.Read("gizmoAlign2D", scn->gizmoAlign2D);
-
 
 				reader.LeaveBlock();
 			}
@@ -121,6 +124,9 @@ namespace Oak
 		writer.Write("start_scene", startScene);
 		writer.Write("scenes_count", (int)scenes.size());
 
+		writer.Write("alignRect", editor.gizmo.alignRect);
+		writer.Write("useAlignRect", editor.gizmo.useAlignRect);
+
 		writer.StartArray("scenes");
 
 		for (auto& scn : scenes)
@@ -133,7 +139,6 @@ namespace Oak
 			writer.Write("camera3DPos", scn->camera3DPos);
 			writer.Write("camera2DPos", scn->camera2DPos);
 			writer.Write("camera2DZoom", scn->camera2DZoom);
-			writer.Write("gizmoAlign2D", scn->gizmoAlign2D);
 
 			writer.FinishBlock();
 		}
@@ -208,8 +213,6 @@ namespace Oak
 
 			editor.freeCamera.pos2D = selectedScene->camera2DPos;
 			editor.freeCamera.zoom2D = selectedScene->camera2DZoom;
-
-			editor.gizmo.align2D = selectedScene->gizmoAlign2D;
 
 			EnableScene(selectedScene, true);
 
@@ -396,7 +399,5 @@ namespace Oak
 
 		holder->camera2DPos = editor.freeCamera.pos2D;
 		holder->camera2DZoom = editor.freeCamera.zoom2D;
-
-		holder->gizmoAlign2D = editor.gizmo.align2D;
 	}
 }

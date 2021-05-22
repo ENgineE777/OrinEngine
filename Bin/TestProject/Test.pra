@@ -3,32 +3,33 @@
 	"export_dir" : "",
 	"start_scene" : 1,
 	"scenes_count" : 2,
+	"alignRect" :
+	{
+		"x" : 32.000000,
+		"y" : 32.000000
+	},
+	"useAlignRect" : true,
 	"scenes" : [
 		{
 			"path" : "scene1.sca",
-			"selected_entity" : 350138,
+			"selected_entity" : 1011636,
 			"camera3DAngles" :
 			{
-				"x" : -4.430015,
-				"y" : -0.360796
+				"x" : 1.739986,
+				"y" : -0.150796
 			},
 			"camera3DPos" :
 			{
-				"x" : 10.941777,
-				"y" : 12.250935,
-				"z" : -26.139671
+				"x" : 13.015605,
+				"y" : 6.224096,
+				"z" : -37.449795
 			},
 			"camera2DPos" :
 			{
 				"x" : 0.000000,
 				"y" : 0.000000
 			},
-			"camera2DZoom" : 1.000000,
-			"gizmoAlign2D" :
-			{
-				"x" : 0.000000,
-				"y" : 0.000000
-			}
+			"camera2DZoom" : 1.000000
 		},
 		{
 			"path" : "scene2.sca",
@@ -49,12 +50,7 @@
 				"x" : 0.000000,
 				"y" : 0.000000
 			},
-			"camera2DZoom" : 1.000000,
-			"gizmoAlign2D" :
-			{
-				"x" : 0.000000,
-				"y" : 0.000000
-			}
+			"camera2DZoom" : 1.000000
 		}
 	],
 	"selected_scene" : "scene1.sca"

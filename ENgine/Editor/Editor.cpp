@@ -836,6 +836,36 @@ namespace Oak
 				}
 
 				ImGui::SameLine();
+
+				ImGui::SameLine();
+
+				ImGui::Separator();
+				ImGui::SameLine();
+
+				if (gizmo.mode == TransformMode::Rectangle)
+				{
+					PushButton("Snap", gizmo.useAlignRect, [this]() { gizmo.useAlignRect = !gizmo.useAlignRect; });
+
+					ImGui::Text("SnapX");
+					ImGui::SameLine();
+
+					ImGui::SetNextItemWidth(100.0f);
+					int value = (int)gizmo.alignRect.x;
+					ImGui::InputInt("##SnapXID", &value);
+					if (value < 2) value = 2;
+					gizmo.alignRect.x = (float)value;
+					ImGui::SameLine();
+
+					ImGui::Text("SnapY");
+					ImGui::SameLine();
+
+					ImGui::SetNextItemWidth(100.0f);
+					value = (int)gizmo.alignRect.y;
+					ImGui::InputInt("##SnapYID", &value, ImGuiInputTextFlags_CharsDecimal);
+					if (value < 2) value = 2;
+					gizmo.alignRect.y = (float)value;
+					ImGui::SameLine();
+				}
 			}
 
 			ImGui::End();
@@ -968,14 +998,55 @@ namespace Oak
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
-		if (!freeCamera.mode_2d)
+		if (gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect && selectedEntity)
 		{
-			for (int i = 0; i <= 20; i++)
-			{
-				float pos = (float)i - 10.0f;
+			Math::Vector2 step = gizmo.alignRect;
 
-				root.render.DebugLine(Math::Vector3(pos, 0.0f, -10.0f), COLOR_WHITE, Math::Vector3(pos, 0.0f, 10.0f), COLOR_WHITE);
-				root.render.DebugLine(Math::Vector3(-10.0f, 0.0f, pos), COLOR_WHITE, Math::Vector3(10.0f, 0.0f, pos), COLOR_WHITE);
+			float minStep = 16.0f;
+
+			if (freeCamera.mode_2d)
+			{
+				minStep = 16.0f / freeCamera.zoom2D;
+			}
+			
+			while (step.x < minStep)
+			{
+				step *= 2.0f;
+			}
+
+			Math::Vector3 pos = gizmo.transform->global.Pos();
+
+			if (freeCamera.mode_2d)
+			{
+				pos.x = freeCamera.pos2D.x * (*gizmo.transform->unitsScale);
+				pos.y = freeCamera.pos2D.y * (*gizmo.transform->unitsScale);
+			}
+			
+			pos.x = step.x * ((int)(pos.x / step.x));
+			pos.y = step.y * ((int)(pos.y / step.y));
+
+			pos *= (*gizmo.transform->unitsInvScale);
+			step *= (*gizmo.transform->unitsInvScale);
+
+			Color color = COLOR_LIGHT_GRAY_A(0.5f);
+
+			int numCellsY = 30;
+			int numCellsX = 45;
+
+			if (freeCamera.mode_2d)
+			{
+				numCellsX = Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / root.render.GetDevice()->GetAspect() / freeCamera.zoom2D / step.y + 2;
+				numCellsY = Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / freeCamera.zoom2D / step.y + 2;
+			}
+			
+			for (int i = -numCellsY; i <= numCellsY; i++)
+			{
+				root.render.DebugLine(Math::Vector3(-numCellsX * step.x + pos.x, i * step.y + pos.y, pos.z), color, Math::Vector3(numCellsX * step.x + pos.x, i * step.y + pos.y, pos.z), color, false);
+			}
+
+			for (int i = -numCellsX; i <= numCellsX; i++)
+			{
+				root.render.DebugLine(Math::Vector3(i * step.x + pos.x, -numCellsY * step.y + pos.y, pos.z), color, Math::Vector3(i * step.x + pos.x, numCellsY * step.y + pos.y, pos.z), color, false);
 			}
 		}
 

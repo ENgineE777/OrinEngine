@@ -93,6 +93,8 @@ namespace Oak
 		Math::Vector2 mousesDir = 0.0f;
 		Math::Vector2 prevMouse = 0.0f;
 
+		Math::Vector3 rectPos = 0.0f;
+
 		Color CheckColor(Axis axis, bool ignoreSelection = false);
 		void DrawAxis(AxisData& axis);
 		void DrawCircle(Axis axis);
@@ -126,7 +128,8 @@ namespace Oak
 		Transform* transform = nullptr;
 		TransformMode mode = TransformMode::Move;
 		bool useLocalSpace = false;
-		Math::Vector2 align2D = 0.0f;
+		Math::Vector2 alignRect = 8.0f;
+		bool useAlignRect = false;
 
 		Gizmo();
 
@@ -139,7 +142,7 @@ namespace Oak
 		void OnLeftMouseDown();
 		void OnLeftMouseUp();
 
-		Math::Vector3 MakeAligned(Math::Vector3& pos);
+		Math::Vector3 AligneRectPos(Math::Vector3& pos);
 
 		void Render();
 	};
