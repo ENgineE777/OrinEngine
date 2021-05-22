@@ -1,9 +1,27 @@
 #include "EditorDrawer.h"
+#include "Editor.h"
 #include "Root/Root.h"
 
 namespace Oak
 {
 	EditorDrawer editorDrawer;
+
+	class TriangleSimplest : public Program
+	{
+	public:
+		virtual const char* GetVsName() { return "triangle_simplest_vs.shd"; };
+		virtual const char* GetPsName() { return "triangle_simplest_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+			root.render.GetDevice()->SetDepthTest(false);
+			root.render.GetDevice()->SetDepthWriting(false);
+		};
+	};
+
+	CLASSREGEX(Program, TriangleSimplest, TriangleSimplest, "TriangleSimplest")
+	CLASSREGEX_END(Program, TriangleSimplest)
 
 	void EditorDrawer::Init()
 	{
@@ -23,6 +41,54 @@ namespace Oak
 		checker_texture->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
 		font = root.fonts.LoadFont("ENgine\\OpenSans-Regular.ttf", false, false, 11, _FL_);
+
+		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float2, ElementSemantic::Texcoord, 0 } };
+		skyBoxVdecl = root.render.GetDevice()->CreateVertexDecl(2, desc, _FL_);
+
+		skyBoxVbuffer = root.render.GetDevice()->CreateBuffer(8, sizeof(VertexSkyBox), _FL_);
+
+		VertexSkyBox* vertices = (VertexSkyBox*)skyBoxVbuffer->Lock();
+
+		float  size = 25.0f;
+
+		VertexSkyBox base_vertices[] =
+		{
+			{ Math::Vector3(-size, size, -size), Math::Vector2(0.0f, 0.0f) },
+			{ Math::Vector3(size, size, -size), Math::Vector2(1.0f, 0.0f) },
+			{ Math::Vector3(-size, -size, -size), Math::Vector2(0.0f, 1.0f) },
+			{ Math::Vector3(size, -size, -size), Math::Vector2(1.0f, 1.0f) },
+			{ Math::Vector3(-size, size, size), Math::Vector2(1.0f, 0.0f) },
+			{ Math::Vector3(size, size, size), Math::Vector2(0.0f, 0.0f) },
+			{ Math::Vector3(-size, -size, size), Math::Vector2(1.0f, 1.0f) },
+			{ Math::Vector3(size, -size, size), Math::Vector2(0.0f, 1.0f) }
+		};
+
+		memcpy(vertices, base_vertices, 8 * 5 * sizeof(float));
+
+		skyBoxVbuffer->Unlock();
+
+		skyBoxIbuffer = root.render.GetDevice()->CreateBuffer(12 * 3, sizeof(int), _FL_);
+
+		int* indices = (int*)skyBoxIbuffer->Lock();
+
+		int bace_indices[] =
+		{
+			0, 1, 2, 2, 1, 3,
+			4, 0, 6, 6, 0, 2,
+			7, 5, 6, 6, 5, 4,
+			3, 1, 7, 7, 1, 5,
+			4, 5, 0, 0, 5, 1,
+			3, 7, 2, 2, 7, 6
+		};
+
+		memcpy(indices, bace_indices, 36 * sizeof(int));
+
+		skyBoxIbuffer->Unlock();
+
+		skyBoxPrg = root.render.GetProgram("TriangleSimplest", _FL_);
+
+		skyBoxTexture = root.render.LoadTexture("ENgine/Editor/skybox.jpg", _FL_);
+		skyBoxTexture->SetAdress(TextureAddress::Clamp);
 	}
 
 	void EditorDrawer::DrawSprite(Texture* tex, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float rotate, Color color)
@@ -105,6 +171,32 @@ namespace Oak
 		}
 	}
 
+	void EditorDrawer::DrawSkyBox()
+	{
+		root.render.GetDevice()->SetProgram(skyBoxPrg);
+
+		root.render.GetDevice()->SetVertexDecl(skyBoxVdecl);
+		root.render.GetDevice()->SetVertexBuffer(0, skyBoxVbuffer);
+		root.render.GetDevice()->SetIndexBuffer(skyBoxIbuffer);
+
+		Math::Matrix view_prev;
+		root.render.GetTransform(TransformStage::View, view_prev);
+
+		Math::Matrix view;
+		view.BuildView(0.0f, Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)), Math::Vector3(0, 1, 0));
+		root.render.SetTransform(TransformStage::View, view);
+
+		Math::Matrix view_proj;
+		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
+
+		root.render.SetTransform(TransformStage::View, view_prev);
+
+		skyBoxPrg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
+		skyBoxPrg->SetTexture(ShaderType::Pixel, "diffuseMap", skyBoxTexture);
+
+		root.render.GetDevice()->DrawIndexed(PrimitiveTopology::TrianglesList, 0, 0, 12);
+	}
+
 	void EditorDrawer::Release()
 	{
 		font.ReleaseRef();
@@ -114,5 +206,10 @@ namespace Oak
 		arrow_tex.ReleaseRef();
 		checker_texture.ReleaseRef();
 
+		skyBoxPrg.ReleaseRef();
+		skyBoxVbuffer.ReleaseRef();
+		skyBoxVdecl.ReleaseRef();
+		skyBoxIbuffer.ReleaseRef();
+		skyBoxTexture.ReleaseRef();
 	}
 }
