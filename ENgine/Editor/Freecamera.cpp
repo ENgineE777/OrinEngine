@@ -9,7 +9,7 @@ namespace Oak
 	{
 		proj.BuildProjection(45.0f * Math::Radian, 600.0f / 800.0f, 1.0f, 1000.0f);
 
-		angles = Math::Vector2(0.0f, -0.5f);
+		angles = Math::Vector2(0.0f, -0.1f);
 		pos = Math::Vector3(0.0f, 6.0f, 0.0f);
 
 		alias_forward = root.controls.GetAlias("FreeCamera.MOVE_FORWARD");
