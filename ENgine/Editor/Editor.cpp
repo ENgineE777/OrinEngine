@@ -6,8 +6,6 @@
 
 #include "EditorDrawer.h"
 
-#include "SceneEntities\TestEntity.h"
-
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 #ifdef OAK_EDITOR
@@ -289,6 +287,8 @@ namespace Oak
 
 	void Editor::SceneTreePopup(bool contextItem)
 	{
+		entityDeletedViaPopup = false;
+
 		if (sceneTreePopup)
 		{
 			return;
@@ -381,6 +381,7 @@ namespace Oak
 				SceneEntity* entity = selectedEntity;
 				SelectEntity(nullptr);
 				project.selectedScene->scene->DeleteEntity(entity, true);
+				entityDeletedViaPopup = true;
 			}
 
 			ImGui::EndPopup();
@@ -541,7 +542,11 @@ namespace Oak
 
 				if (open)
 				{
-					EntitiesTreeView(entity->GetChilds());
+					if (!entityDeletedViaPopup)
+					{
+						EntitiesTreeView(entity->GetChilds());
+					}
+
 					ImGui::TreePop();
 				}
 			}

@@ -42,6 +42,7 @@ namespace Oak
 		bool sceneTreePopup = false; 
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
+		bool entityDeletedViaPopup = false;
 
 		bool projectRunning = false;
 
