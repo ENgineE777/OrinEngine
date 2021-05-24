@@ -887,14 +887,16 @@ namespace Oak
 
 				if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
 				{
-					freeCamera.pos = transform->global.Pos() - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+					auto pos = transform->global.Pos() * (transform->unitsInvScale ? (*transform->unitsInvScale) : 1.0f);
+					freeCamera.pos = pos - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
 
 				ImGui::SameLine();
 
 				if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)) && transform)
 				{
-					transform->position = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+					auto pos = freeCamera.pos * (transform->unitsScale ? (*transform->unitsScale) : 1.0f);
+					transform->position = pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
 
 				ImGui::SameLine();
