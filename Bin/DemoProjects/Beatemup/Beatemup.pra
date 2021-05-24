@@ -9,10 +9,12 @@
 		"y" : 8.000000
 	},
 	"useAlignRect" : false,
+	"pixelsPerUnit" : 50.000000,
+	"pixelsHeight" : 200.000000,
 	"scenes" : [
 		{
 			"path" : "Main.sca",
-			"selected_entity" : 213439,
+			"selected_entity" : 904702,
 			"camera3DAngles" :
 			{
 				"x" : 1.970000,
@@ -22,14 +24,14 @@
 			{
 				"x" : 5.344472,
 				"y" : 6.182575,
-				"z" : -13.702455
+				"z" : -13.702444
 			},
 			"camera2DPos" :
 			{
-				"x" : 1.998039,
-				"y" : 1.893752
+				"x" : -0.641961,
+				"y" : 1.973752
 			},
-			"camera2DZoom" : 2.480002
+			"camera2DZoom" : 1.000000
 		}
 	],
 	"selected_scene" : "Main.sca"

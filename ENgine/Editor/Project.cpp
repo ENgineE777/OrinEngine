@@ -36,6 +36,11 @@ namespace Oak
 			reader.Read("alignRect", editor.gizmo.alignRect);
 			reader.Read("useAlignRect", editor.gizmo.useAlignRect);
 
+			reader.Read("pixelsPerUnit", Sprite::pixelsPerUnit);
+			Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
+
+			reader.Read("pixelsHeight", Sprite::pixelsHeight);
+
 			bool useAlignRect = false;
 
 			while (reader.EnterBlock("scenes"))
@@ -133,6 +138,9 @@ namespace Oak
 
 		writer.Write("alignRect", editor.gizmo.alignRect);
 		writer.Write("useAlignRect", editor.gizmo.useAlignRect);
+
+		writer.Write("pixelsPerUnit", Sprite::pixelsPerUnit);
+		writer.Write("pixelsHeight", Sprite::pixelsHeight);
 
 		writer.StartArray("scenes");
 
@@ -377,6 +385,10 @@ namespace Oak
 
 	void Project::Reset()
 	{
+		Sprite::pixelsPerUnit = 50.0f;
+		Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
+		Sprite::pixelsHeight = 1080.0f;
+
 		editor.SelectEntity(nullptr);
 		selectedScene = nullptr;
 

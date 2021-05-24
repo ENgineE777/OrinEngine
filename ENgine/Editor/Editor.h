@@ -36,6 +36,7 @@ namespace Oak
 		FreeCamera freeCamera;
 
 		bool showAbout = false;
+		bool showProjectSettings = false;
 		SceneEntity* selectedEntity = nullptr;
 		AssetTextureRef selAsset;
 		bool projectTreePopup = false;
@@ -78,6 +79,7 @@ namespace Oak
 
 		void SetupImGUI();
 		void ShowAbout();
+		void ShowProjectSettings();
 		void ShowViewport();
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);

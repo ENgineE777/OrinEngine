@@ -142,6 +142,55 @@ namespace Oak
 		ImGui::End();
 	}
 
+	void Editor::ShowProjectSettings()
+	{
+		if (!showProjectSettings)
+		{
+			return;
+		}
+
+		ImGui::Begin("Project Settings", &showProjectSettings, ImGuiWindowFlags_NoDocking);
+
+		ImGui::Columns(1);
+
+		bool is_open = ImGui::CollapsingHeader("2D###ProjectSettings2D", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+			ImGui::Columns(2);
+
+			ImGui::Text("Pixels height");
+			ImGui::NextColumn();
+
+			ImGui::SetNextItemWidth(-1);
+
+			ImGui::InputFloat("###ProjectSettings2DPH", &Sprite::pixelsHeight);
+
+			ImGui::NextColumn();
+
+			ImGui::Text("Pixels per unit");
+			ImGui::NextColumn();
+
+			ImGui::SetNextItemWidth(-1);
+
+			if (ImGui::InputFloat("###ProjectSettings2DPPU", &Sprite::pixelsPerUnit))
+			{
+				if (Sprite::pixelsPerUnit < 1.0f)
+				{
+					Sprite::pixelsPerUnit = 1.0f;
+				}
+
+				Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
+			}
+
+			ImGui::NextColumn();
+
+			ImGui::Columns(1);
+		}
+
+		ImGui::End();
+	}
+
 	void Editor::SelectEntity(SceneEntity* entity)
 	{
 		if (entity != nullptr && selAsset.Get())
@@ -824,6 +873,16 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
+			if (ImGui::BeginMenu("Edit"))
+			{
+				if (ImGui::MenuItem("Project Settings") && !showProjectSettings)
+				{
+					showProjectSettings = true;
+				}
+
+				ImGui::EndMenu();
+			}
+
 			if (ImGui::BeginMenu("Help"))
 			{
 				if (ImGui::MenuItem("About") && !showAbout)
@@ -1045,6 +1104,7 @@ namespace Oak
 		}
 
 		ShowAbout();
+		ShowProjectSettings();
 		ShowViewport();
 
 		ImGui::Render();
@@ -1198,6 +1258,8 @@ namespace Oak
 
 	void Editor::Release()
 	{
+		StopProject();
+
 		for (auto& item : logCategories)
 		{
 			delete item.second;
