@@ -993,8 +993,16 @@ namespace Oak
 				else
 				{
 					Math::Vector3 pos = root.render.TransformToScreen(p1, 2);
-					ancorns[i] = Math::Vector2(pos.x, pos.y);
-					root.render.DebugSprite(editorDrawer.anchorn, ancorns[i] - Math::Vector2(4.0f), Math::Vector2(8.0f), selAxis == (i + 1) ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE);
+
+					if (pos.z > 0.01f)
+					{
+						ancorns[i] = Math::Vector2(pos.x, pos.y);
+						root.render.DebugSprite(editorDrawer.anchorn, ancorns[i] - Math::Vector2(4.0f), Math::Vector2(8.0f), selAxis == (i + 1) ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE);
+					}
+					else
+					{
+						ancorns[i] = -100.0f;
+					}
 				}
 			}
 		}
@@ -1012,9 +1020,16 @@ namespace Oak
 
 		p1 = root.render.TransformToScreen(p1, 2);
 
-		origin = Math::Vector2(p1.x, p1.y);
+		if (p1.z > 0.01f)
+		{
+			origin = Math::Vector2(p1.x, p1.y);
 
-		root.render.DebugSprite(editorDrawer.center, origin - Math::Vector2(4.0f), Math::Vector2(8.0f), (selAxis == 10 ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE));
+			root.render.DebugSprite(editorDrawer.center, origin - Math::Vector2(4.0f), Math::Vector2(8.0f), (selAxis == 10 ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE));
+		}
+		else
+		{
+			origin = -100.0f;
+		}
 	}
 
 	void Gizmo::RenderTrans3D()
