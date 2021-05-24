@@ -713,6 +713,11 @@ namespace Oak
 			delta.x *= k1;
 			delta.y *= k2;
 
+			if (root.controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Active))
+			{
+				delta.y = transform->size.y / transform->size.x * delta.x;
+			}
+
 			transform->size.x += delta.x;
 
 			auto pos = transform->position;
