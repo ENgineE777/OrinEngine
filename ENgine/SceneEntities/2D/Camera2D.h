@@ -8,6 +8,8 @@ namespace Oak
 {
 	class Camera2D : public SceneEntity
 	{
+		Math::Matrix view;
+
 	public:
 
 		META_DATA_DECL_BASE(Camera3D)
@@ -15,7 +17,6 @@ namespace Oak
 		float zoom = 1.0f;
 
 		Transform transform;
-		Math::Matrix view;
 
 #ifndef DOXYGEN_SKIP
 

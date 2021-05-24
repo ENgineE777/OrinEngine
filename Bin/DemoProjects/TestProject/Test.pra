@@ -12,24 +12,24 @@
 	"scenes" : [
 		{
 			"path" : "scene1.sca",
-			"selected_entity" : 1005498,
+			"selected_entity" : 350138,
 			"camera3DAngles" :
 			{
-				"x" : 2.529986,
-				"y" : -0.420796
+				"x" : 2.230000,
+				"y" : -0.110796
 			},
 			"camera3DPos" :
 			{
-				"x" : 37.858097,
-				"y" : 15.597936,
-				"z" : -29.776964
+				"x" : 27.359648,
+				"y" : 7.884593,
+				"z" : -31.173412
 			},
 			"camera2DPos" :
 			{
 				"x" : -0.855452,
 				"y" : -0.366232
 			},
-			"camera2DZoom" : 0.880000
+			"camera2DZoom" : 0.640000
 		},
 		{
 			"path" : "scene2.sca",

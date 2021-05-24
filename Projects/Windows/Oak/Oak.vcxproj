@@ -196,8 +196,9 @@
     <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity3D.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
     <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
@@ -368,8 +369,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity3D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp" />

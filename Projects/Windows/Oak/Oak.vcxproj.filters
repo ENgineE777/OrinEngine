@@ -92,6 +92,9 @@
     <Filter Include="ENgine\SceneEntities\2D">
       <UniqueIdentifier>{59941c46-96f9-4802-a797-ce956c114903}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\SceneEntities\Other">
+      <UniqueIdentifier>{987cd30d-4566-4fea-a9b1-183d0e1eec00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -359,14 +362,8 @@
     <ClCompile Include="..\..\..\ENgine\Root\Scenes\Scene.cpp">
       <Filter>ENgine\Root\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity.cpp">
-      <Filter>ENgine\SceneEntities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp">
       <Filter>ENgine\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\TestEntity3D.cpp">
-      <Filter>ENgine\SceneEntities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp">
       <Filter>ENgine\Support</Filter>
@@ -397,6 +394,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp">
+      <Filter>ENgine\SceneEntities\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp">
+      <Filter>ENgine\SceneEntities\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp">
+      <Filter>ENgine\SceneEntities\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -883,14 +889,8 @@
     <ClInclude Include="..\..\..\ENgine\Support\Transform.h">
       <Filter>ENgine\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity.h">
-      <Filter>ENgine\SceneEntities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h">
       <Filter>ENgine\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\TestEntity3D.h">
-      <Filter>ENgine\SceneEntities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Sprite.h">
       <Filter>ENgine\Support</Filter>
@@ -921,6 +921,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h">
+      <Filter>ENgine\SceneEntities\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h">
+      <Filter>ENgine\SceneEntities\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h">
+      <Filter>ENgine\SceneEntities\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
