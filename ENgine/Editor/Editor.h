@@ -43,6 +43,8 @@ namespace Oak
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
 
+		bool projectRunning = false;
+
 		struct LogCategory
 		{
 			int selItem = -1;
@@ -80,6 +82,9 @@ namespace Oak
 		void SceneTreePopup(bool contextItem);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 		void AssetsFolder(Assets::Folder* folder);
+
+		void StartProject();
+		void StopProject();
 
 		template<typename Func>
 		void PushButton(const char* label, bool pushed, Func callback)

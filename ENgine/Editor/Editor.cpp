@@ -642,6 +642,66 @@ namespace Oak
 		}
 	}
 
+	void Editor::StartProject()
+	{
+		if (!project.CanRun())
+		{
+			return;
+		}
+
+		if (project.projectName.size() == 0)
+		{
+			const char* fileName = OpenFileDialog("Project file", "pra", false);
+
+			if (fileName)
+			{
+				project.projectName = fileName;
+			}
+			else
+			{
+				return;
+			}
+		}
+
+		project.Save();
+
+		if (selectedEntity)
+		{
+			selectedEntity->EnableTasks(false);
+		}
+
+		if (project.selectedScene)
+		{
+			project.EnableScene(project.selectedScene, false);
+		}
+
+		root.scenes.LoadProject(project.projectName.c_str());
+
+		projectRunning = true;
+	}
+
+	void Editor::StopProject()
+	{
+		if (!projectRunning)
+		{
+			return;
+		}
+
+		root.scenes.UnloadAll();
+
+		if (project.selectedScene)
+		{
+			project.EnableScene(project.selectedScene, true);
+		}
+
+		if (selectedEntity)
+		{
+			selectedEntity->EnableTasks(true);
+		}
+
+		projectRunning = false;
+	}
+
 	bool Editor::Update()
 	{
 		ImGui_ImplDX11_NewFrame();
@@ -781,6 +841,8 @@ namespace Oak
 
 		{
 			ImGui::Begin("Toolbar");
+
+			PushButton("Play", projectRunning, [this]() { projectRunning = !projectRunning; });
 
 			PushButton("2D", freeCamera.mode_2d, [this]() {freeCamera.mode_2d = true; });
 			PushButton("3D", !freeCamera.mode_2d, [this]() {freeCamera.mode_2d = false; });
@@ -998,7 +1060,7 @@ namespace Oak
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
-		if (gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect && selectedEntity)
+		if (!projectRunning && gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect && selectedEntity)
 		{
 			Math::Vector2 step = gizmo.alignRect;
 
@@ -1054,13 +1116,16 @@ namespace Oak
 
 		root.controls.SetFocused(GetActiveWindow() == hwnd && ImGui::IsWindowFocused());
 
-		freeCamera.Update(dt);
+		if (!projectRunning)
+		{
+			freeCamera.Update(dt);
 
-		gizmo.Render();
+			gizmo.Render();
+		}
 
 		root.Update();
 
-		if (project.selectedScene)
+		if (!projectRunning && project.selectedScene)
 		{
 			if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
 			{
@@ -1084,7 +1149,7 @@ namespace Oak
 	{
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
 
-		if (!freeCamera.mode_2d)
+		if (!projectRunning && !freeCamera.mode_2d)
 		{
 			editorDrawer.DrawSkyBox();
 		}

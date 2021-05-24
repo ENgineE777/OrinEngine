@@ -28,10 +28,13 @@ void operator delete[](void* ptr, const char* file, int line);
 		MessageBoxA(nullptr, description, "Alert", MB_ICONERROR);\
 	}
 
+#define MESSAGE_BOX(caption, text) MessageBoxA(nullptr, text, caption, MB_ICONERROR);
+
 #else
 
 #define OAK_ASSERT(expression, description)
 #define OAK_ALERT(description)
+#define MESSAGE_BOX(caption, text)
 
 #endif
 

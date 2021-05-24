@@ -5,6 +5,8 @@ namespace Oak
 {
 	bool Project::CanRun()
 	{
+		MESSAGE_BOX("Can't start", "Please define a start scene");
+
 		return (startScene != -1);
 	}
 
