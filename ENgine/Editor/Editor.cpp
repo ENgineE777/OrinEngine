@@ -842,7 +842,7 @@ namespace Oak
 		{
 			ImGui::Begin("Toolbar");
 
-			PushButton("Play", projectRunning, [this]() { projectRunning = !projectRunning; });
+			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
 			PushButton("2D", freeCamera.mode_2d, [this]() {freeCamera.mode_2d = true; });
 			PushButton("3D", !freeCamera.mode_2d, [this]() {freeCamera.mode_2d = false; });

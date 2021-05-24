@@ -106,7 +106,6 @@ namespace Oak
 				reader.Read("rotation", rotation);
 				reader.Read("scale", scale);
 
-				reader.Read("local", local);
 				reader.Read("size", size);
 				reader.Read("offset", offset);
 
@@ -126,7 +125,6 @@ namespace Oak
 			writer.Write("position", position);
 			writer.Write("rotation", rotation);
 			writer.Write("scale", scale);
-			writer.Write("local", local);
 			writer.Write("size", size);
 			writer.Write("offset", offset);
 			writer.FinishBlock();

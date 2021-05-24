@@ -5,9 +5,14 @@ namespace Oak
 {
 	bool Project::CanRun()
 	{
-		MESSAGE_BOX("Can't start", "Please define a start scene");
+		if (startScene == -1)
+		{
+			MESSAGE_BOX("Can't start", "Please define a start scene");
 
-		return (startScene != -1);
+			return false; 
+		}
+
+		return true;
 	}
 
 	void Project::Load(const char* fileName)

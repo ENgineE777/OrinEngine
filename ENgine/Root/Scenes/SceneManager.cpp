@@ -22,7 +22,7 @@ namespace Oak
 			}
 
 			int count = 0;
-			reader.Read("scenesCount", count);
+			reader.Read("scenes_count", count);
 			scenes.resize(count);
 
 			int index = 0;
