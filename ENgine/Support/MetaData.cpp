@@ -547,8 +547,9 @@ namespace Oak
 
 						ImGuiVector(&transform->position.x, &transform->position.y, &transform->position.z, nullptr, "Position", propGuiID);
 						ImGuiVector(&transform->rotation.z, nullptr, nullptr, nullptr, "Rotation", propGuiID);
-						ImGuiVector(&transform->size.x, &transform->size.y, nullptr, nullptr, "Size", propGuiID);
 						ImGuiVector(&transform->scale.x, &transform->scale.y, nullptr, nullptr, "Scale", propGuiID);
+						ImGuiVector(&transform->size.x, &transform->size.y, nullptr, nullptr, "Size", propGuiID);
+						ImGuiVector(&transform->offset.x, &transform->offset.y, nullptr, nullptr, "Offset", propGuiID);
 					}
 					else
 					{
