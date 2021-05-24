@@ -1,7 +1,7 @@
 ﻿{
 
 	"export_dir" : "",
-	"start_scene" : 1,
+	"start_scene" : 0,
 	"scenes_count" : 2,
 	"alignRect" :
 	{
@@ -12,17 +12,17 @@
 	"scenes" : [
 		{
 			"path" : "scene1.sca",
-			"selected_entity" : 1011636,
+			"selected_entity" : 1005498,
 			"camera3DAngles" :
 			{
-				"x" : 2.009986,
-				"y" : -0.170796
+				"x" : 2.529986,
+				"y" : -0.420796
 			},
 			"camera3DPos" :
 			{
-				"x" : 13.015605,
-				"y" : 6.224096,
-				"z" : -37.449799
+				"x" : 37.858097,
+				"y" : 15.597936,
+				"z" : -29.776964
 			},
 			"camera2DPos" :
 			{

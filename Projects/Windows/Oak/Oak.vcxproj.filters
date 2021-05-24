@@ -395,6 +395,9 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -914,6 +917,9 @@
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,9 +2,6 @@
 #include "SpriteEntity.h"
 #include "Root/Root.h"
 
-#include "Support/MetaData.h"
-
-
 namespace Oak
 {
 	CLASSREG(SceneEntity, SpriteEntity, "Sprite")
