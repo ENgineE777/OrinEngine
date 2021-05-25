@@ -10,7 +10,8 @@ namespace Oak
 	META_DATA_DESC(Camera2D)
 		BASE_SCENE_ENTITY_PROP(Camera2D)
 		TRANSFORM3D_PROP(Camera2D, transform, "Transform")
-		FLOAT_PROP(Camera2D, zoom, 1.0f, "Property", "zoom", "Zoom of a camera")
+		FLOAT_PROP(Camera2D, zoom, 1.0f, "Properties", "zoom", "Zoom of a camera")
+		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
 	META_DATA_DESC_END()
 
 	Camera2D::Camera2D() : SceneEntity()
@@ -19,6 +20,9 @@ namespace Oak
 
 	void Camera2D::Init()
 	{
+		//transform.unitsScale = &Sprite::pixelsPerUnit;
+		//transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&Camera2D::Update);
 	}
 
@@ -28,6 +32,14 @@ namespace Oak
 
 		if (GetScene()->Playing())
 		{
+			if (targetRef.entity)
+			{
+				transform.position.x = targetRef.entity->GetTransform()->global.Pos().x * Sprite::pixelsPerUnitInvert;
+				transform.position.y = targetRef.entity->GetTransform()->global.Pos().y * Sprite::pixelsPerUnitInvert;
+
+				transform.BuildMatrices();
+			}
+
 			if (GetState() == SceneEntity::State::Active)
 			{
 				auto pos = transform.global.Pos();

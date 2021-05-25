@@ -12,6 +12,8 @@
 
 namespace Oak
 {
+	class Scene;
+
 	struct MetaDataEnum
 	{
 		int defIndex;
@@ -47,6 +49,7 @@ namespace Oak
 			Transform3D,
 			Transform2D,
 			AssetTexture,
+			SceneEntity,
 			Array
 		};
 
@@ -164,7 +167,7 @@ namespace Oak
 		void Prepare(void* owner, void* root = nullptr);
 		void SetDefValues();
 		void Load(JsonReader& reader);
-		void PostLoad();
+		void PostLoad(Scene* scene);
 		void Save(JsonWriter& writer);
 
 		void Copy(void* source);
@@ -389,6 +392,16 @@ namespace Oak
 		prop.type = Type::Transform2D;\
 		prop.name = strPropName;\
 		prop.catName = strPropName;\
+		prop.propName = strPropName;\
+		properties.push_back(prop);\
+	}
+
+	#define SCENEOBJECT_PROP(className, classMember, strCatName, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::SceneEntity;\
+		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
 	}

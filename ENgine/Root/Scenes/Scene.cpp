@@ -160,7 +160,7 @@ namespace Oak
 		for (auto entity : entities)
 		{
 			entity->GetMetaData()->Prepare(entity);
-			entity->GetMetaData()->PostLoad();
+			entity->GetMetaData()->PostLoad(this);
 
 			entity->ApplyProperties();
 		}

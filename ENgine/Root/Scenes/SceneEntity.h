@@ -267,10 +267,9 @@ namespace Oak
 		virtual void Release();
 	};
 
-	struct SceneObjectRef
+	struct SceneEntityRef
 	{
 		uint32_t uid = 0;
-		bool isAsset = false;
 		SceneEntity* entity = nullptr;
 	};
 

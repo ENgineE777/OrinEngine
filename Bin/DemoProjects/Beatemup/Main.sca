@@ -5,7 +5,7 @@
 		{
 			"type" : "Camera2D",
 			"uid" : 282420,
-			"name" : "Camera2D",
+			"name" : "Camera",
 			"state" : 2,
 			"Transform" :
 			{
@@ -40,7 +40,11 @@
 					"z" : 0.500000
 				}
 			},
-			"zoom" : 1.000000
+			"zoom" : 1.000000,
+			"Target" :
+			{
+				"uid" : 686452
+			}
 		},
 		{
 			"type" : "SpriteEntity",
@@ -177,8 +181,8 @@
 				"position" :
 				{
 					"x" : 99.516335,
-					"y" : 20.699450,
-					"z" : 1.293716
+					"y" : 20.699471,
+					"z" : 1.293717
 				},
 				"rotation" :
 				{

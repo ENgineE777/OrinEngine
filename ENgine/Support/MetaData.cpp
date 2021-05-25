@@ -3,6 +3,7 @@
 #include "imgui.h"
 #include "Root/Root.h"
 #include "Transform.h"
+#include "Root/Scenes/SceneEntity.h"
 
 #ifdef OAK_EDITOR
 extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
@@ -164,6 +165,18 @@ namespace Oak
 				transform->Load(reader, prop.propName.c_str());
 			}
 			else
+			if (prop.type == Type::SceneEntity)
+			{
+				if (reader.EnterBlock(prop.propName.c_str()))
+				{
+					SceneEntityRef* ref = (SceneEntityRef*)prop.value;
+
+					reader.Read("uid", ref->uid);
+					
+					reader.LeaveBlock();
+				}
+			}
+			else
 			if (prop.type == Type::Array)
 			{
 				if (reader.EnterBlock(prop.name.c_str()))
@@ -190,7 +203,7 @@ namespace Oak
 		}
 	}
 
-	void MetaData::PostLoad()
+	void MetaData::PostLoad(Scene* scene)
 	{
 		for (auto& prop : properties)
 		{
@@ -199,8 +212,14 @@ namespace Oak
 				for (int i = 0; i < prop.adapter->GetSize(); i++)
 				{
 					prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem(i), root);
-					prop.adapter->GetMetaData()->PostLoad();
+					prop.adapter->GetMetaData()->PostLoad(scene);
 				}
+			}
+			else
+			if (prop.type == Type::SceneEntity)
+			{
+				SceneEntityRef* ref = (SceneEntityRef*)prop.value;
+				ref->entity = scene->FindEntity(ref->uid);
 			}
 		}
 	}
@@ -250,6 +269,17 @@ namespace Oak
 			{
 				Transform* transform = (Transform*)prop.value;
 				transform->Save(writer, prop.propName.c_str());
+			}
+			else
+			if (prop.type == Type::SceneEntity)
+			{
+				SceneEntityRef* ref = (SceneEntityRef*)prop.value;
+
+				writer.StartBlock(prop.propName.c_str());
+
+				writer.Write("uid", ref->uid);
+
+				writer.FinishBlock();
 			}
 			else
 			if (prop.type == Type::Array)
@@ -324,6 +354,11 @@ namespace Oak
 				transformDest->scale = transformSrc->scale;
 				transformDest->size = transformSrc->size;
 				transformDest->offset = transformSrc->offset;
+			}
+			else
+			if (prop.type == Type::SceneEntity)
+			{
+				memcpy(prop.value, src, sizeof(SceneEntityRef));
 			}
 			else
 			if (prop.type == Type::Array)
@@ -479,7 +514,7 @@ namespace Oak
 						StringUtils::Printf(propGuiID, 256, "%s###%s%i", prop.propName.c_str(), guiID, i);
 						bool items_open = ImGui::TreeNode(propGuiID);
 
-						StringUtils::Printf(propGuiID, 256, "Add###%sAdd%i", guiID, i);
+						StringUtils::Printf(propGuiID, 256, "Add###%s%s%iAdd", categoriesData[j].name.c_str(), guiID, i);
 
 						ImGui::NextColumn();
 
@@ -504,7 +539,7 @@ namespace Oak
 
 								ImGui::NextColumn();
 
-								StringUtils::Printf(propGuiID, 256, "Del###%sDel%i", guiID, i);
+								StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
 
 								if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
 								{
@@ -610,7 +645,7 @@ namespace Oak
 						{
 							eastl::string* str = (eastl::string*)prop.value;
 
-							StringUtils::Printf(propGuiID, 256, "%s###%s%i", str->c_str()[0] ? str->c_str() : "File not set", guiID, i);
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", str->c_str()[0] ? str->c_str() : "File not set", categoriesData[j].name.c_str(), guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
 							{
@@ -633,7 +668,7 @@ namespace Oak
 
 							ImGui::SameLine();
 
-							StringUtils::Printf(propGuiID, 256, "Del###%sDel%i", guiID);
+							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
@@ -703,7 +738,7 @@ namespace Oak
 						{
 							AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
 
-							StringUtils::Printf(propGuiID, 256, "%s###%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", guiID, i);
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", categoriesData[j].name.c_str(), guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
 							{
@@ -729,7 +764,7 @@ namespace Oak
 
 							ImGui::SameLine();
 
-							StringUtils::Printf(propGuiID, 256, "Del###%sDel%i", guiID, i);
+							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
@@ -738,9 +773,47 @@ namespace Oak
 							}
 						}
 						else
+						if (prop.type == Type::SceneEntity)
+						{
+							SceneEntityRef* ref = reinterpret_cast<SceneEntityRef*>(prop.value);
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->entity ? ref->entity->GetName() : "None", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
+							{
+							}
+
+							if (ImGui::BeginDragDropTarget())
+							{
+								const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_TREENODE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+								if (payload)
+								{
+									uint64_t temp = *((uint64_t*)payload->Data);
+									SceneEntity* entity = (SceneEntity*)temp;
+
+									ref->entity = entity;
+									ref->uid = entity->GetUID();
+
+									prop.changed = true;
+								}
+							}
+
+							ImGui::SameLine();
+
+							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							{
+								ref->entity = nullptr;
+								ref->uid = 0;
+
+								prop.changed = true;
+							}
+						}
+						else
 						if (prop.type == Type::Callback)
 						{
-							StringUtils::Printf(propGuiID, 256, "Action###%s%i", guiID, i);
+							StringUtils::Printf(propGuiID, 256, "Action%s%i", propGuiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
 							{

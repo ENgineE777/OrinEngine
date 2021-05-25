@@ -498,7 +498,7 @@ namespace Oak
 					if (payload.IsDataType("_TREENODE"))
 					{
 						uint64_t temp = *((uint64_t*)payload.Data);
-						SceneEntity* dragged = (SceneEntity*)temp;					
+						SceneEntity* dragged = (SceneEntity*)temp;
 
 						bool transformMatches = transformEntity ? (transformEntity->GetTransform() && !dragged->GetTransform()) : true;
 
