@@ -9,7 +9,7 @@ namespace Oak
 
 	META_DATA_DESC(Camera2D)
 		BASE_SCENE_ENTITY_PROP(Camera2D)
-		TRANSFORM3D_PROP(Camera2D, transform, "Transform")
+		TRANSFORM2D_PROP(Camera2D, transform, "Transform")
 		FLOAT_PROP(Camera2D, zoom, 1.0f, "Properties", "zoom", "Zoom of a camera")
 		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
 	META_DATA_DESC_END()
@@ -20,8 +20,10 @@ namespace Oak
 
 	void Camera2D::Init()
 	{
-		//transform.unitsScale = &Sprite::pixelsPerUnit;
-		//transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.unitsScale = &Sprite::pixelsPerUnit;
+		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.size.x = Sprite::pixelsHeight * 16.0f / 9.0f;
+		transform.size.y = Sprite::pixelsHeight;
 
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&Camera2D::Update);
 	}
@@ -34,15 +36,15 @@ namespace Oak
 		{
 			if (targetRef.entity)
 			{
-				transform.position.x = targetRef.entity->GetTransform()->global.Pos().x * Sprite::pixelsPerUnitInvert;
-				transform.position.y = targetRef.entity->GetTransform()->global.Pos().y * Sprite::pixelsPerUnitInvert;
+				transform.position.x = targetRef.entity->GetTransform()->global.Pos().x;
+				transform.position.y = targetRef.entity->GetTransform()->global.Pos().y;
 
 				transform.BuildMatrices();
 			}
 
 			if (GetState() == SceneEntity::State::Active)
 			{
-				auto pos = transform.global.Pos();
+				auto pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
 
 				float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom);
 				view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
@@ -56,20 +58,48 @@ namespace Oak
 		}
 		else
 		{
-			float dist = 7.0f;
-			float width = tanf(45.0f * Math::Radian * 0.5f) * dist;
+			Math::Vector3 p1, p2;
 
-			Math::Vector3 edges[] = { Math::Vector3(0.0f), Math::Vector3(-width , width, dist), Math::Vector3(width, width, dist), Math::Vector3(width,-width, dist), Math::Vector3(-width,-width, dist)};
-
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 4; i++)
 			{
-				edges[i] = edges[i] * transform.global;
-			}
+				if (i == 0)
+				{
+					p1 = Math::Vector3(0, 0, 0);
+					p2 = Math::Vector3(transform.size.x, 0, 0);
+				}
+				else
+				if (i == 1)
+				{
+					p1 = Math::Vector3(transform.size.x, 0, 0);
+					p2 = Math::Vector3(transform.size.x, transform.size.y, 0);
+				}
+				else
+				if (i == 2)
+				{
+					p1 = Math::Vector3(transform.size.x, transform.size.y, 0);
+					p2 = Math::Vector3(0, transform.size.y, 0);
+				}
+				else
+				if (i == 3)
+				{
+					p1 = Math::Vector3(0, transform.size.y, 0);
+					p2 = Math::Vector3(0, 0, 0);
+				}
 
-			for (int i = 1; i < 5; i++)
-			{
-				root.render.DebugLine(edges[0], COLOR_GREEN, edges[i], COLOR_GREEN);
-				root.render.DebugLine(edges[i], COLOR_GREEN, edges[i == 4 ? 1 : i + 1], COLOR_GREEN);
+				p1 -= Math::Vector3(transform.offset.x * transform.size.x, transform.offset.y * transform.size.y, 0);
+				p1 = p1 * transform.global;
+				p1 *= *transform.unitsInvScale;
+				p2 -= Math::Vector3(transform.offset.x * transform.size.x, transform.offset.y * transform.size.y, 0);
+				p2 = p2 * transform.global;
+				p2 *= *transform.unitsInvScale;
+
+				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
+				p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
+
+				tmp = Math::Vector2(p2.x, p2.y);
+				p2 = Math::Vector3(tmp.x, tmp.y, p1.z);
+
+				root.render.DebugLine(p1, COLOR_YELLOW, p2, COLOR_YELLOW, false);
 			}
 		}
 	}

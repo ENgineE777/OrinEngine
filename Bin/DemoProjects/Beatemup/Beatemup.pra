@@ -14,7 +14,7 @@
 	"scenes" : [
 		{
 			"path" : "Main.sca",
-			"selected_entity" : 282420,
+			"selected_entity" : 904702,
 			"camera3DAngles" :
 			{
 				"x" : 1.970000,
@@ -24,14 +24,14 @@
 			{
 				"x" : 5.344472,
 				"y" : 6.182575,
-				"z" : -13.702431
+				"z" : -13.702423
 			},
 			"camera2DPos" :
 			{
 				"x" : -0.641961,
 				"y" : 1.973752
 			},
-			"camera2DZoom" : 1.000000
+			"camera2DZoom" : 0.520000
 		}
 	],
 	"selected_scene" : "Main.sca"
