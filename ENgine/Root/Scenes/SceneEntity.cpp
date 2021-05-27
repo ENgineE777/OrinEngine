@@ -103,11 +103,6 @@ namespace Oak
 		return state;
 	}
 
-	Transform* SceneEntity::GetTransform()
-	{
-		return nullptr;
-	}
-
 	void SceneEntity::Load(JsonReader& reader)
 	{
 		GetMetaData()->Prepare(this);

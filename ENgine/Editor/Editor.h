@@ -46,6 +46,7 @@ namespace Oak
 		bool entityDeletedViaPopup = false;
 
 		bool projectRunning = false;
+		bool allowSceneDropTraget = true;
 
 		struct LogCategory
 		{
@@ -83,6 +84,7 @@ namespace Oak
 		void ShowViewport();
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
+		void SceneDropTraget(SceneEntity* entity);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 		void AssetsFolder(Assets::Folder* folder);
 

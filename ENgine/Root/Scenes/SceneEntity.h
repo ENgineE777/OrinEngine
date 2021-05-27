@@ -109,7 +109,7 @@ namespace Oak
 
 		\return Transformation of scene entity
 		*/
-		virtual Transform* GetTransform();
+		virtual Transform* GetTransform() = 0;
 
 		/**
 		\brief This method called after each change of properties of scene object via editor
