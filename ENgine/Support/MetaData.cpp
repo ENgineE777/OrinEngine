@@ -95,7 +95,7 @@ namespace Oak
 				ref->ReleaseRef();
 			}
 			else
-			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			if (prop.type == Type::Transform)
 			{
 				Transform* transform = (Transform*)prop.value;
 				transform->position = 0.0f;
@@ -159,7 +159,7 @@ namespace Oak
 				}
 			}
 			else
-			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			if (prop.type == Type::Transform)
 			{
 				Transform* transform = (Transform*)prop.value;
 				transform->Load(reader, prop.propName.c_str());
@@ -265,7 +265,7 @@ namespace Oak
 				}
 			}
 			else
-			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			if (prop.type == Type::Transform)
 			{
 				Transform* transform = (Transform*)prop.value;
 				transform->Save(writer, prop.propName.c_str());
@@ -344,7 +344,7 @@ namespace Oak
 				memcpy(prop.value, src, sizeof(AssetTextureRef));
 			}
 			else
-			if (prop.type == Type::Transform3D || prop.type == Type::Transform2D)
+			if (prop.type == Type::Transform)
 			{
 				Transform* transformSrc = (Transform*)src;
 				Transform* transformDest = (Transform*)prop.value;
@@ -436,11 +436,13 @@ namespace Oak
 
 		width = ImGui::GetContentRegionAvail().x / width;
 
+		bool firstEntry = true;
+
 		for (int i = 0; i < 4; i++)
 		{
 			if (values[i])
 			{
-				if (i != 0)
+				if (!firstEntry)
 				{
 					ImGui::SameLine();
 				}
@@ -454,6 +456,8 @@ namespace Oak
 				{
 					changed = true;
 				}
+
+				firstEntry = false;
 			}
 		}
 
@@ -567,24 +571,47 @@ namespace Oak
 						}
 					}
 					else
-					if (prop.type == Type::Transform3D)
+					if (prop.type == Type::Transform)
 					{
 						Transform* transform = (Transform*)prop.value;
 
-						ImGuiVector(&transform->position.x, &transform->position.y, &transform->position.z, nullptr, "Position", propGuiID);
-						ImGuiVector(&transform->rotation.x, &transform->rotation.y, &transform->rotation.z, nullptr, "Rotation", propGuiID);
-						ImGuiVector(&transform->scale.x, &transform->scale.y, &transform->scale.z, nullptr, "Scale", propGuiID);
-					}
-					else
-					if (prop.type == Type::Transform2D)
-					{
-						Transform* transform = (Transform*)prop.value;
+						if (transform->transformFlag & TransformFlag::MoveXYZ)
+						{
+							ImGuiVector(transform->transformFlag & TransformFlag::MoveX ? &transform->position.x : nullptr,
+										transform->transformFlag & TransformFlag::MoveY ? &transform->position.y : nullptr,
+										transform->transformFlag & TransformFlag::MoveZ ? &transform->position.z : nullptr,
+										nullptr, "Position", propGuiID);
+						}
 
-						ImGuiVector(&transform->position.x, &transform->position.y, &transform->position.z, nullptr, "Position", propGuiID);
-						ImGuiVector(&transform->rotation.z, nullptr, nullptr, nullptr, "Rotation", propGuiID);
-						ImGuiVector(&transform->scale.x, &transform->scale.y, nullptr, nullptr, "Scale", propGuiID);
-						ImGuiVector(&transform->size.x, &transform->size.y, nullptr, nullptr, "Size", propGuiID);
-						ImGuiVector(&transform->offset.x, &transform->offset.y, nullptr, nullptr, "Offset", propGuiID);
+						if (transform->transformFlag & TransformFlag::RotateXYZ)
+						{
+							ImGuiVector(transform->transformFlag & TransformFlag::RotateX ? &transform->rotation.x : nullptr,
+										transform->transformFlag & TransformFlag::RotateY ? &transform->rotation.y : nullptr,
+										transform->transformFlag & TransformFlag::RotateZ ? &transform->rotation.z : nullptr,
+										nullptr, "Rotation", propGuiID);
+						}
+
+						if (transform->transformFlag & TransformFlag::ScaleXYZ)
+						{
+							ImGuiVector(transform->transformFlag & TransformFlag::ScaleX ? &transform->scale.x : nullptr,
+										transform->transformFlag & TransformFlag::ScaleY ? &transform->scale.y : nullptr,
+										transform->transformFlag & TransformFlag::ScaleZ ? &transform->scale.z : nullptr,
+										nullptr, "Scale", propGuiID);
+						}
+
+						if (transform->transformFlag & TransformFlag::RectSizeXY)
+						{
+							ImGuiVector(transform->transformFlag & TransformFlag::RectSizeX ? &transform->size.x : nullptr,
+										transform->transformFlag & TransformFlag::RectSizeY ? &transform->size.y : nullptr,
+										nullptr, nullptr, "Size", propGuiID);
+						}
+
+						if (transform->transformFlag & TransformFlag::RectAnchorn)
+						{
+							ImGuiVector(transform->transformFlag & TransformFlag::RectAnchorn ? &transform->offset.x : nullptr,
+										transform->transformFlag & TransformFlag::RectAnchorn ? &transform->offset.y : nullptr,
+										nullptr, nullptr, "Offset", propGuiID);
+						}
 					}
 					else
 					{

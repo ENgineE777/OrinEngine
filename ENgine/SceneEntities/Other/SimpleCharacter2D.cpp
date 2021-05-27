@@ -8,7 +8,7 @@ namespace Oak
 
 	META_DATA_DESC(SimpleCharacter2D)
 		BASE_SCENE_ENTITY_PROP(SimpleCharacter2D)
-		TRANSFORM2D_PROP(SimpleCharacter2D, trans, "Transform")
+		TRANSFORM_PROP(SimpleCharacter2D, trans, "Transform")
 		ASSET_TEXTURE_PROP(SimpleCharacter2D, texture, "Visual", "Texture")
 		FLOAT_PROP(SimpleCharacter2D, speed, 120.0f, "Properties", "Speed", "Speed of a charater")
 		BOOL_PROP(SimpleCharacter2D, is_enemy, true, "Properties", "IsEnemy", "Definig if charcter is a enemy")
@@ -23,6 +23,7 @@ namespace Oak
 	{
 		trans.unitsScale = &Sprite::pixelsPerUnit;
 		trans.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		trans.transformFlag = SpriteTransformFlags;
 
 		sprite.frames.push_back(Sprite::Frame());
 
@@ -169,7 +170,7 @@ namespace Oak
 		if (GetState() == SceneEntity::State::Active)
 		{
 			trans.position.z = (trans.position.y / floor_height) * 4.0f;
-			trans.scale.x = flipped ? -1.0f : 1.0f;
+			trans.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(trans.scale.x);
 		}
 		
 		trans.BuildMatrices();
@@ -325,7 +326,7 @@ namespace Oak
 
 				if (allow_move)
 				{
-					dir_horz = (trans.position.x - target->trans.position.x) > 0.0f ? -1.0f : 1.0f;
+					dir_horz = (trans.position.x - target->trans.position.x) > 0.0f ? -1 : 1;
 				}
 			}
 			else
@@ -343,7 +344,7 @@ namespace Oak
 
 				if (allow_move)
 				{
-					dir_vert = (trans.position.y - target->trans.position.y) > 0.0f ? -1.0f : 1.0f;
+					dir_vert = (trans.position.y - target->trans.position.y) > 0.0f ? -1 : 1;
 				}
 			}
 			else

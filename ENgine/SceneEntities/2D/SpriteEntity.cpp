@@ -8,7 +8,7 @@ namespace Oak
 
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)
-		TRANSFORM2D_PROP(SpriteEntity, transform, "Transform")
+		TRANSFORM_PROP(SpriteEntity, transform, "Transform")
 		ASSET_TEXTURE_PROP(SpriteEntity, texture, "Visual", "Texture")
 	META_DATA_DESC_END()
 
@@ -23,6 +23,7 @@ namespace Oak
 	{
 		transform.unitsScale = &Sprite::pixelsPerUnit;
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.transformFlag = SpriteTransformFlags;
 
 		sprite.frames.push_back(Sprite::Frame());
 

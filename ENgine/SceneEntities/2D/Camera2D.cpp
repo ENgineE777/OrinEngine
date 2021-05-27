@@ -9,7 +9,7 @@ namespace Oak
 
 	META_DATA_DESC(Camera2D)
 		BASE_SCENE_ENTITY_PROP(Camera2D)
-		TRANSFORM2D_PROP(Camera2D, transform, "Transform")
+		TRANSFORM_PROP(Camera2D, transform, "Transform")
 		FLOAT_PROP(Camera2D, zoom, 1.0f, "Properties", "zoom", "Zoom of a camera")
 		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
 	META_DATA_DESC_END()
@@ -24,6 +24,7 @@ namespace Oak
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.size.x = Sprite::pixelsHeight * 16.0f / 9.0f;
 		transform.size.y = Sprite::pixelsHeight;
+		transform.transformFlag = TransformFlag::MoveX | TransformFlag::MoveY | RectMoveXY;
 
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&Camera2D::Update);
 	}

@@ -17,6 +17,42 @@ namespace Oak
 
 	*/
 
+	enum TransformFlag : uint32_t
+	{
+		MoveX = (1 << 0),
+		MoveY = (1 << 1),
+		MoveZ = (1 << 2),
+		RotateX = (1 << 3),
+		RotateY = (1 << 4),
+		RotateZ = (1 << 5),
+		ScaleX = (1 << 6),
+		ScaleY = (1 << 7),
+		ScaleZ = (1 << 8),
+		RectMoveX = (1 << 9),
+		RectMoveY = (1 << 10),
+		RectSizeX = (1 << 11),
+		RectSizeY = (1 << 12),
+		RectAnchorn = (1 << 13),
+		MoveXYZ = MoveX | MoveY | MoveZ,
+		RotateXYZ = RotateX | RotateY | RotateZ,
+		ScaleXYZ = ScaleX | ScaleY | ScaleZ,
+		RectMoveXY = RectMoveX | RectMoveY,
+		RectSizeXY = RectSizeX | RectSizeY,
+		RectFull = RectMoveXY | RectSizeXY | RectAnchorn,
+		MoveRotateScaleFull = MoveXYZ | RotateXYZ | ScaleXYZ,
+		SpriteTransformFlags = MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY | TransformFlag::RectFull
+	};
+
+	constexpr enum TransformFlag operator |(const enum TransformFlag selfValue, const enum TransformFlag inValue)
+	{
+		return (enum TransformFlag)(uint32_t(selfValue) | uint32_t(inValue));
+	}
+
+	constexpr enum TransformFlag operator &(const enum TransformFlag selfValue, const enum TransformFlag inValue)
+	{
+		return (enum TransformFlag)(uint32_t(selfValue) & uint32_t(inValue));
+	}
+
 	struct Transform
 	{
 		/**
@@ -68,6 +104,11 @@ namespace Oak
 			\brief Units invert scale
 		*/
 		float* unitsInvScale = nullptr;
+
+		/**
+			\brief Transform flag
+		*/
+		TransformFlag transformFlag = TransformFlag::MoveRotateScaleFull;
 
 		/**
 		\brief Calculate final matrix

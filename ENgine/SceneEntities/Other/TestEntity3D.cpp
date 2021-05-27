@@ -8,7 +8,7 @@ namespace Oak
 
 	META_DATA_DESC(TestEntity3D)
 		BASE_SCENE_ENTITY_PROP(TestEntity3D)
-		TRANSFORM3D_PROP(TestEntity3D, transform, "Transform")
+		TRANSFORM_PROP(TestEntity3D, transform, "Transform")
 	META_DATA_DESC_END()
 
 	void TestEntity3D::Init()

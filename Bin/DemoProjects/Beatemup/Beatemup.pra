@@ -14,24 +14,24 @@
 	"scenes" : [
 		{
 			"path" : "Main.sca",
-			"selected_entity" : 904702,
+			"selected_entity" : 739766,
 			"camera3DAngles" :
 			{
-				"x" : 1.970000,
-				"y" : -0.220000
+				"x" : 1.750000,
+				"y" : -0.190000
 			},
 			"camera3DPos" :
 			{
-				"x" : 5.344472,
-				"y" : 6.182575,
-				"z" : -13.702423
+				"x" : 3.040488,
+				"y" : 6.865456,
+				"z" : -16.426094
 			},
 			"camera2DPos" :
 			{
 				"x" : -0.641961,
 				"y" : 1.973752
 			},
-			"camera2DZoom" : 0.520000
+			"camera2DZoom" : 1.000000
 		}
 	],
 	"selected_scene" : "Main.sca"

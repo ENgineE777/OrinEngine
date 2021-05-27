@@ -46,8 +46,7 @@ namespace Oak
 			Enum,
 			EnumString,
 			Callback,
-			Transform3D,
-			Transform2D,
+			Transform,
 			AssetTexture,
 			SceneEntity,
 			Array
@@ -374,22 +373,11 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define TRANSFORM3D_PROP(className, classMember, strPropName)\
+	#define TRANSFORM_PROP(className, classMember, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
-		prop.type = Type::Transform3D;\
-		prop.name = strPropName;\
-		prop.catName = strPropName;\
-		prop.propName = strPropName;\
-		properties.push_back(prop);\
-	}
-
-	#define TRANSFORM2D_PROP(className, classMember, strPropName)\
-	{\
-		Property prop;\
-		prop.offset = memberOFFSET(className, classMember);\
-		prop.type = Type::Transform2D;\
+		prop.type = Type::Transform;\
 		prop.name = strPropName;\
 		prop.catName = strPropName;\
 		prop.propName = strPropName;\

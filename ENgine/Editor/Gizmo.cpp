@@ -397,18 +397,21 @@ namespace Oak
 
 	void Gizmo::CheckSelectionTransRect(Math::Vector2 ms)
 	{
-		for (int i = 0; i < 8; i++)
+		if (transform->transformFlag & TransformFlag::RectSizeXY)
 		{
-			if (ancorns[i].x - 7 < ms.x && ms.x < ancorns[i].x + 7 &&
-				ancorns[i].y - 7 < ms.y && ms.y < ancorns[i].y + 7)
+			for (int i = 0; i < 8; i++)
 			{
-				selAxis = i + 1;
-				break;
+				if (ancorns[i].x - 7 < ms.x && ms.x < ancorns[i].x + 7 &&
+					ancorns[i].y - 7 < ms.y && ms.y < ancorns[i].y + 7)
+				{
+					selAxis = i + 1;
+					break;
+				}
 			}
 		}
 
 		if (origin.x - 7 < ms.x && ms.x < origin.x + 7 &&
-			origin.y - 7 < ms.y && ms.y < origin.y + 7)
+			origin.y - 7 < ms.y && ms.y < origin.y + 7 && transform->transformFlag & TransformFlag::RectAnchorn)
 		{
 			selAxis = 10;
 			movedOrigin = trans2DProjection;
@@ -445,6 +448,23 @@ namespace Oak
 
 		if (mode == TransformMode::Move || mode == TransformMode::Scale)
 		{
+			TransformFlag transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveX : TransformFlag::ScaleX;
+
+			if (axis.type == Axis::Y)
+			{
+				transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveY : TransformFlag::ScaleY;
+			}
+			else
+			if (axis.type == Axis::Z)
+			{
+				transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveZ : TransformFlag::ScaleZ;
+			}
+
+			if (!(transformFlag & transform->transformFlag))
+			{
+				return false;
+			}
+
 			Math::Vector3 dir;
 
 			if (axis.type == Axis::X)
@@ -479,6 +499,23 @@ namespace Oak
 		else
 		if (mode == TransformMode::Rotate)
 		{
+			TransformFlag transformFlag = TransformFlag::RotateX;
+
+			if (axis.type == Axis::Y)
+			{
+				transformFlag = TransformFlag::RotateY;
+			}
+			else
+			if (axis.type == Axis::Z)
+			{
+				transformFlag = TransformFlag::RotateZ;
+			}
+
+			if (!(transformFlag & transform->transformFlag))
+			{
+				return false;
+			}
+
 			Math::Vector3 trans = GetGlobalPos() * view;
 
 			float r = scale;
@@ -560,24 +597,27 @@ namespace Oak
 
 		if (mode == TransformMode::Move)
 		{
-			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::MoveX && transform->transformFlag & TransformFlag::MoveZ &&
+				(Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::XZ;
 				Math::IntersectPlaneRay(GetGlobalPos(), axises[1].axis, mouseOrigin, mouseDirection,selectionOffset);
 				selectionOffset -= GetGlobalPos();
 			}
 
-			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::MoveX && transform->transformFlag & TransformFlag::MoveY &&
+				(Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::XY;
 				Math::IntersectPlaneRay(GetGlobalPos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
 				selectionOffset -= GetGlobalPos();
 			}
 
-			if (Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::MoveY && transform->transformFlag & TransformFlag::MoveZ &&
+				(Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::YZ;
 				Math::IntersectPlaneRay(GetGlobalPos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
@@ -587,36 +627,40 @@ namespace Oak
 
 		if (mode == TransformMode::Scale)
 		{
-			if (Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[0].subPointRight2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].subPointRight2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::ScaleX && transform->transformFlag & TransformFlag::ScaleZ &&
+				(Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[0].subPointRight2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].subPointRight2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::XZ;
 			}
 
-			if (Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[0].subPointLeft2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[1].subPointLeft2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::ScaleX && transform->transformFlag & TransformFlag::ScaleY &&
+				(Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[0].subPointLeft2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[1].subPointLeft2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::XY;
 			}
 
-			if (Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[1].subPointRight2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].subPointLeft2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::ScaleY && transform->transformFlag & TransformFlag::ScaleZ &&
+				(Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[1].subPointRight2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].subPointLeft2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::YZ;
 			}
 
-			if (Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom2, axises[0].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom2, axises[2].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom2, axises[0].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom2, axises[1].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom2, axises[1].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
-				Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom2, axises[2].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f))
+			if (transform->transformFlag & TransformFlag::ScaleY && transform->transformFlag & TransformFlag::ScaleY && transform->transformFlag & TransformFlag::ScaleZ &&
+				(Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom2, axises[0].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom2, axises[2].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom2, axises[0].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom2, axises[1].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom2, axises[1].subPointRight2, mouseOrigin, mouseDirection, 1000.0f) ||
+				 Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom2, axises[2].subPointLeft2, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::XYZ;
 			}
@@ -1045,7 +1089,7 @@ namespace Oak
 
 		float z = pos.x * view_proj._13 + pos.y * view_proj._23 + pos.z * view_proj._33 + view_proj._43;
 
-		scale = 0.1f * (1.0f + z);
+		scale = 0.15f * (1.0f + z);
 		scale = fabsf(scale);
 
 		if (mode == TransformMode::Move || mode == TransformMode::Scale)

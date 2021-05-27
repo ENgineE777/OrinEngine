@@ -216,14 +216,16 @@ namespace Oak
 			{
 				gizmo.SetTransform(selectedEntity->GetTransform());
 
-				if (!transform->unitsInvScale && gizmo.mode == TransformMode::Rectangle)
-				{
-					gizmo.mode = TransformMode::Move;
-				}
-				else
-				if (transform->unitsInvScale)
+				if (transform->transformFlag & TransformFlag::RectFull)
 				{
 					gizmo.mode = TransformMode::Rectangle;
+				}
+				else
+				if ((gizmo.mode == TransformMode::Rotate && !(transform->transformFlag & TransformFlag::RotateXYZ)) ||
+					(gizmo.mode == TransformMode::Scale && !(transform->transformFlag & TransformFlag::ScaleXYZ)) ||
+					(gizmo.mode == TransformMode::Rectangle && !(transform->transformFlag & TransformFlag::RectFull)))
+				{
+					gizmo.mode = TransformMode::Move;
 				}
 			}
 		}
@@ -935,9 +937,9 @@ namespace Oak
 				auto* transform = selectedEntity ? selectedEntity->GetTransform() : nullptr;
 
 				PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
-				PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || !transform->unitsInvScale) gizmo.mode = TransformMode::Rotate; });
-				PushButton("Scale", gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || !transform->unitsInvScale)gizmo.mode = TransformMode::Scale; });
-				PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->unitsInvScale) gizmo.mode = TransformMode::Rectangle; });
+				PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) gizmo.mode = TransformMode::Rotate; });
+				PushButton("Scale", gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ) gizmo.mode = TransformMode::Scale; });
+				PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) gizmo.mode = TransformMode::Rectangle; });
 
 				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
