@@ -97,10 +97,18 @@ namespace Oak
 
 	void Project::Save(const char* fileName)
 	{
+		bool needSetRoot = projectName[0] ? false : true;
+
 		projectName = fileName;
 		StringUtils::GetPath(projectName.c_str(), projectPath);
 
 		Save();
+
+		if (needSetRoot)
+		{
+			root.SetRootPath(projectPath);
+			root.assets.LoadAssets();
+		}
 	}
 
 	void Project::Save()
