@@ -15,6 +15,11 @@ namespace Oak
 		META_DATA_DECL_BASE(Camera3D)
 
 		float zoom = 1.0f;
+		Math::Vector2 border;
+
+		bool useLimits = false;
+		Math::Vector2 leftup;
+		Math::Vector2 rightdown;
 		SceneEntityRef targetRef;
 
 		Transform transform;

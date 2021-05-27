@@ -12,6 +12,13 @@ namespace Oak
 		TRANSFORM_PROP(Camera2D, transform, "Transform")
 		FLOAT_PROP(Camera2D, zoom, 1.0f, "Properties", "zoom", "Zoom of a camera")
 		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
+		FLOAT_PROP(Camera2D, border.x, 100.0f, "Properties", "Horizontal border", "Horizontal border of a camera")
+		FLOAT_PROP(Camera2D, border.y, 100.0f, "Properties", "Vertical border", "Vertical border of a camera")
+		BOOL_PROP(Camera2D, useLimits, false, "Limits", "Use Limits", "Use limits for a camera")
+		FLOAT_PROP(Camera2D, leftup.x, -1000.0f, "Limits", "Left limit", "Left limit of a camera")
+		FLOAT_PROP(Camera2D, rightdown.x, 1000.0f, "Limits", "Right limit", "Right limit of a camera")
+		FLOAT_PROP(Camera2D, leftup.y, 1000.0f, "Limits", "Up limit", "Up limit of a camera")
+		FLOAT_PROP(Camera2D, rightdown.y, -1000.0f, "Limits", "Down limit", "Down limit of a camera")
 	META_DATA_DESC_END()
 
 	Camera2D::Camera2D() : SceneEntity()
@@ -37,8 +44,34 @@ namespace Oak
 		{
 			if (targetRef.entity)
 			{
-				transform.position.x = targetRef.entity->GetTransform()->global.Pos().x;
-				transform.position.y = targetRef.entity->GetTransform()->global.Pos().y;
+				transform.size.x = Sprite::pixelsHeight / root.render.GetDevice()->GetAspect();
+				transform.size.y = Sprite::pixelsHeight;
+
+				if (-transform.size.x * 0.5f + border.x > targetRef.entity->GetTransform()->global.Pos().x - transform.position.x)
+				{
+					transform.position.x = targetRef.entity->GetTransform()->global.Pos().x + transform.size.x * 0.5f - border.x;
+				}
+
+				if ( transform.size.x * 0.5f - border.x < targetRef.entity->GetTransform()->global.Pos().x - transform.position.x)
+				{
+					transform.position.x = targetRef.entity->GetTransform()->global.Pos().x - transform.size.x * 0.5f + border.x;
+				}
+
+				if (-transform.size.y * 0.5f + border.y > targetRef.entity->GetTransform()->global.Pos().y - transform.position.y)
+				{
+					transform.position.y = targetRef.entity->GetTransform()->global.Pos().y + transform.size.y * 0.5f - border.y;
+				}
+
+				if (transform.size.y * 0.5f - border.y < targetRef.entity->GetTransform()->global.Pos().y - transform.position.y)
+				{
+					transform.position.y = targetRef.entity->GetTransform()->global.Pos().y - transform.size.y * 0.5f + border.y;
+				}
+
+				if (useLimits)
+				{
+					transform.position.x = Math::Clamp(transform.position.x, leftup.x + transform.size.x * 0.5f, rightdown.x - transform.size.x * 0.5f);
+					transform.position.y = Math::Clamp(transform.position.y, rightdown.y + transform.size.y * 0.5f, leftup.y - transform.size.y * 0.5f);
+				}
 
 				transform.BuildMatrices();
 			}
@@ -61,36 +94,38 @@ namespace Oak
 		{
 			Math::Vector3 p1, p2;
 
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 8; i++)
 			{
-				if (i == 0)
+				Math::Vector2 offset = (i >= 4 ? border * 2.0f : 0.0f);
+
+				if (i == 0 || i == 4)
 				{
 					p1 = Math::Vector3(0, 0, 0);
-					p2 = Math::Vector3(transform.size.x, 0, 0);
+					p2 = Math::Vector3(transform.size.x - offset.x, 0, 0);
 				}
 				else
-				if (i == 1)
+				if (i == 1 || i == 5)
 				{
-					p1 = Math::Vector3(transform.size.x, 0, 0);
-					p2 = Math::Vector3(transform.size.x, transform.size.y, 0);
+					p1 = Math::Vector3(transform.size.x - offset.x, 0, 0);
+					p2 = Math::Vector3(transform.size.x - offset.x, transform.size.y - offset.y, 0);
 				}
 				else
-				if (i == 2)
+				if (i == 2 || i == 6)
 				{
-					p1 = Math::Vector3(transform.size.x, transform.size.y, 0);
-					p2 = Math::Vector3(0, transform.size.y, 0);
+					p1 = Math::Vector3(transform.size.x - offset.x, transform.size.y - offset.y, 0);
+					p2 = Math::Vector3(0, transform.size.y - offset.y, 0);
 				}
 				else
-				if (i == 3)
+				if (i == 3 || i == 7)
 				{
-					p1 = Math::Vector3(0, transform.size.y, 0);
+					p1 = Math::Vector3(0, transform.size.y - offset.y, 0);
 					p2 = Math::Vector3(0, 0, 0);
 				}
 
-				p1 -= Math::Vector3(transform.offset.x * transform.size.x, transform.offset.y * transform.size.y, 0);
+				p1 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
 				p1 = p1 * transform.global;
 				p1 *= *transform.unitsInvScale;
-				p2 -= Math::Vector3(transform.offset.x * transform.size.x, transform.offset.y * transform.size.y, 0);
+				p2 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
 				p2 = p2 * transform.global;
 				p2 *= *transform.unitsInvScale;
 
