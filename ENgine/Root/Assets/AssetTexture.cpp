@@ -47,6 +47,12 @@ namespace Oak
 		if (sprite)
 		{
 			sprite->texture = PointerRef<AssetTexture>(this, _FL_);
+
+			char str[256];
+			StringUtils::Copy(str, 256, name.c_str());
+			StringUtils::RemoveExtension(str);
+
+			entity->SetName(str);
 		}
 	}
 	#endif
