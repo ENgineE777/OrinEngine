@@ -26,23 +26,14 @@ namespace Oak
 	{
 		friend class Scene;
 
-	private:
-		Scene* scene = nullptr;
-
-	public:
-		enum class State
-		{
-			Invisible,
-			Inactive,
-			Active
-		};
-
 	protected:
+
+		Scene* scene = nullptr;
 
 		eastl::string name;
 		eastl::string layerName;
 		uint32_t uid = 0;
-		State state = State::Active;
+		bool visible = true;
 
 		Transform transform;
 
@@ -93,18 +84,18 @@ namespace Oak
 		virtual uint32_t GetUID();
 
 		/**
-		\brief Set state of a scene object
+		\brief Set visibility of a scene object
 
-		\param[in] state New state of a scene object
+		\param[in] set New visibility state of a scene object
 		*/
-		virtual void SetState(State state);
+		virtual void SetVisible(bool set);
 
 		/**
-		\brief Get current state of a scene object
+		\brief Get current visibility state of a scene object
 
-		\return Current state of a scene object
+		\return Current visibility state of a scene object
 		*/
-		virtual State GetState();
+		virtual bool IsVisible();
 
 		/**
 		\brief Get transformation of scene entity
@@ -279,11 +270,7 @@ namespace Oak
 	CLASSFACTORYDEF_END()
 
 	#define BASE_SCENE_ENTITY_STATE_PROP(className)\
-	ENUM_PROP(className, state, 2, "Common", "State", "State of a object")\
-		ENUM_ELEM("Invisible", 0)\
-		ENUM_ELEM("Inactive", 1)\
-		ENUM_ELEM("Active", 2)\
-	ENUM_END
+	BOOL_PROP(className, visible, true, "Common", "Visibile", "State of visibility of an object")
 
 	#define BASE_SCENE_ENTITY_PROP(className)\
 	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\

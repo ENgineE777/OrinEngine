@@ -86,12 +86,12 @@ namespace Oak
 		return uid;
 	}
 
-	void SceneEntity::SetState(State setState)
+	void SceneEntity::SetVisible(bool set)
 	{
-		state = setState;
+		visible = set;
 	}
 
-	SceneEntity::State SceneEntity::GetState()
+	bool SceneEntity::IsVisible()
 	{
 	#ifdef OAK_EDITOR
 		//if (!scene->Playing() && project.LayerHiden(layer_name.c_str()))
@@ -100,7 +100,12 @@ namespace Oak
 		}
 	#endif
 
-		return state;
+		if (parent && visible)
+		{
+			return parent->IsVisible();
+		}
+
+		return visible;
 	}
 
 	Transform& SceneEntity::GetTransform()

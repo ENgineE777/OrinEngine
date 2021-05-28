@@ -68,12 +68,12 @@ namespace Oak
 		Scene* GetScene(const char* name);
 
 		/**
-		\brief Set state for scene objects from scene groups in all loaded scenes
+		\brief Set visibility for scene objects from scene groups in all loaded scenes
 
-		\param[in] group NAme of a group
+		\param[in] group Name of a group
 		\param[in] state State which will be set for secene objects
 		*/
-		void SetScenesGroupsState(const char* group, int state);
+		void SetScenesGroupsVisibilty(const char* group, bool set);
 
 		/**
 		\brief Unload a scene

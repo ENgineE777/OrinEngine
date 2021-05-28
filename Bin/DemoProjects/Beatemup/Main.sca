@@ -6,7 +6,7 @@
 			"type" : "SpriteEntity",
 			"uid" : 213439,
 			"name" : "Floor",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
@@ -46,7 +46,7 @@
 			"type" : "SpriteEntity",
 			"uid" : 904702,
 			"name" : "Back",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
@@ -86,7 +86,7 @@
 			"type" : "SimpleCharacter2D",
 			"uid" : 686452,
 			"name" : "Player",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
@@ -131,7 +131,7 @@
 			"type" : "SimpleCharacter2D",
 			"uid" : 289727,
 			"name" : "Enemy",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
@@ -176,7 +176,7 @@
 			"type" : "Camera2D",
 			"uid" : 739766,
 			"name" : "Camera",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :

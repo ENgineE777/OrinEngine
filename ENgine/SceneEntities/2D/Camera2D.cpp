@@ -75,7 +75,7 @@ namespace Oak
 				transform.BuildMatrices();
 			}
 
-			if (GetState() == SceneEntity::State::Active)
+			if (IsVisible())
 			{
 				auto pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
 

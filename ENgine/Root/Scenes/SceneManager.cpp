@@ -138,7 +138,7 @@ namespace Oak
 		}
 	}
 
-	void SceneManager::SetScenesGroupsState(const char* groupName, int state)
+	void SceneManager::SetScenesGroupsVisibilty(const char* groupName, bool set)
 	{
 		for (auto& scn : scenes)
 		{
@@ -151,7 +151,7 @@ namespace Oak
 				{
 					for (auto entity : group->entities)
 					{
-						entity->SetState((SceneEntity::State)state);
+						entity->SetVisible(set);
 					}
 				}
 			}

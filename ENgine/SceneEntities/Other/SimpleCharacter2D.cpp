@@ -40,7 +40,7 @@ namespace Oak
 
 	void SimpleCharacter2D::Update(float dt)
 	{
-		if (state != SceneEntity::State::Active)
+		if (!IsVisible())
 		{
 			return;
 		}
@@ -156,7 +156,7 @@ namespace Oak
 
 	void SimpleCharacter2D::Draw(float dt)
 	{
-		if (GetState() == SceneEntity::State::Invisible)
+		if (!IsVisible())
 		{
 			return;
 		}
@@ -166,11 +166,8 @@ namespace Oak
 			return;
 		}
 
-		if (GetState() == SceneEntity::State::Active)
-		{
-			transform.position.z = (transform.position.y / floor_height) * 0.9f;
-			transform.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(transform.scale.x);
-		}
+		transform.position.z = (transform.position.y / floor_height) * 0.9f;
+		transform.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(transform.scale.x);
 		
 		transform.BuildMatrices();
 
@@ -179,7 +176,7 @@ namespace Oak
 			//trans.mat_global.Pos().y -= 1024.0f * arraive;
 		}
 
-		if (GetState() == SceneEntity::State::Active)
+		//if (GetState() == SceneEntity::State::Active)
 		{
 			//graph_instance.Update(GetName(), 0, Script(), nullptr, dt);
 		}
