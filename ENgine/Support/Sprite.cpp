@@ -211,7 +211,7 @@ namespace Oak::Sprite
 		}
 
 		Math::Matrix local_trans = trans->global;
-		Math::Vector3 pos3d = trans->offset * trans->size * Math::Vector3(-1.0f, -1.0f, -1.0f);
+		Math::Vector3 pos3d = Math::Vector3(trans->offset.x, 1.0f - trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, -1.0f, -1.0f);
 		Math::Vector2 pos = Math::Vector2(pos3d.x, pos3d.y);
 		Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);
 

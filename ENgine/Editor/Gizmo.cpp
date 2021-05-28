@@ -782,14 +782,14 @@ namespace Oak
 
 			if (selAxis == 1 || selAxis == 2 || selAxis == 5)
 			{
-				pos.x -= delta.y * (1.0f - transform->offset.y) * transform->local.Vy().x;
-				pos.y -= delta.y * (1.0f - transform->offset.y) * transform->local.Vy().y;
+				pos.x -= delta.y * transform->offset.y * transform->local.Vy().x;
+				pos.y -= delta.y * transform->offset.y * transform->local.Vy().y;
 			}
 			else
 			if (selAxis == 3 || selAxis == 4 || selAxis == 7)
 			{
-				pos.x += delta.y * transform->offset.y * transform->local.Vy().x;
-				pos.y += delta.y * transform->offset.y * transform->local.Vy().y;
+				pos.x += delta.y * (1.0f - transform->offset.y) * transform->local.Vy().x;
+				pos.y += delta.y * (1.0f - transform->offset.y) * transform->local.Vy().y;
 			}
 
 			transform->position = pos;
@@ -1017,10 +1017,10 @@ namespace Oak
 					p1 = Math::Vector3(0, transform->size.y * 0.5f, 0);
 				}
 
-				p1 -= Math::Vector3(transform->offset.x * transform->size.x, transform->offset.y * transform->size.y, 0);
+				p1 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
 				p1 = p1 * transform->global;
 				p1 *= *transform->unitsInvScale;
-				p2 -= Math::Vector3(transform->offset.x * transform->size.x, transform->offset.y * transform->size.y, 0);
+				p2 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
 				p2 = p2 * transform->global;
 				p2 *= *transform->unitsInvScale;
 
@@ -1223,7 +1223,7 @@ namespace Oak
 			inv.Inverse();
 
 			Math::Vector3 pos = movedOrigin * (*transform->unitsScale) * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
-			transform->offset += Math::Vector3(pos.x, pos.y, 0.0f);
+			transform->offset = Math::Vector3(transform->offset.x + pos.x, transform->offset.y - pos.y, 0.0f);
 
 			transform->position.x += pos.x * transform->local.Vx().x * transform->size.x;
 			transform->position.y += pos.x * transform->local.Vx().y * transform->size.x;
