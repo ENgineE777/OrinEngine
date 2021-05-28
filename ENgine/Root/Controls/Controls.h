@@ -19,8 +19,8 @@ namespace Oak
 {
 	enum class AliasAction
 	{
-		Active /*!< Hardware button in pressed state */,
-		Activated /*!< Harwdware button was just pressed */
+		Pressed /*!< Hardware button in pressed state */,
+		JustPressed /*!< Harwdware button was just pressed */
 	};
 
 	/**
@@ -226,7 +226,7 @@ namespace Oak
 
 			\return Returns true in case alias in requsted state. Otherwise false will be returned.
 		*/
-		bool  GetAliasState(int alias, AliasAction action = AliasAction::Activated);
+		bool  GetAliasState(int alias, AliasAction action = AliasAction::JustPressed);
 
 		/**
 			\brief Get value of a alias. Keys are returning ether 0 or 1. Sticks of gamepad can have value from -1.0f to 1.0f
@@ -258,7 +258,7 @@ namespace Oak
 
 			\return State of hardwrae alias.
 		*/
-		bool  DebugKeyPressed(const char* name, AliasAction action = AliasAction::Activated, bool ignore_focus = false);
+		bool  DebugKeyPressed(const char* name, AliasAction action = AliasAction::JustPressed, bool ignore_focus = false);
 
 		/**
 			\brief Check state of up to 3 hardware alias at same time. This allows to check hot kee constoted from severel keys.

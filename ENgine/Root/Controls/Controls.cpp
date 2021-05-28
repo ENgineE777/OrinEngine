@@ -434,12 +434,12 @@ namespace Oak
 
 						int index = i;
 
-						if (action == AliasAction::Activated)
+						if (action == AliasAction::JustPressed)
 						{
 							res = (!(joy_prev_states[index].Gamepad.wButtons & halias.index) && joy_states[index].Gamepad.wButtons & halias.index);
 						}
 
-						if (action == AliasAction::Active)
+						if (action == AliasAction::Pressed)
 						{
 							res = (joy_states[index].Gamepad.wButtons & halias.index) !=  0;
 						}
@@ -454,7 +454,7 @@ namespace Oak
 				{
 					float val = GetHardwareAliasValue(index, false, device_index, false);
 
-					if (action == AliasAction::Active)
+					if (action == AliasAction::Pressed)
 					{
 						return val > 0.99f;
 					}
@@ -468,12 +468,12 @@ namespace Oak
 			}
 			case Device::Keyboard:
 			{
-				if (action == AliasAction::Activated)
+				if (action == AliasAction::JustPressed)
 				{
 					return (btns[halias.index] == 1);
 				}
 
-				if (action == AliasAction::Active)
+				if (action == AliasAction::Pressed)
 				{
 					return (btns[halias.index] > 0);
 				}
@@ -483,12 +483,12 @@ namespace Oak
 			{
 				if (halias.index < 10)
 				{
-					if (action == AliasAction::Activated)
+					if (action == AliasAction::JustPressed)
 					{
 						return (ms_bts[halias.index] == 1);
 					}
 
-					if (action == AliasAction::Active)
+					if (action == AliasAction::Pressed)
 					{
 						return (ms_bts[halias.index] > 0);
 					}
@@ -500,12 +500,12 @@ namespace Oak
 			{
 				if (halias.index < 10)
 				{
-					if (action == AliasAction::Activated)
+					if (action == AliasAction::JustPressed)
 					{
 						return (touches[halias.index].state == 1);
 					}
 
-					if (action == AliasAction::Active)
+					if (action == AliasAction::Pressed)
 					{
 						return (touches[halias.index].state > 0);
 					}
@@ -554,15 +554,15 @@ namespace Oak
 
 				if (ref.refer2hardware)
 				{
-					val &= GetHardwareAliasState(ref.aliasIndex, AliasAction::Active, ref.device_index, false);
+					val &= GetHardwareAliasState(ref.aliasIndex, AliasAction::Pressed, ref.device_index, false);
 				}
 				else
 				{
-					val &= GetAliasState(ref.aliasIndex, AliasAction::Active);
+					val &= GetAliasState(ref.aliasIndex, AliasAction::Pressed);
 				}
 			}
 
-			if (action == AliasAction::Activated && val)
+			if (action == AliasAction::JustPressed && val)
 			{
 				val = false;
 
@@ -575,11 +575,11 @@ namespace Oak
 
 					if (ref.refer2hardware)
 					{
-						val |= GetHardwareAliasState(ref.aliasIndex, AliasAction::Activated, ref.device_index, false);
+						val |= GetHardwareAliasState(ref.aliasIndex, AliasAction::JustPressed, ref.device_index, false);
 					}
 					else
 					{
-						val |= GetAliasState(ref.aliasIndex, AliasAction::Activated);
+						val |= GetAliasState(ref.aliasIndex, AliasAction::JustPressed);
 					}
 				}
 			}
@@ -715,7 +715,7 @@ namespace Oak
 				}
 				else
 				{
-					return GetHardwareAliasState(index, AliasAction::Active, device_index, false) ? 1.0f : 0.0f;
+					return GetHardwareAliasState(index, AliasAction::Pressed, device_index, false) ? 1.0f : 0.0f;
 				}
 
 				break;
@@ -885,7 +885,7 @@ namespace Oak
 
 			for (device_index = 0; device_index<count; device_index++)
 			{
-				if (GetHardwareAliasState(index, AliasAction::Activated, device_index, false))
+				if (GetHardwareAliasState(index, AliasAction::JustPressed, device_index, false))
 				{
 					return halias.name.c_str();
 				}
@@ -917,11 +917,11 @@ namespace Oak
 			return false;
 		}
 
-		bool active = DebugKeyPressed(name, AliasAction::Active) & DebugKeyPressed(name2, AliasAction::Active);
+		bool active = DebugKeyPressed(name, AliasAction::Pressed) & DebugKeyPressed(name2, AliasAction::Pressed);
 
 		if (name3)
 		{
-			active &= DebugKeyPressed(name3, AliasAction::Active);
+			active &= DebugKeyPressed(name3, AliasAction::Pressed);
 		}
 
 		if (active)

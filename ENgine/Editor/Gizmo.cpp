@@ -692,7 +692,7 @@ namespace Oak
 		else
 		if (selAxis == 9)
 		{
-			if (!root.controls.DebugKeyPressed("KEY_Z", AliasAction::Active))
+			if (!root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
 			{
 				return;
 			}
@@ -757,7 +757,7 @@ namespace Oak
 			delta.x *= k1;
 			delta.y *= k2;
 
-			if (root.controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Active))
+			if (root.controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Pressed))
 			{
 				delta.y = transform->size.y / transform->size.x * delta.x;
 			}

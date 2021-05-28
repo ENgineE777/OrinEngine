@@ -27,7 +27,7 @@ namespace Oak
 	{
 		if (mode_2d)
 		{
-			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Active))
+			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
 			{
 				pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) * Sprite::pixelsPerUnitInvert * 2.0f / zoom2D;
 				pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) * Sprite::pixelsPerUnitInvert * 2.0f / zoom2D;
@@ -41,7 +41,7 @@ namespace Oak
 		}
 		else
 		{
-			if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Active))
+			if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Pressed))
 			{
 				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.01f;
 				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.01f;

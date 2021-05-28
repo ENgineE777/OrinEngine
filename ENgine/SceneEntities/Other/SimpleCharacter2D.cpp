@@ -169,7 +169,7 @@ namespace Oak
 
 		if (GetState() == SceneEntity::State::Active)
 		{
-			trans.position.z = (trans.position.y / floor_height) * 4.0f;
+			trans.position.z = (trans.position.y / floor_height) * 0.9f;
 			trans.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(trans.scale.x);
 		}
 		
@@ -220,7 +220,7 @@ namespace Oak
 	{
 		dir_horz = 0;
 
-		if (root.controls.DebugKeyPressed("KEY_A", AliasAction::Active))
+		if (root.controls.DebugKeyPressed("KEY_A", AliasAction::Pressed))
 		{
 			if (!allow_move)
 			{
@@ -239,7 +239,7 @@ namespace Oak
 			}
 		}
 		else
-		if (root.controls.DebugKeyPressed("KEY_D", AliasAction::Active))
+		if (root.controls.DebugKeyPressed("KEY_D", AliasAction::Pressed))
 		{
 			if (!allow_move)
 			{
@@ -260,7 +260,7 @@ namespace Oak
 
 		dir_vert = 0;
 
-		if (root.controls.DebugKeyPressed("KEY_W", AliasAction::Active))
+		if (root.controls.DebugKeyPressed("KEY_W", AliasAction::Pressed))
 		{
 			if (!allow_move)
 			{
@@ -274,7 +274,7 @@ namespace Oak
 			}
 		}
 		else
-		if (root.controls.DebugKeyPressed("KEY_S", AliasAction::Active))
+		if (root.controls.DebugKeyPressed("KEY_S", AliasAction::Pressed))
 		{
 			if (!allow_move)
 			{
