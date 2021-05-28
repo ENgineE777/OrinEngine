@@ -8,7 +8,6 @@ namespace Oak
 
 	META_DATA_DESC(SimpleCharacter2D)
 		BASE_SCENE_ENTITY_PROP(SimpleCharacter2D)
-		TRANSFORM_PROP(SimpleCharacter2D, trans, "Transform")
 		ASSET_TEXTURE_PROP(SimpleCharacter2D, texture, "Visual", "Texture")
 		FLOAT_PROP(SimpleCharacter2D, speed, 120.0f, "Properties", "Speed", "Speed of a charater")
 		BOOL_PROP(SimpleCharacter2D, is_enemy, true, "Properties", "IsEnemy", "Definig if charcter is a enemy")
@@ -21,9 +20,9 @@ namespace Oak
 
 	void SimpleCharacter2D::Init()
 	{
-		trans.unitsScale = &Sprite::pixelsPerUnit;
-		trans.unitsInvScale = &Sprite::pixelsPerUnitInvert;
-		trans.transformFlag = SpriteTransformFlags;
+		transform.unitsScale = &Sprite::pixelsPerUnit;
+		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.transformFlag = SpriteTransformFlags;
 
 		sprite.frames.push_back(Sprite::Frame());
 
@@ -36,7 +35,7 @@ namespace Oak
 	void SimpleCharacter2D::ApplyProperties()
 	{
 		sprite.texture = texture ? texture->GetTexture() : root.render.GetWhiteTexture();
-		trans.size = Math::Vector3((float)sprite.texture->GetWidth(), (float)sprite.texture->GetHeight(), 0.0f);
+		transform.size = Math::Vector3((float)sprite.texture->GetWidth(), (float)sprite.texture->GetHeight(), 0.0f);
 	}
 
 	void SimpleCharacter2D::Update(float dt)
@@ -85,7 +84,7 @@ namespace Oak
 				{
 					cur_time_to_kick = -1.0f;
 
-					Math::Vector2 kick_pos = Math::Vector2(trans.position.x, trans.position.x);
+					Math::Vector2 kick_pos = Math::Vector2(transform.position.x, transform.position.x);
 					kick_pos.x += flipped ? -120.0f : 120.0f;
 
 					MakeHit(kick_pos, 25);
@@ -99,7 +98,7 @@ namespace Oak
 
 			if (target && allow_move)
 			{
-				flipped = trans.position.x > target->trans.position.x;
+				flipped = transform.position.x > target->transform.position.x;
 			}
 
 			if (dir_horz == 0 && dir_vert == 0)
@@ -112,8 +111,8 @@ namespace Oak
 			}
 			else
 			{
-				trans.position.x = Math::Clamp(trans.position.x + dt * speed * dir_horz, -floor_width, floor_width);
-				trans.position.y = Math::Clamp(trans.position.y + dt * speed * 0.75f * dir_vert, 0.0f, floor_height);
+				transform.position.x = Math::Clamp(transform.position.x + dt * speed * dir_horz, -floor_width, floor_width);
+				transform.position.y = Math::Clamp(transform.position.y + dt * speed * 0.75f * dir_vert, 0.0f, floor_height);
 			}
 
 			if (resp_time > 0.0f)
@@ -144,7 +143,7 @@ namespace Oak
 			{
 				death_fly -= dt;
 
-				trans.position.x += dt * (flipped ? 380.0f : -380.0f);
+				transform.position.x += dt * (flipped ? 380.0f : -380.0f);
 
 				if (death_fly < 0.0f)
 				{
@@ -169,11 +168,11 @@ namespace Oak
 
 		if (GetState() == SceneEntity::State::Active)
 		{
-			trans.position.z = (trans.position.y / floor_height) * 0.9f;
-			trans.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(trans.scale.x);
+			transform.position.z = (transform.position.y / floor_height) * 0.9f;
+			transform.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(transform.scale.x);
 		}
 		
-		trans.BuildMatrices();
+		transform.BuildMatrices();
 
 		if (arraive > 0.0f)
 		{
@@ -187,7 +186,7 @@ namespace Oak
 
 		Sprite::UpdateFrame(&sprite, &frameState, dt);
 
-		Sprite::Draw(&trans, COLOR_WHITE, &sprite, &frameState, true, false);
+		Sprite::Draw(&transform, COLOR_WHITE, &sprite, &frameState, true, false);
 	}
 
 	SimpleCharacter2D* SimpleCharacter2D::FindTarget()
@@ -316,7 +315,7 @@ namespace Oak
 				//next_kick
 			}
 
-			if (fabs(trans.position.x - target->trans.position.x) > 200.0f)
+			if (fabs(transform.position.x - target->transform.position.x) > 200.0f)
 			{
 				if (!allow_move)
 				{
@@ -326,7 +325,7 @@ namespace Oak
 
 				if (allow_move)
 				{
-					dir_horz = (trans.position.x - target->trans.position.x) > 0.0f ? -1 : 1;
+					dir_horz = (transform.position.x - target->transform.position.x) > 0.0f ? -1 : 1;
 				}
 			}
 			else
@@ -334,7 +333,7 @@ namespace Oak
 				dir_horz = 0;
 			}
 
-			if (fabsf(trans.position.x - target->trans.position.x) < 500.0f && fabsf(trans.position.y - target->trans.position.y) > 5.0f)
+			if (fabsf(transform.position.x - target->transform.position.x) < 500.0f && fabsf(transform.position.y - target->transform.position.y) > 5.0f)
 			{
 				if (!allow_move)
 				{
@@ -344,7 +343,7 @@ namespace Oak
 
 				if (allow_move)
 				{
-					dir_vert = (trans.position.y - target->trans.position.y) > 0.0f ? -1 : 1;
+					dir_vert = (transform.position.y - target->transform.position.y) > 0.0f ? -1 : 1;
 				}
 			}
 			else
@@ -352,7 +351,7 @@ namespace Oak
 				dir_vert = 0;
 			}
 
-			if (fabsf(trans.position.x - target->trans.position.x) < 200.0f && fabsf(trans.position.y - target->trans.position.y) < 5.0f)
+			if (fabsf(transform.position.x - target->transform.position.x) < 200.0f && fabsf(transform.position.y - target->transform.position.y) < 5.0f)
 			{
 				cur_time_2_kuck += dt;
 				if (cur_time_2_kuck > time_2_kick)
@@ -388,7 +387,7 @@ namespace Oak
 
 				if (chraracter->is_enemy == !is_enemy && chraracter->cur_hp > 0)
 				{
-					if ((chraracter->trans.position.x - 85.0f) < pos.x && pos.x < (chraracter->trans.position.x + 85.0f) && fabsf(chraracter->trans.position.y - pos.y) < 15.0f)
+					if ((chraracter->transform.position.x - 85.0f) < pos.x && pos.x < (chraracter->transform.position.x + 85.0f) && fabsf(chraracter->transform.position.y - pos.y) < 15.0f)
 					{
 						/*if (chraracter->graph_instance.ActivateLink("Hit"))
 						{
@@ -422,7 +421,7 @@ namespace Oak
 
 	void SimpleCharacter2D::Reset()
 	{
-		trans.position = init_pos;
+		transform.position = init_pos;
 
 		cur_hp = max_hp;
 
@@ -447,14 +446,9 @@ namespace Oak
 		}
 	}
 
-	Transform* SimpleCharacter2D::GetTransform()
-	{
-		return &trans;
-	}
-
 	bool SimpleCharacter2D::Play()
 	{
-		init_pos = trans.position;
+		init_pos = transform.position;
 
 		Reset();
 

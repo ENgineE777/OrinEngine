@@ -135,7 +135,7 @@ namespace Oak
 
 				reader.Read("uid", entity->uid);
 
-				auto* transform = entity->GetTransform();
+				auto& transform = entity->GetTransform();
 
 				entity->Load(reader);
 
@@ -145,12 +145,9 @@ namespace Oak
 				{
 					child->parent = entity;
 
-					auto* tranformChild = child->GetTransform();
+					auto& tranformChild = child->GetTransform();
 
-					if (tranformChild)
-					{
-						tranformChild->parent = &transform->global;
-					}
+					tranformChild.parent = &transform.global;
 				}
 			}
 

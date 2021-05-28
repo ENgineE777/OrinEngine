@@ -44,6 +44,8 @@ namespace Oak
 		uint32_t uid = 0;
 		State state = State::Active;
 
+		Transform transform;
+
 		SceneEntity* parent = nullptr;
 		eastl::vector<SceneEntity*> childs;
 
@@ -109,7 +111,7 @@ namespace Oak
 
 		\return Transformation of scene entity
 		*/
-		virtual Transform* GetTransform() = 0;
+		virtual Transform& GetTransform();
 
 		/**
 		\brief This method called after each change of properties of scene object via editor
@@ -285,5 +287,6 @@ namespace Oak
 
 	#define BASE_SCENE_ENTITY_PROP(className)\
 	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\
-	BASE_SCENE_ENTITY_STATE_PROP(className)
+	BASE_SCENE_ENTITY_STATE_PROP(className)\
+	TRANSFORM_PROP(className, transform, "Transform")
 }

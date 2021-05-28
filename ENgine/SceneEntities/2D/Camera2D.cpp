@@ -9,7 +9,6 @@ namespace Oak
 
 	META_DATA_DESC(Camera2D)
 		BASE_SCENE_ENTITY_PROP(Camera2D)
-		TRANSFORM_PROP(Camera2D, transform, "Transform")
 		FLOAT_PROP(Camera2D, zoom, 1.0f, "Properties", "zoom", "Zoom of a camera")
 		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
 		FLOAT_PROP(Camera2D, border.x, 100.0f, "Properties", "Horizontal border", "Horizontal border of a camera")
@@ -47,24 +46,24 @@ namespace Oak
 				transform.size.x = Sprite::pixelsHeight / root.render.GetDevice()->GetAspect();
 				transform.size.y = Sprite::pixelsHeight;
 
-				if (-transform.size.x * 0.5f + border.x > targetRef.entity->GetTransform()->global.Pos().x - transform.position.x)
+				if (-transform.size.x * 0.5f + border.x > targetRef.entity->GetTransform().global.Pos().x - transform.position.x)
 				{
-					transform.position.x = targetRef.entity->GetTransform()->global.Pos().x + transform.size.x * 0.5f - border.x;
+					transform.position.x = targetRef.entity->GetTransform().global.Pos().x + transform.size.x * 0.5f - border.x;
 				}
 
-				if ( transform.size.x * 0.5f - border.x < targetRef.entity->GetTransform()->global.Pos().x - transform.position.x)
+				if ( transform.size.x * 0.5f - border.x < targetRef.entity->GetTransform().global.Pos().x - transform.position.x)
 				{
-					transform.position.x = targetRef.entity->GetTransform()->global.Pos().x - transform.size.x * 0.5f + border.x;
+					transform.position.x = targetRef.entity->GetTransform().global.Pos().x - transform.size.x * 0.5f + border.x;
 				}
 
-				if (-transform.size.y * 0.5f + border.y > targetRef.entity->GetTransform()->global.Pos().y - transform.position.y)
+				if (-transform.size.y * 0.5f + border.y > targetRef.entity->GetTransform().global.Pos().y - transform.position.y)
 				{
-					transform.position.y = targetRef.entity->GetTransform()->global.Pos().y + transform.size.y * 0.5f - border.y;
+					transform.position.y = targetRef.entity->GetTransform().global.Pos().y + transform.size.y * 0.5f - border.y;
 				}
 
-				if (transform.size.y * 0.5f - border.y < targetRef.entity->GetTransform()->global.Pos().y - transform.position.y)
+				if (transform.size.y * 0.5f - border.y < targetRef.entity->GetTransform().global.Pos().y - transform.position.y)
 				{
-					transform.position.y = targetRef.entity->GetTransform()->global.Pos().y - transform.size.y * 0.5f + border.y;
+					transform.position.y = targetRef.entity->GetTransform().global.Pos().y - transform.size.y * 0.5f + border.y;
 				}
 
 				if (useLimits)
@@ -138,10 +137,5 @@ namespace Oak
 				root.render.DebugLine(p1, COLOR_YELLOW, p2, COLOR_YELLOW, false);
 			}
 		}
-	}
-
-	Transform* Camera2D::GetTransform()
-	{
-		return &transform;
 	}
 }

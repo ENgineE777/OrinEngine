@@ -210,23 +210,20 @@ namespace Oak
 		{
 			selectedEntity->SetEditMode(true);
 
-			auto* transform = selectedEntity->GetTransform();
+			auto& transform = selectedEntity->GetTransform();
 
-			if (transform)
+			gizmo.SetTransform(&selectedEntity->GetTransform());
+
+			if (transform.transformFlag & TransformFlag::RectFull)
 			{
-				gizmo.SetTransform(selectedEntity->GetTransform());
-
-				if (transform->transformFlag & TransformFlag::RectFull)
-				{
-					gizmo.mode = TransformMode::Rectangle;
-				}
-				else
-				if ((gizmo.mode == TransformMode::Rotate && !(transform->transformFlag & TransformFlag::RotateXYZ)) ||
-					(gizmo.mode == TransformMode::Scale && !(transform->transformFlag & TransformFlag::ScaleXYZ)) ||
-					(gizmo.mode == TransformMode::Rectangle && !(transform->transformFlag & TransformFlag::RectFull)))
-				{
-					gizmo.mode = TransformMode::Move;
-				}
+				gizmo.mode = TransformMode::Rectangle;
+			}
+			else
+			if ((gizmo.mode == TransformMode::Rotate && !(transform.transformFlag & TransformFlag::RotateXYZ)) ||
+				(gizmo.mode == TransformMode::Scale && !(transform.transformFlag & TransformFlag::ScaleXYZ)) ||
+				(gizmo.mode == TransformMode::Rectangle && !(transform.transformFlag & TransformFlag::RectFull)))
+			{
+				gizmo.mode = TransformMode::Move;
 			}
 		}
 	}
@@ -366,14 +363,7 @@ namespace Oak
 
 							if (parent)
 							{
-								if (!entity->GetTransform())
-								{
-									RELEASE(entity)
-								}
-								else
-								{
-									entity->SetParent(parent, selectedEntity);
-								}
+								entity->SetParent(parent, selectedEntity);
 							}
 							else
 							{
@@ -387,12 +377,9 @@ namespace Oak
 
 						if (entity)
 						{
-							auto* transform = entity->GetTransform();
+							auto& transform = entity->GetTransform();
 
-							if (transform)
-							{
-								transform->local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-							}
+							transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 
 							SelectEntity(entity);
 						}
@@ -943,7 +930,7 @@ namespace Oak
 
 			if (gizmo.IsEnabled())
 			{
-				auto* transform = selectedEntity ? selectedEntity->GetTransform() : nullptr;
+				auto* transform = selectedEntity ? &selectedEntity->GetTransform() : nullptr;
 
 				PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
 				PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) gizmo.mode = TransformMode::Rotate; });

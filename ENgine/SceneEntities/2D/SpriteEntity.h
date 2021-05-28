@@ -12,8 +12,6 @@ namespace Oak
 	{
 	public:
 
-		Transform transform;
-
 		Sprite::Data sprite;
 
 		AssetTextureRef texture;
@@ -29,7 +27,6 @@ namespace Oak
 		void Init() override;
 		void ApplyProperties() override;
 		void Draw(float dt);
-		Transform* GetTransform() override;
 	#endif
 	};
 }

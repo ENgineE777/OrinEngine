@@ -10,12 +10,9 @@ namespace Oak
 	{
 	public:
 
-		Transform transform;
-
 		META_DATA_DECL_BASE(TestEntity3D)
 
 		void Init() override;
-		Transform* GetTransform() override;
 
 		void Draw(float dt);
 	};

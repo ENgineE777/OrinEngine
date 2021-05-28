@@ -15,8 +15,6 @@ namespace Oak
 
 		SimpleCharacter2D* target = nullptr;
 
-		Transform trans;
-
 		bool allow_move = false;
 		float speed = 120.0f;
 		float floor_width = 200.0f;
@@ -51,8 +49,6 @@ namespace Oak
 		void Draw(float dt);
 
 		bool Play() override;
-
-		Transform* GetTransform() override;
 
 		SimpleCharacter2D* FindTarget();
 		void ControlPlayer(float dt);

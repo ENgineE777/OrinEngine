@@ -22,14 +22,10 @@ namespace Oak
 		Math::Vector2 rightdown;
 		SceneEntityRef targetRef;
 
-		Transform transform;
-
 #ifndef DOXYGEN_SKIP
 
 		Camera2D();
 		virtual ~Camera2D() = default;
-
-		Transform* GetTransform() override;
 
 		void Init() override;
 		void Update(float dt);

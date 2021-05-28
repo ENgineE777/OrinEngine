@@ -8,7 +8,6 @@ namespace Oak
 
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)
-		TRANSFORM_PROP(SpriteEntity, transform, "Transform")
 		ASSET_TEXTURE_PROP(SpriteEntity, texture, "Visual", "Texture")
 	META_DATA_DESC_END()
 
@@ -36,11 +35,6 @@ namespace Oak
 	{
 		sprite.texture = texture ? texture->GetTexture() : root.render.GetWhiteTexture();
 		transform.size = Math::Vector3((float)sprite.texture->GetWidth(), (float)sprite.texture->GetHeight(), 0.0f);
-	}
-
-	Transform* SpriteEntity::GetTransform()
-	{
-		return &transform;
 	}
 
 	void SpriteEntity::Draw(float dt)

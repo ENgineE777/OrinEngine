@@ -8,17 +8,11 @@ namespace Oak
 
 	META_DATA_DESC(TestEntity3D)
 		BASE_SCENE_ENTITY_PROP(TestEntity3D)
-		TRANSFORM_PROP(TestEntity3D, transform, "Transform")
 	META_DATA_DESC_END()
 
 	void TestEntity3D::Init()
 	{
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&TestEntity3D::Draw);
-	}
-
-	Transform* TestEntity3D::GetTransform()
-	{
-		return &transform;
 	}
 
 	void TestEntity3D::Draw(float dt)

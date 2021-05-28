@@ -38,11 +38,8 @@ namespace Oak
 		Shape enumProp;
 		eastl::vector<TestItem> itemsProp;
 
-		Transform transform;
-
 		META_DATA_DECL_BASE(TestEntity)
 
 		void Init() override {};
-		Transform* GetTransform() override;
 	};
 }

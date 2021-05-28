@@ -33,12 +33,6 @@ namespace Oak
 			ENUM_ELEM("Cylinder", 2)
 		ENUM_END
 		CALLBACK_PROP(TestEntity, CallbackTest, "Values", "Callaback")
-		TRANSFORM_PROP(TestEntity, transform, "Transform")
 		ARRAY_PROP(TestEntity, itemsProp, TestItem, "Values", "Items array")
 	META_DATA_DESC_END()
-
-	Transform* TestEntity::GetTransform()
-	{
-		return &transform;
-	}
 }

@@ -103,6 +103,11 @@ namespace Oak
 		return state;
 	}
 
+	Transform& SceneEntity::GetTransform()
+	{
+		return transform;
+	}
+
 	void SceneEntity::Load(JsonReader& reader)
 	{
 		GetMetaData()->Prepare(this);
@@ -219,7 +224,7 @@ namespace Oak
 
 	void SceneEntity::SetParent(SceneEntity* setParent, SceneEntity* entityBefore)
 	{
-		auto* transform = GetTransform();
+		auto& transform = GetTransform();
 
 		if (parent)
 		{
@@ -232,11 +237,8 @@ namespace Oak
 				}
 			}
 
-			if (transform)
-			{
-				transform->parent = nullptr;
-				transform->local = transform->global;
-			}
+			transform.parent = nullptr;
+			transform.local = transform.global;
 		}
 
 		parent = setParent;
@@ -259,16 +261,13 @@ namespace Oak
 				parent->childs.push_back(this);
 			}
 
-			auto* transform = GetTransform();
+			auto& transform = GetTransform();
 
-			if (transform)
-			{
-				transform->parent = &parent->GetTransform()->global;
-				Math::Matrix inverse = parent->GetTransform()->global;
-				inverse.Inverse();
+			transform.parent = &parent->GetTransform().global;
+			Math::Matrix inverse = parent->GetTransform().global;
+			inverse.Inverse();
 
-				transform->local = transform->global * inverse;
-			}
+			transform.local = transform.global * inverse;
 		}
 	}
 
