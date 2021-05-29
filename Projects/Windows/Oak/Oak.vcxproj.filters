@@ -386,9 +386,6 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
@@ -911,9 +908,6 @@
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h">
-      <Filter>ENgine\Root\Assets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h">
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h">

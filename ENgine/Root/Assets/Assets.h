@@ -5,7 +5,6 @@
 #include "Support/ThreadExecutor.h"
 #include <atomic>
 #include "AssetTexture.h"
-#include "AssetPrefab.h"
 
 namespace Oak
 {
