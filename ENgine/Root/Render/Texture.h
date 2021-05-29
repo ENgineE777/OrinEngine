@@ -214,6 +214,10 @@ namespace Oak
 		*/
 		virtual void Update(int level, int layer, uint8_t* data, int stride) = 0;
 
+		/**
+			\brief Get native resource for a curent OS and GAPI
+		*/
+		virtual void* GetNativeResource() = 0;
 	protected:
 
 		#ifndef DOXYGEN_SKIP

@@ -191,6 +191,11 @@ namespace Oak
 		DeviceDX11::instance->immediateContext->UpdateSubresource(texture, index, nullptr, data, stride, 0);
 	}
 
+	void* TextureDX11::GetNativeResource()
+	{
+		return srview;
+	}
+
 	void TextureDX11::Release()
 	{
 		if (root.render.textures.count(name) > 0)

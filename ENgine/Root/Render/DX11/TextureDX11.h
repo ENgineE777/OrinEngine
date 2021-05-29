@@ -40,12 +40,14 @@ namespace Oak
 		void SetFilters(TextureFilter magmin, TextureFilter mipmap) override;
 		void SetAdress(TextureAddress adress) override;
 		void SetAdressU(TextureAddress adress) override;
-		 void SetAdressV(TextureAddress adress) override;
+		void SetAdressV(TextureAddress adress) override;
 		void SetAdressW(TextureAddress adress) override;
 	
 		void GenerateMips() override;
 
 		void Update(int level, int layer, uint8_t* data, int stride) override;
+
+		void* GetNativeResource() override;
 
 		protected:
 
