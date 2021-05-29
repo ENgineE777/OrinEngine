@@ -25,20 +25,22 @@ namespace Oak
 
 	void EditorDrawer::Init()
 	{
-		anchorn = root.render.LoadTexture("ENgine\\editor\\gizmo_anch.png", _FL_);
-		anchorn->SetFilters(TextureFilter::Point, TextureFilter::Point);
+		anchornTex = root.render.LoadTexture("ENgine\\editor\\gizmo_anch.png", _FL_);
+		anchornTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
-		center = root.render.LoadTexture("ENgine\\editor\\gizmo_center.png", _FL_);
-		center->SetFilters(TextureFilter::Point, TextureFilter::Point);
+		centerTex = root.render.LoadTexture("ENgine\\editor\\gizmo_center.png", _FL_);
+		centerTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
-		node_tex = root.render.LoadTexture("ENgine\\editor\\node.png", _FL_);
-		node_tex->SetFilters(TextureFilter::Point, TextureFilter::Point);
+		nodeTex = root.render.LoadTexture("ENgine\\editor\\node.png", _FL_);
+		nodeTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
-		arrow_tex = root.render.LoadTexture("ENgine\\editor\\arrow.png", _FL_);
-		arrow_tex->SetFilters(TextureFilter::Point, TextureFilter::Point);
+		arrowTex = root.render.LoadTexture("ENgine\\editor\\arrow.png", _FL_);
+		arrowTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
-		checker_texture = root.render.LoadTexture("ENgine/editor/checker.png", _FL_);
-		checker_texture->SetFilters(TextureFilter::Point, TextureFilter::Point);
+		checkerTex = root.render.LoadTexture("ENgine/editor/checker.png", _FL_);
+		checkerTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
+
+		projectIconTex = root.render.LoadTexture("ENgine/editor/ProjectIcon.png", _FL_);
 
 		font = root.fonts.LoadFont("ENgine\\OpenSans-Regular.ttf", false, false, 11, _FL_);
 
@@ -200,11 +202,12 @@ namespace Oak
 	void EditorDrawer::Release()
 	{
 		font.ReleaseRef();
-		anchorn.ReleaseRef();
-		center.ReleaseRef();
-		node_tex.ReleaseRef();
-		arrow_tex.ReleaseRef();
-		checker_texture.ReleaseRef();
+		anchornTex.ReleaseRef();
+		centerTex.ReleaseRef();
+		nodeTex.ReleaseRef();
+		arrowTex.ReleaseRef();
+		checkerTex.ReleaseRef();
+		projectIconTex.ReleaseRef();
 
 		skyBoxPrg.ReleaseRef();
 		skyBoxVbuffer.ReleaseRef();

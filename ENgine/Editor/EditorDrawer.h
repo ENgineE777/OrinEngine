@@ -31,11 +31,12 @@ namespace Oak
 	public:
 
 		FontRef font;
-		TextureRef anchorn;
-		TextureRef center;
-		TextureRef node_tex;
-		TextureRef arrow_tex;
-		TextureRef checker_texture;
+		TextureRef anchornTex;
+		TextureRef centerTex;
+		TextureRef nodeTex;
+		TextureRef arrowTex;
+		TextureRef checkerTex;
+		TextureRef projectIconTex;
 
 		void Init();
 		void DrawSprite(Texture* tex, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float rotate, Color color);

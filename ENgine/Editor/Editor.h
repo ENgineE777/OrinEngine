@@ -26,6 +26,14 @@ namespace Oak
 		friend class EditorDrawer;
 		friend class Root;
 
+		struct ProjectEntry
+		{
+			eastl::string name;
+			eastl::string path;
+		};
+
+		eastl::vector<ProjectEntry> projects;
+
 		HWND hwnd;
 		ID3D11Device* d3dDevice = nullptr;
 		ID3D11DeviceContext* d3dDeviceContext = nullptr;
@@ -37,6 +45,7 @@ namespace Oak
 
 		bool showAbout = false;
 		bool showProjectSettings = false;
+
 		SceneEntity* selectedEntity = nullptr;
 		AssetTextureRef selAsset;
 		bool projectTreePopup = false;
@@ -79,9 +88,11 @@ namespace Oak
 	private:
 
 		void SetupImGUI();
+		bool ShowEditor();
 		void ShowAbout();
 		void ShowProjectSettings();
 		void ShowViewport();
+		void ShowSelectProject();
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
 		void SceneDropTraget(SceneEntity* entity);
@@ -90,6 +101,8 @@ namespace Oak
 
 		void StartProject();
 		void StopProject();
+
+		void SaveProjectsList();
 
 		template<typename Func>
 		void PushButton(const char* label, bool pushed, Func callback)

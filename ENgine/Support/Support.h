@@ -4,6 +4,7 @@
 #include <eastl/string.h>
 #include <eastl/vector.h>
 #include <eastl/map.h>
+#include <eastl/safe_ptr.h>
 
 #include "Defines.h"
 #include "Color.h"

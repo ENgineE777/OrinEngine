@@ -5,6 +5,7 @@
 #include "imgui_impl_dx11.h"
 
 #include "EditorDrawer.h"
+#include <filesystem>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -49,7 +50,45 @@ namespace Oak
 
 		SetupImGUI();
 
+		JsonReader reader;
+
+		if (reader.Parse("projects"))
+		{
+			while (reader.EnterBlock("projects"))
+			{
+				ProjectEntry entry;
+				reader.Read("name", entry.name);
+				reader.Read("path", entry.path);
+
+				projects.push_back(entry);
+
+				reader.LeaveBlock();
+			}
+		}
+
 		return true;
+	}
+
+	void Editor::SaveProjectsList()
+	{
+		JsonWriter writer;
+
+		if (writer.Start("projects"))
+		{
+			writer.StartArray("projects");
+			
+			for (auto& entry : projects)
+			{
+				writer.StartBlock(nullptr);
+
+				writer.Write("name", entry.name);
+				writer.Write("path", entry.path);
+
+				writer.FinishBlock();
+			}
+
+			writer.FinishArray();
+		}
 	}
 
 	void Editor::SetupImGUI()
@@ -189,6 +228,162 @@ namespace Oak
 		}
 
 		ImGui::End();
+	}
+
+	void Editor::ShowSelectProject()
+	{
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking;
+
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->GetWorkPos());
+		ImGui::SetNextWindowSize(viewport->GetWorkSize());
+		ImGui::SetNextWindowViewport(viewport->ID);
+		window_flags |= ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+		ImGui::Begin("Projects", nullptr, window_flags);
+
+		ImGui::Dummy(ImVec2(0.0f, 3.0f));
+		ImGui::Dummy(ImVec2(3.0f, 3.0f));
+		ImGui::SameLine();
+
+		const char* projectToAdd = nullptr;
+
+		if (ImGui::Button("Add", ImVec2(40.0f, 25.0f)))
+		{
+			const char* fileName = OpenFileDialog("Project file", "pra", true);
+
+			if (fileName)
+			{
+				StringUtils::FixSlashes((char*)fileName);
+				projectToAdd = fileName;
+
+				for (auto& entry : projects)
+				{
+					if (StringUtils::IsEqual(entry.path.c_str(), fileName))
+					{
+						projectToAdd = nullptr;
+						MESSAGE_BOX("Can't add a project", "Project wasalready added");
+					}
+				}
+			}
+		}
+
+		ImGui::SameLine();
+
+		const char* projectToLoad = nullptr;
+
+		if (ImGui::Button("New", ImVec2(40.0f, 25.0f)))
+		{
+			const char* fileName = OpenFileDialog("Project file", "pra", false);
+
+			if (fileName)
+			{
+				char path[512];
+				StringUtils::GetPath(fileName, path);
+
+				bool empty = std::filesystem::directory_iterator(path) == std::filesystem::directory_iterator();
+				
+				if (!empty)
+				{
+					MESSAGE_BOX("Can't create a project", "Folder is not empty");
+				}
+				else
+				{
+					projectToAdd = fileName;
+					projectToLoad = fileName;
+				}
+			}
+		}
+
+		if (projectToAdd)
+		{
+			ProjectEntry entry;
+			char name[256];
+			StringUtils::GetFileName(projectToAdd, name);
+			StringUtils::RemoveExtension(name);
+			entry.name = name;
+			entry.path = projectToAdd;
+
+			projects.push_back(entry);
+
+			SaveProjectsList();
+
+			if (projectToLoad)
+			{
+				project.Save(projectToLoad);
+			}
+		}
+
+		ImVec2 scrolling_child_size = ImVec2(0, ImGui::GetFrameHeightWithSpacing() * 7 + 30);
+		ImGui::BeginChild("ProjectsList");
+
+		ImGuiContext* context = ImGui::GetCurrentContext();
+		ImGuiWindow* window = context->CurrentWindow;
+
+		for (int i = 0; i < projects.size(); i++)
+		{
+			auto& entry = projects[i];
+
+			ImGui::Dummy(ImVec2(0.0f, 3.0f));
+
+			ImVec2 p = ImGui::GetCursorScreenPos();
+			window->DrawList->AddRectFilled(ImVec2(p.x + 5, p.y), ImVec2(p.x + ImGui::GetContentRegionAvail().x - 6, p.y + 82) /*- ImVec2(10.0f, 10.0f)*/, IM_COL32(48, 48, 48,255));
+
+			ImGui::Dummy(ImVec2(0.0f, 3.0f));
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+			ImGui::SameLine();
+
+			ImGui::PushID(StringUtils::PrintTemp("%s%i", entry.path.c_str(), i));
+
+			ImGui::BeginGroup();
+			ImGui::Image(editorDrawer.projectIconTex->GetNativeResource(), ImVec2(70, 70));
+			ImGui::EndGroup();
+
+			ImGui::SameLine();
+
+			ImGui::BeginGroup();
+			ImGui::Text(entry.name.c_str());
+			ImGui::Text(entry.path.c_str());
+
+			if (std::filesystem::exists(entry.path.c_str()))
+			{
+				if (ImGui::Button("Load"))
+				{
+					projectToLoad = entry.path.c_str();
+				}
+			}
+			else
+			{
+				ImGui::Text("[Project was deleted]");
+			}
+
+			ImGui::SameLine();
+			if (ImGui::Button("Delete"))
+			{
+				projects.erase(projects.begin() + i);
+
+				SaveProjectsList();
+
+				i--;
+			}
+
+			ImGui::EndGroup();
+
+			ImGui::PopID();
+
+			ImGui::Dummy(ImVec2(0.0f, 3.0f));
+		}
+		
+		ImGui::EndChild();
+
+		ImGui::End();
+
+		if (projectToLoad)
+		{
+			project.Load(projectToLoad);
+			ShowWindow(hwnd, SW_MAXIMIZE);
+		}
 	}
 
 	void Editor::SelectEntity(SceneEntity* entity)
@@ -754,12 +949,8 @@ namespace Oak
 		projectRunning = false;
 	}
 
-	bool Editor::Update()
+	bool Editor::ShowEditor()
 	{
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
-
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 
 		{
@@ -817,48 +1008,9 @@ namespace Oak
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("New"))
-				{
-					project.Reset();
-				}
-
-				if (ImGui::MenuItem("Load"))
-				{
-					const char* fileName = OpenFileDialog("Project file", "pra", true);
-
-					if (fileName)
-					{
-						project.Load(fileName);
-					}
-				}
-
-				bool saveProjectAs = false;;
-
 				if (ImGui::MenuItem("Save"))
 				{
-					if (project.projectName.empty())
-					{
-						saveProjectAs = true;
-					}
-					else
-					{
-						project.Save();
-					}
-				}
-
-				if (ImGui::MenuItem("Save as"))
-				{
-					saveProjectAs = true;
-				}
-
-				if (saveProjectAs)
-				{
-					const char* fileName = OpenFileDialog("Project file", "pra", false);
-
-					if (fileName)
-					{
-						project.Save(fileName);
-					}
+					project.Save();
 				}
 
 				ImGui::Separator();
@@ -903,6 +1055,8 @@ namespace Oak
 
 		{
 			ImGui::Begin("Toolbar");
+
+			ImGui::Dummy(ImVec2(0.0f, 3.0f));
 
 			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
@@ -1036,7 +1190,7 @@ namespace Oak
 				ImGui::BeginChild("SceneRoot");
 
 				EntitiesTreeView(project.selectedScene->scene->GetEntities());
-			
+
 				ImGui::EndChild();
 
 				SceneDropTraget(nullptr);
@@ -1110,8 +1264,28 @@ namespace Oak
 		}
 
 		ShowAbout();
-		ShowProjectSettings();
 		ShowViewport();
+
+		return true;
+	}
+
+	bool Editor::Update()
+	{
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+
+		if (project.projectName.c_str()[0])
+		{
+			if (!ShowEditor())
+			{
+				return false;
+			}
+		}
+		else
+		{
+			ShowSelectProject();
+		}
 
 		ImGui::Render();
 		d3dDeviceContext->OMSetRenderTargets(1, &mainRenderTargetView, nullptr);
