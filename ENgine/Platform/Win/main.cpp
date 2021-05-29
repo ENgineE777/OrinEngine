@@ -21,6 +21,9 @@ const char* OpenFileDialog(const char* extName, const char* ext, bool open)
     char curDir[512];
     GetCurrentDirectoryA(512, curDir);
 
+    char curDirDialog[512];
+    Oak::StringUtils::Copy(curDirDialog, 512, curDir);
+
     OPENFILENAMEA ofn;
 
     static char fileName[512];
@@ -53,7 +56,7 @@ const char* OpenFileDialog(const char* extName, const char* ext, bool open)
     ofn.nFilterIndex = 1;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = curDir;
+    ofn.lpstrInitialDir = curDirDialog;
     ofn.Flags = OFN_PATHMUSTEXIST;
 
     if (open)
@@ -147,7 +150,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return 1;
     }
 
-    ShowWindow(hwnd, SW_MAXIMIZE);
+    ShowWindow(hwnd, SW_NORMAL);
     UpdateWindow(hwnd);
 
     MSG msg;
