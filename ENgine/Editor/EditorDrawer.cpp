@@ -106,7 +106,7 @@ namespace Oak
 			return;
 		}
 
-		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f, false);
+		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f);
 	}
 
 	void EditorDrawer::PrintText(Math::Vector2 pos, Color color, const char* text)
@@ -143,7 +143,7 @@ namespace Oak
 		mat.RotateZ(atan2f(dir.y / size.x, dir.x / size.x));
 		mat.Pos() = Math::Vector3(center.x, center.y, 0.01f);
 
-		Sprite::Draw(nullptr, color, mat, -0.5f * size, size, 0.0f, 1.0f, false);
+		Sprite::Draw(nullptr, color, mat, -0.5f * size, size, 0.0f, 1.0f);
 	}
 
 	void EditorDrawer::DrawCurve(Math::Vector2 from, Math::Vector2 to, Color color)

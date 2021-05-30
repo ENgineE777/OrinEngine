@@ -11,8 +11,6 @@ namespace Oak
 		ASSET_TEXTURE_PROP(SpriteEntity, texture, "Visual", "Texture")
 	META_DATA_DESC_END()
 
-	Sprite::FrameState SpriteEntity::frameState;
-
 	SpriteEntity::SpriteEntity() : SceneEntity()
 	{
 		//inst_class_name = "SpriteInst";
@@ -24,8 +22,6 @@ namespace Oak
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.transformFlag = SpriteTransformFlags;
 
-		sprite.frames.push_back(Sprite::Frame());
-
 		RenderTasks(false)->AddTask(0, this, (Object::Delegate)& SpriteEntity::Draw);
 
 		GetScene()->AddToGroup(this, "SpriteAsset");
@@ -33,15 +29,13 @@ namespace Oak
 
 	void SpriteEntity::ApplyProperties()
 	{
-		sprite.texture = texture ? texture->GetTexture() : root.render.GetWhiteTexture();
-		transform.size = Math::Vector3((float)sprite.texture->GetWidth(), (float)sprite.texture->GetHeight(), 0.0f);
+		transform.size = Math::Vector3((float)texture->GetTexture()->GetWidth(), (float)texture->GetTexture()->GetHeight(), 0.0f);
 	}
 
 	void SpriteEntity::Draw(float dt)
 	{
 		transform.BuildMatrices();
-		Sprite::UpdateFrame(&sprite, &frameState, dt);
 
-		Sprite::Draw(&transform, COLOR_WHITE, &sprite, &frameState, true, false);
+		Sprite::Draw(&transform, COLOR_WHITE, &texture->spriteSheet);
 	}
 }

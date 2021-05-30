@@ -36,10 +36,7 @@ namespace Oak
 
 		Math::Vector3 init_pos;
 
-		Sprite::Data sprite;
 		AssetTextureRef texture;
-
-		static Sprite::FrameState frameState;
 
 		virtual ~SimpleCharacter2D() = default;
 

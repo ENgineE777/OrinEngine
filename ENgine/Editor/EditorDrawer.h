@@ -5,6 +5,9 @@
 #include "Support/Sprite.h"
 #include "Root/Fonts/Fonts.h"
 
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
 /**
 \ingroup gr_code_editor
 */
@@ -14,7 +17,6 @@ namespace Oak
 	class EditorDrawer
 	{
 		Transform trans;
-		Sprite::FrameState state;
 
 		struct VertexSkyBox
 		{
@@ -30,6 +32,7 @@ namespace Oak
 
 	public:
 
+		HWND hwnd;
 		FontRef font;
 		TextureRef anchornTex;
 		TextureRef centerTex;

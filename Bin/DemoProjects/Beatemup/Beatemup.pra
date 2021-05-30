@@ -14,17 +14,17 @@
 	"scenes" : [
 		{
 			"path" : "Main.sca",
-			"selected_entity" : 686452,
+			"selected_entity" : -1,
 			"camera3DAngles" :
 			{
-				"x" : 1.750000,
-				"y" : -0.190000
+				"x" : 1.640000,
+				"y" : -0.360000
 			},
 			"camera3DPos" :
 			{
-				"x" : 3.040488,
-				"y" : 6.865458,
-				"z" : -16.426094
+				"x" : -0.372257,
+				"y" : 5.569906,
+				"z" : -8.052588
 			},
 			"camera2DPos" :
 			{

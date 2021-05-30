@@ -5,6 +5,7 @@
 #include "imgui_impl_dx11.h"
 
 #include "EditorDrawer.h"
+#include "SpriteWindow.h"
 #include <filesystem>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -39,7 +40,7 @@ namespace Oak
 		renderTaskPool = root.render.AddTaskPool(_FL_);
 		renderTaskPool->AddTask(1, this, (Object::Delegate) & Editor::Render);
 
-		if (!root.render.GetDevice()->SetVideoMode(800, 600, &hwnd))
+		if (!root.render.GetDevice()->SetBackBuffer(0, 800, 600, &hwnd))
 		{
 			return false;
 		}
@@ -47,6 +48,7 @@ namespace Oak
 		freeCamera.Init();
 
 		editorDrawer.Init();
+		editorDrawer.hwnd = hwnd;
 
 		SetupImGUI();
 
@@ -99,6 +101,7 @@ namespace Oak
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+		io.ConfigWindowsMoveFromTitleBarOnly = true;
 
 		ImGui::StyleColorsDark();
 
@@ -129,16 +132,12 @@ namespace Oak
 
 		Oak::root.controls.OverrideMousePos((int)io.MousePos.x, (int)io.MousePos.y);
 
-		UpdateOak();
-
 		ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
 
 		ImVec2 size = ImGui::GetContentRegionAvail();
+		Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
 
-		if (size.x != Oak::root.render.GetDevice()->GetWidth() || size.y != Oak::root.render.GetDevice()->GetHeight())
-		{
-			Oak::root.render.GetDevice()->SetVideoMode((int)size.x, (int)size.y, &hwnd);
-		}
+		UpdateOak();
 
 		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
 
@@ -1266,6 +1265,11 @@ namespace Oak
 		ShowAbout();
 		ShowViewport();
 
+		if (SpriteWindow::instance && SpriteWindow::instance->opened)
+		{
+			SpriteWindow::instance->ImGui();
+		}
+
 		return true;
 	}
 
@@ -1370,8 +1374,6 @@ namespace Oak
 			gizmo.Render();
 		}
 
-		root.Update();
-
 		if (!projectRunning && project.selectedScene)
 		{
 			if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
@@ -1390,6 +1392,8 @@ namespace Oak
 				project.selectedScene->scene->Execute(dt);
 			}
 		}
+
+		root.Update();
 	}
 
 	void Editor::Render(float dt)

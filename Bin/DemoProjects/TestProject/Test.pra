@@ -9,10 +9,12 @@
 		"y" : 32.000000
 	},
 	"useAlignRect" : true,
+	"pixelsPerUnit" : 50.000000,
+	"pixelsHeight" : 1080.000000,
 	"scenes" : [
 		{
 			"path" : "scene1.sca",
-			"selected_entity" : 350138,
+			"selected_entity" : 1011636,
 			"camera3DAngles" :
 			{
 				"x" : 2.230000,

@@ -17,43 +17,26 @@ namespace Oak::Sprite
 	extern float pixelsPerUnitInvert;
 	extern float pixelsHeight;
 
-	enum class Type
+	struct Slice
 	{
-		Image,
-		ThreeSlicesVert,
-		ThreeSlicesHorz,
-		NineSlices,
-		Frames
-	};
-
-	struct Frame
-	{
+		eastl::string name;
+		bool isNineSliced = 0;
 		Math::Vector2 pos = 0.0f;
 		Math::Vector2 size = 0.0f;
-		Math::Vector2 uv = 0.0f;
-		Math::Vector2 duv = 1.0f;
-		Math::Vector2 offset = 0.0f;
-		float time = -1.0f;
+		Math::Vector2 upLeftOffset = 0.0f;
+		Math::Vector2 downRightOffset = 0.0f;
+		Math::Vector2 offset = 0.5f;
 	};
 
-	struct Data
+	struct Sheet
 	{
 		TextureRef texture;
-		eastl::string   texName;
-		Color color = COLOR_WHITE;
-		TextureAddress mode = TextureAddress::Wrap;
+		Math::Vector2 size = 0.0f;
 
-		Type type = Type::Image;
-		int width = 32, height = 32;
-		int tileType = 0;
-		eastl::vector<Frame> frames;
-
-		float frameTime = 0.25f;
-
-		void LoadTexture();
+		eastl::vector<Slice> slices;
 	};
 
-	struct FrameState
+	/*struct FrameState
 	{
 		bool  looped = true;
 		bool  finished = false;
@@ -62,13 +45,12 @@ namespace Oak::Sprite
 		int   curFrame = 0;
 		float curTime = -1.0f;
 		float frameStartTime = 0.0f;
-	};
+	};*/
 
-	void Load(JsonReader& loader, Sprite::Data* sprite, const char* name);
-	void Save(JsonWriter& saver, Sprite::Data* sprite, const char* name);
-	void Copy(Sprite::Data* src, Sprite::Data* dest);
+	void Load(JsonReader& loader, Sprite::Sheet* sheet, const char* name);
+	void Save(JsonWriter& saver, Sprite::Sheet* sheet, const char* name);
  
-	template<typename Func>
+	/*template<typename Func>
 	static void UpdateFrame(Sprite::Data* data, FrameState* state, float dt, Func callback)
 	{
 		if (data->type != Type::Frames)
@@ -155,13 +137,13 @@ namespace Oak::Sprite
 		callback(state->curTime, state->curTime + dt);
 
 		state->curTime += dt;
-	}
+	}*/
 
 	void Init();
-	void UpdateFrame(Sprite::Data* data, FrameState* state, float dt);
+	//void UpdateFrame(Sprite::Data* data, FrameState* state, float dt);
 
-	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool use_depth, bool flipped = false);
-	void Draw(Transform* trans, Color clr, Sprite::Data* sprite, FrameState* state, bool use_depth, bool ignore_camera);
+	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv);
+	void Draw(Transform* trans, Color clr, Sprite::Sheet* sprite, int sheetIndex = -1);
 
 	void Release();
 }

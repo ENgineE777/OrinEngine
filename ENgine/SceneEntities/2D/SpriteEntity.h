@@ -12,14 +12,11 @@ namespace Oak
 	{
 	public:
 
-		Sprite::Data sprite;
-
 		AssetTextureRef texture;
 
 		META_DATA_DECL_BASE(SpriteEntity)
 
 	#ifndef DOXYGEN_SKIP
-		static Sprite::FrameState frameState;
 
 		SpriteEntity();
 		virtual ~SpriteEntity() = default;

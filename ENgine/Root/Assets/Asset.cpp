@@ -30,6 +30,7 @@ namespace Oak
 		if (reader.Parse(strName))
 		{
 			GetMetaData()->Load(reader);
+			LoadData(reader);
 		}
 		else
 		{
@@ -41,6 +42,11 @@ namespace Oak
 	const eastl::string& Asset::GetPath()
 	{
 		return path;
+	}
+
+	void Asset::LoadData(JsonReader& loader)
+	{
+
 	}
 
 	#ifdef OAK_EDITOR
@@ -80,6 +86,13 @@ namespace Oak
 		writer.Start(strName);
 		GetMetaData()->Prepare(this);
 		GetMetaData()->Save(writer);
+
+		SaveData(writer);
+	}
+
+	void Asset::SaveData(JsonWriter& saver)
+	{
+
 	}
 	#endif
 

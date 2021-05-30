@@ -6,7 +6,7 @@
 			"type" : "TestEntity3D",
 			"uid" : 350138,
 			"name" : "TestEntity3D",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
@@ -45,7 +45,7 @@
 					"type" : "TestEntity3D",
 					"uid" : 741372,
 					"name" : "TestEntity3D",
-					"state" : 2,
+					"visible" : true,
 					"Transform" :
 					{
 						"position" :
@@ -86,13 +86,13 @@
 			"type" : "SpriteEntity",
 			"uid" : 1011636,
 			"name" : "Sprite",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
 					"x" : -159.397842,
-					"y" : -38.138523,
+					"y" : -38.138515,
 					"z" : 0.000000
 				},
 				"rotation" :
@@ -126,7 +126,7 @@
 					"type" : "SpriteEntity",
 					"uid" : 419839,
 					"name" : "Sprite",
-					"state" : 2,
+					"visible" : true,
 					"Transform" :
 					{
 						"position" :
@@ -166,7 +166,7 @@
 					"type" : "SpriteEntity",
 					"uid" : 491515,
 					"name" : "Sprite",
-					"state" : 2,
+					"visible" : true,
 					"Transform" :
 					{
 						"position" :
@@ -208,7 +208,7 @@
 			"type" : "SpriteEntity",
 			"uid" : 176115,
 			"name" : "Sprite",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
@@ -248,14 +248,14 @@
 			"type" : "Camera2D",
 			"uid" : 1005498,
 			"name" : "Camera",
-			"state" : 2,
+			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
 					"x" : 0.000000,
 					"y" : 0.000000,
-					"z" : -11.663167
+					"z" : -11.663169
 				},
 				"rotation" :
 				{
@@ -282,7 +282,18 @@
 					"z" : 0.500000
 				}
 			},
-			"zoom" : 1.000000
+			"zoom" : 1.000000,
+			"Target" :
+			{
+				"uid" : 0
+			},
+			"border.x" : 100.000000,
+			"border.y" : 100.000000,
+			"useLimits" : false,
+			"leftup.x" : -1000.000000,
+			"rightdown.x" : 1000.000000,
+			"leftup.y" : 1000.000000,
+			"rightdown.y" : -1000.000000
 		}
 	]
 }

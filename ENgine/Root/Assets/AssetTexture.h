@@ -2,6 +2,7 @@
 
 #include "Asset.h"
 #include "root/Render/Render.h"
+#include "support/Sprite.h"
 
 namespace Oak
 {
@@ -10,18 +11,25 @@ namespace Oak
 		friend class PointerRef<AssetTexture>;
 
 		TextureFilter textureFilter = TextureFilter::Linear;
-		TextureRef texture;
+		TextureAddress texturMode = TextureAddress::Wrap;
+
+		static void StartEditAssetTexture(void* owner);
 
 	public:
 
 		META_DATA_DECL_BASE(AssetTexture)
 
+		Sprite::Sheet spriteSheet;
+
 		TextureRef GetTexture();
 		void Reload() override;
 
+		void LoadData(JsonReader& loader) override;
+
 		#ifdef OAK_EDITOR
-		virtual const char* GetSceneEntityType();
-		virtual void SetupCreatedSceneEntity(SceneEntity* entity);
+		void SaveData(JsonWriter& saver) override;
+		const char* GetSceneEntityType() override;
+		void SetupCreatedSceneEntity(SceneEntity* entity) override;
 		#endif
 	};
 

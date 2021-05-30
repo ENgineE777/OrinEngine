@@ -16,15 +16,11 @@ namespace Oak
 		FLOAT_PROP(SimpleCharacter2D, floor_height, 200.0f, "Properties", "FloorHeight", "Higth of a level floor")
 	META_DATA_DESC_END()
 
-	Sprite::FrameState SimpleCharacter2D::frameState;
-
 	void SimpleCharacter2D::Init()
 	{
 		transform.unitsScale = &Sprite::pixelsPerUnit;
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.transformFlag = SpriteTransformFlags;
-
-		sprite.frames.push_back(Sprite::Frame());
 
 		Tasks(false)->AddTask(10, this, (Object::Delegate)&SimpleCharacter2D::Update);
 		RenderTasks(false)->AddTask(0, this, (Object::Delegate)&SimpleCharacter2D::Draw);
@@ -34,8 +30,7 @@ namespace Oak
 
 	void SimpleCharacter2D::ApplyProperties()
 	{
-		sprite.texture = texture ? texture->GetTexture() : root.render.GetWhiteTexture();
-		transform.size = Math::Vector3((float)sprite.texture->GetWidth(), (float)sprite.texture->GetHeight(), 0.0f);
+		transform.size = Math::Vector3((float)texture->GetTexture()->GetWidth(), (float)texture->GetTexture()->GetHeight(), 0.0f);
 	}
 
 	void SimpleCharacter2D::Update(float dt)
@@ -181,9 +176,7 @@ namespace Oak
 			//graph_instance.Update(GetName(), 0, Script(), nullptr, dt);
 		}
 
-		Sprite::UpdateFrame(&sprite, &frameState, dt);
-
-		Sprite::Draw(&transform, COLOR_WHITE, &sprite, &frameState, true, false);
+		Sprite::Draw(&transform, COLOR_WHITE, &texture->spriteSheet);
 	}
 
 	SimpleCharacter2D* SimpleCharacter2D::FindTarget()

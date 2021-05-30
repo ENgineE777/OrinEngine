@@ -1,4 +1,42 @@
 ﻿{
 
-	"textureFilter" : 0
+	"textureFilter" : 0,
+	"texturMode" : 0,
+	"spriteSheet" :
+	{
+		"sizeX" : 634.000000,
+		"sizeY" : 136.000000,
+		"count" : 1,
+		"Sheet" : [
+			{
+				"name" : "",
+				"isNineSliced" : false,
+				"pos" :
+				{
+					"x" : 241.000000,
+					"y" : 28.000000
+				},
+				"size" :
+				{
+					"x" : 120.000000,
+					"y" : 83.000000
+				},
+				"upLeftOffset" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000
+				},
+				"downRightOffset" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000
+				}
+			}
+		]
+	}
 }
