@@ -130,14 +130,15 @@ namespace Oak
 		};
 
 		/**
-		\brief Set video mode
+		\brief Set backbuffer as current
 
+		\param[in] id Width of video mode
 		\param[in] wgt Width of video mode
 		\param[in] hgt Height of video mode
 		\param[in] data Platform specific data for set up of a video mode
 
 		*/
-		virtual bool SetVideoMode(int wgt, int hgt, void* data) = 0;
+		virtual bool SetBackBuffer(int id, int wgt, int hgt, void* data) = 0;
 
 		/**
 		\brief Get current back buffer

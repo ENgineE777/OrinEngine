@@ -145,7 +145,7 @@ namespace Oak
 		return true;
 	}
 
-	bool DeviceDX11::SetVideoMode(int wgt, int hgt, void* data)
+	bool DeviceDX11::SetBackBuffer(int id, int wgt, int hgt, void* data)
 	{
 		HWND handle = *((HWND*)data);
 		HRESULT hr;
@@ -154,7 +154,7 @@ namespace Oak
 
 		for (auto& holder : backbuffer_holders)
 		{
-			if (holder.handle == handle)
+			if (holder.id == id)
 			{
 				backbuffer_holder = &holder;
 			}
@@ -165,6 +165,7 @@ namespace Oak
 			backbuffer_holders.emplace_back();
 			backbuffer_holder = &backbuffer_holders.back();
 			backbuffer_holder->handle = handle;
+			backbuffer_holder->id = id;
 		}
 
 		if (backbuffer_holder->scr_w != wgt ||

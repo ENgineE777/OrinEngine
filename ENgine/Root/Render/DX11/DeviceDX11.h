@@ -29,6 +29,7 @@ namespace Oak
 			int scr_w = 0;
 			int scr_h = 0;
 			float cur_aspect = 0.0f;
+			int id = 0;
 			HWND handle;
 			ID3D11Texture2D*          renderTarget = nullptr;
 			ID3D11RenderTargetView*   renderTargetView = nullptr;
@@ -78,7 +79,7 @@ namespace Oak
 
 		static DeviceDX11* instance;
 
-		bool SetVideoMode(int wgt, int hgt, void* data) override;
+		bool SetBackBuffer(int id, int wgt, int hgt, void* data) override;
 		void* GetBackBuffer() override;
 		int GetWidth() override;
 		int GetHeight() override;
