@@ -46,6 +46,7 @@ namespace Oak::Sprite
 		Type type = Type::Image;
 		int width = 32, height = 32;
 		int tileType = 0;
+		eastl::vector<Frame> rects;
 		eastl::vector<Frame> frames;
 
 		float frameTime = 0.25f;

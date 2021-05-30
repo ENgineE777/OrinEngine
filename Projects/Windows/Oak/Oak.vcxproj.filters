@@ -401,6 +401,9 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp">
       <Filter>ENgine\SceneEntities\Other</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp">
+      <Filter>ENgine\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -924,6 +927,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h">
       <Filter>ENgine\SceneEntities\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h">
+      <Filter>ENgine\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

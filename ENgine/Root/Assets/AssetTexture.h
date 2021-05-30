@@ -2,6 +2,7 @@
 
 #include "Asset.h"
 #include "root/Render/Render.h"
+#include "support/Sprite.h"
 
 namespace Oak
 {
@@ -13,6 +14,8 @@ namespace Oak
 		TextureRef texture;
 
 	public:
+
+		Sprite::Data spriteData;
 
 		META_DATA_DECL_BASE(AssetTexture)
 

@@ -154,6 +154,7 @@
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Gizmo.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h" />
+    <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
