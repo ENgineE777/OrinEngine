@@ -51,7 +51,6 @@ namespace Oak
 		bool showAnim = true;
 
 		static AssetTexture* texture;
-		static Sprite::Sheet* sprite;
 		static SpriteWindow* instance;
 
 		static void StartEdit(AssetTexture* setTexture);

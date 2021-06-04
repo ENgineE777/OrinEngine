@@ -31,37 +31,95 @@ namespace Oak
 
 	TextureRef AssetTexture::GetTexture()
 	{
-		return spriteSheet.texture;
+		return texture;
 	}
 
 	void AssetTexture::Reload()
 	{
-		if (spriteSheet.texture.Get())
+		if (texture.Get())
 		{
-			root.render.LoadTexture(spriteSheet.texture, path.c_str());
+			root.render.LoadTexture(texture, path.c_str());
 		}
 		else
 		{
-			spriteSheet.texture = root.render.LoadTexture(path.c_str(), _FL_);
+			texture = root.render.LoadTexture(path.c_str(), _FL_);
 		}
 
-		if (spriteSheet.texture.Get())
+		if (texture.Get())
 		{
-			spriteSheet.texture->SetFilters(textureFilter, textureFilter);
-			spriteSheet.texture->SetAdress(texturMode);
-			spriteSheet.size = Math::Vector2((float)spriteSheet.texture->GetWidth(), (float)spriteSheet.texture->GetHeight());
+			texture->SetFilters(textureFilter, textureFilter);
+			texture->SetAdress(texturMode);
+			size = Math::Vector2((float)texture->GetWidth(), (float)texture->GetHeight());
 		}
 	}
 
 	void AssetTexture::LoadData(JsonReader& loader)
 	{
-		Sprite::Load(loader, &spriteSheet, "spriteSheet");
+		if (loader.EnterBlock("spriteSheet"))
+		{
+			Math::Vector2 size = 0.0f;
+
+			loader.Read("sizeX", size.x);
+			loader.Read("sizeY", size.y);
+
+			int count = 1;
+			loader.Read("count", count);
+			slices.resize(count);
+
+			for (int i = 0; i < count; i++)
+			{
+				Slice& slice = slices[i];
+
+				loader.EnterBlock("Sheet");
+
+				loader.Read("name", slice.name);
+				loader.Read("isNineSliced", slice.isNineSliced);
+				loader.Read("pos", slice.pos);
+				loader.Read("size", slice.size);
+				loader.Read("upLeftOffset", slice.upLeftOffset);
+				loader.Read("downRightOffset", slice.downRightOffset);
+				loader.Read("offset", slice.offset);
+
+				loader.LeaveBlock();
+			}
+
+			loader.LeaveBlock();
+		}
 	}
 
 	#ifdef OAK_EDITOR
 	void AssetTexture::SaveData(JsonWriter& saver)
 	{
-		Sprite::Save(saver, &spriteSheet, "spriteSheet");
+		saver.StartBlock("spriteSheet");
+
+		saver.Write("sizeX", size.x);
+		saver.Write("sizeY", size.y);
+
+		int count = (int)slices.size();
+		saver.Write("count", count);
+
+		saver.StartArray("Sheet");
+
+		for (int i = 0; i < count; i++)
+		{
+			Slice& slice = slices[i];
+
+			saver.StartBlock(nullptr);
+
+			saver.Write("name", slice.name);
+			saver.Write("isNineSliced", slice.isNineSliced);
+			saver.Write("pos", slice.pos);
+			saver.Write("size", slice.size);
+			saver.Write("upLeftOffset", slice.upLeftOffset);
+			saver.Write("downRightOffset", slice.downRightOffset);
+			saver.Write("offset", slice.offset);
+
+			saver.FinishBlock();
+		}
+
+		saver.FinishArray();
+
+		saver.FinishBlock();
 	}
 
 	const char* AssetTexture::GetSceneEntityType()
@@ -75,7 +133,7 @@ namespace Oak
 
 		if (sprite)
 		{
-			sprite->texture = PointerRef<AssetTexture>(this, _FL_);
+			sprite->texture = AssetTextureRef(this, _FL_);
 
 			char str[256];
 			StringUtils::Copy(str, 256, name.c_str());
@@ -85,4 +143,22 @@ namespace Oak
 		}
 	}
 	#endif
+
+	void AssetTextureRef::Draw(Transform* trans, Color clr)
+	{
+		Math::Matrix local_trans = trans->global;
+		Math::Vector3 pos3d = Math::Vector3(trans->offset.x, 1.0f - trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, -1.0f, -1.0f);
+		Math::Vector2 pos = Math::Vector2(pos3d.x, pos3d.y);
+		Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);
+
+		if (sliceIndex == -1 || sliceIndex >= Get()->slices.size())
+		{
+			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f);
+		}
+		else
+		{
+			AssetTexture::Slice& slice = Get()->slices[sliceIndex];
+			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, Get()->size.y - slice.pos.y) / Get()->size, slice.size / Get()->size);
+		}
+	}
 };

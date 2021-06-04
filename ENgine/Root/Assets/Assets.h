@@ -21,6 +21,24 @@ namespace Oak
 			eastl::string ext;
 			eastl::string fullName;
 
+			AssetTextureRef GetAssetTexture()
+			{
+				if (asset == nullptr)
+				{
+					ClassFactoryAsset* decl = ClassFactoryAsset::Find(assetCreation[ext].c_str());
+
+					asset = decl->Create(_FL_);
+					asset->SetPath(fullName.c_str());
+					asset->Reload();
+
+					AssetTextureRef ref(dynamic_cast<AssetTexture*>(asset), _FL_);
+
+					return ref;
+				}
+
+				return AssetTextureRef(dynamic_cast<AssetTexture*>(asset), _FL_);
+			}
+
 			template<class T>
 			PointerRef<T> GetAsset()
 			{
@@ -102,6 +120,16 @@ namespace Oak
 			}
 
 			return PointerRef<T>();
+		};
+
+		AssetTextureRef GetAssetTexture(eastl::string& path)
+		{
+			if (assetsMap.count(path) > 0)
+			{
+				return assetsMap[path]->GetAssetTexture();
+			}
+
+			return AssetTextureRef();
 		};
 
 		#ifdef OAK_EDITOR

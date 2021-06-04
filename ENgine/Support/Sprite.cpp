@@ -28,74 +28,6 @@ namespace Oak::Sprite
 	float pixelsPerUnitInvert = 1.0f / pixelsPerUnit;
 	float pixelsHeight = 1080.0f;
 
-	void Load(JsonReader& loader, Sprite::Sheet* sheet, const char* name)
-	{
-		if (loader.EnterBlock(name))
-		{
-			Math::Vector2 size = 0.0f;
-
-			loader.Read("sizeX", sheet->size.x);
-			loader.Read("sizeY", sheet->size.y);
-
-			int count = 1;
-			loader.Read("count", count);
-			sheet->slices.resize(count);
-
-			for (int i = 0; i < count; i++)
-			{
-				Slice& slice = sheet->slices[i];
-
-				loader.EnterBlock("Sheet");
-
-				loader.Read("name", slice.name);
-				loader.Read("isNineSliced", slice.isNineSliced);
-				loader.Read("pos", slice.pos);
-				loader.Read("size", slice.size);
-				loader.Read("upLeftOffset", slice.upLeftOffset);
-				loader.Read("downRightOffset", slice.downRightOffset);
-				loader.Read("offset", slice.offset);
-
-				loader.LeaveBlock();
-			}
-
-			loader.LeaveBlock();
-		}
-	}
-
-	void Save(JsonWriter& saver, Sprite::Sheet* sheet, const char* name)
-	{
-		saver.StartBlock(name);
-
-		saver.Write("sizeX", sheet->size.x);
-		saver.Write("sizeY", sheet->size.y);
-
-		int count = (int)sheet->slices.size();
-		saver.Write("count", count);
-
-		saver.StartArray("Sheet");
-
-		for (int i = 0; i < count; i++)
-		{
-			Slice& slice = sheet->slices[i];
-
-			saver.StartBlock(nullptr);
-
-			saver.Write("name", slice.name);
-			saver.Write("isNineSliced", slice.isNineSliced);
-			saver.Write("pos", slice.pos);
-			saver.Write("size", slice.size);
-			saver.Write("upLeftOffset", slice.upLeftOffset);
-			saver.Write("downRightOffset", slice.downRightOffset);
-			saver.Write("offset", slice.offset);
-
-			saver.FinishBlock();
-		}
-
-		saver.FinishArray();
-
-		saver.FinishBlock();
-	}
-
 	void Init()
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float2, ElementSemantic::Position, 0 } };
@@ -150,7 +82,7 @@ namespace Oak::Sprite
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
-	void Draw(Transform* trans, Color clr, Sprite::Sheet* sprite, int sheetIndex)
+	/*void Draw(Transform* trans, Color clr, AssetTextureRef texture, int sheetIndex)
 	{
 		Math::Matrix local_trans = trans->global;
 		Math::Vector3 pos3d = Math::Vector3(trans->offset.x, 1.0f - trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, -1.0f, -1.0f);
@@ -175,14 +107,16 @@ namespace Oak::Sprite
 			return;
 		}*/
 
-		if (sprite->slices.size() > 0)
-		{
-			Draw(sprite->texture, clr, local_trans, pos, size, Math::Vector2(sprite->slices[0].pos.x, sprite->size.y - sprite->slices[0].pos.y) / sprite->size, sprite->slices[0].size / sprite->size);
-		}
-		else
+		/*if (texture.sliceIndex == -1 || texture.sliceIndex >= texture->spriteSheet.slices.size())
 		{
 			Draw(sprite->texture, clr, local_trans, pos, size, 0.0f, 1.0f);
 		}
+		else
+		{
+			Sprite::Sheet& sheet = texture->spriteSheet;
+			Sprite::Slice& slice = sheet.slices[texture.sliceIndex];
+			Draw(texture->GetTexture(), clr, local_trans, pos, size, Math::Vector2(slice.pos.x, sheet.size.y - slice.pos.y) / sheet.size, slice.size / sheet.size);
+		}*/
 
 		/*else
 		if (sprite->type == Type::Image)
@@ -245,8 +179,8 @@ namespace Oak::Sprite
 					Draw(sprite->texture, clr, local_trans, pos + Math::Vector2(x[j], y[i]), Math::Vector2(x[j + 1] - x[j], y[i + 1] - y[i]), frame.uv, frame.duv, use_depth);
 					index++;
 				}
-		}*/
-	}
+		}
+	}*/
 
 	void Release()
 	{

@@ -176,7 +176,7 @@ namespace Oak
 			//graph_instance.Update(GetName(), 0, Script(), nullptr, dt);
 		}
 
-		Sprite::Draw(&transform, COLOR_WHITE, &texture->spriteSheet);
+		texture.Draw(&transform, COLOR_WHITE);
 	}
 
 	SimpleCharacter2D* SimpleCharacter2D::FindTarget()

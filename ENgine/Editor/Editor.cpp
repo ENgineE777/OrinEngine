@@ -869,7 +869,7 @@ namespace Oak
 			{
 				root.assets.selFolder = nullptr;
 				root.assets.selAsset = item;
-				selAsset = item->GetAsset<AssetTexture>();
+				selAsset = item->GetAssetTexture();
 
 				SelectEntity(nullptr);
 			}

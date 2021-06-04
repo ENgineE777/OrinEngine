@@ -155,7 +155,8 @@ namespace Oak
 				if (reader.Read(prop.name.c_str(), path))
 				{
 					AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
-					*ref = Oak::root.assets.GetAsset<AssetTexture>(path);
+					*ref = Oak::root.assets.GetAssetTexture(path);
+					reader.Read("sliceIndex", ref->sliceIndex);
 				}
 			}
 			else
@@ -262,6 +263,7 @@ namespace Oak
 				if (ref->Get())
 				{
 					writer.Write(prop.name.c_str(), ref->Get()->GetPath().c_str());
+					writer.Write("sliceIndex", ref->sliceIndex);
 				}
 			}
 			else
@@ -784,7 +786,7 @@ namespace Oak
 								{
 									Assets::AssetRef* assetRef = reinterpret_cast<Assets::AssetRef**>(payload->Data)[0];
 
-									*ref = assetRef->GetAsset<AssetTexture>();
+									*ref = assetRef->GetAssetTexture();
 									prop.changed = true;
 								}
 							}

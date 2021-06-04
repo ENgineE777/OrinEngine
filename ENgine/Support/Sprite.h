@@ -17,25 +17,6 @@ namespace Oak::Sprite
 	extern float pixelsPerUnitInvert;
 	extern float pixelsHeight;
 
-	struct Slice
-	{
-		eastl::string name;
-		bool isNineSliced = 0;
-		Math::Vector2 pos = 0.0f;
-		Math::Vector2 size = 0.0f;
-		Math::Vector2 upLeftOffset = 0.0f;
-		Math::Vector2 downRightOffset = 0.0f;
-		Math::Vector2 offset = 0.5f;
-	};
-
-	struct Sheet
-	{
-		TextureRef texture;
-		Math::Vector2 size = 0.0f;
-
-		eastl::vector<Slice> slices;
-	};
-
 	/*struct FrameState
 	{
 		bool  looped = true;
@@ -46,9 +27,6 @@ namespace Oak::Sprite
 		float curTime = -1.0f;
 		float frameStartTime = 0.0f;
 	};*/
-
-	void Load(JsonReader& loader, Sprite::Sheet* sheet, const char* name);
-	void Save(JsonWriter& saver, Sprite::Sheet* sheet, const char* name);
  
 	/*template<typename Func>
 	static void UpdateFrame(Sprite::Data* data, FrameState* state, float dt, Func callback)
@@ -143,7 +121,6 @@ namespace Oak::Sprite
 	//void UpdateFrame(Sprite::Data* data, FrameState* state, float dt);
 
 	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv);
-	void Draw(Transform* trans, Color clr, Sprite::Sheet* sprite, int sheetIndex = -1);
 
 	void Release();
 }

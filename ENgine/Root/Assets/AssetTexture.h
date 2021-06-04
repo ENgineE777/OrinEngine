@@ -17,9 +17,22 @@ namespace Oak
 
 	public:
 
-		META_DATA_DECL_BASE(AssetTexture)
+		struct Slice
+		{
+			eastl::string name;
+			bool isNineSliced = 0;
+			Math::Vector2 pos = 0.0f;
+			Math::Vector2 size = 0.0f;
+			Math::Vector2 upLeftOffset = 0.0f;
+			Math::Vector2 downRightOffset = 0.0f;
+			Math::Vector2 offset = 0.5f;
+		};
 
-		Sprite::Sheet spriteSheet;
+		TextureRef texture;
+		Math::Vector2 size;
+		eastl::vector<Slice> slices;
+
+		META_DATA_DECL_BASE(AssetTexture)
 
 		TextureRef GetTexture();
 		void Reload() override;
@@ -33,5 +46,22 @@ namespace Oak
 		#endif
 	};
 
-	typedef PointerRef<AssetTexture> AssetTextureRef;
+	class AssetTextureRef : public PointerRef<AssetTexture>
+	{
+	public:
+
+		AssetTextureRef() : PointerRef()
+		{
+
+		};
+
+		AssetTextureRef(AssetTexture* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_)
+		{
+
+		};
+
+		int sliceIndex = -1;
+
+		void Draw(Transform* trans, Color clr);
+	};
 }

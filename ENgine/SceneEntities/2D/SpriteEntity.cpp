@@ -36,6 +36,6 @@ namespace Oak
 	{
 		transform.BuildMatrices();
 
-		Sprite::Draw(&transform, COLOR_WHITE, &texture->spriteSheet);
+		texture.Draw(&transform, COLOR_WHITE);
 	}
 }

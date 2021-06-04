@@ -11,7 +11,6 @@
 namespace Oak
 {
 	AssetTexture* SpriteWindow::texture;
-	Sprite::Sheet* SpriteWindow::sprite;
 	SpriteWindow* SpriteWindow::instance = nullptr;
 
 	void ShowSpriteWindow(AssetTexture* texture)
@@ -27,7 +26,6 @@ namespace Oak
 		}
 
 		texture = setTexture;
-		sprite = &texture->spriteSheet;
 		instance->Prepare();
 		instance->opened = true;
 	}
@@ -170,7 +168,7 @@ namespace Oak
 		rectWidth = 2;
 		rectHeight = 2;
 
-		auto& slice = sprite->slices[selSlice];
+		auto& slice = texture->slices[selSlice];
 
 		points[0] = Math::Vector2(slice.pos.x, slice.pos.y);
 		points[1] = Math::Vector2(slice.pos.x + slice.size.x, slice.pos.y);
@@ -224,13 +222,13 @@ namespace Oak
 
 	void SpriteWindow::FitImage()
 	{
-		camZoom = lastViewportSize.y / sprite->size.y;
+		camZoom = lastViewportSize.y / texture->size.y;
 
 		camPos = 0.0f;
 
-		if ((float)sprite->size.x * camZoom > lastViewportSize.x)
+		if ((float)texture->size.x * camZoom > lastViewportSize.x)
 		{
-			camZoom = lastViewportSize.x / sprite->size.x;
+			camZoom = lastViewportSize.x / texture->size.x;
 		}
 
 		deltaMouse = 0.0f;
@@ -239,7 +237,7 @@ namespace Oak
 
 	void SpriteWindow::UpdateSavedPos()
 	{
-		auto& slice = sprite->slices[selSlice];
+		auto& slice = texture->slices[selSlice];
 
 		slice.pos = points[0];
 		slice.size = points[rectHeight * rectWidth - 1] - points[0];
@@ -269,7 +267,7 @@ namespace Oak
 	{
 		if (!opened)
 		{
-			sprite = nullptr;
+			texture = nullptr;
 			return;
 		}
 
@@ -287,7 +285,7 @@ namespace Oak
 
 		if (selSlice != -1)
 		{
-			auto& slice = sprite->slices[selSlice];
+			auto& slice = texture->slices[selSlice];
 			
 			bool changed = false;
 
@@ -363,7 +361,7 @@ namespace Oak
 		{
 			if (io.KeysDown[VK_DELETE])
 			{
-				sprite->slices.erase(sprite->slices.begin() + selSlice);
+				texture->slices.erase(texture->slices.begin() + selSlice);
 				selSlice = -1;
 			}
 			else
@@ -484,27 +482,27 @@ namespace Oak
 					Math::Vector2(((int)(camPos.x) % 42) / 42.0f, 1.0f - ((int)(camPos.y) % 42) / 42.0f),
 					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f));
 
-		float wd = sprite->texture ? sprite->size.x * 1.1f : 512.0f;
-		float ht = sprite->texture ? sprite->size.y * 1.1f : 512.0f;
+		float wd = texture->texture ? texture->size.x * 1.1f : 512.0f;
+		float ht = texture->texture ? texture->size.y * 1.1f : 512.0f;
 
 		Color color = COLOR_WHITE;
 
-		Math::Vector2 halfSize((float)sprite->size.x * 0.5f, (float)sprite->size.y * 0.5f);
+		Math::Vector2 halfSize((float)texture->size.x * 0.5f, (float)texture->size.y * 0.5f);
 
 		spriteTrans.Pos().z = 0.005f;
-		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, -halfSize, sprite->size, 0.0f, 1.0f);
+		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, -halfSize, texture->size, 0.0f, 1.0f);
 
 		spriteTrans.Pos().z = 0.0f;
-		Sprite::Draw(sprite->texture, COLOR_WHITE, spriteTrans, -halfSize, sprite->size, 0.0f, 1.0f);
+		Sprite::Draw(texture->texture, COLOR_WHITE, spriteTrans, -halfSize, texture->size, 0.0f, 1.0f);
 
-		for (int i = 0; i < sprite->slices.size(); i++)
+		for (int i = 0; i < texture->slices.size(); i++)
 		{
 			if (selSlice == i)
 			{
 				continue;
 			}
 
-			auto& slice = sprite->slices[i];
+			auto& slice = texture->slices[i];
 			DrawRect(slice.pos - halfSize, slice.pos + slice.size - halfSize, selSlice == i ? COLOR_GREEN : color);
 		}
 
@@ -515,7 +513,7 @@ namespace Oak
 
 		if (selSlice != -1)
 		{
-			Math::Vector3 halfSize((float)sprite->size.x * 0.5f, (float)sprite->size.y * 0.5f, 0.0f);
+			Math::Vector3 halfSize((float)texture->size.x * 0.5f, (float)texture->size.y * 0.5f, 0.0f);
 
 			for (int i = 0; i < rectHeight; i++)
 				for (int j = 0; j<rectWidth; j++)
@@ -597,8 +595,8 @@ namespace Oak
 		{
 			camPos += Math::Vector2(delta.x, -delta.y) * camZoom;
 
-			camPos.x = Math::Clamp(camPos.x, -sprite->size.x * 0.5f, sprite->size.x * 0.5f);
-			camPos.y = Math::Clamp(camPos.y, -sprite->size.y * 0.5f, sprite->size.y * 0.5f);
+			camPos.x = Math::Clamp(camPos.x, -texture->size.x * 0.5f, texture->size.x * 0.5f);
+			camPos.y = Math::Clamp(camPos.y, -texture->size.y * 0.5f, texture->size.y * 0.5f);
 		}
 		else
 		if (drag == Drag::DragRects)
@@ -626,14 +624,14 @@ namespace Oak
 
 		rectStart = camPos + Math::Vector2(prevMs.x - lastViewportSize.x * 0.5f, -prevMs.y + lastViewportSize.y * 0.5f) / camZoom;
 
-		Math::Vector2 halfSize((float)sprite->size.x * 0.5f, (float)sprite->size.y * 0.5f);
+		Math::Vector2 halfSize((float)texture->size.x * 0.5f, (float)texture->size.y * 0.5f);
 
 		selSlice = -1;
 
 		float bufferZone = 3.0f;
-		for(int i = 0; i < sprite->slices.size(); i++)
+		for(int i = 0; i < texture->slices.size(); i++)
 		{
-			auto& slice = sprite->slices[i];
+			auto& slice = texture->slices[i];
 
 			if (slice.pos.x - halfSize.x - bufferZone < rectStart.x && rectStart.x < slice.pos.x + slice.size.x - halfSize.x + bufferZone &&
 				slice.pos.y - halfSize.y - bufferZone < rectStart.y && rectStart.y < slice.pos.y + slice.size.y - halfSize.y + bufferZone)
@@ -737,11 +735,11 @@ namespace Oak
 
 		if (drag == Drag::DragNewSlice)
 		{
-			Sprite::Slice slice;
-			slice.pos = Math::Vector2(fminf(rectStart.x, rectEnd.x), fminf(rectStart.y, rectEnd.y)) + sprite->size * 0.5f;
+			AssetTexture::Slice slice;
+			slice.pos = Math::Vector2(fminf(rectStart.x, rectEnd.x), fminf(rectStart.y, rectEnd.y)) + texture->size * 0.5f;
 			slice.size = Math::Vector2(fmaxf(rectStart.x, rectEnd.x), fmaxf(rectStart.y, rectEnd.y)) - Math::Vector2(fminf(rectStart.x, rectEnd.x), fminf(rectStart.y, rectEnd.y));
 
-			sprite->slices.push_back(slice);
+			texture->slices.push_back(slice);
 		}
 
 		//if (sender == img_wgt)
