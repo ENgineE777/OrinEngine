@@ -9,6 +9,7 @@ namespace Oak
 	class AssetTexture : public Asset
 	{
 		friend class PointerRef<AssetTexture>;
+		friend class AssetTextureRef;
 
 		TextureFilter textureFilter = TextureFilter::Linear;
 		TextureAddress texturMode = TextureAddress::Wrap;
@@ -42,7 +43,6 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		void SaveData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
-		void SetupCreatedSceneEntity(SceneEntity* entity) override;
 		#endif
 	};
 
@@ -63,5 +63,9 @@ namespace Oak
 		int sliceIndex = -1;
 
 		void Draw(Transform* trans, Color clr);
+
+		void SetupCreatedSceneEntity(SceneEntity* entity);
+
+		Math::Vector2 GetSize();
 	};
 }

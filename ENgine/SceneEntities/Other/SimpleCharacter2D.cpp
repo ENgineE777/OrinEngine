@@ -30,7 +30,8 @@ namespace Oak
 
 	void SimpleCharacter2D::ApplyProperties()
 	{
-		transform.size = Math::Vector3((float)texture->GetTexture()->GetWidth(), (float)texture->GetTexture()->GetHeight(), 0.0f);
+		Math::Vector2 size = texture.GetSize();
+		transform.size = Math::Vector3(size.x, size.y, 0.0f);
 	}
 
 	void SimpleCharacter2D::Update(float dt)

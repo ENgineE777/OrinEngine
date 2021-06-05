@@ -41,7 +41,6 @@ namespace Oak
 		void SaveMetaData();
 		virtual void SaveData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
-		virtual void SetupCreatedSceneEntity(SceneEntity* entity) = 0;
 		#endif
 
 		virtual MetaData* GetMetaData() = 0;

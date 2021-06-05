@@ -160,6 +160,8 @@ namespace Oak
 			UpdateSavedPos();
 		}*/
 
+		textureRef = AssetTextureRef(texture, _FL_);
+
 		FitImage();
 	}
 
@@ -400,6 +402,16 @@ namespace Oak
 
 		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
 
+		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed, true) && ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+		{
+			textureRef.sliceIndex = selSlice;
+			Assets::AssetRef* ptr = (Assets::AssetRef*)&textureRef;
+			ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(Assets::AssetRef*));
+			ImGui::EndDragDropSource();
+
+			inDragAndDrop = true;
+		}
+
 		imageFocused = ImGui::IsWindowFocused();
 
 		camZoom = Math::Clamp(camZoom + io.MouseWheel * 0.5f, 0.4f, 3.0f);
@@ -606,7 +618,7 @@ namespace Oak
 
 		prevMs = ms;
 
-		if (dragMouse && drag == Drag::DragNone)
+		if (!inDragAndDrop && dragMouse && drag == Drag::DragNone)
 		{
 			drag = Drag::DragNewSlice;
 		}
@@ -620,6 +632,11 @@ namespace Oak
 
 	void SpriteWindow::OnLeftMouseDown()
 	{
+		if (inDragAndDrop || root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed, true))
+		{
+			return;
+		}
+
 		Math::Vector2 ps(prevMs.x, -prevMs.y);
 
 		rectStart = camPos + Math::Vector2(prevMs.x - lastViewportSize.x * 0.5f, -prevMs.y + lastViewportSize.y * 0.5f) / camZoom;
@@ -742,12 +759,10 @@ namespace Oak
 			texture->slices.push_back(slice);
 		}
 
-		//if (sender == img_wgt)
-		{
-			selCol = -1;
-			selRow = -1;
-			drag = Drag::DragNone;
-		}
+		selCol = -1;
+		selRow = -1;
+		drag = Drag::DragNone;
+		inDragAndDrop = false;
 	}
 
 	void SpriteWindow::OnMiddleMouseDown()

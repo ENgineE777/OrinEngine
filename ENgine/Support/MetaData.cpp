@@ -784,9 +784,9 @@ namespace Oak
 
 								if (payload)
 								{
-									Assets::AssetRef* assetRef = reinterpret_cast<Assets::AssetRef**>(payload->Data)[0];
+									AssetTextureRef* assetRef = reinterpret_cast<AssetTextureRef**>(payload->Data)[0];
 
-									*ref = assetRef->GetAssetTexture();
+									*ref = *assetRef;
 									prop.changed = true;
 								}
 							}

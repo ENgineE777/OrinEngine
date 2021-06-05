@@ -692,8 +692,7 @@ namespace Oak
 			else
 			if (payload.IsDataType("_ASSET_TEX"))
 			{
-				Assets::AssetRef* assetRef = reinterpret_cast<Assets::AssetRef**>(payload.Data)[0];
-				auto textureRef = assetRef->GetAsset<AssetTexture>();
+				auto& textureRef = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
@@ -701,7 +700,7 @@ namespace Oak
 
 					if (assetEntity)
 					{
-						textureRef->SetupCreatedSceneEntity(assetEntity);
+						textureRef.SetupCreatedSceneEntity(assetEntity);
 						assetEntity->ApplyProperties();
 
 						if (asChild)

@@ -37,6 +37,9 @@ namespace Oak
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
 		bool imageFocused = false;
+		bool inDragAndDrop = false;
+
+		AssetTextureRef textureRef;
 
 		Math::Vector2 rectStart;
 		Math::Vector2 rectEnd;

@@ -126,22 +126,6 @@ namespace Oak
 	{
 		return "Sprite";
 	}
-
-	void AssetTexture::SetupCreatedSceneEntity(SceneEntity* entity)
-	{
-		SpriteEntity* sprite = reinterpret_cast<SpriteEntity*>(entity);
-
-		if (sprite)
-		{
-			sprite->texture = AssetTextureRef(this, _FL_);
-
-			char str[256];
-			StringUtils::Copy(str, 256, name.c_str());
-			StringUtils::RemoveExtension(str);
-
-			entity->SetName(str);
-		}
-	}
 	#endif
 
 	void AssetTextureRef::Draw(Transform* trans, Color clr)
@@ -160,5 +144,32 @@ namespace Oak
 			AssetTexture::Slice& slice = Get()->slices[sliceIndex];
 			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, Get()->size.y - slice.pos.y) / Get()->size, slice.size / Get()->size);
 		}
+	}
+
+	void AssetTextureRef::SetupCreatedSceneEntity(SceneEntity* entity)
+	{
+		SpriteEntity* sprite = reinterpret_cast<SpriteEntity*>(entity);
+
+		if (sprite)
+		{
+			sprite->texture = *this;
+
+			char str[256];
+			StringUtils::Copy(str, 256, Get()->name.c_str());
+			StringUtils::RemoveExtension(str);
+
+			entity->SetName(str);
+		}
+	}
+
+	Math::Vector2 AssetTextureRef::GetSize()
+	{
+		if (sliceIndex == -1 || sliceIndex >= Get()->slices.size())
+		{
+			return Get()->size;
+		}
+		
+		AssetTexture::Slice& slice = Get()->slices[sliceIndex];
+		return slice.size;
 	}
 };
