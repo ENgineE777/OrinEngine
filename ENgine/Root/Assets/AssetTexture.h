@@ -24,8 +24,8 @@ namespace Oak
 			bool isNineSliced = 0;
 			Math::Vector2 pos = 0.0f;
 			Math::Vector2 size = 0.0f;
-			Math::Vector2 upLeftOffset = 0.0f;
-			Math::Vector2 downRightOffset = 0.0f;
+			Math::Vector2 upLeftOffset = 5.0f;
+			Math::Vector2 downRightOffset = 5.0f;
 			Math::Vector2 offset = 0.5f;
 		};
 

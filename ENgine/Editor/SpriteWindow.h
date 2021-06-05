@@ -58,15 +58,16 @@ namespace Oak
 
 		static void StartEdit(AssetTexture* setTexture);
 
-		void FillPoints(int index, int stride, float val, bool vert);
-		void UpdateSpriteRect();
 		void Prepare();
 
+		void FillPoints(int index, int stride, float val);
 		void FillRects();
-		void MoveRects(Math::Vector2 delta);
-		void UpdateSavedPos();
-		void ActualPixels();
+
 		void FitImage();
+
+		void MoveRects(Math::Vector2 delta);
+
+		void UpdateSlice();
 
 		void ImGui();
 		void DrawViewport(Math::Vector2 viewportSize);
@@ -75,9 +76,6 @@ namespace Oak
 
 		void OnLeftMouseDown();
 		void OnLeftMouseUp();
-
-		void OnMiddleMouseDown();
-		void OnMiddleMouseUp();
 	};
 }
 
