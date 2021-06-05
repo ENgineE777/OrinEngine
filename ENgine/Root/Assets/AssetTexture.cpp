@@ -184,6 +184,11 @@ namespace Oak
 			StringUtils::Copy(str, 256, Get()->name.c_str());
 			StringUtils::RemoveExtension(str);
 
+			if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
+			{
+				StringUtils::Cat(str, 256, Get()->slices[sliceIndex].name.c_str());
+			}
+
 			entity->SetName(str);
 		}
 	}

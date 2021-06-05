@@ -535,6 +535,8 @@ namespace Oak
 			slice.pos.y -= texture->size.y;
 			slice.size = Math::Vector2(fmaxf(rectStart.x, rectEnd.x), fmaxf(rectStart.y, rectEnd.y)) - Math::Vector2(fminf(rectStart.x, rectEnd.x), fminf(rectStart.y, rectEnd.y));
 
+			slice.name = StringUtils::PrintTemp("Slice%i", texture->slices.size());
+
 			texture->slices.push_back(slice);
 		}
 
