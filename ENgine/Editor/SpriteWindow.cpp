@@ -44,7 +44,6 @@ namespace Oak
 		}
 
 		deltaMouse = 0.0f;
-		camZoom = 1.0f;
 	}
 
 	void SpriteWindow::FillPoints(int index, int stride, float val)
@@ -439,7 +438,7 @@ namespace Oak
 
 		if (drag == Drag::DragField)
 		{
-			camPos += Math::Vector2(delta.x, -delta.y) * camZoom;
+			camPos += Math::Vector2(delta.x, -delta.y) / camZoom;
 
 			camPos.x = Math::Clamp(camPos.x, 0.0f, texture->size.x);
 			camPos.y = Math::Clamp(camPos.y, 0.0f, texture->size.y);
@@ -447,7 +446,7 @@ namespace Oak
 		else
 		if (drag == Drag::DragRects)
 		{
-			MoveRects(Math::Vector2(delta.x, delta.y) * camZoom);
+			MoveRects(Math::Vector2(delta.x, delta.y) / camZoom);
 		}
 
 		prevMs = ms;

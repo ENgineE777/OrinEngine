@@ -29,8 +29,9 @@ namespace Oak
 		{
 			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
 			{
-				pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) * Sprite::pixelsPerUnitInvert * 2.0f / zoom2D;
-				pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) * Sprite::pixelsPerUnitInvert * 2.0f / zoom2D;
+				float k = root.render.GetDevice()->GetHeight() / Sprite::pixelsHeight;
+				pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;
+				pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) / zoom2D / k;
 			}
 
 			if (editor.vireportHowered)
@@ -73,8 +74,9 @@ namespace Oak
 		if (mode_2d)
 		{
 			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom2D);
+			Math::Vector2 pos = pos2D * Sprite::pixelsPerUnitInvert;
 
-			view.BuildView(Math::Vector3(pos2D.x, pos2D.y, -dist), Math::Vector3(pos2D.x, pos2D.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
+			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
 		}
 		else
 		{
