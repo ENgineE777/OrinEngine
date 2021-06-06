@@ -108,6 +108,22 @@ namespace Oak
 		texture->SaveMetaData();
 	}
 
+	void SpriteWindow::Text(const char* name)
+	{
+		ImGui::Text(name);
+		ImGui::SameLine();
+		ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize(name).x, 1.0f));
+		ImGui::SameLine();
+	}
+
+	bool SpriteWindow::InputFloat(float* value, const char* name)
+	{
+		Text(name);
+
+		ImGui::SetNextItemWidth(60.0f);
+		return ImGui::InputFloat(StringUtils::PrintTemp("###Slice%s", name), value);
+	}
+
 	void SpriteWindow::ImGui()
 	{
 		if (!opened)
@@ -134,70 +150,41 @@ namespace Oak
 			
 			bool changed = false;
 
-			ImGui::Text("Name");
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize("Name").x, 1.0f));
-			ImGui::SameLine();
-
-			struct Funcs
+			if (ImGui::CollapsingHeader("Slice##SelectedSlice", ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				static int ResizeCallback(ImGuiInputTextCallbackData* data)
+				Text("Name");
+
+				struct Funcs
 				{
-					if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
+					static int ResizeCallback(ImGuiInputTextCallbackData* data)
 					{
-						eastl::string* str = (eastl::string*)data->UserData;
-						str->resize(data->BufSize + 1);
-						data->Buf = str->begin();
+						if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
+						{
+							eastl::string* str = (eastl::string*)data->UserData;
+							str->resize(data->BufSize + 1);
+							data->Buf = str->begin();
+						}
+						return 0;
 					}
-					return 0;
+				};
+
+				ImGui::SetNextItemWidth(60.0f);
+				ImGui::InputText("###SliceName", slice.name.begin(), (size_t)slice.name.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&slice.name);
+
+				if (InputFloat(&slice.pos.x, "X")) changed = true;
+				if (InputFloat(&slice.pos.y, "Y")) changed = true;
+
+				if (InputFloat(&slice.size.x, "Width")) changed = true;
+				if (InputFloat(&slice.size.y, "Heigth")) changed = true;
+
+				Text("Is 9-slice");
+			
+				if (ImGui::Checkbox("###Is9Slice", &slice.isNineSliced)) changed = true;
+
+				if (changed)
+				{
+					FillRects();
 				}
-			};
-
-			ImGui::SetNextItemWidth(60.0f);
-			ImGui::InputText("###SliceName", slice.name.begin(), (size_t)slice.name.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&slice.name);
-
-			ImGui::Text("X");
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize("X").x, 1.0f));
-			ImGui::SameLine();
-
-			ImGui::SetNextItemWidth(60.0f);
-			if (ImGui::InputFloat("###SliceX", &slice.pos.x)) changed = true;
-
-			ImGui::Text("Y");
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize("Y").x, 1.0f));
-			ImGui::SameLine();
-
-			ImGui::SetNextItemWidth(60.0f);
-			if (ImGui::InputFloat("###SliceY", &slice.pos.y)) changed = true;
-
-			ImGui::Text("Width");
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize("Width").x, 1.0f));
-			ImGui::SameLine();
-
-			ImGui::SetNextItemWidth(60.0f);
-			if (ImGui::InputFloat("###SliceWidth", &slice.size.x)) changed = true;
-
-			ImGui::Text("Heigth");
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize("Heigth").x, 1.0f));
-			ImGui::SameLine();
-
-			ImGui::SetNextItemWidth(60.0f);
-			if (ImGui::InputFloat("###SliceHeight", &slice.size.y)) changed = true;
-
-			ImGui::Text("Is 9-slice");
-			ImGui::SameLine();
-			ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize("Is 9-slice").x, 1.0f));
-			ImGui::SameLine();
-
-			if (ImGui::Checkbox("###Is9Slice", &slice.isNineSliced)) changed = true;
-
-			if (changed)
-			{
-				FillRects();
 			}
 		}
 

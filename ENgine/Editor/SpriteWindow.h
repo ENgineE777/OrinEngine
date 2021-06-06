@@ -47,6 +47,9 @@ namespace Oak
 
 		void DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color);
 
+		void Text(const char* name);
+		bool InputFloat(float* value, const char* prefix);
+
 	public:
 
 		bool opened = false;
