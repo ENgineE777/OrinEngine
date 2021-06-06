@@ -8,6 +8,8 @@
 
 #include "imgui.h"
 
+#include "stb_image.h"
+
 namespace Oak
 {
 	AssetTexture* SpriteWindow::texture;
@@ -32,6 +34,7 @@ namespace Oak
 
 	void SpriteWindow::Prepare()
 	{
+		selSlice = -1;
 		textureRef = AssetTextureRef(texture, _FL_);
 
 		camZoom = lastViewportSize.y / texture->size.y;
@@ -110,7 +113,7 @@ namespace Oak
 	{
 		ImGui::Text(name);
 		ImGui::SameLine();
-		ImGui::Dummy(ImVec2(40.0f - ImGui::CalcTextSize(name).x, 1.0f));
+		ImGui::Dummy(ImVec2(labelSize - ImGui::CalcTextSize(name).x, 1.0f));
 		ImGui::SameLine();
 	}
 
@@ -118,8 +121,103 @@ namespace Oak
 	{
 		Text(name);
 
-		ImGui::SetNextItemWidth(60.0f);
+		ImGui::SetNextItemWidth(inputSize);
 		return ImGui::InputFloat(StringUtils::PrintTemp("###Slice%s", name), value);
+	}
+
+	bool SpriteWindow::InputInt(int* value, const char* name)
+	{
+		Text(name);
+
+		ImGui::SetNextItemWidth(inputSize);
+		return ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), value);
+	}
+
+	void SpriteWindow::AddToQueue(int posX, int posY, eastl::queue<Math::Vector2>& nodes, int width, int height, uint8_t* data, uint8_t* visited)
+	{
+		if (posY + 1 < height)
+		{
+			if (posX > 0 && !visited[(posY + 1) * width + posX - 1] && data[((posY + 1) * width + posX - 1) * 4 + 3] == 255)
+			{
+				posXMin = (int)fminf((float)posXMin, (float)posX - 1);
+				posYMax = (int)fmaxf((float)posYMax, (float)posY + 1.0f);
+				nodes.push(Math::Vector2((float)posX - 1, (float)posY + 1.0f));
+			}
+
+			if (!visited[(posY + 1) * width + posX] && data[((posY + 1) * width + posX) * 4 + 3] == 255)
+			{
+				posYMax = (int)fmaxf((float)posYMax, (float)posY + 1.0f);
+				nodes.push(Math::Vector2((float)posX, (float)posY + 1.0f));
+			}
+
+			if (posX + 1 < width && !visited[(posY + 1) * width + posX + 1] && data[((posY + 1) * width + posX + 1) * 4 + 3] == 255)
+			{
+				posXMax = (int)fmaxf((float)posXMax, (float)posX + 1);
+				posYMax = (int)fmaxf((float)posYMax, (float)posY + 1.0f);
+				nodes.push(Math::Vector2((float)posX + 1, (float)posY + 1.0f));
+			}
+		}
+
+		if (posY - 1 >= 0)
+		{
+			if (posX > 0 && !visited[(posY - 1) * width + posX - 1] && data[((posY - 1) * width + posX - 1) * 4 + 3] == 255)
+			{
+				posXMin = (int)fminf((float)posXMin, (float)posX - 1);
+				posYMin = (int)fminf((float)posYMin, (float)posY - 1.0f);
+				nodes.push(Math::Vector2((float)posX - 1, (float)posY - 1.0f));
+			}
+
+			if (!visited[(posY - 1) * width + posX] && data[((posY - 1) * width + posX) * 4 + 3] == 255)
+			{
+				posYMin = (int)fminf((float)posYMin, (float)posY - 1.0f);
+				nodes.push(Math::Vector2((float)posX, (float)posY - 1.0f));
+			}
+
+			if (posX + 1 < width && !visited[(posY - 1) * width + posX + 1] && data[((posY - 1) * width + posX + 1) * 4 + 3] == 255)
+			{
+				posXMax = (int)fmaxf((float)posXMax, (float)posX + 1);
+				posYMin = (int)fminf((float)posYMin, (float)posY - 1.0f);
+				nodes.push(Math::Vector2((float)posX + 1, (float)posY - 1.0f));
+			}
+		}
+	}
+
+	void SpriteWindow::TextureCrawler(int posX, int posY, int width, int height, uint8_t* data, uint8_t* visited)
+	{
+		eastl::queue<Math::Vector2> nodes;
+		nodes.push(Math::Vector2((float)posX, (float)posY));
+
+		while (nodes.size())
+		{
+			auto current = nodes.front();
+			nodes.pop();
+
+			for (int i = (int)current.x; i < width; i++)
+			{
+				if (visited[(int)current.y * width + i] || data[((int)current.y * width + i) * 4 + 3] != 255)
+				{
+					break;
+				}
+
+				visited[(int)current.y * width + i] = 1;
+
+				posXMax = (int)fmaxf((float)posXMax, (float)i);
+
+				AddToQueue(i, (int)current.y, nodes, width, height, data, visited);
+			}
+
+			for (int i = (int)current.x - 1; i >= 0; i--)
+			{
+				if (visited[(int)current.y * width + i] || data[((int)current.y * width + i) * 4 + 3] != 255)
+				{
+					break;
+				}
+
+				posXMin = (int)fminf((float)posXMin, (float)i);
+
+				AddToQueue(i, (int)current.y, nodes, width, height, data, visited);
+			}
+		}
 	}
 
 	void SpriteWindow::ImGui()
@@ -140,7 +238,129 @@ namespace Oak
 
 		ImGui::BeginGroup();
 
-		ImGui::Dummy(ImVec2(120, 3));
+		ImGui::Dummy(ImVec2(labelSize + inputSize, 3));
+
+		if (ImGui::CollapsingHeader("Image Info##ImageInfo"))
+		{
+			ImGui::Text(StringUtils::PrintTemp("Image name: %s", texture->GetName()));
+			ImGui::Text(StringUtils::PrintTemp("Image Size: %i x %i", (int)texture->size.x, (int)texture->size.y));
+		}
+
+		if (ImGui::CollapsingHeader("Auto slicing##AutoSlicing"))
+		{
+			const char* types = "Set cells count\0Set cells size\0Auto\0";
+			Text("Slicing Type");
+			ImGui::SetNextItemWidth(inputSize);
+			ImGui::Combo("###SlicingType", &typeAutoSlice, types);
+
+			if (typeAutoSlice == 0)
+			{
+				InputInt(&AutoSliceCols, "Num Cols");
+				InputInt(&AutoSliceRows, "Num Rows");
+			}
+
+			if (typeAutoSlice == 1)
+			{
+				InputInt(&AutoSliceCellSizeX, "CellX");
+				InputInt(&AutoSliceCellSizeY, "CellY");
+			}
+
+			if (typeAutoSlice == 2)
+			{
+				InputInt(&AutoSliceMinSizeX, "MinSizeX");
+				InputInt(&AutoSliceMinSizeY, "MinSizeY");
+			}
+
+			if (ImGui::Button("Slice###SliceSlice"))
+			{
+				texture->slices.clear();
+				selSlice = -1;
+
+				float stepX = (typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX;
+				float stepY = (typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY;
+
+				if (typeAutoSlice == 0 || typeAutoSlice == 1)
+				{
+					float posY = 0;
+
+					int index = 0;
+
+					while (posY < texture->size.y)
+					{
+						float posX = 0;
+
+						while (posX < texture->size.x)
+						{
+							AssetTexture::Slice slice;
+							slice.pos = Math::Vector2(posX, posY);
+							slice.size = Math::Vector2(stepX, stepY);
+
+							slice.name = StringUtils::PrintTemp("Slice%i", index);
+
+							texture->slices.push_back(slice);
+
+							index++;
+
+							posX += stepX;
+						}
+
+						posY += stepY;
+					}
+				}
+				else
+				if (typeAutoSlice == 2)
+				{
+					FileInMemory buffer;
+
+					if (buffer.Load(texture->GetPath().c_str()))
+					{
+						uint8_t* ptr = buffer.GetData();
+
+						int bytes;
+						int width;
+						int height;
+						uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
+
+						uint8_t* visited = (uint8_t*)malloc(width * height);
+						memset(visited, 0, width * height);
+
+						int index = 0;
+
+						for (int j = 0; j < height; j++)
+						{
+							for (int i = 0; i < width; i++)
+							{
+								if (!visited[(j * width + i)] && data[(j * width + i) * 4 + 3] == 255)
+								{
+									posXMin = posXMax = i;
+									posYMin = posYMax = j;
+
+									TextureCrawler(i, j, width, height, data, visited);
+
+									if (posXMax - posXMin + 1 >= AutoSliceMinSizeX && posYMax - posYMin + 1 >= AutoSliceMinSizeY)
+									{
+										AssetTexture::Slice slice;
+										slice.pos = Math::Vector2((float)posXMin, (float)posYMin);
+										slice.size = Math::Vector2((float)posXMax - (float)posXMin + 1, (float)posYMax - (float)posYMin + 1);
+
+										slice.name = StringUtils::PrintTemp("Slice%i", index);
+
+										texture->slices.push_back(slice);
+
+										index++;
+									}
+								}
+							}
+						}
+
+						free(data);
+						free(visited);
+
+						texture->SaveMetaData();
+					}
+				}
+			}
+		}
 
 		if (selSlice != -1)
 		{
@@ -166,7 +386,7 @@ namespace Oak
 					}
 				};
 
-				ImGui::SetNextItemWidth(60.0f);
+				ImGui::SetNextItemWidth(inputSize);
 				ImGui::InputText("###SliceName", slice.name.begin(), (size_t)slice.name.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&slice.name);
 
 				if (InputFloat(&slice.pos.x, "X")) changed = true;
@@ -521,7 +741,7 @@ namespace Oak
 
 			slice.name = StringUtils::PrintTemp("Slice%i", texture->slices.size());
 
-			selSlice = texture->slices.size();
+			selSlice = (int)texture->slices.size();
 			texture->slices.push_back(slice);
 
 			FillRects();

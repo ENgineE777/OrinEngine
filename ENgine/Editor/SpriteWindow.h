@@ -3,6 +3,7 @@
 #ifdef OAK_EDITOR
 
 #include "Root/Assets/AssetTexture.h"
+#include "eastl/queue.h"
 
 namespace Oak
 {
@@ -45,11 +46,29 @@ namespace Oak
 		Math::Vector2 rectEnd;
 		Math::Vector2 lastViewportSize = Math::Vector2(800.f, 600.0f);
 
+		float labelSize = 60;
+		float inputSize = 120;
+
+		int typeAutoSlice = 0;
+		int AutoSliceRows = 1;
+		int AutoSliceCols = 1;
+		int AutoSliceCellSizeX = 32;
+		int AutoSliceCellSizeY = 32;
+		int AutoSliceMinSizeX = 16;
+		int AutoSliceMinSizeY = 16;
+
 		void DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color);
 
 		void Text(const char* name);
 		bool InputFloat(float* value, const char* prefix);
+		bool InputInt(int* value, const char* prefix);
 
+		int posXMin, posXMax;
+		int posYMin, posYMax;
+
+		void AddToQueue(int posX, int posY, eastl::queue<Math::Vector2>& nodes, int width, int height, uint8_t* data, uint8_t* visited);
+		void TextureCrawler(int posX, int posY, int width, int height, uint8_t* data, uint8_t* visited);
+		
 	public:
 
 		bool opened = false;
