@@ -51,10 +51,10 @@ namespace Oak
 	{
 		auto& slice = texture->slices[selSlice];
 
-		points[index + stride * 0] = Math::Vector2(val, slice.pos.y + texture->size.y);
-		points[index + stride * 1] = Math::Vector2(val, slice.pos.y - slice.upLeftOffset.y + texture->size.y);
-		points[index + stride * 2] = Math::Vector2(val, slice.pos.y - slice.size.y + slice.downRightOffset.y + texture->size.y);
-		points[index + stride * 3] = Math::Vector2(val, slice.pos.y - slice.size.y + texture->size.y);
+		points[index + stride * 0] = Math::Vector2(val, texture->size.y - slice.pos.y);
+		points[index + stride * 1] = Math::Vector2(val, texture->size.y - slice.pos.y - slice.upLeftOffset.y);
+		points[index + stride * 2] = Math::Vector2(val, texture->size.y - slice.pos.y - slice.size.y + slice.downRightOffset.y);
+		points[index + stride * 3] = Math::Vector2(val, texture->size.y - slice.pos.y - slice.size.y);
 	}
 
 	void SpriteWindow::FillRects()
@@ -76,10 +76,10 @@ namespace Oak
 			rectWidth = 2;
 			rectHeight = 2;
 
-			points[0] = Math::Vector2(slice.pos.x, slice.pos.y + texture->size.y);
-			points[1] = Math::Vector2(slice.pos.x + slice.size.x, slice.pos.y + texture->size.y);
-			points[2] = Math::Vector2(slice.pos.x, slice.pos.y - slice.size.y + texture->size.y);
-			points[3] = Math::Vector2(slice.pos.x + slice.size.x, slice.pos.y - slice.size.y + texture->size.y);
+			points[0] = Math::Vector2(slice.pos.x, texture->size.y - slice.pos.y);
+			points[1] = Math::Vector2(slice.pos.x + slice.size.x, texture->size.y - slice.pos.y);
+			points[2] = Math::Vector2(slice.pos.x, texture->size.y - slice.pos.y - slice.size.y);
+			points[3] = Math::Vector2(slice.pos.x + slice.size.x, texture->size.y - slice.pos.y - slice.size.y);
 		}
 	}
 
@@ -87,8 +87,7 @@ namespace Oak
 	{
 		auto& slice = texture->slices[selSlice];
 
-		slice.pos = points[0];
-		slice.pos.y -= texture->size.y;
+		slice.pos = Math::Vector2(points[0].x, texture->size.y - points[0].y);
 
 		slice.size = points[rectHeight * rectWidth - 1] - points[0];
 		slice.size.y = -slice.size.y;
@@ -251,7 +250,10 @@ namespace Oak
 
 		imageFocused = ImGui::IsWindowFocused();
 
-		camZoom = Math::Clamp(camZoom + io.MouseWheel * 0.5f, 0.4f, 3.0f);
+		if (imageFocused)
+		{
+			camZoom = Math::Clamp(camZoom + io.MouseWheel * 0.5f, 0.4f, 3.0f);
+		}
 
 		vireportHowered = ImGui::IsItemHovered();
 
@@ -348,8 +350,7 @@ namespace Oak
 			}
 
 			auto& slice = texture->slices[i];
-			Math::Vector2 pos = slice.pos;
-			pos.y += texture->size.y;
+			Math::Vector2 pos(slice.pos.x, texture->size.y - slice.pos.y);
 			DrawRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), color);
 		}
 
@@ -481,7 +482,7 @@ namespace Oak
 			auto& slice = texture->slices[i];
 
 			if (slice.pos.x - bufferZone < rectStart.x && rectStart.x < slice.pos.x + slice.size.x + bufferZone &&
-				slice.pos.y - slice.size.y - bufferZone + texture->size.y < rectStart.y && rectStart.y < slice.pos.y + bufferZone + texture->size.y)
+				texture->size.y - slice.pos.y - slice.size.y - bufferZone < rectStart.y && rectStart.y < texture->size.y - slice.pos.y + bufferZone)
 			{
 				selSlice = i;
 
@@ -516,13 +517,15 @@ namespace Oak
 		if (drag == Drag::DragNewSlice)
 		{
 			AssetTexture::Slice slice;
-			slice.pos = Math::Vector2(fminf(rectStart.x, rectEnd.x), fmaxf(rectStart.y, rectEnd.y));
-			slice.pos.y -= texture->size.y;
+			slice.pos = Math::Vector2(fminf(rectStart.x, rectEnd.x), texture->size.y - fmaxf(rectStart.y, rectEnd.y));
 			slice.size = Math::Vector2(fmaxf(rectStart.x, rectEnd.x), fmaxf(rectStart.y, rectEnd.y)) - Math::Vector2(fminf(rectStart.x, rectEnd.x), fminf(rectStart.y, rectEnd.y));
 
 			slice.name = StringUtils::PrintTemp("Slice%i", texture->slices.size());
 
+			selSlice = texture->slices.size();
 			texture->slices.push_back(slice);
+
+			FillRects();
 		}
 
 		selCol = -1;

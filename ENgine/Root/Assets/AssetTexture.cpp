@@ -155,10 +155,10 @@ namespace Oak
 				for (int i = 0; i < 3; i++)
 					for (int j = 0; j < 3; j++)
 					{
-						Math::Vector2 slicePos = pos + Math::Vector2(x[j], y[i]);
+						Math::Vector2 slicePos = pos + Math::Vector2(x[j], -y[i]);
 						Math::Vector2 sliceSize = Math::Vector2(x[j + 1] - x[j], y[i + 1] - y[i]);
 
-						Math::Vector2 sliceUVPos = slice.pos + Math::Vector2(u[j], -v[i]);
+						Math::Vector2 sliceUVPos = slice.pos + Math::Vector2(u[j], v[i]);
 						Math::Vector2 sliceUVSize = Math::Vector2(u[j + 1] - u[j], v[i + 1] - v[i]);
 
 						Sprite::Draw(Get()->texture, clr, local_trans, slicePos, sliceSize, sliceUVPos / Get()->size, sliceUVSize / Get()->size);
