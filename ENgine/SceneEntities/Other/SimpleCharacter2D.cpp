@@ -163,6 +163,7 @@ namespace Oak
 		}
 
 		transform.position.z = (transform.position.y / floor_height) * 0.9f;
+		transform.position.z = Math::Clamp(transform.position.z, 0.0f, 0.9f);
 		transform.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(transform.scale.x);
 		
 		transform.BuildMatrices();
