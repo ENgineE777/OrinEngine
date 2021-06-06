@@ -40,7 +40,8 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" : "floor.jpg"
+			"Texture" : "floor.jpg",
+			"sliceIndex" : -1
 		},
 		{
 			"type" : "SpriteEntity",
@@ -80,7 +81,8 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" : "back.jpg"
+			"Texture" : "back.jpg",
+			"sliceIndex" : -1
 		},
 		{
 			"type" : "SimpleCharacter2D",
@@ -121,6 +123,7 @@
 				}
 			},
 			"Texture" : "batman.png",
+			"sliceIndex" : -1,
 			"speed" : 70.000000,
 			"is_enemy" : false,
 			"max_hp" : 100,
@@ -166,6 +169,7 @@
 				}
 			},
 			"Texture" : "enemy.png",
+			"sliceIndex" : -1,
 			"speed" : 70.000000,
 			"is_enemy" : true,
 			"max_hp" : 100,

@@ -28,7 +28,7 @@ SamplerState samLinear : register(s0);
 PS_INPUT VS( VS_INPUT input )
 {
 	float4 posTemp = float4(desc[0].x + desc[0].z * input.position.x,
-							desc[0].y + desc[0].w * input.position.y, 0, 1.0f);
+							desc[0].y - desc[0].w * input.position.y, 0, 1.0f);
 	
 	/*posTemp = mul(posTemp, trans);
 
@@ -40,7 +40,7 @@ PS_INPUT VS( VS_INPUT input )
     float4 pos = mul(float4(posTemp.x * desc[2].w, posTemp.y * desc[2].w, 0.0f, 1.0f), trans);
 	output.pos = mul(pos, view_proj);
 
-    output.texCoord = float2(desc[1].x + desc[1].z * input.position.x, desc[1].y - desc[1].w * input.position.y);
+    output.texCoord = float2(desc[1].x + desc[1].z * input.position.x, desc[1].y + desc[1].w * input.position.y);
 	
 	return output;
 }

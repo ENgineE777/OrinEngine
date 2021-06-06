@@ -340,15 +340,13 @@ namespace Oak
 		spriteTrans.Pos().z = 0.01f;
 
 		Sprite::Draw(editorDrawer.checkerTex, COLOR_WHITE, spriteTrans,
-					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y - viewportSize.y * 0.5f / camZoom) , viewportSize / camZoom,
+					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y + viewportSize.y * 0.5f / camZoom), viewportSize / camZoom,
 					Math::Vector2(((int)(camPos.x) % 42) / 42.0f, 1.0f - ((int)(camPos.y) % 42) / 42.0f),
 					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f));
 
-		float wd = texture->texture ? texture->size.x * 1.1f : 512.0f;
-		float ht = texture->texture ? texture->size.y * 1.1f : 512.0f;
-
 		Color color = COLOR_WHITE;
 
+		spriteTrans.Pos().y = texture->size.y;
 		spriteTrans.Pos().z = 0.005f;
 		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, 0.0f, texture->size, 0.0f, 1.0f);
 

@@ -1,4 +1,13 @@
 ﻿{
 
-	"textureFilter" : 0
+	"textureFilter" : 0,
+	"texturMode" : 2,
+	"spriteSheet" :
+	{
+		"sizeX" : 46.000000,
+		"sizeY" : 75.000000,
+		"count" : 0,
+		"Sheet" : [
+		]
+	}
 }
