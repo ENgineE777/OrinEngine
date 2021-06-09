@@ -155,7 +155,7 @@ namespace Oak
 				if (reader.Read(prop.name.c_str(), path))
 				{
 					AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
-					*ref = Oak::root.assets.GetAssetTexture(path);
+					*ref = Oak::root.assets.GetAssetRef<AssetTextureRef>(path);
 					reader.Read("sliceIndex", ref->sliceIndex);
 				}
 			}

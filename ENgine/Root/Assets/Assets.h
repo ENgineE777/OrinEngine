@@ -14,48 +14,36 @@ namespace Oak
 
 	public:
 
-		struct AssetRef
+		struct AssetHolder
 		{
 			Asset* asset = nullptr;
 			eastl::string name;
 			eastl::string ext;
 			eastl::string fullName;
 
-			AssetTextureRef GetAssetTexture()
+			const char* GetAssetType()
+			{
+				return assetCreation[ext].c_str();
+			}
+
+			Asset* GetAsset()
 			{
 				if (asset == nullptr)
 				{
-					ClassFactoryAsset* decl = ClassFactoryAsset::Find(assetCreation[ext].c_str());
+					ClassFactoryAsset* decl = ClassFactoryAsset::Find(GetAssetType());
 
 					asset = decl->Create(_FL_);
 					asset->SetPath(fullName.c_str());
 					asset->Reload();
-
-					AssetTextureRef ref(dynamic_cast<AssetTexture*>(asset), _FL_);
-
-					return ref;
 				}
 
-				return AssetTextureRef(dynamic_cast<AssetTexture*>(asset), _FL_);
+				return asset;
 			}
 
 			template<class T>
-			PointerRef<T> GetAsset()
+			T GetAssetRef()
 			{
-				if (asset == nullptr)
-				{
-					ClassFactoryAsset* decl = ClassFactoryAsset::Find(assetCreation[ext].c_str());
-
-					asset = decl->Create(_FL_);
-					asset->SetPath(fullName.c_str());
-					asset->Reload();
-
-					PointerRef<T> ref(dynamic_cast<T*>(asset), _FL_);
-
-					return ref;
-				}
-
-				return PointerRef<T>(dynamic_cast<T*>(asset), _FL_);
+				return T(GetAsset(), _FL_);
 			}
 		};
 
@@ -64,7 +52,7 @@ namespace Oak
 			eastl::string name;
 			eastl::string fullName;
 			eastl::vector<Folder*> folders;
-			eastl::vector<AssetRef*> assets;
+			eastl::vector<AssetHolder*> assets;
 
 			void Clear()
 			{
@@ -89,7 +77,7 @@ namespace Oak
 
 		static eastl::map<eastl::string, eastl::string> assetCreation;
 
-		eastl::map<eastl::string, AssetRef*> assetsMap;
+		eastl::map<eastl::string, AssetHolder*> assetsMap;
 
 		#ifdef OAK_EDITOR
 		std::atomic<bool> scanning;
@@ -102,34 +90,19 @@ namespace Oak
 
 		Folder rootFolder;
 
-		#ifdef OAK_EDITOR
-		Folder* selFolder = nullptr;
-		AssetRef* selAsset = nullptr;
-		#endif
-
 		void Init();
 
 		void LoadAssets();
 
 		template<class T>
-		PointerRef<T> GetAsset(eastl::string& path)
+		T GetAssetRef(eastl::string& path)
 		{
 			if (assetsMap.count(path) > 0)
 			{
-				return assetsMap[path]->GetAsset<T>();
+				return assetsMap[path]->GetAssetRef<T>();
 			}
 
-			return PointerRef<T>();
-		};
-
-		AssetTextureRef GetAssetTexture(eastl::string& path)
-		{
-			if (assetsMap.count(path) > 0)
-			{
-				return assetsMap[path]->GetAssetTexture();
-			}
-
-			return AssetTextureRef();
+			return T();
 		};
 
 		#ifdef OAK_EDITOR

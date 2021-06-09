@@ -3,7 +3,7 @@
 namespace Oak
 {
 	eastl::map<eastl::string, eastl::string> Assets::assetCreation = { {"jpg", "AssetTexture"}, {"bmp", "AssetTexture"}, {"png", "AssetTexture"}, {"tga", "AssetTexture"},
-	                                                                   {"psd", "AssetTexture"} };
+	                                                                   {"psd", "AssetTexture"}};
 
 	void Assets::Init()
 	{
@@ -83,9 +83,9 @@ namespace Oak
 
 						if (!found)
 						{
-							folder->assets.push_back(NEW AssetRef());
+							folder->assets.push_back(NEW AssetHolder());
 
-							AssetRef* ref = folder->assets.back();
+							AssetHolder* ref = folder->assets.back();
 							ref->name = ffd.cFileName;
 							ref->ext = extension;
 							ref->fullName = relativeName;
@@ -185,9 +185,6 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		scanning.store(false, std::memory_order_release);
 		executor.Terminate();
-
-		selFolder = nullptr;
-		selAsset = nullptr;
 		#endif
 
 		assetsMap.clear();

@@ -50,15 +50,9 @@ namespace Oak
 	{
 	public:
 
-		AssetTextureRef() : PointerRef()
-		{
-
-		};
-
-		AssetTextureRef(AssetTexture* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_)
-		{
-
-		};
+		AssetTextureRef() : PointerRef() {};
+		AssetTextureRef(Asset* setPtr, const char* file, int line) : PointerRef(reinterpret_cast<AssetTexture*>(setPtr), _FL_) {};
+		AssetTextureRef(AssetTexture* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
 
 		int sliceIndex = -1;
 

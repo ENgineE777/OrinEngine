@@ -460,8 +460,8 @@ namespace Oak
 		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed, true) && ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
 			textureRef.sliceIndex = selSlice;
-			Assets::AssetRef* ptr = (Assets::AssetRef*)&textureRef;
-			ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(Assets::AssetRef*));
+			AssetTextureRef* ptr = &textureRef;
+			ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
 			ImGui::EndDragDropSource();
 
 			inDragAndDrop = true;

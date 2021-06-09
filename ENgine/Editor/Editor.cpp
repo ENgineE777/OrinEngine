@@ -387,9 +387,9 @@ namespace Oak
 
 	void Editor::SelectEntity(SceneEntity* entity)
 	{
-		if (entity != nullptr && selAsset.Get())
+		if (entity != nullptr)
 		{
-			selAsset.ReleaseRef();
+			selectedAsset = nullptr;
 		}
 
 		if (selectedEntity)
@@ -692,15 +692,15 @@ namespace Oak
 			else
 			if (payload.IsDataType("_ASSET_TEX"))
 			{
-				auto& textureRef = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
+				auto& assetRef = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					auto* assetEntity = project.selectedScene->scene->CreateEntity(textureRef->GetSceneEntityType());
+					auto* assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
 
 					if (assetEntity)
 					{
-						textureRef.SetupCreatedSceneEntity(assetEntity);
+						assetRef.SetupCreatedSceneEntity(assetEntity);
 						assetEntity->ApplyProperties();
 
 						if (asChild)
@@ -831,7 +831,7 @@ namespace Oak
 		{
 			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
 
-			if (item == root.assets.selFolder)
+			if (item == selectedFolder)
 			{
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
@@ -840,9 +840,9 @@ namespace Oak
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
-				root.assets.selFolder = item;
-				root.assets.selAsset = nullptr;
-				selAsset.ReleaseRef();
+				selectedFolder = item;
+				selectedAssetHolder = nullptr;
+				selectedAsset = nullptr;
 			}
 
 			if (open)
@@ -857,7 +857,7 @@ namespace Oak
 		{
 			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
 
-			if (item == root.assets.selAsset)
+			if (item == selectedAssetHolder)
 			{
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
@@ -866,17 +866,22 @@ namespace Oak
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
-				root.assets.selFolder = nullptr;
-				root.assets.selAsset = item;
-				selAsset = item->GetAssetTexture();
+				selectedFolder = nullptr;
+				selectedAssetHolder = item;
+				selectedAsset = item->GetAsset();
 
 				SelectEntity(nullptr);
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 			{
-				Assets::AssetRef* ptr = item;
-				ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(Assets::AssetRef*));
+				if (StringUtils::IsEqual(item->GetAssetType(), "AssetTexture"))
+				{
+					draggedTextureAsset = item->GetAssetRef<AssetTextureRef>();
+					AssetTextureRef* ptr = (AssetTextureRef*)&draggedTextureAsset;
+					ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
+				}
+
 				ImGui::EndDragDropSource();
 			}
 
@@ -1210,14 +1215,15 @@ namespace Oak
 				selectedEntity->GetMetaData()->ImGuiWidgets();
 			}
 
-			if (selAsset.Get())
+			if (selectedAsset)
 			{
-				selAsset->GetMetaData()->Prepare(selAsset.Get());
-				selAsset->GetMetaData()->ImGuiWidgets();
-				if (selAsset->GetMetaData()->IsValueWasChanged())
+				selectedAsset->GetMetaData()->Prepare(selectedAsset);
+				selectedAsset->GetMetaData()->ImGuiWidgets();
+
+				if (selectedAsset->GetMetaData()->IsValueWasChanged())
 				{
-					selAsset->Reload();
-					selAsset->SaveMetaData();
+					selectedAsset->Reload();
+					selectedAsset->SaveMetaData();
 				}
 			}
 

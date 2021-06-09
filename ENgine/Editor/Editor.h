@@ -47,7 +47,12 @@ namespace Oak
 		bool showProjectSettings = false;
 
 		SceneEntity* selectedEntity = nullptr;
-		AssetTextureRef selAsset;
+		Assets::Folder* selectedFolder = nullptr;
+		Assets::AssetHolder* selectedAssetHolder = nullptr;
+		Asset* selectedAsset;
+
+		AssetTextureRef draggedTextureAsset;
+
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
 		bool viewportCaptured = false;
