@@ -95,6 +95,12 @@ namespace Oak
 				ref->ReleaseRef();
 			}
 			else
+			if (prop.type == Type::AssetAnimGraph2D)
+			{
+				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+				ref->ReleaseRef();
+			}
+			else
 			if (prop.type == Type::Transform)
 			{
 				Transform* transform = (Transform*)prop.value;
@@ -151,12 +157,31 @@ namespace Oak
 			else
 			if (prop.type == Type::AssetTexture)
 			{
-				eastl::string path;
-				if (reader.Read(prop.name.c_str(), path))
+				if (reader.EnterBlock(prop.propName.c_str()))
 				{
-					AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
-					*ref = Oak::root.assets.GetAssetRef<AssetTextureRef>(path);
-					reader.Read("sliceIndex", ref->sliceIndex);
+					eastl::string path;
+					if (reader.Read("path", path))
+					{
+						AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
+						*ref = Oak::root.assets.GetAssetRef<AssetTextureRef>(path);
+						reader.Read("sliceIndex", ref->sliceIndex);
+					}
+
+					reader.LeaveBlock();
+				}
+			}
+			if (prop.type == Type::AssetAnimGraph2D)
+			{
+				if (reader.EnterBlock(prop.propName.c_str()))
+				{
+					eastl::string path;
+					if (reader.Read("path", path))
+					{
+						AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+						*ref = Oak::root.assets.GetAssetRef<AssetAnimGraph2DRef>(path);
+					}
+
+					reader.LeaveBlock();
 				}
 			}
 			else
@@ -262,8 +287,22 @@ namespace Oak
 
 				if (ref->Get())
 				{
-					writer.Write(prop.name.c_str(), ref->Get()->GetPath().c_str());
+					writer.StartBlock(prop.name.c_str());
+					writer.Write("Path", ref->Get()->GetPath().c_str());
 					writer.Write("sliceIndex", ref->sliceIndex);
+					writer.FinishBlock();
+				}
+			}
+			else
+			if (prop.type == Type::AssetAnimGraph2D)
+			{
+				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+
+				if (ref->Get())
+				{
+					writer.StartBlock(prop.name.c_str());
+					writer.Write("Path", ref->Get()->GetPath().c_str());
+					writer.FinishBlock();
 				}
 			}
 			else
@@ -344,6 +383,11 @@ namespace Oak
 			if (prop.type == Type::AssetTexture)
 			{
 				memcpy(prop.value, src, sizeof(AssetTextureRef));
+			}
+			else
+			if (prop.type == Type::AssetAnimGraph2D)
+			{
+				memcpy(prop.value, src, sizeof(AssetAnimGraph2DRef));
 			}
 			else
 			if (prop.type == Type::Transform)
@@ -798,6 +842,45 @@ namespace Oak
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
 								*ref = AssetTextureRef();
+								prop.changed = true;
+							}
+						}
+						else
+						if (prop.type == Type::AssetAnimGraph2D)
+						{
+							AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
+							{
+							}
+
+							if (ref->Get() && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+							{
+								ImGui::SetTooltip(ref->Get()->GetPath().c_str());
+							}
+
+							if (ImGui::BeginDragDropTarget())
+							{
+								const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_ANIM_GRAPH_2D", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+								if (payload)
+								{
+									AssetAnimGraph2DRef* assetRef = reinterpret_cast<AssetAnimGraph2DRef**>(payload->Data)[0];
+
+									*ref = *assetRef;
+									prop.changed = true;
+								}
+							}
+
+							ImGui::SameLine();
+
+							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							{
+								*ref = AssetAnimGraph2DRef();
 								prop.changed = true;
 							}
 						}

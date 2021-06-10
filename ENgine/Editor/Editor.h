@@ -52,6 +52,7 @@ namespace Oak
 		Asset* selectedAsset;
 
 		AssetTextureRef draggedTextureAsset;
+		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
 
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 

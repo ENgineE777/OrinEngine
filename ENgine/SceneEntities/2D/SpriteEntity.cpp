@@ -22,9 +22,7 @@ namespace Oak
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.transformFlag = SpriteTransformFlags;
 
-		RenderTasks(false)->AddTask(0, this, (Object::Delegate)& SpriteEntity::Draw);
-
-		GetScene()->AddToGroup(this, "SpriteAsset");
+		RenderTasks(false)->AddTask(0, this, (Object::Delegate)&SpriteEntity::Draw);
 	}
 
 	void SpriteEntity::ApplyProperties()

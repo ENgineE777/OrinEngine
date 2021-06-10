@@ -48,6 +48,7 @@ namespace Oak
 			Callback,
 			Transform,
 			AssetTexture,
+			AssetAnimGraph2D,
 			SceneEntity,
 			Array
 		};
@@ -367,6 +368,17 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::AssetTexture;\
+		prop.name = strPropName;\
+		prop.catName = strCatName;\
+		prop.propName = strPropName;\
+		properties.push_back(prop);\
+	}
+
+	#define ASSET_ANIM_GRAPH_2D_PROP(className, classMember, strCatName, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::AssetAnimGraph2D;\
 		prop.name = strPropName;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\

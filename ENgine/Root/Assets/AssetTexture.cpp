@@ -130,6 +130,11 @@ namespace Oak
 
 	void AssetTextureRef::Draw(Transform* trans, Color clr)
 	{
+		if (!Get())
+		{
+			return;
+		}
+
 		Math::Matrix local_trans = trans->global;
 		Math::Vector3 pos3d = Math::Vector3(trans->offset.x, trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, 1.0f, -1.0f);
 		Math::Vector2 pos = Math::Vector2(pos3d.x, pos3d.y);
@@ -195,6 +200,11 @@ namespace Oak
 
 	Math::Vector2 AssetTextureRef::GetSize()
 	{
+		if (!Get())
+		{
+			return 50.0f;
+		}
+
 		if (sliceIndex == -1 || sliceIndex >= Get()->slices.size())
 		{
 			return Get()->size;

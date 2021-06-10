@@ -649,6 +649,8 @@ namespace Oak
 			ImGuiPayload& payload = context->DragDropPayload;
 			bool dragFinished = false;
 
+			SceneEntity* assetEntity = nullptr;
+
 			if (payload.IsDataType("_TREENODE"))
 			{
 				uint64_t temp = *((uint64_t*)payload.Data);
@@ -696,37 +698,59 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					auto* assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
 
 					if (assetEntity)
 					{
 						assetRef.SetupCreatedSceneEntity(assetEntity);
 						assetEntity->ApplyProperties();
+					}
 
-						if (asChild)
-						{
-							assetEntity->SetParent(entity);
-						}
-						else
-						{
-							SceneEntity* parent = entity ? entity->GetParent() : nullptr;
+					dragFinished = true;
+				}
+			}
+			else
+			if (payload.IsDataType("_ASSET_ANIM_GRAPH_2D"))
+			{
+				auto& assetRef = *reinterpret_cast<AssetAnimGraph2DRef**>(payload.Data)[0];
 
-							if (parent)
-							{
-								assetEntity->SetParent(parent, entity);
-							}
-							else
-							{
-								project.selectedScene->scene->AddEntity(assetEntity);
-							}
-						}
+				if (ImGui::AcceptDragDropPayload("_ASSET_ANIM_GRAPH_2D", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+				{
+					assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
 
-						SelectEntity(assetEntity);
+					if (assetEntity)
+					{
+						assetRef.SetupCreatedSceneEntity(assetEntity);
+						assetEntity->ApplyProperties();
+					}
 
-						dragFinished = true;
+					dragFinished = true;
+				}
+			}
+
+			if (assetEntity)
+			{
+				if (asChild)
+				{
+					assetEntity->SetParent(entity);
+				}
+				else
+				{
+					SceneEntity* parent = entity ? entity->GetParent() : nullptr;
+
+					if (parent)
+					{
+						assetEntity->SetParent(parent, entity);
+					}
+					else
+					{
+						project.selectedScene->scene->AddEntity(assetEntity);
 					}
 				}
 			}
+
+			SelectEntity(assetEntity);
+
 
 			if (dragFinished)
 			{
@@ -880,6 +904,13 @@ namespace Oak
 					draggedTextureAsset = item->GetAssetRef<AssetTextureRef>();
 					AssetTextureRef* ptr = (AssetTextureRef*)&draggedTextureAsset;
 					ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
+				}
+
+				if (StringUtils::IsEqual(item->GetAssetType(), "AssetAnimGraph2D"))
+				{
+					draggedAssetAnimGraph2D = item->GetAssetRef<AssetAnimGraph2DRef>();
+					AssetAnimGraph2DRef* ptr = (AssetAnimGraph2DRef*)&draggedAssetAnimGraph2D;
+					ImGui::SetDragDropPayload("_ASSET_ANIM_GRAPH_2D", &ptr, sizeof(AssetAnimGraph2DRef*));
 				}
 
 				ImGui::EndDragDropSource();
