@@ -22,8 +22,7 @@ namespace Oak
 		JsonReader reader;
 
 		StringUtils::Copy(strName, 512, path.c_str());
-		StringUtils::RemoveExtension(strName);
-		StringUtils::Copy(strName, 512, StringUtils::PrintTemp("%s.meta", strName));
+		StringUtils::Cat(strName, 512, ".meta");
 
 		GetMetaData()->Prepare(this);
 
@@ -78,8 +77,7 @@ namespace Oak
 		char strName[512];
 
 		StringUtils::Copy(strName, 512, path.c_str());
-		StringUtils::RemoveExtension(strName);
-		StringUtils::Copy(strName, 512, StringUtils::PrintTemp("%s.meta", strName));
+		StringUtils::Cat(strName, 512, ".meta");
 
 		JsonWriter writer;
 
