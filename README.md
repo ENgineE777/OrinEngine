@@ -21,10 +21,10 @@ The users' games are theirs.
 - Powerful system for binding properties into the editor
 - Powerful assets system
 - Font system with support of True-Type fonts
-- Sprite Editor
-- Animation graphs
-- Powerful scripting system based on daScript (https://www.angelcode.com/angelscript/)
-- Render system with support of DX11, OpenGL ES 3, Metal and Vulkan
-- Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview)
 - Controls system based on aliases
+- Sprite Editor
+- Animation graphs (WIP)
+- Powerful scripting system based on daScript (https://www.angelcode.com/angelscript/) (WIP)
+- Render system with support of DX11, OpenGL ES 3, Metal and Vulkan (WIP)
+- Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview) (WIP)
 - And lots, lots more
