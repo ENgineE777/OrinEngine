@@ -1,4 +1,4 @@
-[![Oak Game Engine logo](/logo.png)]
+![Oak Game Engine logo](/logo.png)
 
 **Oak Game Engine**
 
