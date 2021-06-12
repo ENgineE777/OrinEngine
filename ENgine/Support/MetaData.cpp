@@ -559,6 +559,22 @@ namespace Oak
 						StringUtils::Printf(propGuiID, 256, "###%s%s%i", categoriesData[j].name.c_str(), guiID, i);
 					}
 
+					if (prop.type == Type::Callback)
+					{
+						ImGui::Columns(1);
+
+						StringUtils::Printf(propGuiID, 256, "%s%s%i", prop.propName.c_str(), propGuiID, i);
+
+						if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+						{
+							prop.callback(owner);
+						}
+
+						ImGui::NextColumn();
+
+						ImGui::Columns(2);
+					}
+					else
 					if (prop.type == Type::Array)
 					{
 						StringUtils::Printf(propGuiID, 256, "%s###%s%i", prop.propName.c_str(), guiID, i);
@@ -920,16 +936,6 @@ namespace Oak
 								ref->uid = 0;
 
 								prop.changed = true;
-							}
-						}
-						else
-						if (prop.type == Type::Callback)
-						{
-							StringUtils::Printf(propGuiID, 256, "Action%s%i", propGuiID, i);
-
-							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
-							{
-								prop.callback(owner);
 							}
 						}
 
