@@ -29,24 +29,6 @@ namespace Oak
 		scene->AddEntity(this);
 	}
 
-	void SceneEntity::EnableTasks(bool enable)
-	{
-		if (taskPool)
-		{
-			taskPool->SetActive(enable);
-		}
-
-		if (renderTaskPool)
-		{
-			renderTaskPool->SetActive(enable);
-		}
-	}
-
-	bool SceneEntity::HasOwnTasks()
-	{
-		return taskPool || renderTaskPool;
-	}
-
 	void SceneEntity::SetEditMode(bool ed)
 	{
 		edited = ed;
@@ -125,44 +107,9 @@ namespace Oak
 		GetMetaData()->Save(writer);
 	}
 
-	TaskExecutor::SingleTaskPool* SceneEntity::Tasks(bool editor)
+	TaskExecutor::SingleTaskPool* SceneEntity::Tasks(bool render)
 	{
-		if (editor)
-		{
-	#ifdef OAK_EDITOR
-			if (!taskPool)
-			{
-				taskPool = root.taskExecutor.CreateSingleTaskPool(_FL_);
-				taskPool->SetActive(false);
-			}
-
-			return taskPool;
-	#else
-		return nullptr;
-	#endif
-		}
-
-		return scene->taskPool;
-	}
-
-	TaskExecutor::SingleTaskPool* SceneEntity::RenderTasks(bool editor)
-	{
-		if (editor)
-		{
-	#ifdef OAK_EDITOR
-			if (!renderTaskPool)
-			{
-				renderTaskPool = root.render.AddTaskPool(_FL_);
-				renderTaskPool->SetActive(false);
-			}
-
-			return renderTaskPool;
-	#else
-			return nullptr;
-	#endif
-		}
-
-		return scene->renderTaskPool;
+		return render ? scene->renderTaskPool : scene->taskPool;
 	}
 
 	bool SceneEntity::Play()
@@ -202,25 +149,10 @@ namespace Oak
 			scene->taskPool->DelAllTasks(this);
 		}
 
-	#ifdef OAK_EDITOR
-		if (taskPool)
-		{
-			delete taskPool;
-		}
-	#endif
-
 		if (scene)
 		{
 			scene->renderTaskPool->DelAllTasks(this);
 		}
-
-	#ifdef OAK_EDITOR
-		if (renderTaskPool)
-		{
-			root.render.DelTaskPool(renderTaskPool);
-			delete renderTaskPool;
-		}
-	#endif
 
 		if (scene) scene->DelFromAllGroups(this);
 

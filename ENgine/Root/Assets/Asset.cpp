@@ -92,6 +92,34 @@ namespace Oak
 	{
 
 	}
+
+	void Asset::EnableTasks(bool enable)
+	{
+		if (taskPool) taskPool->SetActive(enable);
+		if (renderTaskPool) renderTaskPool->SetActive(enable);
+	}
+
+	TaskExecutor::SingleTaskPool* Asset::Tasks(bool editor)
+	{
+		if (!taskPool)
+		{
+			taskPool = root.taskExecutor.CreateSingleTaskPool(_FL_);
+			taskPool->SetActive(false);
+		}
+
+		return taskPool;
+	}
+
+	TaskExecutor::SingleTaskPool* Asset::RenderTasks(bool editor)
+	{
+		if (!renderTaskPool)
+		{
+			renderTaskPool = root.render.AddTaskPool(_FL_);
+			renderTaskPool->SetActive(false);
+		}
+
+		return renderTaskPool;
+	}
 	#endif
 
 	void Asset::Reload()
@@ -101,6 +129,18 @@ namespace Oak
 
 	void Asset::Release()
 	{
+#ifdef OAK_EDITOR
+		if (taskPool)
+		{
+			delete taskPool;
+		}
+
+		if (renderTaskPool)
+		{
+			delete renderTaskPool;
+		}
+#endif
+
 		if (root.assets.assetsMap.count(path) > 0)
 		{
 			root.assets.assetsMap[path]->asset = nullptr;

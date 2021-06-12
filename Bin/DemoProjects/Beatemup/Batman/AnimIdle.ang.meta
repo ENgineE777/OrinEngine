@@ -1,4 +1,9 @@
 ﻿{
 
+	"Texture" :
+	{
+		"Path" : "Batman/batman.png",
+		"sliceIndex" : -1
+	},
 	"k" : 1.000000
 }

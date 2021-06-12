@@ -4,6 +4,7 @@
 #include "Support/ClassFactory.h"
 #include "Support/PointerRef.h"
 #include "Support/MetaData.h"
+#include "Root/TaskExecutor/TaskExecutor.h"
 
 #ifdef OAK_EDITOR
 #include <sys/stat.h>
@@ -26,6 +27,11 @@ namespace Oak
 		eastl::string path;
 		int refCounter = 0;
 
+#ifdef OAK_EDITOR
+		TaskExecutor::SingleTaskPool* taskPool = nullptr;
+		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
+#endif
+
 	public:
 
 		virtual ~Asset() = default;
@@ -41,6 +47,9 @@ namespace Oak
 		void SaveMetaData();
 		virtual void SaveData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
+		void EnableTasks(bool enable);
+		TaskExecutor::SingleTaskPool* Tasks(bool editor);
+		TaskExecutor::SingleTaskPool* RenderTasks(bool editor);
 		#endif
 
 		virtual MetaData* GetMetaData() = 0;

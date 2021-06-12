@@ -946,11 +946,6 @@ namespace Oak
 
 		project.Save();
 
-		if (selectedEntity)
-		{
-			selectedEntity->EnableTasks(false);
-		}
-
 		if (project.selectedScene)
 		{
 			project.EnableScene(project.selectedScene, false);
@@ -973,11 +968,6 @@ namespace Oak
 		if (project.selectedScene)
 		{
 			project.EnableScene(project.selectedScene, true);
-		}
-
-		if (selectedEntity)
-		{
-			selectedEntity->EnableTasks(true);
 		}
 
 		projectRunning = false;
@@ -1417,16 +1407,8 @@ namespace Oak
 				selectedEntity->ApplyProperties();
 			}
 
-			if (selectedEntity && selectedEntity->HasOwnTasks())
-			{
-				project.EnableScene(project.selectedScene, false);
-				selectedEntity->Tasks(true)->Execute(dt);
-			}
-			else
-			{
-				project.EnableScene(project.selectedScene, true);
-				project.selectedScene->scene->Execute(dt);
-			}
+			project.EnableScene(project.selectedScene, true);
+			project.selectedScene->scene->Execute(dt);
 		}
 
 		root.Update();

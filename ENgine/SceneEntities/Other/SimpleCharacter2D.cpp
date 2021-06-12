@@ -23,7 +23,7 @@ namespace Oak
 		transform.transformFlag = SpriteTransformFlags;
 
 		Tasks(false)->AddTask(10, this, (Object::Delegate)&SimpleCharacter2D::Update);
-		RenderTasks(false)->AddTask(0, this, (Object::Delegate)&SimpleCharacter2D::Draw);
+		Tasks(true)->AddTask(0, this, (Object::Delegate)&SimpleCharacter2D::Draw);
 
 		GetScene()->AddToGroup(this, "SimpleCharacter2D");
 	}

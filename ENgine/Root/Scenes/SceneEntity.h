@@ -42,8 +42,6 @@ namespace Oak
 
 	#ifdef OAK_EDITOR
 		bool edited = false;
-		TaskExecutor::SingleTaskPool* taskPool = nullptr;
-		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
 	#endif
 
 	public:
@@ -126,16 +124,10 @@ namespace Oak
 		/**
 		\brief Get task pool
 
-		\param[in] editor Should be used scene task pool or created new one which will be used in the editor
+		\param[in] render Should be used task registered in render pool
 		*/
-		virtual TaskExecutor::SingleTaskPool* Tasks(bool editor);
+		virtual TaskExecutor::SingleTaskPool* Tasks(bool renderTask = false);
 
-		/**
-		\brief Get render task pool
-
-		\param[in] editor Should be used scene render task pool or created new one which will be used in the editor
-		*/
-		virtual TaskExecutor::SingleTaskPool* RenderTasks(bool editor);
 
 		/**
 		\brief This method called when scene is starting to play
@@ -151,20 +143,6 @@ namespace Oak
 		\param[in] setScene new scene
 		*/
 		void SetScene(Scene* setScene);
-
-		/**
-		\brief Enable entity's task pools
-
-		\param[in] enable 
-		*/
-		virtual void EnableTasks(bool enable);
-
-		/**
-		\brief Check if entity has own task pools
-
-		\return if entity has own task pools
-		*/
-		virtual bool HasOwnTasks();
 
 		/**
 		\brief Copy data from source entity
