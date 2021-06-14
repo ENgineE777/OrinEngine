@@ -46,7 +46,7 @@ namespace Oak
 		Math::Vector2 rectEnd;
 		Math::Vector2 lastViewportSize = Math::Vector2(800.f, 600.0f);
 
-		float labelSize = 60;
+		float labelSize = 45;
 		float inputSize = 120;
 
 		int typeAutoSlice = 0;
@@ -59,9 +59,16 @@ namespace Oak
 
 		void DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color);
 
+		int selAnim = -1;
+		int selAnimSlice = -1;
+
+		int curAnimPlaySlice = -1;
+		float curAnimPlayTime = 0.0f;
+
 		void Text(const char* name);
 		bool InputFloat(float* value, const char* prefix);
 		bool InputInt(int* value, const char* prefix);
+		bool InputString(eastl::string& value, const char* name);
 
 		int posXMin, posXMax;
 		int posYMin, posYMax;
@@ -69,6 +76,12 @@ namespace Oak
 		void AddToQueue(int posX, int posY, eastl::queue<Math::Vector2>& nodes, int width, int height, uint8_t* data, uint8_t* visited);
 		void TextureCrawler(int posX, int posY, int width, int height, uint8_t* data, uint8_t* visited);
 		
+		void ShowImageInfo();
+		void ShowAutoSlicing();
+		void ShowSlices();
+		void ShowAnimations();
+		void ShowImage();
+
 	public:
 
 		bool opened = false;

@@ -29,9 +29,23 @@ namespace Oak
 			Math::Vector2 offset = 0.5f;
 		};
 
+		struct Frame
+		{
+			int slice = -1;
+			float frameLength = 1.0f;
+		};
+
+		struct Animation
+		{
+			int fps = 15;
+			eastl::string name;
+			eastl::vector<Frame> frames;
+		};
+
 		TextureRef texture;
 		Math::Vector2 size;
 		eastl::vector<Slice> slices;
+		eastl::vector<Animation> animations;
 
 		META_DATA_DECL_BASE(AssetTexture)
 

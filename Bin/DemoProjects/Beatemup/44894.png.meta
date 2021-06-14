@@ -158,12 +158,12 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 241.000000,
+					"x" : 240.428574,
 					"y" : 9.000000
 				},
 				"size" :
 				{
-					"x" : 38.000000,
+					"x" : 37.999985,
 					"y" : 72.000000
 				},
 				"upLeftOffset" :
@@ -246,7 +246,7 @@
 				"pos" :
 				{
 					"x" : 384.000000,
-					"y" : 9.000000
+					"y" : 7.571411
 				},
 				"size" :
 				{
@@ -2334,7 +2334,7 @@
 				"pos" :
 				{
 					"x" : 9.000000,
-					"y" : 289.000000
+					"y" : 288.000000
 				},
 				"size" :
 				{
@@ -2363,7 +2363,7 @@
 				"pos" :
 				{
 					"x" : 350.000000,
-					"y" : 289.000000
+					"y" : 286.857178
 				},
 				"size" :
 				{
@@ -2478,8 +2478,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 71.000000,
-					"y" : 291.000000
+					"x" : 70.833336,
+					"y" : 290.000000
 				},
 				"size" :
 				{
@@ -2913,8 +2913,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 215.000000,
-					"y" : 381.000000
+					"x" : 214.000000,
+					"y" : 379.000000
 				},
 				"size" :
 				{
@@ -3121,7 +3121,7 @@
 				},
 				"size" :
 				{
-					"x" : 45.000000,
+					"x" : 45.000004,
 					"y" : 70.000000
 				},
 				"upLeftOffset" :
@@ -3842,12 +3842,12 @@
 				"pos" :
 				{
 					"x" : 243.000000,
-					"y" : 501.000000
+					"y" : 496.416718
 				},
 				"size" :
 				{
-					"x" : 36.000000,
-					"y" : 71.000000
+					"x" : 78.083305,
+					"y" : 75.583374
 				},
 				"upLeftOffset" :
 				{
@@ -9403,6 +9403,162 @@
 					"x" : 0.500000,
 					"y" : 0.500000
 				}
+			}
+		],
+		"anim_count" : 3,
+		"Animations" : [
+			{
+				"name" : "Idle",
+				"fps" : 10,
+				"frames_count" : 16,
+				"frames" : [
+					{
+						"slice" : 0,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 1,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 2,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 3,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 4,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 5,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 6,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 7,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 8,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 9,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 10,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 11,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 12,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 13,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 14,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 15,
+						"frame_length" : 1.000000
+					}
+				]
+			},
+			{
+				"name" : "Kick1",
+				"fps" : 10,
+				"frames_count" : 7,
+				"frames" : [
+					{
+						"slice" : 80,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 85,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 90,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 89,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 86,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 75,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 81,
+						"frame_length" : 1.000000
+					}
+				]
+			},
+			{
+				"name" : "Kick2",
+				"fps" : 10,
+				"frames_count" : 10,
+				"frames" : [
+					{
+						"slice" : 107,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 108,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 105,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 106,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 100,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 102,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 104,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 110,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 109,
+						"frame_length" : 1.000000
+					},
+					{
+						"slice" : 103,
+						"frame_length" : 1.000000
+					}
+				]
 			}
 		]
 	}

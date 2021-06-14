@@ -62,7 +62,7 @@ namespace Oak
 			loader.Read("sizeX", size.x);
 			loader.Read("sizeY", size.y);
 
-			int count = 1;
+			int count = 0;
 			loader.Read("count", count);
 			slices.resize(count);
 
@@ -79,6 +79,38 @@ namespace Oak
 				loader.Read("upLeftOffset", slice.upLeftOffset);
 				loader.Read("downRightOffset", slice.downRightOffset);
 				loader.Read("offset", slice.offset);
+
+				loader.LeaveBlock();
+			}
+
+			count = 0;
+			loader.Read("anim_count", count);
+			animations.resize(count);
+
+			for (int i = 0; i < count; i++)
+			{
+				Animation& anim = animations[i];
+
+				loader.EnterBlock("Animations");
+
+				loader.Read("name", anim.name);
+				loader.Read("fps", anim.fps);
+
+				int frames_count = 0;
+				loader.Read("frames_count", frames_count);
+				anim.frames.resize(frames_count);
+
+				for (int j = 0; j < frames_count; j++)
+				{
+					loader.EnterBlock("frames");
+
+					Frame& frame = anim.frames[j];
+
+					loader.Read("slice", frame.slice);
+					loader.Read("frame_length", frame.frameLength);
+
+					loader.LeaveBlock();
+				}
 
 				loader.LeaveBlock();
 			}
@@ -113,6 +145,47 @@ namespace Oak
 			saver.Write("upLeftOffset", slice.upLeftOffset);
 			saver.Write("downRightOffset", slice.downRightOffset);
 			saver.Write("offset", slice.offset);
+
+			saver.FinishBlock();
+		}
+
+		saver.FinishArray();
+
+		count = (int)animations.size();
+		saver.Write("anim_count", count);
+
+		saver.StartArray("Animations");
+
+		for (int i = 0; i < count; i++)
+		{
+			Animation& anim = animations[i];
+
+			saver.StartBlock(nullptr);
+
+			saver.Write("name", anim.name);
+			saver.Write("fps", anim.fps);
+			
+			int frames_count = (int)anim.frames.size();
+			saver.Write("frames_count", frames_count);
+
+			if (frames_count > 0)
+			{
+				saver.StartArray("frames");
+
+				for (int j = 0; j < frames_count; j++)
+				{
+					saver.StartBlock(nullptr);
+
+					Frame& frame = anim.frames[j];
+
+					saver.Write("slice", frame.slice);
+					saver.Write("frame_length", frame.frameLength);
+
+					saver.FinishBlock();
+				}
+
+				saver.FinishArray();
+			}
 
 			saver.FinishBlock();
 		}

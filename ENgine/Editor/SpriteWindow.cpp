@@ -10,6 +10,8 @@
 
 #include "stb_image.h"
 
+#include "imgui_internal.h"
+
 namespace Oak
 {
 	AssetTexture* SpriteWindow::texture;
@@ -35,6 +37,11 @@ namespace Oak
 	void SpriteWindow::Prepare()
 	{
 		selSlice = -1;
+		selAnim = (texture && texture->animations.size() > 0) ? 0 : -1;
+
+		curAnimPlaySlice = -1;
+
+		selAnimSlice = -1;
 		textureRef = AssetTextureRef(texture, _FL_);
 
 		camZoom = lastViewportSize.y / texture->size.y;
@@ -133,6 +140,29 @@ namespace Oak
 		return ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), value);
 	}
 
+	bool SpriteWindow::InputString(eastl::string& value, const char* name)
+	{
+		Text(name);
+
+		struct Funcs
+		{
+			static int ResizeCallback(ImGuiInputTextCallbackData* data)
+			{
+				if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
+				{
+					eastl::string* str = (eastl::string*)data->UserData;
+					str->resize(data->BufSize + 1);
+					data->Buf = str->begin();
+				}
+				return 0;
+			}
+		};
+
+		ImGui::SetNextItemWidth(inputSize);
+		return ImGui::InputText("###SliceName", value.begin(), (size_t)value.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&value);
+	}
+
+
 	void SpriteWindow::AddToQueue(int posX, int posY, eastl::queue<Math::Vector2>& nodes, int width, int height, uint8_t* data, uint8_t* visited)
 	{
 		if (posY + 1 < height)
@@ -220,197 +250,372 @@ namespace Oak
 		}
 	}
 
-	void SpriteWindow::ImGui()
+	void SpriteWindow::ShowImageInfo()
 	{
-		if (!opened)
+		ImGui::Begin("Image Info", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		ImGui::Text(StringUtils::PrintTemp("Image name: %s", texture->GetName()));
+		ImGui::Text(StringUtils::PrintTemp("Image Size: %i x %i", (int)texture->size.x, (int)texture->size.y));
+
+		ImGui::End();
+	}
+
+	void SpriteWindow::ShowAutoSlicing()
+	{
+		ImGui::Begin("Auto slicing");
+
+		const char* types = "Set cells count\0Set cells size\0Auto\0";
+		Text("Slicing Type");
+		ImGui::SetNextItemWidth(inputSize);
+		ImGui::Combo("###SlicingType", &typeAutoSlice, types);
+
+		if (typeAutoSlice == 0)
 		{
-			texture = nullptr;
-			return;
+			InputInt(&AutoSliceCols, "Num Cols");
+			InputInt(&AutoSliceRows, "Num Rows");
 		}
 
-		ImGui::Begin("Sprite Editor", &opened, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoNavFocus);
-
-		if (needSetSize)
+		if (typeAutoSlice == 1)
 		{
-			ImGui::SetWindowSize(ImVec2(800.0f, 600.0f));
-			needSetSize = false;
+			InputInt(&AutoSliceCellSizeX, "CellX");
+			InputInt(&AutoSliceCellSizeY, "CellY");
 		}
 
-		ImGui::BeginGroup();
-
-		ImGui::Dummy(ImVec2(labelSize + inputSize, 3));
-
-		if (ImGui::CollapsingHeader("Image Info##ImageInfo"))
+		if (typeAutoSlice == 2)
 		{
-			ImGui::Text(StringUtils::PrintTemp("Image name: %s", texture->GetName()));
-			ImGui::Text(StringUtils::PrintTemp("Image Size: %i x %i", (int)texture->size.x, (int)texture->size.y));
+			InputInt(&AutoSliceMinSizeX, "MinSizeX");
+			InputInt(&AutoSliceMinSizeY, "MinSizeY");
 		}
 
-		if (ImGui::CollapsingHeader("Auto slicing##AutoSlicing"))
+		if (ImGui::Button("Slice###SliceSlice"))
 		{
-			const char* types = "Set cells count\0Set cells size\0Auto\0";
-			Text("Slicing Type");
-			ImGui::SetNextItemWidth(inputSize);
-			ImGui::Combo("###SlicingType", &typeAutoSlice, types);
+			texture->slices.clear();
+			selSlice = -1;
 
-			if (typeAutoSlice == 0)
+			float stepX = (typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX;
+			float stepY = (typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY;
+
+			if (typeAutoSlice == 0 || typeAutoSlice == 1)
 			{
-				InputInt(&AutoSliceCols, "Num Cols");
-				InputInt(&AutoSliceRows, "Num Rows");
-			}
+				float posY = 0;
 
-			if (typeAutoSlice == 1)
-			{
-				InputInt(&AutoSliceCellSizeX, "CellX");
-				InputInt(&AutoSliceCellSizeY, "CellY");
-			}
+				int index = 0;
 
+				while (posY < texture->size.y)
+				{
+					float posX = 0;
+
+					while (posX < texture->size.x)
+					{
+						AssetTexture::Slice slice;
+						slice.pos = Math::Vector2(posX, posY);
+						slice.size = Math::Vector2(stepX, stepY);
+
+						slice.name = StringUtils::PrintTemp("Slice%i", index);
+
+						texture->slices.push_back(slice);
+
+						index++;
+
+						posX += stepX;
+					}
+
+					posY += stepY;
+				}
+			}
+			else
 			if (typeAutoSlice == 2)
 			{
-				InputInt(&AutoSliceMinSizeX, "MinSizeX");
-				InputInt(&AutoSliceMinSizeY, "MinSizeY");
-			}
+				FileInMemory buffer;
 
-			if (ImGui::Button("Slice###SliceSlice"))
-			{
-				texture->slices.clear();
-				selSlice = -1;
-
-				float stepX = (typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX;
-				float stepY = (typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY;
-
-				if (typeAutoSlice == 0 || typeAutoSlice == 1)
+				if (buffer.Load(texture->GetPath().c_str()))
 				{
-					float posY = 0;
+					uint8_t* ptr = buffer.GetData();
+
+					int bytes;
+					int width;
+					int height;
+					uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
+
+					uint8_t* visited = (uint8_t*)malloc(width * height);
+					memset(visited, 0, width * height);
 
 					int index = 0;
 
-					while (posY < texture->size.y)
+					for (int j = 0; j < height; j++)
 					{
-						float posX = 0;
-
-						while (posX < texture->size.x)
+						for (int i = 0; i < width; i++)
 						{
-							AssetTexture::Slice slice;
-							slice.pos = Math::Vector2(posX, posY);
-							slice.size = Math::Vector2(stepX, stepY);
-
-							slice.name = StringUtils::PrintTemp("Slice%i", index);
-
-							texture->slices.push_back(slice);
-
-							index++;
-
-							posX += stepX;
-						}
-
-						posY += stepY;
-					}
-				}
-				else
-				if (typeAutoSlice == 2)
-				{
-					FileInMemory buffer;
-
-					if (buffer.Load(texture->GetPath().c_str()))
-					{
-						uint8_t* ptr = buffer.GetData();
-
-						int bytes;
-						int width;
-						int height;
-						uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
-
-						uint8_t* visited = (uint8_t*)malloc(width * height);
-						memset(visited, 0, width * height);
-
-						int index = 0;
-
-						for (int j = 0; j < height; j++)
-						{
-							for (int i = 0; i < width; i++)
+							if (!visited[(j * width + i)] && data[(j * width + i) * 4 + 3] == 255)
 							{
-								if (!visited[(j * width + i)] && data[(j * width + i) * 4 + 3] == 255)
+								posXMin = posXMax = i;
+								posYMin = posYMax = j;
+
+								TextureCrawler(i, j, width, height, data, visited);
+
+								if (posXMax - posXMin + 1 >= AutoSliceMinSizeX && posYMax - posYMin + 1 >= AutoSliceMinSizeY)
 								{
-									posXMin = posXMax = i;
-									posYMin = posYMax = j;
+									AssetTexture::Slice slice;
+									slice.pos = Math::Vector2((float)posXMin, (float)posYMin);
+									slice.size = Math::Vector2((float)posXMax - (float)posXMin + 1, (float)posYMax - (float)posYMin + 1);
 
-									TextureCrawler(i, j, width, height, data, visited);
+									slice.name = StringUtils::PrintTemp("Slice%i", index);
 
-									if (posXMax - posXMin + 1 >= AutoSliceMinSizeX && posYMax - posYMin + 1 >= AutoSliceMinSizeY)
-									{
-										AssetTexture::Slice slice;
-										slice.pos = Math::Vector2((float)posXMin, (float)posYMin);
-										slice.size = Math::Vector2((float)posXMax - (float)posXMin + 1, (float)posYMax - (float)posYMin + 1);
+									texture->slices.push_back(slice);
 
-										slice.name = StringUtils::PrintTemp("Slice%i", index);
-
-										texture->slices.push_back(slice);
-
-										index++;
-									}
+									index++;
 								}
 							}
 						}
-
-						free(data);
-						free(visited);
-
-						texture->SaveMetaData();
 					}
+
+					free(data);
+					free(visited);
+
+					texture->SaveMetaData();
 				}
 			}
 		}
+
+		ImGui::End();
+	}
+
+	void SpriteWindow::ShowSlices()
+	{
+		ImGui::Begin("Slices");
 
 		if (selSlice != -1)
 		{
 			auto& slice = texture->slices[selSlice];
-			
+
 			bool changed = false;
 
-			if (ImGui::CollapsingHeader("Slice##SelectedSlice", ImGuiTreeNodeFlags_DefaultOpen))
+			if (InputString(slice.name, "Name")) changed = true;
+
+			if (InputFloat(&slice.pos.x, "X")) changed = true;
+			if (InputFloat(&slice.pos.y, "Y")) changed = true;
+
+			if (InputFloat(&slice.size.x, "Width")) changed = true;
+			if (InputFloat(&slice.size.y, "Heigth")) changed = true;
+
+			Text("Is 9-slice");
+
+			if (ImGui::Checkbox("###Is9Slice", &slice.isNineSliced)) changed = true;
+
+			if (changed)
 			{
-				Text("Name");
-
-				struct Funcs
-				{
-					static int ResizeCallback(ImGuiInputTextCallbackData* data)
-					{
-						if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
-						{
-							eastl::string* str = (eastl::string*)data->UserData;
-							str->resize(data->BufSize + 1);
-							data->Buf = str->begin();
-						}
-						return 0;
-					}
-				};
-
-				ImGui::SetNextItemWidth(inputSize);
-				ImGui::InputText("###SliceName", slice.name.begin(), (size_t)slice.name.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&slice.name);
-
-				if (InputFloat(&slice.pos.x, "X")) changed = true;
-				if (InputFloat(&slice.pos.y, "Y")) changed = true;
-
-				if (InputFloat(&slice.size.x, "Width")) changed = true;
-				if (InputFloat(&slice.size.y, "Heigth")) changed = true;
-
-				Text("Is 9-slice");
-			
-				if (ImGui::Checkbox("###Is9Slice", &slice.isNineSliced)) changed = true;
-
-				if (changed)
-				{
-					FillRects();
-				}
+				FillRects();
+				texture->SaveMetaData();
 			}
 		}
 
-		ImGui::EndGroup();
+		ImGui::End();
+	}
+
+	void SpriteWindow::ShowAnimations()
+	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		ImGui::Begin("Animations");
+
+		ImGui::BeginChild("AnimationsList", ImVec2(120, 0), true);
+
+		ImGui::SetNextItemWidth(300);
+
+		bool changed = false;
+
+		if (ImGui::Button("Add###AnimAdd"))
+		{
+			auto& anim = texture->animations.push_back();
+			anim.name = "Anim";
+
+			selAnim = (int)texture->animations.size() - 1;
+			changed = true;
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("Del###AnimDel"))
+		{
+			if (selAnim != -1)
+			{
+				texture->animations.erase(texture->animations.begin() + selAnim);
+				selAnim = -1;
+
+				changed = true;
+			}
+		}
+
+		ImGui::BeginChild("AnimationsListItems", ImVec2(0, 0), true);
+
+		for (int i = 0; i < texture->animations.size(); i++)
+		{
+			auto& anim = texture->animations[i];
+
+			ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+
+			if (i == selAnim)
+			{
+				node_flags |= ImGuiTreeNodeFlags_Selected;
+			}
+
+			ImGui::TreeNodeEx(&anim, node_flags, anim.name.c_str());
+
+			if (ImGui::IsItemClicked())
+			{
+				selAnim = i;
+			}
+		}
+
+		ImGui::EndChild();
+
+		ImGui::EndChild();
 
 		ImGui::SameLine();
 
-		ImGui::BeginChild("ImageView");
+		if (selAnim != -1)
+		{
+			ImGui::BeginChild("AnimationSelAnim", ImVec2(200, 0), true);
+
+			auto& anim = texture->animations[selAnim];
+
+			if (InputString(anim.name, "Name")) changed = true;
+			if (InputInt(&anim.fps, "FPS")) changed = true;
+
+			if (anim.frames.size() > 0)
+			{
+				if (curAnimPlaySlice == -1)
+				{
+					curAnimPlaySlice = 0;
+				}
+
+				if (anim.frames.size() > 1)
+				{
+					curAnimPlayTime += root.GetDeltaTime();
+
+					int count = (int)(curAnimPlayTime * (float)anim.fps);
+					curAnimPlayTime -= (float)count / (float)anim.fps;
+
+					curAnimPlaySlice = (curAnimPlaySlice + count) % (int)anim.frames.size();
+				}
+
+				auto& slice = texture->slices[anim.frames[curAnimPlaySlice].slice];
+				Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
+				Math::Vector2 duv = slice.size / texture->size;
+
+				float k = slice.size.x / slice.size.y;
+				ImGui::Image(texture->GetTexture()->GetNativeResource(),
+					(k > 1.0f ? ImVec2(150.0f, 150.0f / k) : ImVec2(150.0f * k, 150.0f)), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y),
+					ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+			}
+			else
+			{
+				curAnimPlaySlice = -1;
+			}
+
+			ImGui::EndChild();
+
+			ImGui::SameLine();
+
+			auto size = ImGui::GetContentRegionAvail();
+
+			ImGui::BeginChild("AnimFrames", ImVec2(size.x - (labelSize + inputSize), 0), true);
+
+			if (anim.frames.size() == 0)
+			{
+				Text("No farmes");
+			}
+			else
+			{
+				auto size = ImGui::GetContentRegionAvail();
+
+				float pos = 0.0f;
+
+				for (int i = 0; i < anim.frames.size(); i++)
+				{
+					auto& slice = texture->slices[anim.frames[i].slice];
+					Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
+					Math::Vector2 duv = slice.size / texture->size;
+
+					float k = slice.size.x / slice.size.y;
+					ImGui::Image(texture->GetTexture()->GetNativeResource(),
+						(k > 1.0f ? ImVec2(50.0f, 50.0f / k) : ImVec2(50.0f * k, 50.0f)), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y),
+						ImVec4(1, 1, 1, 1), selAnimSlice == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
+
+					if (ImGui::IsItemClicked())
+					{
+						selAnimSlice = i;
+					}
+
+					pos += 65.0f;
+
+					if (pos > size.x)
+					{
+						pos = 0.0f;
+					}
+					else
+					{
+						ImGui::SameLine();
+					}
+				}
+			}
+
+			if (selAnimSlice != -1 && ImGui::IsWindowFocused())
+			{
+				if (io.KeysDown[VK_DELETE])
+				{
+					anim.frames.erase(anim.frames.begin() + selAnimSlice);
+					selAnimSlice = -1;
+				}
+			}
+
+			ImGui::EndChild();
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+				if (payload)
+				{
+					AssetTextureRef* assetRef = reinterpret_cast<AssetTextureRef**>(payload->Data)[0];
+
+					if (assetRef->sliceIndex != -1)
+					{
+						AssetTexture::Frame frame;
+						frame.slice = assetRef->sliceIndex;
+
+						anim.frames.push_back(frame);
+						changed = true;
+					}
+				}
+			}
+
+			ImGui::SameLine();
+
+			ImGui::BeginChild("SelAnimFrame", ImVec2(labelSize + inputSize, 0), true);
+
+			if (selAnimSlice != -1)
+			{
+				if (ImGui::Button("Del###SelAnimFrameDel"))
+				{
+					anim.frames.erase(anim.frames.begin() + selAnimSlice);
+					selAnimSlice = -1;
+				}
+
+				auto& frame = anim.frames[selAnimSlice];
+				if (InputFloat(&frame.frameLength, "Length")) changed = true;
+			}
+
+			ImGui::EndChild();
+		}
+
+		if (changed) texture->SaveMetaData();
+
+		ImGui::End();
+	}
+
+	void SpriteWindow::ShowImage()
+	{
+		ImGui::Begin("Image");
 
 		ImGuiIO& io = ImGui::GetIO();
 
@@ -453,6 +658,8 @@ namespace Oak
 
 		ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
 
+		if (size.y < 0)	size.y = -size.y;
+
 		DrawViewport(Math::Vector2(size.x, size.y));
 
 		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
@@ -489,9 +696,9 @@ namespace Oak
 		}
 
 		ImVec2 del = ImGui::GetMouseDragDelta(0);
-		OnMouseMove(Math::Vector2((float)viewportPos.x,(float)viewportPos.y),
+		OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y),
 					fabsf(del.x) > 7.0f && fabsf(del.y) > 7.0f && ImGui::IsWindowFocused() &&
-					viewportPos.x > 0 && viewportPos.x < size.x && viewportPos.y > 0 && viewportPos.y < size.x);
+					viewportPos.x > 0 && viewportPos.x < size.x&& viewportPos.y > 0 && viewportPos.y < size.x);
 
 		if (viewportCaptured && ImGui::IsMouseReleased(0))
 		{
@@ -505,9 +712,65 @@ namespace Oak
 			viewportCaptured = false;
 		}
 
-		ImGui::EndChild();
+		ImGui::End();
+	}
+
+	void SpriteWindow::ImGui()
+	{
+		if (!opened)
+		{
+			texture = nullptr;
+			return;
+		}
+
+		ImGui::Begin("Sprite Editor", &opened, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse);
+
+		if (needSetSize)
+		{
+			auto size = ImGui::GetWindowSize();
+
+			if (size.x <= 32 && size.y <= 32)
+			{
+				ImGui::SetWindowSize(ImVec2(900.0f, 700.0f));
+			}
+
+			needSetSize = false;
+		}
+
+		ImGuiID dockspaceID = ImGui::GetID("SpriteEditor");
+
+		ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
+
+		if (!ImGui::DockBuilderGetNode(dockspaceID))
+		{
+			ImGui::DockBuilderRemoveNode(dockspaceID);
+			ImGui::DockBuilderAddNode(dockspaceID, ImGuiDockNodeFlags_None);
+
+			ImGuiID dock_main_id = dockspaceID;
+			ImGuiID dock_top_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.6f, nullptr, &dock_main_id);
+			ImGuiID dock_bottom_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.25f, nullptr, &dock_main_id);
+
+			ImGui::DockBuilderDockWindow("Image Info", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Auto slicing", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Slices", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Animations", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Image", dock_top_id);
+
+			ImGui::DockBuilderFinish(dock_main_id);
+
+			ImGuiDockNode* node = ImGui::DockBuilderGetNode(dock_top_id);
+			node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
+		}
+
+		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags | ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoWindowMenuButton);
 
 		ImGui::End();
+
+		ShowImageInfo();
+		ShowAutoSlicing();
+		ShowSlices();
+		ShowAnimations();
+		ShowImage();
 	}
 
 	void SpriteWindow::DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color)
