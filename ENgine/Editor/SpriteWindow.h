@@ -26,6 +26,7 @@ namespace Oak
 		int selRow = -1;
 		int selCol = -1;
 		int selSlice = -1;
+
 		Math::Vector2 prevMs;
 
 		bool borderDrawed = false;
@@ -68,6 +69,7 @@ namespace Oak
 		void Text(const char* name);
 		bool InputFloat(float* value, const char* prefix);
 		bool InputInt(int* value, const char* prefix);
+		bool InputInt(float* value, const char* prefix);
 		bool InputString(eastl::string& value, const char* name);
 
 		int posXMin, posXMax;

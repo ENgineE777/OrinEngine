@@ -140,6 +140,25 @@ namespace Oak
 		return ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), value);
 	}
 
+	bool SpriteWindow::InputInt(float* value, const char* name)
+	{
+		Text(name);
+
+		int intValue = (int)(*value);
+
+		ImGui::SetNextItemWidth(inputSize);
+		if (ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), &intValue))
+		{
+			*value = (float)intValue;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	bool InputInt(float* value, const char* prefix);
+
 	bool SpriteWindow::InputString(eastl::string& value, const char* name)
 	{
 		Text(name);
@@ -392,11 +411,11 @@ namespace Oak
 
 			if (InputString(slice.name, "Name")) changed = true;
 
-			if (InputFloat(&slice.pos.x, "X")) changed = true;
-			if (InputFloat(&slice.pos.y, "Y")) changed = true;
+			if (InputInt(&slice.pos.x, "X")) changed = true;
+			if (InputInt(&slice.pos.y, "Y")) changed = true;
 
-			if (InputFloat(&slice.size.x, "Width")) changed = true;
-			if (InputFloat(&slice.size.y, "Heigth")) changed = true;
+			if (InputInt(&slice.size.x, "Width")) changed = true;
+			if (InputInt(&slice.size.y, "Heigth")) changed = true;
 
 			Text("Is 9-slice");
 
@@ -1018,6 +1037,9 @@ namespace Oak
 
 	void SpriteWindow::MoveRects(Math::Vector2 delta)
 	{
+		delta.x = floorf(delta.x);
+		delta.y = floorf(delta.y);
+
 		if (selRow == -1)
 		{
 			for (int i = 0; i<rectHeight; i++)

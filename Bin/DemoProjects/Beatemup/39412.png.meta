@@ -420,7 +420,7 @@
 				"pos" :
 				{
 					"x" : 75.199997,
-					"y" : 17.133427
+					"y" : 17.133429
 				},
 				"size" :
 				{
@@ -5963,18 +5963,15 @@
 				"frames" : [
 					{
 						"slice" : 12,
-						"frame_length" : 1.000000,
-						"event_count" : 3
+						"frame_length" : 1.000000
 					},
 					{
 						"slice" : 13,
-						"frame_length" : 1.000000,
-						"event_count" : 3
+						"frame_length" : 1.000000
 					},
 					{
 						"slice" : 14,
-						"frame_length" : 1.000000,
-						"event_count" : 3
+						"frame_length" : 1.000000
 					}
 				]
 			}
