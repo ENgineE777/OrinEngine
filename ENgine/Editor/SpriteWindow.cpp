@@ -522,9 +522,11 @@ namespace Oak
 					curAnimPlaySlice = (curAnimPlaySlice + count) % (int)anim.frames.size();
 				}
 
-				DrawImage(anim.frames[0].slice, anim.frames[curAnimPlaySlice].slice, 150.0f, anim.frames[curAnimPlaySlice].offset, -1);
+				float sz = 180.0f;
 
-				ImGui::Image(nullptr, ImVec2(150.0f, 150.0f), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+				DrawImage(anim.frames[0].slice, anim.frames[curAnimPlaySlice].slice, sz, anim.frames[curAnimPlaySlice].offset, -1);
+
+				ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 
 				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 				{
@@ -636,7 +638,7 @@ namespace Oak
 
 				ImDrawList* draw_list = ImGui::GetWindowDrawList();
 
-				float sz = 170.0f;
+				float sz = 180.0f;
 
 				if (selAnimSlice > 0)
 				{
