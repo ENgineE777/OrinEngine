@@ -132,15 +132,21 @@ namespace Oak
 		return ImGui::InputFloat(StringUtils::PrintTemp("###Slice%s", name), value);
 	}
 
-	bool SpriteWindow::InputInt(int* value, const char* name)
+	bool SpriteWindow::InputInt(int* value, const char* name, bool needClamp)
 	{
 		Text(name);
 
 		ImGui::SetNextItemWidth(inputSize);
-		return ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), value);
+		if (ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), value))
+		{
+			if (needClamp && *value < 1) *value = 1;
+			return true;
+		}
+
+		return false;
 	}
 
-	bool SpriteWindow::InputInt(float* value, const char* name)
+	bool SpriteWindow::InputInt(float* value, const char* name, bool needClamp)
 	{
 		Text(name);
 
@@ -149,6 +155,7 @@ namespace Oak
 		ImGui::SetNextItemWidth(inputSize);
 		if (ImGui::InputInt(StringUtils::PrintTemp("###Slice%s", name), &intValue))
 		{
+			if (needClamp && intValue < 1) intValue = 1;
 			*value = (float)intValue;
 
 			return true;
@@ -156,8 +163,6 @@ namespace Oak
 
 		return false;
 	}
-
-	bool InputInt(float* value, const char* prefix);
 
 	bool SpriteWindow::InputString(eastl::string& value, const char* name)
 	{
@@ -290,20 +295,20 @@ namespace Oak
 
 		if (typeAutoSlice == 0)
 		{
-			InputInt(&AutoSliceCols, "Num Cols");
-			InputInt(&AutoSliceRows, "Num Rows");
+			InputInt(&AutoSliceCols, "Num Cols", true);
+			InputInt(&AutoSliceRows, "Num Rows", true);
 		}
 
 		if (typeAutoSlice == 1)
 		{
-			InputInt(&AutoSliceCellSizeX, "CellX");
-			InputInt(&AutoSliceCellSizeY, "CellY");
+			InputInt(&AutoSliceCellSizeX, "CellX", true);
+			InputInt(&AutoSliceCellSizeY, "CellY", true);
 		}
 
 		if (typeAutoSlice == 2)
 		{
-			InputInt(&AutoSliceMinSizeX, "MinSizeX");
-			InputInt(&AutoSliceMinSizeY, "MinSizeY");
+			InputInt(&AutoSliceMinSizeX, "MinSizeX", true);
+			InputInt(&AutoSliceMinSizeY, "MinSizeY", true);
 		}
 
 		if (ImGui::Button("Slice###SliceSlice"))
@@ -411,11 +416,11 @@ namespace Oak
 
 			if (InputString(slice.name, "Name")) changed = true;
 
-			if (InputInt(&slice.pos.x, "X")) changed = true;
-			if (InputInt(&slice.pos.y, "Y")) changed = true;
+			if (InputInt(&slice.pos.x, "X", false)) changed = true;
+			if (InputInt(&slice.pos.y, "Y", false)) changed = true;
 
-			if (InputInt(&slice.size.x, "Width")) changed = true;
-			if (InputInt(&slice.size.y, "Heigth")) changed = true;
+			if (InputInt(&slice.size.x, "Width", true)) changed = true;
+			if (InputInt(&slice.size.y, "Heigth", true)) changed = true;
 
 			Text("Is 9-slice");
 
@@ -498,7 +503,7 @@ namespace Oak
 			auto& anim = texture->animations[selAnim];
 
 			if (InputString(anim.name, "Name")) changed = true;
-			if (InputInt(&anim.fps, "FPS")) changed = true;
+			if (InputInt(&anim.fps, "FPS", true)) changed = true;
 
 			if (anim.frames.size() > 0)
 			{
@@ -517,14 +522,19 @@ namespace Oak
 					curAnimPlaySlice = (curAnimPlaySlice + count) % (int)anim.frames.size();
 				}
 
-				auto& slice = texture->slices[anim.frames[curAnimPlaySlice].slice];
-				Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
-				Math::Vector2 duv = slice.size / texture->size;
+				DrawImage(anim.frames[curAnimPlaySlice].slice, 150.0f, anim.frames[curAnimPlaySlice].offset, -1);
 
-				float k = slice.size.x / slice.size.y;
-				ImGui::Image(texture->GetTexture()->GetNativeResource(),
-					(k > 1.0f ? ImVec2(150.0f, 150.0f / k) : ImVec2(150.0f * k, 150.0f)), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y),
-					ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+				ImGui::Image(nullptr, ImVec2(150.0f, 150.0f), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+
+				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+				{
+					textureRef.sliceIndex = anim.frames[curAnimPlaySlice].slice;
+					AssetTextureRef* ptr = &textureRef;
+					ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
+					ImGui::EndDragDropSource();
+
+					inDragAndDrop = true;
+				}
 			}
 			else
 			{
@@ -537,7 +547,7 @@ namespace Oak
 
 			auto size = ImGui::GetContentRegionAvail();
 
-			ImGui::BeginChild("AnimFrames", ImVec2(size.x - (labelSize + inputSize), 0), true);
+			ImGui::BeginChild("AnimFrames", ImVec2(size.x - 200, 0), true);
 
 			if (anim.frames.size() == 0)
 			{
@@ -548,26 +558,24 @@ namespace Oak
 				auto size = ImGui::GetContentRegionAvail();
 
 				float pos = 0.0f;
+				float sz = 60.0f;
 
 				for (int i = 0; i < anim.frames.size(); i++)
 				{
-					auto& slice = texture->slices[anim.frames[i].slice];
-					Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
-					Math::Vector2 duv = slice.size / texture->size;
+					DrawImage(anim.frames[i].slice, sz, 0.0f, i);
 
-					float k = slice.size.x / slice.size.y;
-					ImGui::Image(texture->GetTexture()->GetNativeResource(),
-						(k > 1.0f ? ImVec2(50.0f, 50.0f / k) : ImVec2(50.0f * k, 50.0f)), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y),
-						ImVec4(1, 1, 1, 1), selAnimSlice == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
+					ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), selAnimSlice == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
 
 					if (ImGui::IsItemClicked())
 					{
 						selAnimSlice = i;
+						selSlice = anim.frames[selAnimSlice].slice;
+						FillRects();
 					}
 
-					pos += 65.0f;
+					pos += sz + 10.0f;
 
-					if (pos > size.x)
+					if (pos > size.x - sz - 10.0f)
 					{
 						pos = 0.0f;
 					}
@@ -583,6 +591,12 @@ namespace Oak
 				if (io.KeysDown[VK_DELETE])
 				{
 					anim.frames.erase(anim.frames.begin() + selAnimSlice);
+
+					if (selSlice == selAnimSlice)
+					{
+						selSlice = -1;
+					}
+
 					selAnimSlice = -1;
 				}
 			}
@@ -610,18 +624,32 @@ namespace Oak
 
 			ImGui::SameLine();
 
-			ImGui::BeginChild("SelAnimFrame", ImVec2(labelSize + inputSize, 0), true);
+			ImGui::BeginChild("SelAnimFrame", ImVec2(200, 0), true);
 
 			if (selAnimSlice != -1)
 			{
-				if (ImGui::Button("Del###SelAnimFrameDel"))
+				auto& frame = anim.frames[selAnimSlice];
+				if (InputFloat(&frame.frameLength, "Length")) changed = true;
+				if (InputInt(&frame.offset.x, "OffsetX", false)) changed = true;
+				if (InputInt(&frame.offset.y, "OffsetY", false)) changed = true;
+
+				ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+				float sz = 170.0f;
+
+				if (selAnimSlice > 0)
+				{
+					DrawImage(anim.frames[selAnimSlice - 1].slice, sz, anim.frames[selAnimSlice - 1].offset, -1);
+				}
+
+				DrawImage(frame.slice, sz, frame.offset, -1);
+				ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+				
+				if (ImGui::Button("Del###SelAnimFrameDel", ImVec2(180, 0)))
 				{
 					anim.frames.erase(anim.frames.begin() + selAnimSlice);
 					selAnimSlice = -1;
 				}
-
-				auto& frame = anim.frames[selAnimSlice];
-				if (InputFloat(&frame.frameLength, "Length")) changed = true;
 			}
 
 			ImGui::EndChild();
@@ -732,6 +760,31 @@ namespace Oak
 		}
 
 		ImGui::End();
+	}
+
+	void SpriteWindow::DrawImage(int sliceIndex, float size, Math::Vector2 offset, int index)
+	{
+		ImDrawList* drawList = ImGui::GetWindowDrawList();
+
+		auto& slice = texture->slices[sliceIndex];
+		Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
+		Math::Vector2 duv = slice.size / texture->size;
+
+		float k = slice.size.x / slice.size.y;
+		ImVec2 p = ImGui::GetCursorScreenPos();
+	
+		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
+
+		float scale = slice.size.x / sz.x;
+
+		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f + offset.x * scale, p.y + (size - sz.y) * 0.5f + offset.y * scale);
+
+		drawList->AddImage(texture->GetTexture()->GetNativeResource(), pos, ImVec2(pos.x + sz.x, pos.y + sz.y), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y));
+
+		if (index != -1)
+		{
+			drawList->AddText(ImVec2(p.x + 4, p.y + 1), IM_COL32_WHITE, StringUtils::PrintTemp("%i", index));
+		}
 	}
 
 	void SpriteWindow::ImGui()

@@ -68,8 +68,8 @@ namespace Oak
 
 		void Text(const char* name);
 		bool InputFloat(float* value, const char* prefix);
-		bool InputInt(int* value, const char* prefix);
-		bool InputInt(float* value, const char* prefix);
+		bool InputInt(int* value, const char* prefix, bool needClamp);
+		bool InputInt(float* value, const char* prefix, bool needClamp);
 		bool InputString(eastl::string& value, const char* name);
 
 		int posXMin, posXMax;
@@ -83,6 +83,8 @@ namespace Oak
 		void ShowSlices();
 		void ShowAnimations();
 		void ShowImage();
+
+		void DrawImage(int slice, float size, Math::Vector2 offset, int index);
 
 	public:
 

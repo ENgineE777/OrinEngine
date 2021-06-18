@@ -33,6 +33,7 @@ namespace Oak
 		{
 			int slice = -1;
 			float frameLength = 1.0f;
+			Math::Vector2 offset = 0.0f;
 		};
 
 		struct Animation

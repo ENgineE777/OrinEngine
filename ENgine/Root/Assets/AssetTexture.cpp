@@ -108,6 +108,7 @@ namespace Oak
 
 					loader.Read("slice", frame.slice);
 					loader.Read("frame_length", frame.frameLength);
+					loader.Read("offset", frame.offset);
 
 					loader.LeaveBlock();
 				}
@@ -180,6 +181,7 @@ namespace Oak
 
 					saver.Write("slice", frame.slice);
 					saver.Write("frame_length", frame.frameLength);
+					saver.Write("offset", frame.offset);
 
 					saver.FinishBlock();
 				}
