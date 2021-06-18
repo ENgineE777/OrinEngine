@@ -31,7 +31,7 @@ namespace Oak
 		{
 			transform.BuildMatrices();
 
-			anim.Draw(&transform, COLOR_WHITE);
+			anim.Draw(&transform, COLOR_WHITE, dt);
 		}
 	}
 }

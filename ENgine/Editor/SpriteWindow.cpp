@@ -522,13 +522,14 @@ namespace Oak
 					curAnimPlaySlice = (curAnimPlaySlice + count) % (int)anim.frames.size();
 				}
 
-				DrawImage(anim.frames[curAnimPlaySlice].slice, 150.0f, anim.frames[curAnimPlaySlice].offset, -1);
+				DrawImage(anim.frames[0].slice, anim.frames[curAnimPlaySlice].slice, 150.0f, anim.frames[curAnimPlaySlice].offset, -1);
 
 				ImGui::Image(nullptr, ImVec2(150.0f, 150.0f), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 
 				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 				{
-					textureRef.sliceIndex = anim.frames[curAnimPlaySlice].slice;
+					textureRef.sliceIndex = -1;
+					textureRef.animIndex = selAnim;
 					AssetTextureRef* ptr = &textureRef;
 					ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
 					ImGui::EndDragDropSource();
@@ -562,7 +563,7 @@ namespace Oak
 
 				for (int i = 0; i < anim.frames.size(); i++)
 				{
-					DrawImage(anim.frames[i].slice, sz, 0.0f, i);
+					DrawImage(anim.frames[0].slice, anim.frames[i].slice, sz, 0.0f, i);
 
 					ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), selAnimSlice == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
 
@@ -639,10 +640,10 @@ namespace Oak
 
 				if (selAnimSlice > 0)
 				{
-					DrawImage(anim.frames[selAnimSlice - 1].slice, sz, anim.frames[selAnimSlice - 1].offset, -1);
+					DrawImage(anim.frames[0].slice, anim.frames[selAnimSlice - 1].slice, sz, anim.frames[selAnimSlice - 1].offset, -1);
 				}
 
-				DrawImage(frame.slice, sz, frame.offset, -1);
+				DrawImage(anim.frames[0].slice, frame.slice, sz, frame.offset, -1);
 				ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 				
 				if (ImGui::Button("Del###SelAnimFrameDel", ImVec2(180, 0)))
@@ -714,6 +715,7 @@ namespace Oak
 		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed, true) && ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
 			textureRef.sliceIndex = selSlice;
+			textureRef.animIndex = -1;
 			AssetTextureRef* ptr = &textureRef;
 			ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
 			ImGui::EndDragDropSource();
@@ -762,15 +764,17 @@ namespace Oak
 		ImGui::End();
 	}
 
-	void SpriteWindow::DrawImage(int sliceIndex, float size, Math::Vector2 offset, int index)
+	void SpriteWindow::DrawImage(int sliceScaleIndex, int sliceIndex, float size, Math::Vector2 offset, int index)
 	{
 		ImDrawList* drawList = ImGui::GetWindowDrawList();
+
+		auto& sliceScale = texture->slices[sliceScaleIndex];
+		float k = sliceScale.size.x / sliceScale.size.y;
 
 		auto& slice = texture->slices[sliceIndex];
 		Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
 		Math::Vector2 duv = slice.size / texture->size;
 
-		float k = slice.size.x / slice.size.y;
 		ImVec2 p = ImGui::GetCursorScreenPos();
 	
 		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);

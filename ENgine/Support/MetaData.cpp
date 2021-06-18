@@ -165,6 +165,7 @@ namespace Oak
 						AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
 						*ref = Oak::root.assets.GetAssetRef<AssetTextureRef>(path);
 						reader.Read("sliceIndex", ref->sliceIndex);
+						reader.Read("animIndex", ref->animIndex);
 					}
 
 					reader.LeaveBlock();
@@ -290,6 +291,7 @@ namespace Oak
 					writer.StartBlock(prop.name.c_str());
 					writer.Write("Path", ref->Get()->GetPath().c_str());
 					writer.Write("sliceIndex", ref->sliceIndex);
+					writer.Write("animIndex", ref->animIndex);
 					writer.FinishBlock();
 				}
 			}

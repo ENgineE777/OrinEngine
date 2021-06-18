@@ -35,6 +35,6 @@ namespace Oak
 	{
 		transform.BuildMatrices();
 
-		texture.Draw(&transform, COLOR_WHITE);
+		texture.Draw(&transform, COLOR_WHITE, dt);
 	}
 }

@@ -43,7 +43,8 @@
 			"Texture" :
 			{
 				"Path" : "floor.jpg",
-				"sliceIndex" : -1
+				"sliceIndex" : -1,
+				"animIndex" : -1
 			}
 		},
 		{
@@ -87,7 +88,8 @@
 			"Texture" :
 			{
 				"Path" : "back.jpg",
-				"sliceIndex" : -1
+				"sliceIndex" : -1,
+				"animIndex" : -1
 			}
 		},
 		{
@@ -131,7 +133,8 @@
 			"Texture" :
 			{
 				"Path" : "batman.png",
-				"sliceIndex" : -1
+				"sliceIndex" : -1,
+				"animIndex" : -1
 			},
 			"speed" : 70.000000,
 			"is_enemy" : false,
@@ -166,8 +169,8 @@
 				},
 				"size" :
 				{
-					"x" : 38.000000,
-					"y" : 71.000000,
+					"x" : 36.000000,
+					"y" : 65.000000,
 					"z" : 0.000000
 				},
 				"offset" :
@@ -179,8 +182,9 @@
 			},
 			"Texture" :
 			{
-				"Path" : "enemy.png",
-				"sliceIndex" : -1
+				"Path" : "39412.png",
+				"sliceIndex" : 12,
+				"animIndex" : -1
 			},
 			"speed" : 70.000000,
 			"is_enemy" : true,
@@ -238,93 +242,6 @@
 			"rightdown.x" : 317.000000,
 			"leftup.y" : 200.000000,
 			"rightdown.y" : 0.000000
-		},
-		{
-			"type" : "SpriteEntity",
-			"uid" : 218097,
-			"name" : "buttonSlice0",
-			"visible" : true,
-			"Transform" :
-			{
-				"position" :
-				{
-					"x" : 3.589405,
-					"y" : -17.946878,
-					"z" : 0.000000
-				},
-				"rotation" :
-				{
-					"x" : 0.000000,
-					"y" : 0.000000,
-					"z" : 0.000000
-				},
-				"scale" :
-				{
-					"x" : 1.000000,
-					"y" : 1.000000,
-					"z" : 1.000000
-				},
-				"size" :
-				{
-					"x" : 448.000000,
-					"y" : 278.000000,
-					"z" : 0.000000
-				},
-				"offset" :
-				{
-					"x" : 0.500000,
-					"y" : 0.500000,
-					"z" : 0.500000
-				}
-			},
-			"Texture" :
-			{
-				"Path" : "button.png",
-				"sliceIndex" : 0
-			}
-		},
-		{
-			"type" : "AnimGraph2D",
-			"uid" : 678844,
-			"name" : "AnimIdle",
-			"visible" : true,
-			"Transform" :
-			{
-				"position" :
-				{
-					"x" : -314.689026,
-					"y" : 194.357025,
-					"z" : 0.000000
-				},
-				"rotation" :
-				{
-					"x" : 0.000000,
-					"y" : 0.000000,
-					"z" : 0.000000
-				},
-				"scale" :
-				{
-					"x" : 1.000000,
-					"y" : 1.000000,
-					"z" : 1.000000
-				},
-				"size" :
-				{
-					"x" : 46.000000,
-					"y" : 75.000000,
-					"z" : 0.000000
-				},
-				"offset" :
-				{
-					"x" : 0.500000,
-					"y" : 0.500000,
-					"z" : 0.500000
-				}
-			},
-			"Anim" :
-			{
-				"Path" : "Batman/AnimIdle.ang"
-			}
 		}
 	]
 }

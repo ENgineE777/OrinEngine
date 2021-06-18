@@ -203,7 +203,7 @@ namespace Oak
 	}
 	#endif
 
-	void AssetTextureRef::Draw(Transform* trans, Color clr)
+	void AssetTextureRef::Draw(Transform* trans, Color clr, float dt)
 	{
 		if (!Get())
 		{
@@ -215,11 +215,7 @@ namespace Oak
 		Math::Vector2 pos = Math::Vector2(pos3d.x, pos3d.y);
 		Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);
 
-		if (sliceIndex == -1 || sliceIndex >= Get()->slices.size())
-		{
-			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f);
-		}
-		else
+		if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
 		{
 			AssetTexture::Slice& slice = Get()->slices[sliceIndex];
 
@@ -250,6 +246,35 @@ namespace Oak
 				Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size);
 			}
 		}
+		else
+		if (animIndex != -1 && animIndex < Get()->animations.size())
+		{
+			auto& anim = Get()->animations[animIndex];
+
+			if (anim.frames.size() > 1)
+			{
+				animPlayTime += dt;
+
+				int count = (int)(animPlayTime * (float)anim.fps);
+				animPlayTime -= (float)count / (float)anim.fps;
+
+				animPlaySlice = (animPlaySlice + count) % (int)anim.frames.size();
+
+				Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);
+
+				auto& frame = anim.frames[animPlaySlice];
+				AssetTexture::Slice& slice = Get()->slices[frame.slice];
+
+				trans->size.x = slice.size.x;
+				trans->size.y = slice.size.y;
+
+				Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size);
+			}
+		}
+		else
+		{
+			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f);
+		}
 	}
 
 	void AssetTextureRef::SetupCreatedSceneEntity(SceneEntity* entity)
@@ -267,6 +292,11 @@ namespace Oak
 			if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
 			{
 				StringUtils::Cat(str, 256, Get()->slices[sliceIndex].name.c_str());
+			}
+			else
+			if (animIndex != -1 && animIndex < Get()->animations.size())
+			{
+				StringUtils::Cat(str, 256, Get()->animations[animIndex].name.c_str());
 			}
 
 			entity->SetName(str);

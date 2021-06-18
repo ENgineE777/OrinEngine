@@ -63,6 +63,9 @@ namespace Oak
 
 	class AssetTextureRef : public PointerRef<AssetTexture>
 	{
+		int animPlaySlice = 0;
+		float animPlayTime = 0.0f;
+
 	public:
 
 		AssetTextureRef() : PointerRef() {};
@@ -70,8 +73,9 @@ namespace Oak
 		AssetTextureRef(AssetTexture* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
 
 		int sliceIndex = -1;
+		int animIndex = -1;
 
-		void Draw(Transform* trans, Color clr);
+		void Draw(Transform* trans, Color clr, float dt);
 
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 

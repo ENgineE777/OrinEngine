@@ -84,7 +84,7 @@ namespace Oak
 		void ShowAnimations();
 		void ShowImage();
 
-		void DrawImage(int slice, float size, Math::Vector2 offset, int index);
+		void DrawImage(int sliceScaleIndex, int slice, float size, Math::Vector2 offset, int index);
 
 	public:
 
