@@ -97,20 +97,29 @@ namespace Oak
 		auto& slice = texture->slices[selSlice];
 
 		slice.pos = Math::Vector2(points[0].x, texture->size.y - points[0].y);
+		slice.pos.x = floorf(slice.pos.x);
+		slice.pos.y = floorf(slice.pos.y);
 
 		slice.size = points[rectHeight * rectWidth - 1] - points[0];
-		slice.size.y = -slice.size.y;
+		slice.size.x = floorf(slice.size.x);
+		slice.size.y = -floorf(slice.size.y);
 
 		if (rectWidth > 2)
 		{
 			slice.upLeftOffset.x = points[1].x - points[0].x;
 			slice.downRightOffset.x = points[3].x - points[2].x;
+
+			slice.upLeftOffset.x = floorf(slice.upLeftOffset.x);
+			slice.upLeftOffset.x = floorf(slice.upLeftOffset.x);
 		}
 
 		if (rectHeight > 2)
 		{
 			slice.upLeftOffset.y = points[0].y - points[rectWidth].y;
 			slice.downRightOffset.y = points[2 * rectWidth].y - points[3 * rectWidth].y;
+
+			slice.upLeftOffset.y = floorf(slice.upLeftOffset.y);
+			slice.upLeftOffset.y = floorf(slice.upLeftOffset.y);
 		}
 
 		texture->SaveMetaData();
@@ -1034,6 +1043,7 @@ namespace Oak
 
 		rectStart = camPos + Math::Vector2(prevMs.x - lastViewportSize.x * 0.5f, -prevMs.y + lastViewportSize.y * 0.5f) / camZoom;
 
+		int prevSelSlice = selSlice;
 		selSlice = -1;
 
 		float bufferZone = 3.0f;
@@ -1052,23 +1062,30 @@ namespace Oak
 
 		if (selSlice != -1)
 		{
-			drag = Drag::DragRects;
+			if (prevSelSlice != selSlice)
+			{
+				drag = Drag::DragSelectRect;
+			}
+			else
+			{
+				drag = Drag::DragRects;
 
-			selCol = -1;
-			selRow = -1;
+				selCol = -1;
+				selRow = -1;
 
-			for (int i = 0; i < rectHeight; i++)
-				for (int j = 0; j < rectWidth; j++)
-				{
-					Math::Vector2 point = points[rectWidth * i + j];
-
-					if (point.x - 7 < rectStart.x && rectStart.x < point.x + 7 &&
-						point.y - 7 < rectStart.y && rectStart.y < point.y + 7)
+				for (int i = 0; i < rectHeight; i++)
+					for (int j = 0; j < rectWidth; j++)
 					{
-						selRow = i;
-						selCol = j;
+						Math::Vector2 point = points[rectWidth * i + j];
+
+						if (point.x - 7 < rectStart.x && rectStart.x < point.x + 7 &&
+							point.y - 7 < rectStart.y && rectStart.y < point.y + 7)
+						{
+							selRow = i;
+							selCol = j;
+						}
 					}
-				}
+			}
 		}
 	}
 
@@ -1087,6 +1104,12 @@ namespace Oak
 
 			FillRects();
 		}
+		else
+		if (drag == Drag::DragRects)
+		{
+			FillRects();
+		}
+
 
 		selCol = -1;
 		selRow = -1;
@@ -1096,9 +1119,6 @@ namespace Oak
 
 	void SpriteWindow::MoveRects(Math::Vector2 delta)
 	{
-		delta.x = floorf(delta.x);
-		delta.y = floorf(delta.y);
-
 		if (selRow == -1)
 		{
 			for (int i = 0; i<rectHeight; i++)

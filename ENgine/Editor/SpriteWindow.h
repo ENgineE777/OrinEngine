@@ -12,6 +12,7 @@ namespace Oak
 		enum class Drag
 		{
 			DragNone,
+			DragSelectRect,
 			DragRects,
 			DragField,
 			DragNewSlice
