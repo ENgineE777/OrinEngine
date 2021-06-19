@@ -648,7 +648,7 @@ namespace Oak
 				DrawImage(anim.frames[0].slice, frame.slice, sz, frame.offset, -1);
 				ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 				
-				if (ImGui::Button("Del###SelAnimFrameDel", ImVec2(180, 0)))
+				if (ImGui::Button("Delete###SelAnimFrameDel", ImVec2(180, 0)))
 				{
 					anim.frames.erase(anim.frames.begin() + selAnimSlice);
 					selAnimSlice = -1;

@@ -80,5 +80,10 @@ namespace Oak
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 
 		Math::Vector2 GetSize();
+
+	#ifdef OAK_EDITOR
+		void ImGuiImage(float size);
+	#endif
+
 	};
 }

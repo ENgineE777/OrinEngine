@@ -1,6 +1,11 @@
 #include "Root/Root.h"
 #include "SceneEntities/2D/SpriteEntity.h"
 
+
+#ifdef OAK_EDITOR
+#include "imgui.h"
+#endif
+
 namespace Oak
 {
 #ifdef OAK_EDITOR
@@ -318,4 +323,55 @@ namespace Oak
 		AssetTexture::Slice& slice = Get()->slices[sliceIndex];
 		return slice.size;
 	}
+
+	#ifdef OAK_EDITOR
+	void AssetTextureRef::ImGuiImage(float size)
+	{
+		ImDrawList* drawList = ImGui::GetWindowDrawList();
+
+		float k = 1.0f;
+		Math::Vector2 uv = 0.0f;
+		Math::Vector2 duv = 1.0f;
+
+		int curSlice = -1;
+
+		if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
+		{
+			curSlice = sliceIndex;
+		}
+		else
+		if (animIndex != -1 && animIndex < Get()->animations.size())
+		{
+			auto& anim = Get()->animations[animIndex];
+			auto& frame = anim.frames[animPlaySlice];
+
+			curSlice = frame.slice;
+		}
+
+		if (curSlice != -1)
+		{
+			auto& slice = Get()->slices[curSlice];
+
+			k = slice.size.x / slice.size.y;
+			uv = Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size;
+			duv = slice.size / Get()->size;
+		}
+		else
+		{
+			k = GetSize().x / GetSize().y;
+		}
+
+		ImVec2 p = ImGui::GetCursorScreenPos();
+
+		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
+
+		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f, p.y + (size - sz.y) * 0.5f);
+
+		drawList->AddImage(Get()->GetTexture()->GetNativeResource(), pos, ImVec2(pos.x + sz.x, pos.y + sz.y), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y));
+
+		ImGui::Image(nullptr, ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+
+		drawList->AddText(ImVec2(p.x + 4, p.y + 1), IM_COL32_WHITE, Get()->GetPath().c_str());
+	}
+	#endif
 };

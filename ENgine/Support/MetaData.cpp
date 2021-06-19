@@ -829,15 +829,34 @@ namespace Oak
 						{
 							AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
 
-							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", categoriesData[j].name.c_str(), guiID, i);
-
-							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
+							if (ref->Get())
 							{
+								ImGui::BeginGroup();
+
+								ref->ImGuiImage(120.0f);
+
+								if (ref->Get() && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+								{
+									ImGui::SetTooltip(ref->Get()->GetPath().c_str());
+								}
+
+								StringUtils::Printf(propGuiID, 256, "Delete###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
+
+								if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+								{
+									*ref = AssetTextureRef();
+									prop.changed = true;
+								}
+
+								ImGui::EndGroup();
 							}
-
-							if (ref->Get() && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+							else
 							{
-								ImGui::SetTooltip(ref->Get()->GetPath().c_str());
+								StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", "None", categoriesData[j].name.c_str(), guiID, i);
+
+								if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+								{
+								}
 							}
 
 							if (ImGui::BeginDragDropTarget())
@@ -851,16 +870,6 @@ namespace Oak
 									*ref = *assetRef;
 									prop.changed = true;
 								}
-							}
-
-							ImGui::SameLine();
-
-							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
-
-							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
-							{
-								*ref = AssetTextureRef();
-								prop.changed = true;
 							}
 						}
 						else
