@@ -41,8 +41,8 @@ namespace Oak
 
 		curAnimPlaySlice = -1;
 
-		selAnimSlice = -1;
-		animSliceToPaste = -1;
+		selAnimFrame = -1;
+		animFrameToPaste = -1;
 
 		textureRef = AssetTextureRef(texture, _FL_);
 
@@ -447,6 +447,57 @@ namespace Oak
 		ImGui::End();
 	}
 
+	bool SpriteWindow::AnimFrameDrag(int index)
+	{
+		if (!animFrameDragChecked && ImGui::BeginDragDropTarget())
+		{
+			animFrameDragChecked = true;
+
+			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+			if (payload)
+			{
+				AssetTextureRef* assetRef = reinterpret_cast<AssetTextureRef**>(payload->Data)[0];
+
+				if (assetRef->sliceIndex != -1)
+				{
+					AssetTexture::Frame frame;
+					frame.slice = assetRef->sliceIndex;
+
+					auto& anim = texture->animations[selAnim];
+
+					if (dragFrameIndex != -1)
+					{
+						if (dragFrameIndex == index)
+						{
+							return false;
+						}
+
+						anim.frames.erase(anim.frames.begin() + dragFrameIndex);
+					}
+
+
+					if (index == -1)
+					{
+						anim.frames.push_back(frame);
+						selAnimFrame = (int)anim.frames.size() - 1;
+					}
+					else
+					{
+						anim.frames.insert(anim.frames.begin() + index, frame);
+						selAnimFrame = index;
+					}
+
+					dragFrameIndex = -1;
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	void SpriteWindow::ShowAnimations()
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -465,8 +516,8 @@ namespace Oak
 			anim.name = "Anim";
 
 			selAnim = (int)texture->animations.size() - 1;
-			selAnimSlice = -1;
-			animSliceToPaste = -1;
+			selAnimFrame = -1;
+			animFrameToPaste = -1;
 
 			changed = true;
 		}
@@ -478,8 +529,8 @@ namespace Oak
 			{
 				texture->animations.erase(texture->animations.begin() + selAnim);
 				selAnim = -1;
-				selAnimSlice = -1;
-				animSliceToPaste = -1;
+				selAnimFrame = -1;
+				animFrameToPaste = -1;
 
 				changed = true;
 			}
@@ -503,8 +554,8 @@ namespace Oak
 			if (ImGui::IsItemClicked())
 			{
 				selAnim = i;
-				selAnimSlice = -1;
-				animSliceToPaste = -1;
+				selAnimFrame = -1;
+				animFrameToPaste = -1;
 			}
 		}
 
@@ -581,57 +632,76 @@ namespace Oak
 				float pos = 0.0f;
 				float sz = 60.0f;
 
+				animFrameDragChecked = false;
+
 				for (int i = 0; i < anim.frames.size(); i++)
 				{
 					DrawImage(anim.frames[0].slice, anim.frames[i].slice, sz, 0.0f, i);
 
-					ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), selAnimSlice == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
+					ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), selAnimFrame == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
 
 					if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 					{
-						selAnimSlice = i;
-						selSlice = anim.frames[selAnimSlice].slice;
+						selAnimFrame = i;
+						selSlice = anim.frames[selAnimFrame].slice;
 						FillRects();
 					}
 
-					if (selAnimSlice == i && ImGui::BeginPopupContextItem("FrameContext"))
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+					{
+						textureRef.sliceIndex = anim.frames[i].slice;
+						textureRef.animIndex = -1;
+						AssetTextureRef* ptr = &textureRef;
+						ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
+						ImGui::EndDragDropSource();
+
+						dragFrameIndex = i;
+					}
+
+					if (selAnimFrame == i && ImGui::BeginPopupContextItem("FrameContext"))
 					{
 						if (ImGui::MenuItem("Duplicate"))
 						{
 							anim.frames.insert(anim.frames.begin() + i + 1, anim.frames[i]);
-							selAnimSlice = i + 1;
-							animSliceToPaste = -1;
+							selAnimFrame = i + 1;
+							animFrameToPaste = -1;
+
+							changed = true;
 						}
 
 						if (ImGui::MenuItem("Copy"))
 						{
-							animSliceToPaste = i;
+							animFrameToPaste = i;
 						}
 
-						if (animSliceToPaste != -1 && ImGui::MenuItem("Paste"))
+						if (animFrameToPaste != -1 && ImGui::MenuItem("Paste"))
 						{
-							anim.frames.insert(anim.frames.begin() + i + 1, anim.frames[animSliceToPaste]);
-							selAnimSlice = i + 1;
+							anim.frames.insert(anim.frames.begin() + i, anim.frames[animFrameToPaste]);
+							selAnimFrame = i;
+
+							changed = true;
 						}
 
 						if (ImGui::MenuItem("Delete"))
 						{
-							anim.frames.erase(anim.frames.begin() + selAnimSlice);
+							anim.frames.erase(anim.frames.begin() + selAnimFrame);
 
-							if (selSlice == selAnimSlice)
+							if (selSlice == selAnimFrame)
 							{
 								selSlice = -1;
 							}
 
-							//changed = true;
+							changed = true;
 
-							selAnimSlice = -1;
-							animSliceToPaste = -1;
+							selAnimFrame = -1;
+							animFrameToPaste = -1;
 							i--;
 						}
 
 						ImGui::EndPopup();
 					}
+
+					if (AnimFrameDrag(i)) changed = true;
 
 					pos += sz + 10.0f;
 
@@ -648,32 +718,15 @@ namespace Oak
 
 			ImGui::EndChild();
 
-			if (ImGui::BeginDragDropTarget())
-			{
-				const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
-
-				if (payload)
-				{
-					AssetTextureRef* assetRef = reinterpret_cast<AssetTextureRef**>(payload->Data)[0];
-
-					if (assetRef->sliceIndex != -1)
-					{
-						AssetTexture::Frame frame;
-						frame.slice = assetRef->sliceIndex;
-
-						anim.frames.push_back(frame);
-						changed = true;
-					}
-				}
-			}
+			if (AnimFrameDrag(-1)) changed = true;
 
 			ImGui::SameLine();
 
 			ImGui::BeginChild("SelAnimFrame", ImVec2(200, 0), true);
 
-			if (selAnimSlice != -1)
+			if (selAnimFrame != -1)
 			{
-				auto& frame = anim.frames[selAnimSlice];
+				auto& frame = anim.frames[selAnimFrame];
 				if (InputFloat(&frame.frameLength, "Length")) changed = true;
 				if (InputInt(&frame.offset.x, "OffsetX", false)) changed = true;
 				if (InputInt(&frame.offset.y, "OffsetY", false)) changed = true;
@@ -682,9 +735,9 @@ namespace Oak
 
 				float sz = 180.0f;
 
-				if (selAnimSlice > 0)
+				if (selAnimFrame > 0)
 				{
-					DrawImage(anim.frames[0].slice, anim.frames[selAnimSlice - 1].slice, sz, anim.frames[selAnimSlice - 1].offset, -1);
+					DrawImage(anim.frames[0].slice, anim.frames[selAnimFrame - 1].slice, sz, anim.frames[selAnimFrame - 1].offset, -1);
 				}
 
 				DrawImage(anim.frames[0].slice, frame.slice, sz, frame.offset, -1);
@@ -692,9 +745,9 @@ namespace Oak
 				
 				if (ImGui::Button("Delete###SelAnimFrameDel", ImVec2(180, 0)))
 				{
-					anim.frames.erase(anim.frames.begin() + selAnimSlice);
-					selAnimSlice = -1;
-					animSliceToPaste = -1;
+					anim.frames.erase(anim.frames.begin() + selAnimFrame);
+					selAnimFrame = -1;
+					animFrameToPaste = -1;
 				}
 			}
 

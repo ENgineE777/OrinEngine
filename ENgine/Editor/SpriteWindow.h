@@ -62,11 +62,14 @@ namespace Oak
 		void DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color);
 
 		int selAnim = -1;
-		int selAnimSlice = -1;
-		int animSliceToPaste = -1;
+		int selAnimFrame = -1;
+		int animFrameToPaste = -1;
 
 		int curAnimPlaySlice = -1;
 		float curAnimPlayTime = 0.0f;
+
+		bool animFrameDragChecked = false;
+		int dragFrameIndex = -1;
 
 		void Text(const char* name);
 		bool InputFloat(float* value, const char* prefix);
@@ -87,6 +90,7 @@ namespace Oak
 		void ShowImage();
 
 		void DrawImage(int sliceScaleIndex, int slice, float size, Math::Vector2 offset, int index);
+		bool AnimFrameDrag(int index);
 
 	public:
 
