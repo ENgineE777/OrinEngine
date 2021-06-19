@@ -874,7 +874,7 @@ namespace Oak
 
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
 
-		float dist = (viewportSize.y * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian * camZoom));
+		float dist = (viewportSize.y * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * camZoom);
 		Math::Matrix view;
 		view.BuildView(Math::Vector3(camPos.x * Sprite::pixelsPerUnitInvert, camPos.y * Sprite::pixelsPerUnitInvert, -dist), Math::Vector3(camPos.x * Sprite::pixelsPerUnitInvert, camPos.y * Sprite::pixelsPerUnitInvert, -dist + 1.0f), Math::Vector3(0, 1, 0));
 		root.render.SetTransform(TransformStage::View, view);
@@ -886,7 +886,7 @@ namespace Oak
 		Transform trans;
 	
 		Math::Matrix spriteTrans;
-		spriteTrans.Pos().z = 0.01f;
+		spriteTrans.Pos().z = 0.0f;
 
 		Sprite::Draw(editorDrawer.checkerTex, COLOR_WHITE, spriteTrans,
 					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y + viewportSize.y * 0.5f / camZoom), viewportSize / camZoom,
@@ -896,10 +896,10 @@ namespace Oak
 		Color color = COLOR_WHITE;
 
 		spriteTrans.Pos().y = texture->size.y;
-		spriteTrans.Pos().z = 0.005f;
+		spriteTrans.Pos().z = -0.0025f;
 		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, 0.0f, texture->size, 0.0f, 1.0f);
 
-		spriteTrans.Pos().z = 0.0f;
+		spriteTrans.Pos().z = -0.005f;
 		Sprite::Draw(texture->texture, COLOR_WHITE, spriteTrans, 0.0f, texture->size, 0.0f, 1.0f);
 
 		for (int i = 0; i < texture->slices.size(); i++)
