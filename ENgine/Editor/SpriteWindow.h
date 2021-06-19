@@ -63,6 +63,7 @@ namespace Oak
 
 		int selAnim = -1;
 		int selAnimSlice = -1;
+		int animSliceToPaste = -1;
 
 		int curAnimPlaySlice = -1;
 		float curAnimPlayTime = 0.0f;

@@ -42,6 +42,8 @@ namespace Oak
 		curAnimPlaySlice = -1;
 
 		selAnimSlice = -1;
+		animSliceToPaste = -1;
+
 		textureRef = AssetTextureRef(texture, _FL_);
 
 		camZoom = lastViewportSize.y / texture->size.y;
@@ -463,6 +465,9 @@ namespace Oak
 			anim.name = "Anim";
 
 			selAnim = (int)texture->animations.size() - 1;
+			selAnimSlice = -1;
+			animSliceToPaste = -1;
+
 			changed = true;
 		}
 
@@ -473,6 +478,8 @@ namespace Oak
 			{
 				texture->animations.erase(texture->animations.begin() + selAnim);
 				selAnim = -1;
+				selAnimSlice = -1;
+				animSliceToPaste = -1;
 
 				changed = true;
 			}
@@ -496,6 +503,8 @@ namespace Oak
 			if (ImGui::IsItemClicked())
 			{
 				selAnim = i;
+				selAnimSlice = -1;
+				animSliceToPaste = -1;
 			}
 		}
 
@@ -578,11 +587,50 @@ namespace Oak
 
 					ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), selAnimSlice == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
 
-					if (ImGui::IsItemClicked())
+					if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 					{
 						selAnimSlice = i;
 						selSlice = anim.frames[selAnimSlice].slice;
 						FillRects();
+					}
+
+					if (selAnimSlice == i && ImGui::BeginPopupContextItem("FrameContext"))
+					{
+						if (ImGui::MenuItem("Duplicate"))
+						{
+							anim.frames.insert(anim.frames.begin() + i + 1, anim.frames[i]);
+							selAnimSlice = i + 1;
+							animSliceToPaste = -1;
+						}
+
+						if (ImGui::MenuItem("Copy"))
+						{
+							animSliceToPaste = i;
+						}
+
+						if (animSliceToPaste != -1 && ImGui::MenuItem("Paste"))
+						{
+							anim.frames.insert(anim.frames.begin() + i + 1, anim.frames[animSliceToPaste]);
+							selAnimSlice = i + 1;
+						}
+
+						if (ImGui::MenuItem("Delete"))
+						{
+							anim.frames.erase(anim.frames.begin() + selAnimSlice);
+
+							if (selSlice == selAnimSlice)
+							{
+								selSlice = -1;
+							}
+
+							//changed = true;
+
+							selAnimSlice = -1;
+							animSliceToPaste = -1;
+							i--;
+						}
+
+						ImGui::EndPopup();
 					}
 
 					pos += sz + 10.0f;
@@ -595,21 +643,6 @@ namespace Oak
 					{
 						ImGui::SameLine();
 					}
-				}
-			}
-
-			if (selAnimSlice != -1 && ImGui::IsWindowFocused())
-			{
-				if (io.KeysDown[VK_DELETE])
-				{
-					anim.frames.erase(anim.frames.begin() + selAnimSlice);
-
-					if (selSlice == selAnimSlice)
-					{
-						selSlice = -1;
-					}
-
-					selAnimSlice = -1;
 				}
 			}
 
@@ -661,6 +694,7 @@ namespace Oak
 				{
 					anim.frames.erase(anim.frames.begin() + selAnimSlice);
 					selAnimSlice = -1;
+					animSliceToPaste = -1;
 				}
 			}
 
