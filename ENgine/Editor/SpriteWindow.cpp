@@ -877,7 +877,7 @@ namespace Oak
 	
 		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
 
-		float scale = slice.size.x / sz.x;
+		float scale = sz.x / slice.size.x;
 
 		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f + offset.x * scale, p.y + (size - sz.y) * 0.5f + offset.y * scale);
 

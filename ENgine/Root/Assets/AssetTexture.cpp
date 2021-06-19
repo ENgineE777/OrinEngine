@@ -332,6 +332,8 @@ namespace Oak
 		float k = 1.0f;
 		Math::Vector2 uv = 0.0f;
 		Math::Vector2 duv = 1.0f;
+		float sliceSizeX = 1.0f;
+		Math::Vector2 offset = 0.0f;
 
 		int curSlice = -1;
 
@@ -346,6 +348,8 @@ namespace Oak
 			auto& frame = anim.frames[animPlaySlice];
 
 			curSlice = frame.slice;
+
+			offset = frame.offset;
 		}
 
 		if (curSlice != -1)
@@ -355,6 +359,7 @@ namespace Oak
 			k = slice.size.x / slice.size.y;
 			uv = Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size;
 			duv = slice.size / Get()->size;
+			sliceSizeX = slice.size.x;
 		}
 		else
 		{
@@ -364,8 +369,8 @@ namespace Oak
 		ImVec2 p = ImGui::GetCursorScreenPos();
 
 		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
-
-		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f, p.y + (size - sz.y) * 0.5f);
+		float scale = sz.x / sliceSizeX;
+		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f + offset.x * scale, p.y + (size - sz.y) * 0.5f + offset.y * scale);
 
 		drawList->AddImage(Get()->GetTexture()->GetNativeResource(), pos, ImVec2(pos.x + sz.x, pos.y + sz.y), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y));
 
