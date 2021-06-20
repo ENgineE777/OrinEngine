@@ -929,16 +929,18 @@ namespace Oak
 
 		auto& sliceScale = texture->slices[sliceScaleIndex];
 		float k = sliceScale.size.x / sliceScale.size.y;
+		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
 
 		auto& slice = texture->slices[sliceIndex];
 		Math::Vector2 uv = Math::Vector2(slice.pos.x, slice.pos.y) / texture->size;
 		Math::Vector2 duv = slice.size / texture->size;
 
-		ImVec2 p = ImGui::GetCursorScreenPos();
-	
-		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
+		float scale = sz.x / sliceScale.size.x;
+		scale = sz.y / sliceScale.size.y;
 
-		float scale = sz.x / slice.size.x;
+		ImVec2 p = ImGui::GetCursorScreenPos();
+		sz.x = scale * slice.size.x;
+		sz.y = scale * slice.size.y;
 
 		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f + offset.x * scale, p.y + (size - sz.y) * 0.5f + offset.y * scale);
 

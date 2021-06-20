@@ -264,17 +264,23 @@ namespace Oak
 				animPlayTime -= (float)count / (float)anim.fps;
 
 				animPlaySlice = (animPlaySlice + count) % (int)anim.frames.size();
-
-				Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);
-
-				auto& frame = anim.frames[animPlaySlice];
-				AssetTexture::Slice& slice = Get()->slices[frame.slice];
-
-				trans->size.x = slice.size.x;
-				trans->size.y = slice.size.y;
-
-				Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size);
 			}
+			else
+			{
+				animPlaySlice = 0;
+			}
+
+			auto& frame = anim.frames[animPlaySlice];
+			AssetTexture::Slice& slice = Get()->slices[frame.slice];
+
+			trans->size.x = slice.size.x;
+			trans->size.y = slice.size.y;
+
+			pos3d = Math::Vector3(trans->offset.x, trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, 1.0f, -1.0f);
+			pos = Math::Vector2(pos3d.x, pos3d.y);
+			size = Math::Vector2(trans->size.x, trans->size.y);
+
+			Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size);
 		}
 		else
 		{
@@ -315,11 +321,25 @@ namespace Oak
 			return 50.0f;
 		}
 
+		if (animIndex != -1 && animIndex < Get()->animations.size())
+		{
+			auto& anim = Get()->animations[animIndex];
+
+			if (anim.frames.size() > 0)
+			{
+				return Get()->slices[anim.frames[animPlaySlice].slice].size;
+			}
+			else
+			{
+				return 50.0f;
+			}
+		}
+		else
 		if (sliceIndex == -1 || sliceIndex >= Get()->slices.size())
 		{
 			return Get()->size;
 		}
-		
+
 		AssetTexture::Slice& slice = Get()->slices[sliceIndex];
 		return slice.size;
 	}
