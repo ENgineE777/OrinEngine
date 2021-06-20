@@ -36,6 +36,18 @@ namespace Oak
 		instance->opened = true;
 	}
 
+	void SpriteWindow::FitImage()
+	{
+		camZoom = lastViewportSize.y / texture->size.y;
+
+		camPos = texture->size * 0.5f;
+
+		if ((float)texture->size.x * camZoom > lastViewportSize.x)
+		{
+			camZoom = lastViewportSize.x / texture->size.x;
+		}
+	}
+
 	void SpriteWindow::Prepare()
 	{
 		selSlice = -1;
@@ -48,14 +60,7 @@ namespace Oak
 
 		textureRef = AssetTextureRef(texture, _FL_);
 
-		camZoom = lastViewportSize.y / texture->size.y;
-
-		camPos = texture->size * 0.5f;
-
-		if ((float)texture->size.x * camZoom > lastViewportSize.x)
-		{
-			camZoom = lastViewportSize.x / texture->size.x;
-		}
+		FitImage();
 
 		deltaMouse = 0.0f;
 	}
@@ -293,6 +298,18 @@ namespace Oak
 
 		ImGui::Text(StringUtils::PrintTemp("Image name: %s", texture->GetName()));
 		ImGui::Text(StringUtils::PrintTemp("Image Size: %i x %i", (int)texture->size.x, (int)texture->size.y));
+
+		if (ImGui::Button("Actual Pixels###ActualPixels"))
+		{
+			camZoom = 1.0f;
+		}
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Fit image###FitImage"))
+		{
+			FitImage();
+		}
 
 		ImGui::End();
 	}

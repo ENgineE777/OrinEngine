@@ -93,6 +93,7 @@ namespace Oak
 
 		void DrawImage(int sliceScaleIndex, int slice, float size, Math::Vector2 offset, int index);
 		bool AnimFrameDrag(int index);
+		void FitImage();
 
 	public:
 
@@ -109,8 +110,6 @@ namespace Oak
 
 		void FillPoints(int index, int stride, float val);
 		void FillRects();
-
-		void FitImage();
 
 		void MoveRects(Math::Vector2 delta);
 
