@@ -65,7 +65,7 @@ namespace Oak
 		int selAnimFrame = -1;
 		int animFrameToPaste = -1;
 
-		int curAnimPlaySlice = -1;
+		int curAnimPlayFrame = -1;
 		float curAnimPlayTime = 0.0f;
 
 		eastl::vector<int> selectedSlices;

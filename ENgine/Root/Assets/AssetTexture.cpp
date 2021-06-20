@@ -27,6 +27,35 @@ namespace Oak
 		CALLBACK_PROP(AssetTexture, AssetTexture::StartEditAssetTexture, "Properties", "Sprite Editor")
 	META_DATA_DESC_END()
 
+	void AssetTexture::Animation::AdvanceFrame(float dt, int& currentFrame, float& currentTime)
+	{
+		if (frames.size() > 1)
+		{
+			if (currentFrame >= frames.size())
+			{
+				currentFrame = 0;
+			}
+
+			currentTime += dt;
+
+			while (currentTime > frames[currentFrame].frameLength / (float)fps)
+			{
+				currentTime -= frames[currentFrame].frameLength / (float)fps;
+
+				currentFrame++;
+
+				if (currentFrame >= frames.size())
+				{
+					currentFrame = 0;
+				}
+			}
+		}
+		else
+		{
+			currentFrame = 0;
+		}
+	}
+
 	void AssetTexture::StartEditAssetTexture(void* owner)
 	{
 #ifdef OAK_EDITOR
@@ -256,19 +285,7 @@ namespace Oak
 		{
 			auto& anim = Get()->animations[animIndex];
 
-			if (anim.frames.size() > 1)
-			{
-				animPlayTime += dt;
-
-				int count = (int)(animPlayTime * (float)anim.fps);
-				animPlayTime -= (float)count / (float)anim.fps;
-
-				animPlaySlice = (animPlaySlice + count) % (int)anim.frames.size();
-			}
-			else
-			{
-				animPlaySlice = 0;
-			}
+			anim.AdvanceFrame(dt, animPlaySlice, animPlayTime);
 
 			auto& frame = anim.frames[animPlaySlice];
 			AssetTexture::Slice& slice = Get()->slices[frame.slice];

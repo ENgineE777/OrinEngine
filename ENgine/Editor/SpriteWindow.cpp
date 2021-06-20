@@ -53,7 +53,7 @@ namespace Oak
 		selSlice = -1;
 		selAnim = (texture && texture->animations.size() > 0) ? 0 : -1;
 
-		curAnimPlaySlice = -1;
+		curAnimPlayFrame = -1;
 
 		selAnimFrame = -1;
 		animFrameToPaste = -1;
@@ -619,28 +619,16 @@ namespace Oak
 
 			if (anim.frames.size() > 0)
 			{
-				if (curAnimPlaySlice == -1)
+				if (curAnimPlayFrame == -1)
 				{
-					curAnimPlaySlice = 0;
+					curAnimPlayFrame = 0;
 				}
 
-				if (anim.frames.size() > 1)
-				{
-					curAnimPlayTime += root.GetDeltaTime();
-
-					int count = (int)(curAnimPlayTime * (float)anim.fps);
-					curAnimPlayTime -= (float)count / (float)anim.fps;
-
-					curAnimPlaySlice = (curAnimPlaySlice + count) % (int)anim.frames.size();
-				}
-				else
-				{
-					curAnimPlaySlice = 0;
-				}
+				anim.AdvanceFrame(root.GetDeltaTime(), curAnimPlayFrame, curAnimPlayTime);
 
 				float sz = 180.0f;
 
-				DrawImage(anim.frames[0].slice, anim.frames[curAnimPlaySlice].slice, sz, anim.frames[curAnimPlaySlice].offset, -1);
+				DrawImage(anim.frames[0].slice, anim.frames[curAnimPlayFrame].slice, sz, anim.frames[curAnimPlayFrame].offset, -1);
 
 				ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 
@@ -657,7 +645,7 @@ namespace Oak
 			}
 			else
 			{
-				curAnimPlaySlice = -1;
+				curAnimPlayFrame = -1;
 			}
 
 			ImGui::EndChild();

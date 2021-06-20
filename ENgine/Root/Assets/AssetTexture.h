@@ -41,6 +41,8 @@ namespace Oak
 			int fps = 15;
 			eastl::string name;
 			eastl::vector<Frame> frames;
+
+			void AdvanceFrame(float dt, int& currentFrame, float& currentTime);
 		};
 
 		TextureRef texture;
