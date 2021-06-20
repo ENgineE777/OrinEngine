@@ -445,6 +445,9 @@
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.sh" />
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h.in" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\..\Libs\eastl\source\EASTL.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

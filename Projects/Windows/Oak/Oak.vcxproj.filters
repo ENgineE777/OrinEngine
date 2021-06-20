@@ -967,4 +967,9 @@
       <Filter>Libs\jemalloc\include</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\..\Libs\eastl\source\EASTL.natvis">
+      <Filter>Libs\eastl\source</Filter>
+    </Natvis>
+  </ItemGroup>
 </Project>
