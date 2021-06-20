@@ -68,6 +68,8 @@ namespace Oak
 		int curAnimPlaySlice = -1;
 		float curAnimPlayTime = 0.0f;
 
+		eastl::vector<int> selectedSlices;
+
 		bool animFrameDragChecked = false;
 		int dragFrameIndex = -1;
 

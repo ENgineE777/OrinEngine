@@ -12,6 +12,8 @@
 
 #include "imgui_internal.h"
 
+#include "eastl/sort.h"
+
 namespace Oak
 {
 	AssetTexture* SpriteWindow::texture;
@@ -449,9 +451,11 @@ namespace Oak
 
 	bool SpriteWindow::AnimFrameDrag(int index)
 	{
-		if (!animFrameDragChecked && ImGui::BeginDragDropTarget())
+		if (!animFrameDragChecked && selAnim != -1 && ImGui::BeginDragDropTarget())
 		{
 			animFrameDragChecked = true;
+
+			auto& anim = texture->animations[selAnim];
 
 			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
 
@@ -464,8 +468,6 @@ namespace Oak
 					AssetTexture::Frame frame;
 					frame.slice = assetRef->sliceIndex;
 
-					auto& anim = texture->animations[selAnim];
-
 					if (dragFrameIndex != -1)
 					{
 						if (dragFrameIndex == index)
@@ -475,7 +477,6 @@ namespace Oak
 
 						anim.frames.erase(anim.frames.begin() + dragFrameIndex);
 					}
-
 
 					if (index == -1)
 					{
@@ -489,6 +490,31 @@ namespace Oak
 					}
 
 					dragFrameIndex = -1;
+
+					return true;
+				}
+			}
+			else
+			{
+				const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ANIM_FRAMES", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+				if (payload)
+				{
+					for (int i = 0; i < selectedSlices.size(); i++)
+					{
+						AssetTexture::Frame frame;
+						frame.slice = selectedSlices[i];
+
+						if (index == -1)
+						{
+							anim.frames.push_back(frame);
+						}
+						else
+						{
+							anim.frames.insert(anim.frames.begin() + index, frame);
+							index++;
+						}
+					}
 
 					return true;
 				}
@@ -590,6 +616,10 @@ namespace Oak
 
 					curAnimPlaySlice = (curAnimPlaySlice + count) % (int)anim.frames.size();
 				}
+				else
+				{
+					curAnimPlaySlice = 0;
+				}
 
 				float sz = 180.0f;
 
@@ -621,6 +651,8 @@ namespace Oak
 
 			ImGui::BeginChild("AnimFrames", ImVec2(size.x - 200, 0), true);
 
+			animFrameDragChecked = false;
+
 			if (anim.frames.size() == 0)
 			{
 				Text("No farmes");
@@ -632,11 +664,9 @@ namespace Oak
 				float pos = 0.0f;
 				float sz = 60.0f;
 
-				animFrameDragChecked = false;
-
 				for (int i = 0; i < anim.frames.size(); i++)
 				{
-					DrawImage(anim.frames[0].slice, anim.frames[i].slice, sz, 0.0f, i);
+					DrawImage(anim.frames[i].slice, anim.frames[i].slice, sz, 0.0f, i);
 
 					ImGui::Image(nullptr, ImVec2(sz, sz), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), selAnimFrame == i ? ImVec4(1, 1, 0, 1) : ImVec4(1, 1, 1, 1));
 
@@ -765,12 +795,26 @@ namespace Oak
 
 		ImGuiIO& io = ImGui::GetIO();
 
-		if (selSlice != -1 && imageFocused)
+		if (imageFocused)
 		{
 			if (io.KeysDown[VK_DELETE])
 			{
-				texture->slices.erase(texture->slices.begin() + selSlice);
-				selSlice = -1;
+				if (selSlice != -1)
+				{
+					texture->slices.erase(texture->slices.begin() + selSlice);
+					selSlice = -1;
+				}
+				else
+				{
+					eastl::sort(selectedSlices.begin(), selectedSlices.end());
+
+					for (int i = (int)selectedSlices.size() - 1; i >= 0; i--)
+					{
+						texture->slices.erase(texture->slices.begin() + selectedSlices[i]);
+					}
+
+					selectedSlices.clear();
+				}
 			}
 			else
 			{
@@ -815,7 +859,7 @@ namespace Oak
 			textureRef.sliceIndex = selSlice;
 			textureRef.animIndex = -1;
 			AssetTextureRef* ptr = &textureRef;
-			ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
+			ImGui::SetDragDropPayload(selectedSlices.size() > 0 ? "_ANIM_FRAMES" : "_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
 			ImGui::EndDragDropSource();
 
 			inDragAndDrop = true;
@@ -1053,6 +1097,16 @@ namespace Oak
 					root.render.DebugSprite(editorDrawer.anchornTex, Math::Vector2(pos.x - 4, pos.y - 4), Math::Vector2(8.0f), color);
 				}
 		}
+		else
+		{
+			for (int i = 0; i < selectedSlices.size(); i++)
+			{
+				auto& slice = texture->slices[selectedSlices[i]];
+
+				Math::Vector2 pos(slice.pos.x, texture->size.y - slice.pos.y);
+				DrawRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), COLOR_GREEN);
+			}
+		}
 
 		if (imageFocused)
 		{
@@ -1133,22 +1187,90 @@ namespace Oak
 		int prevSelSlice = selSlice;
 		selSlice = -1;
 
+		bool multiSelected = root.controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Pressed, true);
+
 		float bufferZone = 3.0f;
-		for(int i = 0; i < texture->slices.size(); i++)
+		for (int i = 0; i < texture->slices.size(); i++)
 		{
 			auto& slice = texture->slices[i];
 
 			if (slice.pos.x - bufferZone < rectStart.x && rectStart.x < slice.pos.x + slice.size.x + bufferZone &&
 				texture->size.y - slice.pos.y - slice.size.y - bufferZone < rectStart.y && rectStart.y < texture->size.y - slice.pos.y + bufferZone)
 			{
-				selSlice = i;
+				if (multiSelected)
+				{
+					bool add = false;
 
-				FillRects();
+					if (prevSelSlice != -1)
+					{
+						selectedSlices.push_back(prevSelSlice);
+
+						selSlice = -1;
+					}
+
+					bool alreadyAdded = false;
+
+					for (int j = 0; j < selectedSlices.size(); j++)
+					{
+						if (selectedSlices[j] == i)
+						{
+							alreadyAdded = true;
+
+							selectedSlices.erase(selectedSlices.begin() + j);
+
+							break;
+						}
+					}
+
+					if (!alreadyAdded)
+					{
+						selectedSlices.push_back(i);
+
+						selSlice = -1;
+
+						break;
+					}
+
+					break;
+				}
+				else
+				{
+					selSlice = i;
+
+					FillRects();
+				}
 			}
+		}
+
+		if (!multiSelected && selSlice == -1)
+		{
+			selectedSlices.clear();
 		}
 
 		if (selSlice != -1)
 		{
+			if (selectedSlices.size() > 0)
+			{
+				for (int j = 0; j < selectedSlices.size(); j++)
+				{
+					if (selectedSlices[j] == selSlice)
+					{
+						selSlice = -1;
+						break;
+					}
+				}
+
+				if (selSlice == -1)
+				{
+					drag = Drag::DragRects;
+				}
+				else
+				{
+					selectedSlices.clear();
+					drag = Drag::DragSelectRect;
+				}
+			}
+			else
 			if (prevSelSlice != selSlice)
 			{
 				drag = Drag::DragSelectRect;
@@ -1194,7 +1316,19 @@ namespace Oak
 		else
 		if (drag == Drag::DragRects)
 		{
-			FillRects();
+			if (selSlice == -1)
+			{
+				for (int j = 0; j < selectedSlices.size(); j++)
+				{
+					auto& slice = texture->slices[selectedSlices[j]];
+					slice.pos.x = floorf(slice.pos.x);
+					slice.pos.y = floorf(slice.pos.y);
+				}
+			}
+			else
+			{
+				FillRects();
+			}
 		}
 
 
@@ -1206,6 +1340,16 @@ namespace Oak
 
 	void SpriteWindow::MoveRects(Math::Vector2 delta)
 	{
+		if (selSlice == -1)
+		{
+			for (int i = 0; i < selectedSlices.size(); i++)
+			{
+				texture->slices[selectedSlices[i]].pos -= delta;
+			}
+
+			return;
+		}
+
 		if (selRow == -1)
 		{
 			for (int i = 0; i<rectHeight; i++)
