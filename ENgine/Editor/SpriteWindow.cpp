@@ -61,8 +61,6 @@ namespace Oak
 		textureRef = AssetTextureRef(texture, _FL_);
 
 		FitImage();
-
-		deltaMouse = 0.0f;
 	}
 
 	void SpriteWindow::FillPoints(int index, int stride, float val)
@@ -1113,22 +1111,7 @@ namespace Oak
 
 	void SpriteWindow::OnMouseMove(Math::Vector2 ms, bool dragMouse)
 	{
-		deltaMouse.x += (prevMs.x - ms.x);
-		deltaMouse.y += (prevMs.y - ms.y);
-
-		Math::Vector2 delta(0.0f);
-
-		if (fabs(deltaMouse.x) > 1.0f)
-		{
-			delta.x = floorf(deltaMouse.x);
-			deltaMouse.x = 0.0f;
-		}
-
-		if (fabs(deltaMouse.y) > 1.0f)
-		{
-			delta.y = floorf(deltaMouse.y);
-			deltaMouse.y = 0.0f;
-		}
+		Math::Vector2 delta(prevMs.x - ms.x, prevMs.y - ms.y);
 
 		if (drag == Drag::DragField)
 		{

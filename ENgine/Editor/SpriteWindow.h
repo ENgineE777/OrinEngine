@@ -19,7 +19,6 @@ namespace Oak
 		};
 
 		Math::Vector2 points[16];
-		Math::Vector2 deltaMouse = 0.0f;
 
 		Drag drag = Drag::DragNone;
 		int rectWidth;
