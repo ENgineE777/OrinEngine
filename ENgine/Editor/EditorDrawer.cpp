@@ -93,6 +93,44 @@ namespace Oak
 		skyBoxTexture->SetAdress(TextureAddress::Clamp);
 	}
 
+	void EditorDrawer::SetCameraMatrices(Math::Vector2 pos, float pixelHeight, float aspect)
+	{
+		float dist = pixelHeight * 0.5f * Sprite::pixelsPerUnitInvert / tanf(22.5f * Math::Radian);
+
+		Math::Matrix view;
+		view.BuildView(Math::Vector3(pos.x * Sprite::pixelsPerUnitInvert, pos.y * Sprite::pixelsPerUnitInvert, -dist),
+						Math::Vector3(pos.x * Sprite::pixelsPerUnitInvert, pos.y * Sprite::pixelsPerUnitInvert, -dist + 1.0f), Math::Vector3(0, 1, 0));
+		root.render.SetTransform(TransformStage::View, view);
+
+		Math::Matrix proj;
+		proj.BuildProjection(45.0f * Math::Radian, aspect, 1.0f, 1000.0f);
+
+		root.render.SetTransform(TransformStage::Projection, proj);
+	}
+
+	void EditorDrawer::DrawCheckerBoard(Math::Vector2 camPos, Math::Vector2 viewportSize, float camZoom)
+	{
+		Math::Matrix mat;
+
+		Sprite::Draw(checkerTex, COLOR_WHITE, mat,
+					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y + viewportSize.y * 0.5f / camZoom), viewportSize / camZoom,
+					Math::Vector2(((int)(camPos.x) % 42) / 42.0f, 1.0f - ((int)(camPos.y) % 42) / 42.0f),
+					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f));
+	}
+
+	void EditorDrawer::DrawWindowBorder()
+	{
+		Color color(1.0, 0.65f, 0.0f, 1.0f);
+
+		for (float i = 0; i < 3.0f; i += 1.0f)
+		{
+			root.render.DebugLine2D(Math::Vector2(0.5f, 0.5f + i), color, Math::Vector2((float)root.render.GetDevice()->GetWidth(), 0.5f + i), color);
+			root.render.DebugLine2D(Math::Vector2(0.5f, (float)root.render.GetDevice()->GetHeight() - 0.5f - i), color, Math::Vector2((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight() - 0.5f - i), color);
+			root.render.DebugLine2D(Math::Vector2(0.5f + i, 0.5f), color, Math::Vector2(0.5f + i, (float)root.render.GetDevice()->GetHeight()), color);
+			root.render.DebugLine2D(Math::Vector2((float)root.render.GetDevice()->GetWidth() - i - 0.5f, 0.5f), color, Math::Vector2((float)root.render.GetDevice()->GetWidth() - i - 0.5f, (float)root.render.GetDevice()->GetHeight()), color);
+		}
+	}
+
 	void EditorDrawer::DrawSprite(Texture* tex, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float rotate, Color color)
 	{
 		Math::Matrix mat;

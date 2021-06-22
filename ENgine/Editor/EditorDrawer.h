@@ -42,6 +42,10 @@ namespace Oak
 		TextureRef projectIconTex;
 
 		void Init();
+
+		void DrawCheckerBoard(Math::Vector2 camPos, Math::Vector2 viewportSize, float camZoom);
+		void SetCameraMatrices(Math::Vector2 pos, float pixelHeight, float aspect);
+		void DrawWindowBorder();
 		void DrawSprite(Texture* tex, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float rotate, Color color);
 		void PrintText(Math::Vector2 pos, Color color, const char* text);
 		void DrawLine(Math::Vector2 from, Math::Vector2 to, Color color);

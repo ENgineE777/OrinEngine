@@ -1391,7 +1391,15 @@ namespace Oak
 
 		float dt = root.GetDeltaTime();
 
-		root.controls.SetFocused(GetActiveWindow() == hwnd && ImGui::IsWindowFocused());
+		if (GetActiveWindow() == hwnd && ImGui::IsWindowFocused())
+		{
+			root.controls.SetFocused(true);
+			editorDrawer.DrawWindowBorder();
+		}
+		else
+		{
+			root.controls.SetFocused(false);
+		}
 
 		if (!projectRunning)
 		{

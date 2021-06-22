@@ -30,7 +30,6 @@ namespace Oak
 
 		Math::Vector2 prevMs;
 
-		bool borderDrawed = false;
 		int numFrames = 1;
 
 		bool needSetSize = true;

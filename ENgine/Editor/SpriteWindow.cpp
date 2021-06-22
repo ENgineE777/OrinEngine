@@ -1021,27 +1021,13 @@ namespace Oak
 
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
 
-		float dist = (viewportSize.y * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * camZoom);
-		Math::Matrix view;
-		view.BuildView(Math::Vector3(camPos.x * Sprite::pixelsPerUnitInvert, camPos.y * Sprite::pixelsPerUnitInvert, -dist), Math::Vector3(camPos.x * Sprite::pixelsPerUnitInvert, camPos.y * Sprite::pixelsPerUnitInvert, -dist + 1.0f), Math::Vector3(0, 1, 0));
-		root.render.SetTransform(TransformStage::View, view);
-
-		Math::Matrix proj;
-		proj.BuildProjection(45.0f * Math::Radian, viewportSize.y / viewportSize.x, 1.0f, 1000.0f);
-		root.render.SetTransform(TransformStage::Projection, proj);
-
-		Transform trans;
+		editorDrawer.SetCameraMatrices(camPos, viewportSize.y / camZoom, viewportSize.y / viewportSize.x);
 	
-		Math::Matrix spriteTrans;
-		spriteTrans.Pos().z = 0.0f;
-
-		Sprite::Draw(editorDrawer.checkerTex, COLOR_WHITE, spriteTrans,
-					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y + viewportSize.y * 0.5f / camZoom), viewportSize / camZoom,
-					Math::Vector2(((int)(camPos.x) % 42) / 42.0f, 1.0f - ((int)(camPos.y) % 42) / 42.0f),
-					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f));
+		editorDrawer.DrawCheckerBoard(camPos, viewportSize, camZoom);
 
 		Color color = COLOR_WHITE;
 
+		Math::Matrix spriteTrans;
 		spriteTrans.Pos().y = texture->size.y;
 		spriteTrans.Pos().z = -0.0025f;
 		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, 0.0f, texture->size, 0.0f, 1.0f);
@@ -1117,17 +1103,7 @@ namespace Oak
 
 		if (imageFocused)
 		{
-			Color color(1.0, 0.65f, 0.0f, 1.0f);
-
-			for (float i = 0; i < 3.0f; i += 1.0f)
-			{
-				root.render.DebugLine2D(Math::Vector2(0.5f, 0.5f + i), color, Math::Vector2((float)root.render.GetDevice()->GetWidth(), 0.5f + i), color);
-				root.render.DebugLine2D(Math::Vector2(0.5f, (float)root.render.GetDevice()->GetHeight() - 0.5f - i), color, Math::Vector2((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight() - 0.5f - i), color);
-				root.render.DebugLine2D(Math::Vector2(0.5f + i, 0.5f), color, Math::Vector2(0.5f + i, (float)root.render.GetDevice()->GetHeight()), color);
-				root.render.DebugLine2D(Math::Vector2((float)root.render.GetDevice()->GetWidth() - i - 0.5f, 0.5f), color, Math::Vector2((float)root.render.GetDevice()->GetWidth() - i - 0.5f, (float)root.render.GetDevice()->GetHeight()), color);
-			}
-
-			borderDrawed = true;
+			editorDrawer.DrawWindowBorder();
 		}
 
 		root.render.ExecutePool(1000, 0.0f);
