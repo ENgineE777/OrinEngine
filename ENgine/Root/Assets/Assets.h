@@ -34,6 +34,7 @@ namespace Oak
 					ClassFactoryAsset* decl = ClassFactoryAsset::Find(GetAssetType());
 
 					asset = decl->Create(_FL_);
+					asset->Init();
 					asset->SetPath(fullName.c_str());
 					asset->Reload();
 				}

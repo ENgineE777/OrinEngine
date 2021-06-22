@@ -1402,13 +1402,24 @@ namespace Oak
 
 		if (!projectRunning && project.selectedScene)
 		{
-			if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
+			if (selectedAsset && selectedAsset->HasOwnTasks())
 			{
-				selectedEntity->ApplyProperties();
+				selectedAsset->EnableTasks(true);
+				if (selectedAsset->Tasks())
+				{
+					selectedAsset->Tasks()->Execute(dt);
+				}
 			}
+			else
+			{
+				if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
+				{
+					selectedEntity->ApplyProperties();
+				}
 
-			project.EnableScene(project.selectedScene, true);
-			project.selectedScene->scene->Execute(dt);
+				project.EnableScene(project.selectedScene, true);
+				project.selectedScene->scene->Execute(dt);
+			}
 		}
 
 		root.Update();
@@ -1423,7 +1434,19 @@ namespace Oak
 			editorDrawer.DrawSkyBox();
 		}
 
-		root.render.ExecutePool(0, dt);
+		if (selectedAsset && selectedAsset->HasOwnTasks())
+		{
+			selectedAsset->EnableTasks(true);
+			if (selectedAsset->RenderTasks())
+			{
+				selectedAsset->RenderTasks()->Execute(dt);
+			}
+		}
+		else
+		{
+			root.render.ExecutePool(0, dt);
+		}
+
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);
 		root.render.GetDevice()->Present();

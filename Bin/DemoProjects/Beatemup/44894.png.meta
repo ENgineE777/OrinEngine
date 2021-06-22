@@ -2217,8 +2217,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 765.000000,
-					"y" : 287.000000
+					"x" : 764.221985,
+					"y" : 287.555359
 				},
 				"size" :
 				{
@@ -2275,8 +2275,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 541.000000,
-					"y" : 288.000000
+					"x" : 540.222229,
+					"y" : 288.555359
 				},
 				"size" :
 				{
@@ -2304,8 +2304,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 712.000000,
-					"y" : 288.000000
+					"x" : 711.221985,
+					"y" : 288.555359
 				},
 				"size" :
 				{
@@ -2363,7 +2363,7 @@
 				"pos" :
 				{
 					"x" : 350.000000,
-					"y" : 286.857178
+					"y" : 286.856781
 				},
 				"size" :
 				{
@@ -2391,8 +2391,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 477.000000,
-					"y" : 289.000000
+					"x" : 476.000031,
+					"y" : 289.444397
 				},
 				"size" :
 				{
@@ -2420,7 +2420,7 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 818.333313,
+					"x" : 814.000000,
 					"y" : 289.000000
 				},
 				"size" :
@@ -2536,8 +2536,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 662.000000,
-					"y" : 291.000000
+					"x" : 661.222229,
+					"y" : 291.555359
 				},
 				"size" :
 				{
@@ -2652,8 +2652,8 @@
 				"isNineSliced" : false,
 				"pos" :
 				{
-					"x" : 590.000000,
-					"y" : 297.000000
+					"x" : 589.222229,
+					"y" : 297.555359
 				},
 				"size" :
 				{
@@ -5988,7 +5988,7 @@
 				"pos" :
 				{
 					"x" : 797.000000,
-					"y" : 916.000000
+					"y" : 915.000000
 				},
 				"size" :
 				{
@@ -9405,7 +9405,7 @@
 				}
 			}
 		],
-		"anim_count" : 3,
+		"anim_count" : 4,
 		"Animations" : [
 			{
 				"name" : "Idle",
@@ -9414,67 +9414,147 @@
 				"frames" : [
 					{
 						"slice" : 0,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 1,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -2.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 2,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -2.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 3,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -2.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 4,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 5,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 1.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 6,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 2.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 7,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 1.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 8,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -1.000000,
+							"y" : -1.000000
+						}
 					},
 					{
 						"slice" : 9,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -3.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 10,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -3.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 11,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -3.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 12,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -1.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 13,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 14,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 1.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 15,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 1.000000,
+							"y" : 0.000000
+						}
 					}
 				]
 			},
@@ -9485,31 +9565,66 @@
 				"frames" : [
 					{
 						"slice" : 80,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 85,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 90,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 89,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 86,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 75,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 81,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					}
 				]
 			},
@@ -9520,43 +9635,163 @@
 				"frames" : [
 					{
 						"slice" : 107,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 108,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 105,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 106,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 100,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 102,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 104,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 110,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 109,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					},
 					{
 						"slice" : 103,
-						"frame_length" : 1.000000
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
+					}
+				]
+			},
+			{
+				"name" : "Kick3",
+				"fps" : 10,
+				"frames_count" : 7,
+				"frames" : [
+					{
+						"slice" : 82,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
+					},
+					{
+						"slice" : 78,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -6.000000,
+							"y" : -1.000000
+						}
+					},
+					{
+						"slice" : 91,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 4.000000,
+							"y" : 3.000000
+						}
+					},
+					{
+						"slice" : 87,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -5.000000,
+							"y" : 0.000000
+						}
+					},
+					{
+						"slice" : 79,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -6.000000,
+							"y" : -1.000000
+						}
+					},
+					{
+						"slice" : 76,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : -5.000000,
+							"y" : 0.000000
+						}
+					},
+					{
+						"slice" : 83,
+						"frame_length" : 1.000000,
+						"offset" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000
+						}
 					}
 				]
 			}

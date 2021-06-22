@@ -3,6 +3,11 @@
 
 namespace Oak
 {
+	void Asset::Init()
+	{
+
+	}
+
 	void Asset::SetPath(const char* setPath)
 	{
 		path = setPath;
@@ -93,13 +98,18 @@ namespace Oak
 
 	}
 
+	bool Asset::HasOwnTasks()
+	{
+		return taskPool || renderTaskPool;
+	}
+
 	void Asset::EnableTasks(bool enable)
 	{
 		if (taskPool) taskPool->SetActive(enable);
 		if (renderTaskPool) renderTaskPool->SetActive(enable);
 	}
 
-	TaskExecutor::SingleTaskPool* Asset::Tasks(bool editor)
+	TaskExecutor::SingleTaskPool* Asset::Tasks()
 	{
 		if (!taskPool)
 		{
@@ -110,7 +120,7 @@ namespace Oak
 		return taskPool;
 	}
 
-	TaskExecutor::SingleTaskPool* Asset::RenderTasks(bool editor)
+	TaskExecutor::SingleTaskPool* Asset::RenderTasks()
 	{
 		if (!renderTaskPool)
 		{

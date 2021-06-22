@@ -14,7 +14,7 @@ namespace Oak
 {
 	class SceneEntity;
 
-	class Asset
+	class Asset : public Object
 	{
 	protected:
 
@@ -36,6 +36,7 @@ namespace Oak
 
 		virtual ~Asset() = default;
 
+		virtual void Init();
 		void SetPath(const char* setPath);
 		const eastl::string& GetPath();
 
@@ -47,9 +48,10 @@ namespace Oak
 		void SaveMetaData();
 		virtual void SaveData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
+		bool HasOwnTasks();
 		void EnableTasks(bool enable);
-		TaskExecutor::SingleTaskPool* Tasks(bool editor);
-		TaskExecutor::SingleTaskPool* RenderTasks(bool editor);
+		TaskExecutor::SingleTaskPool* Tasks();
+		TaskExecutor::SingleTaskPool* RenderTasks();
 		#endif
 
 		virtual MetaData* GetMetaData() = 0;
