@@ -143,20 +143,36 @@ namespace Oak
 
 		vireportHowered = ImGui::IsItemHovered();
 
-		if (vireportHowered && ImGui::IsMouseDown(0))
+		if (vireportHowered && ImGui::IsMouseClicked(0))
 		{
 			gizmo.OnLeftMouseDown();
+
+			if (selectedAsset && selectedAsset->HasOwnTasks())
+			{
+				selectedAsset->OnLeftMouseDown();
+			}
+
 			viewportCaptured = true;
 		}
 
 		gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 
+		if (selectedAsset && selectedAsset->HasOwnTasks())
+		{
+			selectedAsset->ImGui(viewportFocused);
+			selectedAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+		}
+
 		if (viewportCaptured && ImGui::IsMouseReleased(0))
 		{
 			gizmo.OnLeftMouseUp();
 			viewportCaptured = false;
-		}
 
+			if (selectedAsset && selectedAsset->HasOwnTasks())
+			{
+				selectedAsset->OnLeftMouseUp();
+			}
+		}
 
 		ImGui::End();
 	}
@@ -387,8 +403,9 @@ namespace Oak
 
 	void Editor::SelectEntity(SceneEntity* entity)
 	{
-		if (entity != nullptr)
+		if (entity != nullptr && selectedAsset)
 		{
+			selectedAsset->EnableTasks(false);
 			selectedAsset = nullptr;
 		}
 
@@ -1238,14 +1255,7 @@ namespace Oak
 
 			if (selectedAsset)
 			{
-				selectedAsset->GetMetaData()->Prepare(selectedAsset);
-				selectedAsset->GetMetaData()->ImGuiWidgets();
-
-				if (selectedAsset->GetMetaData()->IsValueWasChanged())
-				{
-					selectedAsset->Reload();
-					selectedAsset->SaveMetaData();
-				}
+				selectedAsset->ImGuiProperties();
 			}
 
 			ImGui::Columns(1);
@@ -1391,14 +1401,12 @@ namespace Oak
 
 		float dt = root.GetDeltaTime();
 
-		if (GetActiveWindow() == hwnd && ImGui::IsWindowFocused())
+		viewportFocused = GetActiveWindow() == hwnd && ImGui::IsWindowFocused();
+		root.controls.SetFocused(viewportFocused);
+
+		if (viewportFocused)
 		{
-			root.controls.SetFocused(true);
 			editorDrawer.DrawWindowBorder();
-		}
-		else
-		{
-			root.controls.SetFocused(false);
 		}
 
 		if (!projectRunning)
@@ -1412,6 +1420,7 @@ namespace Oak
 		{
 			if (selectedAsset && selectedAsset->HasOwnTasks())
 			{
+				project.EnableScene(project.selectedScene, false);
 				selectedAsset->EnableTasks(true);
 				if (selectedAsset->Tasks())
 				{
@@ -1442,19 +1451,7 @@ namespace Oak
 			editorDrawer.DrawSkyBox();
 		}
 
-		if (selectedAsset && selectedAsset->HasOwnTasks())
-		{
-			selectedAsset->EnableTasks(true);
-			if (selectedAsset->RenderTasks())
-			{
-				selectedAsset->RenderTasks()->Execute(dt);
-			}
-		}
-		else
-		{
-			root.render.ExecutePool(0, dt);
-		}
-
+		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);
 		root.render.GetDevice()->Present();

@@ -130,6 +130,38 @@ namespace Oak
 
 		return renderTaskPool;
 	}
+
+	void Asset::ImGuiProperties()
+	{
+		GetMetaData()->Prepare(this);
+		GetMetaData()->ImGuiWidgets();
+
+		if (GetMetaData()->IsValueWasChanged())
+		{
+			Reload();
+			SaveMetaData();
+		}
+	}
+
+	void Asset::ImGui(bool viewportFocused)
+	{
+
+	}
+
+	void Asset::OnMouseMove(Math::Vector2 ms)
+	{
+
+	}
+
+	void Asset::OnLeftMouseDown()
+	{
+
+	}
+
+	void Asset::OnLeftMouseUp()
+	{
+
+	}
 	#endif
 
 	void Asset::Reload()

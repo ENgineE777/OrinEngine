@@ -83,6 +83,7 @@ namespace Oak
 
 		Project project;
 		Gizmo gizmo;
+		bool viewportFocused = false;
 
 		bool Init(HWND hwnd);
 		bool Update();
