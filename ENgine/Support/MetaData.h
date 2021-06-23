@@ -294,6 +294,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::EnumString;\
+		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		prop.enum_callback = set_callback;\
@@ -305,6 +306,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::EnumString;\
+		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
@@ -316,7 +318,6 @@ namespace Oak
 	{\
 		Property prop;\
 		prop.type = Type::Callback;\
-		prop.name = strPropName;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		prop.callback = set_callback;\
@@ -329,6 +330,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::Array;\
+		prop.name = #classMember;\
 		prop.propName = strPropName; \
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
@@ -342,6 +344,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::Array;\
+		prop.name = #classMember;\
 		prop.propName = strPropName; \
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
@@ -368,7 +371,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::AssetTexture;\
-		prop.name = strPropName;\
+		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
@@ -379,7 +382,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::AssetAnimGraph2D;\
-		prop.name = strPropName;\
+		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
@@ -390,7 +393,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::Transform;\
-		prop.name = strPropName;\
+		prop.name = #classMember;\
 		prop.catName = strPropName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
@@ -401,6 +404,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::SceneEntity;\
+		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
