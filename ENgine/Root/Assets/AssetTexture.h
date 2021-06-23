@@ -90,7 +90,10 @@ namespace Oak
 
 		Math::Vector2 GetSize();
 
+		void LoadData(JsonReader& loader, const char* name);
+
 	#ifdef OAK_EDITOR
+		void SaveData(JsonWriter& saver, const char* name);
 		void ImGuiImage(float size);
 	#endif
 

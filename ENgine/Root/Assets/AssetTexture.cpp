@@ -372,7 +372,36 @@ namespace Oak
 		return slice.size;
 	}
 
+	void AssetTextureRef::LoadData(JsonReader& loader, const char* name)
+	{
+		if (loader.EnterBlock(name))
+		{
+			eastl::string path;
+			if (loader.Read("path", path))
+			{
+				*this = Oak::root.assets.GetAssetRef<AssetTextureRef>(path);
+
+				loader.Read("sliceIndex", sliceIndex);
+				loader.Read("animIndex", animIndex);
+			}
+
+			loader.LeaveBlock();
+		}
+	}
+
 	#ifdef OAK_EDITOR
+	void AssetTextureRef::SaveData(JsonWriter& saver, const char* name)
+	{
+		if (Get())
+		{
+			saver.StartBlock(name);
+			saver.Write("Path", Get()->GetPath().c_str());
+			saver.Write("sliceIndex", sliceIndex);
+			saver.Write("animIndex", animIndex);
+			saver.FinishBlock();
+		}
+	}
+
 	void AssetTextureRef::ImGuiImage(float size)
 	{
 		ImDrawList* drawList = ImGui::GetWindowDrawList();
