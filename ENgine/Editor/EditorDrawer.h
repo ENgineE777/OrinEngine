@@ -47,7 +47,7 @@ namespace Oak
 		void SetCameraMatrices(Math::Vector2 pos, float pixelHeight, float aspect);
 		void DrawWindowBorder();
 		void DrawSprite(Texture* tex, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float rotate, Color color);
-		void PrintText(Math::Vector2 pos, Color color, const char* text);
+		void PrintText(Math::Vector2 pos, float fontScale, Color color, const char* text);
 		void DrawLine(Math::Vector2 from, Math::Vector2 to, Color color);
 		void DrawCurve(Math::Vector2 from, Math::Vector2 to, Color color);
 		void DrawSkyBox();

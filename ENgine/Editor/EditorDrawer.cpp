@@ -115,7 +115,7 @@ namespace Oak
 		Sprite::Draw(checkerTex, COLOR_WHITE, mat,
 					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y + viewportSize.y * 0.5f / camZoom), viewportSize / camZoom,
 					Math::Vector2(((int)(camPos.x) % 42) / 42.0f, 1.0f - ((int)(camPos.y) % 42) / 42.0f),
-					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f));
+					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f), false);
 	}
 
 	void EditorDrawer::DrawWindowBorder()
@@ -134,30 +134,28 @@ namespace Oak
 	void EditorDrawer::DrawSprite(Texture* tex, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 offset, float rotate, Color color)
 	{
 		Math::Matrix mat;
-		mat.RotateZ(rotate);
-
+		mat.RotateZ(-rotate);
 		mat.Pos() = Math::Vector3(pos.x, pos.y, 0.01f);
 
-		if (pos.x + size.x < 0 || root.render.GetDevice()->GetWidth() < pos.x ||
-			pos.y + size.y < 0 || root.render.GetDevice()->GetHeight() < pos.y)
-		{
-			return;
-		}
-
-		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f);
+		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f, false);
 	}
 
-	void EditorDrawer::PrintText(Math::Vector2 pos, Color color, const char* text)
+	void EditorDrawer::PrintText(Math::Vector2 pos, float fontScale, Color color, const char* text)
 	{
-		if (pos.x + 250 < 0 || root.render.GetDevice()->GetWidth() < pos.x ||
-			pos.y + 15 < 0 || root.render.GetDevice()->GetHeight() < pos.y)
+		Math::Vector3 pos3d = Math::Vector3(pos.x * Sprite::pixelsPerUnitInvert, pos.y * Sprite::pixelsPerUnitInvert, 0.0f);
+
+		pos3d = root.render.TransformToScreen(pos3d, 2);
+
+		Math::Matrix mat;
+		mat.Scale(fontScale);
+		mat.Pos().x = pos3d.x;
+		mat.Pos().y = pos3d.y;
+
+		if (pos3d.x + 250 < 0 || root.render.GetDevice()->GetWidth() < pos3d.x ||
+			pos3d.y + 15 < 0 || root.render.GetDevice()->GetHeight() < pos3d.y)
 		{
 			return;
 		}
-
-		Math::Matrix mat;
-		mat.Pos().x = pos.x;
-		mat.Pos().y = pos.y;
 
 		char str[64];
 		StringUtils::Copy(str, 64, text);
@@ -175,13 +173,11 @@ namespace Oak
 		Math::Vector2 dir = to - from;
 		Math::Vector2 size(dir.Length(), 2.0f);
 
-		Math::Vector2 center = from + dir * 0.5f;
-
 		Math::Matrix mat;
-		mat.RotateZ(atan2f(dir.y / size.x, dir.x / size.x));
-		mat.Pos() = Math::Vector3(center.x, center.y, 0.01f);
+		mat.RotateZ(-atan2f(dir.y / size.x, dir.x / size.x));
+		mat.Pos() = Math::Vector3(from.x, from.y, 0.01f);
 
-		Sprite::Draw(nullptr, color, mat, -0.5f * size, size, 0.0f, 1.0f);
+		Sprite::Draw(nullptr, color, mat, 0.0f, size, 0.0f, 1.0f, false);
 	}
 
 	void EditorDrawer::DrawCurve(Math::Vector2 from, Math::Vector2 to, Color color)
