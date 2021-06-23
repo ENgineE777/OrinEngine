@@ -68,6 +68,12 @@ namespace Oak
 		int animPlaySlice = 0;
 		float animPlayTime = 0.0f;
 
+		#ifdef OAK_EDITOR
+		char name[256];
+		int previewAnimPlaySlice = 0;
+		float previewAnimPlayTime = 0.0f;
+		#endif
+
 	public:
 
 		AssetTextureRef() : PointerRef() {};
@@ -79,6 +85,7 @@ namespace Oak
 
 		void Draw(Transform* trans, Color clr, float dt);
 
+		const char* GetName();
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 
 		Math::Vector2 GetSize();

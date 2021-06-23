@@ -271,13 +271,13 @@ namespace Oak
 						Math::Vector2 sliceUVPos = slice.pos + Math::Vector2(u[j], v[i]);
 						Math::Vector2 sliceUVSize = Math::Vector2(u[j + 1] - u[j], v[i + 1] - v[i]);
 
-						Sprite::Draw(Get()->texture, clr, local_trans, slicePos, sliceSize, sliceUVPos / Get()->size, sliceUVSize / Get()->size);
+						Sprite::Draw(Get()->texture, clr, local_trans, slicePos, sliceSize, sliceUVPos / Get()->size, sliceUVSize / Get()->size, true);
 						index++;
 					}
 			}
 			else
 			{
-				Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size);
+				Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, true);
 			}
 		}
 		else
@@ -297,12 +297,37 @@ namespace Oak
 			pos = Math::Vector2(pos3d.x, pos3d.y);
 			size = Math::Vector2(trans->size.x, trans->size.y);
 
-			Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size);
+			Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, true);
 		}
 		else
 		{
-			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f);
+			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f, true);
 		}
+	}
+
+	const char* AssetTextureRef::GetName()
+	{
+		if (!Get())
+		{
+			return "null";
+		}
+
+		StringUtils::Copy(name, 256, Get()->name.c_str());
+		StringUtils::RemoveExtension(name);
+
+		if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
+		{
+			StringUtils::Cat(name, 256, "_");
+			StringUtils::Cat(name, 256, Get()->slices[sliceIndex].name.c_str());
+		}
+		else
+		if (animIndex != -1 && animIndex < Get()->animations.size())
+		{
+			StringUtils::Cat(name, 256, "_");
+			StringUtils::Cat(name, 256, Get()->animations[animIndex].name.c_str());
+		}
+
+		return name;
 	}
 
 	void AssetTextureRef::SetupCreatedSceneEntity(SceneEntity* entity)
@@ -313,21 +338,7 @@ namespace Oak
 		{
 			sprite->texture = *this;
 
-			char str[256];
-			StringUtils::Copy(str, 256, Get()->name.c_str());
-			StringUtils::RemoveExtension(str);
-
-			if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
-			{
-				StringUtils::Cat(str, 256, Get()->slices[sliceIndex].name.c_str());
-			}
-			else
-			if (animIndex != -1 && animIndex < Get()->animations.size())
-			{
-				StringUtils::Cat(str, 256, Get()->animations[animIndex].name.c_str());
-			}
-
-			entity->SetName(str);
+			entity->SetName(GetName());
 		}
 	}
 
@@ -382,7 +393,10 @@ namespace Oak
 		if (animIndex != -1 && animIndex < Get()->animations.size())
 		{
 			auto& anim = Get()->animations[animIndex];
-			auto& frame = anim.frames[animPlaySlice];
+
+			anim.AdvanceFrame(root.GetDeltaTime(), previewAnimPlaySlice, previewAnimPlayTime);
+
+			auto& frame = anim.frames[previewAnimPlaySlice];
 
 			curSlice = frame.slice;
 
@@ -413,7 +427,7 @@ namespace Oak
 
 		ImGui::Image(nullptr, ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 
-		drawList->AddText(ImVec2(p.x + 4, p.y + 1), IM_COL32_WHITE, Get()->GetPath().c_str());
+		drawList->AddText(ImVec2(p.x + 4, p.y + 1), IM_COL32_WHITE, GetName());
 	}
 	#endif
 };
