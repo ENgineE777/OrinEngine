@@ -18,7 +18,7 @@ namespace Oak::Sprite
 	extern float pixelsHeight;
 
 	void Init();
-	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv);
+	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool useDepth);
 	void Release();
 }
 #endif

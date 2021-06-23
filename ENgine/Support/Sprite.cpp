@@ -17,10 +17,27 @@ namespace Oak::Sprite
 		};
 	};
 
+	class QuadProgramNoZ : public QuadProgram
+	{
+	public:
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthTest(false);
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
 	CLASSREGEX(Program, QuadProgram, QuadProgram, "QuadProgram")
 	CLASSREGEX_END(Program, QuadProgram)
 
+	CLASSREGEX(Program, QuadProgramNoZ, QuadProgramNoZ, "QuadProgramNoZ")
+	CLASSREGEX_END(Program, QuadProgramNoZ)
+
 	ProgramRef quadPrg;
+	ProgramRef quadPrgNoZ;
 	VertexDeclRef vdecl;
 	DataBufferRef buffer;
 
@@ -46,14 +63,16 @@ namespace Oak::Sprite
 		buffer->Unlock();
 
 		quadPrg = root.render.GetProgram("QuadProgram", _FL_);
+		quadPrgNoZ = root.render.GetProgram("QuadProgramNoZ", _FL_);
 	}
 
-	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv)
+	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool useDepth)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 
-		root.render.GetDevice()->SetProgram(quadPrg);
+		ProgramRef prg = useDepth ? quadPrg : quadPrgNoZ;
+		root.render.GetDevice()->SetProgram(prg);
 
 		Device::Viewport viewport;
 		root.render.GetDevice()->GetViewport(viewport);
@@ -68,11 +87,11 @@ namespace Oak::Sprite
 
 		trans.Pos() *= pixelsPerUnitInvert;
 
-		quadPrg->SetVector(ShaderType::Vertex, "desc", &params[0], 3);
-		quadPrg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
-		quadPrg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
-		quadPrg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
-		quadPrg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
+		prg->SetVector(ShaderType::Vertex, "desc", &params[0], 3);
+		prg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
+		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
+		prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
+		prg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
 
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
@@ -82,6 +101,7 @@ namespace Oak::Sprite
 		vdecl.ReleaseRef();
 		buffer.ReleaseRef();
 		quadPrg.ReleaseRef();
+		quadPrgNoZ.ReleaseRef();
 	}
 }
 
