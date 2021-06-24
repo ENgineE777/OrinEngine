@@ -42,7 +42,7 @@ namespace Oak
 			eastl::string name;
 			eastl::vector<Frame> frames;
 
-			void AdvanceFrame(float dt, int& currentFrame, float& currentTime);
+			bool AdvanceFrame(float dt, int& currentFrame, float& currentTime, bool looped, bool reversed, eastl::function<void(int)> onFrameChange);
 		};
 
 		TextureRef texture;
@@ -65,8 +65,12 @@ namespace Oak
 
 	class AssetTextureRef : public PointerRef<AssetTexture>
 	{
-		int animPlaySlice = 0;
+		int animPlayFrame = 0;
 		float animPlayTime = 0.0f;
+		bool animLooped = true;
+		bool animFinished = false;
+		bool animReversed = false;
+		eastl::function<void(int)> onFrameChange;
 
 		#ifdef OAK_EDITOR
 		char name[256];
@@ -89,6 +93,9 @@ namespace Oak
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 
 		Math::Vector2 GetSize();
+
+		void ResetAnim(bool looped, bool reversed, eastl::function<void(int)> onFrameChange);
+		bool IsAnimFinished();
 
 		void LoadData(JsonReader& loader, const char* name);
 

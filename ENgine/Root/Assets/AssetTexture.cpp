@@ -27,7 +27,7 @@ namespace Oak
 		CALLBACK_PROP(AssetTexture, AssetTexture::StartEditAssetTexture, "Properties", "Sprite Editor")
 	META_DATA_DESC_END()
 
-	void AssetTexture::Animation::AdvanceFrame(float dt, int& currentFrame, float& currentTime)
+	bool AssetTexture::Animation::AdvanceFrame(float dt, int& currentFrame, float& currentTime, bool looped, bool reversed, eastl::function<void(int)> onFrameChange)
 	{
 		if (frames.size() > 1)
 		{
@@ -42,11 +42,55 @@ namespace Oak
 			{
 				currentTime -= frames[currentFrame].frameLength / (float)fps;
 
-				currentFrame++;
-
-				if (currentFrame >= frames.size())
+				if (reversed)
 				{
-					currentFrame = 0;
+					currentFrame--;
+
+					if (currentFrame < 0)
+					{
+						if (looped)
+						{
+							currentFrame = (int)(frames.size()) - 1;
+						}
+						else
+						{
+							currentFrame = 0;
+
+							if (onFrameChange)
+							{
+								onFrameChange(currentFrame);
+							}
+							return true;
+						}
+					}
+				}
+				else
+				{
+					currentFrame++;
+	
+					if (currentFrame >= frames.size())
+					{
+						if (looped)
+						{
+							currentFrame = 0;
+						}
+						else
+						{
+							currentFrame = (int)frames.size() - 1;
+
+							if (onFrameChange)
+							{
+								onFrameChange(currentFrame);
+							}
+
+							return true;
+						}
+					}
+				}
+
+				if (onFrameChange)
+				{
+					onFrameChange(currentFrame);
 				}
 			}
 		}
@@ -54,6 +98,8 @@ namespace Oak
 		{
 			currentFrame = 0;
 		}
+
+		return false;
 	}
 
 	void AssetTexture::StartEditAssetTexture(void* owner)
@@ -285,9 +331,12 @@ namespace Oak
 		{
 			auto& anim = Get()->animations[animIndex];
 
-			anim.AdvanceFrame(dt, animPlaySlice, animPlayTime);
+			if (!animFinished)
+			{
+				animFinished = anim.AdvanceFrame(dt, animPlayFrame, animPlayTime, animLooped, animReversed, onFrameChange);
+			}
 
-			auto& frame = anim.frames[animPlaySlice];
+			auto& frame = anim.frames[animPlayFrame];
 			AssetTexture::Slice& slice = Get()->slices[frame.slice];
 
 			trans->size.x = slice.size.x;
@@ -355,7 +404,7 @@ namespace Oak
 
 			if (anim.frames.size() > 0)
 			{
-				return Get()->slices[anim.frames[animPlaySlice].slice].size;
+				return Get()->slices[anim.frames[animPlayFrame].slice].size;
 			}
 			else
 			{
@@ -370,6 +419,32 @@ namespace Oak
 
 		AssetTexture::Slice& slice = Get()->slices[sliceIndex];
 		return slice.size;
+	}
+
+	void AssetTextureRef::ResetAnim(bool looped, bool reversed, eastl::function<void(int)> setOnFrameChange)
+	{
+		if (!Get())
+		{
+			return;
+		}
+
+		animPlayFrame = reversed ? 0 : ((int)Get()->animations[animIndex].frames.size() - 1);
+		animPlayTime = 0.0f;
+		animLooped = looped;
+		animReversed = reversed;
+		animFinished = false;
+
+		onFrameChange = setOnFrameChange;
+
+		if (onFrameChange)
+		{
+			onFrameChange(animPlayFrame);
+		}
+	}
+
+	bool AssetTextureRef::IsAnimFinished()
+	{
+		return animFinished;
 	}
 
 	void AssetTextureRef::LoadData(JsonReader& loader, const char* name)
@@ -423,7 +498,7 @@ namespace Oak
 		{
 			auto& anim = Get()->animations[animIndex];
 
-			anim.AdvanceFrame(root.GetDeltaTime(), previewAnimPlaySlice, previewAnimPlayTime);
+			anim.AdvanceFrame(root.GetDeltaTime(), previewAnimPlaySlice, previewAnimPlayTime, true, animReversed, nullptr);
 
 			auto& frame = anim.frames[previewAnimPlaySlice];
 

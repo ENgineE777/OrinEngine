@@ -622,7 +622,7 @@ namespace Oak
 					curAnimPlayFrame = 0;
 				}
 
-				anim.AdvanceFrame(root.GetDeltaTime(), curAnimPlayFrame, curAnimPlayTime);
+				anim.AdvanceFrame(root.GetDeltaTime(), curAnimPlayFrame, curAnimPlayTime, true, false, nullptr);
 
 				float sz = 180.0f;
 

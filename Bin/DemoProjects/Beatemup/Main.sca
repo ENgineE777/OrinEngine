@@ -40,7 +40,7 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" :
+			"texture" :
 			{
 				"Path" : "floor.jpg",
 				"sliceIndex" : -1,
@@ -85,7 +85,7 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" :
+			"texture" :
 			{
 				"Path" : "back.jpg",
 				"sliceIndex" : -1,
@@ -119,7 +119,7 @@
 				},
 				"size" :
 				{
-					"x" : 39.000000,
+					"x" : 36.000000,
 					"y" : 72.000000,
 					"z" : 0.000000
 				},
@@ -130,7 +130,7 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" :
+			"texture" :
 			{
 				"Path" : "44894.png",
 				"sliceIndex" : -1,
@@ -169,8 +169,8 @@
 				},
 				"size" :
 				{
-					"x" : 36.000004,
-					"y" : 65.000000,
+					"x" : 35.000000,
+					"y" : 66.000000,
 					"z" : 0.000000
 				},
 				"offset" :
@@ -180,7 +180,7 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" :
+			"texture" :
 			{
 				"Path" : "39412.png",
 				"sliceIndex" : -1,
@@ -244,16 +244,16 @@
 			"rightdown.y" : 0.000000
 		},
 		{
-			"type" : "SpriteEntity",
-			"uid" : 1044275,
-			"name" : "44894Kick3",
+			"type" : "AnimGraph2D",
+			"uid" : 972090,
+			"name" : "AnimIdle",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : -45.050392,
-					"y" : 267.536011,
+					"x" : -39.339561,
+					"y" : 260.269592,
 					"z" : 0.000000
 				},
 				"rotation" :
@@ -270,9 +270,9 @@
 				},
 				"size" :
 				{
-					"x" : 40.000000,
-					"y" : 73.000000,
-					"z" : 0.000000
+					"x" : 39.000000,
+					"y" : 72.000000,
+					"z" : 1.000000
 				},
 				"offset" :
 				{
@@ -281,11 +281,9 @@
 					"z" : 0.500000
 				}
 			},
-			"Texture" :
+			"anim" :
 			{
-				"Path" : "44894.png",
-				"sliceIndex" : -1,
-				"animIndex" : 3
+				"Path" : "Batman/AnimIdle.ang"
 			}
 		}
 	]

@@ -163,17 +163,8 @@ namespace Oak
 			else
 			if (prop.type == Type::AssetAnimGraph2D)
 			{
-				if (reader.EnterBlock(prop.propName.c_str()))
-				{
-					eastl::string path;
-					if (reader.Read("path", path))
-					{
-						AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
-						*ref = Oak::root.assets.GetAssetRef<AssetAnimGraph2DRef>(path);
-					}
-
-					reader.LeaveBlock();
-				}
+				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+				ref->LoadData(reader, prop.name.c_str());
 			}
 			else
 			if (prop.type == Type::Transform)
@@ -281,13 +272,7 @@ namespace Oak
 			if (prop.type == Type::AssetAnimGraph2D)
 			{
 				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
-
-				if (ref->Get())
-				{
-					writer.StartBlock(prop.name.c_str());
-					writer.Write("Path", ref->Get()->GetPath().c_str());
-					writer.FinishBlock();
-				}
+				ref->SaveData(writer, prop.name.c_str());
 			}
 			else
 			if (prop.type == Type::Transform)
