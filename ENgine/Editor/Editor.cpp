@@ -909,6 +909,7 @@ namespace Oak
 			{
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
+				if (selectedAsset) selectedAsset->EnableTasks(false);
 				selectedAsset = item->GetAsset();
 
 				SelectEntity(nullptr);
@@ -966,6 +967,11 @@ namespace Oak
 		if (project.selectedScene)
 		{
 			project.EnableScene(project.selectedScene, false);
+		}
+
+		if (selectedAsset)
+		{
+			selectedAsset->EnableTasks(false);
 		}
 
 		root.scenes.LoadProject(project.projectName.c_str());
@@ -1409,7 +1415,7 @@ namespace Oak
 			editorDrawer.DrawWindowBorder();
 		}
 
-		if (!projectRunning)
+		if (!projectRunning && (!selectedAsset || !selectedAsset->HasOwnTasks()))
 		{
 			freeCamera.Update(dt);
 
