@@ -481,17 +481,20 @@ namespace Oak
 	{
 		ImDrawList* drawList = ImGui::GetWindowDrawList();
 
-		float k = 1.0f;
 		Math::Vector2 uv = 0.0f;
 		Math::Vector2 duv = 1.0f;
-		float sliceSizeX = 1.0f;
 		Math::Vector2 offset = 0.0f;
-
-		int curSlice = -1;
+		ImVec2 sz;
 
 		if (sliceIndex != -1 && sliceIndex < Get()->slices.size())
 		{
-			curSlice = sliceIndex;
+			auto& slice = Get()->slices[sliceIndex];
+
+			uv = Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size;
+			duv = slice.size / Get()->size;
+
+			float k = slice.size.x / slice.size.y;
+			sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
 		}
 		else
 		if (animIndex != -1 && animIndex < Get()->animations.size())
@@ -500,32 +503,30 @@ namespace Oak
 
 			anim.AdvanceFrame(root.GetDeltaTime(), previewAnimPlaySlice, previewAnimPlayTime, true, animReversed, nullptr);
 
-			auto& frame = anim.frames[previewAnimPlaySlice];
+			auto& sliceScale = Get()->slices[anim.frames[0].slice];
+			float k = sliceScale.size.x / sliceScale.size.y;
+			sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
 
-			curSlice = frame.slice;
-
-			offset = frame.offset;
-		}
-
-		if (curSlice != -1)
-		{
-			auto& slice = Get()->slices[curSlice];
-
-			k = slice.size.x / slice.size.y;
+			auto& slice = Get()->slices[anim.frames[previewAnimPlaySlice].slice];
 			uv = Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size;
 			duv = slice.size / Get()->size;
-			sliceSizeX = slice.size.x;
+
+			float scale = sz.x / sliceScale.size.x;
+
+			offset = anim.frames[previewAnimPlaySlice].offset * scale;
+
+			ImVec2 p = ImGui::GetCursorScreenPos();
+			sz.x = scale * slice.size.x;
+			sz.y = scale * slice.size.y;
 		}
 		else
 		{
-			k = GetSize().x / GetSize().y;
+			float k = Get()->size.x / Get()->size.y;
+			sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
 		}
 
 		ImVec2 p = ImGui::GetCursorScreenPos();
-
-		ImVec2 sz = k > 1.0f ? ImVec2(size, size / k) : ImVec2(size * k, size);
-		float scale = sz.x / sliceSizeX;
-		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f + offset.x * scale, p.y + (size - sz.y) * 0.5f + offset.y * scale);
+		ImVec2 pos = ImVec2(p.x + (size - sz.x) * 0.5f + offset.x, p.y + (size - sz.y) * 0.5f + offset.y);
 
 		drawList->AddImage(Get()->GetTexture()->GetNativeResource(), pos, ImVec2(pos.x + sz.x, pos.y + sz.y), ImVec2(uv.x, uv.y), ImVec2(uv.x + duv.x, uv.y + duv.y));
 
