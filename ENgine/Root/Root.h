@@ -8,6 +8,7 @@
 #include "Root/Memory/MemoryManager.h"
 #include "Root/Render/Render.h"
 #include "Root/Scenes/SceneManager.h"
+#include "Root/Scripts/Scripts.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 
 namespace Oak
@@ -77,6 +78,11 @@ namespace Oak
 		\brief Access to scene manager
 		*/
 		SceneManager scenes;
+
+		/**
+			\brief Access to scipts manager
+		*/
+		Scripts scripts;
 
 		/**
 		\brief Access to task executor service

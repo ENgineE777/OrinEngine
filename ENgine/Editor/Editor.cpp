@@ -14,6 +14,8 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
 #endif
 
+#include <filesystem>
+
 namespace Oak
 {
 	Editor editor;
@@ -948,6 +950,11 @@ namespace Oak
 			return;
 		}
 
+		if (!root.scripts.Start())
+		{
+			return;
+		}
+
 		if (project.projectName.size() == 0)
 		{
 			const char* fileName = OpenFileDialog("Project file", "pra", false);
@@ -987,6 +994,8 @@ namespace Oak
 		}
 
 		root.scenes.UnloadAll();
+
+		root.scripts.Stop();
 
 		if (project.selectedScene)
 		{

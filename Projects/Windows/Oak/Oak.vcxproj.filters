@@ -95,6 +95,9 @@
     <Filter Include="ENgine\SceneEntities\Other">
       <UniqueIdentifier>{987cd30d-4566-4fea-a9b1-183d0e1eec00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Scripts">
+      <UniqueIdentifier>{c7567920-e509-4db9-a2d9-f69c3b27a225}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Oak.rc">
@@ -409,6 +412,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Scripts\ScriptCore.cpp">
+      <Filter>ENgine\Root\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Scripts\Scripts.cpp">
+      <Filter>ENgine\Root\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -942,6 +954,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Scripts\ScriptCore.h">
+      <Filter>ENgine\Root\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Scripts\Scripts.h">
+      <Filter>ENgine\Root\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
