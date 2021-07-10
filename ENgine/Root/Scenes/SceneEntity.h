@@ -22,7 +22,7 @@ namespace Oak
 
 	*/
 
-	class SceneEntity : public Object
+	class CLASS_DECLSPEC SceneEntity : public Object
 	{
 		friend class Scene;
 

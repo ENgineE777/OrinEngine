@@ -10,80 +10,11 @@
 #include <memory.h>
 #include <tchar.h>
 
-#include "resource.h"
+#include "../Projects/Windows/Editor/resource.h"
 
 #define MAX_LOADSTRING 100
 
 HWND hwnd;
-
-const char* OpenFileDialog(const char* extName, const char* ext, bool open)
-{
-    char curDir[512];
-    GetCurrentDirectoryA(512, curDir);
-
-    char curDirDialog[512];
-    Oak::StringUtils::Copy(curDirDialog, 512, curDir);
-
-    OPENFILENAMEA ofn;
-
-    static char fileName[512];
-
-    char filter[512];
-    Oak::StringUtils::Copy(filter, 512, extName);
-
-    int index = (int)strlen(filter);
-
-    filter[index + 1] = '*';
-    filter[index + 2] = '.';
-
-    if (ext)
-    {
-        Oak::StringUtils::Copy(&filter[index + 3], 5, ext);
-    }
-    else
-    {
-        Oak::StringUtils::Copy(&filter[index + 3], 5, "*");
-    }
-
-    ZeroMemory(&ofn, sizeof(ofn));
-    ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = hwnd;
-    ofn.lpstrFile = fileName;
-    ofn.lpstrFile[0] = '\0';
-    ofn.nMaxFile = 512;
-    ofn.lpstrFilter = filter;
-    ofn.lpstrDefExt = ext;
-    ofn.nFilterIndex = 1;
-    ofn.lpstrFileTitle = NULL;
-    ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = curDirDialog;
-    ofn.Flags = OFN_PATHMUSTEXIST;
-
-    if (open)
-    {
-        ofn.Flags |= OFN_FILEMUSTEXIST;
-    }
-
-    bool res = false;
-
-    if (open)
-    {
-        res = GetOpenFileNameA(&ofn) ? true : false;
-    }
-    else
-    {
-        res = GetSaveFileNameA(&ofn) ? true : false;
-    }
-
-    SetCurrentDirectoryA(curDir);
-
-    if (res)
-    {
-        return fileName;
-    }
-
-    return nullptr;
-}
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {

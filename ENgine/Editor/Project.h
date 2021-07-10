@@ -11,7 +11,7 @@
 
 namespace Oak
 {
-	class Project
+	class CLASS_DECLSPEC Project
 	{
 	public:
 

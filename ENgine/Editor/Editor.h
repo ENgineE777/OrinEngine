@@ -19,7 +19,7 @@
 
 namespace Oak
 {
-	class Editor : Object
+	class CLASS_DECLSPEC Editor : Object
 	{
 		friend class Project;
 		friend class FreeCamera;
@@ -84,6 +84,8 @@ namespace Oak
 		Project project;
 		Gizmo gizmo;
 		bool viewportFocused = false;
+
+		const char* OpenFileDialog(const char* extName, const char* ext, bool open);
 
 		bool Init(HWND hwnd);
 		bool Update();
@@ -151,5 +153,5 @@ namespace Oak
 		void UpdateOak();
 	};
 
-	extern Editor editor;
+	extern CLASS_DECLSPEC Editor editor;
 }

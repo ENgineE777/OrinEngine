@@ -26,7 +26,7 @@ namespace Oak
 
 	*/
 
-	class Root
+	class CLASS_DECLSPEC Root
 	{
 		#ifndef DOXYGEN_SKIP
 
@@ -117,5 +117,5 @@ namespace Oak
 		void Release();
 	};
 
-	extern Root root;
+	extern CLASS_DECLSPEC Root root;
 }

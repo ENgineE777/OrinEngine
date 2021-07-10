@@ -40,13 +40,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -118,7 +118,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -126,8 +126,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName)_DEBUG.pdb</ProgramDatabaseFile>
+      <AdditionalDependencies>..\..\..\Bin\eastl_Debug.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,7 +136,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -146,7 +146,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\eastl.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
@@ -225,94 +225,6 @@
     <ClInclude Include="..\..\..\ENgine\Support\ThreadExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Transform.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\algorithm.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\allocator.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\allocator_malloc.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\any.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\array.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bitset.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bitvector.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\adaptors.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\call_traits.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\compressed_pair.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\fixed_ring_buffer.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\fixed_tuple_vector.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\intrusive_sdlist.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\intrusive_slist.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\list_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\lru_cache.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\ring_buffer.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\sort_extra.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\sparse_matrix.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\tuple_vector.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\chrono.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\core_allocator.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\core_allocator_adapter.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\deque.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\finally.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_allocator.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_function.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_hash_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_hash_set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_list.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_slist.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_string.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_substring.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_vector.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\functional.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\hash_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\hash_set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\heap.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\initializer_list.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_hash_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_hash_set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_list.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_ptr.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\iterator.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\linked_array.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\linked_ptr.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\list.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\memory.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\meta.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\numeric.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\numeric_limits.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\optional.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\priority_queue.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\queue.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\random.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\ratio.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\safe_ptr.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\scoped_array.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\scoped_ptr.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\segmented_vector.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\shared_array.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\shared_ptr.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\slist.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\sort.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\span.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\stack.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string_hash_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string_view.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\tuple.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\type_traits.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\unique_ptr.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\unordered_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\unordered_set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\utility.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\variant.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_map.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_multimap.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_multiset.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_set.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\version.h" />
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\weak_ptr.h" />
     <ClInclude Include="..\..\..\Libs\imgui\imgui.h" />
     <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_win32.h" />
@@ -331,7 +243,6 @@
     <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h" />
     <ClInclude Include="..\..\..\Libs\vjson\block_allocator.h" />
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
-    <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
@@ -340,7 +251,6 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp" />
-    <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />
@@ -391,15 +301,6 @@
     <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\ThreadExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\allocator_eastl.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\assert.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\fixed_pool.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\hashtable.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\intrusive_list.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\numeric_limits.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\red_black_tree.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\string.cpp" />
-    <ClCompile Include="..\..\..\Libs\eastl\source\thread_support.cpp" />
     <ClCompile Include="..\..\..\Libs\imgui\imgui.cpp" />
     <ClCompile Include="..\..\..\Libs\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\Libs\imgui\imgui_impl_dx11.cpp" />
@@ -439,13 +340,6 @@
     <ClCompile Include="..\..\..\Libs\vjson\json.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Oak.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Oak.ico" />
-    <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.sh" />
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h.in" />
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h.in" />
@@ -453,9 +347,6 @@
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h.in" />
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.sh" />
     <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h.in" />
-  </ItemGroup>
-  <ItemGroup>
-    <Natvis Include="..\..\..\Libs\eastl\source\EASTL.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

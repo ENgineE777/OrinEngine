@@ -6,7 +6,7 @@
 #include "Root/Scenes/SceneEntity.h"
 
 #ifdef OAK_EDITOR
-extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
+#include "Editor/Editor.h"
 #endif
 
 namespace Oak
@@ -722,7 +722,7 @@ namespace Oak
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
 							{
-								const char* fileName = OpenFileDialog("Any file", nullptr, true);
+								const char* fileName = editor.OpenFileDialog("Any file", nullptr, true);
 
 								if (fileName)
 								{

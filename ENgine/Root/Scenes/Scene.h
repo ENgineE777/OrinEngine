@@ -19,7 +19,7 @@ namespace Oak
 
 	class SceneEntity;
 
-	class Scene
+	class CLASS_DECLSPEC Scene
 	{
 		friend class Project;
 		friend class SceneEntity;

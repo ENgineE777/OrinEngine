@@ -14,7 +14,7 @@
 
 namespace Oak
 {
-	class EditorDrawer
+	class CLASS_DECLSPEC EditorDrawer
 	{
 		Transform trans;
 

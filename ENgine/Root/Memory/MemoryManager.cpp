@@ -2,16 +2,6 @@
 #include "Root/Root.h"
 #include <jemalloc/jemalloc.h>
 
-void* operator new[](size_t size, const char* pName, int flags, unsigned debugFlags, const char* file, int line)
-{
-	return Oak::root.memory.Alloc(size, nullptr, line);
-}
-
-void* operator new[](size_t size, size_t alignment, size_t alignmentOffset, const char* pName, int flags, unsigned debugFlags, const char* file, int line)
-{
-	return Oak::root.memory.AllignedAlloc(size, alignment, nullptr, line);
-}
-
 void* operator new (size_t size, const char* file, int line)
 {
 	return Oak::root.memory.Alloc(size, file, line);

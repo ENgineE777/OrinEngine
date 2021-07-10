@@ -61,6 +61,7 @@ public:\
 #define CLASSREGEX(baseClass, shortClassName, fullClassName, shortName)\
 class ClassFactory##shortClassName##baseClass : public ClassFactory##baseClass\
 {\
+public:\
 	virtual const char* GetName() { return #shortClassName; };\
 	virtual const char* GetShortName() { return shortName; };\
 	virtual baseClass* Create(const char* file, int line) { return new(file, line) fullClassName(); };

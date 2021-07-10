@@ -10,15 +10,80 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-#ifdef OAK_EDITOR
-extern const char* OpenFileDialog(const char* extName, const char* ext, bool open);
-#endif
-
 #include <filesystem>
 
 namespace Oak
 {
 	Editor editor;
+
+	const char* Editor::OpenFileDialog(const char* extName, const char* ext, bool open)
+	{
+		char curDir[512];
+		GetCurrentDirectoryA(512, curDir);
+
+		char curDirDialog[512];
+		Oak::StringUtils::Copy(curDirDialog, 512, curDir);
+
+		OPENFILENAMEA ofn;
+
+		static char fileName[512];
+
+		char filter[512];
+		Oak::StringUtils::Copy(filter, 512, extName);
+
+		int index = (int)strlen(filter);
+
+		filter[index + 1] = '*';
+		filter[index + 2] = '.';
+
+		if (ext)
+		{
+			Oak::StringUtils::Copy(&filter[index + 3], 5, ext);
+		}
+		else
+		{
+			Oak::StringUtils::Copy(&filter[index + 3], 5, "*");
+		}
+
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = editor.hwnd;
+		ofn.lpstrFile = fileName;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = 512;
+		ofn.lpstrFilter = filter;
+		ofn.lpstrDefExt = ext;
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = curDirDialog;
+		ofn.Flags = OFN_PATHMUSTEXIST;
+
+		if (open)
+		{
+			ofn.Flags |= OFN_FILEMUSTEXIST;
+		}
+
+		bool res = false;
+
+		if (open)
+		{
+			res = GetOpenFileNameA(&ofn) ? true : false;
+		}
+		else
+		{
+			res = GetSaveFileNameA(&ofn) ? true : false;
+		}
+
+		SetCurrentDirectoryA(curDir);
+
+		if (res)
+		{
+			return fileName;
+		}
+
+		return nullptr;
+	}
 
 	bool Editor::Init(HWND setHwnd)
 	{

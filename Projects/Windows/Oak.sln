@@ -4,6 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Oak", "Oak\Oak.vcxproj", "{075CB791-8F70-4A20-A8EE-07FA4612507D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7C64503-0778-4435-B565-2333FB52D6BE} = {F7C64503-0778-4435-B565-2333FB52D6BE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcxproj", "{1DF80034-478D-4695-8F37-5AC731912840}"
+	ProjectSection(ProjectDependencies) = postProject
+		{075CB791-8F70-4A20-A8EE-07FA4612507D} = {075CB791-8F70-4A20-A8EE-07FA4612507D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eastl", "Eastl\Eastl.vcxproj", "{F7C64503-0778-4435-B565-2333FB52D6BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,14 @@ Global
 		{075CB791-8F70-4A20-A8EE-07FA4612507D}.Debug|x64.Build.0 = Debug|x64
 		{075CB791-8F70-4A20-A8EE-07FA4612507D}.Release|x64.ActiveCfg = Release|x64
 		{075CB791-8F70-4A20-A8EE-07FA4612507D}.Release|x64.Build.0 = Release|x64
+		{1DF80034-478D-4695-8F37-5AC731912840}.Debug|x64.ActiveCfg = Debug|x64
+		{1DF80034-478D-4695-8F37-5AC731912840}.Debug|x64.Build.0 = Debug|x64
+		{1DF80034-478D-4695-8F37-5AC731912840}.Release|x64.ActiveCfg = Release|x64
+		{1DF80034-478D-4695-8F37-5AC731912840}.Release|x64.Build.0 = Release|x64
+		{F7C64503-0778-4435-B565-2333FB52D6BE}.Debug|x64.ActiveCfg = Debug|x64
+		{F7C64503-0778-4435-B565-2333FB52D6BE}.Debug|x64.Build.0 = Debug|x64
+		{F7C64503-0778-4435-B565-2333FB52D6BE}.Release|x64.ActiveCfg = Release|x64
+		{F7C64503-0778-4435-B565-2333FB52D6BE}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

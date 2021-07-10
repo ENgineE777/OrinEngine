@@ -289,21 +289,10 @@ namespace eastl
 
 #ifndef EASTL_API // If the build file hasn't already defined this to be dllexport...
 	#if EASTL_DLL
-		#if defined(_MSC_VER)
-			#define EASTL_API      __declspec(dllimport)
-			#define EASTL_LOCAL
-		#elif defined(__CYGWIN__)
-			#define EASTL_API      __attribute__((dllimport))
-			#define EASTL_LOCAL
-		#elif (defined(__GNUC__) && (__GNUC__ >= 4))
-			#define EASTL_API      __attribute__ ((visibility("default")))
-			#define EASTL_LOCAL    __attribute__ ((visibility("hidden")))
-		#else
-			#define EASTL_API
-			#define EASTL_LOCAL
-		#endif
+		#define EASTL_API      __declspec(dllexport)
+		#define EASTL_LOCAL
 	#else
-		#define EASTL_API
+		#define EASTL_API      __declspec(dllimport)
 		#define EASTL_LOCAL
 	#endif
 #endif
