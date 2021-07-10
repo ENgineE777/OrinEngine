@@ -41,10 +41,10 @@ namespace Oak
 
 	void SceneEntity::Copy(SceneEntity* source)
 	{
-		source->GetMetaData()->Copy(source);
+		GetMetaData()->Prepare(this);
+		GetMetaData()->Copy(source, source->GetMetaData()->properties);
 
 		ApplyProperties();
-
 	}
 	#endif
 

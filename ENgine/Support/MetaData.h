@@ -170,7 +170,7 @@ namespace Oak
 		void PostLoad(Scene* scene);
 		void Save(JsonWriter& writer);
 
-		void Copy(void* source);
+		void Copy(void* source, eastl::vector<Property>& sourceProperties);
 
 		#ifndef DOXYGEN_SKIP
 		#ifdef OAK_EDITOR

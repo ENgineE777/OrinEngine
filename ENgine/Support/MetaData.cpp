@@ -318,11 +318,25 @@ namespace Oak
 		}
 	}
 
-	void MetaData::Copy(void* source)
+	void MetaData::Copy(void* source, eastl::vector<Property>& sourceProperties)
 	{
 		for (auto& prop : properties)
 		{
-			uint8_t* src = (uint8_t*)source + prop.offset;
+			uint8_t* src = nullptr;
+
+			for (auto& sourceProp : sourceProperties)
+			{
+				if (StringUtils::IsEqual(prop.name.c_str(), sourceProp.name.c_str()))
+				{
+					src = (uint8_t*)source + sourceProp.offset;
+					break;
+				}
+			}
+
+			if (src == nullptr)
+			{
+				continue;
+			}
 
 			if (prop.type == Type::Boolean)
 			{
@@ -387,12 +401,13 @@ namespace Oak
 				for (int i = 0; i < count; i++)
 				{
 					prop.adapter->value = src;
-					uint8_t* src_item = prop.adapter->GetItem(i);
+					uint8_t* srcItem = prop.adapter->GetItem(i);
+					auto& srcProperties = prop.adapter->GetMetaData()->properties;
 
 					prop.adapter->value = prop.value;
 
 					prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem(i), root);
-					prop.adapter->GetMetaData()->Copy(src_item);
+					prop.adapter->GetMetaData()->Copy(srcItem, srcProperties);
 				}
 			}
 		}
