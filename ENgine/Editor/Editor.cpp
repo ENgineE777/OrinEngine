@@ -121,7 +121,7 @@ namespace Oak
 
 		JsonReader reader;
 
-		if (reader.Parse("projects"))
+		if (reader.ParseFile("projects"))
 		{
 			while (reader.EnterBlock("projects"))
 			{
@@ -1180,6 +1180,13 @@ namespace Oak
 			ImGui::Dummy(ImVec2(0.0f, 3.0f));
 
 			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
+
+			if (ImGui::Button("Build Code", ImVec2(75.0f, 25.0f)))
+			{
+				root.scripts.CompileProjectCode(true);
+			}
+
+			ImGui::SameLine();
 
 			PushButton("2D", freeCamera.mode_2d, [this]() {freeCamera.mode_2d = true; });
 			PushButton("3D", !freeCamera.mode_2d, [this]() {freeCamera.mode_2d = false; });

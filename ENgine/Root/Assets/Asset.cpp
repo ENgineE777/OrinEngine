@@ -31,7 +31,7 @@ namespace Oak
 
 		GetMetaData()->Prepare(this);
 
-		if (reader.Parse(strName))
+		if (reader.ParseFile(strName))
 		{
 			GetMetaData()->Load(reader);
 			LoadData(reader);

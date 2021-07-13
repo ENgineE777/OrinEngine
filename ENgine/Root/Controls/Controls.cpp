@@ -175,7 +175,7 @@ namespace Oak
 
 		JsonReader reader;
 
-		if (reader.Parse(name_haliases))
+		if (reader.ParseFile(name_haliases))
 		{
 			while (reader.EnterBlock("keyboard"))
 			{
@@ -248,7 +248,7 @@ namespace Oak
 
 		bool res = false;
 
-		if (reader.Parse(name_aliases))
+		if (reader.ParseFile(name_aliases))
 		{
 			res = true;
 

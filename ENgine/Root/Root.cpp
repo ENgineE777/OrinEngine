@@ -142,6 +142,8 @@ namespace Oak
 
 		scenes.Execute(dt);
 
+		scripts.Update();
+
 		render.Execute(dt);
 	}
 

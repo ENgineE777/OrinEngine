@@ -18,7 +18,7 @@ namespace Oak::StringUtils
 	{
 		JsonReader reader;
 
-		reader.Parse("ENgine/low2hi.dat");
+		reader.ParseFile("ENgine/low2hi.dat");
 
 		eastl::string str;
 

@@ -38,13 +38,22 @@ namespace Oak
 		~JsonReader();
 
 		/**
+			\brief Parse json string
+
+			\param[in] source json string
+
+			\return True will be returned if json string successfully parsed. Otherwise it returns false.
+		*/
+		bool ParseString(const char* source);
+
+		/**
 		\brief Parse json file
 
 		\param[in] name Full path of a file
 
 		\return True will be returned if file successfully opened and parsed. Otherwise it returns false.
 		*/
-		bool Parse(const char* name);
+		bool ParseFile(const char* name);
 
 		bool EnterBlock(const char* name);
 		void LeaveBlock();

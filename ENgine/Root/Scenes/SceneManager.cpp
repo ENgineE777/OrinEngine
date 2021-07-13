@@ -13,7 +13,7 @@ namespace Oak
 		StringUtils::GetPath(projectName, projectPath);
 
 		JsonReader reader;
-		if (reader.Parse(projectName))
+		if (reader.ParseFile(projectName))
 		{
 			int startScene = -1;
 			if (!reader.Read("start_scene", startScene))

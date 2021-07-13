@@ -26,9 +26,11 @@ namespace Oak
 		root.SetRootPath(projectPath);
 		root.assets.LoadAssets();
 
+		root.scripts.CompileProjectCode(false);
+
 		JsonReader reader;
 
-		if (reader.Parse(projectName.c_str()))
+		if (reader.ParseFile(projectName.c_str()))
 		{
 			reader.Read("start_scene", startScene);
 			reader.Read("export_dir", exportDir);

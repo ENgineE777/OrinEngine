@@ -46,7 +46,6 @@ namespace Oak
 		bool showAbout = false;
 		bool showProjectSettings = false;
 
-		SceneEntity* selectedEntity = nullptr;
 		Assets::Folder* selectedFolder = nullptr;
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
 		Asset* selectedAsset;
@@ -81,6 +80,7 @@ namespace Oak
 
 	public:
 
+		SceneEntity* selectedEntity = nullptr;
 		Project project;
 		Gizmo gizmo;
 		bool viewportFocused = false;
@@ -92,6 +92,9 @@ namespace Oak
 		void Render(float dt);
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		void OnResize(int width, int height);
+
+		void SelectEntity(SceneEntity* entity);
+
 		void Release();
 
 	private:
@@ -142,8 +145,6 @@ namespace Oak
 
 			ImGui::SameLine();
 		}
-
-		void SelectEntity(SceneEntity* entity);
 
 		bool CreateDeviceD3D();
 		void CleanupDeviceD3D();

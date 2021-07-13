@@ -21,11 +21,11 @@ namespace Oak
 
 	*/
 
-	class TaskExecutor
+	class CLASS_DECLSPEC TaskExecutor
 	{
 	public:
 
-		class TaskPool
+		class CLASS_DECLSPEC TaskPool
 		{
 		public:
 			virtual void Execute(float dt) = 0;
@@ -33,7 +33,7 @@ namespace Oak
 
 		class GroupTaskPool;
 
-		class SingleTaskPool : public TaskPool
+		class CLASS_DECLSPEC SingleTaskPool : public TaskPool
 		{
 		public:
 
@@ -110,7 +110,7 @@ namespace Oak
 			void DelAllTasks(Object* entity, SingleTaskPool* new_pool = nullptr);
 		};
 
-		class GroupTaskPool : public TaskPool
+		class CLASS_DECLSPEC GroupTaskPool : public TaskPool
 		{
 			friend class SingleTaskPool;
 

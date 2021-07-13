@@ -17,7 +17,26 @@ namespace Oak
 		allocator.free();
 	}
 
-	bool JsonReader::Parse(const char* name)
+	bool JsonReader::ParseString(const char* source)
+	{
+		char* errorPos = 0;
+		char* errorDesc = 0;
+		int errorLine = 0;
+
+		root = json_parse((char*)source, &errorPos, &errorDesc, &errorLine, &allocator);
+
+		if (root)
+		{
+			nodes[curDepth] = root;
+			curNode = nodes[curDepth];
+
+			return true;
+		}
+
+		return false;
+	}
+
+	bool JsonReader::ParseFile(const char* name)
 	{
 		if (file.Load(name))
 		{
@@ -28,19 +47,7 @@ namespace Oak
 				data += 3;
 			}
 
-			char *errorPos = 0;
-			char *errorDesc = 0;
-			int errorLine = 0;
-
-			root = json_parse((char*)data, &errorPos, &errorDesc, &errorLine, &allocator);
-
-			if (root)
-			{
-				nodes[curDepth] = root;
-				curNode = nodes[curDepth];
-
-				return true;
-			}
+			return ParseString((const char*)data);
 		}
 
 		return false;

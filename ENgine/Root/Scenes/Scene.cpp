@@ -169,7 +169,7 @@ namespace Oak
 	
 		StringUtils::GetPath(name, scenePath);
 
-		if (reader.Parse(name))
+		if (reader.ParseFile(name))
 		{
 			StringUtils::GetFileName(name, sceneName);
 			StringUtils::RemoveExtension(sceneName);
