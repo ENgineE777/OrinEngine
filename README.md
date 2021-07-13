@@ -23,8 +23,9 @@ The users' games are theirs.
 - Font system with support of True-Type fonts
 - Controls system based on aliases
 - Sprite Editor
-- Animation graphs (WIP)
-- Powerful scripting system based on daScript (https://www.angelcode.com/angelscript/) (WIP)
+- Animation graphs
+- Scripting system based on using C++ as scripting language
+- Hot reload of gameplay code (WIP)
 - Render system with support of DX11, OpenGL ES 3, Metal and Vulkan (WIP)
 - Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview) (WIP)
 - And lots, lots more
