@@ -12,7 +12,7 @@ include_directories ("../../../../Libs/vjson"
 
 file (GLOB_RECURSE SOURCES "../*.cpp" "../*.h" "../../../ENgine/CppBuild/Gameplay.cpp")
 
-link_libraries("../../../eastl_Debug"
-	       "../../../Oak_Debug")
-
 add_library(gameplay SHARED ${SOURCES})
+
+target_link_libraries(gameplay optimized "../../../eastl" optimized "../../../Oak")
+target_link_libraries(gameplay debug "../../../eastl_Debug" debug "../../../Oak_Debug")
