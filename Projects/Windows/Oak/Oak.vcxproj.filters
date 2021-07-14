@@ -89,6 +89,15 @@
     <Filter Include="ENgine\Root\Network">
       <UniqueIdentifier>{e265f699-7a37-4cd5-bf15-e1f5e1fe08f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Meshes">
+      <UniqueIdentifier>{3a99e783-956d-459d-83c3-a2b3a7d19483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\Support\fbx">
+      <UniqueIdentifier>{c11e7d4d-4610-424b-9728-29dd8bca4644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\SceneEntities\3D">
+      <UniqueIdentifier>{19e21794-0edd-402a-8a42-e6edae6a523f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -373,6 +382,24 @@
     <ClCompile Include="..\..\..\ENgine\Root\Network\Network.cpp">
       <Filter>ENgine\Root\Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Meshes\Meshes.cpp">
+      <Filter>ENgine\Root\Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.cpp">
+      <Filter>ENgine\Root\Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshRes.cpp">
+      <Filter>ENgine\Root\Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.c">
+      <Filter>ENgine\Support\fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.cpp">
+      <Filter>ENgine\Support\fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -650,6 +677,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Network\Network.h">
       <Filter>ENgine\Root\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\Meshes.h">
+      <Filter>ENgine\Root\Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.h">
+      <Filter>ENgine\Root\Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshRes.h">
+      <Filter>ENgine\Root\Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.h">
+      <Filter>ENgine\Support\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.h">
+      <Filter>ENgine\Support\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.h" />
+    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
@@ -172,6 +174,9 @@
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\Meshes.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Network\Network.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h" />
@@ -205,6 +210,7 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
@@ -246,6 +252,8 @@
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.c" />
+    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
@@ -266,6 +274,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Memory\MemoryManager.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Meshes\Meshes.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshRes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Network\Network.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp" />
@@ -294,6 +305,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />

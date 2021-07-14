@@ -36,6 +36,8 @@ namespace Oak
 		friend class DeviceDX11;
 		friend class DeviceGLES;
 
+	protected:
+
 		static eastl::map<eastl::string, Math::Vector4> vectors;
 		static eastl::map<eastl::string, Math::Matrix> matrixes;
 		static eastl::map<eastl::string, Texture*> textures;

@@ -102,6 +102,13 @@ namespace Oak
 		#endif
 
 		/**
+			\brief Get Name of texture
+
+			\return Name of a texture
+		*/
+		virtual const char* GetName() { return name.c_str(); };
+
+		/**
 			\brief Resize Texture
 
 			\param[in] width Set width

@@ -6,6 +6,7 @@
 #include "Root/Files/Files.h"
 #include "Root/Fonts/Fonts.h"
 #include "Root/Memory/MemoryManager.h"
+#include "Root/Meshes/Meshes.h"
 #include "Root/Render/Render.h"
 #include "Root/Scenes/SceneManager.h"
 #include "Root/Scripts/Scripts.h"
@@ -68,6 +69,11 @@ namespace Oak
 		\brief Access to memory manger
 		*/
 		MemoryManager memory;
+
+		/**
+		\brief Access to meshes service
+		*/
+		Meshes meshes;
 
 		/**
 		\brief Access to render service
