@@ -172,6 +172,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Network\Network.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.h" />
@@ -265,6 +266,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Memory\MemoryManager.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Network\Network.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.cpp" />

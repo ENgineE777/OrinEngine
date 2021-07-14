@@ -86,6 +86,9 @@
     <Filter Include="ENgine\Root\Scripts">
       <UniqueIdentifier>{c7567920-e509-4db9-a2d9-f69c3b27a225}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Network">
+      <UniqueIdentifier>{e265f699-7a37-4cd5-bf15-e1f5e1fe08f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -367,6 +370,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\Scripts\Scripts.cpp">
       <Filter>ENgine\Root\Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Network\Network.cpp">
+      <Filter>ENgine\Root\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -641,6 +647,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Scripts\Scripts.h">
       <Filter>ENgine\Root\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Network\Network.h">
+      <Filter>ENgine\Root\Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
