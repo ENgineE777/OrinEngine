@@ -152,8 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.h" />
-    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
@@ -218,6 +216,8 @@
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Delegate.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\fbx\miniz.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\fbx\ofbx.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h" />
@@ -252,8 +252,6 @@
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.c" />
-    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
@@ -309,6 +307,8 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c" />
+    <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp" />

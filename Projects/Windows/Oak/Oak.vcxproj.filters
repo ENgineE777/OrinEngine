@@ -394,10 +394,10 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.c">
+    <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c">
       <Filter>ENgine\Support\fbx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.cpp">
+    <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp">
       <Filter>ENgine\Support\fbx</Filter>
     </ClCompile>
   </ItemGroup>
@@ -690,10 +690,10 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.h">
+    <ClInclude Include="..\..\..\ENgine\Support\fbx\miniz.h">
       <Filter>ENgine\Support\fbx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.h">
+    <ClInclude Include="..\..\..\ENgine\Support\fbx\ofbx.h">
       <Filter>ENgine\Support\fbx</Filter>
     </ClInclude>
   </ItemGroup>
