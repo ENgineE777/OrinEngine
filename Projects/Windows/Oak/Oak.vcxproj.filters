@@ -391,14 +391,14 @@
     <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshRes.cpp">
       <Filter>ENgine\Root\Meshes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.c">
-      <Filter>ENgine\Support\fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.cpp">
-      <Filter>ENgine\Support\fbx</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp">
       <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.c">
+      <Filter>ENgine\Support\fbx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.cpp">
+      <Filter>ENgine\Support\fbx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -687,14 +687,14 @@
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshRes.h">
       <Filter>ENgine\Root\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.h">
-      <Filter>ENgine\Support\fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.h">
-      <Filter>ENgine\Support\fbx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h">
       <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.h">
+      <Filter>ENgine\Support\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.h">
+      <Filter>ENgine\Support\fbx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

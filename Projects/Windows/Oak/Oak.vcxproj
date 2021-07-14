@@ -152,8 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.h" />
-    <ClInclude Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.h" />
+    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.h" />
+    <ClInclude Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
@@ -252,8 +252,8 @@
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\miniz.c" />
-    <ClCompile Include="..\..\..\..\Atum\Atum\Support\fbx\ofbx.cpp" />
+    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\miniz.c" />
+    <ClCompile Include="..\..\..\..\RS\OakEngine\ENgine\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
