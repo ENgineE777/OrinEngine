@@ -121,12 +121,13 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\physx\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\Bin\eastl_Debug.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\eastl_Debug.lib;..\..\..\Libs\physx\libs\debug\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\debug\PhysX_64.lib;..\..\..\Libs\physx\libs\debug\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\debug\SceneQuery_static_64.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
@@ -139,19 +140,21 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\physx\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\Bin\eastl.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\eastl.lib;..\..\..\Libs\physx\libs\release\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\release\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\release\PhysX_64.lib;..\..\..\Libs\physx\libs\release\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\release\SceneQuery_static_64.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
@@ -176,6 +179,11 @@
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Network\Network.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysController.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\Physics.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysObject.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysObjectBase.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysScene.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.h" />
@@ -209,6 +217,7 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
@@ -252,6 +261,7 @@
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
@@ -276,6 +286,11 @@
     <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshRes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Network\Network.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysController.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\Physics.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysObject.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysObjectBase.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysScene.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.cpp" />
@@ -304,6 +319,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />

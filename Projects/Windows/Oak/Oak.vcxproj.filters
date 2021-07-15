@@ -98,6 +98,9 @@
     <Filter Include="ENgine\SceneEntities\3D">
       <UniqueIdentifier>{19e21794-0edd-402a-8a42-e6edae6a523f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Physics">
+      <UniqueIdentifier>{61698f00-9229-4221-8918-bf00cd73469b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -400,6 +403,27 @@
     <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp">
       <Filter>ENgine\Support\fbx</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysController.cpp">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\Physics.cpp">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysObject.cpp">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysObjectBase.cpp">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysScene.cpp">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -695,6 +719,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\fbx\ofbx.h">
       <Filter>ENgine\Support\fbx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysController.h">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\Physics.h">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysObject.h">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysObjectBase.h">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysScene.h">
+      <Filter>ENgine\Root\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

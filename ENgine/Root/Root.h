@@ -8,6 +8,7 @@
 #include "Root/Memory/MemoryManager.h"
 #include "Root/Meshes/Meshes.h"
 #include "Root/Render/Render.h"
+#include "Root/Physics/Physics.h"
 #include "Root/Scenes/SceneManager.h"
 #include "Root/Scripts/Scripts.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
@@ -79,6 +80,11 @@ namespace Oak
 		\brief Access to render service
 		*/
 		Render render;
+
+		/**
+			\brief Access to physics service
+		*/
+		Physics physics;
 
 		/**
 		\brief Access to scene manager

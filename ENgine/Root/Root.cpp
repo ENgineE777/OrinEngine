@@ -78,6 +78,8 @@ namespace Oak
 
 		assets.Init();
 
+		physics.Init();
+
 		scenes.Init();
 
 		StringUtils::Init();
@@ -144,7 +146,12 @@ namespace Oak
 
 		scripts.Update();
 
+		physics.Update(dt);
+
 		render.Execute(dt);
+
+		physics.Fetch();
+
 	}
 
 	float Root::GetDeltaTime()

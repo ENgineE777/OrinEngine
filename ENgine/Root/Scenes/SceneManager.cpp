@@ -56,6 +56,7 @@ namespace Oak
 				index++;
 			}
 
+			pscene = root.physics.CreateScene();
 			LoadScene(&scenes[startScene]);
 		}
 	}
@@ -201,5 +202,11 @@ namespace Oak
 
 		scenes.clear();
 		scenesSearch.clear();
+
+		if (pscene)
+		{
+			root.physics.DestroyScene(pscene);
+			pscene = nullptr;
+		}
 	}
 }
