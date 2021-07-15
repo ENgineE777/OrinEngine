@@ -448,16 +448,16 @@ namespace Oak
 
 		if (mode == TransformMode::Move || mode == TransformMode::Scale)
 		{
-			TransformFlag transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveX : TransformFlag::ScaleX;
+			TransformFlag transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveX : (TransformFlag::ScaleX | TransformFlag::SizeX);
 
 			if (axis.type == Axis::Y)
 			{
-				transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveY : TransformFlag::ScaleY;
+				transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveY : (TransformFlag::ScaleY | TransformFlag::SizeY);
 			}
 			else
 			if (axis.type == Axis::Z)
 			{
-				transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveZ : TransformFlag::ScaleZ;
+				transformFlag = (mode == TransformMode::Move) ? TransformFlag::MoveZ : (TransformFlag::ScaleZ | TransformFlag::SizeZ);
 			}
 
 			if (!(transformFlag & transform->transformFlag))
@@ -627,7 +627,7 @@ namespace Oak
 
 		if (mode == TransformMode::Scale)
 		{
-			if (transform->transformFlag & TransformFlag::ScaleX && transform->transformFlag & TransformFlag::ScaleZ &&
+			if (transform->transformFlag & (TransformFlag::ScaleX | TransformFlag::SizeX) && transform->transformFlag & (TransformFlag::ScaleZ | TransformFlag::SizeZ) &&
 				(Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				 Math::IntersectTrianglrRay(axises[0].subPointRight2, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				 Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
@@ -636,7 +636,7 @@ namespace Oak
 				selAxis = (int)Axis::XZ;
 			}
 
-			if (transform->transformFlag & TransformFlag::ScaleX && transform->transformFlag & TransformFlag::ScaleY &&
+			if (transform->transformFlag & (TransformFlag::ScaleX | TransformFlag::SizeX) && transform->transformFlag & (TransformFlag::ScaleY | TransformFlag::SizeY) &&
 				(Math::IntersectTrianglrRay(axises[0].subPointFrom2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
 				 Math::IntersectTrianglrRay(axises[0].subPointLeft2, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
 				 Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
@@ -645,7 +645,7 @@ namespace Oak
 				selAxis = (int)Axis::XY;
 			}
 
-			if (transform->transformFlag & TransformFlag::ScaleY && transform->transformFlag & TransformFlag::ScaleZ &&
+			if (transform->transformFlag & (TransformFlag::ScaleY | TransformFlag::SizeY) && transform->transformFlag & (TransformFlag::ScaleZ | TransformFlag::SizeZ) &&
 				(Math::IntersectTrianglrRay(axises[1].subPointFrom2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				 Math::IntersectTrianglrRay(axises[1].subPointRight2, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
 				 Math::IntersectTrianglrRay(axises[2].subPointFrom2, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
@@ -948,17 +948,41 @@ namespace Oak
 
 			if (selAxis & (int)Axis::X)
 			{
-				transform->scale.x = fmaxf(transform->scale.x + da, 0.1f);
+				if (transform->transformFlag & TransformFlag::ScaleX)
+				{
+					transform->scale.x = fmaxf(transform->scale.x + da, 0.1f);
+				}
+				else
+				if (transform->transformFlag & TransformFlag::SizeX)
+				{
+					transform->size.x = fmaxf(transform->size.x + da, 0.1f);
+				}
 			}
 
 			if (selAxis & (int)Axis::Y)
 			{
-				transform->scale.y = fmaxf(transform->scale.y + da, 0.1f);
+				if (transform->transformFlag & TransformFlag::ScaleY)
+				{
+					transform->scale.y = fmaxf(transform->scale.y + da, 0.1f);
+				}
+				else
+				if (transform->transformFlag & TransformFlag::SizeY)
+				{
+					transform->size.y = fmaxf(transform->size.y + da, 0.1f);
+				}
 			}
 
 			if (selAxis & (int)Axis::Z)
 			{
-				transform->scale.z = fmaxf(transform->scale.z + da, 0.1f);
+				if (transform->transformFlag & TransformFlag::ScaleZ)
+				{
+					transform->scale.z = fmaxf(transform->scale.z + da, 0.1f);
+				}
+				else
+				if (transform->transformFlag & TransformFlag::SizeZ)
+				{
+					transform->size.z = fmaxf(transform->size.z + da, 0.1f);
+				}
 			}
 		}
 	}

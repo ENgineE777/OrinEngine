@@ -645,6 +645,13 @@ namespace Oak
 										nullptr, "Scale", propGuiID);
 						}
 
+						if (transform->transformFlag & TransformFlag::SizeXYZ)
+						{
+							ImGuiVector(transform->transformFlag & TransformFlag::SizeX ? &transform->size.x : nullptr,
+										transform->transformFlag & TransformFlag::SizeY ? &transform->size.y : nullptr,
+										transform->transformFlag & TransformFlag::SizeZ ? &transform->size.z : nullptr, nullptr, "Size", propGuiID);
+						}
+
 						if (transform->transformFlag & TransformFlag::RectSizeXY)
 						{
 							ImGuiVector(transform->transformFlag & TransformFlag::RectSizeX ? &transform->size.x : nullptr,

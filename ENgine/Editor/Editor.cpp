@@ -1216,7 +1216,7 @@ namespace Oak
 
 				PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
 				PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) gizmo.mode = TransformMode::Rotate; });
-				PushButton("Scale", gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ) gizmo.mode = TransformMode::Scale; });
+				PushButton("Scale", gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) gizmo.mode = TransformMode::Scale; });
 				PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) gizmo.mode = TransformMode::Rectangle; });
 
 				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
