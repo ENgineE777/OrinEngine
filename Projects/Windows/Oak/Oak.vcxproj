@@ -154,7 +154,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Editor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
@@ -217,6 +216,7 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
@@ -261,7 +261,6 @@
     <ClInclude Include="..\..\..\Libs\vjson\json.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp" />
@@ -319,6 +318,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />

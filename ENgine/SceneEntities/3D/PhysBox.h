@@ -1,97 +1,88 @@
 
 #pragma once
 
-#include "Services/Scene/SceneObject.h"
+#include "Root/Scenes/SceneEntity.h"
+#include "Root/Physics/PhysScene.h"
 
-/**
-\page scene_object_3D_PhysBox Physic Box
-
-Box can be static or dynamic. Dimentions are adjustable. Debug render used for
-rendering in a scene. So this object is more for draft construction of levels.
-
-This class ::PhysBox is a representation on C++ side.
-
-Parameters
-----------
-
-Name              | Description
-------------------| -------------
-color             | Display color of a box
-SizeX             | Size along X axis of a box
-SizeY             | Size along Y axis of a box
-SizeZ             | Size along Z axis of a box
-Is Static         | Set if object should be satic or dynamic
-
-*/
-
-
-/**
-\ingroup gr_code_scene_objects_3D
-*/
-
-/**
-\brief Representation of physical box in 3D space
-
-Box can be static or dynamic. Dimentions are adjustable. Debug render used for
-rendering in a scene. So this object is more for draft construction of levels.
-
-*/
-
-class PhysBox : public SceneObject
+namespace Oak
 {
-public:
-
 	/**
-	\brief Transform of a box.
-	*/
-	Matrix transform;
+	\page scene_object_3D_PhysBox Physic Box
 
-	/**
-	\brief Size of a box along.
-	*/
+	Box can be static or dynamic. Dimentions are adjustable. Debug render used for
+	rendering in a scene. So this object is more for draft construction of levels.
 
-	Vector3 size;
+	This class ::PhysBox is a representation on C++ side.
 
-	/**
-	\brief Group of a body
-	*/
+	Parameters
+	----------
 
-	uint32_t phys_group;
+	Name              | Description
+	------------------| -------------
+	color             | Display color of a box
+	SizeX             | Size along X axis of a box
+	SizeY             | Size along Y axis of a box
+	SizeZ             | Size along Z axis of a box
+	Is Static         | Set if object should be satic or dynamic
 
-	/**
-	\brief Controls if box static or dynamic.
 	*/
 
-	bool isStatic;
 
 	/**
-	\brief Color of a box.
+	\ingroup gr_code_scene_objects_3D
 	*/
 
-	Color color;
+	/**
+	\brief Representation of physical box in 3D space
+
+	Box can be static or dynamic. Dimentions are adjustable. Debug render used for
+	rendering in a scene. So this object is more for draft construction of levels.
+
+	*/
+
+	class PhysBox : public SceneEntity
+	{
+	public:
+
+		/**
+		\brief Group of a body
+		*/
+
+		uint32_t phys_group;
+
+		/**
+		\brief Controls if box static or dynamic.
+		*/
+
+		bool isStatic;
+
+		/**
+		\brief Color of a box.
+		*/
+
+		Color color;
 
 
-#ifndef DOXYGEN_SKIP
+	#ifndef DOXYGEN_SKIP
 
-	META_DATA_DECL(PhysBox)
+		META_DATA_DECL(PhysBox)
 
-	PhysScene::BodyUserData body;
+		PhysScene::BodyUserData body;
 
-	virtual ~PhysBox() = default;
+		virtual ~PhysBox() = default;
 
-	Matrix* Trans() override;
-	bool Is3DObject() override;
-	void Init() override;
-	void Draw(float dt);
+		void Init() override;
+		void Draw(float dt);
 
-	void SetState(State state) override;
+		void SetVisible(bool state) override;
 
-	bool Play() override;
-	void Release() override;
+		bool Play() override;
+		void Release() override;
 
-#ifdef EDITOR
-	bool CheckSelection(Vector2 ms, Vector3 start, Vector3 dir) override;
-#endif
+	#ifdef OAK_EDITOR
+		//bool CheckSelection(Vector2 ms, Vector3 start, Vector3 dir) override;
+	#endif
 
-#endif
-};
+	#endif
+	};
+}

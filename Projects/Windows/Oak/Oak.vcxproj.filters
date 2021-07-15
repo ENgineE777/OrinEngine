@@ -418,10 +418,10 @@
     <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysScene.cpp">
       <Filter>ENgine\Root\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.cpp">
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp">
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.cpp">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -735,10 +735,10 @@
     <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysScene.h">
       <Filter>ENgine\Root\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Atum\Atum\SceneObjects\3D\PhysBox.h">
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h">
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.h">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
   </ItemGroup>
