@@ -143,6 +143,12 @@
     <Filter Include="ENgine\Root\Particles\Renderer">
       <UniqueIdentifier>{0920ef16-efc9-4afd-aeb6-3f35e6f6e956}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Root\Sounds">
+      <UniqueIdentifier>{53a5fc59-3399-499b-b7d8-7f26d521c1c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ENgine\SceneEntities\Common">
+      <UniqueIdentifier>{935bf47d-ba5c-4549-bf36-4de6b8b75507}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -618,6 +624,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_QuadRenderer.cpp">
       <Filter>ENgine\Root\Particles\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Sounds\Sounds.cpp">
+      <Filter>ENgine\Root\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundRes.cpp">
+      <Filter>ENgine\Root\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundInstance.cpp">
+      <Filter>ENgine\Root\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp">
+      <Filter>ENgine\SceneEntities\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1166,6 +1184,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_QuadRenderer.h">
       <Filter>ENgine\Root\Particles\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Sounds\Sounds.h">
+      <Filter>ENgine\Root\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundRes.h">
+      <Filter>ENgine\Root\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundInstance.h">
+      <Filter>ENgine\Root\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h">
+      <Filter>ENgine\SceneEntities\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

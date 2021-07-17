@@ -121,13 +121,13 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\SPARK;..\..\..\ENgine\Support\PugiXml;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\physx\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\SPARK;..\..\..\ENgine\Support\PugiXml;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\fmod\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\physx\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\Bin\eastl_Debug.lib;..\..\..\Libs\physx\libs\debug\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\debug\PhysX_64.lib;..\..\..\Libs\physx\libs\debug\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\debug\SceneQuery_static_64.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\eastl_Debug.lib;..\..\..\Libs\physx\libs\debug\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\debug\PhysX_64.lib;..\..\..\Libs\physx\libs\debug\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\debug\SceneQuery_static_64.lib;..\..\..\Libs\fmod\libs\fmod_vc.lib;..\..\..\Libs\fmod\libs\fmodL_vc.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
@@ -140,7 +140,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;OAK_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\PugiXml;..\..\..\ENgine\Support\SPARK;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\physx\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\PugiXml;..\..\..\ENgine\Support\SPARK;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\fmod\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\physx\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -148,7 +148,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\Bin\eastl.lib;..\..\..\Libs\physx\libs\release\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\release\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\release\PhysX_64.lib;..\..\..\Libs\physx\libs\release\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\release\SceneQuery_static_64.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\eastl.lib;..\..\..\Libs\physx\libs\release\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\release\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\release\PhysX_64.lib;..\..\..\Libs\physx\libs\release\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\release\SceneQuery_static_64.lib;..\..\..\Libs\fmod\libs\fmod_vc.lib;..\..\..\Libs\fmod\libs\fmodL_vc.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
@@ -215,6 +215,9 @@
     <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneManager.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Scripts\ScriptCore.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Scripts\Scripts.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundInstance.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundRes.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Sounds\Sounds.h" />
     <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h" />
@@ -223,6 +226,7 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
@@ -394,6 +398,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneManager.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Scripts\ScriptCore.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Scripts\Scripts.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundInstance.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundRes.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Sounds\Sounds.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp" />
@@ -402,6 +409,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />

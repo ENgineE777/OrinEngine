@@ -183,7 +183,9 @@ namespace Oak
 	{
 		if (holder->refCounter == 0)
 		{
+			auto* scene = holder->scene;
 			RELEASE(holder->scene)
+			root.sounds.DeleteSceneSounds(scene);
 		}
 	}
 

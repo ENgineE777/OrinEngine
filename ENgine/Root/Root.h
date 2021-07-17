@@ -12,6 +12,7 @@
 #include "Root/Physics/Physics.h"
 #include "Root/Scenes/SceneManager.h"
 #include "Root/Scripts/Scripts.h"
+#include "Root/Sounds/Sounds.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 
 namespace Oak
@@ -101,6 +102,11 @@ namespace Oak
 			\brief Access to scipts manager
 		*/
 		Scripts scripts;
+
+		/**
+			\brief Access to sound manager
+		*/
+		Sounds sounds;
 
 		/**
 		\brief Access to task executor service

@@ -78,6 +78,8 @@ namespace Oak
 
 		particles.Init();
 
+		sounds.Init();
+
 		assets.Init();
 
 		physics.Init();
@@ -152,6 +154,8 @@ namespace Oak
 
 		render.Execute(dt);
 
+		sounds.Update(dt);
+
 		physics.Fetch();
 
 	}
@@ -185,6 +189,7 @@ namespace Oak
 		fonts.Release();
 		render.Release();
 		controls.Release();
+		sounds.Release();
 
 		redirectLog = false;
 
