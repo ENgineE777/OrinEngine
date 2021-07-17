@@ -105,6 +105,11 @@ namespace Oak
 
 	void MemoryManager::Free(void* p)
 	{
+		if (p == nullptr)
+		{
+			return;
+		}
+
 		uint8_t* ptr = (uint8_t*)p;
 		ptr-= allocationSize;
 

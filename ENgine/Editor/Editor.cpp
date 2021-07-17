@@ -1540,6 +1540,7 @@ namespace Oak
 
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(10, dt);
+		root.render.ExecutePool(100, dt);
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);
 		root.render.GetDevice()->Present();

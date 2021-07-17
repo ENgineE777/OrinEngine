@@ -76,6 +76,8 @@ namespace Oak
 
 		Sprite::Init();
 
+		particles.Init();
+
 		assets.Init();
 
 		physics.Init();

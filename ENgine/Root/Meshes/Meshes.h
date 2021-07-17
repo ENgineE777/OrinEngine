@@ -10,7 +10,7 @@ namespace Oak
 {
 	class CLASS_DECLSPEC Meshes
 	{
-		struct MeshRef
+		struct CLASS_DECLSPEC MeshRef
 		{
 			int count;
 			Mesh* mesh;

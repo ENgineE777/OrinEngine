@@ -7,6 +7,7 @@
 #include "Root/Fonts/Fonts.h"
 #include "Root/Memory/MemoryManager.h"
 #include "Root/Meshes/Meshes.h"
+#include "Root/Particles/Particles.h"
 #include "Root/Render/Render.h"
 #include "Root/Physics/Physics.h"
 #include "Root/Scenes/SceneManager.h"
@@ -80,6 +81,11 @@ namespace Oak
 		\brief Access to render service
 		*/
 		Render render;
+
+		/**
+		\brief Access to particles service
+		*/
+		Particles particles;
 
 		/**
 			\brief Access to physics service
