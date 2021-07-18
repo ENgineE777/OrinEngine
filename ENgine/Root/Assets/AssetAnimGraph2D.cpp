@@ -753,7 +753,8 @@ namespace Oak
 			}
 		};
 
-		curNode->texture.ResetAnim(curNode->looped, curNode->reversed, fireEvents);
+		curTexture = curNode->texture;
+		curTexture.ResetAnim(curNode->looped, curNode->reversed, fireEvents);
 	}
 
 	bool AssetAnimGraph2DRef::GotoNode(const char* nodeName)
@@ -786,9 +787,9 @@ namespace Oak
 			return;
 		}
 
-		curNode->texture.Draw(trans, clr, dt);
+		curTexture.Draw(trans, clr, dt);
 
-		if (!curNode->looped && curNode->texture.IsAnimFinished())
+		if (!curNode->looped && curTexture.IsAnimFinished())
 		{
 			if (curNode->defLink != -1)
 			{
