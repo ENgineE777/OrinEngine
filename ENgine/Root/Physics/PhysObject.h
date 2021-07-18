@@ -21,13 +21,13 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC PhysObject : public PhysObjectBase
+	class PhysObject : public PhysObjectBase
 	{
 		friend class PhysScene;
 
 	public:
 
-		enum CLASS_DECLSPEC BodyType
+		enum BodyType
 		{
 			Static = 0 /*!< Hardware button in pressed state */,
 			Dynamic /*!< Hardware button in pressed state */,

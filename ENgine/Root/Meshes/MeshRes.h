@@ -6,11 +6,11 @@
 
 namespace Oak
 {
-	class CLASS_DECLSPEC Mesh
+	class Mesh
 	{
 	public:
 
-		class CLASS_DECLSPEC Instance : public Object
+		class Instance : public Object
 		{
 			Mesh* res = nullptr;
 			TaskExecutor::SingleTaskPool* taskPool;
@@ -41,14 +41,14 @@ namespace Oak
 			void Release();
 		};
 
-		struct CLASS_DECLSPEC MeshVertex
+		struct MeshVertex
 		{
 			Math::Vector3 pos;
 			Math::Vector2 uv;
 			Math::Vector3 normal;
 		};
 
-		struct CLASS_DECLSPEC SubMesh
+		struct SubMesh
 		{
 			int texture = -1;
 			int num_triangles;

@@ -44,7 +44,7 @@ namespace Oak
 
 	*/
 
-	struct CLASS_DECLSPEC PhysControllerDesc
+	struct PhysControllerDesc
 	{
 		/** \brief Height of a controller. Overall height euqals radius * 2 + height */
 		float height = 1.0f;
@@ -70,7 +70,7 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC PhysController : public PxUserControllerHitReport, public PxControllerBehaviorCallback, public PxQueryFilterCallback, public PhysObjectBase
+	class PhysController : public PxUserControllerHitReport, public PxControllerBehaviorCallback, public PxQueryFilterCallback, public PhysObjectBase
 	{
 		friend class PhysScene;
 		PxController* controller = nullptr;
@@ -82,7 +82,7 @@ namespace Oak
 
 	public:
 
-		enum CLASS_DECLSPEC CollideType
+		enum CollideType
 		{
 			CollideSides = (1 << 0) /*!< Sides is collided */,
 			CollideUp = (1 << 1) /*!< Upper point is collided */,

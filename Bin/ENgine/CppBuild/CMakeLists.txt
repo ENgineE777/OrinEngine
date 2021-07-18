@@ -3,11 +3,15 @@ project (gameplay)
 set (CMAKE_BUILD_TYPE Release)
 set (CMAKE_CXX_STANDARD 17)
 
-add_definitions("-DOAK_EDITOR" "-DOAK_EXPORTING")
+add_definitions("-DOAK_EDITOR")
 
 include_directories ("../../../../Libs/vjson"
 					 "../../../../Libs/eastl/include"
 					 "../../../../Libs/eastl/include/Common"
+					 "../../../../Libs/fmod/include"
+					 "../../../../Libs/physx/include"
+					 "../../../../ENgine/Support/PugiXml"
+					 "../../../../ENgine/Support/SPARK"
 					 "../../../../ENgine")
 
 file (GLOB_RECURSE SOURCES "../*.cpp" "../*.h" "../../../ENgine/CppBuild/Gameplay.cpp")

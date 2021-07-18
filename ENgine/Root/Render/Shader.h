@@ -10,7 +10,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class ShaderType
+	enum class CLASS_DECLSPEC ShaderType
 	{
 		Vertex = 0 /*!< Vertex shader */,
 		Pixel = 1 /*!< Pixel shader */
@@ -27,7 +27,7 @@ namespace Oak
 
 	*/
 
-	class Shader
+	class CLASS_DECLSPEC Shader
 	{
 		friend class Program;
 		friend class DeviceDX11;

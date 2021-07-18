@@ -18,7 +18,7 @@ namespace Oak
 
 	*/
 
-	class File
+	class CLASS_DECLSPEC File
 	{
 		#ifndef DOXYGEN_SKIP
 		uint8_t* data_ptr;
@@ -31,7 +31,7 @@ namespace Oak
 
 	public:
 
-		enum class ModeType
+		enum class CLASS_DECLSPEC ModeType
 		{
 			Read = 0 /*!< Read access mode */,
 			Write = 1 /*!< Write access mode */,
@@ -40,7 +40,7 @@ namespace Oak
 			AppendText = 4 /*!< Append to the end of a text file */
 		};
 
-		enum class SeekType
+		enum class CLASS_DECLSPEC SeekType
 		{
 			SeekSet = 0 /*!< Beginning of file */,
 			SeekCur = 1 /*!< Current position of the file pointer */,

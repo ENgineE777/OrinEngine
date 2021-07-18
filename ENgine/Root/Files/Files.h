@@ -19,7 +19,7 @@ namespace Oak
 
 	*/
 
-	class Files
+	class CLASS_DECLSPEC Files
 	{
 		friend class File;
 		friend class FileInMemory;

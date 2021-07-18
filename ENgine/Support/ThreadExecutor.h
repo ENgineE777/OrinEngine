@@ -5,12 +5,14 @@
 #include <windows.h>
 #endif
 
-/**
-\ingroup gr_code_common
-*/
+#include "Defines.h"
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_common
+	*/
+
 	/**
 	\brief Wrapper around mutex
 
@@ -18,7 +20,7 @@ namespace Oak
 
 	*/
 
-	class CriticalSection
+	class CLASS_DECLSPEC CriticalSection
 	{
 	public:
 		CriticalSection();
@@ -43,7 +45,7 @@ namespace Oak
 	#endif
 	};
 
-	class ThreadCaller
+	class CLASS_DECLSPEC ThreadCaller
 	{
 	public:
 		typedef void (ThreadCaller::*Delegate)();
@@ -58,7 +60,7 @@ namespace Oak
 
 	*/
 
-	class ThreadExecutor
+	class CLASS_DECLSPEC ThreadExecutor
 	{
 	#ifndef DOXYGEN_SKIP
 		enum class State

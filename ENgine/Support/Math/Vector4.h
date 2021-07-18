@@ -9,7 +9,7 @@ namespace Oak::Math
 	\ingroup gr_code_common_math
 	*/
 
-	struct Vector4
+	struct CLASS_DECLSPEC Vector4
 	{
 	public:
 

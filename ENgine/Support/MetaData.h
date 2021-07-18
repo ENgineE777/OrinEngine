@@ -14,7 +14,7 @@ namespace Oak
 {
 	class Scene;
 
-	struct MetaDataEnum
+	struct CLASS_DECLSPEC MetaDataEnum
 	{
 		int defIndex;
 		eastl::string enumList;
@@ -29,7 +29,7 @@ namespace Oak
 
 	*/
 
-	class MetaData
+	class CLASS_DECLSPEC MetaData
 	{
 
 	public:

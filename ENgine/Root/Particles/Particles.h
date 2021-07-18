@@ -7,7 +7,7 @@
 
 namespace Oak
 {
-	class CLASS_DECLSPEC Particles
+	class Particles
 	{
 		struct ParticleRef
 		{

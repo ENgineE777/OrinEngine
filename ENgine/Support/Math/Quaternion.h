@@ -10,7 +10,7 @@ namespace Oak::Math
 	\ingroup gr_code_common_math
 	*/
 
-	class Quaternion
+	class CLASS_DECLSPEC Quaternion
 	{
 	public:
 		union

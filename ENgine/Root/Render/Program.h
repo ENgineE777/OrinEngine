@@ -20,7 +20,7 @@ namespace Oak
 
 	*/
 
-	class Program
+	class CLASS_DECLSPEC Program
 	{
 		friend class Render;
 		friend class PointerRef<Program>;

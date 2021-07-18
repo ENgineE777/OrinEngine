@@ -18,7 +18,7 @@ namespace Oak
 	extenstion is needed.
 	*/
 
-	class CLASS_DECLSPEC SceneManager : public Object
+	class SceneManager : public Object
 	{
 		friend class SceneEntity;
 

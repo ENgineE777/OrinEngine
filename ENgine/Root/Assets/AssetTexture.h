@@ -6,7 +6,7 @@
 
 namespace Oak
 {
-	class AssetTexture : public Asset
+	class CLASS_DECLSPEC AssetTexture : public Asset
 	{
 		friend class PointerRef<AssetTexture>;
 		friend class AssetTextureRef;
@@ -18,7 +18,7 @@ namespace Oak
 
 	public:
 
-		struct Slice
+		struct CLASS_DECLSPEC Slice
 		{
 			eastl::string name;
 			bool isNineSliced = 0;
@@ -29,14 +29,14 @@ namespace Oak
 			Math::Vector2 offset = 0.5f;
 		};
 
-		struct Frame
+		struct CLASS_DECLSPEC Frame
 		{
 			int slice = -1;
 			float frameLength = 1.0f;
 			Math::Vector2 offset = 0.0f;
 		};
 
-		struct Animation
+		struct CLASS_DECLSPEC Animation
 		{
 			int fps = 15;
 			eastl::string name;
@@ -63,7 +63,7 @@ namespace Oak
 		#endif
 	};
 
-	class AssetTextureRef : public PointerRef<AssetTexture>
+	class CLASS_DECLSPEC AssetTextureRef : public PointerRef<AssetTexture>
 	{
 		int animPlayFrame = 0;
 		float animPlayTime = 0.0f;

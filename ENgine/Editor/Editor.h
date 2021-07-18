@@ -1,5 +1,6 @@
 #pragma once
 
+#include "IEditor.h"
 #include "Root/Root.h"
 #include "FreeCamera.h"
 #include "Project.h"
@@ -7,8 +8,6 @@
 
 #include "imgui.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
 #include <d3d11.h>
 #include "eastl/bonus/ring_buffer.h"
 #include "Root/Assets/Assets.h"
@@ -19,7 +18,7 @@
 
 namespace Oak
 {
-	class CLASS_DECLSPEC Editor : Object
+	class Editor : public IEditor
 	{
 		friend class Project;
 		friend class FreeCamera;
@@ -87,15 +86,15 @@ namespace Oak
 
 		const char* OpenFileDialog(const char* extName, const char* ext, bool open);
 
-		bool Init(HWND hwnd);
-		bool Update();
+		bool Init(HWND hwnd) override;
+		bool Update() override;
 		void Render(float dt);
-		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-		void OnResize(int width, int height);
+		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) override;
+		void OnResize(int width, int height) override;
 
 		void SelectEntity(SceneEntity* entity);
 
-		void Release();
+		void Release() override;
 
 	private:
 
@@ -154,5 +153,7 @@ namespace Oak
 		void UpdateOak();
 	};
 
+	#ifdef OAK_EXPORTING
 	extern CLASS_DECLSPEC Editor editor;
+	#endif
 }

@@ -6,12 +6,10 @@
 
 namespace Oak
 {
-	class AssetAnimGraph2D : public Asset
+	class CLASS_DECLSPEC AssetAnimGraph2D : public Asset
 	{
 		friend class PointerRef<AssetAnimGraph2D>;
 		friend class AssetAnimGraph2DRef;
-
-	public:
 
 		enum class DragMode
 		{
@@ -22,14 +20,16 @@ namespace Oak
 			AddLink
 		};
 
-		enum class NodeType
+	public:
+
+		enum class CLASS_DECLSPEC NodeType
 		{
 			AnimNode,
 			LogicNode,
 			GroupNode
 		};
 
-		class Link
+		class CLASS_DECLSPEC Link
 		{
 		public:
 			META_DATA_DECL_BASE(Link)
@@ -41,7 +41,7 @@ namespace Oak
 			float angle = 0.0f;
 		};
 
-		class Event
+		class CLASS_DECLSPEC Event
 		{
 		public:
 			META_DATA_DECL_BASE(Event)
@@ -51,7 +51,7 @@ namespace Oak
 			eastl::string param;
 		};
 
-		class Node
+		class CLASS_DECLSPEC Node
 		{
 		public:
 			META_DATA_DECL_BASE(Node)
@@ -108,8 +108,9 @@ namespace Oak
 		#endif
 	};
 
-	class AssetAnimGraph2DRef : public PointerRef<AssetAnimGraph2D>
+	class CLASS_DECLSPEC AssetAnimGraph2DRef : public PointerRef<AssetAnimGraph2D>
 	{
+		AssetTextureRef curTexture;
 		AssetAnimGraph2D::Node* curNode = nullptr;
 
 	public:

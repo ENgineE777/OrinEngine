@@ -19,7 +19,7 @@ namespace Oak
 
 	*/
 
-	class JsonWriter
+	class CLASS_DECLSPEC JsonWriter
 	{
 		FILE* file = nullptr;
 		int offset = 0;

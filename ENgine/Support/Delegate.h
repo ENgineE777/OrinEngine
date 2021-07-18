@@ -6,7 +6,7 @@ namespace Oak
 	\ingroup gr_code_common
 	*/
 
-	class Object
+	class CLASS_DECLSPEC Object
 	{
 	public:
 		typedef void (Object::*Delegate)(float timedelta);
@@ -16,7 +16,7 @@ namespace Oak
 		virtual void Release() {};
 	};
 
-	struct DelegateObject
+	struct CLASS_DECLSPEC DelegateObject
 	{
 		Object* entity;
 		Object::Delegate call;

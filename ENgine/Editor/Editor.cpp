@@ -8,6 +8,8 @@
 #include "SpriteWindow.h"
 #include <filesystem>
 
+#include "commdlg.h"
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 #include <filesystem>
@@ -16,6 +18,12 @@ namespace Oak
 {
 	Editor editor;
 
+	IEditor* GetEditor()
+	{
+		return &editor;
+	}
+
+	CLASS_DECLSPEC IEditor* GetEditor();
 	const char* Editor::OpenFileDialog(const char* extName, const char* ext, bool open)
 	{
 		char curDir[512];

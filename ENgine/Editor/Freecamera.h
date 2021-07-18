@@ -9,7 +9,7 @@
 
 namespace Oak
 {
-	class CLASS_DECLSPEC FreeCamera
+	class FreeCamera
 	{
 	public:
 

@@ -13,12 +13,12 @@ namespace Oak::Sprite
 {
 #ifndef DOXYGEN_SKIP
 
-	extern float pixelsPerUnit;
-	extern float pixelsPerUnitInvert;
-	extern float pixelsHeight;
+	extern CLASS_DECLSPEC float pixelsPerUnit;
+	extern CLASS_DECLSPEC float pixelsPerUnitInvert;
+	extern CLASS_DECLSPEC float pixelsHeight;
 
-	void Init();
-	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool useDepth);
-	void Release();
+	CLASS_DECLSPEC void Init();
+	CLASS_DECLSPEC void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool useDepth);
+	CLASS_DECLSPEC void Release();
 }
 #endif

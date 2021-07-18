@@ -20,7 +20,7 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC PhysScene : public PxSimulationEventCallback
+	class PhysScene : public PxSimulationEventCallback
 	{
 		friend class Physics;
 		PxScene* scene = nullptr;
@@ -36,7 +36,7 @@ namespace Oak
 
 		*/
 
-		struct CLASS_DECLSPEC BodyUserData
+		struct BodyUserData
 		{
 			/** \brief Poninter to a scene object */
 			class SceneEntity* object = nullptr;
@@ -58,7 +58,7 @@ namespace Oak
 
 		*/
 
-		struct CLASS_DECLSPEC RaycastDesc
+		struct RaycastDesc
 		{
 			/** \brief Origin of a ray */
 			Math::Vector3 origin;

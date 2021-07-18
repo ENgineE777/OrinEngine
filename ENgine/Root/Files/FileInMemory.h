@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include "Support/Defines.h"
 
 namespace Oak
 {
@@ -19,7 +20,7 @@ namespace Oak
 
 	*/
 
-	class FileInMemory
+	class CLASS_DECLSPEC FileInMemory
 	{
 		#ifndef DOXYGEN_SKIP
 		uint8_t* buffer = nullptr;

@@ -17,7 +17,7 @@ namespace Oak
 
 	*/
 
-	enum TransformFlag : uint32_t
+	enum CLASS_DECLSPEC TransformFlag : uint32_t
 	{
 		MoveX = (1 << 0),
 		MoveY = (1 << 1),
@@ -57,7 +57,7 @@ namespace Oak
 		return (enum TransformFlag)(uint32_t(selfValue) & uint32_t(inValue));
 	}
 
-	struct Transform
+	struct CLASS_DECLSPEC Transform
 	{
 		/**
 			\brief Local position

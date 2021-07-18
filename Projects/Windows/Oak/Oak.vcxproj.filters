@@ -403,9 +403,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp">
-      <Filter>ENgine\SceneEntities\Other</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp">
       <Filter>ENgine\SceneEntities\Other</Filter>
     </ClCompile>
@@ -885,9 +882,6 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h">
-      <Filter>ENgine\SceneEntities\Other</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h">
       <Filter>ENgine\SceneEntities\Other</Filter>
     </ClInclude>
@@ -1196,6 +1190,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h">
       <Filter>ENgine\SceneEntities\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\IRoot.h">
+      <Filter>ENgine\Root</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Controls\IControls.h">
+      <Filter>ENgine\Root\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\IEditor.h">
+      <Filter>ENgine\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

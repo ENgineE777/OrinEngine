@@ -17,7 +17,7 @@ namespace Oak
 		Rectangle
 	};
 
-	class CLASS_DECLSPEC Gizmo
+	class Gizmo
 	{
 		enum class Axis
 		{

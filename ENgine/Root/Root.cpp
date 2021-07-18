@@ -23,6 +23,11 @@ namespace Oak
 {
 	Root root;
 
+	IRoot* GetRoot()
+	{
+		return &root;
+	}
+
 	Root::Root()
 	{
 		logsDir[0] = 0;

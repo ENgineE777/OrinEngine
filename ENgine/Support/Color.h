@@ -46,7 +46,7 @@ namespace Oak
 
 	*/
 
-	class Color
+	class CLASS_DECLSPEC Color
 	{
 	public:
 

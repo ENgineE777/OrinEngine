@@ -14,7 +14,7 @@ namespace Oak
 {
 	class SceneEntity;
 
-	class Asset : public Object
+	class CLASS_DECLSPEC Asset : public Object
 	{
 	protected:
 

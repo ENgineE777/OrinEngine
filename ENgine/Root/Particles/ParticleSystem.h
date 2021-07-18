@@ -8,7 +8,7 @@
 
 namespace Oak
 {
-	class CLASS_DECLSPEC ParticleSystem : public Object
+	class ParticleSystem : public Object
 	{
 		SPK::Ref<SPK::System> res;
 		SPK::Ref<SPK::System> system;

@@ -19,7 +19,7 @@ namespace Oak
 
 	*/
 
-	class JsonReader
+	class CLASS_DECLSPEC JsonReader
 	{
 		#ifndef DOXYGEN_SKIP
 		block_allocator allocator;

@@ -26,7 +26,7 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC Sounds
+	class Sounds
 	{
 		friend class SoundInstance;
 		friend class SoundRes;
@@ -35,7 +35,7 @@ namespace Oak
 
 		FMOD::System* system;
 
-		struct CLASS_DECLSPEC SoundsResRef
+		struct SoundsResRef
 		{
 			int count;
 			SoundRes* res;

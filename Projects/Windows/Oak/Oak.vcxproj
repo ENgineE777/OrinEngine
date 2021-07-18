@@ -158,6 +158,7 @@
     <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Gizmo.h" />
+    <ClInclude Include="..\..\..\ENgine\Editor\IEditor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Controls\IControls.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h" />
@@ -173,6 +175,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRef.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\IRoot.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\Meshes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.h" />
@@ -227,7 +230,6 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
     <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h" />
@@ -410,7 +412,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\SimpleCharacter2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c" />

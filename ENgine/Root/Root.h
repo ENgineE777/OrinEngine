@@ -1,6 +1,8 @@
 
 #pragma once
 
+
+#include "Root/IRoot.h"
 #include "Root/Assets/Assets.h"
 #include "Root/Controls/Controls.h"
 #include "Root/Files/Files.h"
@@ -30,7 +32,7 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC Root
+	class Root : public IRoot
 	{
 		#ifndef DOXYGEN_SKIP
 
@@ -53,10 +55,9 @@ namespace Oak
 		*/
 		Assets assets;
 
-		/**
-		\brief Access to controls service
-		*/
 		Controls controls;
+
+		IControls* GetControls() { return &controls; };
 
 		/**
 		\brief Access to files service
@@ -141,5 +142,7 @@ namespace Oak
 		void Release();
 	};
 
-	extern CLASS_DECLSPEC Root root;
+	#ifdef OAK_EXPORTING
+	extern Root root;
+	#endif
 }

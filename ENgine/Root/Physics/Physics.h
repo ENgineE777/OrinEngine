@@ -20,7 +20,7 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC Physics
+	class Physics
 	{
 		friend class PhysScene;
 		friend class PhysObjectBase;

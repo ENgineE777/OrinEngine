@@ -2,6 +2,7 @@
 #pragma once
 
 #include <math.h>
+#include "Support/Defines.h"
 
 namespace Oak::Math
 {
@@ -9,7 +10,7 @@ namespace Oak::Math
 	\ingroup gr_code_common_math
 	*/
 
-	struct Vector3
+	struct CLASS_DECLSPEC Vector3
 	{
 	public:
 
