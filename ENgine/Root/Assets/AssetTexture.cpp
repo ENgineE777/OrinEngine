@@ -428,7 +428,7 @@ namespace Oak
 			return;
 		}
 
-		animPlayFrame = reversed ? 0 : ((int)Get()->animations[animIndex].frames.size() - 1);
+		animPlayFrame = reversed ? ((int)Get()->animations[animIndex].frames.size() - 1) : 0;
 		animPlayTime = 0.0f;
 		animLooped = looped;
 		animReversed = reversed;
