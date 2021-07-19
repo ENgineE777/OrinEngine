@@ -179,7 +179,7 @@ namespace Oak
 
 		if (renderTaskPool)
 		{
-			delete renderTaskPool;
+			root.render.DelTaskPool(renderTaskPool);
 		}
 #endif
 
