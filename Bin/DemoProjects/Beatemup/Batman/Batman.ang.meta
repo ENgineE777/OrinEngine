@@ -1,0 +1,270 @@
+﻿{
+
+	"camPos" :
+	{
+		"x" : -212.714371,
+		"y" : 120.968262
+	},
+	"camZoom" : 0.900000,
+	"def_node" : 0,
+	"Count" : 8,
+	"Node" : [
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -292.055695,
+				"y" : 155.499969
+			},
+			"name" : "Idle",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 5,
+			"Link" : [
+				{
+					"index" : 2,
+					"name" : "LegKick2"
+				},
+				{
+					"index" : 1,
+					"name" : "LegKick1"
+				},
+				{
+					"index" : 3,
+					"name" : "Walk"
+				},
+				{
+					"index" : 4,
+					"name" : "WalkBack"
+				},
+				{
+					"index" : 5,
+					"name" : "Hit"
+				}
+			],
+			"CountEvent" : 1,
+			"Event" : [
+				{
+					"frameNumber" : 4,
+					"name" : "Bla",
+					"param" : "B;aB;a"
+				}
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : 103.944435,
+				"y" : 281.944794
+			},
+			"name" : "Kick1",
+			"object_uid" : 0,
+			"def_link" : 0,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 1
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : ""
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : 84.944435,
+				"y" : 59.388889
+			},
+			"name" : "Kick2",
+			"object_uid" : 0,
+			"def_link" : 0,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 2
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : ""
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -668.666443,
+				"y" : 278.666870
+			},
+			"name" : "Walk",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 5
+			},
+			"Count" : 2,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : "Idle"
+				},
+				{
+					"index" : 5,
+					"name" : "Hit"
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : true,
+			"pos" :
+			{
+				"x" : -632.158447,
+				"y" : -25.142860
+			},
+			"name" : "WalkBack",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 5
+			},
+			"Count" : 2,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : "Idle"
+				},
+				{
+					"index" : 5,
+					"name" : "Hit"
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -743.269958,
+				"y" : 138.190536
+			},
+			"name" : "Hit",
+			"object_uid" : 0,
+			"def_link" : 0,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 4
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : ""
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -214.380966,
+				"y" : -62.920643
+			},
+			"name" : "Death",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 6
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -267.714478,
+				"y" : 390.412842
+			},
+			"name" : "Resp",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Batman/batman.png",
+				"sliceIndex" : -1,
+				"animIndex" : 3
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : "Idle"
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		}
+	]
+}
