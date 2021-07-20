@@ -2,8 +2,8 @@
 #pragma once
 
 #include "PhysScene.h"
-#include <vector>
 #include "Root/Files/FileInMemory.h"
+#include "Root/Files/File.h"
 
 using namespace physx;
 
@@ -40,27 +40,20 @@ namespace Oak
 
 		class StreamWriter : public PxOutputStream
 		{
-			FILE* file = nullptr;
+			File file;
 
 		public:
-			~StreamWriter()
-			{
-				if (file)
-				{
-					fclose(file);
-				}
-			}
 
 			bool Prepere(const char* name)
 			{
-				fopen_s(&file, name, "wb");
-
-				return (file != nullptr);
-			}
+				return file.Open(name, File::ModeType::Write);
+ 			}
 
 			virtual uint32_t write(const void* src, uint32_t count)
 			{
-				return (uint32_t)fwrite(src, count, 1, file);
+				file.Write(src, count);
+
+				return count;
 			}
 		};
 	#endif
@@ -68,7 +61,7 @@ namespace Oak
 		float physStep = 1.0f / 60.0f;
 		float accum_dt = 0.0f;
 
-		std::vector<PhysScene*> scenes;
+		eastl::vector<PhysScene*> scenes;
 
 		class StraemReader : public PxInputStream
 		{
