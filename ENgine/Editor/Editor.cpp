@@ -205,9 +205,9 @@ namespace Oak
 
 		ImGuiIO& io = ImGui::GetIO();
 
-		Oak::root.controls.OverrideMousePos((int)io.MousePos.x, (int)io.MousePos.y);
-
 		ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
+
+		Oak::root.controls.OverrideMousePos(viewportPos.x, viewportPos.y);
 
 		ImVec2 size = ImGui::GetContentRegionAvail();
 		Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
