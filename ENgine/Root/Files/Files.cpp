@@ -61,9 +61,19 @@ namespace Oak
 	}
 
 	#ifdef PLATFORM_WIN
-	bool Files::IsFileExist(const char*  name)
+	bool Files::IsFileExist(const char* name)
 	{
+		const char* rootPath = root.GetRootPath();
+
 		struct stat buffer;
+
+		if (rootPath[0])
+		{
+			char path[1024];
+			StringUtils::Printf(path, 1024, "%s%s", rootPath, name);
+
+			return (stat(path, &buffer) == 0);
+		}
 
 		return (stat(name, &buffer) == 0);
 	}
