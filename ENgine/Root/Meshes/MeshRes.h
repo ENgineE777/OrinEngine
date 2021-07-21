@@ -6,11 +6,11 @@
 
 namespace Oak
 {
-	class Mesh
+	class CLASS_DECLSPEC Mesh
 	{
 	public:
 
-		class Instance : public Object
+		class CLASS_DECLSPEC Instance : public Object
 		{
 			Mesh* res = nullptr;
 			TaskExecutor::SingleTaskPool* taskPool;

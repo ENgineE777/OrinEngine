@@ -634,6 +634,12 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp">
       <Filter>ENgine\SceneEntities\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp">
+      <Filter>ENgine\SceneEntities\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1199,6 +1205,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Editor\IEditor.h">
       <Filter>ENgine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h">
+      <Filter>ENgine\SceneEntities\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Render\IRender.h">
+      <Filter>ENgine\Root\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\IMeshes.h">
+      <Filter>ENgine\Root\Meshes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

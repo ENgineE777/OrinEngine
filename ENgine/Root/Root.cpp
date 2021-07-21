@@ -175,6 +175,23 @@ namespace Oak
 		return Timer::GetFPS();
 	}
 
+	void Root::PreparePhysScene()
+	{
+		if (pscene == nullptr)
+		{
+			pscene = root.physics.CreateScene();
+		}
+	}
+
+	void Root::ClearPhysScene()
+	{
+		if (pscene)
+		{
+			root.physics.DestroyScene(pscene);
+			pscene = nullptr;
+		}
+	}
+
 	void Root::SetRootPath(const char* setRootPath)
 	{
 		rootPath = setRootPath;

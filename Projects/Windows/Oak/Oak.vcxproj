@@ -177,6 +177,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h" />
     <ClInclude Include="..\..\..\ENgine\Root\IRoot.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Meshes\IMeshes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\Meshes.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshRes.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Render\IRender.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Program.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Render.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Render\Shader.h" />
@@ -226,9 +228,11 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
@@ -408,9 +412,11 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />

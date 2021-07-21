@@ -58,7 +58,7 @@ namespace Oak
 		transform.BuildMatrices();
 
 		body.object = this;
-		body.body = root.scenes.PScene()->CreateBox(transform.size, transform.global, Math::Matrix(), isStatic ? PhysObject::Static : PhysObject::Dynamic, phys_group);
+		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.global, Math::Matrix(), isStatic ? PhysObject::Static : PhysObject::Dynamic, phys_group);
 
 		Math::Matrix kjljl;
 		body.body->GetTransform(kjljl);

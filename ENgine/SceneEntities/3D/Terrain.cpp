@@ -280,7 +280,7 @@ namespace Oak
 	bool Terrain::Play()
 	{
 		body.object = this;
-		body.body = root.scenes.PScene()->CreateHeightmap(hwidth, hheight, Math::Vector2(scaleh, scalev), (hgt_name + eastl::string("hm")).c_str(), 1);
+		body.body = root.GetPhysScene()->CreateHeightmap(hwidth, hheight, Math::Vector2(scaleh, scalev), (hgt_name + eastl::string("hm")).c_str(), 1);
 		body.body->SetUserData(&body);
 
 		return true;

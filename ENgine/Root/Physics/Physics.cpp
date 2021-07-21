@@ -36,15 +36,15 @@ namespace Oak
 		for (int x = 0; x < width; x++)
 			for (int y = 0; y < height; y++)
 			{
-				samples[x + y * width].height = PxI16(hmap[((x)* width + y)]);
-				samples[x + y * width].setTessFlag();
-				samples[x + y * width].materialIndex0 = 1;
-				samples[x + y * width].materialIndex1 = 1;
+				samples[x + y * width].height = static_cast<PxI16>(hmap[((x)*width + y)]);
+
+				samples[x + y * width].clearTessFlag();
+				samples[x + y * width].materialIndex0 = 0;
+				samples[x + y * width].materialIndex1 = 0;
 			}
 
 		PxHeightFieldDesc heightFieldDesc;
 
-		heightFieldDesc.format = PxHeightFieldFormat::eS16_TM;
 		heightFieldDesc.nbColumns = width;
 		heightFieldDesc.nbRows = height;
 		heightFieldDesc.samples.data = samples;

@@ -53,7 +53,7 @@ namespace Oak
 			{
 				file.Write(src, count);
 
-				return count;
+				return 1;
 			}
 		};
 	#endif

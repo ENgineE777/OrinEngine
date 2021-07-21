@@ -14,7 +14,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class PrimitiveTopology
+	enum class CLASS_DECLSPEC PrimitiveTopology
 	{
 		LineStrip = 0,
 		LinesList,
@@ -26,7 +26,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class CullMode
+	enum class CLASS_DECLSPEC CullMode
 	{
 		CullNone = 0 /*!< Culling disabled */,
 		CullCW /*!< Clockwise culling */,
@@ -37,7 +37,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class BlendOp
+	enum class CLASS_DECLSPEC BlendOp
 	{
 		BlendAdd = 0,
 		BlendSub,
@@ -50,7 +50,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class CompareFunc
+	enum class CLASS_DECLSPEC CompareFunc
 	{
 		CmpNever = 0,
 		CmpLess,
@@ -66,7 +66,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class BlendArg
+	enum class CLASS_DECLSPEC BlendArg
 	{
 		ArgZero = 0,
 		ArgOne,
@@ -91,7 +91,7 @@ namespace Oak
 
 	*/
 
-	class Device
+	class CLASS_DECLSPEC Device
 	{
 		friend class Render;
 		friend class Program;

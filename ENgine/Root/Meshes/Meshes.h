@@ -4,11 +4,11 @@
 #include "stdio.h"
 #include <stdlib.h>
 #include "Support/Support.h"
-#include "MeshRes.h"
+#include "IMeshes.h"
 
 namespace Oak
 {
-	class Meshes
+	class Meshes : public IMeshes
 	{
 		struct MeshRef
 		{
@@ -21,7 +21,7 @@ namespace Oak
 	public:
 
 		void Init();
-		Mesh::Instance* LoadMesh(const char* name, TaskExecutor::SingleTaskPool* taskPool);
+		Mesh::Instance* LoadMesh(const char* name, TaskExecutor::SingleTaskPool* taskPool) override;
 		bool DecRef(Mesh* mesh);
 	};
 }

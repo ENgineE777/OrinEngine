@@ -39,7 +39,7 @@ namespace Oak
 
 	using namespace physx;
 
-	class PhysObjectBase
+	class CLASS_DECLSPEC PhysObjectBase
 	{
 		friend class Physics;
 

@@ -17,7 +17,7 @@ namespace Oak
 
 	*/
 
-	class DataBuffer
+	class CLASS_DECLSPEC DataBuffer
 	{
 		friend class PointerRef<DataBuffer>;
 

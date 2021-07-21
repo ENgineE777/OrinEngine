@@ -1054,6 +1054,7 @@ namespace Oak
 			selectedAsset->EnableTasks(false);
 		}
 
+		root.PreparePhysScene();
 		root.scenes.LoadProject(project.projectName.c_str());
 
 		projectRunning = true;
@@ -1069,6 +1070,8 @@ namespace Oak
 		root.scenes.UnloadAll();
 
 		root.scripts.Stop();
+
+		root.ClearPhysScene();
 
 		if (project.selectedScene)
 		{

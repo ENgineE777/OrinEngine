@@ -293,6 +293,11 @@ namespace Oak
 		sprites->AddSprite(texture, pos, size, offset, angle, color);
 	}
 
+	TextureRef Render::GetWhiteTexture()
+	{
+		return whiteTex;
+	}
+
 	Math::Vector3 Render::TransformToScreen(Math::Vector3 pos, int type)
 	{
 		Math::Matrix view;

@@ -10,7 +10,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class ElementType
+	enum class CLASS_DECLSPEC ElementType
 	{
 		Float /*!< 1 component float */,
 		Float2 /*!< 2 component float */,
@@ -31,7 +31,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class ElementSemantic
+	enum class CLASS_DECLSPEC ElementSemantic
 	{
 		Position /*!< Will be used as position */,
 		Texcoord /*!< Will be used as texture coordinates */,
@@ -49,7 +49,7 @@ namespace Oak
 
 	*/
 
-	class VertexDecl
+	class CLASS_DECLSPEC VertexDecl
 	{
 		friend class PointerRef<VertexDecl>;
 		int refCounter = 0;

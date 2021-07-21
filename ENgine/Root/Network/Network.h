@@ -20,7 +20,7 @@ namespace Oak
 		Delegate that handles network callbacks.
 	*/
 
-	class NetworkDelegate
+	class CLASS_DECLSPEC NetworkDelegate
 	{
 		public:
 
@@ -52,7 +52,7 @@ namespace Oak
 		for a connection. For handling callbacks from network client a delegate should be set.
 	*/
 
-	class NetworkClient
+	class CLASS_DECLSPEC NetworkClient
 	{ 
 	#ifndef DOXYGEN_SKIP
 		enum
@@ -134,7 +134,7 @@ namespace Oak
 		For handling callbacks from network client a delegate should be set.
 	*/
 
-	class NetworkServer
+	class CLASS_DECLSPEC NetworkServer
 	{
 	#ifndef DOXYGEN_SKIP
 		#ifdef PLATFORM_WIN

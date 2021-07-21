@@ -31,8 +31,6 @@ namespace Oak
 
 		char projectPath[1024];
 
-		PhysScene* pscene = nullptr;
-
 		eastl::vector<SceneHolder> scenes;
 
 		eastl::vector<SceneHolder*> scenesToLoad;
@@ -51,7 +49,6 @@ namespace Oak
 
 		void Init();
 		void LoadProject(const char* projectName);
-		inline PhysScene* PScene() { return pscene; }
 		void Execute(float dt);
 		void UnloadAll();
 	#endif

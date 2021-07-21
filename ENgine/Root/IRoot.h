@@ -6,9 +6,10 @@
 //#include "Root/Files/Files.h"
 //#include "Root/Fonts/Fonts.h"
 //#include "Root/Memory/MemoryManager.h"
-//#include "Root/Meshes/Meshes.h"
+#include "Root/Meshes/IMeshes.h"
 //#include "Root/Particles/Particles.h"
-//#include "Root/Render/Render.h"
+#include "Root/Render/IRender.h"
+#include "Root/Physics/PhysScene.h"
 //#include "Root/Physics/Physics.h"
 //#include "Root/Scenes/SceneManager.h"
 //#include "Root/Scripts/Scripts.h"
@@ -38,6 +39,21 @@ namespace Oak
 			\brief Access to controls service
 		*/
 		virtual IControls* GetControls() = 0;
+
+		/**
+		\brief Access to meshes service
+		*/
+		virtual IMeshes* GetMeshes() = 0;
+
+		/**
+			\brief Access to render service
+		*/		
+		virtual IRender* GetRender() = 0;
+
+		/**
+			\brief Get instance of physic scene 
+		*/
+		virtual PhysScene* GetPhysScene() = 0;
 
 		virtual void Log(const char* name, const char* text, ...) = 0;
 		virtual float GetDeltaTime() = 0;

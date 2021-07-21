@@ -46,6 +46,8 @@ namespace Oak
 		bool redirectLog = true;
 		#endif
 
+		PhysScene* pscene = nullptr;
+
 		#endif
 
 	public:
@@ -57,7 +59,7 @@ namespace Oak
 
 		Controls controls;
 
-		IControls* GetControls() { return &controls; };
+		IControls* GetControls() override { return &controls; };
 
 		/**
 		\brief Access to files service
@@ -79,20 +81,23 @@ namespace Oak
 		*/
 		Meshes meshes;
 
+		IMeshes* GetMeshes() override { return &meshes; };
+
 		/**
 		\brief Access to render service
 		*/
 		Render render;
+
+		IRender* GetRender() override { return &render; };
 
 		/**
 		\brief Access to particles service
 		*/
 		Particles particles;
 
-		/**
-			\brief Access to physics service
-		*/
 		Physics physics;
+
+		PhysScene* GetPhysScene() override { return pscene; };
 
 		/**
 		\brief Access to scene manager
@@ -134,6 +139,9 @@ namespace Oak
 		float GetDeltaTime();
 		int GetFPS();
 
+		void PreparePhysScene();
+		void ClearPhysScene();
+	
 		void SetRootPath(const char* rootPath);
 		const char* GetRootPath();
 

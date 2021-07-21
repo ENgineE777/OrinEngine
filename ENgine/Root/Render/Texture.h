@@ -10,7 +10,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class TextureFormat
+	enum class CLASS_DECLSPEC TextureFormat
 	{
 		FMT_A8R8G8B8 = 0,
 		FMT_A8R8,
@@ -23,7 +23,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class TextureFilter
+	enum class CLASS_DECLSPEC TextureFilter
 	{
 		Point = 0 /*!< Point filter */,
 		Linear /*!< Linera filtraion */
@@ -33,7 +33,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class TextureAddress
+	enum class CLASS_DECLSPEC TextureAddress
 	{
 		Wrap = 0 /*!< Wrapping */,
 		Mirror /*!< Mirroring */,
@@ -45,7 +45,7 @@ namespace Oak
 	\ingroup gr_code_root_render
 	*/
 
-	enum class TextureType
+	enum class CLASS_DECLSPEC TextureType
 	{
 		Tex2D = 0 /*!< 2D texture */,
 		Array /*!< Array texture */,
@@ -64,7 +64,7 @@ namespace Oak
 
 	*/
 
-	class Texture
+	class CLASS_DECLSPEC Texture
 	{
 		private:
 
