@@ -10,7 +10,7 @@ namespace Oak
 	{
 		Release();
 
-		const char* modeStr[] = { "rb", "w", "wb", "a", "ab" };
+		const char* modeStr[] = { "rb", "wb", "w", "ab", "a" };
 
 		file = root.files.FileOpen(name, modeStr[(int)mode]);
 
