@@ -1,0 +1,176 @@
+﻿{
+
+	"uid" : 30624,
+	"entities" : [
+		{
+			"type" : "Terrain",
+			"uid" : 980907,
+			"name" : "Terrain",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"scaleh" : 0.500000,
+			"scalev" : 0.065000,
+			"tex_name" : "Terrain/terrain_c.tga",
+			"hgt_name" : "Terrain/terrain_h.tga",
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 1.000000,
+				"a" : 1.000000
+			}
+		},
+		{
+			"type" : "Tank",
+			"uid" : 524287,
+			"name" : "Tank",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 0.000000,
+					"y" : 17.957293,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			}
+		},
+		{
+			"type" : "ControlsAliases",
+			"uid" : 1046458,
+			"name" : "ControlsAliases",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"aliases_name" : "tank_aliases"
+		},
+		{
+			"type" : "TankClient",
+			"uid" : 161717,
+			"name" : "TankClient",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 0.000000,
+					"y" : 19.294210,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"base_model_name" : "TankModel/AATankBody.FBX",
+			"tower_model_name" : "TankModel/AATankTower.FBX"
+		}
+	]
+}
