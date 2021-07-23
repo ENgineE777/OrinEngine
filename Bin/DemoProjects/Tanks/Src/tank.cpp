@@ -297,7 +297,7 @@ namespace Oak
 
 					for (auto& inst : marker->instances)
 					{
-						AddInstance(index, inst.transform.Pos(), false);
+						AddInstance(index, inst.transform.global.Pos(), false);
 					}
 
 					index++;
