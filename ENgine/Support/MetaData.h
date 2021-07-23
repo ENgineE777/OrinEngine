@@ -76,8 +76,8 @@ namespace Oak
 			uint8_t* value = nullptr;
 
 			#ifdef OAK_EDITOR
-			int64_t sel_item_offset = -1;
-			int32_t* sel_item = nullptr;
+			int64_t selItemOffset = -1;
+			int32_t* selItem = nullptr;
 			Object::DelegateSimple gizmoCallback = nullptr;
 			#endif
 
@@ -335,7 +335,7 @@ namespace Oak
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		prop.adapter = new ArrayAdapterImpl<structType>;\
-		prop.adapter->sel_item_offset = memberOFFSET(selItemClassName, selItemClassMember);\
+		prop.adapter->selItemOffset = memberOFFSET(selItemClassName, selItemClassMember);\
 		properties.push_back(prop);\
 	}
 
@@ -349,7 +349,7 @@ namespace Oak
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		prop.adapter = new ArrayAdapterImpl<structType>;\
-		prop.adapter->sel_item_offset = memberOFFSET(selItemClassName, selItemClassMember);\
+		prop.adapter->selItemOffset = memberOFFSET(selItemClassName, selItemClassMember);\
 		prop.adapter->gizmoCallback = (Object::DelegateSimple)&className::setGizmoCallback;\
 		properties.push_back(prop);\
 	}

@@ -40,6 +40,13 @@ namespace Oak
 
 			if (prop.adapter)
 			{
+				#ifdef OAK_EDITOR
+				if (prop.adapter->selItemOffset != -1)
+				{
+					prop.adapter->selItem = (int32_t*)((uint8_t*)root + prop.adapter->selItemOffset);
+				}
+				#endif
+
 				prop.adapter->value = prop.value;
 			}
 		}
@@ -568,18 +575,65 @@ namespace Oak
 
 						ImGui::NextColumn();
 
+						int selItem = -1;
+
+						if (prop.adapter->selItem != nullptr)
+						{
+							selItem = *prop.adapter->selItem;
+						}
+
 						if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
 						{
 							prop.adapter->PushBack();
 							prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem((int)prop.adapter->GetSize() - 1));
 							prop.adapter->GetMetaData()->SetDefValues();
 							prop.changed = true;
+
+							if (prop.adapter->selItem != nullptr)
+							{
+								selItem = prop.adapter->GetSize() - 1;
+							}
 						}
 
 						ImGui::NextColumn();
 
 						if (items_open)
 						{
+							if (prop.adapter->selItem != nullptr)
+							{
+								ImGui::Text("Selection");
+								ImGui::NextColumn();
+
+								int width = ImGui::GetContentRegionAvail().x * 0.3f;
+
+								if (ImGui::Button("Prev", ImVec2(width, 0.0f)))
+								{
+									if (selItem > 0)
+									{
+										selItem--;
+									}
+								}
+
+								ImGui::SameLine();
+
+								if (ImGui::Button("DeSel", ImVec2(width, 0.0f)))
+								{
+									selItem = -1;
+								}
+
+								ImGui::SameLine();
+
+								if (ImGui::Button("Next", ImVec2(width, 0.0f)))
+								{
+									if (selItem < prop.adapter->GetSize() - 1)
+									{
+										selItem++;
+									}
+								}
+
+								ImGui::NextColumn();
+							}
+
 							int count = prop.adapter->GetSize();
 							int index2delete = -1;
 
@@ -591,7 +645,29 @@ namespace Oak
 
 								StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
 
-								if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+								int width = (prop.adapter->selItem != nullptr) ? ImGui::GetContentRegionAvail().x * 0.5f : ImGui::GetContentRegionAvail().x;
+
+								if (prop.adapter->selItem != nullptr)
+								{
+									if (selItem == i)
+									{
+										if (ImGui::Button(StringUtils::PrintTemp("Deselect###%s%s%iDesel", categoriesData[j].name.c_str(), guiID, i), ImVec2(width, 0.0f)))
+										{
+											selItem = -1;
+										}
+									}
+									else
+									{
+										if(ImGui::Button(StringUtils::PrintTemp("Select###%s%s%iSel", categoriesData[j].name.c_str(), guiID, i), ImVec2(width, 0.0f)))
+										{
+											selItem = i;
+										}
+									}
+
+									ImGui::SameLine();
+								}
+
+								if (ImGui::Button(propGuiID, ImVec2(width, 0.0f)))
 								{
 									index2delete = i;
 								}
@@ -614,6 +690,16 @@ namespace Oak
 							}
 
 							ImGui::TreePop();
+						}
+
+						if (prop.adapter->selItem != nullptr && selItem != *prop.adapter->selItem)
+						{
+							*prop.adapter->selItem = selItem;
+
+							if (prop.adapter->gizmoCallback)
+							{
+								(((Object*)owner)->*prop.adapter->gizmoCallback)();
+							}
 						}
 					}
 					else
