@@ -10,20 +10,23 @@ namespace Oak
 	META_DATA_DESC(GenericMarker::Instance)
 		FLOAT_PROP(GenericMarker::Instance, radius, 1.0f, "Prop", "radius", "radius of a marker")
 		COLOR_PROP(GenericMarker::Instance, color, COLOR_WHITE, "Prop", "color")
+		TRANSFORM_PROP(GenericMarker::Instance, transform, "Transform")
 	META_DATA_DESC_END()
 
 	CLASSREG(SceneEntity, GenericMarker, "GenericMarker")
 
 	META_DATA_DESC(GenericMarker)
 		BASE_SCENE_ENTITY_PROP(GenericMarker)
-		STRING_PROP(GenericMarker, scene_group, "", "Prop", "scene_group")
-		BOOL_PROP(GenericMarker, full_shade, true, "Prop", "full_shade", "full_shade")
-		BOOL_PROP(GenericMarker, is_path, false, "Prop", "is_path", "is_path")
-		//ARRAY_PROP_INST_CALLGIZMO(GenericMarker, instances, Instance, "Prop", "inst", GenericMarker, sel_inst, SetGizmo)
+		STRING_PROP(GenericMarker, sceneGroup, "", "Prop", "scene_group")
+		BOOL_PROP(GenericMarker, fullShade, true, "Prop", "full_shade", "use full shade")
+		BOOL_PROP(GenericMarker, isPath, false, "Prop", "is path", "is path")
+		ARRAY_PROP_INST_CALLGIZMO(GenericMarker, instances, Instance, "Prop", "inst", GenericMarker, selInst, SetGizmo)
 	META_DATA_DESC_END()
 
 	void GenericMarker::Init()
 	{
+		transform.transformFlag = MoveXYZ | RotateXYZ;
+
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&GenericMarker::Draw);
 	}
 
@@ -31,43 +34,11 @@ namespace Oak
 	{
 		GetScene()->DelFromAllGroups(this);
 
-		if (scene_group.c_str()[0] != 0)
+		if (sceneGroup.c_str()[0] != 0)
 		{
-			GetScene()->AddToGroup(this, scene_group.c_str());
+			GetScene()->AddToGroup(this, sceneGroup.c_str());
 		}
 	}
-
-	/*void GenericMarker::Load(JSONReader& reader)
-	{
-		SceneObject::Load(reader);
-
-		for (auto& inst : instances)
-		{
-			reader.EnterBlock("inst_trans");
-
-			reader.Read("trans", &inst.transform);
-
-			reader.LeaveBlock();
-		}
-	}
-
-	void GenericMarker::Save(JSONWriter& writer)
-	{
-		SceneObject::Save(writer);
-
-		writer.StartArray("inst_trans");
-
-		for (auto& inst : instances)
-		{
-			writer.StartBlock(nullptr);
-
-			writer.Write("trans", &inst.transform);
-
-			writer.FinishBlock();
-		}
-
-		writer.FinishArray();
-	}*/
 
 	void GenericMarker::Draw(float dt)
 	{
@@ -76,39 +47,46 @@ namespace Oak
 			return;
 		}
 
+		UpdateTransforms();
+
 	#ifdef OAK_EDITOR
 		if (edited)
 		{
-			if (root.controls.DebugKeyPressed("KEY_I") && sel_inst != -1)
+			if (root.controls.DebugKeyPressed("KEY_I") && selInst != -1)
 			{
-				instances.erase(sel_inst + instances.begin());
-				sel_inst = -1;
+				instances.erase(selInst + instances.begin());
+				selInst = -1;
 				SetGizmo();
 			}
 
 			bool add_center = root.controls.DebugKeyPressed("KEY_P");
 			bool add_copy = root.controls.DebugKeyPressed("KEY_O");
 
-			if (add_center || (add_copy && sel_inst != -1))
+			if (add_center || (add_copy && selInst != -1))
 			{
 				Instance inst;
 
 				if (add_copy)
 				{
-					inst.color = instances[sel_inst].color;
-					inst.transform = instances[sel_inst].transform;
-					inst.transform.Pos().x += 1.0f;
+					inst.color = instances[selInst].color;
+					inst.transform = instances[selInst].transform;
+					inst.transform.position.x += 1.0f;
 				}
 				else
 				{
-					//inst.transform.Pos() += editor.freecamera.pos + Vector3(cosf(editor.freecamera.angles.x), sinf(editor.freecamera.angles.y), sinf(editor.freecamera.angles.x)) * 5.0f;
+					inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
+
+					Math::Matrix invMat = transform.global;
+					invMat.Inverse();
+
+					inst.transform.position = invMat.MulVertex(inst.transform.position);
 				}
 
 				instances.push_back(inst);
 
-				sel_inst = (int)instances.size() - 1;
+				selInst = (int)instances.size() - 1;
 
-				//SetGizmo();
+				SetGizmo();
 			}
 		}
 	#endif
@@ -117,12 +95,15 @@ namespace Oak
 
 		for (auto& inst : instances)
 		{
-			root.render.DebugSphere(inst.transform.Pos(), inst.color, inst.radius, full_shade);
+			inst.transform.parent = &transform.global;
+			inst.transform.BuildMatrices();
 
-			if (index != 0 && is_path)
+			root.render.DebugSphere(inst.transform.global.Pos(), inst.color, inst.radius, fullShade);
+
+			if (index != 0 && isPath)
 			{
-				auto prev_inst = instances[index - 1];
-				root.render.DebugLine(inst.transform.Pos(), inst.color, prev_inst.transform.Pos(), prev_inst.color);
+				auto prevInst = instances[index - 1];
+				root.render.DebugLine(inst.transform.global.Pos(), inst.color, prevInst.transform.global.Pos(), prevInst.color);
 			}
 
 			index++;
@@ -154,27 +135,44 @@ namespace Oak
 		return false;
 	}*/
 
+	bool GenericMarker::Play()
+	{
+		UpdateTransforms();
+
+		return true;
+	}
+
+	void GenericMarker::UpdateTransforms()
+	{
+		transform.BuildMatrices();
+
+		for (auto& inst : instances)
+		{
+			inst.transform.parent = &transform.global;
+			inst.transform.BuildMatrices();
+		}
+	}
+
 	void GenericMarker::SetEditMode(bool ed)
 	{
 		SceneEntity::SetEditMode(ed);
 
 		if (!ed)
 		{
-			sel_inst = -1;
+			SetGizmo();
 		}
-
-		SetGizmo();
 	}
 
 	void GenericMarker::SetGizmo()
 	{
-		if (sel_inst != -1)
+		if (selInst != -1)
 		{
-			//Gizmo::inst->SetTrans3D(&instances[sel_inst].transform);
+			instances[selInst].transform.transformFlag = MoveXYZ;
+			editor.gizmo.SetTransform(&instances[selInst].transform);
 		}
 		else
 		{
-			//Gizmo::inst->Disable();
+			editor.gizmo.SetTransform(&transform);
 		}
 	}
 #endif

@@ -43,32 +43,33 @@ namespace Oak
 		{
 			META_DATA_DECL_BASE(Instance)
 
-			Math::Matrix transform;
+			Transform transform;
 			Color color;
 			float radius = 1.0f;
 		};
 
-		bool full_shade = true;
-		bool is_path = false;
+		bool fullShade = true;
+		bool isPath = false;
 		eastl::vector<int> mapping;
 		eastl::vector<Instance> instances;
 
 		/**
 		\brief Name of group which will be used in registration via class Scene::AddToGroup
 		*/
-		eastl::string scene_group;
+		eastl::string sceneGroup;
 
 	#ifndef DOXYGEN_SKIP
-		int sel_inst = -1;
+		int selInst = -1;
 		META_DATA_DECL(GenericMarker)
 
 		void Init() override;
 		void ApplyProperties() override;
 
-		//void Load(JSONReader& reader) override;
-		//void Save(JSONWriter& writer) override;
-
 		void Draw(float dt);
+
+		bool Play() override;
+
+		void UpdateTransforms();
 
 	#ifdef OAK_EDITOR
 		//bool CheckSelection(Vector2 ms, Vector3 start, Vector3 dir) override;

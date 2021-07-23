@@ -39,8 +39,7 @@ namespace Oak
 		IDXGISwapChain* swapChain = nullptr;
 		ID3D11RenderTargetView* mainRenderTargetView = nullptr;
 
-		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
-		FreeCamera freeCamera;
+		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;	
 
 		bool showAbout = false;
 		bool showProjectSettings = false;
@@ -81,6 +80,7 @@ namespace Oak
 
 		SceneEntity* selectedEntity = nullptr;
 		Project project;
+		FreeCamera freeCamera;
 		Gizmo gizmo;
 		bool viewportFocused = false;
 
