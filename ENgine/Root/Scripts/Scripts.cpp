@@ -165,6 +165,8 @@ namespace Oak
 						auto code_ptr = (decltype(register_code)*)Procs;
 
 						code_ptr(ClassFactorySceneEntity::Decls());
+
+						ClassFactorySceneEntity::Sort();
 					}
 
 					if (Module)

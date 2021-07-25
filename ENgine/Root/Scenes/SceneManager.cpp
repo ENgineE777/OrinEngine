@@ -6,6 +6,7 @@ namespace Oak
 {
 	void SceneManager::Init()
 	{
+		ClassFactorySceneEntity::Sort();
 	}
 
 	void SceneManager::LoadProject(const char* projectName)
