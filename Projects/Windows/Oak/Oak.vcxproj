@@ -123,6 +123,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\SPARK;..\..\..\ENgine\Support\PugiXml;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\fmod\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\imgui;..\..\..\Libs\physx\include;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +143,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\PugiXml;..\..\..\ENgine\Support\SPARK;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\fmod\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\physx\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

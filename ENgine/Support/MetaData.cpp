@@ -604,7 +604,7 @@ namespace Oak
 								ImGui::Text("Selection");
 								ImGui::NextColumn();
 
-								int width = ImGui::GetContentRegionAvail().x * 0.3f;
+								float width = ImGui::GetContentRegionAvail().x * 0.3f;
 
 								if (ImGui::Button("Prev", ImVec2(width, 0.0f)))
 								{
@@ -645,7 +645,7 @@ namespace Oak
 
 								StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
 
-								int width = (prop.adapter->selItem != nullptr) ? ImGui::GetContentRegionAvail().x * 0.5f : ImGui::GetContentRegionAvail().x;
+								float width = (prop.adapter->selItem != nullptr) ? ImGui::GetContentRegionAvail().x * 0.5f : ImGui::GetContentRegionAvail().x;
 
 								if (prop.adapter->selItem != nullptr)
 								{

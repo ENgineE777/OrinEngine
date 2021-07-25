@@ -43,9 +43,9 @@ namespace SPK
 		if (nbTexCoords > 0)
 			texCoordBuffer = SPK_NEW_ARRAY(float, nbVertices * nbTexCoords * 4);
 
-		vbuffer = root.render.GetDevice()->CreateBuffer(nbVertices * 4, sizeof(Vertex), _FL_);
+		vbuffer = root.render.GetDevice()->CreateBuffer((int)nbVertices * 4, sizeof(Vertex), _FL_);
 
-		indices = root.render.GetDevice()->CreateBuffer(nbVertices * 6, sizeof(uint32_t), _FL_);
+		indices = root.render.GetDevice()->CreateBuffer((int)nbVertices * 6, sizeof(uint32_t), _FL_);
 		uint32_t* mesh_indices = (uint32_t*)indices->Lock();
 
 		for (int i = 0; i < nbVertices; i++)
@@ -100,6 +100,6 @@ namespace SPK
 		root.render.GetDevice()->SetVertexBuffer(0, vbuffer);
 		root.render.GetDevice()->SetIndexBuffer(indices);
 
-		root.render.GetDevice()->DrawIndexed(PrimitiveTopology::TrianglesList, 0, 0, nbVertices * 2);
+		root.render.GetDevice()->DrawIndexed(PrimitiveTopology::TrianglesList, 0, 0, (int)nbVertices * 2);
 	}
 }

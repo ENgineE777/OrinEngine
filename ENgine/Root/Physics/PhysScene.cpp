@@ -182,7 +182,7 @@ namespace Oak
 		{
 			bodies.resize(hit.getNbTouches());
 
-			for (int i = 0; i < hit.getNbTouches(); i++)
+			for (int i = 0; i < (int)hit.getNbTouches(); i++)
 			{
 				bodies[i] = (BodyUserData*)(aTouches[i].actor->userData);
 			}
