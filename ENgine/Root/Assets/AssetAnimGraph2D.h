@@ -112,6 +112,7 @@ namespace Oak
 	{
 		AssetTextureRef curTexture;
 		AssetAnimGraph2D::Node* curNode = nullptr;
+		eastl::function<void(int, eastl::string&, eastl::string&)> onFrameChange;
 
 	public:
 
@@ -119,6 +120,8 @@ namespace Oak
 		AssetAnimGraph2DRef(Asset* setPtr, const char* file, int line) : PointerRef(reinterpret_cast<AssetAnimGraph2D*>(setPtr), _FL_) {};
 		AssetAnimGraph2DRef(AssetAnimGraph2D* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
 		
+		void SetOnFrameChangeCallback(eastl::function<void(int, eastl::string&, eastl::string&)> onFrameChange);
+
 		void Reset();
 		bool ActivateLink(const char* link);
 		void GotoNode(int index);

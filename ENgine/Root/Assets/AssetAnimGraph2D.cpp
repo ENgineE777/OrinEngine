@@ -704,6 +704,11 @@ namespace Oak
 	}
 	#endif
 
+	void AssetAnimGraph2DRef::SetOnFrameChangeCallback(eastl::function<void(int, eastl::string&, eastl::string&)> setOnFrameChange)
+	{
+		onFrameChange = setOnFrameChange;
+	}
+
 	void AssetAnimGraph2DRef::Reset()
 	{
 		if (!Get())
@@ -749,6 +754,7 @@ namespace Oak
 			{
 				if (frame == event.frameNumber)
 				{
+					onFrameChange(frame, event.name, event.param);
 				}
 			}
 		};
