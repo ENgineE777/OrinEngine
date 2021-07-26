@@ -35,6 +35,8 @@ namespace Oak
 		int cur_hp = 100;
 		int next_kick = -1;
 
+		bool moveBack = false;
+
 		Math::Vector3 init_pos;
 
 		AssetAnimGraph2DRef animGraph;
@@ -42,6 +44,7 @@ namespace Oak
 		virtual ~SimpleCharacter2D() = default;
 
 		void Init() override;
+		void ApplyProperties() override;
 		void Update(float dt);
 		void Draw(float dt);
 
@@ -50,8 +53,10 @@ namespace Oak
 		SimpleCharacter2D* FindTarget();
 		void ControlPlayer(float dt);
 		void ControlEnemy(float dt);
-		void MakeHit(Math::Vector2 pos, int damage);
+		void MakeHit(int damage);
 		void Respawn();
 		void Reset();
+
+		void OnFrameChangeCallback(int frame, eastl::string& name, eastl::string& param);
 	};
 }

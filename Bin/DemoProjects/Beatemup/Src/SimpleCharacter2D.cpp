@@ -28,6 +28,16 @@ namespace Oak
 		GetScene()->AddToGroup(this, "SimpleCharacter2D");
 	}
 
+	void SimpleCharacter2D::ApplyProperties()
+	{
+		auto fireEvents = [this](int frame, eastl::string& name, eastl::string& param)
+		{
+			this->OnFrameChangeCallback(frame, name, param);
+		};
+
+		animGraph.SetOnFrameChangeCallback(fireEvents);
+	}
+
 	void SimpleCharacter2D::Update(float dt)
 	{
 		if (!IsVisible())
@@ -66,6 +76,11 @@ namespace Oak
 				ControlEnemy(dt);
 			}
 
+			if (moveBack)
+			{
+				dir_horz = flipped ? 1 : -1;
+			}
+
 			if (cur_time_to_kick > 0.0f)
 			{
 				cur_time_to_kick -= dt;
@@ -73,10 +88,6 @@ namespace Oak
 				if (cur_time_to_kick < 0.0f)
 				{
 					cur_time_to_kick = -1.0f;
-
-					Math::Vector2 kick_pos = Math::Vector2(transform.position.x, transform.position.y);
-
-					MakeHit(kick_pos, 25);
 
 					if (target && target->cur_hp == 0)
 					{
@@ -347,10 +358,12 @@ namespace Oak
 		}
 	}
 
-	void SimpleCharacter2D::MakeHit(Math::Vector2 pos, int damage)
+	void SimpleCharacter2D::MakeHit(int damage)
 	{
 		eastl::vector<Scene::Group*> out_group;
 		GetScene()->GetGroup(out_group, "SimpleCharacter2D");
+
+		Math::Vector2 pos = Math::Vector2(transform.position.x, transform.position.y);
 
 		for (auto group : out_group)
 		{
@@ -426,5 +439,30 @@ namespace Oak
 		Reset();
 
 		return true;
+	}
+
+	void SimpleCharacter2D::OnFrameChangeCallback(int frame, eastl::string& name, eastl::string& param)
+	{
+		if (StringUtils::IsEqual("MakeHit", name.c_str()))
+		{
+			int damage = atoi(param.c_str());
+
+			if (damage < 1)
+			{
+				damage = 10;
+			}
+
+			MakeHit(damage);
+		}
+		else
+		if (StringUtils::IsEqual("StartMoveBack", name.c_str()))
+		{
+			moveBack = true;
+		}
+		else
+		if (StringUtils::IsEqual("EndMoveBack", name.c_str()))
+		{
+			moveBack = false;
+		}
 	}
 }

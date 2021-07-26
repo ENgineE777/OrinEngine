@@ -84,8 +84,13 @@
 					"name" : ""
 				}
 			],
-			"CountEvent" : 0,
+			"CountEvent" : 1,
 			"Event" : [
+				{
+					"frameNumber" : 2,
+					"name" : "MakeHit",
+					"param" : "25"
+				}
 			]
 		},
 		{
@@ -113,8 +118,13 @@
 					"name" : ""
 				}
 			],
-			"CountEvent" : 0,
+			"CountEvent" : 1,
 			"Event" : [
+				{
+					"frameNumber" : 4,
+					"name" : "MakeHit",
+					"param" : "25"
+				}
 			]
 		},
 		{
@@ -208,8 +218,18 @@
 					"name" : ""
 				}
 			],
-			"CountEvent" : 0,
+			"CountEvent" : 2,
 			"Event" : [
+				{
+					"frameNumber" : 0,
+					"name" : "StartMoveBack",
+					"param" : ""
+				},
+				{
+					"frameNumber" : 5,
+					"name" : "EndMoveBack",
+					"param" : ""
+				}
 			]
 		},
 		{
