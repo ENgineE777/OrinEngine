@@ -236,8 +236,6 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h" />
     <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
@@ -420,8 +418,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />

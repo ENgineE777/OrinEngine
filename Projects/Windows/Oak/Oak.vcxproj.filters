@@ -80,9 +80,6 @@
     <Filter Include="ENgine\SceneEntities\2D">
       <UniqueIdentifier>{59941c46-96f9-4802-a797-ce956c114903}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\SceneEntities\Other">
-      <UniqueIdentifier>{987cd30d-4566-4fea-a9b1-183d0e1eec00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ENgine\Root\Scripts">
       <UniqueIdentifier>{c7567920-e509-4db9-a2d9-f69c3b27a225}</UniqueIdentifier>
     </Filter>
@@ -402,12 +399,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.cpp">
-      <Filter>ENgine\SceneEntities\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.cpp">
-      <Filter>ENgine\SceneEntities\Other</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp">
       <Filter>ENgine\Editor</Filter>
@@ -887,12 +878,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity.h">
-      <Filter>ENgine\SceneEntities\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Other\TestEntity3D.h">
-      <Filter>ENgine\SceneEntities\Other</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h">
       <Filter>ENgine\Editor</Filter>
