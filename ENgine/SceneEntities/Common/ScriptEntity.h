@@ -8,7 +8,6 @@ namespace Oak
 	class CLASS_DECLSPEC ScriptEntity : public SceneEntity
 	{
 	public:
-		META_DATA_DECL(ScriptEntity)
 
 	#ifndef DOXYGEN_SKIP
 
