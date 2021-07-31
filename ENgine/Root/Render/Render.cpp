@@ -145,6 +145,11 @@ namespace Oak
 			int height;
 			uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
 
+			if (data == nullptr)
+			{
+				return TextureRef();
+			}
+
 			texture = device->CreateTextureInner(width, height, TextureFormat::FMT_A8R8G8B8, 0, false, TextureType::Tex2D, _FL_);
 			texture->name = name;
 
