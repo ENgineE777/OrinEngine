@@ -58,6 +58,7 @@ namespace Oak
 
 		eastl::vector<SceneHolder*> scenes;
 
+
 		bool CanRun();
 		void Load(const char* fileName);
 		void LoadScene(SceneHolder* holder);
@@ -79,6 +80,7 @@ namespace Oak
 		void GenerateUID(SceneHolder* holder);
 		void Reset();
 
+		void SelectExportDir();
 		void Export();
 
 		void SaveCameraPos(SceneHolder* holder);

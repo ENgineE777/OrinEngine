@@ -1,5 +1,6 @@
 #include "Editor.h"
 #include "Support/Sprite.h"
+#include "shlobj_core.h"
 
 namespace Oak
 {
@@ -417,8 +418,101 @@ namespace Oak
 		startScene = -1;
 	}
 
+	void Project::SelectExportDir()
+	{
+		BROWSEINFOA bi = { 0 };
+
+		bi.lpszTitle = "Browse for Folder";
+
+		LPITEMIDLIST pidl = SHBrowseForFolderA(&bi);
+
+		if (pidl != NULL)
+		{
+			CHAR tszPath[MAX_PATH] = "\0";
+
+			if (SHGetPathFromIDListA(pidl, tszPath) == TRUE)
+			{
+				exportDir = tszPath;
+			}
+
+			CoTaskMemFree(pidl);
+		}
+	}
+
 	void Project::Export()
 	{
+		if (projectName.empty())
+		{
+			return;
+		}
+
+		if (exportDir.empty())
+		{
+			SelectExportDir();
+
+			if (exportDir.empty())
+			{
+				return;
+			}
+		}
+
+		Save();
+
+		root.files.DeleteFolder(exportDir.c_str());
+		root.files.CreateFolder((exportDir + "/dummy").c_str());
+
+		DWORD dwAttrib = GetFileAttributesA(exportDir.c_str());
+
+		if (dwAttrib == INVALID_FILE_ATTRIBUTES || !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			eastl::string str = eastl::string("Failure in exporing resources to folder:\n") + exportDir;
+			MESSAGE_BOX("Export failed", str.c_str());
+
+			return;
+		}
+
+		{
+			eastl::string dest_path = exportDir + "/project";
+			root.files.CpyFolder(projectPath, dest_path.c_str());
+		}
+
+		{
+			char project_file_name[512];
+			StringUtils::GetFileName(projectName.c_str(), project_file_name);
+
+			eastl::string original_name = exportDir + "/project/" + project_file_name;
+			eastl::string new_name = exportDir + "/project/project.pra";
+
+			rename(original_name.c_str(), new_name.c_str());
+		}
+
+		char ApplicationDir[512];
+		GetCurrentDirectoryA(512, ApplicationDir);
+
+		{
+			eastl::string src_path = eastl::string(ApplicationDir) + "/Shaders/GLES";
+			eastl::string dest_path = exportDir + "/Shaders/GLES";
+			root.files.CpyFolder(src_path.c_str(), dest_path.c_str());
+		}
+
+		{
+			eastl::string src_path = eastl::string(ApplicationDir) + "/settings";
+			eastl::string dest_path = exportDir + "/settings";
+			root.files.CpyFolder(src_path.c_str(), dest_path.c_str());
+		}
+
+		{
+			eastl::string dest_path = exportDir + "/settings/editor";
+			root.files.DeleteFolder(dest_path.c_str());
+		}
+
+		{
+			eastl::string dest_path = exportDir + "/settings/EUI";
+			root.files.DeleteFolder(dest_path.c_str());
+		}
+
+		eastl::string str = eastl::string("Resources of project were exported to folder:\n") + exportDir;
+		MESSAGE_BOX("Export finished", str.c_str());
 	}
 
 	void Project::SaveCameraPos(SceneHolder* holder)

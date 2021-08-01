@@ -317,6 +317,25 @@ namespace Oak
 			ImGui::Columns(1);
 		}
 
+		is_open = ImGui::CollapsingHeader("Export###ProjectSettingsExport", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+			ImGui::Columns(2);
+
+			ImGui::Text("Export Directory");
+			ImGui::NextColumn();
+
+			if (ImGui::Button(StringUtils::PrintTemp("%s###ProjectSettingsExportDir", project.exportDir[0] ? project.exportDir.c_str() : "File not set"), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+			{
+				project.SelectExportDir();
+			}
+
+			ImGui::NextColumn();
+
+			ImGui::Columns(1);
+		}
+
 		ImGui::End();
 	}
 
@@ -1155,11 +1174,16 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::BeginMenu("Edit"))
+			if (ImGui::BeginMenu("Project"))
 			{
-				if (ImGui::MenuItem("Project Settings") && !showProjectSettings)
+				if (ImGui::MenuItem("Settings") && !showProjectSettings)
 				{
 					showProjectSettings = true;
+				}
+
+				if (ImGui::MenuItem("Export"))
+				{
+					project.Export();
 				}
 
 				ImGui::EndMenu();
@@ -1397,6 +1421,7 @@ namespace Oak
 		}
 
 		ShowAbout();
+		ShowProjectSettings();
 		ShowViewport();
 
 		if (SpriteWindow::instance && SpriteWindow::instance->opened)
