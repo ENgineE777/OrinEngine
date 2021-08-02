@@ -163,6 +163,8 @@
     <ClInclude Include="..\..\..\ENgine\Editor\IEditor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h" />
+    <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h" />
+    <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
@@ -355,6 +357,7 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />

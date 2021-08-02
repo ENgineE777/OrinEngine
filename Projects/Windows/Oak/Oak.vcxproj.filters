@@ -146,6 +146,9 @@
     <Filter Include="ENgine\SceneEntities\Common">
       <UniqueIdentifier>{935bf47d-ba5c-4549-bf36-4de6b8b75507}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\Platform\Common">
+      <UniqueIdentifier>{afbdecd7-3e84-491e-91ee-b3946ce49ff4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -633,6 +636,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.cpp">
       <Filter>ENgine\SceneEntities\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp">
+      <Filter>ENgine\Platform\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1208,6 +1214,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.h">
       <Filter>ENgine\SceneEntities\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h">
+      <Filter>ENgine\Platform\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h">
+      <Filter>ENgine\Platform\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

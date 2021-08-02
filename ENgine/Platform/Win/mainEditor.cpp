@@ -1,7 +1,7 @@
 ﻿
 #include <SDKDDKVer.h>
 
-#include "Platform/Common/IRunner.h"
+#include "Editor/IEditor.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -18,12 +18,17 @@ HWND hwnd;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+    if (Oak::GetEditor()->ProcHandler(hWnd, msg, wParam, lParam))
+    {
+        return true;
+    }
+
     switch (msg)
     {
     case WM_SIZE:
         if (wParam != SIZE_MINIMIZED)
         {
-            Oak::GetRunner()->OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
+            Oak::GetEditor()->OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
         }
         return 0;
     case WM_SYSCOMMAND:
@@ -70,7 +75,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return 1;
     }
 
-    if (!Oak::GetRunner()->Init(hwnd))
+    if (!Oak::GetEditor()->Init(hwnd))
     {
         UnregisterClass(wcex.lpszClassName, wcex.hInstance);
         return 1;
@@ -90,10 +95,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
             continue;
         }
 
-        Oak::GetRunner()->Update();
+        if (!Oak::GetEditor()->Update())
+        {
+            break;
+        }
     }
 
-    Oak::GetRunner()->Release();
+    Oak::GetEditor()->Release();
 
     DestroyWindow(hwnd);
     UnregisterClass(wcex.lpszClassName, wcex.hInstance);

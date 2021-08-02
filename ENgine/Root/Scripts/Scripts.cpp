@@ -208,6 +208,8 @@ namespace Oak
 
 	bool Scripts::Start()
 	{
+		CheckGamePlayDll();
+
 		return true;
 	}
 
