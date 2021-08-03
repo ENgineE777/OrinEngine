@@ -49,6 +49,7 @@ namespace Oak
 
 		eastl::string projectName;
 		char projectPath[1024];
+		char applicationDir[512];
 		eastl::string exportDir;
 
 		int startScene = -1;
@@ -82,6 +83,8 @@ namespace Oak
 
 		void SelectExportDir();
 		void Export();
+		void CpyFolder(const char* src, const char* dest = nullptr);
+		void CpyFile(const char* src, const char* dest = nullptr);
 
 		void SaveCameraPos(SceneHolder* holder);
 	};

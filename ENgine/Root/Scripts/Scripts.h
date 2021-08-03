@@ -15,7 +15,11 @@ namespace Oak
 		uint64_t LastWrite = 0;
 		int pingPong = 0;
 
+#ifdef _DEBUG
 		eastl::string configName = "Debug";
+#else
+		eastl::string configName = "Release";
+#endif
 
 		void CheckGamePlayDll();
 		#endif

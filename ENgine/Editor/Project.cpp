@@ -439,6 +439,16 @@ namespace Oak
 		}
 	}
 
+	void Project::CpyFolder(const char* src, const char* dest)
+	{
+		root.files.CpyFolder((eastl::string(applicationDir) + src).c_str(), (exportDir + (dest != nullptr ? dest : src)).c_str());
+	}
+
+	void Project::CpyFile(const char* src, const char* dest)
+	{
+		root.files.CpyFile((eastl::string(applicationDir) + src).c_str(), (exportDir + (dest != nullptr ? dest : src)).c_str());
+	}
+
 	void Project::Export()
 	{
 		if (projectName.empty())
@@ -458,24 +468,12 @@ namespace Oak
 
 		Save();
 
+		GetCurrentDirectoryA(512, applicationDir);
+
 		root.files.DeleteFolder(exportDir.c_str());
-		root.files.CreateFolder((exportDir + "/dummy").c_str());
 
-		DWORD dwAttrib = GetFileAttributesA(exportDir.c_str());
-
-		if (dwAttrib == INVALID_FILE_ATTRIBUTES || !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY))
-		{
-			eastl::string str = eastl::string("Failure in exporing resources to folder:\n") + exportDir;
-			MESSAGE_BOX("Export failed", str.c_str());
-
-			return;
-		}
-
-		{
-			eastl::string dest_path = exportDir + "/project";
-			root.files.CpyFolder(projectPath, dest_path.c_str());
-		}
-
+		root.files.CpyFolder(projectPath, (exportDir + "/project").c_str());
+		
 		{
 			char project_file_name[512];
 			StringUtils::GetFileName(projectName.c_str(), project_file_name);
@@ -486,33 +484,16 @@ namespace Oak
 			rename(original_name.c_str(), new_name.c_str());
 		}
 
-		char ApplicationDir[512];
-		GetCurrentDirectoryA(512, ApplicationDir);
+		CpyFolder("/ENgine/Controls");
+		CpyFolder("/ENgine/Shaders/PC");
 
-		{
-			eastl::string src_path = eastl::string(ApplicationDir) + "/Shaders/GLES";
-			eastl::string dest_path = exportDir + "/Shaders/GLES";
-			root.files.CpyFolder(src_path.c_str(), dest_path.c_str());
-		}
+		CpyFolder("/ENgine/ExportBinaries", "");
 
-		{
-			eastl::string src_path = eastl::string(ApplicationDir) + "/settings";
-			eastl::string dest_path = exportDir + "/settings";
-			root.files.CpyFolder(src_path.c_str(), dest_path.c_str());
-		}
+		CpyFile("/ENgine/helvetica");
+		CpyFile("/ENgine/low2hi.dat");
+		CpyFile("/ENgine/OpenSans-Regular.ttf");
 
-		{
-			eastl::string dest_path = exportDir + "/settings/editor";
-			root.files.DeleteFolder(dest_path.c_str());
-		}
-
-		{
-			eastl::string dest_path = exportDir + "/settings/EUI";
-			root.files.DeleteFolder(dest_path.c_str());
-		}
-
-		eastl::string str = eastl::string("Resources of project were exported to folder:\n") + exportDir;
-		MESSAGE_BOX("Export finished", str.c_str());
+		MESSAGE_BOX("Export finished", (eastl::string("Resources of project were exported to folder:\n") + exportDir).c_str());
 	}
 
 	void Project::SaveCameraPos(SceneHolder* holder)

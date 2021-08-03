@@ -29,14 +29,8 @@ namespace Oak
 		return result;
 	}
 
-	void Scripts::CompileProjectCode(bool forceCompile)	{
-
-		#ifdef _DEBUG
-		configName = "Debug";
-		#else
-		configName = "Release";
-		#endif
-
+	void Scripts::CompileProjectCode(bool forceCompile)
+	{
 		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str())))
 		{
 			CreateDirectoryA(StringUtils::PrintTemp("%s/_Code", root.GetRootPath()), nullptr);
