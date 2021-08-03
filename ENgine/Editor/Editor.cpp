@@ -137,6 +137,8 @@ namespace Oak
 				reader.Read("name", entry.name);
 				reader.Read("path", entry.path);
 
+				LoadPorjectIcon(entry);
+
 				projects.push_back(entry);
 
 				reader.LeaveBlock();
@@ -144,6 +146,23 @@ namespace Oak
 		}
 
 		return true;
+	}
+
+	void Editor::LoadPorjectIcon(ProjectEntry& entry)
+	{
+		JsonReader reader;
+
+		if (reader.ParseFile(entry.path.c_str()))
+		{
+			eastl::string iconPath;
+			reader.Read("iconPath", iconPath);
+
+			char projectPath[1024];
+			StringUtils::GetPath(entry.path.c_str(), projectPath);
+			StringUtils::FixSlashes(projectPath);
+
+			entry.icon = root.render.LoadTexture((projectPath + iconPath).c_str(), _FL_);
+		}
 	}
 
 	void Editor::SaveProjectsList()
@@ -282,7 +301,37 @@ namespace Oak
 
 		ImGui::Columns(1);
 
-		bool is_open = ImGui::CollapsingHeader("2D###ProjectSettings2D", ImGuiTreeNodeFlags_DefaultOpen);
+		bool is_open = ImGui::CollapsingHeader("Windows###ProjectSettingsWindows", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+			ImGui::Columns(2);
+
+			ImGui::Text("Icon");
+			ImGui::NextColumn();
+
+			if (ImGui::Button(StringUtils::PrintTemp("%s###ProjectSettingsExportDir", project.iconPath[0] ? project.iconPath.c_str() : "File not set"), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+			{
+				const char* fileName = OpenFileDialog("Icon texture", nullptr, true);
+
+				if (fileName)
+				{
+					char relativeName[512];
+					StringUtils::GetCropPath(Oak::root.GetRootPath(), fileName, relativeName, 512);
+
+					project.iconPath = relativeName;
+					project.icon = root.render.LoadTexture(project.iconPath.c_str(), _FL_);
+				}
+			}
+
+			ImGui::Image(project.icon.Get() ? project.icon->GetNativeResource() : nullptr, ImVec2(64, 64), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+
+			ImGui::NextColumn();
+
+			ImGui::Columns(1);
+		}
+
+		is_open = ImGui::CollapsingHeader("2D###ProjectSettings2D", ImGuiTreeNodeFlags_DefaultOpen);
 
 		if (is_open)
 		{
@@ -414,6 +463,8 @@ namespace Oak
 			entry.name = name;
 			entry.path = projectToAdd;
 
+			LoadPorjectIcon(entry);
+
 			projects.push_back(entry);
 
 			SaveProjectsList();
@@ -446,7 +497,7 @@ namespace Oak
 			ImGui::PushID(StringUtils::PrintTemp("%s%i", entry.path.c_str(), i));
 
 			ImGui::BeginGroup();
-			ImGui::Image(editorDrawer.projectIconTex->GetNativeResource(), ImVec2(70, 70));
+			ImGui::Image(entry.icon.Get() ? entry.icon->GetNativeResource() : editorDrawer.projectIconTex->GetNativeResource(), ImVec2(70, 70));
 			ImGui::EndGroup();
 
 			ImGui::SameLine();

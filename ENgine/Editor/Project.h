@@ -51,6 +51,8 @@ namespace Oak
 		char projectPath[1024];
 		char applicationDir[512];
 		eastl::string exportDir;
+		eastl::string iconPath;
+		TextureRef icon;
 
 		int startScene = -1;
 

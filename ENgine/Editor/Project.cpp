@@ -35,6 +35,9 @@ namespace Oak
 		{
 			reader.Read("start_scene", startScene);
 			reader.Read("export_dir", exportDir);
+			reader.Read("iconPath", iconPath);
+
+			icon = root.render.LoadTexture(iconPath.c_str(), _FL_);
 
 			reader.Read("alignRect", editor.gizmo.alignRect);
 			reader.Read("useAlignRect", editor.gizmo.useAlignRect);
@@ -144,6 +147,8 @@ namespace Oak
 		writer.Start(projectName.c_str());
 
 		writer.Write("export_dir", exportDir.c_str());
+		writer.Write("iconPath", iconPath.c_str());
+
 		writer.Write("start_scene", startScene);
 		writer.Write("scenes_count", (int)scenes.size());
 

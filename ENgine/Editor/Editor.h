@@ -29,6 +29,7 @@ namespace Oak
 		{
 			eastl::string name;
 			eastl::string path;
+			TextureRef icon;
 		};
 
 		eastl::vector<ProjectEntry> projects;
@@ -75,6 +76,7 @@ namespace Oak
 		eastl::map<eastl::string, LogCategory*> logCategories;
 
 		void CaptureLog(const char* name, const char* text);
+		void LoadPorjectIcon(ProjectEntry& entry);
 
 	public:
 

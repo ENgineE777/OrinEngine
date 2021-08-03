@@ -1,6 +1,7 @@
 ﻿{
 
 	"export_dir" : "",
+	"iconPath" : "BatIcon.png",
 	"start_scene" : 0,
 	"scenes_count" : 1,
 	"alignRect" :
