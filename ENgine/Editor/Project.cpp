@@ -561,7 +561,9 @@ namespace Oak
 		root.files.DeleteFolder(exportDir.c_str());
 
 		root.files.CpyFolder(projectPath, (exportDir + "/project").c_str());
-		
+
+		root.files.DeleteFolder((exportDir + "/_Code").c_str());
+
 		{
 			char project_file_name[512];
 			StringUtils::GetFileName(projectFullName.c_str(), project_file_name);
