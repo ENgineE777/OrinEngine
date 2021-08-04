@@ -7,6 +7,8 @@
 #include "Root/Root.h"
 #include "Support/StringUtils.h"
 
+#include <filesystem>
+
 namespace Oak
 {
 	bool Files::Init()
@@ -134,55 +136,15 @@ namespace Oak
 
 	void Files::DeleteFolder(const char* path)
 	{
-		WIN32_FIND_DATAA ffd;
-		HANDLE hFile;
-		CHAR searchDir[256];
-		CHAR searchParams[256];
-
-		BOOL fFile = TRUE;
-
-		StringUtils::Copy(searchDir, 256, path);
-
-		StringUtils::Copy(searchParams, 256, path);
-		StringUtils::Cat(searchParams, 256, "\\*.*");
-
-		hFile = FindFirstFileA(searchParams, &ffd);
-
-		if (hFile != INVALID_HANDLE_VALUE)
+		if (!std::filesystem::exists(path))
 		{
-			while (fFile)
-			{
-				if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-				{
-					char FileName[512];
-
-					StringUtils::Copy(FileName, 512, path);
-					StringUtils::Cat(FileName, 512, "//");
-					StringUtils::Copy(FileName, 512, ffd.cFileName);
-
-					DeleteFileA(FileName);
-				}
-				else
-				if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && strcmp(ffd.cFileName, ".") != 0 && strcmp(ffd.cFileName, "..") != 0)
-				{
-					char FileName[512];
-
-					StringUtils::Copy(FileName, 512, path);
-					StringUtils::Cat(FileName, 512, "//");
-					StringUtils::Cat(FileName, 512, ffd.cFileName);
-
-					DeleteFolder(FileName);
-
-					RemoveDirectoryA(FileName);
-				}
-
-				fFile = FindNextFileA(hFile, &ffd);
-			}
-
-			FindClose(hFile);
+			return;
 		}
 
-		RemoveDirectoryA(path);
+		for (auto& path : std::filesystem::directory_iterator(path))
+		{
+			std::filesystem::remove_all(path);
+		}
 	}
 
 	void Files::CpyFolder(const char* path, const char* dest_path)

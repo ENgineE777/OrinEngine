@@ -45,10 +45,7 @@ namespace Oak
 
 		time_t t = time(0);
 
-		for (auto& path : std::filesystem::directory_iterator(logsDir))
-		{
-			std::filesystem::remove_all(path);
-		}
+		root.files.DeleteFolder(logsDir);
 
 		#endif
 
