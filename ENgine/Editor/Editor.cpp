@@ -110,6 +110,8 @@ namespace Oak
 			return false;
 		}
 
+		root.scripts.SetAllowDynamicReload(true);
+
 		root.render.AddExecutedLevelPool(1);
 
 		renderTaskPool = root.render.AddTaskPool(_FL_);

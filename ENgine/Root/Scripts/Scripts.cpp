@@ -122,6 +122,62 @@ namespace Oak
 		CheckGamePlayDll();
 	}
 
+	void Scripts::LoadGamePlayDll(const char* path)
+	{
+		HMODULE newModule = LoadLibraryA(path);
+
+		uint32_t uid = 0;
+
+		if (newModule)
+		{
+			if (Module && allowDynamicReload)
+			{
+				if (editor.selectedEntity)
+				{
+					uid = editor.selectedEntity->GetUID();
+					editor.SelectEntity(nullptr);
+				}
+
+				void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
+				auto code_ptr = (decltype(unregister_code)*)Procs;
+
+				code_ptr(ClassFactorySceneEntity::Decls());
+			}
+
+			{
+				void* Procs = GetProcAddress((HMODULE)newModule, "register_code");
+				auto code_ptr = (decltype(register_code)*)Procs;
+
+				code_ptr(ClassFactorySceneEntity::Decls());
+
+				ClassFactorySceneEntity::Sort();
+			}
+
+			if (Module && allowDynamicReload)
+			{
+				{
+					void* Procs = GetProcAddress(newModule, "recreate_entites");
+					auto code_ptr = (decltype(recreate_entites)*)Procs;
+
+					code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.project.selectedScene->scene->GetEntities());
+				}
+
+				FreeLibrary((HMODULE)Module);
+
+				char tmpname[256];
+				StringUtils::Printf(tmpname, 256, "%s/_Code/%s/Gameplay.rcpp%i.dll", root.GetRootPath(), configName.c_str(), 1 - pingPong);
+				DeleteFileA(tmpname);
+			}
+
+			Module = newModule;
+
+			if (uid != 0)
+			{
+				editor.SelectEntity(Oak::editor.project.selectedScene->scene->FindEntity(uid));
+			}
+		}
+	}
+
 	void Scripts::CheckGamePlayDll()
 	{
 		HANDLE hDLLFile = CreateFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -140,75 +196,39 @@ namespace Oak
 
 			if (CopyFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE))
 			{
-				HMODULE newModule = LoadLibraryA(tmpname);
+				LoadGamePlayDll(tmpname);
 
-				uint32_t uid = 0;
-
-				if (newModule)
-				{
-					if (Module)
-					{
-						if (editor.selectedEntity)
-						{
-							uid = editor.selectedEntity->GetUID();
-							editor.SelectEntity(nullptr);
-						}
-
-						void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
-						auto code_ptr = (decltype(unregister_code)*)Procs;
-
-						code_ptr(ClassFactorySceneEntity::Decls());
-					}
-
-					{
-						void* Procs = GetProcAddress((HMODULE)newModule, "register_code");
-						auto code_ptr = (decltype(register_code)*)Procs;
-
-						code_ptr(ClassFactorySceneEntity::Decls());
-
-						ClassFactorySceneEntity::Sort();
-					}
-
-					if (Module)
-					{
-						{
-							void* Procs = GetProcAddress(newModule, "recreate_entites");
-							auto code_ptr = (decltype(recreate_entites)*)Procs;
-
-							code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.project.selectedScene->scene->GetEntities());
-						}
-
-						FreeLibrary((HMODULE)Module);
-
-						char tmpname[256];
-						StringUtils::Printf(tmpname, 256, "%s/_Code/%s/Gameplay.rcpp%i.dll", root.GetRootPath(), configName.c_str(), 1 - pingPong);
-						DeleteFileA(tmpname);
-					}
-
-					LastWrite = lastWriteTime;
-					Module = newModule;
-
-					if (uid != 0)
-					{
-						editor.SelectEntity(Oak::editor.project.selectedScene->scene->FindEntity(uid));
-					}
-				}
+				LastWrite = lastWriteTime;
 			}
 		}
 
-		// Boy Scout Rule!
 		CloseHandle(hDLLFile);
 	}
 	#endif
 
+	void Scripts::SetAllowDynamicReload(bool val)
+	{
+		allowDynamicReload = val;
+	}
+
 	void Scripts::Update()
 	{
-		CheckGamePlayDll();
+		if (allowDynamicReload)
+		{
+			CheckGamePlayDll();
+		}
 	}
 
 	bool Scripts::Start()
 	{
-		CheckGamePlayDll();
+		if (allowDynamicReload)
+		{
+			CheckGamePlayDll();
+		}
+		else
+		{
+			LoadGamePlayDll(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()));
+		}
 
 		return true;
 	}
