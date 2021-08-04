@@ -119,7 +119,7 @@ namespace Oak
 						}
 					}
 
-					if (!found)
+					if (!found && !StringUtils::IsEqual(ffd.cFileName, "_Code"))
 					{
 						folder->folders.push_back(NEW Folder());
 						Folder* subFolder = folder->folders.back();
