@@ -1318,10 +1318,10 @@ namespace Oak
 
 			ImGui::SameLine();
 
-			PushButton("2D", freeCamera.mode_2d, [this]() {freeCamera.mode_2d = true; });
-			PushButton("3D", !freeCamera.mode_2d, [this]() {freeCamera.mode_2d = false; });
+			PushButton("2D", freeCamera.mode2D, [this]() { freeCamera.mode2D = true; });
+			PushButton("3D", !freeCamera.mode2D, [this]() { freeCamera.mode2D = false; });
 
-			if (freeCamera.mode_2d)
+			if (freeCamera.mode2D)
 			{
 				ImGui::Text("Zoom");
 				ImGui::SameLine();
@@ -1571,7 +1571,7 @@ namespace Oak
 
 			float minStep = 16.0f;
 
-			if (freeCamera.mode_2d)
+			if (freeCamera.mode2D)
 			{
 				minStep = 16.0f / freeCamera.zoom2D;
 			}
@@ -1583,7 +1583,7 @@ namespace Oak
 
 			Math::Vector3 pos = gizmo.transform->global.Pos();
 
-			if (freeCamera.mode_2d)
+			if (freeCamera.mode2D)
 			{
 				pos.x = freeCamera.pos2D.x * (*gizmo.transform->unitsScale);
 				pos.y = freeCamera.pos2D.y * (*gizmo.transform->unitsScale);
@@ -1600,7 +1600,7 @@ namespace Oak
 			int numCellsY = 30;
 			int numCellsX = 45;
 
-			if (freeCamera.mode_2d)
+			if (freeCamera.mode2D)
 			{
 				numCellsX = (int)(Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / root.render.GetDevice()->GetAspect() / freeCamera.zoom2D / step.y + 2);
 				numCellsY = (int)(Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / freeCamera.zoom2D / step.y + 2);
@@ -1664,7 +1664,7 @@ namespace Oak
 	{
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
 
-		if (!projectRunning && !freeCamera.mode_2d)
+		if (!projectRunning && !freeCamera.mode2D)
 		{
 			editorDrawer.DrawSkyBox();
 		}

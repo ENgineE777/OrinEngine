@@ -14,14 +14,14 @@ namespace Oak
 	public:
 
 		Math::Vector2 angles;
-		Math::Vector3  pos;
-		Math::Matrix  view;
-		Math::Matrix  proj;
+		Math::Vector3 pos;
+		Math::Matrix view;
+		Math::Matrix proj;
 
 		Math::Vector2 pos2D;
 		float zoom2D = 1.0f;
 
-		bool mode_2d = false;
+		bool mode2D = false;
 
 		int alias_forward;
 		int alias_strafe;

@@ -25,7 +25,7 @@ namespace Oak
 
 	void FreeCamera::Update(float dt)
 	{
-		if (mode_2d)
+		if (mode2D)
 		{
 			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
 			{
@@ -71,7 +71,7 @@ namespace Oak
 			pos += dir_strafe * speed * strafe;
 		}
 
-		if (mode_2d)
+		if (mode2D)
 		{
 			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom2D);
 			Math::Vector2 pos = pos2D * Sprite::pixelsPerUnitInvert;

@@ -25,6 +25,8 @@ namespace Oak
 
 			uint32_t selectedEntity = -1;
 
+			bool camera2DMode = false;
+
 			Math::Vector2 camera3DAngles = Math::Vector2(0.0f, -0.5f);
 			Math::Vector3 camera3DPos = Math::Vector3(0.0f, 6.0f, 0.0f);
 

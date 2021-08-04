@@ -63,6 +63,7 @@ namespace Oak
 				scn->SetPath(str.c_str());
 
 				reader.Read("selected_entity", scn->selectedEntity);
+				reader.Read("camera2DMode", scn->camera2DMode);
 				reader.Read("camera3DAngles", scn->camera3DAngles);
 				reader.Read("camera3DPos", scn->camera3DPos);
 				reader.Read("camera2DPos", scn->camera2DPos);
@@ -182,6 +183,7 @@ namespace Oak
 
 			writer.Write("path", scn->path.c_str());
 			writer.Write("selected_entity", scn->selectedEntity);
+			writer.Write("camera2DMode", scn->camera2DMode);
 			writer.Write("camera3DAngles", scn->camera3DAngles);
 			writer.Write("camera3DPos", scn->camera3DPos);
 			writer.Write("camera2DPos", scn->camera2DPos);
@@ -254,6 +256,8 @@ namespace Oak
 			{
 				LoadScene(selectedScene);
 			}
+
+			editor.freeCamera.mode2D = selectedScene->camera2DMode;
 
 			editor.freeCamera.angles = selectedScene->camera3DAngles;
 			editor.freeCamera.pos = selectedScene->camera3DPos;
@@ -605,6 +609,8 @@ namespace Oak
 
 	void Project::SaveCameraPos(SceneHolder* holder)
 	{
+		holder->camera2DMode = editor.freeCamera.mode2D;
+
 		holder->camera3DAngles = editor.freeCamera.angles;
 		holder->camera3DPos = editor.freeCamera.pos;
 
