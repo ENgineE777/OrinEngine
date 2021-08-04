@@ -22,6 +22,11 @@ namespace Oak
 				return;
 			}
 
+			reader.Read("pixelsPerUnit", Sprite::pixelsPerUnit);
+			Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
+
+			reader.Read("pixelsHeight", Sprite::pixelsHeight);
+
 			int count = 0;
 			reader.Read("scenes_count", count);
 			scenes.resize(count);
