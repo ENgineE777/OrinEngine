@@ -1585,8 +1585,8 @@ namespace Oak
 
 			if (freeCamera.mode2D)
 			{
-				pos.x = freeCamera.pos2D.x * (*gizmo.transform->unitsScale);
-				pos.y = freeCamera.pos2D.y * (*gizmo.transform->unitsScale);
+				pos.x = freeCamera.pos2D.x;
+				pos.y = freeCamera.pos2D.y;
 			}
 			
 			pos.x = step.x * ((int)(pos.x / step.x));
