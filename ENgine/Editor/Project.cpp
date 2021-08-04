@@ -562,7 +562,7 @@ namespace Oak
 
 		root.files.CpyFolder(projectPath, (exportDir + "/project").c_str());
 
-		root.files.DeleteFolder((exportDir + "/_Code").c_str());
+		root.files.DeleteFolder((exportDir + "/project/_Code").c_str());
 
 		{
 			char project_file_name[512];
@@ -595,8 +595,7 @@ namespace Oak
 			EndUpdateResourceA(resource, FALSE);
 		}
 
-
-		rename((exportDir + "/Oak.exe").c_str(), (exportDir + "/" + "Tanks" + ".exe").c_str());
+		rename((exportDir + "/Oak.exe").c_str(), (exportDir + "/" + projectName + ".exe").c_str());
 
 		MESSAGE_BOX("Export finished", (eastl::string("Resources of project were exported to folder:\n") + exportDir).c_str());
 	}
