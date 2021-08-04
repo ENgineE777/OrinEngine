@@ -415,9 +415,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Scripts\ScriptCore.cpp">
-      <Filter>ENgine\Root\Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Root\Scripts\Scripts.cpp">
       <Filter>ENgine\Root\Scripts</Filter>
     </ClCompile>
@@ -899,9 +896,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Scripts\ScriptCore.h">
-      <Filter>ENgine\Root\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Scripts\Scripts.h">
       <Filter>ENgine\Root\Scripts</Filter>

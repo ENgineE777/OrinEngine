@@ -222,7 +222,6 @@
     <ClInclude Include="..\..\..\ENgine\Root\Scenes\Scene.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneEntity.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneManager.h" />
-    <ClInclude Include="..\..\..\ENgine\Root\Scripts\ScriptCore.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Scripts\Scripts.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundInstance.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundRes.h" />
@@ -406,7 +405,6 @@
     <ClCompile Include="..\..\..\ENgine\Root\Scenes\Scene.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneManager.cpp" />
-    <ClCompile Include="..\..\..\ENgine\Root\Scripts\ScriptCore.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Scripts\Scripts.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundInstance.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundRes.cpp" />
