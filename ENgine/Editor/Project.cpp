@@ -417,6 +417,9 @@ namespace Oak
 
 	void Project::Reset()
 	{
+		icon.ReleaseRef();
+		iconSmall.ReleaseRef();
+
 		Sprite::pixelsPerUnit = 50.0f;
 		Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
 		Sprite::pixelsHeight = 1080.0f;

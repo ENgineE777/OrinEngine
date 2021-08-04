@@ -1708,6 +1708,11 @@ namespace Oak
 
 	void Editor::Release()
 	{
+		for (auto& entry : projects)
+		{
+			entry.icon.ReleaseRef();
+		}
+
 		StopProject();
 
 		for (auto& item : logCategories)
