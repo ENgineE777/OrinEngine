@@ -63,7 +63,7 @@ namespace Oak
 		mousePos.x -= corner.x;
 		mousePos.y -= corner.y;
 
-		Oak::root.controls.OverrideMousePos(Math::Clamp(mousePos.x, 0, root.render.GetDevice()->GetWidth()), Math::Clamp(mousePos.y, 0, root.render.GetDevice()->GetHeight()));
+		Oak::root.controls.OverrideMousePos((int)Math::Clamp((float)mousePos.x, 0.0f, (float)root.render.GetDevice()->GetWidth()), (int)Math::Clamp((float)mousePos.y, 0.0f, (float)root.render.GetDevice()->GetHeight()));
 
 		root.Update();
 	}
