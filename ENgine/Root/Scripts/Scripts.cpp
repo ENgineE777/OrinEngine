@@ -1,7 +1,6 @@
 
 #include "Root/Root.h"
 
-#include "ScriptCore.h"
 #include "Root/Scenes/SceneEntity.h"
 #include "Editor/Editor.h"
 
@@ -31,7 +30,7 @@ namespace Oak
 
 	void Scripts::CompileProjectCode(bool forceCompile)
 	{
-		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str())))
+		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str())))
 		{
 			CreateDirectoryA(StringUtils::PrintTemp("%s/_Code", root.GetRootPath()), nullptr);
 
@@ -89,7 +88,14 @@ namespace Oak
 								reader.LeaveBlock();
 
 								reader.Read("productPath", vsPath);
-								system(StringUtils::PrintTemp("%s gameplay.sln /Build %s", vsPath.c_str(), configName.c_str()));
+
+								if (system(StringUtils::PrintTemp("%s gameplay.sln /Build %s", vsPath.c_str(), configName.c_str())) == 0)
+								{
+									char tmpname[256];
+									StringUtils::Printf(tmpname, 256, "%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str());
+
+									CopyFileA(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE);
+								}
 							}
 							else
 							{
@@ -118,7 +124,7 @@ namespace Oak
 
 	void Scripts::CheckGamePlayDll()
 	{
-		HANDLE hDLLFile = CreateFileA(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		HANDLE hDLLFile = CreateFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if (hDLLFile == INVALID_HANDLE_VALUE)
 		{
@@ -132,7 +138,7 @@ namespace Oak
 			char tmpname[256];
 			StringUtils::Printf(tmpname, 256, "%s/_Code/%s/gameplay.rcpp%i.dll", root.GetRootPath(), configName.c_str(), pingPong);
 
-			if (CopyFileA(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE))
+			if (CopyFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE))
 			{
 				HMODULE newModule = LoadLibraryA(tmpname);
 
