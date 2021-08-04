@@ -637,6 +637,9 @@
     <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp">
       <Filter>ENgine\Platform\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Node2D.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1214,6 +1217,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h">
       <Filter>ENgine\Platform\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Node2D.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

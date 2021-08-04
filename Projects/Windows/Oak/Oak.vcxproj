@@ -229,6 +229,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Node2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h" />
@@ -412,6 +413,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Node2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp" />
