@@ -31,7 +31,12 @@ namespace Oak
 			return false;
 		}
 
-		root.SetRootPath("project/");
+		char currDir[512];
+		GetCurrentDirectoryA(512, currDir);
+
+		root.SetRootPath(StringUtils::PrintTemp("%s/project/", currDir));
+
+		root.assets.LoadAssets();
 
 		if (!root.scripts.Start())
 		{
