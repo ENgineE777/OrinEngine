@@ -47,12 +47,17 @@ namespace Oak
 
 		SceneHolder* selectedScene = nullptr;
 
+		eastl::string projectFullName;
 		eastl::string projectName;
 		char projectPath[1024];
 		char applicationDir[512];
 		eastl::string exportDir;
+
 		eastl::string iconPath;
 		TextureRef icon;
+
+		eastl::string iconSmallPath;
+		TextureRef iconSmall;
 
 		int startScene = -1;
 
@@ -84,6 +89,8 @@ namespace Oak
 		void Reset();
 
 		void SelectExportDir();
+		void UpdateExeStrings(HANDLE res);
+		void UpdateIconsSet(HANDLE resource, const char* path, bool smallIcon, int idOffest);
 		void Export();
 		void CpyFolder(const char* src, const char* dest = nullptr);
 		void CpyFile(const char* src, const char* dest = nullptr);

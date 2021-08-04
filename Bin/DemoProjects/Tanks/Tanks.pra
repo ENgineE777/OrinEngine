@@ -2,6 +2,8 @@
 
 	"export_dir" : "",
 	"iconPath" : "TankIcon.png",
+	"iconSmallPath" : "TankIcon.png",
+	"projectName" : "Tanks",
 	"start_scene" : 0,
 	"scenes_count" : 1,
 	"alignRect" :
@@ -24,8 +26,8 @@
 			"camera3DPos" :
 			{
 				"x" : 126.322609,
-				"y" : 29.974148,
-				"z" : 23.643791
+				"y" : 29.974146,
+				"z" : 23.643793
 			},
 			"camera2DPos" :
 			{

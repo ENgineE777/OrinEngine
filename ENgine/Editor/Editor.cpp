@@ -307,10 +307,31 @@ namespace Oak
 		{
 			ImGui::Columns(2);
 
+			ImGui::Text("Window title");
+			ImGui::NextColumn();
+
+			struct Funcs
+			{
+				static int ResizeCallback(ImGuiInputTextCallbackData* data)
+				{
+					if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
+					{
+						eastl::string* str = (eastl::string*)data->UserData;
+						str->resize(data->BufSize + 1);
+						data->Buf = str->begin();
+					}
+					return 0;
+				}
+			};
+
+			ImGui::InputText("", project.projectName.begin(), (size_t)project.projectName.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&project.projectName);
+
+			ImGui::NextColumn();
+
 			ImGui::Text("Icon");
 			ImGui::NextColumn();
 
-			if (ImGui::Button(StringUtils::PrintTemp("%s###ProjectSettingsExportDir", project.iconPath[0] ? project.iconPath.c_str() : "File not set"), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+			if (ImGui::Button(StringUtils::PrintTemp("%s###ProjectSettingsIconWin", project.iconPath[0] ? project.iconPath.c_str() : "File not set"), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
 			{
 				const char* fileName = OpenFileDialog("Icon texture", nullptr, true);
 
@@ -325,6 +346,27 @@ namespace Oak
 			}
 
 			ImGui::Image(project.icon.Get() ? project.icon->GetNativeResource() : nullptr, ImVec2(64, 64), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
+
+			ImGui::NextColumn();
+
+			ImGui::Text("IconSmall");
+			ImGui::NextColumn();
+
+			if (ImGui::Button(StringUtils::PrintTemp("%s###ProjectSettingsIconSmallWin", project.iconSmallPath[0] ? project.iconSmallPath.c_str() : "File not set"), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
+			{
+				const char* fileName = OpenFileDialog("Icon texture", nullptr, true);
+
+				if (fileName)
+				{
+					char relativeName[512];
+					StringUtils::GetCropPath(Oak::root.GetRootPath(), fileName, relativeName, 512);
+
+					project.iconSmallPath = relativeName;
+					project.iconSmall = root.render.LoadTexture(project.iconSmallPath.c_str(), _FL_);
+				}
+			}
+
+			ImGui::Image(project.iconSmall.Get() ? project.iconSmall->GetNativeResource() : nullptr, ImVec2(64, 64), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, 1), ImVec4(1, 1, 1, 1));
 
 			ImGui::NextColumn();
 
@@ -1098,13 +1140,13 @@ namespace Oak
 			return;
 		}
 
-		if (project.projectName.size() == 0)
+		if (project.projectFullName.size() == 0)
 		{
 			const char* fileName = OpenFileDialog("Project file", "pra", false);
 
 			if (fileName)
 			{
-				project.projectName = fileName;
+				project.projectFullName = fileName;
 			}
 			else
 			{
@@ -1125,7 +1167,7 @@ namespace Oak
 		}
 
 		root.PreparePhysScene();
-		root.scenes.LoadProject(project.projectName.c_str());
+		root.scenes.LoadProject(project.projectFullName.c_str());
 
 		projectRunning = true;
 	}
@@ -1489,7 +1531,7 @@ namespace Oak
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		if (project.projectName.c_str()[0])
+		if (project.projectFullName.c_str()[0])
 		{
 			if (!ShowEditor())
 			{

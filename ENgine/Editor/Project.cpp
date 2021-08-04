@@ -20,8 +20,8 @@ namespace Oak
 	{
 		Reset();
 
-		projectName = fileName;
-		StringUtils::GetPath(projectName.c_str(), projectPath);
+		projectFullName = fileName;
+		StringUtils::GetPath(projectFullName.c_str(), projectPath);
 		StringUtils::FixSlashes(projectPath);
 
 		root.SetRootPath(projectPath);
@@ -31,14 +31,18 @@ namespace Oak
 
 		JsonReader reader;
 
-		if (reader.ParseFile(projectName.c_str()))
+		if (reader.ParseFile(projectFullName.c_str()))
 		{
 			reader.Read("start_scene", startScene);
 			reader.Read("export_dir", exportDir);
-			reader.Read("iconPath", iconPath);
 
+			reader.Read("iconPath", iconPath);
 			icon = root.render.LoadTexture(iconPath.c_str(), _FL_);
 
+			reader.Read("iconSmallPath", iconSmallPath);
+			iconSmall = root.render.LoadTexture(iconSmallPath.c_str(), _FL_);
+
+			reader.Read("projectName", projectName);
 			reader.Read("alignRect", editor.gizmo.alignRect);
 			reader.Read("useAlignRect", editor.gizmo.useAlignRect);
 
@@ -103,10 +107,10 @@ namespace Oak
 
 	void Project::Save(const char* fileName)
 	{
-		bool needSetRoot = projectName[0] ? false : true;
+		bool needSetRoot = projectFullName[0] ? false : true;
 
-		projectName = fileName;
-		StringUtils::GetPath(projectName.c_str(), projectPath);
+		projectFullName = fileName;
+		StringUtils::GetPath(projectFullName.c_str(), projectPath);
 
 		Save();
 
@@ -144,10 +148,22 @@ namespace Oak
 		}
 
 		JsonWriter writer;
-		writer.Start(projectName.c_str());
+		writer.Start(projectFullName.c_str());
 
 		writer.Write("export_dir", exportDir.c_str());
 		writer.Write("iconPath", iconPath.c_str());
+		writer.Write("iconSmallPath", iconSmallPath.c_str());
+
+		if (projectName.empty())
+		{
+			char name[128];
+			StringUtils::GetFileName(projectFullName.c_str(), name);
+			StringUtils::RemoveExtension(name);
+
+			projectName = name;
+		}
+
+		writer.Write("projectName", projectName.c_str());
 
 		writer.Write("start_scene", startScene);
 		writer.Write("scenes_count", (int)scenes.size());
@@ -418,7 +434,7 @@ namespace Oak
 
 		root.assets.Clear();
 
-		projectName.clear();
+		projectFullName.clear();
 		exportDir.clear();
 		startScene = -1;
 	}
@@ -454,9 +470,76 @@ namespace Oak
 		root.files.CpyFile((eastl::string(applicationDir) + src).c_str(), (exportDir + (dest != nullptr ? dest : src)).c_str());
 	}
 
+	void Project::UpdateExeStrings(HANDLE resource)
+	{
+		eastl::wstring strings[16];
+
+		StringUtils::Utf8toUtf16(strings[7], projectName.c_str());
+		StringUtils::Utf8toUtf16(strings[13], "Oak");
+
+		char buffer[256];
+		int index = 0;
+
+		for (auto& str : strings)
+		{
+			uint16_t sz = (uint16_t)str.size();
+			memcpy(&buffer[index], &sz, 2);
+			index += 2;
+
+			for (int j = 0; j < str.size(); j++)
+			{
+				uint16_t chr = str[j];
+				memcpy(&buffer[index], &chr, 2);
+				index += 2;
+			}
+		}
+
+		if (!UpdateResourceA(resource, MAKEINTRESOURCEA(6), MAKEINTRESOURCEA(7), 1033, (LPVOID)buffer, index))
+		{
+			auto err = GetLastError();
+			root.Log("Export", "Failed to update string in output exe with error %u", err);
+		}
+	}
+
+	void Project::UpdateIconsSet(HANDLE resource, const char* path, bool smallIcon, int idOffest)
+	{
+		int sizes[] = { 16, 24, 32, 48, 64, 72, 96, 128, 256 };
+
+		char icoPath[512];
+		StringUtils::Printf(icoPath, 512, "%s/%s", root.GetRootPath(), path);
+		StringUtils::RemoveExtension(icoPath);
+
+		for (int i = 0; i < sizeof(sizes) / sizeof(int); i++)
+		{
+			if (system(StringUtils::PrintTemp("%s/ENgine/Tools/nconvert/nconvert.exe -resize %i %i -overwrite -out ico \"%s%s\"", applicationDir, sizes[i], sizes[i], root.GetRootPath(), path)) == 0)
+			{
+				FileInMemory ico;
+
+				if (ico.Load(StringUtils::PrintTemp("%s.ico", icoPath)))
+				{
+					uint8_t* ptr = ico.GetPtr();
+					ptr += 22;
+
+					if (!UpdateResourceA(resource, MAKEINTRESOURCEA(3), MAKEINTRESOURCEA(i + 1 + idOffest), 1033, (LPVOID)ptr, ico.GetSize() - 22))
+					{
+						auto err = GetLastError();
+						root.Log("Export", "Failed to update icon set in output exe with error %u", err);
+					}
+				}
+			}
+
+			if (smallIcon && i == 4)
+			{
+				break;
+			}
+		}
+
+		DeleteFileA(StringUtils::PrintTemp("%s.ico", icoPath));
+	}
+
 	void Project::Export()
 	{
-		if (projectName.empty())
+		if (projectFullName.empty())
 		{
 			return;
 		}
@@ -481,12 +564,9 @@ namespace Oak
 		
 		{
 			char project_file_name[512];
-			StringUtils::GetFileName(projectName.c_str(), project_file_name);
+			StringUtils::GetFileName(projectFullName.c_str(), project_file_name);
 
-			eastl::string original_name = exportDir + "/project/" + project_file_name;
-			eastl::string new_name = exportDir + "/project/project.pra";
-
-			rename(original_name.c_str(), new_name.c_str());
+			rename((exportDir + "/project/" + project_file_name).c_str(), (exportDir + "/project/project.pra").c_str());
 		}
 
 		CpyFolder("/ENgine/Controls");
@@ -497,6 +577,24 @@ namespace Oak
 		CpyFile("/ENgine/helvetica");
 		CpyFile("/ENgine/low2hi.dat");
 		CpyFile("/ENgine/OpenSans-Regular.ttf");
+
+		auto resource = BeginUpdateResourceA((exportDir + "/Oak.exe").c_str(), FALSE);
+		if (resource != NULL)
+		{
+			UpdateExeStrings(resource);
+
+			if (icon.Get())
+			{
+				UpdateIconsSet(resource, iconPath.c_str(), false, 0);
+
+				UpdateIconsSet(resource, iconSmall.Get() ? iconSmallPath.c_str() : iconPath.c_str(), true, 9);
+			}
+
+			EndUpdateResourceA(resource, FALSE);
+		}
+
+
+		rename((exportDir + "/Oak.exe").c_str(), (exportDir + "/" + "Tanks" + ".exe").c_str());
 
 		MESSAGE_BOX("Export finished", (eastl::string("Resources of project were exported to folder:\n") + exportDir).c_str());
 	}

@@ -2,6 +2,8 @@
 
 	"export_dir" : "",
 	"iconPath" : "BatIcon.png",
+	"iconSmallPath" : "BatIcon.png",
+	"projectName" : "Beatemup",
 	"start_scene" : 0,
 	"scenes_count" : 1,
 	"alignRect" :
