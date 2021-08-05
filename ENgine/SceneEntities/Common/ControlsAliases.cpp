@@ -14,10 +14,8 @@ namespace Oak
 	{
 	}
 
-	void ControlsAliases::Play()
+	void ControlsAliases::ApplyProperties()
 	{
-		SceneEntity::Play();
-
 		root.controls.LoadAliases(aliases_name.c_str());
 	}
 }
