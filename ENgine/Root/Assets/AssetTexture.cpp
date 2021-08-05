@@ -339,12 +339,9 @@ namespace Oak
 			auto& frame = anim.frames[animPlayFrame];
 			AssetTexture::Slice& slice = Get()->slices[frame.slice];
 
-			trans->size.x = slice.size.x;
-			trans->size.y = slice.size.y;
-
 			pos3d = Math::Vector3(trans->offset.x, trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, 1.0f, -1.0f);
 			pos = Math::Vector2(pos3d.x, pos3d.y);
-			size = Math::Vector2(trans->size.x, trans->size.y);
+			size = Math::Vector2(slice.size.x, slice.size.y);
 
 			Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, true);
 		}

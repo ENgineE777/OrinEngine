@@ -795,7 +795,19 @@ namespace Oak
 			return;
 		}
 
-		curTexture.Draw(trans, clr, dt);
+		if (curTexture.Get())
+		{
+			auto size = curTexture.GetSize();
+			trans->size.x = size.x;
+			trans->size.y = size.y;
+
+			curTexture.Draw(trans, clr, dt);
+		}
+		else
+		{
+			trans->size.x = 50.0f;
+			trans->size.y = 50.0f;
+		}
 
 		if (!curNode->looped && curTexture.IsAnimFinished())
 		{
