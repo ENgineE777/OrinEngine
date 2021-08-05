@@ -963,10 +963,9 @@ namespace Oak
 						project.selectedScene->scene->AddEntity(assetEntity);
 					}
 				}
+
+				SelectEntity(assetEntity);
 			}
-
-			SelectEntity(assetEntity);
-
 
 			if (dragFinished)
 			{
