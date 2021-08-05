@@ -22,7 +22,7 @@ namespace Oak
 
 		void Init() override;
 
-		bool Play() override;
+		void Play() override;
 	#endif
 	};
 }

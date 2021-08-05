@@ -107,7 +107,7 @@ namespace Oak
 		void ShRender(float dt);
 		void Render(Program* prg);
 
-		bool Play() override;
+		void Play() override;
 
 		void Release() override;
 	#endif

@@ -26,8 +26,10 @@ namespace Oak
 		SceneEntity::SetVisible(visible);
 	}
 
-	bool MusicPlayer::Play()
+	void MusicPlayer::Play()
 	{
+		SceneEntity::Play();
+
 		stream = root.sounds.CreateSound(GetScene(), true, soundName.c_str());
 
 		if (IsVisible() && !faded)
@@ -35,7 +37,6 @@ namespace Oak
 			stream->Play(PlaySoundType::Looped);
 		}
 
-		return true;
 	}
 
 	void MusicPlayer::FadeIn(float time)

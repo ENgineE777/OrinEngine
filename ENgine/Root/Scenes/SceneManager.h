@@ -44,9 +44,6 @@ namespace Oak
 	public:
 
 	#ifndef DOXYGEN_SKIP
-		bool failureOnScenePlay = false;
-		eastl::string failureOnScenePlayMessage;
-
 		void Init();
 		void LoadProject(const char* projectName);
 		void Execute(float dt);

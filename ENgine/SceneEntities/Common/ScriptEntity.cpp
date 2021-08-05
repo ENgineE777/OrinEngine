@@ -21,14 +21,14 @@ namespace Oak
 		}
 	}
 
-	bool ScriptEntity::Play()
+	void ScriptEntity::Play()
 	{
+		SceneEntity::Play();
+
 		if (IsVisible())
 		{
 			Tasks(false)->AddTask(100, this, (Object::Delegate) & ScriptEntity::Update);
 		}
-
-		return true;
 	}
 
 	void ScriptEntity::Update(float dt)

@@ -220,21 +220,18 @@ namespace Oak
 		taskPool->Execute(dt);
 	}
 
-	bool Scene::Play()
+	void Scene::Play()
 	{
 		if (playing)
 		{
-			return true;
+			return;
 		}
 
 		playing = true;
 
 		for (auto entity : entities)
 		{
-			if (!entity->Play())
-			{
-				return false;
-			}
+			entity->Play();
 
 			if (entity->groupName.c_str())
 			{
@@ -248,8 +245,6 @@ namespace Oak
 		}
 
 		postPlayList.clear();
-
-		return true;
 	}
 
 	void Scene::AddPostPlay(int level, Object* entity, Object::DelegateSimple call)

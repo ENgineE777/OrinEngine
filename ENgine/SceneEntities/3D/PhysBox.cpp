@@ -51,7 +51,7 @@ namespace Oak
 		}
 	}
 
-	bool PhysBox::Play()
+	void PhysBox::Play()
 	{
 		SceneEntity::Play();
 
@@ -64,8 +64,6 @@ namespace Oak
 		body.body->GetTransform(kjljl);
 
 		body.body->SetUserData(&body);
-
-		return true;
 	}
 
 	void PhysBox::Release()

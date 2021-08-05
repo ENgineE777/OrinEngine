@@ -78,11 +78,6 @@ namespace Oak
 
 	void SceneManager::LoadScene(SceneHolder* holder)
 	{
-		if (failureOnScenePlay)
-		{
-			return;
-		}
-
 		holder->refCounter++;
 
 		if (holder->scene)
@@ -98,10 +93,7 @@ namespace Oak
 
 		holder->scene->Load(path);
 
-		if (!holder->scene->Play())
-		{
-			failureOnScenePlay = true;
-		}
+		holder->scene->Play();
 	}
 
 	Scene* SceneManager::GetScene(const char* name)
@@ -196,9 +188,6 @@ namespace Oak
 
 	void SceneManager::UnloadAll()
 	{
-		failureOnScenePlay = false;
-		failureOnScenePlayMessage.clear();
-
 		for (auto& scn : scenes)
 		{
 			if (scn.scene)

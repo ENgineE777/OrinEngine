@@ -17,7 +17,7 @@ namespace Oak
 
 		void Init() override;
 
-		bool Play() override;
+		void Play() override;
 
 		virtual void Update(float dt);
 	#endif

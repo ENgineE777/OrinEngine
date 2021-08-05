@@ -112,9 +112,12 @@ namespace Oak
 		return render ? scene->renderTaskPool : scene->taskPool;
 	}
 
-	bool SceneEntity::Play()
+	void SceneEntity::Play()
 	{
-		return true;
+		for (auto* child : childs)
+		{
+			child->Play();
+		}
 	}
 
 	#ifdef OAK_EDITOR

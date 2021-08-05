@@ -134,7 +134,7 @@ namespace Oak
 
 		\return Result of switching a scene object in palyng state.
 		*/
-		virtual bool Play();
+		virtual void Play();
 
 	#ifdef OAK_EDITOR
 		/**

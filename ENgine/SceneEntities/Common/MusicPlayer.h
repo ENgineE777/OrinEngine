@@ -76,7 +76,7 @@ namespace Oak
 
 		void Work(float dt);
 
-		bool Play() override;
+		void Play() override;
 		void Release() override;
 	#endif
 	};

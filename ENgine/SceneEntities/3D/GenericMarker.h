@@ -67,7 +67,7 @@ namespace Oak
 
 		void Draw(float dt);
 
-		bool Play() override;
+		void Play() override;
 
 		void UpdateTransforms();
 

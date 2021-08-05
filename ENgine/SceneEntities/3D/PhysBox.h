@@ -76,7 +76,7 @@ namespace Oak
 
 		void SetVisible(bool state) override;
 
-		bool Play() override;
+		void Play() override;
 		void Release() override;
 
 	#ifdef OAK_EDITOR

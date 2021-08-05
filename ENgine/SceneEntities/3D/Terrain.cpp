@@ -277,13 +277,13 @@ namespace Oak
 		root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, sz);
 	}
 
-	bool Terrain::Play()
+	void Terrain::Play()
 	{
+		SceneEntity::Play();
+
 		body.object = this;
 		body.body = root.GetPhysScene()->CreateHeightmap(hwidth, hheight, Math::Vector2(scaleh, scalev), (hgt_name + eastl::string("hm")).c_str(), 1);
 		body.body->SetUserData(&body);
-
-		return true;
 	}
 
 	void Terrain::Release()

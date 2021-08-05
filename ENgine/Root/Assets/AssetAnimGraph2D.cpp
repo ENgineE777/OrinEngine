@@ -842,7 +842,14 @@ namespace Oak
 
 	Math::Vector2 AssetAnimGraph2DRef::GetSize()
 	{
-		return 0.0f;
+		Math::Vector2 size(50.0f);
+
+		if (curTexture.Get())
+		{
+			size = curTexture.GetSize();
+		}
+
+		return size;
 	}
 
 	void AssetAnimGraph2DRef::LoadData(JsonReader& loader, const char* name)

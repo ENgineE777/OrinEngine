@@ -87,7 +87,7 @@ namespace Oak
 		void Save(const char* name);
 		void Execute(float dt);
 
-		bool Play();
+		void Play();
 		void AddPostPlay(int level, Object* entity, Object::DelegateSimple call);
 
 	#ifdef OAK_EDITOR

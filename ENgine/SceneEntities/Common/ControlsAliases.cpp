@@ -14,10 +14,10 @@ namespace Oak
 	{
 	}
 
-	bool ControlsAliases::Play()
+	void ControlsAliases::Play()
 	{
-		root.controls.LoadAliases(aliases_name.c_str());
+		SceneEntity::Play();
 
-		return true;
+		root.controls.LoadAliases(aliases_name.c_str());
 	}
 }

@@ -135,11 +135,11 @@ namespace Oak
 		return false;
 	}*/
 
-	bool GenericMarker::Play()
+	void GenericMarker::Play()
 	{
-		UpdateTransforms();
+		SceneEntity::Play();
 
-		return true;
+		UpdateTransforms();
 	}
 
 	void GenericMarker::UpdateTransforms()
