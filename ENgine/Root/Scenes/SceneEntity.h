@@ -115,6 +115,11 @@ namespace Oak
 		virtual void Load(JsonReader& reader);
 
 		/**
+			\brief Post load after all entities were created
+		*/
+		virtual void PostLoad();
+
+		/**
 		\brief Save properties into JSON
 
 		\param[in] writer JSON helper class for writing JSON

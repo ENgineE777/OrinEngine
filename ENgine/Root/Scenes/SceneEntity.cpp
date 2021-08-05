@@ -101,6 +101,23 @@ namespace Oak
 		GetMetaData()->Load(reader);
 	}
 
+	void SceneEntity::PostLoad()
+	{
+		GetMetaData()->Prepare(this);
+		GetMetaData()->PostLoad(scene);
+
+		ApplyProperties();
+
+		for (auto child : childs)
+		{
+			child->parent = this;
+
+			child->GetTransform().parent = &transform.global;
+
+			child->PostLoad();
+		}
+	}
+
 	void SceneEntity::Save(JsonWriter& writer)
 	{
 		GetMetaData()->Prepare(this);

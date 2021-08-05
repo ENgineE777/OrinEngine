@@ -135,31 +135,12 @@ namespace Oak
 
 				reader.Read("uid", entity->uid);
 
-				auto& transform = entity->GetTransform();
-
 				entity->Load(reader);
 
 				LoadEntities(reader, "childs", entity->childs);
-
-				for (auto child : entity->childs)
-				{
-					child->parent = entity;
-
-					auto& tranformChild = child->GetTransform();
-
-					tranformChild.parent = &transform.global;
-				}
 			}
 
 			reader.LeaveBlock();
-		}
-
-		for (auto entity : entities)
-		{
-			entity->GetMetaData()->Prepare(entity);
-			entity->GetMetaData()->PostLoad(this);
-
-			entity->ApplyProperties();
 		}
 	}
 
@@ -176,6 +157,11 @@ namespace Oak
 
 			reader.Read("uid", uid);
 			LoadEntities(reader, "entities", entities);
+
+			for (auto entity : entities)
+			{
+				entity->PostLoad();
+			}
 		}
 	}
 
