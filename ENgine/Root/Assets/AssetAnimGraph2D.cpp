@@ -501,6 +501,8 @@ namespace Oak
 				if (node != -1)
 				{
 					nodes[node].texture = *(reinterpret_cast<AssetTextureRef**>(payload->Data)[0]);
+
+					SaveMetaData();
 				}
 			}
 		}
