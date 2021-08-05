@@ -818,7 +818,17 @@ namespace Oak
 			{
 				SceneEntity* entity = selectedEntity;
 				SelectEntity(nullptr);
-				project.selectedScene->scene->DeleteEntity(entity, true);
+
+				if (entity->GetParent())
+				{
+					entity->SetParent(nullptr);
+					entity->Release();
+				}
+				else
+				{
+					project.selectedScene->scene->DeleteEntity(entity, true);
+				}
+
 				entityDeletedViaPopup = true;
 			}
 
@@ -1583,6 +1593,7 @@ namespace Oak
 
 			Math::Vector3 pos = gizmo.transform->global.Pos();
 
+			if (freeCamera.mode2D)
 			if (freeCamera.mode2D)
 			{
 				pos.x = freeCamera.pos2D.x;
