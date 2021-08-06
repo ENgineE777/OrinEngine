@@ -1,5 +1,6 @@
-#include "Math.h"
 #include <stdlib.h>
+#include "Root/Root.h"
+#include "Support/Support.h"
 
 namespace Oak::Math
 {
@@ -87,6 +88,59 @@ namespace Oak::Math
 	bool IsSameAngles(float angle, float target_angle)
 	{
 		return fabs(GetAnglesDifference(angle, target_angle)) < 0.001f;
+	}
+
+	bool IsPointInPolygon(Math::Vector2 pt, eastl::vector<Math::Vector2>& polygon)
+	{
+		eastl::vector<Math::Vector2> temp;
+
+		int count = (int)polygon.size();
+		temp.resize(count);
+
+		for (int i = 0; i < count; i++)
+		{
+			temp[i] = polygon[i] - pt;
+		}
+
+		bool orientation = temp[0].Cross(temp[1]) > 0;
+
+		for (int i = 1; i < count; i++)
+		{
+			if ((temp[i].Cross(temp[(i + 1) % count]) > 0) != orientation)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	bool IsPointInRectangle(Math::Vector2 pt, Math::Vector2 center, Math::Vector2 offset, Math::Vector2 size, float angle, bool debugDraw)
+	{
+		eastl::vector<Math::Vector2> polygon = { { 0.0f, size.y * 0.5f },{ size.x, size.y * 0.5f }, { size.x, -size.y * 0.5f }, { 0.0f, -size.y * 0.5f } };
+
+		float cs = cosf(angle);
+		float sn = sinf(angle);
+
+		Vector2 local_offset = offset * size * 0.5f;
+
+		for (int i = 0; i < 4; i++)
+		{
+			polygon[i] = polygon[i] - local_offset;
+			polygon[i] = Vector2{ polygon[i].x * cs - polygon[i].y * sn, polygon[i].x * sn + polygon[i].y * cs } + center;
+		}
+
+		if (debugDraw)
+		{
+			for (int i = 0; i < polygon.size(); i++)
+			{
+				int nextIndex = (i + 1) % polygon.size();
+				root.render.DebugLine(Math::Vector3(polygon[i].x, polygon[i].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN,
+										Math::Vector3(polygon[nextIndex].x, polygon[nextIndex].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN, false);
+			}
+		}
+
+		return Math::IsPointInPolygon(pt, polygon);
 	}
 
 	bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir)

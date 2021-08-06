@@ -24,6 +24,8 @@ namespace Oak::Math
 	CLASS_DECLSPEC float AdvanceAngle(float angle, float target_angle, float delta_angle);
 	CLASS_DECLSPEC float GetAnglesDifference(float angle, float target_angle);
 	CLASS_DECLSPEC bool IsSameAngles(float angle, float target_angle);
+	CLASS_DECLSPEC bool IsPointInPolygon(Math::Vector2 pt, eastl::vector<Math::Vector2>& polygon);
+	CLASS_DECLSPEC bool IsPointInRectangle(Math::Vector2 pt, Math::Vector2 center, Math::Vector2 offset, Math::Vector2 size, float angle, bool debugDraw);
 	CLASS_DECLSPEC bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir);
 	CLASS_DECLSPEC bool IntersectBBoxRay(Vector3 vmin, Vector3 vmax, Vector3 start, Vector3 dir);
 	CLASS_DECLSPEC bool IntersectTrianglrRay(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 orig, Vector3 dir, float distance);
