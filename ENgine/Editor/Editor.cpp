@@ -1075,7 +1075,7 @@ namespace Oak
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
 
-			bool open = ImGui::TreeNodeEx(&item, nodeFlags, item->name.c_str());
+			bool open = ImGui::TreeNodeEx(item, nodeFlags, item->name.c_str());
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
@@ -1624,6 +1624,22 @@ namespace Oak
 			for (int i = -numCellsX; i <= numCellsX; i++)
 			{
 				root.render.DebugLine(Math::Vector3(i * step.x + pos.x, -numCellsY * step.y + pos.y, pos.z), color, Math::Vector3(i * step.x + pos.x, numCellsY * step.y + pos.y, pos.z), color, false);
+			}
+		}
+
+		if (!projectRunning && (!selectedAsset || !selectedAsset->HasOwnTasks()))
+		{
+			Math::Vector3 rect[] = { Math::Vector3(0, 0, 0), Math::Vector3(Sprite::pixelsHeight * 16.0f / 9.0f, 0, 0),
+									Math::Vector3(Sprite::pixelsHeight * 16.0f / 9.0f, Sprite::pixelsHeight, 0), Math::Vector3(0, Sprite::pixelsHeight, 0) } ;
+
+			for (int i = 0; i < 4; i++)
+			{
+				Math::Vector3 p1 = rect[i], p2 = rect[(i + 1) % 4];
+
+				p1 *= Sprite::pixelsPerUnitInvert;
+				p2 *= Sprite::pixelsPerUnitInvert;
+
+				root.render.DebugLine(p1, COLOR_CYAN, p2, COLOR_CYAN, false);
 			}
 		}
 
