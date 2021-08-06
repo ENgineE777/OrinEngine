@@ -70,7 +70,7 @@ namespace Oak
 		pxdesc.height = desc.height;
 		pxdesc.radius = desc.radius;
 		pxdesc.position = PxExtendedVec3(desc.pos.x, desc.pos.y, desc.pos.z);
-		pxdesc.upDirection = PxVec3(0.0f, 1.0f, 0.0f);
+		pxdesc.upDirection = PxVec3(desc.upVector.x, desc.upVector.y, desc.upVector.z);
 		pxdesc.density = 1.0f;
 		pxdesc.slopeLimit = desc.slopeLimit;
 		pxdesc.contactOffset = 0.01f;

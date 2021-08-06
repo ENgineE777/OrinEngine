@@ -52,6 +52,9 @@ namespace Oak
 		/** \brief Radius of a controller. Overall height euqals radius * 2 + height */
 		float radius = 0.25f;
 
+		/** \brief Up vector of a controller */
+		Math::Vector3 upVector = Math::Vector3(0.0f, 1.0f, 0.0f);
+
 		/** \brief Postion of a controller */
 		Math::Vector3 pos;
 
@@ -184,6 +187,11 @@ namespace Oak
 		\param[out] pos Current position of a controller
 		*/
 		void GetPosition(Math::Vector3& pos);
+
+		/**
+		\brief Restrict axis for making object as 2D
+		*/
+		void RestrictZAxis();
 
 		/**
 		\brief PhysController should released only via this mehod

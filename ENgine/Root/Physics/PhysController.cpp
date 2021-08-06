@@ -131,6 +131,8 @@ namespace Oak
 		PhysScene::BodyUserData* udataA = static_cast<PhysScene::BodyUserData*>(GetUserData());
 		PhysScene::BodyUserData* udataB = static_cast<PhysScene::BodyUserData*>(actor->userData);
 
+		auto jkl = shape->getQueryFilterData().word0;
+
 		if (ignore_group != 0 && (ignore_group & shape->getQueryFilterData().word0))
 		{
 			return PxQueryHitType::eNONE;
@@ -297,6 +299,16 @@ namespace Oak
 
 		PxExtendedVec3 cpos = controller->getFootPosition();
 		pos = Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
+	}
+
+	void PhysController::RestrictZAxis()
+	{
+		auto actor = controller->getActor();
+
+		if (actor)
+		{
+			actor->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
+		}
 	}
 
 	void PhysController::Release()
