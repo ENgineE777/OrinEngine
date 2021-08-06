@@ -149,6 +149,9 @@
     <Filter Include="ENgine\Platform\Common">
       <UniqueIdentifier>{afbdecd7-3e84-491e-91ee-b3946ce49ff4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\SceneEntities\UI">
+      <UniqueIdentifier>{6b8bd6e8-c0e1-4b3d-ad4e-e23a0805705f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -639,6 +642,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Node2D.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.cpp">
+      <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.cpp">
+      <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.cpp">
+      <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.cpp">
+      <Filter>ENgine\SceneEntities\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1220,6 +1235,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Node2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.h">
+      <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.h">
+      <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.h">
+      <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.h">
+      <Filter>ENgine\SceneEntities\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

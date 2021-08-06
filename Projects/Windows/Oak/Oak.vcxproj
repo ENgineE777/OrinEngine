@@ -239,6 +239,10 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.h" />
     <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Color.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Defines.h" />
@@ -423,6 +427,10 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
