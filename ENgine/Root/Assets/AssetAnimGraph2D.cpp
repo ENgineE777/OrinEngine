@@ -748,21 +748,7 @@ namespace Oak
 			return;
 		}
 
-		curNode = &Get()->nodes[index];
-
-		auto fireEvents = [this](int frame)
-		{
-			for (auto& event : curNode->events)
-			{
-				if (frame == event.frameNumber)
-				{
-					onFrameChange(frame, event.name, event.param);
-				}
-			}
-		};
-
-		curTexture = curNode->texture;
-		curTexture.ResetAnim(curNode->looped, curNode->reversed, fireEvents);
+		gotoNode = &Get()->nodes[index];
 	}
 
 	bool AssetAnimGraph2DRef::GotoNode(const char* nodeName)
@@ -790,6 +776,25 @@ namespace Oak
 
 	void AssetAnimGraph2DRef::Draw(Transform* trans, Color clr, float dt)
 	{
+		if (gotoNode)
+		{
+			auto fireEvents = [this](int frame)
+			{
+				for (auto& event : curNode->events)
+				{
+					if (frame == event.frameNumber)
+					{
+						onFrameChange(frame, event.name, event.param);
+					}
+				}
+			};
+
+			curNode = gotoNode;
+			gotoNode = nullptr;
+			curTexture = curNode->texture;
+			curTexture.ResetAnim(curNode->looped, curNode->reversed, fireEvents);
+		}
+
 		if (!Get() || !curNode)
 		{
 			return;

@@ -111,6 +111,8 @@ namespace Oak
 	class CLASS_DECLSPEC AssetAnimGraph2DRef : public PointerRef<AssetAnimGraph2D>
 	{
 		AssetTextureRef curTexture;
+		
+		AssetAnimGraph2D::Node* gotoNode = nullptr;
 		AssetAnimGraph2D::Node* curNode = nullptr;
 		eastl::function<void(int, eastl::string&, eastl::string&)> onFrameChange;
 
