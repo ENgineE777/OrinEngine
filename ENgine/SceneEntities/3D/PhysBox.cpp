@@ -60,9 +60,6 @@ namespace Oak
 		body.object = this;
 		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.global, Math::Matrix(), isStatic ? PhysObject::Static : PhysObject::Dynamic, phys_group);
 
-		Math::Matrix kjljl;
-		body.body->GetTransform(kjljl);
-
 		body.body->SetUserData(&body);
 	}
 
