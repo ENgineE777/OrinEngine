@@ -729,7 +729,9 @@ namespace Oak
 			return false;
 		}
 
-		for (auto& link : curNode->links)
+		auto* node = (gotoNode != nullptr) ? gotoNode : curNode;
+
+		for (auto& link : node->links)
 		{
 			if (StringUtils::IsEqual(link.name.c_str(), linkName))
 			{
