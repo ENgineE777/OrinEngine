@@ -90,9 +90,19 @@ namespace Oak::Math
 		return fabs(GetAnglesDifference(angle, target_angle)) < 0.001f;
 	}
 
-	bool IsPointInPolygon(Math::Vector2 pt, eastl::vector<Math::Vector2>& polygon)
+	bool IsPointInPolygon(Vector2 pt, eastl::vector<Vector2>& polygon, bool debugDraw)
 	{
-		eastl::vector<Math::Vector2> temp;
+		if (debugDraw)
+		{
+			for (int i = 0; i < polygon.size(); i++)
+			{
+				int nextIndex = (i + 1) % polygon.size();
+				root.render.DebugLine(Vector3(polygon[i].x, polygon[i].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN,
+					Vector3(polygon[nextIndex].x, polygon[nextIndex].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN, false);
+			}
+		}
+
+		eastl::vector<Vector2> temp;
 
 		int count = (int)polygon.size();
 		temp.resize(count);
@@ -115,9 +125,19 @@ namespace Oak::Math
 		return true;
 	}
 
-	bool IsPointInRectangle(Math::Vector2 pt, Math::Vector2 center, Math::Vector2 offset, Math::Vector2 size, float angle, bool debugDraw)
+	bool IsPointInTriangle(Vector2 pt, Vector2 p1, Vector2 p2, Vector2 p3, bool debugDraw)
 	{
-		eastl::vector<Math::Vector2> polygon = { { 0.0f, size.y * 0.5f },{ size.x, size.y * 0.5f }, { size.x, -size.y * 0.5f }, { 0.0f, -size.y * 0.5f } };
+		eastl::vector<Vector2> polygon;
+		polygon.push_back(p1);
+		polygon.push_back(p2);
+		polygon.push_back(p3);
+
+		return IsPointInPolygon(pt, polygon, debugDraw);
+	}
+
+	bool IsPointInRectangle(Vector2 pt, Vector2 center, Vector2 offset, Vector2 size, float angle, bool debugDraw)
+	{
+		eastl::vector<Vector2> polygon = { { 0.0f, size.y * 0.5f },{ size.x, size.y * 0.5f }, { size.x, -size.y * 0.5f }, { 0.0f, -size.y * 0.5f } };
 
 		float cs = cosf(angle);
 		float sn = sinf(angle);
@@ -130,17 +150,18 @@ namespace Oak::Math
 			polygon[i] = Vector2{ polygon[i].x * cs - polygon[i].y * sn, polygon[i].x * sn + polygon[i].y * cs } + center;
 		}
 
-		if (debugDraw)
-		{
-			for (int i = 0; i < polygon.size(); i++)
-			{
-				int nextIndex = (i + 1) % polygon.size();
-				root.render.DebugLine(Math::Vector3(polygon[i].x, polygon[i].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN,
-										Math::Vector3(polygon[nextIndex].x, polygon[nextIndex].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN, false);
-			}
-		}
+		return IsPointInPolygon(pt, polygon, debugDraw);
+	}
 
-		return Math::IsPointInPolygon(pt, polygon);
+	bool IsPointInSector(Vector2 pt, Vector2 center, float orientation, float distance, float angle, bool debugDraw)
+	{
+		float side_angle = orientation - angle * 0.5f;
+		Vector2 p2(cosf(side_angle) * distance + center.x, sinf(side_angle) * distance + center.y);
+
+		side_angle = orientation + angle * 0.5f;
+		Vector2 p3(cosf(side_angle) * distance + center.x, sinf(side_angle) * distance + center.y);
+
+		return IsPointInTriangle(pt, center, p2, p3, debugDraw);
 	}
 
 	bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir)
@@ -272,7 +293,7 @@ namespace Oak::Math
 		return true;
 	}
 
-	bool IntersectPlaneRay(Math::Vector3 planeP, Math::Vector3 planeN, Math::Vector3 rayP, Math::Vector3 rayD, Math::Vector3& intersection)
+	bool IntersectPlaneRay(Vector3 planeP, Vector3 planeN, Vector3 rayP, Vector3 rayD, Vector3& intersection)
 	{
 		float d = planeP.Dot(-planeN);
 		float det = (rayD.z * planeN.z + rayD.y * planeN.y + rayD.x * planeN.x);
@@ -285,19 +306,6 @@ namespace Oak::Math
 
 		float t = -(d + rayP.z * planeN.z + rayP.y * planeN.y + rayP.x * planeN.x) / det;
 		intersection = rayP + t * rayD;
-
-		return true;
-	}
-
-	bool IsInsideTriangle(Math::Vector2 s, Math::Vector2 a, Math::Vector2 b, Math::Vector2 c)
-	{
-		float as_x = s.x - a.x;
-		float as_y = s.y - a.y;
-
-		bool s_ab = (b.x - a.x) * as_y - (b.y - a.y) * as_x > 0;
-
-		if ((c.x - a.x) * as_y - (c.y - a.y) * as_x > 0 == s_ab) return false;
-		if ((c.x - b.x) * (s.y - b.y) - (c.y - b.y) * (s.x - b.x) > 0 != s_ab) return false;
 
 		return true;
 	}

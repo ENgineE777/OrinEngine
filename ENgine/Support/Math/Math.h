@@ -24,11 +24,12 @@ namespace Oak::Math
 	CLASS_DECLSPEC float AdvanceAngle(float angle, float target_angle, float delta_angle);
 	CLASS_DECLSPEC float GetAnglesDifference(float angle, float target_angle);
 	CLASS_DECLSPEC bool IsSameAngles(float angle, float target_angle);
-	CLASS_DECLSPEC bool IsPointInPolygon(Math::Vector2 pt, eastl::vector<Math::Vector2>& polygon);
-	CLASS_DECLSPEC bool IsPointInRectangle(Math::Vector2 pt, Math::Vector2 center, Math::Vector2 offset, Math::Vector2 size, float angle, bool debugDraw);
+	CLASS_DECLSPEC bool IsPointInTriangle(Vector2 pt, Vector2 p1, Vector2 p2, Vector2 p3, bool debugDraw = false);
+	CLASS_DECLSPEC bool IsPointInSector(Vector2 pt, Vector2 center, float orientation, float distance, float angle, bool debugDraw = false);
+	CLASS_DECLSPEC bool IsPointInPolygon(Vector2 pt, eastl::vector<Vector2>& polygon, bool debugDraw = false);
+	CLASS_DECLSPEC bool IsPointInRectangle(Vector2 pt, Vector2 center, Vector2 offset, Vector2 size, float angle, bool debugDraw = false);
 	CLASS_DECLSPEC bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir);
 	CLASS_DECLSPEC bool IntersectBBoxRay(Vector3 vmin, Vector3 vmax, Vector3 start, Vector3 dir);
 	CLASS_DECLSPEC bool IntersectTrianglrRay(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 orig, Vector3 dir, float distance);
-	CLASS_DECLSPEC bool IntersectPlaneRay(Math::Vector3 planeP, Math::Vector3 planeN, Math::Vector3 rayP, Math::Vector3 rayD, Math::Vector3& intersection);
-	CLASS_DECLSPEC bool IsInsideTriangle(Math::Vector2 s, Math::Vector2 a, Math::Vector2 b, Math::Vector2 c);
+	CLASS_DECLSPEC bool IntersectPlaneRay(Vector3 planeP, Vector3 planeN, Vector3 rayP, Vector3 rayD, Vector3& intersection);
 }

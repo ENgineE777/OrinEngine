@@ -419,8 +419,8 @@ namespace Oak
 
 		if (selAxis == -1)
 		{
-			if (Math::IsInsideTriangle(ms, ancorns[0], ancorns[1], ancorns[2]) ||
-				Math::IsInsideTriangle(ms, ancorns[0], ancorns[2], ancorns[3]))
+			if (Math::IsPointInTriangle(ms, ancorns[0], ancorns[1], ancorns[2]) ||
+				Math::IsPointInTriangle(ms, ancorns[0], ancorns[2], ancorns[3]))
 			{
 				//SetCursor(cr_move);
 
