@@ -272,14 +272,6 @@ namespace Oak
 
 	void PhysController::SetPosition(Math::Vector3 pos)
 	{
-		Math::Vector3 cur_pos;
-		GetPosition(cur_pos);
-
-		/*if (pos == cur_pos)
-		{
-			return;
-		}*/
-
 		if (!active)
 		{
 			deactive_pos = pos;
