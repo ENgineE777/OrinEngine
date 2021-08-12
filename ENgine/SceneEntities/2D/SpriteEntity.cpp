@@ -9,6 +9,7 @@ namespace Oak
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)
 		ASSET_TEXTURE_PROP(SpriteEntity, texture, "Visual", "Texture")
+		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
 
 	SpriteEntity::SpriteEntity() : SceneEntity()
@@ -33,8 +34,11 @@ namespace Oak
 
 	void SpriteEntity::Draw(float dt)
 	{
-		transform.BuildMatrices();
+		if (IsVisible())
+		{
+			transform.BuildMatrices();
 
-		texture.Draw(&transform, COLOR_WHITE, dt);
+			texture.Draw(&transform, color, dt);
+		}
 	}
 }

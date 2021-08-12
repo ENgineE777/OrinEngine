@@ -12,6 +12,7 @@ namespace Oak
 	{
 	public:
 
+		Color color;
 		AssetTextureRef texture;
 
 		META_DATA_DECL_BASE(SpriteEntity)
