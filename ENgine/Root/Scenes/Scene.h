@@ -183,7 +183,7 @@ namespace Oak
 
 		\return Returns true if a scene is playing. Otherwise false will be returned
 		*/
-		bool Playing();
+		bool IsPlaying();
 
 	#ifndef DOXYGEN_SKIP
 

@@ -270,7 +270,7 @@ namespace Oak
 	}
 	#endif
 
-	bool Scene::Playing()
+	bool Scene::IsPlaying()
 	{
 		return playing;
 	}

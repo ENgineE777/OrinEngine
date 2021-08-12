@@ -27,7 +27,7 @@ namespace Oak
 
 	void AnimGraph2D::Draw(float dt)
 	{
-		if (anim.Get())
+		if (IsVisible() && anim.Get())
 		{
 			transform.BuildMatrices();
 

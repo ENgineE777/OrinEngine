@@ -42,7 +42,7 @@ namespace Oak
 
 	void GenericMarker::Draw(float dt)
 	{
-		if (GetScene()->Playing() || !IsVisible())
+		if (GetScene()->IsPlaying() || !IsVisible())
 		{
 			return;
 		}

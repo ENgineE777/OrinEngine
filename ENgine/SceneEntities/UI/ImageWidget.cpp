@@ -37,7 +37,7 @@ namespace Oak
 
 		transform.global.Pos().y = Sprite::pixelsHeight - transform.global.Pos().y;
 
-		if (scene->Playing())
+		if (scene->IsPlaying())
 		{
 			Math::Matrix view;
 			root.render.GetTransform(TransformStage::View, view);

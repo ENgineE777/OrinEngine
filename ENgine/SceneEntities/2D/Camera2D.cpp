@@ -39,7 +39,7 @@ namespace Oak
 	{
 		transform.BuildMatrices();
 
-		if (GetScene()->Playing())
+		if (GetScene()->IsPlaying())
 		{
 			if (targetRef.entity)
 			{
