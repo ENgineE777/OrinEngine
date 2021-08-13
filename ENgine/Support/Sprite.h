@@ -17,8 +17,11 @@ namespace Oak::Sprite
 	extern CLASS_DECLSPEC float pixelsPerUnitInvert;
 	extern CLASS_DECLSPEC float pixelsHeight;
 
+	extern CLASS_DECLSPEC ProgramRef quadPrg;
+	extern CLASS_DECLSPEC ProgramRef quadPrgNoZ;
+
 	CLASS_DECLSPEC void Init();
-	CLASS_DECLSPEC void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool useDepth);
+	CLASS_DECLSPEC void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg = quadPrg);
 	CLASS_DECLSPEC void Release();
 }
 #endif

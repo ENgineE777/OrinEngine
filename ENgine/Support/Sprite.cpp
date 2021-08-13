@@ -36,14 +36,15 @@ namespace Oak::Sprite
 	CLASSREGEX(Program, QuadProgramNoZ, QuadProgramNoZ, "QuadProgramNoZ")
 	CLASSREGEX_END(Program, QuadProgramNoZ)
 
-	ProgramRef quadPrg;
-	ProgramRef quadPrgNoZ;
 	VertexDeclRef vdecl;
 	DataBufferRef buffer;
 
 	float pixelsPerUnit = 50.0f;
 	float pixelsPerUnitInvert = 1.0f / pixelsPerUnit;
 	float pixelsHeight = 1080.0f;
+
+	ProgramRef quadPrg;
+	ProgramRef quadPrgNoZ;
 
 	void Init()
 	{
@@ -66,12 +67,11 @@ namespace Oak::Sprite
 		quadPrgNoZ = root.render.GetProgram("QuadProgramNoZ", _FL_);
 	}
 
-	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, bool useDepth)
+	void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 
-		ProgramRef prg = useDepth ? quadPrg : quadPrgNoZ;
 		root.render.GetDevice()->SetProgram(prg);
 
 		Device::Viewport viewport;

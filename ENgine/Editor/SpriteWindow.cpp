@@ -1028,8 +1028,8 @@ namespace Oak
 		Math::Matrix spriteTrans;
 		spriteTrans.Pos().y = texture->size.y;
 
-		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, 0.0f, texture->size, 0.0f, 1.0f, false);
-		Sprite::Draw(texture->texture, COLOR_WHITE, spriteTrans, 0.0f, texture->size, 0.0f, 1.0f, false);
+		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, 0.0f, texture->size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
+		Sprite::Draw(texture->texture, COLOR_WHITE, spriteTrans, 0.0f, texture->size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
 
 		for (int i = 0; i < texture->slices.size(); i++)
 		{

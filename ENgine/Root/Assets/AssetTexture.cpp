@@ -317,13 +317,13 @@ namespace Oak
 						Math::Vector2 sliceUVPos = slice.pos + Math::Vector2(u[j], v[i]);
 						Math::Vector2 sliceUVSize = Math::Vector2(u[j + 1] - u[j], v[i + 1] - v[i]);
 
-						Sprite::Draw(Get()->texture, clr, local_trans, slicePos, sliceSize, sliceUVPos / Get()->size, sliceUVSize / Get()->size, true);
+						Sprite::Draw(Get()->texture, clr, local_trans, slicePos, sliceSize, sliceUVPos / Get()->size, sliceUVSize / Get()->size, prg);
 						index++;
 					}
 			}
 			else
 			{
-				Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, true);
+				Sprite::Draw(Get()->texture, clr, local_trans, pos, size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, prg);
 			}
 		}
 		else
@@ -343,11 +343,11 @@ namespace Oak
 			pos = Math::Vector2(pos3d.x, pos3d.y);
 			size = Math::Vector2(slice.size.x, slice.size.y);
 
-			Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, true);
+			Sprite::Draw(Get()->texture, clr, local_trans, pos + Math::Vector2(frame.offset.x, -frame.offset.y), slice.size, Math::Vector2(slice.pos.x, slice.pos.y) / Get()->size, slice.size / Get()->size, prg);
 		}
 		else
 		{
-			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f, true);
+			Sprite::Draw(Get()->texture, clr, local_trans, pos, size, 0.0f, 1.0f, prg);
 		}
 	}
 

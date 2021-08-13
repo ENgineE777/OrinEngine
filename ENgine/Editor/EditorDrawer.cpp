@@ -115,7 +115,7 @@ namespace Oak
 		Sprite::Draw(checkerTex, COLOR_WHITE, mat,
 					Math::Vector2(camPos.x - viewportSize.x * 0.5f / camZoom, camPos.y + viewportSize.y * 0.5f / camZoom), viewportSize / camZoom,
 					Math::Vector2(((int)(camPos.x) % 42) / 42.0f, 1.0f - ((int)(camPos.y) % 42) / 42.0f),
-					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f), false);
+					Math::Vector2(viewportSize.x / camZoom / 42.0f, viewportSize.y / camZoom / 42.0f), Sprite::quadPrgNoZ);
 	}
 
 	void EditorDrawer::DrawWindowBorder()
@@ -137,7 +137,7 @@ namespace Oak
 		mat.RotateZ(-rotate);
 		mat.Pos() = Math::Vector3(pos.x, pos.y, 0.01f);
 
-		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f, false);
+		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
 	}
 
 	void EditorDrawer::PrintText(Math::Vector2 pos, float fontScale, Color color, const char* text)
@@ -177,7 +177,7 @@ namespace Oak
 		mat.RotateZ(-atan2f(dir.y / size.x, dir.x / size.x));
 		mat.Pos() = Math::Vector3(from.x, from.y, 0.01f);
 
-		Sprite::Draw(nullptr, color, mat, 0.0f, size, 0.0f, 1.0f, false);
+		Sprite::Draw(nullptr, color, mat, 0.0f, size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
 	}
 
 	void EditorDrawer::DrawCurve(Math::Vector2 from, Math::Vector2 to, Color color)

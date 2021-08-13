@@ -86,6 +86,7 @@ namespace Oak
 
 		int sliceIndex = -1;
 		int animIndex = -1;
+		ProgramRef prg = Sprite::quadPrg;
 
 		void Draw(Transform* trans, Color clr, float dt);
 
