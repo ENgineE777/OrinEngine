@@ -229,8 +229,10 @@
     <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Node2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
@@ -239,6 +241,9 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\HordePlayer.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\HordeFlock.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\WorldManager.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.h" />
@@ -417,8 +422,10 @@
     <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Node2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
@@ -427,6 +434,9 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\HordePlayer.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\HordeFlock.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\WorldManager.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.cpp" />

@@ -55,3 +55,18 @@ float4 PS( PS_INPUT input) : SV_Target
 
     return clr;
 }
+
+float4 PS_LIGHT(PS_INPUT input) : SV_Target
+{
+    float2 dir = input.texCoord * 2.0f - 1.0f;
+    float intense = (1 - sqrt(dir.x * dir.x + dir.y * dir.y));
+
+    if (intense < 0.01f)
+    {
+       //discard;
+    }
+
+ //   float4 clr = diffuseMap.Sample(samLinear, input.texCoord) * color;
+
+    return float4(intense, intense, intense, 1.0f) * color;
+}

@@ -152,6 +152,9 @@
     <Filter Include="ENgine\SceneEntities\UI">
       <UniqueIdentifier>{6b8bd6e8-c0e1-4b3d-ad4e-e23a0805705f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ENgine\SceneEntities\Horde">
+      <UniqueIdentifier>{453c56de-5ed3-4e8e-bf7a-a4b8127bc982}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
@@ -654,6 +657,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.cpp">
       <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\WorldManager.cpp">
+      <Filter>ENgine\SceneEntities\Horde</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\HordePlayer.cpp">
+      <Filter>ENgine\SceneEntities\Horde</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\HordeFlock.cpp">
+      <Filter>ENgine\SceneEntities\Horde</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1247,6 +1265,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.h">
       <Filter>ENgine\SceneEntities\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\WorldManager.h">
+      <Filter>ENgine\SceneEntities\Horde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\HordePlayer.h">
+      <Filter>ENgine\SceneEntities\Horde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\HordeFlock.h">
+      <Filter>ENgine\SceneEntities\Horde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

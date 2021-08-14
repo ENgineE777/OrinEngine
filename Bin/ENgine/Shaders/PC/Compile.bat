@@ -40,8 +40,13 @@ fxc /E PS /T ps_4_0 /Zi /Od /Fo particle_ps.shd particle.shader
 
 fxc /E VS /T vs_4_0 /Zi /Od /Fo sprite_vs.shd sprite.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo sprite_ps.shd sprite.shader
+fxc /E PS_LIGHT /T ps_4_0 /Zi /Od /Fo sprite_light_ps.shd sprite.shader
 
 fxc /E VS /T vs_4_0 /Zi /Od /Fo triangle_simplest_vs.shd triangle_simplest.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo triangle_simplest_ps.shd triangle_simplest.shader
+
+fxc /E VS /T vs_4_0 /Zi /Od /Fo drawLightMap2D_vs.shd drawLightMap2D.shader
+fxc /E PS_AMBIENT /T ps_4_0 /Zi /Od /Fo drawAmbient2D_ps.shd drawLightMap2D.shader
+fxc /E PS /T ps_4_0 /Zi /Od /Fo drawLightMap2D_ps.shd drawLightMap2D.shader
 
 pause
