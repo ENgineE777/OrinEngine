@@ -63,10 +63,8 @@ float4 PS_LIGHT(PS_INPUT input) : SV_Target
 
     if (intense < 0.01f)
     {
-       //discard;
+       discard;
     }
 
- //   float4 clr = diffuseMap.Sample(samLinear, input.texCoord) * color;
-
-    return float4(intense, intense, intense, 1.0f) * color;
+    return float4(1.0f, 1.0f, 1.0f, intense) * color;
 }
