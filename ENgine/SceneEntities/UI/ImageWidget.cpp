@@ -22,7 +22,7 @@ namespace Oak
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.transformFlag = SpriteTransformFlags;
 
-		Tasks(true)->AddTask(0, this, (Object::Delegate) & ImageWidget::Draw);
+		Tasks(true)->AddTask(199, this, (Object::Delegate) & ImageWidget::Draw);
 	}
 
 	void ImageWidget::ApplyProperties()
@@ -52,6 +52,7 @@ namespace Oak
 			transform.global.Pos().y += view.Pos().y - root.render.GetDevice()->GetHeight() * 0.5f * k;
 		}
 
+		texture.prg = Sprite::quadPrgNoZ;
 		texture.Draw(&transform, COLOR_WHITE, dt);
 	}
 }
