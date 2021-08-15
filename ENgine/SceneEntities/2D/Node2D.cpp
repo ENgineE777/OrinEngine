@@ -20,5 +20,12 @@ namespace Oak
 		transform.unitsScale = &Sprite::pixelsPerUnit;
 		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY;
+
+		Tasks(false)->AddTask(0, this, (Object::Delegate)&Node2D::Update);
+	}
+
+	void Node2D::Update(float dt)
+	{
+		transform.BuildMatrices();
 	}
 }
