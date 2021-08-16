@@ -1629,8 +1629,10 @@ namespace Oak
 
 		if (!projectRunning && (!selectedAsset || !selectedAsset->HasOwnTasks()))
 		{
-			Math::Vector3 rect[] = { Math::Vector3(0, 0, 0), Math::Vector3(Sprite::pixelsHeight * 16.0f / 9.0f, 0, 0),
-									Math::Vector3(Sprite::pixelsHeight * 16.0f / 9.0f, Sprite::pixelsHeight, 0), Math::Vector3(0, Sprite::pixelsHeight, 0) } ;
+			float width = Sprite::pixelsHeight / root.render.GetDevice()->GetHeight() * root.render.GetDevice()->GetWidth();
+
+			Math::Vector3 rect[] = { Math::Vector3(0, 0, 0), Math::Vector3(width, 0, 0),
+									Math::Vector3(width, Sprite::pixelsHeight, 0), Math::Vector3(0, Sprite::pixelsHeight, 0) } ;
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -1698,6 +1700,7 @@ namespace Oak
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(10, dt);
 		root.render.ExecutePool(100, dt);
+		root.render.ExecutePool(150, dt);
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);
 		root.render.GetDevice()->Present();

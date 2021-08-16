@@ -75,6 +75,7 @@ namespace Oak
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(10, dt);
 		root.render.ExecutePool(100, dt);
+		root.render.ExecutePool(150, dt);
 		root.render.ExecutePool(199, dt);
 		root.render.ExecutePool(1000, dt);
 		root.render.GetDevice()->Present();
@@ -82,12 +83,10 @@ namespace Oak
 
 	void Runner::OnResize(int width, int height)
 	{
-		//if (d3dDevice != nullptr)
-		{
-			//CleanupRenderTarget();
-			//swapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0);
-			//CreateRenderTarget();
-		}
+		RECT rect;
+		GetClientRect(hwnd, (LPRECT)&rect);
+
+		root.render.GetDevice()->SetBackBuffer(0, rect.right, rect.bottom, &hwnd);
 	}
 
 	void Runner::Release()
