@@ -32,7 +32,7 @@ namespace Oak
 		transform.size.y = Sprite::pixelsHeight;
 		transform.transformFlag = TransformFlag::MoveX | TransformFlag::MoveY | RectMoveXY;
 
-		Tasks(false)->AddTask(0, this, (Object::Delegate)&Camera2D::Update);
+		Tasks(false)->AddTask(100, this, (Object::Delegate)&Camera2D::Update);
 	}
 
 	void Camera2D::Update(float dt)
