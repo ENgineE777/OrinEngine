@@ -5,10 +5,11 @@
 #include "Support/MetaData.h"
 #include "Support/Sprite.h"
 #include "root/Assets/AssetTexture.h"
+#include "ContainerWidget.h"
 
 namespace Oak
 {
-	class ImageWidget : public SceneEntity
+	class ImageWidget : public ContainerWidget
 	{
 	public:
 
@@ -17,10 +18,9 @@ namespace Oak
 
 	#ifndef DOXYGEN_SKIP
 
-		ImageWidget();
+		ImageWidget() = default;;
 		virtual ~ImageWidget() = default;
 
-		void Init() override;
 		void ApplyProperties() override;
 		void Draw(float dt);
 	#endif
