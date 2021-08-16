@@ -241,9 +241,6 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\HordePlayer.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\HordeFlock.h" />
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Horde\WorldManager.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.h" />
@@ -434,9 +431,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\HordePlayer.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\HordeFlock.cpp" />
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Horde\WorldManager.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.cpp" />
