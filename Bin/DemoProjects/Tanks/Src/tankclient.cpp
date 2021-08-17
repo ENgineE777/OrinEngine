@@ -20,7 +20,7 @@ namespace Oak
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&TankClient::Update);
 	}
 
-	bool TankClient::Play()
+	void TankClient::Play()
 	{
 		alias_forward = GetRoot()->GetControls()->GetAlias("Tank.MOVE_FORWARD");
 		alias_strafe = GetRoot()->GetControls()->GetAlias("Tank.MOVE_STRAFE");
@@ -28,8 +28,6 @@ namespace Oak
 		alias_rotate_x = GetRoot()->GetControls()->GetAlias("Tank.ROTATE_X");
 		alias_rotate_y = GetRoot()->GetControls()->GetAlias("Tank.ROTATE_Y");
 		alias_fire = GetRoot()->GetControls()->GetAlias("Tank.FIRE");
-
-		return true;
 	}
 
 	void TankClient::Stop()
@@ -56,7 +54,7 @@ namespace Oak
 
 	void TankClient::Update(float dt)
 	{
-		if (!GetScene()->Playing())
+		if (!GetScene()->IsPlaying())
 		{
 			return;
 		}

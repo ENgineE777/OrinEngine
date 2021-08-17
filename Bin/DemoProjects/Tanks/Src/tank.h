@@ -98,7 +98,7 @@ namespace Oak
 
 		void AddInstance(int id, Math::Vector3 pos, bool is_bot);
 
-		bool Play() override;
+		void Play() override;
 		void Update(float dt);
 		void AddSplash(Math::Vector3& pos, float radius, float force);
 

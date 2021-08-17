@@ -51,7 +51,7 @@ namespace Oak
 
 		void AddIsntance(int id, bool  is_contralable);
 
-		bool Play() override;
+		void Play() override;
 		void Stop();
 		void Update(float dt);
 

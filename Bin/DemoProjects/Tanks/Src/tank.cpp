@@ -45,7 +45,7 @@ namespace Oak
 		state.controller = GetRoot()->GetPhysScene()->CreateController(cdesc, 1);
 	}
 
-	bool Tank::Play()
+	void Tank::Play()
 	{
 		time = 0.0f;
 
@@ -80,8 +80,6 @@ namespace Oak
 			clientID = 0;
 			OnClientConnected(0);
 		}
-
-		return true;
 	}
 
 	void Tank::OnClientConnected(int id)
@@ -210,7 +208,7 @@ namespace Oak
 
 	void Tank::SendServerState(float dt)
 	{
-		if (!GetScene()->Playing())
+		if (!GetScene()->IsPlaying())
 		{
 			return;
 		}
@@ -241,7 +239,7 @@ namespace Oak
 
 	void Tank::SendClientState(float dt)
 	{
-		if (!GetScene()->Playing())
+		if (!GetScene()->IsPlaying())
 		{
 			return;
 		}
@@ -277,7 +275,7 @@ namespace Oak
 
 	void Tank::Update(float dt)
 	{
-		if (!GetScene()->Playing())
+		if (!GetScene()->IsPlaying())
 		{
 			return;
 		}

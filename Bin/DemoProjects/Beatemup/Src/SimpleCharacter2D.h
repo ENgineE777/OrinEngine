@@ -48,7 +48,7 @@ namespace Oak
 		void Update(float dt);
 		void Draw(float dt);
 
-		bool Play() override;
+		void Play() override;
 
 		SimpleCharacter2D* FindTarget();
 		void ControlPlayer(float dt);

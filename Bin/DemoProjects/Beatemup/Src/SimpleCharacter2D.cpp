@@ -45,7 +45,7 @@ namespace Oak
 			return;
 		}
 
-		if (GetScene()->Playing())
+		if (GetScene()->IsPlaying())
 		{
 			if (arraive > 0.0f)
 			{
@@ -432,13 +432,11 @@ namespace Oak
 		}
 	}
 
-	bool SimpleCharacter2D::Play()
+	void SimpleCharacter2D::Play()
 	{
 		init_pos = transform.position;
 
 		Reset();
-
-		return true;
 	}
 
 	void SimpleCharacter2D::OnFrameChangeCallback(int frame, eastl::string& name, eastl::string& param)
