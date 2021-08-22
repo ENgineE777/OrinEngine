@@ -128,8 +128,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\Bin\eastl_Debug.lib;..\..\..\Libs\physx\libs\debug\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\debug\PhysX_64.lib;..\..\..\Libs\physx\libs\debug\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\debug\SceneQuery_static_64.lib;..\..\..\Libs\fmod\libs\fmod_vc.lib;..\..\..\Libs\fmod\libs\fmodL_vc.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\ENgine\CppBuild\lib\eastl_Debug.lib;..\..\..\Libs\physx\libs\debug\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\debug\PhysX_64.lib;..\..\..\Libs\physx\libs\debug\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\debug\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\debug\SceneQuery_static_64.lib;..\..\..\Libs\fmod\libs\fmod_vc.lib;..\..\..\Libs\fmod\libs\fmodL_vc.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)/ENgine/CppBuild/lib/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,9 +151,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\Bin\eastl.lib;..\..\..\Libs\physx\libs\release\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\release\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\release\PhysX_64.lib;..\..\..\Libs\physx\libs\release\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\release\SceneQuery_static_64.lib;..\..\..\Libs\fmod\libs\fmod_vc.lib;..\..\..\Libs\fmod\libs\fmodL_vc.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\Bin\ENgine\CppBuild\lib\eastl.lib;..\..\..\Libs\physx\libs\release\PhysXCooking_64.lib;..\..\..\Libs\physx\libs\release\PhysXCommon_64.lib;..\..\..\Libs\physx\libs\release\PhysX_64.lib;..\..\..\Libs\physx\libs\release\PhysXTask_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXCharacterKinematic_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXExtensions_static_64.lib;..\..\..\Libs\physx\libs\release\PhysXFoundation_64.lib;..\..\..\Libs\physx\libs\release\SceneQuery_static_64.lib;..\..\..\Libs\fmod\libs\fmod_vc.lib;..\..\..\Libs\fmod\libs\fmodL_vc.lib;dxgi.lib;d3d11.lib;dxguid.lib;d3dcompiler.lib;dinput8.lib;xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(OutDir)/ENgine/CppBuild/lib/$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -18,5 +18,5 @@ file (GLOB_RECURSE SOURCES "../*.cpp" "../*.h" "../../../ENgine/CppBuild/Gamepla
 
 add_library(gameplay SHARED ${SOURCES})
 
-target_link_libraries(gameplay optimized "../../../eastl" optimized "../../../Oak")
-target_link_libraries(gameplay debug "../../../eastl_Debug" debug "../../../Oak_Debug")
+target_link_libraries(gameplay optimized "../../../ENgine/CppBuild/lib/eastl" optimized "../../../ENgine/CppBuild/lib/Oak")
+target_link_libraries(gameplay debug "../../../ENgine/CppBuild/lib/eastl_Debug" debug "../../../ENgine/CppBuild/lib/Oak_Debug")
