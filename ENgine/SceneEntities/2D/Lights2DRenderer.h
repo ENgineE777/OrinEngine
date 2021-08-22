@@ -8,7 +8,7 @@
 
 namespace Oak
 {
-	class Lights2DRenderer : public SceneEntity
+	class CLASS_DECLSPEC Lights2DRenderer : public SceneEntity
 	{
 	public:
 
