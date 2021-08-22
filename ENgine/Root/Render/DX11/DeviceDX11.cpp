@@ -199,7 +199,6 @@ namespace Oak
 				sd.OutputWindow = backbuffer_holder->handle;
 				sd.SampleDesc.Count = 1;
 				sd.SampleDesc.Quality = 0;
-				sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 				sd.Windowed = TRUE;
 
 				hr = factory->CreateSwapChain(pd3dDevice, &sd, &backbuffer_holder->swapChain);
@@ -340,7 +339,7 @@ namespace Oak
 	{
 		if (swapChain)
 		{
-			swapChain->Present(0, 0);
+			swapChain->Present(1, 0);
 			need_set_rt = true;
 		}
 		else
