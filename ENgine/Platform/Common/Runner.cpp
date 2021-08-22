@@ -51,6 +51,8 @@ namespace Oak
 
 	void Runner::Update()
 	{
+		root.controls.SetFocused(hwnd == GetActiveWindow());
+
 		root.CountDeltaTime();
 
 		POINT corner = { 0, 0};
