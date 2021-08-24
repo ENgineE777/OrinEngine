@@ -150,6 +150,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>$(OutDir)/ENgine/CppBuild/lib/$(TargetName).lib</ImportLibrary>
       <ProgramDatabaseFile>$(OutDir)/DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(OutDir)ENgine/CppBuild/lib/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
