@@ -36,11 +36,29 @@ namespace Oak
 
 			char curDir[256];
 			GetCurrentDirectoryA(256, curDir);
+			StringUtils::FixSlashes(curDir);
 
 			char path[256];
 			StringUtils::Printf(path, 256, "%s/_Code/CMakeLists.txt", root.GetRootPath());
+			StringUtils::FixSlashes(path);
 
 			CopyFileA(StringUtils::PrintTemp("%s/ENgine/CppBuild/CMakeLists.txt", curDir), path, false);
+
+			FileInMemory cmakeLists;
+
+			if (cmakeLists.Load(path))
+			{
+				eastl::string data = (const char*)cmakeLists.GetData();
+
+				StringUtils::ReplaceAllStrings(data, "$EDITOR_DIR", curDir);
+
+				File cmakeOut;
+
+				if (cmakeOut.Open(path, File::ModeType::WriteText))
+				{
+					cmakeOut.Write(data.c_str(), data.size());
+				}
+			}	
 
 			SetCurrentDirectoryA(StringUtils::PrintTemp("%s/_Code", root.GetRootPath()));
 
