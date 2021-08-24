@@ -10,9 +10,11 @@
 
 #include "commdlg.h"
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#include "shellapi.h"
 
 #include <filesystem>
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 namespace Oak
 {
@@ -587,7 +589,7 @@ namespace Oak
 		{
 			char curDir[1024];
 			GetCurrentDirectoryA(1024, curDir);
-			project.Load(projectToLoad[0] == ':' ? projectToLoad : StringUtils::PrintTemp("%s/%s", curDir, projectToLoad));
+			project.Load(projectToLoad[1] == ':' ? projectToLoad : StringUtils::PrintTemp("%s/%s", curDir, projectToLoad));
 			ShowWindow(hwnd, SW_MAXIMIZE);
 		}
 	}
@@ -1297,6 +1299,14 @@ namespace Oak
 
 			if (ImGui::BeginMenu("Help"))
 			{
+				if (ImGui::MenuItem("Docs"))
+				{
+					char curDir[512];
+					GetCurrentDirectoryA(512, curDir);
+
+					ShellExecuteA(NULL, "open", StringUtils::PrintTemp("%s/Docs/html/index.html", curDir), NULL, NULL, SW_SHOWNORMAL);
+				}
+
 				if (ImGui::MenuItem("About") && !showAbout)
 				{
 					showAbout = true;
