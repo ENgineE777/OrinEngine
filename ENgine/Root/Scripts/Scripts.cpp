@@ -50,7 +50,7 @@ namespace Oak
 			{
 				eastl::string data = (const char*)cmakeLists.GetData();
 
-				StringUtils::ReplaceAllStrings(data, "$EDITOR_DIR", curDir);
+				StringUtils::FindAndReplace(data, "$EDITOR_DIR", curDir);
 
 				File cmakeOut;
 
@@ -62,9 +62,14 @@ namespace Oak
 
 			SetCurrentDirectoryA(StringUtils::PrintTemp("%s/_Code", root.GetRootPath()));
 
+			if (system("cmake") != 0)
+			{
+				MESSAGE_BOX("Can't compile script", "Please install cmake");
+			}
+			else
 			if (system("cmake CMakeLists.txt") != 0)
 			{
-				MESSAGE_BOX("Can't compile script", "CMake is missing. Please install CMake");
+				MESSAGE_BOX("Can't compile script", "There were issues with creating a visual studio project");
 			}
 			else
 			{
@@ -107,12 +112,24 @@ namespace Oak
 
 								reader.Read("productPath", vsPath);
 
-								if (system(StringUtils::PrintTemp("%s gameplay.sln /Build %s", vsPath.c_str(), configName.c_str())) == 0)
+								DeleteFileA("errors.txt");
+
+								if (system(StringUtils::PrintTemp("%s gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) == 0)
 								{
 									char tmpname[256];
 									StringUtils::Printf(tmpname, 256, "%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str());
 
 									CopyFileA(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE);
+								}
+								else
+								{
+									FileInMemory errors;
+
+									if (errors.Load("errors.txt"))
+									{
+										eastl::string str = (const char*)errors.GetPtr();
+										MESSAGE_BOX("Can't compile script", str.c_str());
+									}
 								}
 							}
 							else
