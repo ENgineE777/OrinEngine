@@ -585,7 +585,9 @@ namespace Oak
 
 		if (projectToLoad)
 		{
-			project.Load(projectToLoad);
+			char curDir[1024];
+			GetCurrentDirectoryA(1024, curDir);
+			project.Load(projectToLoad[0] == ':' ? projectToLoad : StringUtils::PrintTemp("%s/%s", curDir, projectToLoad));
 			ShowWindow(hwnd, SW_MAXIMIZE);
 		}
 	}
