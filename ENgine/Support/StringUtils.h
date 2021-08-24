@@ -37,4 +37,5 @@ namespace Oak::StringUtils
 	CLASS_DECLSPEC void LowerCase(eastl::string& str);
 	CLASS_DECLSPEC void UpperCase(eastl::string& str);
 	CLASS_DECLSPEC bool CompareABC(const char* str1, const char* str2);
+	CLASS_DECLSPEC void FindAndReplace(eastl::string& str, eastl::string from, eastl::string to);
 }

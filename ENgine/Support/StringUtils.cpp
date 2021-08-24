@@ -738,6 +738,18 @@ namespace Oak::StringUtils
 
 		return false;
 	}
+
+	void FindAndReplace(eastl::string& str, eastl::string from, eastl::string to)
+	{
+		size_t start_pos = str.find(from);
+
+		while(start_pos != eastl::string::npos)
+		{
+			str.replace(start_pos, from.length(), to);
+
+			start_pos = str.find(from);
+		}
+	}
 }
 
 
