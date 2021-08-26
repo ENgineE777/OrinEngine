@@ -4,5 +4,3 @@ xcopy ..\Libs\fmod\include\*.* ENgine\CppBuild\include\Libs\fmod\include\ /sy
 xcopy ..\Libs\physx\include\*.* ENgine\CppBuild\include\Libs\physx\include\ /sy
 xcopy ..\ENgine\*.h ENgine\CppBuild\include\ENgine\ /sy
 copy Oak.dll ENgine\ExportBinaries\Oak.dll
-
-pause
