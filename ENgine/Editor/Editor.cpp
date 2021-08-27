@@ -241,16 +241,24 @@ namespace Oak
 
 		vireportHowered = ImGui::IsItemHovered();
 
-		if (vireportHowered && ImGui::IsMouseClicked(0))
+		if (vireportHowered)
 		{
-			gizmo.OnLeftMouseDown();
-
-			if (selectedAsset && selectedAsset->HasOwnTasks())
+			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(2) || fabsf(io.MouseWheel > 0.01f))
 			{
-				selectedAsset->OnLeftMouseDown();
+				ImGui::SetWindowFocus();
 			}
 
-			viewportCaptured = true;
+			if (ImGui::IsMouseClicked(0))
+			{
+				gizmo.OnLeftMouseDown();
+
+				if (selectedAsset && selectedAsset->HasOwnTasks())
+				{
+					selectedAsset->OnLeftMouseDown();
+				}
+
+				viewportCaptured = true;
+			}
 		}
 
 		gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
