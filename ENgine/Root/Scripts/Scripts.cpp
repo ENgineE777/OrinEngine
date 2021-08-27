@@ -200,7 +200,7 @@ namespace Oak
 				FreeLibrary((HMODULE)Module);
 
 				char tmpname[256];
-				StringUtils::Printf(tmpname, 256, "%s/_Code/%s/Gameplay.rcpp%i.dll", root.GetRootPath(), configName.c_str(), 1 - pingPong);
+				StringUtils::Printf(tmpname, 256, "%s/Gameplay_%s.rcpp%i.dll", root.GetRootPath(), configName.c_str(), 1 - pingPong);
 				DeleteFileA(tmpname);
 			}
 
@@ -227,7 +227,7 @@ namespace Oak
 		{
 			pingPong = 1 - pingPong;
 			char tmpname[256];
-			StringUtils::Printf(tmpname, 256, "%s/_Code/%s/gameplay.rcpp%i.dll", root.GetRootPath(), configName.c_str(), pingPong);
+			StringUtils::Printf(tmpname, 256, "%s/gameplay_%s.rcpp%i.dll", root.GetRootPath(), configName.c_str(), pingPong);
 
 			if (CopyFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE))
 			{
