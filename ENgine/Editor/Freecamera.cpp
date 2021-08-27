@@ -44,8 +44,8 @@ namespace Oak
 		{
 			if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Pressed))
 			{
-				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.01f;
-				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.01f;
+				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.0075f;
+				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.0075f;
 
 				if (angles.y > Math::HalfPI)
 				{
