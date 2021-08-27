@@ -434,7 +434,7 @@ namespace Oak
 
 	void SpriteWindow::ShowSlices()
 	{
-		ImGui::Begin("Slices");
+		ImGui::Begin("Selected Slices");
 
 		if (selSlice != -1)
 		{
@@ -459,6 +459,15 @@ namespace Oak
 				FillRects();
 				texture->SaveMetaData();
 			}
+		}
+		else
+		if (selectedSlices.size() > 0)
+		{
+			ImGui::Text("Showing of multiple slices doesn't supported right now");
+		}
+		else
+		{
+			ImGui::Text("Slice is not selected");
 		}
 
 		ImGui::End();
@@ -614,6 +623,11 @@ namespace Oak
 
 			if (InputString(anim.name, "Name")) changed = true;
 			if (InputInt(&anim.fps, "FPS", true)) changed = true;
+
+			if (anim.fps > 60)
+			{
+				anim.fps = 60;
+			}
 
 			if (anim.frames.size() > 0)
 			{
@@ -975,7 +989,7 @@ namespace Oak
 
 			ImGui::DockBuilderDockWindow("Image Info", dock_bottom_id);
 			ImGui::DockBuilderDockWindow("Auto slicing", dock_bottom_id);
-			ImGui::DockBuilderDockWindow("Slices", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Selected Slices", dock_bottom_id);
 			ImGui::DockBuilderDockWindow("Animations", dock_bottom_id);
 			ImGui::DockBuilderDockWindow("Image", dock_top_id);
 
