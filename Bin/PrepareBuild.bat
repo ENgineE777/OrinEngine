@@ -2,6 +2,7 @@ call CopyCppBuild.bat
 cd ../Doxygen
 call gen_doc.bat
 cd ../
+RMDIR /s /q ENgineRelease\
 xcopy Bin\*.* ENgineRelease\ /sy
 
 del ENgineRelease\CopyCppBuild.bat
