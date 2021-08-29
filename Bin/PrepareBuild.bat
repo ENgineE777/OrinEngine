@@ -40,4 +40,8 @@ del ENgineRelease\DemoProjects\Beatemup\gameplay_Debug.dll
 RMDIR /s /q ENgineRelease\DemoProjects\Tanks\_Code
 del ENgineRelease\DemoProjects\Tanks\gameplay_Debug.dll
 
+del ENgineRelease\projects
+copy ENgineRelease\ENgine\defaultProjects ENgineRelease\projects
+del ENgineRelease\ENgine\defaultProjects
+
 pause

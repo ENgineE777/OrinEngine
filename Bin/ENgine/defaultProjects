@@ -1,0 +1,13 @@
+﻿{
+
+	"projects" : [
+		{
+			"name" : "Beatemup",
+			"path" : "DemoProjects/Beatemup/Beatemup.pra"
+		},
+		{
+			"name" : "Tanks",
+			"path" : "DemoProjects/Tanks/Tanks.pra"
+		}
+	]
+}
