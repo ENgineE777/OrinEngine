@@ -351,6 +351,18 @@ namespace Oak
 
 		ImGui::Begin("Project Settings", &showProjectSettings, ImGuiWindowFlags_NoDocking);
 
+		if (needSetSizePrjSet)
+		{
+			auto size = ImGui::GetWindowSize();
+
+			if (size.x <= 32 && size.y <= 32)
+			{
+				ImGui::SetWindowSize(ImVec2(900.0f, 700.0f));
+			}
+
+			needSetSizePrjSet = false;
+		}
+
 		ImGui::Columns(1);
 
 		bool is_open = ImGui::CollapsingHeader("Windows###ProjectSettingsWindows", ImGuiTreeNodeFlags_DefaultOpen);

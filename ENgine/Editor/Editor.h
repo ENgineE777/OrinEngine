@@ -61,6 +61,8 @@ namespace Oak
 		bool projectRunning = false;
 		bool allowSceneDropTraget = true;
 
+		bool needSetSizePrjSet = true; 
+
 		struct LogCategory
 		{
 			int selItem = -1;
