@@ -120,16 +120,11 @@ namespace Oak
 		template<typename Func>
 		void PushButton(const char* label, bool pushed, Func callback)
 		{
-			float b = 1.0f;
-			float c = 0.5f;
-			int i = 4;
 			bool needPopStyle = false;
 
 			if (pushed)
 			{
-				ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, b, b));
-				ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, c, c));
+				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetColorU32(ImGuiCol_ButtonActive));
 				needPopStyle = true;
 			}
 
@@ -140,7 +135,7 @@ namespace Oak
 
 			if (needPopStyle)
 			{
-				ImGui::PopStyleColor(3);
+				ImGui::PopStyleColor(1);
 				needPopStyle = false;
 			}
 

@@ -203,8 +203,48 @@ namespace Oak
 
 		ImGui::StyleColorsDark();
 
+		ImGui::GetStyle().WindowRounding = 5.0f;
+		ImGui::GetStyle().FrameRounding = 4.0f;
+		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_PopupBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_FrameBgActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.139f, 0.139f, 0.139f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_CheckMark] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_SliderGrab] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_SliderGrabActive] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0.165f, 0.165f, 0.16f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_Header] = ImVec4(0.13f, 0.13f, 0.13f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_HeaderActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_Separator] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_SeparatorHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_SeparatorActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_ResizeGrip] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_ResizeGripHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_Tab] = ImVec4(0.192f, 0.192f, 0.192f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_TabHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_TabActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_TabUnfocused] = ImVec4(0.121f, 0.121f, 0.121f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.71f, 0.404f, 0.043f, 1.0f);
+		ImGui::GetStyle().Colors[ImGuiCol_DockingPreview] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
+
+		ImGui::GetStyle().Colors[ImGuiCol_DragDropTarget] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+
 		ImGuiIO& guiIO = ImGui::GetIO();
-		ImFont* font = io.Fonts->AddFontFromFileTTF("ENgine/OpenSans-Regular.ttf", 18);
+		ImFont* font = io.Fonts->AddFontFromFileTTF("ENgine/DroidSans.ttf", 16);
 		guiIO.FontDefault = font;
 
 		ImGuiStyle& style = ImGui::GetStyle();
@@ -542,7 +582,7 @@ namespace Oak
 			ImGui::Dummy(ImVec2(0.0f, 3.0f));
 
 			ImVec2 p = ImGui::GetCursorScreenPos();
-			window->DrawList->AddRectFilled(ImVec2(p.x + 5, p.y), ImVec2(p.x + ImGui::GetContentRegionAvail().x - 6, p.y + 82) /*- ImVec2(10.0f, 10.0f)*/, IM_COL32(48, 48, 48,255));
+			window->DrawList->AddRectFilled(ImVec2(p.x + 5, p.y), ImVec2(p.x + ImGui::GetContentRegionAvail().x - 6, p.y + 82) /*- ImVec2(10.0f, 10.0f)*/, IM_COL32(55, 55, 55,255));
 
 			ImGui::Dummy(ImVec2(0.0f, 3.0f));
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
@@ -1336,7 +1376,12 @@ namespace Oak
 		{
 			ImGui::Begin("Toolbar");
 
-			ImGui::Dummy(ImVec2(0.0f, 3.0f));
+			ImGui::PushStyleColor(ImGuiCol_Separator, ImVec4(0.29f, 0.29f, 0.29f, 1.0f));
+
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+			ImGui::SameLine();
 
 			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
@@ -1434,6 +1479,8 @@ namespace Oak
 					ImGui::SameLine();
 				}
 			}
+
+			ImGui::PopStyleColor(1);
 
 			ImGui::End();
 		}
