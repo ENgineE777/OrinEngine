@@ -408,6 +408,23 @@ namespace Oak
 		return false;
 	}
 
+	bool JsonReader::Read(const char* name, Math::Vector4& val)
+	{
+		if (EnterBlock(name))
+		{
+			Read("x", val.x);
+			Read("y", val.y);
+			Read("z", val.z);
+			Read("w", val.w);
+
+			LeaveBlock();
+
+			return true;
+		}
+
+		return false;
+	}
+
 	bool JsonReader::Read(const char* name, Math::Matrix& val)
 	{
 		if (EnterBlock(name))

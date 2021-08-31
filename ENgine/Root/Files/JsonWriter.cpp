@@ -206,6 +206,16 @@ namespace Oak
 		FinishBlock();
 	}
 
+	void JsonWriter::Write(const char* name, Math::Vector4& val)
+	{
+		StartBlock(name);
+		Write("x", val.x);
+		Write("y", val.y);
+		Write("z", val.z);
+		Write("w", val.w);
+		FinishBlock();
+	}
+
 	void JsonWriter::Write(const char* name, Math::Matrix& val)
 	{
 		StartBlock(name);

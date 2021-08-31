@@ -69,6 +69,7 @@ namespace Oak
 		bool Read(const char* name, int64_t& val);
 		bool Read(const char* name, Math::Vector2& val);
 		bool Read(const char* name, Math::Vector3& val);
+		bool Read(const char* name, Math::Vector4& val);
 		bool Read(const char* name, Math::Matrix& val);
 		bool Read(const char* name, Color& val);
 		bool Read(const char* name, Math::Quaternion& val);
