@@ -4,6 +4,7 @@
 #include "Root/Root.h"
 #include "Transform.h"
 #include "Root/Scenes/SceneEntity.h"
+#include "ImGuiHelper.h"
 
 #ifdef OAK_EDITOR
 #include "Editor/Editor.h"
@@ -372,12 +373,22 @@ namespace Oak
 			else
 			if (prop.type == Type::AssetTexture)
 			{
-				memcpy(prop.value, src, sizeof(AssetTextureRef));
+				AssetTextureRef* refSrc = reinterpret_cast<AssetTextureRef*>(src);
+				AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(prop.value);
+
+				*ref = *refSrc;
 			}
 			else
 			if (prop.type == Type::AssetAnimGraph2D)
 			{
-				memcpy(prop.value, src, sizeof(AssetAnimGraph2DRef));
+				AssetAnimGraph2DRef* refSrc = reinterpret_cast<AssetAnimGraph2DRef*>(src);
+				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+
+				*ref = *refSrc;
+				ref->Reset();
+
+				int k =0;
+				k++;
 			}
 			else
 			if (prop.type == Type::Transform)
@@ -785,23 +796,9 @@ namespace Oak
 						else
 						if (prop.type == Type::String)
 						{
-							eastl::string* str = (eastl::string*)prop.value;
+							eastl::string& str = *((eastl::string*)prop.value);
 
-							struct Funcs
-							{
-								static int ResizeCallback(ImGuiInputTextCallbackData* data)
-								{
-									if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
-									{
-										eastl::string* str = (eastl::string*)data->UserData;
-										str->resize(data->BufSize + 1);
-										data->Buf = str->begin();
-									}
-									return 0;
-								}
-							};
-
-							if (ImGui::InputText(propGuiID, str->begin(), (size_t)str->size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)str))
+							if (ImGuiHelper::InputString(propGuiID, str))
 							{
 								prop.changed = true;
 							}
@@ -867,28 +864,7 @@ namespace Oak
 								}
 							}
 
-							if (enumData.enumList.empty())
-							{
-								int count = 0;
-
-								for (int i = 0; i < enumData.names.size(); i++)
-								{
-									count += (int)enumData.names[i].size() + 1;
-								}
-
-								enumData.enumList.resize(count + 1);
-
-								int index = 0;
-
-								for (int i = 0; i < enumData.names.size(); i++)
-								{
-									int sz = (int)enumData.names[i].size() + 1;
-									memcpy(&enumData.enumList[index], enumData.names[i].c_str(), sz);
-									index += sz;
-								}
-							}
-
-							if (ImGui::Combo(propGuiID, &index, enumData.enumList.c_str()))
+							if (ImGuiHelper::InputCombobox(propGuiID, index, enumData.names, enumData.enumList))
 							{
 								*((int*)prop.value) = enumData.values[index];
 								prop.changed = true;

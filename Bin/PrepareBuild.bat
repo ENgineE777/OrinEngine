@@ -24,6 +24,7 @@ del ENgineRelease\PhysXCommon_64_debug.dll
 del ENgineRelease\PhysXCooking_64_debug.dll
 del ENgineRelease\PhysXFoundation_64_debug.dll
 del ENgineRelease\PrepareBuild.bat
+del ENgineRelease\editor
 
 RMDIR /s /q ENgineRelease\Logs
 

@@ -11,6 +11,8 @@
 #include "commdlg.h"
 
 #include "shellapi.h"
+#include "Support/ImGuiHelper.h"
+
 
 #include <filesystem>
 
@@ -131,6 +133,8 @@ namespace Oak
 
 		SetupImGUI();
 
+		LoadSettings();
+
 		JsonReader reader;
 
 		if (reader.ParseFile("projects"))
@@ -191,6 +195,28 @@ namespace Oak
 		}
 	}
 
+	void Editor::LoadSettings()
+	{
+		JsonReader reader;
+
+		if (reader.ParseFile(StringUtils::PrintTemp("%s/editor", std::filesystem::current_path().string().c_str())))
+		{
+			reader.Read("themeName", selectedThemeName);
+		}
+
+		ApplySelecetedTheme();
+	}
+
+	void Editor::SaveSettings()
+	{
+		JsonWriter writer;
+
+		if (writer.Start(StringUtils::PrintTemp("%s/editor", std::filesystem::current_path().string().c_str())))
+		{
+			writer.Write("themeName", selectedThemeName);
+		}
+	}
+
 	void Editor::SetupImGUI()
 	{
 		IMGUI_CHECKVERSION();
@@ -203,45 +229,7 @@ namespace Oak
 
 		ImGui::StyleColorsDark();
 
-		ImGui::GetStyle().WindowRounding = 5.0f;
-		ImGui::GetStyle().FrameRounding = 4.0f;
-		ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_ChildBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_PopupBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_FrameBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_FrameBgActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_TitleBg] = ImVec4(0.259f, 0.259f, 0.259f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_TitleBgActive] = ImVec4(0.139f, 0.139f, 0.139f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_CheckMark] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_SliderGrab] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_SliderGrabActive] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0.165f, 0.165f, 0.16f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_Header] = ImVec4(0.13f, 0.13f, 0.13f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_HeaderHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_HeaderActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_Separator] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_SeparatorHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_SeparatorActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_ResizeGrip] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_ResizeGripHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_ResizeGripActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_Tab] = ImVec4(0.192f, 0.192f, 0.192f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_TabHovered] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_TabActive] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_TabUnfocused] = ImVec4(0.121f, 0.121f, 0.121f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.71f, 0.404f, 0.043f, 1.0f);
-		ImGui::GetStyle().Colors[ImGuiCol_DockingPreview] = ImVec4(0.996f, 0.561f, 0.047f, 1.0f);
-
-		ImGui::GetStyle().Colors[ImGuiCol_DragDropTarget] = ImVec4(1.0f, 0.678f, 0.298f, 1.0f);
+		ImGuiHelper::GetAllStyles(themes);
 
 		ImGuiIO& guiIO = ImGui::GetIO();
 		ImFont* font = io.Fonts->AddFontFromFileTTF("ENgine/DroidSans.ttf", 16);
@@ -260,6 +248,129 @@ namespace Oak
 
 		ImGui_ImplWin32_Init(hwnd);
 		ImGui_ImplDX11_Init(d3dDevice, d3dDeviceContext);
+	}
+
+	void Editor::ApplySelecetedTheme()
+	{
+		selectedTheme = -1;
+
+		for (int index = 0; index < themes.size(); index++)
+		{
+			if (StringUtils::IsEqual(selectedThemeName.c_str(), themes[index].c_str()))
+			{
+				selectedTheme = index;
+				break;
+			}
+		}
+
+		if (selectedTheme == -1)
+		{
+			selectedTheme = 0;
+			selectedThemeName = themes[selectedTheme];
+		}
+
+		ImGuiHelper::LoadStyle(selectedThemeName.c_str());
+	}
+
+	void Editor::ShowEditorSettings()
+	{
+		if (!showEditorSettings)
+		{
+			return;
+		}
+
+		ImGuiStyle& style = ImGui::GetStyle();
+
+		ImGui::Begin("Editor setting", &showEditorSettings, ImGuiWindowFlags_NoDocking);
+
+		if (needSetSizeEdSet)
+		{
+			auto size = ImGui::GetWindowSize();
+
+			if (size.x <= 32 && size.y <= 32)
+			{
+				ImGui::SetWindowSize(ImVec2(900.0f, 700.0f));
+			}
+
+			needSetSizeEdSet = false;
+		}
+
+		ImGui::Columns(1);
+
+
+		bool is_open = ImGui::CollapsingHeader("Free camera###EditorSettingsFreeCamera", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+		}
+
+		is_open = ImGui::CollapsingHeader("Color theme###EditorSettingsColorTheme", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+			ImGui::Dummy(ImVec2(0.0f, 3.0f));
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+			ImGui::SameLine();
+
+			if (ImGuiHelper::InputCombobox("###SelectThemeName", selectedTheme, themes, themeList))
+			{
+				selectedThemeName = themes[selectedTheme];
+				ApplySelecetedTheme();
+				SaveSettings();
+			}
+
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+			ImGui::SameLine();
+
+			is_open = ImGui::CollapsingHeader("Theme settings###EditorSettingsThemeSettings", ImGuiTreeNodeFlags_None);
+
+			if (is_open)
+			{
+				ImGuiHelper::VerticalHorizontalPadding();
+
+				ImGuiHelper::InputString("###ThemeName", selectedThemeName);
+				ImGui::SameLine();
+
+				if (ImGui::Button("Save"))
+				{
+					ImGuiHelper::SaveStyle(selectedThemeName.c_str());
+
+					themeList.clear();
+					ImGuiHelper::GetAllStyles(themes);
+
+					ApplySelecetedTheme();
+					SaveSettings();
+				}
+
+				ImGuiHelper::HorizontalPadding();
+
+				static ImGuiTextFilter filter;
+				filter.Draw("Filter colors", ImGui::GetFontSize() * 16);
+
+				static ImGuiColorEditFlags alpha_flags = 0;
+
+				ImGui::BeginChild("##colors", ImVec2(0, 0), true, ImGuiWindowFlags_AlwaysVerticalScrollbar | ImGuiWindowFlags_AlwaysHorizontalScrollbar | ImGuiWindowFlags_NavFlattened);
+
+				for (int i = 0; i < ImGuiCol_COUNT; i++)
+				{
+					const char* name = ImGui::GetStyleColorName(i);
+					if (!filter.PassFilter(name)) continue;
+
+					ImGui::PushID(i);
+
+					ImGuiHelper::HorizontalPadding();
+
+					ImGui::ColorEdit4("##color", (float*)&style.Colors[i], ImGuiColorEditFlags_AlphaBar | alpha_flags);
+					ImGui::SameLine(0.0f, style.ItemInnerSpacing.x);
+					ImGui::TextUnformatted(name);
+					ImGui::PopID();
+				}
+
+				ImGui::EndChild();
+			}
+		}
+
+		ImGui::End();
 	}
 
 	void Editor::ShowViewport()
@@ -594,7 +705,7 @@ namespace Oak
 			ImGui::Dummy(ImVec2(0.0f, 3.0f));
 
 			ImVec2 p = ImGui::GetCursorScreenPos();
-			window->DrawList->AddRectFilled(ImVec2(p.x + 5, p.y), ImVec2(p.x + ImGui::GetContentRegionAvail().x - 6, p.y + 82) /*- ImVec2(10.0f, 10.0f)*/, IM_COL32(55, 55, 55,255));
+			window->DrawList->AddRectFilled(ImVec2(p.x + 5, p.y), ImVec2(p.x + ImGui::GetContentRegionAvail().x - 6, p.y + 82) /*- ImVec2(10.0f, 10.0f)*/, IM_COL32(80, 80, 80,255));
 
 			ImGui::Dummy(ImVec2(0.0f, 3.0f));
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
@@ -1342,6 +1453,16 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
+			if (ImGui::BeginMenu("Edit"))
+			{
+				if (ImGui::MenuItem("Editor settings") && !showEditorSettings)
+				{
+					showEditorSettings = true;
+				}
+
+				ImGui::EndMenu();
+			}
+
 			if (ImGui::BeginMenu("Project"))
 			{
 				if (ImGui::MenuItem("Settings") && !showProjectSettings)
@@ -1605,6 +1726,7 @@ namespace Oak
 
 		ShowAbout();
 		ShowProjectSettings();
+		ShowEditorSettings();
 		ShowViewport();
 
 		if (SpriteWindow::instance && SpriteWindow::instance->opened)
@@ -1642,7 +1764,7 @@ namespace Oak
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 
-		swapChain->Present(0, 0);
+		swapChain->Present(1, 0);
 
 		return true;
 	}

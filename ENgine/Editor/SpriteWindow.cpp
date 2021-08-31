@@ -14,6 +14,8 @@
 
 #include "eastl/sort.h"
 
+#include "Support/ImGuiHelper.h"
+
 namespace Oak
 {
 	AssetTexture* SpriteWindow::texture;
@@ -184,22 +186,8 @@ namespace Oak
 	{
 		Text(name);
 
-		struct Funcs
-		{
-			static int ResizeCallback(ImGuiInputTextCallbackData* data)
-			{
-				if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
-				{
-					eastl::string* str = (eastl::string*)data->UserData;
-					str->resize(data->BufSize + 1);
-					data->Buf = str->begin();
-				}
-				return 0;
-			}
-		};
-
 		ImGui::SetNextItemWidth(inputSize);
-		return ImGui::InputText("###SliceName", value.begin(), (size_t)value.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&value);
+		return ImGuiHelper::InputString("###SliceName", value);
 	}
 
 

@@ -44,6 +44,7 @@ namespace Oak
 
 		bool showAbout = false;
 		bool showProjectSettings = false;
+		bool showEditorSettings = false;
 
 		Assets::Folder* selectedFolder = nullptr;
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
@@ -62,6 +63,12 @@ namespace Oak
 		bool allowSceneDropTraget = true;
 
 		bool needSetSizePrjSet = true; 
+		bool needSetSizeEdSet = true;
+
+		eastl::string themeList;
+		eastl::vector<eastl::string> themes;
+		int selectedTheme = 0;
+		eastl::string selectedThemeName = "orange";
 
 		struct LogCategory
 		{
@@ -100,12 +107,15 @@ namespace Oak
 
 		void Release() override;
 
+		void ApplySelecetedTheme();
+
 	private:
 
 		void SetupImGUI();
 		bool ShowEditor();
 		void ShowAbout();
 		void ShowProjectSettings();
+		void ShowEditorSettings();
 		void ShowViewport();
 		void ShowSelectProject();
 		void ProjectTreePopup(bool contextItem);
@@ -118,6 +128,9 @@ namespace Oak
 		void StopProject();
 
 		void SaveProjectsList();
+
+		void LoadSettings();
+		void SaveSettings();
 
 		template<typename Func>
 		void PushButton(const char* label, bool pushed, Func callback)

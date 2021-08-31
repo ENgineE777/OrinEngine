@@ -661,6 +661,9 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Support\ImGuiHelper.cpp">
+      <Filter>ENgine\Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1259,6 +1262,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Support\ImGuiHelper.h">
+      <Filter>ENgine\Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

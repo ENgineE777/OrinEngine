@@ -253,6 +253,7 @@
     <ClInclude Include="..\..\..\ENgine\Support\Delegate.h" />
     <ClInclude Include="..\..\..\ENgine\Support\fbx\miniz.h" />
     <ClInclude Include="..\..\..\ENgine\Support\fbx\ofbx.h" />
+    <ClInclude Include="..\..\..\ENgine\Support\ImGuiHelper.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h" />
     <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h" />
@@ -439,6 +440,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c" />
     <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\ImGuiHelper.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\PugiXml\pugixml.cpp" />
