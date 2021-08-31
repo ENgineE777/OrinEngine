@@ -114,14 +114,7 @@ namespace Oak
 
 								DeleteFileA("errors.txt");
 
-								if (system(StringUtils::PrintTemp("%s gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) == 0)
-								{
-									char tmpname[256];
-									StringUtils::Printf(tmpname, 256, "%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str());
-
-									CopyFileA(StringUtils::PrintTemp("%s/_Code/%s/gameplay.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE);
-								}
-								else
+								if (system(StringUtils::PrintTemp("%s gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) != 0)
 								{
 									FileInMemory errors;
 
