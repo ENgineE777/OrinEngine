@@ -6895,7 +6895,7 @@ bool    ImGui::BeginTabBarEx(ImGuiTabBar* tab_bar, const ImRect& tab_bar_bb, ImG
     window->DC.CursorPos.y = tab_bar->BarRect.Max.y + g.Style.ItemSpacing.y;
 
     // Draw separator
-    const ImU32 col = GetColorU32((flags & ImGuiTabBarFlags_IsFocused) ? ImGuiCol_TabActive : ImGuiCol_TabUnfocusedActive);
+    const ImU32 col = GetColorU32((flags & ImGuiTabBarFlags_IsFocused) ? ImGuiCol_Separator : ImGuiCol_Separator);
     const float y = tab_bar->BarRect.Max.y - 1.0f;
     if (dock_node != NULL)
     {
