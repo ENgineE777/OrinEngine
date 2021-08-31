@@ -88,6 +88,17 @@ namespace Oak
 		int animIndex = -1;
 		ProgramRef prg = Sprite::quadPrg;
 
+		AssetTextureRef& operator=(const AssetTextureRef& ref)
+		{
+			Copy(ref);
+
+			sliceIndex = ref.sliceIndex;
+			animIndex = ref.animIndex;
+			prg = ref.prg;
+
+			return *this;
+		}
+
 		void Draw(Transform* trans, Color clr, float dt);
 
 		const char* GetName();
