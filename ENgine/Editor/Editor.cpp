@@ -202,6 +202,18 @@ namespace Oak
 		if (reader.ParseFile(StringUtils::PrintTemp("%s/editor", std::filesystem::current_path().string().c_str())))
 		{
 			reader.Read("themeName", selectedThemeName);
+
+			if (reader.EnterBlock("FreeCamera"))
+			{
+				reader.Read("rotationSensivity", freeCamera.rotationSensivity);
+				reader.Read("moveSpeed", freeCamera.moveSpeed);
+				reader.Read("moveFastSpeed", freeCamera.moveFastSpeed);
+				reader.Read("moveAcceleration", freeCamera.moveAcceleration);
+				reader.Read("moveDeacceleration", freeCamera.moveDeacceleration);
+				reader.Read("zoom2Dsensivity", freeCamera.zoom2Dsensivity);
+
+				reader.LeaveBlock();
+			}
 		}
 
 		ApplySelecetedTheme();
@@ -214,6 +226,17 @@ namespace Oak
 		if (writer.Start(StringUtils::PrintTemp("%s/editor", std::filesystem::current_path().string().c_str())))
 		{
 			writer.Write("themeName", selectedThemeName);
+
+			writer.StartBlock("FreeCamera");
+
+			writer.Write("rotationSensivity", freeCamera.rotationSensivity);
+			writer.Write("moveSpeed", freeCamera.moveSpeed);
+			writer.Write("moveFastSpeed", freeCamera.moveFastSpeed);
+			writer.Write("moveAcceleration", freeCamera.moveAcceleration);
+			writer.Write("moveDeacceleration", freeCamera.moveDeacceleration);
+			writer.Write("zoom2Dsensivity", freeCamera.zoom2Dsensivity);
+
+			writer.FinishBlock();
 		}
 	}
 
@@ -295,13 +318,18 @@ namespace Oak
 			needSetSizeEdSet = false;
 		}
 
-		ImGui::Columns(1);
-
+		bool changed = false;
 
 		bool is_open = ImGui::CollapsingHeader("Free camera###EditorSettingsFreeCamera", ImGuiTreeNodeFlags_DefaultOpen);
 
 		if (is_open)
 		{
+			changed |= ImGui::SliderFloat("Rotation Sensivity", &freeCamera.rotationSensivity, 1.0f, 10.0f, "%.0f");
+			changed |= ImGui::SliderFloat("Move Speed", &freeCamera.moveSpeed, 30.0f, 150.0f, "%.0f");
+			changed |= ImGui::SliderFloat("Move Fast Speed", &freeCamera.moveFastSpeed, 200.0f, 500.0f, "%.0f");
+			changed |= ImGui::SliderFloat("Move Accel", &freeCamera.moveAcceleration, 50.0f, 400.0f, "%.0f");
+			changed |= ImGui::SliderFloat("Move Deaccel", &freeCamera.moveDeacceleration, 50.0f, 400.0f, "%.0f");
+			changed |= ImGui::SliderFloat("Zoom2D Sensivity", &freeCamera.zoom2Dsensivity, 1.0f, 10.0f, "%.0f");
 		}
 
 		is_open = ImGui::CollapsingHeader("Color theme###EditorSettingsColorTheme", ImGuiTreeNodeFlags_DefaultOpen);
@@ -316,7 +344,6 @@ namespace Oak
 			{
 				selectedThemeName = themes[selectedTheme];
 				ApplySelecetedTheme();
-				SaveSettings();
 			}
 
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
@@ -339,7 +366,7 @@ namespace Oak
 					ImGuiHelper::GetAllStyles(themes);
 
 					ApplySelecetedTheme();
-					SaveSettings();
+					changed = true;
 				}
 
 				ImGuiHelper::HorizontalPadding();
@@ -368,6 +395,11 @@ namespace Oak
 
 				ImGui::EndChild();
 			}
+		}
+
+		if (changed)
+		{
+			SaveSettings();
 		}
 
 		ImGui::End();

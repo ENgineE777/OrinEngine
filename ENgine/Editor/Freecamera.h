@@ -36,6 +36,13 @@ namespace Oak
 		float cur_speed = 0.0f;
 		float prev_ed_zoom = 1.0f;
 
+		float rotationSensivity = 5.0f;
+		float moveSpeed = 100.0f;
+		float moveFastSpeed = 350.0f;
+		float moveAcceleration = 75.0f;
+		float moveDeacceleration = 200.0f;
+		float zoom2Dsensivity = 5.0f;
+
 		void Init();
 
 		void Update(float dt);

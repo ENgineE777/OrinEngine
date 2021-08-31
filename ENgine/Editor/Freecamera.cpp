@@ -36,7 +36,7 @@ namespace Oak
 
 			if (editor.vireportHowered)
 			{
-				zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * 0.05f;
+				zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * (0.015f + rotationSensivity * 0.007f);
 				ClampZoom2D();
 			}
 		}
@@ -44,8 +44,9 @@ namespace Oak
 		{
 			if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Pressed))
 			{
-				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.0055f;
-				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.0055f;
+				float sensivity = 0.0025f + rotationSensivity * 0.00075f;
+				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * sensivity;
+				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * sensivity;
 
 				if (angles.y > Math::HalfPI)
 				{
@@ -62,8 +63,8 @@ namespace Oak
 			float strafe = root.controls.GetAliasValue(alias_strafe, false);
 			float fast = root.controls.GetAliasValue(alias_fast, false);
 
-			float speed = (100.0f + 350.0f * fast) * Math::Vector2(forward, strafe).Length();
-			float accel = fabsf(speed) > 0.0f ? 75.0f : 200.0f;
+			float speed = (moveSpeed + moveFastSpeed * fast) * Math::Vector2(forward, strafe).Length();
+			float accel = fabsf(speed) > 0.0f ? moveAcceleration : moveDeacceleration;
 
 			if (cur_speed < speed)
 			{
