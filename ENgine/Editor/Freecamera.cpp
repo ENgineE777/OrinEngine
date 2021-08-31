@@ -44,8 +44,8 @@ namespace Oak
 		{
 			if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Pressed))
 			{
-				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.0075f;
-				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.0075f;
+				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * 0.0055f;
+				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * 0.0055f;
 
 				if (angles.y > Math::HalfPI)
 				{
@@ -62,13 +62,33 @@ namespace Oak
 			float strafe = root.controls.GetAliasValue(alias_strafe, false);
 			float fast = root.controls.GetAliasValue(alias_fast, false);
 
-			float speed = (100.0f + 350.0f * fast) * dt;
+			float speed = (100.0f + 350.0f * fast) * Math::Vector2(forward, strafe).Length();
+			float accel = fabsf(speed) > 0.0f ? 75.0f : 200.0f;
+
+			if (cur_speed < speed)
+			{
+				cur_speed += dt * accel;
+
+				if (cur_speed > speed)
+				{
+					cur_speed = speed;
+				}
+			}
+			else
+			{
+				cur_speed -= dt * accel;
+
+				if (cur_speed < speed)
+				{
+					cur_speed = speed;
+				}
+			}
 
 			Math::Vector3 dir = Math::Vector3(cosf(angles.x), sinf(angles.y), sinf(angles.x));
-			pos += dir * speed * forward;
+			pos += dir * cur_speed * forward * dt;
 	
 			Math::Vector3 dir_strafe = Math::Vector3(dir.z, 0,-dir.x);
-			pos += dir_strafe * speed * strafe;
+			pos += dir_strafe * cur_speed * strafe * dt;
 		}
 
 		if (mode2D)

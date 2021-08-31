@@ -33,6 +33,7 @@ namespace Oak
 		int alias_rotate_y;
 		int alias_reset_view;
 
+		float cur_speed = 0.0f;
 		float prev_ed_zoom = 1.0f;
 
 		void Init();
