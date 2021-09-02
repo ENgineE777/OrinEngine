@@ -786,7 +786,10 @@ namespace Oak
 				{
 					if (frame == event.frameNumber)
 					{
-						onFrameChange(frame, event.name, event.param);
+						if (onFrameChange)
+						{
+							onFrameChange(frame, event.name, event.param);
+						}
 					}
 				}
 			};
