@@ -243,10 +243,19 @@ namespace Oak
 		virtual void Release();
 	};
 
-	struct SceneEntityRef
+	struct SceneEntityRefBase
 	{
 		uint32_t uid = 0;
-		SceneEntity* entity = nullptr;
+		virtual void SetEntity(SceneEntity* setEntity) = 0;
+		virtual SceneEntity* GetSceneEntity() = 0;
+	};
+
+	template<class T>
+	struct SceneEntityRef : SceneEntityRefBase
+	{
+		T* entity = nullptr;
+		virtual void SetEntity(SceneEntity* setEntity) override { entity = dynamic_cast<T*>(setEntity); };
+		virtual SceneEntity* GetSceneEntity() override { return entity; };
 	};
 
 	CLASSFACTORYDEF(SceneEntity)

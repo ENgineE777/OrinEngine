@@ -35,9 +35,32 @@ namespace Oak
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&Camera2D::Update);
 	}
 
+	struct SceneEntityRefBase2
+	{
+		uint32_t uid = 0;
+		virtual void Set(SceneEntity* entity) = 0;
+	};
+
+	template<class T>
+	struct SceneEntityRef2 : SceneEntityRefBase2
+	{
+		T* entity;
+		virtual void Set(SceneEntity* setEntity) { entity = dynamic_cast<T*>(setEntity); };
+	};
+
+
 	void Camera2D::Update(float dt)
 	{
 		transform.BuildMatrices();
+
+		SceneEntityRef2<Camera2D> ref;
+		SceneEntityRefBase2* ref2 = (SceneEntityRefBase2*)&ref;
+
+		ref2->Set(this);
+
+		ref.entity->IsVisible();
+		int k = sizeof(ref);
+		int k2 = sizeof(ref2);
 
 		if (GetScene()->IsPlaying())
 		{

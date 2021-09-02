@@ -20,7 +20,7 @@ namespace Oak
 		bool useLimits = false;
 		Math::Vector2 leftup;
 		Math::Vector2 rightdown;
-		SceneEntityRef targetRef;
+		SceneEntityRef<SceneEntity> targetRef;
 
 #ifndef DOXYGEN_SKIP
 

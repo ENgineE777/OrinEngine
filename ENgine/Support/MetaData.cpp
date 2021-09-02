@@ -185,7 +185,7 @@ namespace Oak
 			{
 				if (reader.EnterBlock(prop.propName.c_str()))
 				{
-					SceneEntityRef* ref = (SceneEntityRef*)prop.value;
+					SceneEntityRefBase* ref = (SceneEntityRefBase*)prop.value;
 
 					reader.Read("uid", ref->uid);
 					
@@ -234,8 +234,8 @@ namespace Oak
 			else
 			if (prop.type == Type::SceneEntity)
 			{
-				SceneEntityRef* ref = (SceneEntityRef*)prop.value;
-				ref->entity = scene->FindEntity(ref->uid);
+				SceneEntityRefBase* ref = (SceneEntityRefBase*)prop.value;
+				ref->SetEntity(scene->FindEntity(ref->uid));
 			}
 		}
 	}
@@ -291,7 +291,7 @@ namespace Oak
 			else
 			if (prop.type == Type::SceneEntity)
 			{
-				SceneEntityRef* ref = (SceneEntityRef*)prop.value;
+				SceneEntityRefBase* ref = (SceneEntityRefBase*)prop.value;
 
 				writer.StartBlock(prop.propName.c_str());
 
@@ -405,7 +405,7 @@ namespace Oak
 			else
 			if (prop.type == Type::SceneEntity)
 			{
-				memcpy(prop.value, src, sizeof(SceneEntityRef));
+				memcpy(prop.value, src, sizeof(SceneEntityRefBase));
 			}
 			else
 			if (prop.type == Type::Array)
@@ -948,6 +948,8 @@ namespace Oak
 									AssetAnimGraph2DRef* assetRef = reinterpret_cast<AssetAnimGraph2DRef**>(payload->Data)[0];
 
 									*ref = *assetRef;
+									ref->Reset();
+
 									prop.changed = true;
 								}
 							}
@@ -965,8 +967,9 @@ namespace Oak
 						else
 						if (prop.type == Type::SceneEntity)
 						{
-							SceneEntityRef* ref = reinterpret_cast<SceneEntityRef*>(prop.value);
-							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->entity ? ref->entity->GetName() : "None", categoriesData[j].name.c_str(), guiID, i);
+							SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(prop.value);
+
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->GetSceneEntity() ? ref->GetSceneEntity()->GetName() : "None", categoriesData[j].name.c_str(), guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
 							{
@@ -981,7 +984,7 @@ namespace Oak
 									uint64_t temp = *((uint64_t*)payload->Data);
 									SceneEntity* entity = (SceneEntity*)temp;
 
-									ref->entity = entity;
+									ref->SetEntity(entity);
 									ref->uid = entity->GetUID();
 
 									prop.changed = true;
@@ -994,7 +997,7 @@ namespace Oak
 
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
-								ref->entity = nullptr;
+								ref->SetEntity(nullptr);
 								ref->uid = 0;
 
 								prop.changed = true;
