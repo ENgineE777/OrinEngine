@@ -39,8 +39,8 @@ namespace Oak
 		float rotationSensivity = 5.0f;
 		float moveSpeed = 100.0f;
 		float moveFastSpeed = 350.0f;
-		float moveAcceleration = 75.0f;
-		float moveDeacceleration = 200.0f;
+		float moveAcceleration = 50.0f;
+		float moveDeacceleration = 100.0f;
 		float zoom2Dsensivity = 5.0f;
 
 		void Init();
