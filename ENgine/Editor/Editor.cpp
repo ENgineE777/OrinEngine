@@ -248,6 +248,9 @@ namespace Oak
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+		io.MouseDrawCursor = true;
+
 		io.ConfigWindowsMoveFromTitleBarOnly = true;
 
 		ImGui::StyleColorsDark();
@@ -1814,6 +1817,16 @@ namespace Oak
 		else
 		{
 			ShowSelectProject();
+		}
+
+		ImGuiContext* context = ImGui::GetCurrentContext();
+
+		if (context->DragDropActive)
+		{
+			ImGuiContext* context = ImGui::GetCurrentContext();
+
+			ImVec2 p = ImGui::GetIO().MousePos;
+			ImGui::GetForegroundDrawList(context->MouseLastHoveredViewport)->AddRectFilled(ImVec2(p.x + 12, p.y + 10), ImVec2(p.x + 25, p.y + 20), ImGui::GetColorU32(ImGuiCol_DragDropTarget));
 		}
 
 		ImGui::Render();
