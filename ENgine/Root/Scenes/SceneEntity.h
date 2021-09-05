@@ -183,6 +183,8 @@ namespace Oak
 		\brief This method called when scene resoources are exporting
 		*/
 		virtual void Export();
+
+		virtual bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 	#endif
 
 		/**

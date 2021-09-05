@@ -155,6 +155,11 @@ namespace Oak
 	{
 
 	}
+
+	bool SceneEntity::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
+	{
+		return false;
+	}
 	#endif
 
 	void SceneEntity::Release()
