@@ -1760,7 +1760,18 @@ namespace Oak
 
 						ImVec2 size = ImGui::GetContentRegionAvail();
 
-						ImGui::ListBox("##listbox2", &log.second->selItem, &log.second->logsPtr[0], (int)log.second->logs.size(), (int)(size.y / 23));
+						if (ImGui::ListBoxHeader("##listbox2", ImVec2(-1, -1)))
+						{
+							for (int n = 0; n < log.second->logs.size(); n++)
+							{
+								if (ImGui::Selectable(log.second->logs[n].c_str(), log.second->selItem == n))
+								{
+									log.second->selItem = n;
+								}
+							}
+
+							ImGui::ListBoxFooter();
+						}
 
 						ImGui::SetScrollHereY(1.0f);
 
