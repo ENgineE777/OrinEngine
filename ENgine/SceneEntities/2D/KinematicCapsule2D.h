@@ -29,6 +29,7 @@ namespace Oak
 		virtual ~KinematicCapsule2D() = default;
 
 		void Init() override;
+		void SetVisible(bool state) override;
 		void Play() override;
 		void Move(Math::Vector2 dir, uint32_t ignoreGroup = 0);
 		void EditorDraw(float dt);

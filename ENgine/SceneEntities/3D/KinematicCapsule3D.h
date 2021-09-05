@@ -29,6 +29,7 @@ namespace Oak
 		virtual ~KinematicCapsule3D() = default;
 
 		void Init() override;
+		void SetVisible(bool state) override;
 		void Play() override;
 		void Move(Math::Vector3 dir, uint32_t ignoreGroup = 0);
 		void EditorDraw(float dt);

@@ -19,6 +19,16 @@ namespace Oak
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule2D::EditorDraw);
 	}
 
+	void KinematicCapsule2D::SetVisible(bool state)
+	{
+		SceneEntity::SetVisible(state);
+
+		if (controller)
+		{
+			controller->SetActive(state);
+		}
+	}
+
 	void KinematicCapsule2D::Play()
 	{
 		PhysControllerDesc desc;
@@ -38,6 +48,8 @@ namespace Oak
 		bodyData.controller = controller;
 
 		controller->SetUserData(&bodyData);
+
+		SetVisible(visible);
 	}
 
 	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t ignoreGroup)
@@ -47,7 +59,7 @@ namespace Oak
 		Math::Vector3 pos;
 		controller->GetPosition(pos);
 
-		transform.global.Pos() = Sprite::pixelsPerUnit;
+		transform.global.Pos() *= Sprite::pixelsPerUnit;
 
 		if (affectOnParent && parent)
 		{

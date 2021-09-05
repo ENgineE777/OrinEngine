@@ -19,6 +19,16 @@ namespace Oak
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule3D::EditorDraw);
 	}
 
+	void KinematicCapsule3D::SetVisible(bool state)
+	{
+		SceneEntity::SetVisible(state);
+
+		if (controller)
+		{
+			controller->SetActive(state);
+		}
+	}
+
 	void KinematicCapsule3D::Play()
 	{
 		PhysControllerDesc desc;
