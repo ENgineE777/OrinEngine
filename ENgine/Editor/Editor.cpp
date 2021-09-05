@@ -940,6 +940,22 @@ namespace Oak
 		}
 	}
 
+	void Editor::CopyChilds(SceneEntity* entity, SceneEntity* copy)
+	{
+		auto& childs = entity->GetChilds();
+
+		for (auto* child : childs)
+		{
+			SceneEntity* childCopy = project.selectedScene->scene->CreateEntity(child->className);
+
+			childCopy->SetParent(copy, nullptr);
+
+			childCopy->Copy(child);
+
+			CopyChilds(child, childCopy);
+		}
+	}
+
 	void Editor::SceneTreePopup(bool contextItem)
 	{
 		entityDeletedViaPopup = false;
@@ -1012,6 +1028,8 @@ namespace Oak
 				}
 
 				copy->Copy(selectedEntity);
+
+				CopyChilds(selectedEntity, copy);
 
 				SelectEntity(copy);
 

@@ -109,6 +109,8 @@ namespace Oak
 
 		void ApplySelecetedTheme();
 
+		void CopyChilds(SceneEntity* entity, SceneEntity* copy);
+
 	private:
 
 		void SetupImGUI();
