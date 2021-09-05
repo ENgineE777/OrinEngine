@@ -9,7 +9,7 @@
 
 namespace Oak
 {
-	class AnimGraph2D : public SceneEntity
+	class CLASS_DECLSPEC AnimGraph2D : public SceneEntity
 	{
 	public:
 
