@@ -460,9 +460,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Actions\SPK_ActionSet.cpp">
       <Filter>ENgine\Support\Spark\Extensions\Actions</Filter>
     </ClCompile>
@@ -663,6 +660,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Support\ImGuiHelper.cpp">
       <Filter>ENgine\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\KinematicCapsule3D.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox3D.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PhysBox2D.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\KinematicCapsule2D.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -966,9 +975,6 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\Spark\SPARK.h">
       <Filter>ENgine\Support\Spark</Filter>
     </ClInclude>
@@ -1265,6 +1271,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Support\ImGuiHelper.h">
       <Filter>ENgine\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\KinematicCapsule3D.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox3D.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PhysBox2D.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\KinematicCapsule2D.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

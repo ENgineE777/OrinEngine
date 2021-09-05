@@ -40,21 +40,30 @@ namespace Oak
 
 	*/
 
-	class PhysBox : public SceneEntity
+	class CLASS_DECLSPEC PhysBox3D : public SceneEntity
 	{
-	public:
+	protected:
+
+		enum class BodyType
+		{
+			Static = 0,
+			Dynamic = 1,
+			DynamicCCD = 2,
+			Kinematic = 3,
+			Trigger = 4
+		};
 
 		/**
 		\brief Group of a body
 		*/
 
-		uint32_t phys_group;
+		uint32_t physGroup;
 
 		/**
 		\brief Controls if box static or dynamic.
 		*/
 
-		bool isStatic;
+		BodyType bodyType;
 
 		/**
 		\brief Color of a box.
@@ -62,17 +71,28 @@ namespace Oak
 
 		Color color;
 
+		/**
+			\brief Visualize box during play
+		*/
+		bool visibleDuringPlay;
 
-	#ifndef DOXYGEN_SKIP
-
-		META_DATA_DECL(PhysBox)
+		/**
+			\brief Affecting on parent
+		*/
+		bool affectOnParent = false;
 
 		PhysScene::BodyUserData body;
 
-		virtual ~PhysBox() = default;
+	public:
+
+	#ifndef DOXYGEN_SKIP
+
+		META_DATA_DECL(PhysBox3D)
+
+		virtual ~PhysBox3D() = default;
 
 		void Init() override;
-		void Draw(float dt);
+		virtual void Draw(float dt);
 
 		void SetVisible(bool state) override;
 
@@ -80,7 +100,7 @@ namespace Oak
 		void Release() override;
 
 	#ifdef OAK_EDITOR
-		//bool CheckSelection(Vector2 ms, Vector3 start, Vector3 dir) override;
+		bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir) override;
 	#endif
 
 	#endif
