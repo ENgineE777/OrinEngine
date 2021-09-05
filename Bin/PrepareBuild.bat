@@ -2,6 +2,7 @@ call CopyCppBuild.bat
 cd ../Doxygen
 call gen_doc.bat
 cd ../
+F:\VS\VS2019\Common7\IDE\devenv.exe /Build Release Projects\Windows\Oak.sln /Project Runner
 RMDIR /s /q ENgineRelease\
 xcopy Bin\*.* ENgineRelease\ /sy
 
