@@ -92,8 +92,6 @@ namespace Oak::ImGuiHelper
 
 		JsonReader reader;
 
-		root.Log("sdfds", std::filesystem::current_path().string().c_str());
-
 		if (reader.ParseFile(StringUtils::PrintTemp("%s/ENgine/editor/themes/%s", std::filesystem::current_path().string().c_str(), name)))
 		{
 			if (reader.EnterBlock("colors"))
