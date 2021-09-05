@@ -7,7 +7,7 @@
 
 namespace Oak
 {
-	class ModelEntity : public SceneEntity
+	class CLASS_DECLSPEC ModelEntity : public SceneEntity
 	{
 	public:
 
