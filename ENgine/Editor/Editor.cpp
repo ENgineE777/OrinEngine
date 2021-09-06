@@ -1395,6 +1395,8 @@ namespace Oak
 
 		project.Save();
 
+		root.scripts.SetAllowDynamicReload(false);
+
 		if (project.selectedScene)
 		{
 			project.EnableScene(project.selectedScene, false);
@@ -1428,6 +1430,8 @@ namespace Oak
 		{
 			project.EnableScene(project.selectedScene, true);
 		}
+
+		root.scripts.SetAllowDynamicReload(true);
 
 		projectRunning = false;
 	}
