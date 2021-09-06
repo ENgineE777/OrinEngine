@@ -989,7 +989,14 @@ namespace Oak
 
 							if (parent)
 							{
-								entity->SetParent(parent, selectedEntity);
+								if (entity->GetTransform().unitsInvScale == parent->GetTransform().unitsInvScale)
+								{
+									entity->SetParent(parent, selectedEntity);
+								}
+								else
+								{
+									RELEASE(entity)
+								}
 							}
 							else
 							{
@@ -1007,6 +1014,7 @@ namespace Oak
 
 							transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 
+							entity->UpdateVisibility();
 							SelectEntity(entity);
 						}
 					}
@@ -1104,31 +1112,36 @@ namespace Oak
 				{
 					if (ImGui::AcceptDragDropPayload("_TREENODE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 					{
-						if (dragged->GetParent())
+						bool allowDrag = true;
+
+						SceneEntity* parent = asChild ? entity : (entity ? entity->GetParent() : nullptr);
+
+						if (parent && parent->GetTransform().unitsInvScale != dragged->GetTransform().unitsInvScale)
 						{
-							dragged->SetParent(nullptr);
-						}
-						else
-						{
-							project.selectedScene->scene->DeleteEntity(dragged, false);
+							allowDrag = false;
 						}
 
-						if (asChild)
+						if (allowDrag)
 						{
-							dragged->SetParent(entity);
-						}
-						else
-						{
-							SceneEntity* parent = entity ? entity->GetParent() : nullptr;
+							if (dragged->GetParent())
+							{
+								dragged->SetParent(nullptr);
+							}
+							else
+							{
+								project.selectedScene->scene->DeleteEntity(dragged, false);
+							}
 
 							if (parent)
 							{
-								dragged->SetParent(parent, entity);
+								dragged->SetParent(parent, asChild ? nullptr : entity);
 							}
 							else
 							{
 								project.selectedScene->scene->AddEntity(dragged);
 							}
+
+							dragged->UpdateVisibility();
 						}
 
 						dragFinished = true;
@@ -1174,25 +1187,33 @@ namespace Oak
 
 			if (assetEntity)
 			{
-				if (asChild)
-				{
-					assetEntity->SetParent(entity);
-				}
-				else
-				{
-					SceneEntity* parent = entity ? entity->GetParent() : nullptr;
+				bool allowAdd = true;
 
+				SceneEntity* parent = asChild ? entity : (entity ? entity->GetParent() : nullptr);
+
+				if (parent && parent->GetTransform().unitsInvScale != assetEntity->GetTransform().unitsInvScale)
+				{
+					allowAdd = false;
+				}
+
+				if (allowAdd)
+				{
 					if (parent)
 					{
-						assetEntity->SetParent(parent, entity);
+						assetEntity->SetParent(parent, asChild ? nullptr : entity);
 					}
 					else
 					{
 						project.selectedScene->scene->AddEntity(assetEntity);
 					}
-				}
 
-				SelectEntity(assetEntity);
+					assetEntity->UpdateVisibility();
+					SelectEntity(assetEntity);
+				}
+				else
+				{
+					RELEASE(assetEntity)
+				}
 			}
 
 			if (dragFinished)

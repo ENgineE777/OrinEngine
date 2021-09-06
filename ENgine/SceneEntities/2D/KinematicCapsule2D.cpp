@@ -14,6 +14,8 @@ namespace Oak
 
 	void KinematicCapsule2D::Init()
 	{
+		transform.unitsScale = &Sprite::pixelsPerUnit;
+		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
 		transform.transformFlag = MoveXYZ;
 
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule2D::EditorDraw);
