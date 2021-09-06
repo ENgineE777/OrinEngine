@@ -68,9 +68,28 @@ namespace Oak
 		return uid;
 	}
 
-	void SceneEntity::SetVisible(bool set)
+	void SceneEntity::SetVisiblity(bool set)
 	{
 		visible = set;
+
+		UpdateVisibility();
+	}
+
+	void SceneEntity::UpdateVisibility()
+	{
+		currentVisible = visible;
+
+		if (parent)
+		{
+			currentVisible &= parent->currentVisible;
+		}
+
+		OnVisiblityChange(currentVisible);
+
+		for (auto& child : childs)
+		{
+			child->UpdateVisibility();
+		}
 	}
 
 	bool SceneEntity::IsVisible()
@@ -82,12 +101,12 @@ namespace Oak
 		}
 	#endif
 
-		if (parent && visible)
-		{
-			return parent->IsVisible();
-		}
+		return currentVisible;
+	}
 
-		return visible;
+	void SceneEntity::OnVisiblityChange(bool set)
+	{
+
 	}
 
 	Transform& SceneEntity::GetTransform()

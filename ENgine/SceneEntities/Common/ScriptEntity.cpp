@@ -7,11 +7,14 @@ namespace Oak
 	{
 	}
 
-	void ScriptEntity::SetVisible(bool visible)
+	void ScriptEntity::OnVisiblityChange(bool set)
 	{
-		SceneEntity::SetVisible(visible);
+		if (!GetScene()->IsPlaying())
+		{
+			return;
+		}
 
-		if (visible)
+		if (set)
 		{
 			Tasks(false)->AddTask(100, this, (Object::Delegate) & ScriptEntity::Update);
 		}

@@ -1953,6 +1953,7 @@ namespace Oak
 				if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
 				{
 					selectedEntity->ApplyProperties();
+					selectedEntity->UpdateVisibility();
 				}
 
 				project.EnableScene(project.selectedScene, true);

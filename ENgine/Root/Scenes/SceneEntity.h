@@ -34,6 +34,7 @@ namespace Oak
 		eastl::string layerName;
 		uint32_t uid = 0;
 		bool visible = true;
+		bool currentVisible = false;
 
 		Transform transform;
 
@@ -86,7 +87,19 @@ namespace Oak
 
 		\param[in] set New visibility state of a scene object
 		*/
-		virtual void SetVisible(bool set);
+		void SetVisiblity(bool set);
+
+		/**
+			\brief Update visibility state
+		*/
+		void UpdateVisibility();
+
+		/**
+			\brief Called on changing of visibily
+
+			\param[in] set New visibility state of a scene object
+		*/
+		virtual void OnVisiblityChange(bool set);
 
 		/**
 		\brief Get current visibility state of a scene object

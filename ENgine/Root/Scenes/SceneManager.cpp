@@ -149,7 +149,7 @@ namespace Oak
 				{
 					for (auto entity : group->entities)
 					{
-						entity->SetVisible(set);
+						entity->SetVisiblity(set);
 					}
 				}
 			}

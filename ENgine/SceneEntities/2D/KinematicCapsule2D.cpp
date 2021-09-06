@@ -19,10 +19,8 @@ namespace Oak
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule2D::EditorDraw);
 	}
 
-	void KinematicCapsule2D::SetVisible(bool state)
+	void KinematicCapsule2D::OnVisiblityChange(bool state)
 	{
-		SceneEntity::SetVisible(state);
-
 		if (controller)
 		{
 			controller->SetActive(state);
@@ -43,13 +41,12 @@ namespace Oak
 
 		controller = GetRoot()->GetPhysScene()->CreateController(desc, 2);
 		controller->RestrictZAxis();
+		controller->SetActive(IsVisible());
 
 		bodyData.object = this;
 		bodyData.controller = controller;
 
 		controller->SetUserData(&bodyData);
-
-		SetVisible(visible);
 	}
 
 	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t ignoreGroup)

@@ -67,7 +67,7 @@ namespace Oak
 
 		virtual ~MusicPlayer() = default;
 
-		void SetVisible(bool visible) override;
+		void OnVisiblityChange(bool set) override;
 
 		void Init() override;
 

@@ -13,7 +13,7 @@ namespace Oak
 
 		virtual ~ScriptEntity() = default;
 
-		void SetVisible(bool visible) override;
+		void OnVisiblityChange(bool set) override;
 
 		void Init() override;
 

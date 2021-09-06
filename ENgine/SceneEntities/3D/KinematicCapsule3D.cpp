@@ -19,13 +19,11 @@ namespace Oak
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule3D::EditorDraw);
 	}
 
-	void KinematicCapsule3D::SetVisible(bool state)
+	void KinematicCapsule3D::OnVisiblityChange(bool set)
 	{
-		SceneEntity::SetVisible(state);
-
 		if (controller)
 		{
-			controller->SetActive(state);
+			controller->SetActive(set);
 		}
 	}
 
@@ -43,6 +41,7 @@ namespace Oak
 		desc.pos = transform.global.Pos();
 
 		controller = GetRoot()->GetPhysScene()->CreateController(desc, 2);
+		controller->SetActive(IsVisible());
 
 		bodyData.object = this;
 		bodyData.controller = controller;

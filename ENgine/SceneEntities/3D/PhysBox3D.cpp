@@ -59,10 +59,8 @@ namespace Oak
 		}
 	}
 
-	void PhysBox3D::SetVisible(bool state)
+	void PhysBox3D::OnVisiblityChange(bool state)
 	{
-		SceneEntity::SetVisible(state);
-
 		if (body.body)
 		{
 			body.body->SetActive(state);
@@ -77,6 +75,7 @@ namespace Oak
 
 		body.object = this;
 		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.global, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
+		body.body->SetActive(IsVisible());
 
 		body.body->SetUserData(&body);
 	}

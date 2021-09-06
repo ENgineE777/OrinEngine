@@ -50,6 +50,7 @@ namespace Oak
 
 		body.object = this;
 		body.body = root.GetPhysScene()->CreateBox(transform.size * Sprite::pixelsPerUnitInvert, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
+		body.body->SetActive(IsVisible());
 
 		if (bodyType == BodyType::Dynamic || bodyType == BodyType::DynamicCCD)
 		{

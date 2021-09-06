@@ -161,6 +161,7 @@ namespace Oak
 			for (auto entity : entities)
 			{
 				entity->PostLoad();
+				entity->UpdateVisibility();
 			}
 		}
 	}

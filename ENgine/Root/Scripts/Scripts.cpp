@@ -56,7 +56,7 @@ namespace Oak
 
 				if (cmakeOut.Open(path, File::ModeType::WriteText))
 				{
-					cmakeOut.Write(data.c_str(), data.size());
+					cmakeOut.Write(data.c_str(), (int)data.size());
 				}
 			}	
 

@@ -16,14 +16,12 @@ namespace Oak
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&MusicPlayer::Work);
 	}
 
-	void MusicPlayer::SetVisible(bool visible)
+	void MusicPlayer::OnVisiblityChange(bool set)
 	{
 		if (stream && stream->IsPlaying() && !faded)
 		{
-			stream->Pause(!visible);
+			stream->Pause(!set);
 		}
-
-		SceneEntity::SetVisible(visible);
 	}
 
 	void MusicPlayer::Play()
