@@ -631,9 +631,6 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp">
       <Filter>ENgine\SceneEntities\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.cpp">
-      <Filter>ENgine\SceneEntities\Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp">
       <Filter>ENgine\Platform\Common</Filter>
     </ClCompile>
@@ -672,6 +669,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\KinematicCapsule2D.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\ScriptEntity3D.cpp">
+      <Filter>ENgine\SceneEntities\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1239,9 +1242,6 @@
     <ClInclude Include="..\..\..\ENgine\Root\Meshes\IMeshes.h">
       <Filter>ENgine\Root\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ScriptEntity.h">
-      <Filter>ENgine\SceneEntities\Common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h">
       <Filter>ENgine\Platform\Common</Filter>
     </ClInclude>
@@ -1283,6 +1283,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\KinematicCapsule2D.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\ScriptEntity3D.h">
+      <Filter>ENgine\SceneEntities\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

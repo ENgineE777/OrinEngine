@@ -5,13 +5,13 @@
 
 namespace Oak
 {
-	class CLASS_DECLSPEC ScriptEntity : public SceneEntity
+	class CLASS_DECLSPEC ScriptEntity3D : public SceneEntity
 	{
 	public:
 
 	#ifndef DOXYGEN_SKIP
 
-		virtual ~ScriptEntity() = default;
+		virtual ~ScriptEntity3D() = default;
 
 		void OnVisiblityChange(bool set) override;
 
