@@ -32,8 +32,6 @@ namespace Oak
 		PhysControllerDesc desc;
 		desc.height = 1.0f;
 
-		transform.BuildMatrices();
-
 		auto size = Math::Vector2(100.0f, 150.0f);
 		desc.radius = fminf(size.x, size.y) * 0.5f * 0.65f;
 		desc.upVector = upVector;

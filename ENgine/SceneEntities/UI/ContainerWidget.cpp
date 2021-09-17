@@ -67,24 +67,22 @@ namespace Oak
 
 		if (horzSize == Size::fillParent)
 		{
-			transform.position.x = 0;
+			transform.position = Math::Vector3(0.0f, transform.position.y, transform.position.z);
 			transform.size.x = parentSize.x - rightPadding.x - leftPadding.x;
 		}
 
 		if (vertSize == Size::fillParent)
 		{
-			transform.position.y = 0;
+			transform.position = Math::Vector3(transform.position.y, 0.0f, transform.position.z);
 			transform.size.y = parentSize.y - rightPadding.y - leftPadding.y;
 		}
 
-		transform.BuildMatrices();
-
-		if (parentWidget)
+		/*if (parentWidget)
 		{
 			Math::Vector3 offset = parentWidget->GetTransform().size * parentWidget->GetTransform().offset;
 			transform.global.Pos().x -= offset.x;
 			transform.global.Pos().y -= offset.y;
-		}
+		}*/
 
 		if (horzAlign == Align::alignLeft)
 		{

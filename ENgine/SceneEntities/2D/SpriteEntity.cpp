@@ -36,8 +36,6 @@ namespace Oak
 	{
 		if (IsVisible())
 		{
-			transform.BuildMatrices();
-
 			texture.Draw(&transform, color, dt);
 		}
 	}

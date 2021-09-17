@@ -31,7 +31,6 @@ namespace Oak
 	{
 		if (mesh)
 		{
-			transform.BuildMatrices();
 			mesh->transform = transform.global;
 		}
 	}

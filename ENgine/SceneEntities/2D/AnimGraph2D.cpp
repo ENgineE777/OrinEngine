@@ -29,8 +29,6 @@ namespace Oak
 	{
 		if (IsVisible() && anim.Get())
 		{
-			transform.BuildMatrices();
-
 			anim.Draw(&transform, COLOR_WHITE, dt);
 		}
 	}

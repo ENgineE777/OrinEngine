@@ -720,26 +720,41 @@ namespace Oak
 
 						if (transform->transformFlag & TransformFlag::MoveXYZ)
 						{
-							ImGuiVector(transform->transformFlag & TransformFlag::MoveX ? &transform->position.x : nullptr,
-										transform->transformFlag & TransformFlag::MoveY ? &transform->position.y : nullptr,
-										transform->transformFlag & TransformFlag::MoveZ ? &transform->position.z : nullptr,
-										nullptr, "Position", propGuiID);
+							Math::Vector3 position = transform->position;
+
+							if (ImGuiVector(transform->transformFlag & TransformFlag::MoveX ? &position.x : nullptr,
+											transform->transformFlag & TransformFlag::MoveY ? &position.y : nullptr,
+											transform->transformFlag & TransformFlag::MoveZ ? &position.z : nullptr,
+											nullptr, "Position", propGuiID))
+							{
+								transform->position = position;
+							}
 						}
 
 						if (transform->transformFlag & TransformFlag::RotateXYZ)
 						{
-							ImGuiVector(transform->transformFlag & TransformFlag::RotateX ? &transform->rotation.x : nullptr,
-										transform->transformFlag & TransformFlag::RotateY ? &transform->rotation.y : nullptr,
-										transform->transformFlag & TransformFlag::RotateZ ? &transform->rotation.z : nullptr,
-										nullptr, "Rotation", propGuiID);
+							Math::Vector3 rotation = transform->rotation;
+
+							if (ImGuiVector(transform->transformFlag & TransformFlag::RotateX ? &rotation.x : nullptr,
+											transform->transformFlag & TransformFlag::RotateY ? &rotation.y : nullptr,
+											transform->transformFlag & TransformFlag::RotateZ ? &rotation.z : nullptr,
+											nullptr, "Rotation", propGuiID))
+							{
+								transform->rotation = rotation;
+							}
 						}
 
 						if (transform->transformFlag & TransformFlag::ScaleXYZ)
 						{
-							ImGuiVector(transform->transformFlag & TransformFlag::ScaleX ? &transform->scale.x : nullptr,
-										transform->transformFlag & TransformFlag::ScaleY ? &transform->scale.y : nullptr,
-										transform->transformFlag & TransformFlag::ScaleZ ? &transform->scale.z : nullptr,
-										nullptr, "Scale", propGuiID);
+							Math::Vector3 scale = transform->scale;
+
+							if (ImGuiVector(transform->transformFlag & TransformFlag::ScaleX ? &scale.x : nullptr,
+											transform->transformFlag & TransformFlag::ScaleY ? &scale.y : nullptr,
+											transform->transformFlag & TransformFlag::ScaleZ ? &scale.z : nullptr,
+											nullptr, "Scale", propGuiID))
+							{
+								transform->scale = scale;
+							}
 						}
 
 						if (transform->transformFlag & TransformFlag::SizeXYZ)

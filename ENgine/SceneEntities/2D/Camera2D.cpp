@@ -51,8 +51,6 @@ namespace Oak
 
 	void Camera2D::Update(float dt)
 	{
-		transform.BuildMatrices();
-
 		SceneEntityRef2<Camera2D> ref;
 		SceneEntityRefBase2* ref2 = (SceneEntityRefBase2*)&ref;
 
@@ -69,33 +67,35 @@ namespace Oak
 				transform.size.x = Sprite::pixelsHeight / root.render.GetDevice()->GetAspect();
 				transform.size.y = Sprite::pixelsHeight;
 
-				if (-transform.size.x * 0.5f + border.x > targetRef.entity->GetTransform().global.Pos().x - transform.position.x)
+				Math::Vector3 pos = transform.position;
+
+				if (-transform.size.x * 0.5f + border.x > targetRef.entity->GetTransform().global.Pos().x - pos.x)
 				{
-					transform.position.x = targetRef.entity->GetTransform().global.Pos().x + transform.size.x * 0.5f - border.x;
+					pos.x = targetRef.entity->GetTransform().global.Pos().x + transform.size.x * 0.5f - border.x;
 				}
 
-				if ( transform.size.x * 0.5f - border.x < targetRef.entity->GetTransform().global.Pos().x - transform.position.x)
+				if ( transform.size.x * 0.5f - border.x < targetRef.entity->GetTransform().global.Pos().x - pos.x)
 				{
-					transform.position.x = targetRef.entity->GetTransform().global.Pos().x - transform.size.x * 0.5f + border.x;
+					pos.x = targetRef.entity->GetTransform().global.Pos().x - transform.size.x * 0.5f + border.x;
 				}
 
-				if (-transform.size.y * 0.5f + border.y > targetRef.entity->GetTransform().global.Pos().y - transform.position.y)
+				if (-transform.size.y * 0.5f + border.y > targetRef.entity->GetTransform().global.Pos().y - pos.y)
 				{
-					transform.position.y = targetRef.entity->GetTransform().global.Pos().y + transform.size.y * 0.5f - border.y;
+					pos.y = targetRef.entity->GetTransform().global.Pos().y + transform.size.y * 0.5f - border.y;
 				}
 
-				if (transform.size.y * 0.5f - border.y < targetRef.entity->GetTransform().global.Pos().y - transform.position.y)
+				if (transform.size.y * 0.5f - border.y < targetRef.entity->GetTransform().global.Pos().y - pos.y)
 				{
-					transform.position.y = targetRef.entity->GetTransform().global.Pos().y - transform.size.y * 0.5f + border.y;
+					pos.y = targetRef.entity->GetTransform().global.Pos().y - transform.size.y * 0.5f + border.y;
 				}
 
 				if (useLimits)
 				{
-					transform.position.x = Math::Clamp(transform.position.x, leftup.x + transform.size.x * 0.5f, rightdown.x - transform.size.x * 0.5f);
-					transform.position.y = Math::Clamp(transform.position.y, rightdown.y + transform.size.y * 0.5f, leftup.y - transform.size.y * 0.5f);
+					pos.x = Math::Clamp(pos.x, leftup.x + transform.size.x * 0.5f, rightdown.x - transform.size.x * 0.5f);
+					pos.y = Math::Clamp(pos.y, rightdown.y + transform.size.y * 0.5f, leftup.y - transform.size.y * 0.5f);
 				}
 
-				transform.BuildMatrices();
+				transform.position = pos;
 			}
 
 			if (IsVisible())

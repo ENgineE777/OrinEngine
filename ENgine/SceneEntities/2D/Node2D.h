@@ -20,7 +20,6 @@ namespace Oak
 		virtual ~Node2D() = default;
 
 		void Init() override;
-		void Update(float dt);
 	#endif
 	};
 }

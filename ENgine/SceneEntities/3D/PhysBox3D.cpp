@@ -39,18 +39,19 @@ namespace Oak
 
 		if (body.body && (bodyType == BodyType::Dynamic || bodyType == BodyType::DynamicCCD))
 		{
-			body.body->GetTransform(transform.global);
+			Math::Matrix mat;
+			body.body->GetTransform(mat);
+
+			transform.global = mat;
 
 			if (affectOnParent && parent)
 			{
 				auto& parentTrans = parent->GetTransform();
 				parentTrans.position = transform.global.Pos();
 				parentTrans.rotation = transform.global.GetRotation() / Math::Radian;
+
+				transform.local = Math::Matrix();
 			}
-		}
-		else
-		{
-			transform.BuildMatrices();
 		}
 
 		if (visibleDuringPlay || !GetScene()->IsPlaying())
@@ -70,8 +71,6 @@ namespace Oak
 	void PhysBox3D::Play()
 	{
 		SceneEntity::Play();
-
-		transform.BuildMatrices();
 
 		body.object = this;
 		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.global, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);

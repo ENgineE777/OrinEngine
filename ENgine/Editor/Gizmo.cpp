@@ -720,7 +720,9 @@ namespace Oak
 					k *= -1.0f;
 				}
 
-				transform->rotation.z -= k * sign / Math::Radian;
+				auto rotation = transform->rotation;
+				rotation.z -= k * sign / Math::Radian;
+				transform->rotation = rotation;
 			}
 		}
 		else
@@ -832,15 +834,6 @@ namespace Oak
 		point = mouseOrigin + mouseDirection * t;
 	}
 
-	void Gizmo::CaclLocalMatrix()
-	{
-		Math::Matrix inverse = transform->parent ? (*transform->parent) : Math::Matrix();
-		inverse.Inverse();
-
-		transform->local = transform->global * inverse;
-		transform->SetData(transform->local);
-	}
-
 	Math::Vector3 Gizmo::GetGlobalPos()
 	{
 		return transform->unitsInvScale ? (transform->global.Pos() * (*transform->unitsInvScale)) : transform->global.Pos();
@@ -848,12 +841,15 @@ namespace Oak
 
 	void Gizmo::SetGlobalPos(Math::Vector3 pos)
 	{
-		transform->global.Pos() = pos;
-		
 		if (transform->unitsScale)
 		{
-			transform->global.Pos() *= (*transform->unitsScale);
+			pos *= (*transform->unitsScale);
 		}
+
+		auto tr = transform->global;
+		tr.Pos() = pos;
+		transform->global = tr;
+
 	}
 
 	void Gizmo::MoveTrans3D(Math::Vector2 ms)
@@ -900,8 +896,6 @@ namespace Oak
 			{
 				PlaneTranslation(axises[2]);
 			}
-
-			CaclLocalMatrix();
 		}
 		else
 		if (mode == TransformMode::Rotate)
@@ -930,15 +924,14 @@ namespace Oak
 				scaleMat.Scale(Math::Vector3(transform->local.Vx().Normalize(), transform->local.Vy().Normalize(), transform->local.Vz().Normalize()));
 
 				transform->local = scaleMat * rot * transform->local;
-				transform->SetData(transform->local);
 			}
 			else
 			{
 				Math::Vector3 tr = transform->global.Pos();
-				transform->global = transform->global * rot;
-				transform->global.Pos() = tr;
-
-				CaclLocalMatrix();
+				auto global = transform->global * rot;
+				global.Pos() = tr;
+				
+				transform->global = global;
 			}
 		}
 		else
@@ -946,11 +939,13 @@ namespace Oak
 		{
 			da *= scale * 16;
 
+			auto scale = transform->scale;
+
 			if (selAxis & (int)Axis::X)
 			{
 				if (transform->transformFlag & TransformFlag::ScaleX)
 				{
-					transform->scale.x = fmaxf(transform->scale.x + da, 0.1f);
+					scale.x = fmaxf(scale.x + da, 0.1f);
 				}
 				else
 				if (transform->transformFlag & TransformFlag::SizeX)
@@ -963,7 +958,7 @@ namespace Oak
 			{
 				if (transform->transformFlag & TransformFlag::ScaleY)
 				{
-					transform->scale.y = fmaxf(transform->scale.y + da, 0.1f);
+					scale.y = fmaxf(scale.y + da, 0.1f);
 				}
 				else
 				if (transform->transformFlag & TransformFlag::SizeY)
@@ -976,7 +971,7 @@ namespace Oak
 			{
 				if (transform->transformFlag & TransformFlag::ScaleZ)
 				{
-					transform->scale.z = fmaxf(transform->scale.z + da, 0.1f);
+					scale.z = fmaxf(scale.z + da, 0.1f);
 				}
 				else
 				if (transform->transformFlag & TransformFlag::SizeZ)
@@ -984,13 +979,13 @@ namespace Oak
 					transform->size.z = fmaxf(transform->size.z + da, 0.1f);
 				}
 			}
+
+			transform->scale = scale;
 		}
 	}
 
 	void Gizmo::RenderTransRect()
 	{
-		transform->BuildMatrices();
-
 		Math::Vector3 p1, p2;
 
 		for (int phase = 1; phase <= 2; phase++)
@@ -1249,11 +1244,15 @@ namespace Oak
 			Math::Vector3 pos = movedOrigin * (*transform->unitsScale) * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
 			transform->offset = Math::Vector3(transform->offset.x + pos.x, transform->offset.y - pos.y, 0.0f);
 
-			transform->position.x += pos.x * transform->local.Vx().x * transform->size.x;
-			transform->position.y += pos.x * transform->local.Vx().y * transform->size.x;
+			auto position = transform->position;
 
-			transform->position.x += pos.y * transform->local.Vy().x * transform->size.y;
-			transform->position.y += pos.y * transform->local.Vy().y * transform->size.y;
+			position.x += pos.x * transform->local.Vx().x * transform->size.x;
+			position.y += pos.x * transform->local.Vx().y * transform->size.x;
+
+			position.x += pos.y * transform->local.Vy().x * transform->size.y;
+			position.y += pos.y * transform->local.Vy().y * transform->size.y;
+
+			transform->position = position;
 
 			selAxis = -1;
 		}

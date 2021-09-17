@@ -62,17 +62,17 @@ namespace Oak
 		/**
 			\brief Local position
 		*/
-		Math::Vector3 position;
+		__declspec(property(get = GetPosition, put = SetPosition)) Math::Vector3 position;
 
 		/**
 			\brief Local rotation position
 		*/
-		Math::Vector3 rotation;
+		__declspec(property(get = GetRotation, put = SetRotation)) Math::Vector3 rotation;
 
 		/**
 			\brief Local rotation position
 		*/
-		Math::Vector3 scale = 1.0f;
+		__declspec(property(get = GetScale, put = SetScale)) Math::Vector3 scale;
 
 		/**
 			\brief Size of object
@@ -87,17 +87,22 @@ namespace Oak
 		/**
 		\brief Calulated local matrix
 		*/
-		Math::Matrix local;
+		__declspec(property(get = GetLocal, put = SetLocal)) Math::Matrix local;
 
 		/**
 		\brief Final matrix
 		*/
-		Math::Matrix global;
+		__declspec(property(get = GetGlobal, put = SetGlobal)) Math::Matrix global;
 
 		/**
 		\brief Matrix of a parent
 		*/
-		Math::Matrix* parent = nullptr;
+		Transform* parent = nullptr;
+
+		/**
+			\brief Matrix of a parent
+		*/
+		eastl::vector<Transform*> childs;
 
 		/**
 			\brief Units scale
@@ -115,29 +120,6 @@ namespace Oak
 		TransformFlag transformFlag = TransformFlag::MoveRotateScaleFull;
 
 		/**
-		\brief Calculate final matrix
-		*/
-		virtual void BuildMatrices()
-		{
-			local.Identity();
-			local.Rotate(rotation * Math::Radian);
-			local.Scale(scale);
-			local.Pos() = position;
-
-			global = parent ? (local * (*parent)) : local;
-		}
-
-		/**
-			\brief Calculate final matrix
-		*/
-		virtual void SetData(Math::Matrix& matrix)
-		{
-			position = matrix.Pos();
-			scale = matrix.GetScale();
-			rotation = matrix.GetRotation() / Math::Radian;
-		}
-
-		/**
 		\brief Load data of transform
 
 		\param[in] read JSON helper class for read JSON
@@ -147,9 +129,9 @@ namespace Oak
 		{
 			if (reader.EnterBlock(name))
 			{
-				reader.Read("position", position);
-				reader.Read("rotation", rotation);
-				reader.Read("scale", scale);
+				reader.Read("position", positionValue);
+				reader.Read("rotation", rotationValue);
+				reader.Read("scale", scaleValue);
 
 				reader.Read("size", size);
 				reader.Read("offset", offset);
@@ -167,12 +149,148 @@ namespace Oak
 		void Save(JsonWriter& writer, const char* name)
 		{
 			writer.StartBlock(name);
-			writer.Write("position", position);
-			writer.Write("rotation", rotation);
-			writer.Write("scale", scale);
+			writer.Write("position", positionValue);
+			writer.Write("rotation", rotationValue);
+			writer.Write("scale", scaleValue);
 			writer.Write("size", size);
 			writer.Write("offset", offset);
 			writer.FinishBlock();
 		};
+
+		Math::Vector3 GetPosition()
+		{
+			return positionValue;
+		}
+
+		void SetPosition(Math::Vector3 set)
+		{
+			positionValue = set;
+
+			SetDirty();
+		}
+
+		Math::Vector3 GetRotation()
+		{
+			return rotationValue;
+		}
+
+		void SetRotation(Math::Vector3 set)
+		{
+			rotationValue = set;
+
+			SetDirty();
+		}
+
+		Math::Vector3 GetScale()
+		{
+			return scaleValue;
+		}
+
+		void SetScale(Math::Vector3 set)
+		{
+			scaleValue = set;
+
+			SetDirty();
+		}
+
+		Math::Matrix GetLocal()
+		{
+			if (dirty)
+			{
+				BuildMatrices();
+			}
+
+			return localValue;
+		}
+
+
+		/**
+			\brief Set local transform
+		*/
+		void SetLocal(Math::Matrix set)
+		{
+			positionValue = set.Pos();
+			scaleValue = set.GetScale();
+			rotationValue = set.GetRotation() / Math::Radian;
+
+			SetDirty();
+		}
+
+		Math::Matrix GetGlobal()
+		{
+			if (dirty)
+			{
+				BuildMatrices();
+			}
+
+			return globalValue;
+		}
+
+		/**
+			\brief Set local transform
+		*/
+		void SetGlobal(Math::Matrix set)
+		{
+			globalValue = set;
+
+			if (parent)
+			{
+				Math::Matrix inverse = parent->globalValue;
+				inverse.Inverse();
+
+				localValue = globalValue * inverse;
+			}
+			else
+			{
+				localValue = set;
+			}
+
+			SetLocal(localValue);
+			dirty = false;
+		}
+
+		private:
+
+		bool dirty = true;
+
+		Math::Vector3 positionValue;
+		Math::Vector3 rotationValue;
+		Math::Vector3 scaleValue = 1.0f;
+		Math::Matrix localValue;
+		Math::Matrix globalValue;
+
+		void SetDirty()
+		{
+			dirty = true;
+
+			for (auto child : childs)
+			{
+				child->SetDirty();
+			}
+		}
+
+		void BuildMatrices()
+		{
+			localValue.Identity();
+			localValue.Rotate(rotation * Math::Radian);
+			localValue.Scale(scale);
+			localValue.Pos() = position;
+
+			if (parent)
+			{
+				if (parent->dirty)
+				{
+					parent->BuildMatrices();
+				}
+
+				globalValue = localValue * parent->globalValue;
+			}
+			else
+			{
+				globalValue = localValue;
+			}
+
+			dirty = false;
+		}
 	};
 }

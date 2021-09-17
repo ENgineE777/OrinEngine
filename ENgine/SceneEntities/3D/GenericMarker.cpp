@@ -70,7 +70,7 @@ namespace Oak
 				{
 					inst.color = instances[selInst].color;
 					inst.transform = instances[selInst].transform;
-					inst.transform.position.x += 1.0f;
+					inst.transform.position = Math::Vector3(inst.transform.position.x + 1.0f, inst.transform.position.y, inst.transform.position.z);
 				}
 				else
 				{
@@ -95,8 +95,7 @@ namespace Oak
 
 		for (auto& inst : instances)
 		{
-			inst.transform.parent = &transform.global;
-			inst.transform.BuildMatrices();
+			inst.transform.parent = &transform;
 
 			root.render.DebugSphere(inst.transform.global.Pos(), inst.color, inst.radius, fullShade);
 
@@ -144,12 +143,9 @@ namespace Oak
 
 	void GenericMarker::UpdateTransforms()
 	{
-		transform.BuildMatrices();
-
 		for (auto& inst : instances)
 		{
-			inst.transform.parent = &transform.global;
-			inst.transform.BuildMatrices();
+			inst.transform.parent = &transform;
 		}
 	}
 

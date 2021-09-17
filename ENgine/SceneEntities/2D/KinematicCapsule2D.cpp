@@ -34,8 +34,6 @@ namespace Oak
 		PhysControllerDesc desc;
 		desc.height = 1.0f;
 
-		transform.BuildMatrices();
-
 		auto size = Math::Vector2(100.0f, 150.0f);
 		desc.radius = fminf(size.x, size.y) * Sprite::pixelsPerUnitInvert * 0.5f * 0.65f;
 		desc.upVector.Set(0.0f, 0.0f, 1.0f);
@@ -58,12 +56,18 @@ namespace Oak
 		Math::Vector3 pos;
 		controller->GetPosition(pos);
 
-		transform.global.Pos() *= Sprite::pixelsPerUnit;
+		pos *= Sprite::pixelsPerUnit;
 
 		if (affectOnParent && parent)
 		{
-			auto& parentTrans = parent->GetTransform();
-			parentTrans.position = transform.global.Pos();
+			parent->GetTransform().position = pos;
+		}
+		else
+		{
+			Math::Matrix trans = transform.global;
+			trans.Pos() = pos;
+
+			transform.global = trans;
 		}
 	}
 

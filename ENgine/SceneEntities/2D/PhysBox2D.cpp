@@ -38,13 +38,6 @@ namespace Oak
 	{
 		SceneEntity::Play();
 
-		if (parent)
-		{
-			parent->GetTransform().BuildMatrices();
-		}
-
-		transform.BuildMatrices();
-
 		Math::Matrix mat = transform.global;
 		mat.Pos() *= Sprite::pixelsPerUnitInvert;
 
@@ -69,20 +62,20 @@ namespace Oak
 
 		if (body.body && (bodyType == BodyType::Dynamic || bodyType == BodyType::DynamicCCD))
 		{
-			body.body->GetTransform(transform.global);
-
-			transform.global.Pos() *= Sprite::pixelsPerUnit;
+			Math::Matrix mat;
+			body.body->GetTransform(mat);
+			mat.Pos() *= Sprite::pixelsPerUnit;
 
 			if (affectOnParent && parent)
 			{
 				auto& parentTrans = parent->GetTransform();
-				parentTrans.position = transform.global.Pos();
-				parentTrans.rotation = transform.global.GetRotation() / Math::Radian;
+				parentTrans.position = mat.Pos();
+				parentTrans.rotation = mat.GetRotation() / Math::Radian;
 			}
-		}
-		else
-		{
-			transform.BuildMatrices();
+			else
+			{
+				transform.global = mat;
+			}
 		}
 
 		if (visibleDuringPlay || !GetScene()->IsPlaying())

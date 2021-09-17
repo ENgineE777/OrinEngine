@@ -131,7 +131,8 @@ namespace Oak
 		{
 			child->parent = this;
 
-			child->GetTransform().parent = &transform.global;
+			child->GetTransform().parent = &transform;
+			transform.childs.push_back(&child->transform);
 
 			child->PostLoad();
 		}
@@ -214,15 +215,14 @@ namespace Oak
 				if (parent->childs[i] == this)
 				{
 					parent->childs.erase(parent->childs.begin() + i);
+					parent->transform.childs.erase(parent->transform.parent->childs.begin() + i);
 					break;
 				}
 			}
-
-			transform.parent = nullptr;
-			transform.local = transform.global;
 		}
 
 		parent = setParent;
+		transform.parent = setParent ? &setParent->transform : nullptr;
 
 		if (parent)
 		{
@@ -233,6 +233,7 @@ namespace Oak
 					if (parent->childs[i] == entityBefore)
 					{
 						parent->childs.insert(parent->childs.begin() + i + 1, this);
+						parent->transform.childs.insert(parent->transform.childs.begin() + i + 1, &transform);
 						return;
 					}
 				}
@@ -240,16 +241,11 @@ namespace Oak
 			else
 			{
 				parent->childs.push_back(this);
+				parent->transform.childs.push_back(&transform);
 			}
-
-			auto& transform = GetTransform();
-
-			transform.parent = &parent->GetTransform().global;
-			Math::Matrix inverse = parent->GetTransform().global;
-			inverse.Inverse();
-
-			transform.local = transform.global * inverse;
 		}
+
+		transform.local = transform.global;
 	}
 
 	SceneEntity* SceneEntity::GetParent()
