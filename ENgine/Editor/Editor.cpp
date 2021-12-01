@@ -1478,6 +1478,7 @@ namespace Oak
 			{
 				selectedFolder = item;
 				selectedAssetHolder = nullptr;
+				if (selectedAsset) selectedAsset->EnableTasks(false);
 				selectedAsset = nullptr;
 			}
 
