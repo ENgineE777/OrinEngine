@@ -549,6 +549,21 @@ namespace Oak
 						ang.Open(path.c_str(), File::ModeType::WriteText);
 					}
 				}
+				else
+				if (assetDialog == CreateAssetDialog::Scene)
+				{
+					path = StringUtils::PrintTemp("%s.sca", path.c_str());
+
+					if (std::filesystem::exists(path.c_str()))
+					{
+						MESSAGE_BOX("Can't create a scene file", "Scene file already exists");
+					}
+					else
+					{
+						project.AddScene(path.c_str());
+						project.Save();
+					}
+				}
 
 				ImGui::CloseCurrentPopup();
 			}
@@ -988,54 +1003,6 @@ namespace Oak
 		RELEASE(mainRenderTargetView)
 	}
 
-	void Editor::ProjectTreePopup(bool contextItem)
-	{
-		if (projectTreePopup)
-		{
-			return;
-		}
-
-		if ((contextItem && ImGui::BeginPopupContextItem("CreateScene")) ||
-			(!contextItem && ImGui::BeginPopupContextWindow("CreateScene")))
-		{
-			projectTreePopup = true;
-
-			if (ImGui::MenuItem("Add new scene"))
-			{
-				const char* fileName = OpenFileDialog("Scene file", "sca", false);
-
-				if (fileName)
-				{
-					project.AddScene(fileName);
-				}
-			}
-
-			if (ImGui::MenuItem("Add scene"))
-			{
-				const char* fileName = OpenFileDialog("Scene file", "sca", true);
-
-				if (fileName)
-				{
-					project.AddScene(fileName);
-				}
-			}
-
-			if (project.selectedScene && ImGui::MenuItem("Mark as start scne"))
-			{
-				project.SetStartScene(project.selectedScene->path.c_str());
-			}
-
-			if (project.selectedScene && ImGui::MenuItem("Delete"))
-			{
-				auto* scene = project.selectedScene;
-				project.SelectScene(nullptr);
-				project.DeleteScene(scene);
-			}
-
-			ImGui::EndPopup();
-		}
-	}
-
 	void Editor::CopyChilds(SceneEntity* entity, SceneEntity* copy)
 	{
 		auto& childs = entity->GetChilds();
@@ -1184,10 +1151,10 @@ namespace Oak
 					assetDialog = CreateAssetDialog::Folder;
 				}
 
-				/*if (ImGui::MenuItem("Scene"))
+				if (ImGui::MenuItem("Scene"))
 				{
 					assetDialog = CreateAssetDialog::Scene;
-				}*/
+				}
 
 				if (ImGui::MenuItem("Anim Graph 2D"))
 				{
@@ -1208,13 +1175,29 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
-			if (ImGui::MenuItem("Rename"))
+			if (selectedAssetHolder)
 			{
+				AssetScene* scene = selectedAssetHolder->GetAsset<AssetScene>();
+
+				if (scene)
+				{
+					if (ImGui::MenuItem("Mark as start scne"))
+					{
+						project.SetStartScene(scene->GetPath().c_str());
+					}
+				}
 			}
 
-			if (ImGui::MenuItem("Delete"))
+			/*if (ImGui::MenuItem("Rename"))
 			{
-			}
+			}*/
+
+			/*if (ImGui::MenuItem("Delete"))
+			{
+				//auto* scene = project.selectedScene;
+				//project.SelectScene(nullptr);
+				//project.DeleteScene(scene);
+			}*/
 
 			ImGui::EndPopup();
 		}
@@ -1494,6 +1477,8 @@ namespace Oak
 
 		for (auto* item : folder->assets)
 		{
+			auto scene = item->GetAsset<AssetScene>();
+
 			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
 
 			if (item == selectedAssetHolder)
@@ -1501,16 +1486,32 @@ namespace Oak
 				nodeFlags |= ImGuiTreeNodeFlags_Selected;
 			}
 
-			bool open = ImGui::TreeNodeEx(item, nodeFlags, item->name.c_str());
+			eastl::string name = item->name;
+
+			if (scene && project.IsStartScene(item->fullName.c_str()))
+			{
+				name += "(Main)";
+			}
+
+			bool open = ImGui::TreeNodeEx(item, nodeFlags, name.c_str());
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
 				if (selectedAsset) selectedAsset->EnableTasks(false);
-				selectedAsset = item->GetAsset();
 
-				SelectEntity(nullptr);
+				if (scene)
+				{
+					project.SelectScene(project.FindSceneHolder(item->fullName.c_str()));
+					selectedAsset = nullptr;
+				}
+				else
+				{
+					selectedAsset = item->GetAsset<Asset>();
+
+					SelectEntity(nullptr);
+				}
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
@@ -1646,7 +1647,6 @@ namespace Oak
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
-			ImGui::DockBuilderDockWindow("Project", dock_left_id);
 			ImGui::DockBuilderDockWindow("Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
@@ -1844,35 +1844,6 @@ namespace Oak
 			}
 
 			ImGui::PopStyleColor(1);
-
-			ImGui::End();
-		}
-
-		{
-			ImGui::Begin("Project");
-
-			for (int i = 0; i < project.scenes.size(); i++)
-			{
-				auto* scene = project.scenes[i];
-
-				ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen; // ImGuiTreeNodeFlags_Bullet
-
-				if (project.selectedScene == scene)
-				{
-					node_flags |= ImGuiTreeNodeFlags_Selected;
-				}
-
-				ImGui::TreeNodeEx(scene, node_flags, (project.startScene == i) ? StringUtils::PrintTemp("%s (Start)", scene->name.c_str()) : scene->name.c_str());
-
-				if (ImGui::IsItemClicked() || (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
-				{
-					project.SelectScene(scene);
-				}
-
-				ProjectTreePopup(true);
-			}
-
-			ProjectTreePopup(false);
 
 			ImGui::End();
 		}

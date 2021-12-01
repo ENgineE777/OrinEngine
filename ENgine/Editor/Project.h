@@ -79,8 +79,10 @@ namespace Oak
 		void FillSelectedObject(SceneHolder* holder);
 
 		void SetStartScene(const char* path);
+		bool IsStartScene(const char* path);
 		void SelectScene(SceneHolder* holder);
 		int  FindSceneIndex(const char* path);
+		SceneHolder* FindSceneHolder(const char* path);
 		Scene* GetScene(const char* path);
 		void AddScene(const char* path);
 		void DeleteScene(SceneHolder* holder);

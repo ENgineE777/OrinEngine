@@ -6,6 +6,7 @@
 #include <atomic>
 #include "AssetTexture.h"
 #include "AssetAnimGraph2D.h"
+#include "AssetScene.h"
 
 namespace Oak
 {
@@ -27,7 +28,8 @@ namespace Oak
 				return assetCreation[ext].c_str();
 			}
 
-			Asset* GetAsset()
+			template<class T>
+			T* GetAsset()
 			{
 				if (asset == nullptr)
 				{
@@ -39,13 +41,13 @@ namespace Oak
 					asset->Reload();
 				}
 
-				return asset;
+				return dynamic_cast<T*>(asset);
 			}
 
 			template<class T>
 			T GetAssetRef()
 			{
-				return T(GetAsset(), _FL_);
+				return T(GetAsset<Asset>(), _FL_);
 			}
 		};
 

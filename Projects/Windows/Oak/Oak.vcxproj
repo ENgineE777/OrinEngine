@@ -170,6 +170,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\IControls.h" />
@@ -374,6 +375,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />

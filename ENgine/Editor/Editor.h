@@ -134,7 +134,6 @@ namespace Oak
 		void ShowEditorSettings();
 		void ShowViewport();
 		void ShowSelectProject();
-		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
 		void AssetsTreePopup(bool contextItem);
 		void SceneDropTraget(SceneEntity* entity);

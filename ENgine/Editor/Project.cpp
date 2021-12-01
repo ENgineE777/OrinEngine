@@ -231,6 +231,11 @@ namespace Oak
 		}
 	}
 
+	bool Project::IsStartScene(const char* path)
+	{
+		return startScene == FindSceneIndex(path);
+	}
+
 	void Project::SelectScene(SceneHolder* holder)
 	{
 		if (holder == selectedScene)
@@ -272,6 +277,19 @@ namespace Oak
 				editor.SelectEntity(selectedScene->scene->FindEntity(selectedScene->selectedEntity));
 			}
 		}
+	}
+
+	Project::SceneHolder* Project::FindSceneHolder(const char* path)
+	{
+		for (int i = 0; i < scenes.size(); i++)
+		{
+			if (StringUtils::IsEqual(scenes[i]->path.c_str(), path))
+			{
+				return scenes[i];
+			}
+		}
+
+		return nullptr;
 	}
 
 	int Project::FindSceneIndex(const char* path)

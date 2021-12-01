@@ -676,6 +676,9 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\ScriptEntity3D.cpp">
       <Filter>ENgine\SceneEntities\3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1289,6 +1292,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\ScriptEntity3D.h">
       <Filter>ENgine\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h">
+      <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
