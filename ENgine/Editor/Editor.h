@@ -53,8 +53,21 @@ namespace Oak
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
 
+		enum class CreateAssetDialog
+		{
+			Inactive,
+			Folder,
+			Scene,
+			AnimGraph2D,
+			Prefab
+		};
+
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
+		bool assetsTreePopup = false;
+		bool need2openAssetPopup = false;
+		eastl::string createAssetName;
+		CreateAssetDialog assetDialog = CreateAssetDialog::Inactive;
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
 		bool entityDeletedViaPopup = false;
@@ -115,6 +128,7 @@ namespace Oak
 
 		void SetupImGUI();
 		bool ShowEditor();
+		void ShowCreateAssetDialog();
 		void ShowAbout();
 		void ShowProjectSettings();
 		void ShowEditorSettings();
@@ -122,6 +136,7 @@ namespace Oak
 		void ShowSelectProject();
 		void ProjectTreePopup(bool contextItem);
 		void SceneTreePopup(bool contextItem);
+		void AssetsTreePopup(bool contextItem);
 		void SceneDropTraget(SceneEntity* entity);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 		void AssetsFolder(Assets::Folder* folder);

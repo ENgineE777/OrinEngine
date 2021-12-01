@@ -469,6 +469,99 @@ namespace Oak
 		ImGui::End();
 	}
 
+	void Editor::ShowCreateAssetDialog()
+	{
+		if (assetDialog == CreateAssetDialog::Inactive)
+		{
+			return;
+		}
+
+		bool open = true;
+
+		if (need2openAssetPopup)
+		{
+			need2openAssetPopup = false;
+			ImGui::OpenPopup("Enter name");
+		}
+
+		if (ImGui::BeginPopupModal("Enter name", &open, ImGuiWindowFlags_NoResize))
+		{
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+			ImGui::SameLine();
+
+			ImGui::Text("Name");
+			ImGui::SameLine();
+
+			Oak::ImGuiHelper::InputString("##NewName", createAssetName);
+
+			ImGui::Dummy(ImVec2(3.0f, 3.0f));
+
+			ImGui::Dummy(ImVec2(90.0f, 7.0f));
+			ImGui::SameLine();
+
+			if (ImGui::Button("Ok", ImVec2(50.0f, 0.0f)))
+			{
+				open = false;
+
+				eastl::string path = createAssetName;
+
+				if (selectedFolder != nullptr)
+				{
+					path = selectedFolder->fullName + createAssetName;
+				}
+				else
+				if (selectedAssetHolder != nullptr)
+				{
+					char assetPath[512];
+					assetPath[0] = 0;
+					StringUtils::GetPath(selectedAssetHolder->fullName.c_str(), assetPath);
+
+					path = assetPath + createAssetName;
+				}
+
+				path = root.GetRootPath() + path;
+
+				if (assetDialog == CreateAssetDialog::Folder)
+				{
+					if (std::filesystem::exists(path.c_str()))
+					{
+						MESSAGE_BOX("Can't create a folder", "Folder already exists");
+					}
+					else
+					{
+						std::filesystem::create_directories(path.c_str());
+					}
+				}
+				else
+				if (assetDialog == CreateAssetDialog::AnimGraph2D)
+				{
+					path = StringUtils::PrintTemp("%s.ang", path.c_str());
+					
+					if (std::filesystem::exists(path.c_str()))
+					{
+						MESSAGE_BOX("Can't create a ang file", "Ang file already exists");
+					}
+					else
+					{
+						File ang;
+						ang.Open(path.c_str(), File::ModeType::WriteText);
+					}
+				}
+
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+
+		if (open == false)
+		{
+			assetDialog = CreateAssetDialog::Inactive;
+		}
+	}
+
 	void Editor::ShowAbout()
 	{
 		if (!showAbout)
@@ -1072,6 +1165,61 @@ namespace Oak
 		}
 	}
 
+	void Editor::AssetsTreePopup(bool contextItem)
+	{
+		if (assetsTreePopup)
+		{
+			return;
+		}
+
+		if ((contextItem && ImGui::BeginPopupContextItem("CreateEntity")) ||
+			(!contextItem && ImGui::BeginPopupContextWindow("CreateEntity")))
+		{
+			assetsTreePopup = true;
+
+			if (ImGui::BeginMenu("Create"))
+			{
+				if (ImGui::MenuItem("Folder"))
+				{
+					assetDialog = CreateAssetDialog::Folder;
+				}
+
+				/*if (ImGui::MenuItem("Scene"))
+				{
+					assetDialog = CreateAssetDialog::Scene;
+				}*/
+
+				if (ImGui::MenuItem("Anim Graph 2D"))
+				{
+					assetDialog = CreateAssetDialog::AnimGraph2D;
+				}
+
+				/*if (ImGui::MenuItem("Prefab"))
+				{
+					assetDialog = CreateAssetDialog::Prefab;
+				}*/
+
+				if (assetDialog != CreateAssetDialog::Inactive)
+				{
+					need2openAssetPopup = true;
+					createAssetName = "";
+				}
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::MenuItem("Rename"))
+			{
+			}
+
+			if (ImGui::MenuItem("Delete"))
+			{
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
 	void Editor::SceneDropTraget(SceneEntity* entity)
 	{
 		ImGuiContext* context = ImGui::GetCurrentContext();
@@ -1333,6 +1481,8 @@ namespace Oak
 				selectedAsset = nullptr;
 			}
 
+			AssetsTreePopup(true);
+
 			if (open)
 			{
 				AssetsFolder(item);
@@ -1583,6 +1733,7 @@ namespace Oak
 
 		projectTreePopup = false;
 		sceneTreePopup = false;
+		assetsTreePopup = false;
 
 		{
 			ImGui::Begin("Toolbar");
@@ -1772,6 +1923,8 @@ namespace Oak
 
 			AssetsFolder(&root.assets.rootFolder);
 
+			AssetsTreePopup(false);
+
 			ImGui::End();
 		}
 
@@ -1813,6 +1966,7 @@ namespace Oak
 			ImGui::End();
 		}
 
+		ShowCreateAssetDialog();
 		ShowAbout();
 		ShowProjectSettings();
 		ShowEditorSettings();
