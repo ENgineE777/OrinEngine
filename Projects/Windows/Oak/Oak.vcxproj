@@ -240,6 +240,7 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\TileMap.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox3D.h" />
@@ -436,6 +437,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\TileMap.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox3D.cpp" />

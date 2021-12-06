@@ -62,13 +62,20 @@ namespace Oak
 			Prefab
 		};
 
+		enum class ViewportCature
+		{
+			None,
+			LeftButton,
+			RightButton
+		};
+
 		bool projectTreePopup = false;
 		bool sceneTreePopup = false; 
 		bool assetsTreePopup = false;
 		bool need2openAssetPopup = false;
 		eastl::string createAssetName;
 		CreateAssetDialog assetDialog = CreateAssetDialog::Inactive;
-		bool viewportCaptured = false;
+		ViewportCature viewportCaptured = ViewportCature::None;
 		bool vireportHowered = false;
 		bool entityDeletedViaPopup = false;
 
@@ -107,6 +114,10 @@ namespace Oak
 		FreeCamera freeCamera;
 		Gizmo gizmo;
 		bool viewportFocused = false;
+
+		bool ownGrid = false;
+		Math::Vector3 gridOrigin = 0.0f;
+		Math::Vector2 gridStep = 0.0f;
 
 		const char* OpenFileDialog(const char* extName, const char* ext, bool open);
 

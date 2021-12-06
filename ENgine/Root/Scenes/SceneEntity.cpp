@@ -180,6 +180,31 @@ namespace Oak
 	{
 		return false;
 	}
+
+	void SceneEntity::OnMouseMove(Math::Vector2 ms)
+	{
+
+	}
+
+	void SceneEntity::OnLeftMouseDown()
+	{
+
+	}
+
+	void SceneEntity::OnLeftMouseUp()
+	{
+
+	}
+
+	void SceneEntity::OnRightMouseDown()
+	{
+
+	}
+
+	void SceneEntity::OnRightMouseUp()
+	{
+
+	}
 	#endif
 
 	void SceneEntity::Release()

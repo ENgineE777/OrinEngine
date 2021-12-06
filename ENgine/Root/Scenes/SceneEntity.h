@@ -198,6 +198,12 @@ namespace Oak
 		virtual void Export();
 
 		virtual bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
+
+		virtual void OnMouseMove(Math::Vector2 ms);
+		virtual	void OnLeftMouseDown();
+		virtual void OnLeftMouseUp();
+		virtual	void OnRightMouseDown();
+		virtual void OnRightMouseUp();
 	#endif
 
 		/**

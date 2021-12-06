@@ -1166,30 +1166,7 @@ namespace Oak
 	{
 		if (!transform) return;
 
-		Math::Vector2 msConv = ms;
-		msConv.x /= (float)root.render.GetDevice()->GetWidth();
-		msConv.y /= (float)root.render.GetDevice()->GetHeight();
-
-		Math::Matrix view;
-		root.render.GetTransform(TransformStage::View, view);
-
-		Math::Matrix view_proj;
-		root.render.GetTransform(TransformStage::Projection, view_proj);
-
-		Math::Vector3 v;
-		v.x = (2.0f * msConv.x - 1) / view_proj._11;
-		v.y = -(2.0f * msConv.y - 1) / view_proj._22;
-		v.z = 1.0f;
-
-		Math::Matrix inv_view = view;
-		inv_view.Inverse();
-		mouseOrigin = inv_view.Pos();
-
-		mouseDirection.x = v.x * inv_view._11 + v.y * inv_view._21 + v.z * inv_view._31;
-		mouseDirection.y = v.x * inv_view._12 + v.y * inv_view._22 + v.z * inv_view._32;
-		mouseDirection.z = v.x * inv_view._13 + v.y * inv_view._23 + v.z * inv_view._33;
-		mouseDirection.Normalize();
-
+		Math::GetMouseRay(ms, mouseOrigin, mouseDirection);
 		Math::IntersectPlaneRay(GetGlobalPos(), Math::Vector3(0.0f, 0.0f, -1.0f), mouseOrigin, mouseDirection, trans2DProjection);
 
 		if (mousedPressed)

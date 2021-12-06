@@ -442,8 +442,28 @@ namespace Oak
 				{
 					selectedAsset->OnLeftMouseDown();
 				}
+				else
+				if (selectedEntity)
+				{
+					selectedEntity->OnLeftMouseDown();
+				}
 
-				viewportCaptured = true;
+				viewportCaptured = ViewportCature::LeftButton;
+			}
+			else
+			if (ImGui::IsMouseClicked(1))
+			{
+				if (selectedAsset && selectedAsset->HasOwnTasks())
+				{
+					selectedAsset->OnRightMouseDown();
+				}
+				else
+				if (selectedEntity)
+				{
+					selectedEntity->OnRightMouseDown();
+				}
+
+				viewportCaptured = ViewportCature::RightButton;
 			}
 		}
 
@@ -454,16 +474,42 @@ namespace Oak
 			selectedAsset->ImGui(viewportFocused);
 			selectedAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 		}
+		else
+		if (selectedEntity)
+		{
+			selectedEntity->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+		}
 
-		if (viewportCaptured && ImGui::IsMouseReleased(0))
+		if (viewportCaptured == ViewportCature::LeftButton && ImGui::IsMouseReleased(0))
 		{
 			gizmo.OnLeftMouseUp();
-			viewportCaptured = false;
 
 			if (selectedAsset && selectedAsset->HasOwnTasks())
 			{
 				selectedAsset->OnLeftMouseUp();
 			}
+			else
+			if (selectedEntity)
+			{
+				selectedEntity->OnLeftMouseUp();
+			}
+
+			viewportCaptured = ViewportCature::None;
+		}
+		else
+		if (viewportCaptured == ViewportCature::RightButton && ImGui::IsMouseReleased(1))
+		{
+			if (selectedAsset && selectedAsset->HasOwnTasks())
+			{
+				selectedAsset->OnRightMouseUp();
+			}
+			else
+			if (selectedEntity)
+			{
+				selectedEntity->OnRightMouseUp();
+			}
+
+			viewportCaptured = ViewportCature::None;
 		}
 
 		ImGui::End();
@@ -2000,13 +2046,13 @@ namespace Oak
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
-		if (!projectRunning && gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect && selectedEntity)
+		if (!projectRunning && ((gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect && selectedEntity) || (ownGrid && gridStep.Length2() > 0.1f)))
 		{
-			Math::Vector2 step = gizmo.alignRect;
+			Math::Vector2 step = ownGrid ? gridStep : gizmo.alignRect;
 
 			float minStep = 16.0f;
 
-			if (freeCamera.mode2D)
+			if (freeCamera.mode2D && !ownGrid)
 			{
 				minStep = 16.0f / freeCamera.zoom2D;
 			}
@@ -2016,17 +2062,24 @@ namespace Oak
 				step *= 2.0f;
 			}
 
-			Math::Vector3 pos = gizmo.transform->global.Pos();
+			Math::Vector3 pos = ownGrid ? gridOrigin : gizmo.transform->global.Pos();
 
-			if (freeCamera.mode2D)
 			if (freeCamera.mode2D)
 			{
 				pos.x = freeCamera.pos2D.x;
 				pos.y = freeCamera.pos2D.y;
 			}
 			
-			pos.x = step.x * ((int)(pos.x / step.x));
-			pos.y = step.y * ((int)(pos.y / step.y));
+			if (!ownGrid)
+			{
+				pos.x = step.x * (int)(pos.x / step.x);
+				pos.y = step.y * (int)(pos.y / step.y);
+			}
+			else
+			{
+				pos.x = step.x * (int)((pos.x - gridOrigin.x) / step.x) + gridOrigin.x;
+				pos.y = step.y * (int)((pos.y - gridOrigin.y) / step.y) + gridOrigin.y;
+			}
 
 			pos *= (*gizmo.transform->unitsInvScale);
 			step *= (*gizmo.transform->unitsInvScale);

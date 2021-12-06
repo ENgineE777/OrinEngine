@@ -32,4 +32,5 @@ namespace Oak::Math
 	CLASS_DECLSPEC bool IntersectBBoxRay(Vector3 vmin, Vector3 vmax, Vector3 start, Vector3 dir);
 	CLASS_DECLSPEC bool IntersectTrianglrRay(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 orig, Vector3 dir, float distance);
 	CLASS_DECLSPEC bool IntersectPlaneRay(Vector3 planeP, Vector3 planeN, Vector3 rayP, Vector3 rayD, Vector3& intersection);
+	CLASS_DECLSPEC void GetMouseRay(Math::Vector2 ms, Math::Vector3& mouseOrigin, Math::Vector3& mouseDirection);
 }

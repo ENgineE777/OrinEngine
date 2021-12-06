@@ -57,6 +57,8 @@ namespace Oak
 		virtual void OnMouseMove(Math::Vector2 ms);
 		virtual	void OnLeftMouseDown();
 		virtual void OnLeftMouseUp();
+		virtual	void OnRightMouseDown();
+		virtual void OnRightMouseUp();
 		#endif
 
 		virtual MetaData* GetMetaData() = 0;
