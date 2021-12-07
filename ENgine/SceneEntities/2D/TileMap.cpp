@@ -11,6 +11,7 @@ namespace Oak
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TEXTURE_PROP(TileMap, texture, "Visual", "Texture")
+		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
 	META_DATA_DESC_END()
 
 	void TileMap::Init()

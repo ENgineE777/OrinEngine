@@ -7,6 +7,7 @@
 #include "AssetTexture.h"
 #include "AssetAnimGraph2D.h"
 #include "AssetScene.h"
+#include "AssetTileSet.h"
 
 namespace Oak
 {

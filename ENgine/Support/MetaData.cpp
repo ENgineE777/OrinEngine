@@ -108,6 +108,11 @@ namespace Oak
 				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
 				ref->ReleaseRef();
 			}
+			if (prop.type == Type::AssetTileSet)
+			{
+				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
+				ref->ReleaseRef();
+			}
 			else
 			if (prop.type == Type::Transform)
 			{
@@ -172,6 +177,12 @@ namespace Oak
 			if (prop.type == Type::AssetAnimGraph2D)
 			{
 				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
+				ref->LoadData(reader, prop.name.c_str());
+			}
+			else
+			if (prop.type == Type::AssetTileSet)
+			{
+				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
 				ref->LoadData(reader, prop.name.c_str());
 			}
 			else
@@ -283,6 +294,11 @@ namespace Oak
 				ref->SaveData(writer, prop.name.c_str());
 			}
 			else
+			if (prop.type == Type::AssetTileSet)
+			{
+				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
+				ref->SaveData(writer, prop.name.c_str());
+			}
 			if (prop.type == Type::Transform)
 			{
 				Transform* transform = (Transform*)prop.value;
@@ -386,9 +402,14 @@ namespace Oak
 
 				*ref = *refSrc;
 				ref->Reset();
+			}
+			else
+			if (prop.type == Type::AssetTileSet)
+			{
+				AssetTileSetRef* refSrc = reinterpret_cast<AssetTileSetRef*>(src);
+				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
 
-				int k =0;
-				k++;
+				*ref = *refSrc;
 			}
 			else
 			if (prop.type == Type::Transform)
@@ -976,6 +997,45 @@ namespace Oak
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
 								*ref = AssetAnimGraph2DRef();
+								prop.changed = true;
+							}
+						}
+						else
+						if (prop.type == Type::AssetTileSet)
+						{
+							AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
+
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
+							{
+							}
+
+							if (ref->Get() && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+							{
+								ImGui::SetTooltip(ref->Get()->GetPath().c_str());
+							}
+
+							if (ImGui::BeginDragDropTarget())
+							{
+								const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+								if (payload)
+								{
+									AssetTileSetRef* assetRef = reinterpret_cast<AssetTileSetRef**>(payload->Data)[0];
+
+									*ref = *assetRef;
+									prop.changed = true;
+								}
+							}
+
+							ImGui::SameLine();
+
+							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							{
+								*ref = AssetTileSetRef();
 								prop.changed = true;
 							}
 						}

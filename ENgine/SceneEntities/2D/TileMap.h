@@ -4,6 +4,7 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Support/MetaData.h"
 #include "Support/Sprite.h"
+#include "root/Assets/AssetTileSet.h"
 #include "root/Assets/AssetTexture.h"
 
 namespace Oak
@@ -21,6 +22,7 @@ namespace Oak
 		eastl::vector<Tile> instances;
 
 		int drawLevel = 0;
+		AssetTileSetRef tileSet;
 		AssetTextureRef texture;
 
 		META_DATA_DECL(SpriteTile)

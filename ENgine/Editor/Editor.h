@@ -52,6 +52,7 @@ namespace Oak
 
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
+		AssetTileSetRef draggedAssetTileSet;
 
 		enum class CreateAssetDialog
 		{
@@ -59,6 +60,7 @@ namespace Oak
 			Folder,
 			Scene,
 			AnimGraph2D,
+			TileSet,
 			Prefab
 		};
 

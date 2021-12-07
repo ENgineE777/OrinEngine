@@ -6,6 +6,7 @@
 
 #include "EditorDrawer.h"
 #include "SpriteWindow.h"
+#include "TileSetWindow.h"
 #include <filesystem>
 
 #include "commdlg.h"
@@ -593,6 +594,21 @@ namespace Oak
 					{
 						File ang;
 						ang.Open(path.c_str(), File::ModeType::WriteText);
+					}
+				}
+				else
+				if (assetDialog == CreateAssetDialog::TileSet)
+				{
+					path = StringUtils::PrintTemp("%s.tls", path.c_str());
+					
+					if (std::filesystem::exists(path.c_str()))
+					{
+						MESSAGE_BOX("Can't create a tls file", "Tls file already exists");
+					}
+					else
+					{
+						File tls;
+						tls.Open(path.c_str(), File::ModeType::WriteText);
 					}
 				}
 				else
@@ -1207,6 +1223,11 @@ namespace Oak
 					assetDialog = CreateAssetDialog::AnimGraph2D;
 				}
 
+				if (ImGui::MenuItem("TileSet"))
+				{
+					assetDialog = CreateAssetDialog::TileSet;
+				}
+
 				/*if (ImGui::MenuItem("Prefab"))
 				{
 					assetDialog = CreateAssetDialog::Prefab;
@@ -1361,6 +1382,25 @@ namespace Oak
 					dragFinished = true;
 				}
 			}
+			else
+			if (payload.IsDataType("_ASSET_TILE_SET"))
+			{
+				auto& assetRef = *reinterpret_cast<AssetTileSetRef**>(payload.Data)[0];
+
+				if (ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+				{
+					assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
+
+					if (assetEntity)
+					{
+						assetRef.SetupCreatedSceneEntity(assetEntity);
+						assetEntity->ApplyProperties();
+					}
+
+					dragFinished = true;
+				}
+			}
+
 
 			if (assetEntity)
 			{
@@ -1574,6 +1614,13 @@ namespace Oak
 					draggedAssetAnimGraph2D = item->GetAssetRef<AssetAnimGraph2DRef>();
 					AssetAnimGraph2DRef* ptr = (AssetAnimGraph2DRef*)&draggedAssetAnimGraph2D;
 					ImGui::SetDragDropPayload("_ASSET_ANIM_GRAPH_2D", &ptr, sizeof(AssetAnimGraph2DRef*));
+				}
+
+				if (StringUtils::IsEqual(item->GetAssetType(), "AssetTileSet"))
+				{
+					draggedAssetTileSet = item->GetAssetRef<AssetTileSetRef>();
+					AssetTileSetRef* ptr = (AssetTileSetRef*)&draggedAssetTileSet;
+					ImGui::SetDragDropPayload("_ASSET_TILE_SET", &ptr, sizeof(AssetTileSetRef*));
 				}
 
 				ImGui::EndDragDropSource();
@@ -1993,6 +2040,11 @@ namespace Oak
 		if (SpriteWindow::instance && SpriteWindow::instance->opened)
 		{
 			SpriteWindow::instance->ImGui();
+		}
+
+		if (TileSetWindow::instance && TileSetWindow::instance->opened)
+		{
+			TileSetWindow::instance->ImGui();
 		}
 
 		return true;

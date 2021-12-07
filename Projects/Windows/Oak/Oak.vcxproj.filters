@@ -682,6 +682,12 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\TileMap.cpp">
       <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Editor\TileSetWindow.cpp">
+      <Filter>ENgine\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTileSet.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1301,6 +1307,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\TileMap.h">
       <Filter>ENgine\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Editor\TileSetWindow.h">
+      <Filter>ENgine\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTileSet.h">
+      <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

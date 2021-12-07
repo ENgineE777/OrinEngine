@@ -165,6 +165,7 @@
     <ClInclude Include="..\..\..\ENgine\Editor\IEditor.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\Project.h" />
     <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h" />
+    <ClInclude Include="..\..\..\ENgine\Editor\TileSetWindow.h" />
     <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h" />
     <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTileSet.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\IControls.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Files\File.h" />
@@ -372,12 +374,14 @@
     <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp" />
     <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Editor\TileSetWindow.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTileSet.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp" />
