@@ -87,6 +87,8 @@ namespace Oak
 		bool needSetSizePrjSet = true; 
 		bool needSetSizeEdSet = true;
 
+		bool selectMode = false;
+
 		eastl::string themeList;
 		eastl::vector<eastl::string> themes;
 		int selectedTheme = 0;

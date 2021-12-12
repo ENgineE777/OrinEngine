@@ -437,7 +437,10 @@ namespace Oak
 
 			if (ImGui::IsMouseClicked(0))
 			{
-				gizmo.OnLeftMouseDown();
+				if (!selectMode)
+				{
+					gizmo.OnLeftMouseDown();
+				}
 
 				if (selectedAsset && selectedAsset->HasOwnTasks())
 				{
@@ -468,7 +471,10 @@ namespace Oak
 			}
 		}
 
-		gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+		if (!selectMode)
+		{
+			gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+		}
 
 		if (selectedAsset && selectedAsset->HasOwnTasks())
 		{
@@ -483,7 +489,10 @@ namespace Oak
 
 		if (viewportCaptured == ViewportCature::LeftButton && ImGui::IsMouseReleased(0))
 		{
-			gizmo.OnLeftMouseUp();
+			if (!selectMode)
+			{
+				gizmo.OnLeftMouseUp();
+			}
 
 			if (selectedAsset && selectedAsset->HasOwnTasks())
 			{
@@ -1874,10 +1883,12 @@ namespace Oak
 			{
 				auto* transform = selectedEntity ? &selectedEntity->GetTransform() : nullptr;
 
-				PushButton("Move", gizmo.mode == TransformMode::Move, [this]() {gizmo.mode = TransformMode::Move; });
-				PushButton("Rotate", gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) gizmo.mode = TransformMode::Rotate; });
-				PushButton("Scale", gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) gizmo.mode = TransformMode::Scale; });
-				PushButton("Rect", gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) gizmo.mode = TransformMode::Rectangle; });
+				PushButton("Select", selectMode, [this]() { selectMode = true; });
+
+				PushButton("Move", !selectMode && gizmo.mode == TransformMode::Move, [this]() { gizmo.mode = TransformMode::Move; selectMode = false; });
+				PushButton("Rotate", !selectMode && gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) { gizmo.mode = TransformMode::Rotate; selectMode = false; }});
+				PushButton("Scale", !selectMode && gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) { gizmo.mode = TransformMode::Scale; selectMode = false; }});
+				PushButton("Rect", !selectMode && gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) { gizmo.mode = TransformMode::Rectangle; selectMode = false;	}});
 
 				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
@@ -2190,7 +2201,10 @@ namespace Oak
 		{
 			freeCamera.Update(dt);
 
-			gizmo.Render();
+			if (!selectMode)
+			{
+				gizmo.Render();
+			}
 		}
 
 		if (!projectRunning && project.selectedScene)
