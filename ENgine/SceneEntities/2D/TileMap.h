@@ -17,13 +17,13 @@ namespace Oak
 		{
 			int x = 0;
 			int y = 0;
+			AssetTextureRef texture;
 		};
 
-		eastl::vector<Tile> instances;
+		eastl::vector<Tile> tiles;
 
 		int drawLevel = 0;
 		AssetTileSetRef tileSet;
-		AssetTextureRef texture;
 
 		META_DATA_DECL(SpriteTile)
 
@@ -34,6 +34,9 @@ namespace Oak
 		void Init() override;
 		void ApplyProperties() override;
 		void Draw(float dt);
+
+		void Load(JsonReader& reader) override;
+		void Save(JsonWriter& writer) override;
 
 	#ifdef OAK_EDITOR
 		enum class Mode

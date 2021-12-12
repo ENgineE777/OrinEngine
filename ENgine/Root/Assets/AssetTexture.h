@@ -99,6 +99,11 @@ namespace Oak
 			return *this;
 		}
 
+		bool operator==(AssetTextureRef& rhs)
+		{
+			return Get() == rhs.Get() && sliceIndex == rhs.sliceIndex && animIndex == rhs.animIndex;
+		}
+
 		void Draw(Transform* trans, Color clr, float dt);
 
 		const char* GetName();

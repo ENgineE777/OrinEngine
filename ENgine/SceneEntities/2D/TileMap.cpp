@@ -1,7 +1,11 @@
 
 #include "TileMap.h"
 #include "Root/Root.h"
+
+#ifdef OAK_EDITOR
 #include "Editor/Editor.h"
+#include "Editor/TileSetWindow.h"
+#endif
 
 namespace Oak
 {
@@ -10,7 +14,6 @@ namespace Oak
 	META_DATA_DESC(TileMap)
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
-		ASSET_TEXTURE_PROP(TileMap, texture, "Visual", "Texture")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
 	META_DATA_DESC_END()
 
@@ -24,13 +27,13 @@ namespace Oak
 
 	void TileMap::ApplyProperties()
 	{
-		Math::Vector2 size = texture.GetSize();
+		Math::Vector2 size = tileSet.GetSize();
 		transform.size = Math::Vector3(size.x, size.y, 0.0f);
 
 		transform.offset.x = 0.0f;
 		transform.offset.y = 0.0f;
 
-	#ifdef EDITOR
+	#ifdef OAK_EDITOR
 		Tasks(true)->DelAllTasks(this);
 	#endif
 
@@ -39,80 +42,13 @@ namespace Oak
 
 	void TileMap::Draw(float dt)
 	{
+#ifdef OAK_EDITOR
 		if (IsEditMode())
 		{
 			editor.gridOrigin = transform.GetGlobal().Pos();
-			editor.gridStep = texture.GetSize();
+			editor.gridStep = tileSet.GetSize();
 		}
-
-		/*if (GetState() == Invisible)
-		{
-			return;
-		}*/
-
-		/*trans.offset = sprite_asset->trans.offset;
-		trans.size = sprite_asset->trans.size + 0.5f;
-
-		Vector2 pos = trans.pos;
-		trans.pos *= axis_scale;
-
-		Vector2 cam_pos = 0.0f;
-		if (Sprite::use_ed_cam)
-		{
-			cam_pos = Sprite::ed_cam_pos;
-			Sprite::ed_cam_pos *= axis_scale;
-		}
-		else
-		{
-			cam_pos = Sprite::cam_pos;
-			Sprite::cam_pos *= axis_scale;
-		}*/
-
-		for (auto inst : instances)
-		{
-			/*if (GetState() == Active)
-			{
-				Sprite::UpdateFrame(&sprite_asset->sprite[inst.index], &inst.frame_state, dt);
-			}*/
-
-			//if (inst.color.a < 0.01f)
-			{
-				//continue;
-			}
-
-			/*Vector2 pos = inst.GetPos();
-			trans.mat_global.Pos() = { pos.x, pos.y, trans.depth };
-			inst.frame_state.horz_flipped = inst.GetFlipped();
-			inst.color.a = inst.GetAlpha();
-
-			Sprite::Draw(&trans, inst.color, &sprite_asset->sprite[inst.index], &inst.frame_state, true, false);*/
-		}
-
-		/*trans.size = sprite_asset->trans.size;
-
-	#ifdef EDITOR
-		if (rect_select)
-		{
-			for (auto& index : sel_instances)
-			{
-				auto& inst = instances[index];
-				Vector2 pos = Sprite::MoveToCamera(inst.GetPos() - Asset()->trans.offset * Asset()->trans.size);
-				Vector2 pos2 = Sprite::MoveToCamera(inst.GetPos() - Asset()->trans.offset * Asset()->trans.size + Asset()->trans.size);
-
-				core.render.DebugRect2D(pos, pos2, COLOR_WHITE);
-			}
-		}
-
-		if (edited)
-		{
-			if (sel_inst != -1)
-			{
-				trans.pos = instances[sel_inst].GetPos();
-				trans.rotation = instances[sel_inst].GetAngle();
-				trans.BuildMatrices();
-			}
-		}
-	#endif*/
+#endif
 
 		if (IsVisible())
 		{
@@ -121,15 +57,65 @@ namespace Oak
 			Math::Matrix mat = trans.global;
 			auto pos = mat.Pos();
 
-			for (auto inst : instances)
+			for (auto tile : tiles)
 			{
-				mat.Pos() = pos + mat.Vx() * (float)inst.x * transform.size.x + mat.Vy() * (float)inst.y * transform.size.y;
+				mat.Pos() = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
 
 				trans.global = mat;
+				auto sz = tile.texture.GetSize();
+				trans.size.x = sz.x;
+				trans.size.y = sz.y;
 
-				texture.Draw(&trans, COLOR_WHITE, dt);
+				tile.texture.Draw(&trans, COLOR_WHITE, dt);
 			}
 		}
+	}
+
+	void TileMap::Load(JsonReader& reader)
+	{
+		SceneEntity::Load(reader);
+
+		int count = 0;
+		reader.Read("count", count);
+		tiles.resize(count);
+
+		for (int i = 0; i < count; i++)
+		{
+			Tile& tile = tiles[i];
+
+			reader.EnterBlock("Tile");
+
+			reader.Read("x", tile.x);
+			reader.Read("y", tile.y);
+			tile.texture.LoadData(reader, "Texture");
+
+			reader.LeaveBlock();
+		}
+	}
+
+	void TileMap::Save(JsonWriter& writer)
+	{
+		SceneEntity::Save(writer);
+
+		int count = (int)tiles.size();
+		writer.Write("count", count);
+
+		writer.StartArray("Tile");
+
+		for (int i = 0; i < count; i++)
+		{
+			Tile& tile = tiles[i];
+
+			writer.StartBlock(nullptr);
+
+			writer.Write("x", tile.x);
+			writer.Write("y", tile.y);
+			tile.texture.SaveData(writer, "Texture");
+
+			writer.FinishBlock();
+		}
+
+		writer.FinishArray();
 	}
 
 #ifdef OAK_EDITOR
@@ -142,6 +128,13 @@ namespace Oak
 		if (!ed)
 		{
 			mode = Mode::Inactive;
+		}
+		else
+		{
+			if (tileSet.Get())
+			{
+				TileSetWindow::StartEdit(tileSet.Get());
+			}
 		}
 	}
 
@@ -175,38 +168,37 @@ namespace Oak
 
 			int y = (int)(pos.y / (transform.size.y * Sprite::pixelsPerUnitInvert));
 
-			bool newOne = true;
-
-			for (int i = 0; i < instances.size(); i++)
+			for (int i = 0; i < tiles.size(); i++)
 			{
-				if (instances[i].x == x && instances[i].y == y)
+				if (tiles[i].x == x && tiles[i].y == y)
 				{
-					if (mode == Mode::Erase)
-					{
-						instances.erase(instances.begin() + i);
-					}
-
-					newOne = false;
+					tiles.erase(tiles.begin() + i);
 
 					break;
 				}
 			}
 
-			if (newOne && mode == Mode::Place)
+			if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
 			{
-				instances.push_back({ x, y });
+				tiles.push_back({ x, y, tileSet->GetSelectedTile() });
 			}
 		}
 	}
 
 	void TileMap::OnLeftMouseDown()
 	{
-		mode = Mode::Place;
+		if (tileSet.Get())
+		{
+			mode = Mode::Place;
+		}
 	}
 
 	void TileMap::OnLeftMouseUp()
 	{
-		mode = Mode::Inactive;
+		if (tileSet.Get())
+		{
+			mode = Mode::Inactive;
+		}
 	}
 
 	void TileMap::OnRightMouseDown()

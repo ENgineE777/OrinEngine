@@ -3,6 +3,7 @@
 #include "Asset.h"
 #include "root/Render/Render.h"
 #include "support/Sprite.h"
+#include "Root/Assets/AssetTexture.h"
 
 namespace Oak
 {
@@ -15,8 +16,21 @@ namespace Oak
 
 	public:
 
+		Math::Vector2 camPos;
+		float camZoom = 1.0f;
+		int selTile = -1;
+
+		struct Tile
+		{
+			int x = 0;
+			int y = 0;
+			AssetTextureRef texture;
+		};
+
 		int sizeX = 16;
 		int sizeY = 16;
+
+		eastl::vector<Tile> tiles;
 
 		META_DATA_DECL_BASE(AssetTileSet)
 
@@ -25,6 +39,8 @@ namespace Oak
 		void LoadData(JsonReader& loader) override;
 
 		#ifdef OAK_EDITOR
+		bool IsTileSelected();
+		AssetTextureRef GetSelectedTile();
 		void SaveData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif

@@ -35,14 +35,75 @@ namespace Oak
 	{
 		if (loader.EnterBlock("tileSet"))
 		{
+			loader.Read("camPos", camPos);
+			loader.Read("camZoom", camZoom);
+			loader.Read("selTile", selTile);
+
+			loader.Read("sizeX", sizeX);
+			loader.Read("sizeY", sizeY);
+
+			int count = 0;
+			loader.Read("count", count);
+			tiles.resize(count);
+
+			for (int i = 0; i < count; i++)
+			{
+				Tile& tile = tiles[i];
+
+				loader.EnterBlock("Tile");
+
+				loader.Read("x", tile.x);
+				loader.Read("y", tile.y);
+				tile.texture.LoadData(loader, "Texture");
+
+				loader.LeaveBlock();
+			}
+
 			loader.LeaveBlock();
 		}
 	}
 
 	#ifdef OAK_EDITOR
+	bool AssetTileSet::IsTileSelected()
+	{
+		return selTile != -1;
+	}
+
+	AssetTextureRef AssetTileSet::GetSelectedTile()
+	{
+		return selTile != -1 ? tiles[selTile].texture : AssetTextureRef();
+	}
+
 	void AssetTileSet::SaveData(JsonWriter& saver)
 	{
 		saver.StartBlock("tileSet");
+
+		saver.Write("camPos", camPos);
+		saver.Write("camZoom", camZoom);
+		saver.Write("selTile", selTile);
+
+		saver.Write("sizeX", sizeX);
+		saver.Write("sizeY", sizeY);
+
+		int count = (int)tiles.size();
+		saver.Write("count", count);
+
+		saver.StartArray("Tile");
+
+		for (int i = 0; i < count; i++)
+		{
+			Tile& tile = tiles[i];
+
+			saver.StartBlock(nullptr);
+
+			saver.Write("x", tile.x);
+			saver.Write("y", tile.y);
+			tile.texture.SaveData(saver, "Texture");
+
+			saver.FinishBlock();
+		}
+
+		saver.FinishArray();
 
 		saver.FinishBlock();
 	}
@@ -71,7 +132,7 @@ namespace Oak
 
 	Math::Vector2 AssetTileSetRef::GetSize()
 	{
-		return 0.0f;
+		return Get() ? Math::Vector2( (float)Get()->sizeX, (float)Get()->sizeX ) : 16.0f;
 	}
 
 	void AssetTileSetRef::LoadData(JsonReader& loader, const char* name)
@@ -82,9 +143,6 @@ namespace Oak
 			if (loader.Read("path", path))
 			{
 				*this = Oak::root.assets.GetAssetRef<AssetTileSetRef>(path);
-
-				//loader.Read("sliceIndex", sliceIndex);
-				//loader.Read("animIndex", animIndex);
 			}
 
 			loader.LeaveBlock();
@@ -98,8 +156,6 @@ namespace Oak
 		{
 			saver.StartBlock(name);
 			saver.Write("Path", Get()->GetPath().c_str());
-			//saver.Write("sliceIndex", sliceIndex);
-			//saver.Write("animIndex", animIndex);
 			saver.FinishBlock();
 		}
 	}

@@ -8,6 +8,7 @@
 
 #ifdef OAK_EDITOR
 #include "Editor/Editor.h"
+#include "Editor/TileSetWindow.h"
 #endif
 
 namespace Oak
@@ -1007,7 +1008,7 @@ namespace Oak
 
 							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", categoriesData[j].name.c_str(), guiID, i);
 
-							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 70.0f, 0.0f)))
 							{
 							}
 
@@ -1027,6 +1028,15 @@ namespace Oak
 									*ref = *assetRef;
 									prop.changed = true;
 								}
+							}
+
+							ImGui::SameLine();
+
+							StringUtils::Printf(propGuiID, 256, "Ed###%s%s%iEd", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							{
+								TileSetWindow::StartEdit(ref->Get());
 							}
 
 							ImGui::SameLine();
