@@ -1749,7 +1749,7 @@ namespace Oak
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
-			ImGui::DockBuilderDockWindow("Scene", dock_left_id);
+			ImGui::DockBuilderDockWindow("###Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
 			ImGui::DockBuilderDockWindow("Assets", dock_bottom_id);
@@ -1953,7 +1953,7 @@ namespace Oak
 		}
 
 		{
-			ImGui::Begin("Scene");
+			ImGui::Begin(StringUtils::PrintTemp("%s###Scene", (project.selectedScene->scene ? project.selectedScene->name.c_str() : "Scene")));
 
 			if (project.selectedScene)
 			{
