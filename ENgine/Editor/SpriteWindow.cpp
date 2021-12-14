@@ -335,48 +335,70 @@ namespace Oak
 			float stepX = (typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX;
 			float stepY = (typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY;
 
-			if (typeAutoSlice == 0 || typeAutoSlice == 1)
+			FileInMemory buffer;
+
+			if (buffer.Load(texture->GetPath().c_str()))
 			{
-				float posY = 0;
+				uint8_t* ptr = buffer.GetData();
 
-				int index = 0;
+				int bytes;
+				int width;
+				int height;
+				uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
 
-				while (posY < texture->size.y)
+				if (typeAutoSlice == 0 || typeAutoSlice == 1)
 				{
-					float posX = 0;
+					float posY = 0;
 
-					while (posX < texture->size.x)
+					int index = 0;
+
+					while (posY + stepY <= texture->size.y)
 					{
-						AssetTexture::Slice slice;
-						slice.pos = Math::Vector2(posX, posY);
-						slice.size = Math::Vector2(stepX, stepY);
+						float posX = 0;
 
-						slice.name = StringUtils::PrintTemp("Slice%i", index);
+						while (posX + stepX <= texture->size.x)
+						{
+							bool empty = true;
 
-						texture->slices.push_back(slice);
+							for (int j = posY; j < posY + stepY; j++)
+							{
+								for (int i = posX; i < posX + stepX; i++)
+								{
+									if (data[(j * width + i) * 4 + 3] == 255)
+									{
+										empty = false;
+										break;
+									}
+								}
 
-						index++;
+								if (!empty)
+								{
+									break;
+								}
+							}
 
-						posX += stepX;
+							if (!empty)
+							{
+								AssetTexture::Slice slice;
+								slice.pos = Math::Vector2(posX, posY);
+								slice.size = Math::Vector2(stepX, stepY);
+
+								slice.name = StringUtils::PrintTemp("Slice%i", index);
+
+								texture->slices.push_back(slice);
+
+								index++;
+							}
+
+							posX += stepX;
+						}
+
+						posY += stepY;
 					}
-
-					posY += stepY;
 				}
-			}
-			else
-			if (typeAutoSlice == 2)
-			{
-				FileInMemory buffer;
-
-				if (buffer.Load(texture->GetPath().c_str()))
+				else
+				if (typeAutoSlice == 2)
 				{
-					uint8_t* ptr = buffer.GetData();
-
-					int bytes;
-					int width;
-					int height;
-					uint8_t* data = stbi_load_from_memory(ptr, buffer.GetSize(), &width, &height, &bytes, STBI_rgb_alpha);
-
 					uint8_t* visited = (uint8_t*)malloc(width * height);
 					memset(visited, 0, width * height);
 
@@ -409,11 +431,11 @@ namespace Oak
 						}
 					}
 
-					free(data);
 					free(visited);
-
-					texture->SaveMetaData();
 				}
+
+				free(data);
+				texture->SaveMetaData();
 			}
 		}
 
