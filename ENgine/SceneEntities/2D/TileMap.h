@@ -50,6 +50,8 @@ namespace Oak
 
 		void SetEditMode(bool ed) override;
 
+		void Copy(SceneEntity* source) override;
+
 		void OnMouseMove(Math::Vector2 ms) override;
 		void OnLeftMouseDown() override;
 		void OnLeftMouseUp() override;

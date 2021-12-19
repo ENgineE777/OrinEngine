@@ -138,6 +138,13 @@ namespace Oak
 		}
 	}
 
+	void TileMap::Copy(SceneEntity* source)
+	{
+		SceneEntity::Copy(source);
+
+		tiles = ((TileMap*)source)->tiles;
+	}
+
 	void TileMap::OnMouseMove(Math::Vector2 ms)
 	{
 		if (mode != Mode::Inactive)
