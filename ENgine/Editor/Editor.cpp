@@ -411,7 +411,8 @@ namespace Oak
 
 	void Editor::ShowViewport()
 	{
-		ImGui::Begin("Game", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+		ImGui::Begin(StringUtils::PrintTemp("%s###Game", selectedAsset != nullptr ? selectedAsset->GetName().c_str() : "Viewport"),
+					nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImGuiIO& io = ImGui::GetIO();
 
@@ -1751,7 +1752,7 @@ namespace Oak
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
 			ImGui::DockBuilderDockWindow("###Scene", dock_left_id);
-			ImGui::DockBuilderDockWindow("Game", dock_main_id);
+			ImGui::DockBuilderDockWindow("###Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
 			ImGui::DockBuilderDockWindow("Assets", dock_bottom_id);
 			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
