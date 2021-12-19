@@ -1172,6 +1172,7 @@ namespace Oak
 				copy->Copy(selectedEntity);
 
 				CopyChilds(selectedEntity, copy);
+				copy->UpdateVisibility();
 
 				SelectEntity(copy);
 

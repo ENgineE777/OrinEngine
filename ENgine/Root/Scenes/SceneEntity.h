@@ -165,9 +165,9 @@ namespace Oak
 		/**
 		\brief Copy data from source entity
 
-		\param[in] sorce Source entity
+		\param[in] source Source entity
 		*/
-		virtual void Copy(SceneEntity* sorce);
+		virtual void Copy(SceneEntity* source);
 
 		/**
 		\brief Enable or disable editor mode
