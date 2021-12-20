@@ -275,7 +275,12 @@ namespace Oak
 	struct SceneEntityRef : SceneEntityRefBase
 	{
 		T* entity = nullptr;
-		virtual void SetEntity(SceneEntity* setEntity) override { entity = dynamic_cast<T*>(setEntity); };
+		virtual void SetEntity(SceneEntity* setEntity) override
+		{
+			entity = dynamic_cast<T*>(setEntity);
+			uid = entity ? entity->GetUID() : 0;
+		};
+
 		virtual SceneEntity* GetSceneEntity() override { return entity; };
 	};
 

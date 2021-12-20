@@ -427,7 +427,10 @@ namespace Oak
 			else
 			if (prop.type == Type::SceneEntity)
 			{
-				memcpy(prop.value, src, sizeof(SceneEntityRefBase));
+				SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(prop.value);
+				SceneEntityRefBase* ref2 = reinterpret_cast<SceneEntityRefBase*>(src);
+
+				ref->SetEntity(ref2->GetSceneEntity());
 			}
 			else
 			if (prop.type == Type::Array)
