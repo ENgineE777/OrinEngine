@@ -240,17 +240,26 @@ namespace Oak
 				if (parent->childs[i] == this)
 				{
 					parent->childs.erase(parent->childs.begin() + i);
-					parent->transform.childs.erase(parent->transform.parent->childs.begin() + i);
+					parent->transform.childs.erase(parent->transform.childs.begin() + i);
 					break;
 				}
 			}
+
+			transform.local = transform.global;
+			transform.parent = nullptr;
 		}
 
 		parent = setParent;
-		transform.parent = setParent ? &setParent->transform : nullptr;
 
 		if (parent)
 		{
+			Math::Matrix invParent = parent->transform.global;
+			invParent.Inverse();
+
+			transform.local = transform.global * invParent;
+
+			transform.parent = setParent ? &setParent->transform : nullptr;
+
 			if (entityBefore)
 			{
 				for (int i = 0; i < parent->childs.size(); i++)
@@ -269,8 +278,6 @@ namespace Oak
 				parent->transform.childs.push_back(&transform);
 			}
 		}
-
-		transform.local = transform.global;
 	}
 
 	SceneEntity* SceneEntity::GetParent()
