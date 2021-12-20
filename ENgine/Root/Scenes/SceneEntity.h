@@ -8,6 +8,7 @@
 #include "Root/TaskExecutor/TaskExecutor.h"
 #include "Root/Files/Files.h"
 #include "Support/Transform.h"
+#include <typeinfo>
 
 namespace Oak
 {
@@ -257,6 +258,51 @@ namespace Oak
 		\return True will be returned in case injection was successfully.
 		*/
 		virtual bool InjectIntoScript(const char* typeName, int name, void* property, const char* prefix);
+
+
+		struct Holder
+		{
+			std::size_t typeHash;
+			void* ptr = nullptr;
+		};
+
+		eastl::map<eastl::string, Holder> callbacks;
+		
+		template<class T>
+		void RegisterCallback(eastl::string name, T callback)
+		{
+			auto typeHash = typeid(T).hash_code();
+
+			auto iter = callbacks.find(name);
+
+			if (iter == callbacks.end())
+			{
+				Holder& holder = callbacks[name];
+
+				holder.typeHash = typeHash;
+				T* call = new T();
+				*call = callback;
+				holder.ptr = call;
+			}
+		}
+
+		template<class T>
+		T GetCallback(eastl::string name)
+		{
+			auto typeHash = typeid(T).hash_code();
+
+			auto iter = callbacks.find(name);
+
+			if (iter != callbacks.end())
+			{
+				if ((*iter).second.typeHash == typeHash)
+				{
+					return *((T*)((*iter).second.ptr));
+				}
+			}
+
+			return T();
+		}
 
 		/**
 		\brief SceneObject should released only via this method

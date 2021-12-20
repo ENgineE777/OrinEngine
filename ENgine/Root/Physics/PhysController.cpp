@@ -39,8 +39,8 @@ namespace Oak
 
 			if (udataA && udataB)
 			{
-				PhysScene::HandleSceneObjectContact(udataA->object, udataA->index, udataB->object, udataB->index, "OnContact");
-				PhysScene::HandleSceneObjectContact(udataB->object, udataB->index, udataA->object, udataA->index, "OnContact");
+				PhysScene::HandleSceneObjectContact("OnContact", udataA->object, udataA->index, udataB->object, udataB->index);
+				PhysScene::HandleSceneObjectContact("OnContact", udataB->object, udataB->index, udataA->object, udataA->index);
 			}
 		}
 
@@ -101,8 +101,8 @@ namespace Oak
 
 		if (udataA && udataB)
 		{
-			PhysScene::HandleSceneObjectContact(udataA->object, udataA->index, udataB->object, udataB->index, "OnContact");
-			PhysScene::HandleSceneObjectContact(udataB->object, udataB->index, udataA->object, udataA->index, "OnContact");
+			PhysScene::HandleSceneObjectContact("OnContact", udataA->object, udataA->index, udataB->object, udataB->index);
+			PhysScene::HandleSceneObjectContact("OnContact", udataB->object, udataB->index, udataA->object, udataA->index);
 		}
 
 		if (udataB)
@@ -154,13 +154,13 @@ namespace Oak
 			{
 				if (udataA->body && udataA->body->GetType() == PhysObject::Trigger)
 				{
-					PhysScene::HandleSceneObjectContact(udataB->object, udataB->index, udataA->object, udataA->index, "OnContact");
+					PhysScene::HandleSceneObjectContact("OnContact", udataB->object, udataB->index, udataA->object, udataA->index);
 					return PxQueryHitType::eTOUCH;
 				}
 				else
 				if (udataB->body && udataB->body->GetType() == PhysObject::Trigger)
 				{
-					PhysScene::HandleSceneObjectContact(udataA->object, udataA->index, udataB->object, udataB->index, "OnContact");
+					PhysScene::HandleSceneObjectContact("OnContact", udataA->object, udataA->index, udataB->object, udataB->index);
 					return PxQueryHitType::eTOUCH;
 				}
 			}

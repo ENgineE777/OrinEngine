@@ -1,6 +1,7 @@
 
 #include "Physics.h"
 #include "Root/Root.h"
+#include "Root/Scenes/SceneEntity.h"
 
 namespace Oak
 {
@@ -213,8 +214,8 @@ namespace Oak
 
 		if (udataA && udataB)
 		{
-			PhysScene::HandleSceneObjectContact(udataA->object, udataA->index, udataB->object, udataB->index, "OnContact");
-			PhysScene::HandleSceneObjectContact(udataB->object, udataB->index, udataA->object, udataA->index, "OnContact");
+			PhysScene::HandleSceneObjectContact("OnContact", udataA->object, udataA->index, udataB->object, udataB->index);
+			PhysScene::HandleSceneObjectContact("OnContact", udataB->object, udataB->index, udataA->object, udataA->index);
 		}
 	}
 
@@ -231,12 +232,12 @@ namespace Oak
 			{
 				if (pairs[i].status == PxPairFlag::eNOTIFY_TOUCH_FOUND)
 				{
-					PhysScene::HandleSceneObjectContact(udataA->object, udataA->index, udataB->object, udataB->index, "OnContactStart");
+					PhysScene::HandleSceneObjectContact("OnContactStart", udataA->object, udataA->index, udataB->object, udataB->index);
 				}
 
 				if (pairs[i].status == PxPairFlag::eNOTIFY_TOUCH_LOST)
 				{
-					PhysScene::HandleSceneObjectContact(udataA->object, udataA->index, udataB->object, udataB->index, "OnContactEnd");
+					PhysScene::HandleSceneObjectContact("OnContactEnd", udataA->object, udataA->index, udataB->object, udataB->index);
 				}
 			}
 		}
@@ -248,13 +249,15 @@ namespace Oak
 		delete this;
 	}
 
-	void PhysScene::HandleSceneObjectContact(SceneEntity* object, int index, SceneEntity* contact_object, int contact_index, const char* callback_name)
+	void PhysScene::HandleSceneObjectContact(const char* callback_name, SceneEntity* object, int index, SceneEntity* contact_object, int contact_index)
 	{
-		/*SceneObject::ScriptCallback* callabck = object->FindScriptCallback(callback_name);
+		eastl::function<void(int, SceneEntity*, int)> callback;
 
-		if (callabck)
+		callback = object->GetCallback<eastl::function<void(int, SceneEntity*, int)>>(callback_name);
+
+		if (callback)
 		{
-			callabck->Call(object->Script(), index, contact_object->GetName(), contact_index);
-		}*/
+			callback(index, contact_object, contact_index);
+		}
 	}
 }

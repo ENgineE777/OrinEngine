@@ -152,7 +152,7 @@ namespace Oak
 		void onTrigger(PxTriggerPair* pairs, PxU32 count);
 		void onAdvance(const PxRigidBody*const* bodyBuffer, const PxTransform* poseBuffer, const PxU32 count) {};
 
-		static void HandleSceneObjectContact(class SceneEntity* object, int index, class SceneEntity* contact_object, int contact_index, const char* callback_name);
+		static void HandleSceneObjectContact(const char* callback_name, class SceneEntity* object, int index, class SceneEntity* contact_object, int contact_index);
 	#endif
 	};
 }
