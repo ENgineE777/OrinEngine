@@ -58,6 +58,13 @@ void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
 			copy->SetName(entity->GetName());
 			copy->SetUID(entity->GetUID());
 
+			auto childs = entity->GetChilds();
+
+			for (auto child : childs)
+			{
+				child->SetParent(copy);
+			}
+
 			entity->Release();
 		}
 	}
