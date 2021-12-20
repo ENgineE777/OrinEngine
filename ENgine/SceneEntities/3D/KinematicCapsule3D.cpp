@@ -10,6 +10,8 @@ namespace Oak
 		BASE_SCENE_ENTITY_PROP(KinematicCapsule3D)
 		INT_PROP(KinematicCapsule3D, physGroup, 1, "Physics", "Physical group", "Physical group")
 		BOOL_PROP(KinematicCapsule3D, affectOnParent, false, "Physics", "Affect on parent", "Affect on parent")
+		FLOAT_PROP(KinematicCapsule3D, height, 0.5f, "Physics", "height", "height")
+		FLOAT_PROP(KinematicCapsule3D, radius, 0.5f, "Physics", "radius", "radius")
 	META_DATA_DESC_END()
 
 	void KinematicCapsule3D::Init()
@@ -63,9 +65,13 @@ namespace Oak
 
 	void KinematicCapsule3D::EditorDraw(float dt)
 	{
-		if (IsVisible())
+		if (IsVisible() && !scene->IsPlaying())
 		{
+			Math::Matrix mat = transform.global;
+			Math::Vector3 dir = mat.Vy();
 
+			root.render.DebugSphere((mat.Pos() + dir * radius) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
+			root.render.DebugSphere((mat.Pos() + dir * (radius + height)) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
 		}
 	}
 }

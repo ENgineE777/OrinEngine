@@ -16,6 +16,8 @@ namespace Oak
 
 		Math::Vector3 upVector;
 		bool affectOnParent = false;
+		float height = 0.5f;
+		float radius = 0.5f;
 
 	public:
 

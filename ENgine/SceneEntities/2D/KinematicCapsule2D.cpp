@@ -10,6 +10,9 @@ namespace Oak
 		BASE_SCENE_ENTITY_PROP(KinematicCapsule2D)
 		INT_PROP(KinematicCapsule2D, physGroup, 1, "Physics", "Physical group", "Physical group")
 		BOOL_PROP(KinematicCapsule2D, affectOnParent, false, "Physics", "Affect on parent", "Affect on parent")
+		BOOL_PROP(KinematicCapsule2D, YOriented, true, "Physics", "YOriented", "Affect on parent")
+		FLOAT_PROP(KinematicCapsule2D, height, 16.0f, "Physics", "height", "height")
+		FLOAT_PROP(KinematicCapsule2D, radius, 16.0f, "Physics", "radius", "radius")
 	META_DATA_DESC_END()
 
 	void KinematicCapsule2D::Init()
@@ -32,11 +35,14 @@ namespace Oak
 	void KinematicCapsule2D::Play()
 	{
 		PhysControllerDesc desc;
-		desc.height = 1.0f;
+		desc.height = height * Sprite::pixelsPerUnitInvert;
+		desc.radius = radius * Sprite::pixelsPerUnitInvert;
 
-		auto size = Math::Vector2(100.0f, 150.0f);
-		desc.radius = fminf(size.x, size.y) * Sprite::pixelsPerUnitInvert * 0.5f * 0.65f;
-		desc.upVector.Set(0.0f, 0.0f, 1.0f);
+		if (!YOriented)
+		{
+			desc.upVector.Set(0.0f, 0.0f, 1.0f);
+		}
+
 		desc.pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
 
 		controller = GetRoot()->GetPhysScene()->CreateController(desc, 2);
@@ -73,9 +79,13 @@ namespace Oak
 
 	void KinematicCapsule2D::EditorDraw(float dt)
 	{
-		if (IsVisible())
+		if (IsVisible() && !scene->IsPlaying())
 		{
+			Math::Matrix mat = transform.global;
+			Math::Vector3 dir = YOriented ? mat.Vy() : mat.Vz();
 
+			root.render.DebugSphere((mat.Pos() + dir * radius) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
+			root.render.DebugSphere((mat.Pos() + dir * (radius + height)) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
 		}
 	}
 }

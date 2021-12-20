@@ -14,8 +14,12 @@ namespace Oak
 		PhysScene::BodyUserData bodyData;
 		uint32_t physGroup;
 
-		Math::Vector3 upVector;
 		bool affectOnParent = false;
+
+		float height = 16.0f;
+		float radius = 16.0f;
+
+		bool YOriented = true;; 
 
 	public:
 
