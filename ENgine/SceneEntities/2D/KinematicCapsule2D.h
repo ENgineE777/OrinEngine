@@ -35,6 +35,7 @@ namespace Oak
 		void Init() override;
 		void OnVisiblityChange(bool set) override;
 		void Play() override;
+		void SetPosition(Math::Vector3 pos);
 		void Move(Math::Vector2 dir, uint32_t ignoreGroup = 0);
 		void EditorDraw(float dt);
 	#endif

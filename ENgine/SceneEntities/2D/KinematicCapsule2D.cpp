@@ -77,6 +77,14 @@ namespace Oak
 		}
 	}
 
+	void KinematicCapsule2D::SetPosition(Math::Vector3 pos)
+	{
+		if (controller)
+		{
+			controller->SetPosition(pos * Sprite::pixelsPerUnitInvert);
+		}
+	}
+
 	void KinematicCapsule2D::EditorDraw(float dt)
 	{
 		if (IsVisible() && !scene->IsPlaying())
