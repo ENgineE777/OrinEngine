@@ -354,6 +354,16 @@ namespace Oak
 			uid = entity ? entity->GetUID() : 0;
 		};
 
+		operator bool() const
+		{
+			return entity != nullptr;
+		}
+
+		T* operator->() const
+		{
+			return entity;
+		}
+
 		virtual SceneEntity* GetSceneEntity() override { return entity; };
 	};
 
