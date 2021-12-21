@@ -35,31 +35,25 @@ namespace Oak
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&Camera2D::Update);
 	}
 
-	struct SceneEntityRefBase2
+	void Camera2D::UpdateRenderView()
 	{
-		uint32_t uid = 0;
-		virtual void Set(SceneEntity* entity) = 0;
-	};
+		if (IsVisible())
+		{
+			auto pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
 
-	template<class T>
-	struct SceneEntityRef2 : SceneEntityRefBase2
-	{
-		T* entity;
-		virtual void Set(SceneEntity* setEntity) { entity = dynamic_cast<T*>(setEntity); };
-	};
+			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom);
+			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
 
+			root.render.SetTransform(TransformStage::View, view);
+
+			Math::Matrix proj;
+			proj.BuildProjection(45.0f * Math::Radian, (float)root.render.GetDevice()->GetHeight() / (float)root.render.GetDevice()->GetWidth(), 1.0f, 1000.0f);
+			root.render.SetTransform(TransformStage::Projection, proj);
+		}
+	}
 
 	void Camera2D::Update(float dt)
 	{
-		SceneEntityRef2<Camera2D> ref;
-		SceneEntityRefBase2* ref2 = (SceneEntityRefBase2*)&ref;
-
-		ref2->Set(this);
-
-		ref.entity->IsVisible();
-		int k = sizeof(ref);
-		int k2 = sizeof(ref2);
-
 		if (GetScene()->IsPlaying())
 		{
 			if (targetRef.entity)
@@ -98,19 +92,7 @@ namespace Oak
 				transform.position = pos;
 			}
 
-			if (IsVisible())
-			{
-				auto pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
-
-				float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom);
-				view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
-
-				root.render.SetTransform(TransformStage::View, view);
-
-				Math::Matrix proj;
-				proj.BuildProjection(45.0f * Math::Radian, (float)root.render.GetDevice()->GetHeight() / (float)root.render.GetDevice()->GetWidth(), 1.0f, 1000.0f);
-				root.render.SetTransform(TransformStage::Projection, proj);
-			}
+			UpdateRenderView();
 		}
 		else
 		{

@@ -29,7 +29,7 @@ namespace Oak
 
 		void Init() override;
 		void Update(float dt);
-
+		void UpdateRenderView();
 #endif
 	};
 }
