@@ -82,6 +82,7 @@ namespace Oak
 		Math::Vector3 deactive_pos;
 		uint32_t collide_group;
 		uint32_t ignore_group;
+		PhysScene* scene = nullptr;
 
 	public:
 

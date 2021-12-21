@@ -23,9 +23,13 @@ namespace Oak
 	class CLASS_DECLSPEC PhysScene : public PxSimulationEventCallback
 	{
 		friend class Physics;
+		friend class PhysObject;
+		friend class PhysController;
+
 		PxScene* scene = nullptr;
 		bool needFetch = false;
 		PxControllerManager* manager = nullptr;
+		bool inPhysUpdate = false;
 
 	public:
 

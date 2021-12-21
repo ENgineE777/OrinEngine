@@ -1,5 +1,6 @@
 #include "PhysObject.h"
 #include "PhysScene.h"
+#include "Root/Root.h"
 
 namespace Oak
 {
@@ -10,6 +11,12 @@ namespace Oak
 
 	void PhysObject::SetActive(bool set)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetActive for phys object during phys update");
+			return;
+		}
+
 		if (set == is_active)
 		{
 			return;
@@ -42,11 +49,23 @@ namespace Oak
 
 	void PhysObject::SetFixedRotation(bool set)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetFixedRotation for phys object during phys update");
+			return;
+		}
+
 		((PxRigidDynamic*)actor)->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 	}
 
 	void PhysObject::SetGroup(int group)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetGroup for phys object during phys update");
+			return;
+		}
+
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 
@@ -55,6 +74,12 @@ namespace Oak
 
 	void PhysObject::SetTransform(Math::Matrix& mat)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetTransform for phys object during phys update");
+			return;
+		}
+
 		Math::Matrix mat_offset = (body_type == Static) ? offset * mat : mat;
 
 		PxMat33 m;
@@ -87,6 +112,12 @@ namespace Oak
 
 	void PhysObject::AddForceAt(Math::Vector3 pos, Math::Vector3 force)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call AddForceAt for phys object during phys update");
+			return;
+		}
+
 		if (body_type != Dynamic && body_type != DynamicCCD)
 		{
 			return;
@@ -97,6 +128,12 @@ namespace Oak
 
 	void PhysObject::RestrictZAxis()
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call RestrictZAxis for phys object during phys update");
+			return;
+		}
+
 		auto* rigid_actor = (PxRigidDynamic*)(actor);
 
 		if (rigid_actor)

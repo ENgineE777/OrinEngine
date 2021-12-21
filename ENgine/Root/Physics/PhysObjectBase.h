@@ -42,6 +42,7 @@ namespace Oak
 	class CLASS_DECLSPEC PhysObjectBase
 	{
 		friend class Physics;
+		friend class PhysScene;
 
 	public:
 
@@ -52,6 +53,8 @@ namespace Oak
 		virtual void Release();
 
 	protected:
+		PhysScene* scene = nullptr;
+
 		virtual void ActualRelease() = 0;
 	};
 }

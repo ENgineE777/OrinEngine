@@ -7,7 +7,14 @@ namespace Oak
 {
 	PhysObject* PhysScene::CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group)
 	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call CreateBox for scene during phys update");
+			return nullptr;
+		}
+
 		PhysObject* obj = new PhysObject();
+		obj->scene = this;
 
 		obj->body_type = type;
 
@@ -67,6 +74,12 @@ namespace Oak
 
 	PhysController* PhysScene::CreateController(PhysControllerDesc& desc, uint32_t group)
 	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call CreateController for scene during phys update");
+			return nullptr;
+		}
+
 		PxCapsuleControllerDesc pxdesc;
 		pxdesc.height = desc.height;
 		pxdesc.radius = desc.radius;
@@ -83,6 +96,7 @@ namespace Oak
 		pxdesc.reportCallback = controller;
 		pxdesc.behaviorCallback = controller;
 
+		controller->scene = this;
 		controller->controller = manager->createController(pxdesc);
 		controller->height = desc.height + desc.radius * 2.0f + controller->controller->getContactOffset();
 
@@ -97,6 +111,12 @@ namespace Oak
 
 	PhysObject* PhysScene::CreateHeightmap(int width, int height, Math::Vector2  scale, const char* name, uint32_t group)
 	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call CreateHeightmap for scene during phys update");
+			return nullptr;
+		}
+
 		PhysObject* hm = nullptr;
 
 		Physics::StraemReader reader;
@@ -145,6 +165,12 @@ namespace Oak
 
 	bool PhysScene::RayCast(RaycastDesc& desc)
 	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call RayCast for scene during phys update");
+			return false;
+		}
+
 		if (desc.length < 0.005f)
 		{
 			return false;
@@ -170,6 +196,12 @@ namespace Oak
 
 	bool PhysScene::OverlapWithSphere(Math::Vector3 pos, float radius, eastl::vector<BodyUserData*>& bodies)
 	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call OverlapWithSphere for scene during phys update");
+			return false;
+		}
+
 		PxOverlapHit aTouches[128];
 
 		PxOverlapBuffer hit(aTouches, 128);

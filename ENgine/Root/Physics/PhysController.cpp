@@ -1,7 +1,7 @@
 #include "PhysController.h"
 #include "PhysObject.h"
 #include "PhysScene.h"
-#include "Root/Scenes/SceneEntity.h"
+#include "Root/Root.h"
 
 namespace Oak
 {
@@ -176,6 +176,12 @@ namespace Oak
 
 	void PhysController::SetActive(bool set)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetActive for controller during phys update");
+			return;
+		}
+
 		if (active == set)
 		{
 			return;
@@ -253,16 +259,38 @@ namespace Oak
 		PxControllerFilters filters = PxControllerFilters();
 		filters.mFilterCallback = this;
 
-		const PxU32 flags = controller->move(PxVec3(dir.x, dir.y, dir.z), 0.0001f, 1.0f/60.0f, filters, NULL);
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call Move for controller during phys update");
+		}
+		else
+		{
+			scene->inPhysUpdate = true;
+			const PxU32 flags = controller->move(PxVec3(dir.x, dir.y, dir.z), 0.0001f, 1.0f/60.0f, filters, NULL);
+			scene->inPhysUpdate = false;
+		}
 	}
 
 	void PhysController::SetUpDirection(Math::Vector3 up)
 	{
-		controller->setUpDirection(PxVec3(up.x, up.y, up.z));
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetUpDirection for controller during phys update");
+		}
+		else
+		{
+			controller->setUpDirection(PxVec3(up.x, up.y, up.z));
+		}
 	}
 
 	void PhysController::SetGroup(int group)
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetGroup for controller during phys update");
+			return;
+		}
+
 		auto actor = controller->getActor();
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
@@ -278,7 +306,14 @@ namespace Oak
 			return;
 		}
 
-		controller->setFootPosition(PxExtendedVec3(pos.x, pos.y, pos.z));
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetPosition for controller during phys update");
+		}
+		else
+		{
+			controller->setFootPosition(PxExtendedVec3(pos.x, pos.y, pos.z));
+		}
 	}
 
 	void PhysController::GetPosition(Math::Vector3& pos)
@@ -295,6 +330,12 @@ namespace Oak
 
 	void PhysController::RestrictZAxis()
 	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call RestrictZAxis for controller during phys update");
+			return;
+		}
+
 		auto actor = controller->getActor();
 
 		if (actor)
