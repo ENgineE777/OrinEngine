@@ -290,7 +290,7 @@ namespace Oak
 		return childs;
 	}
 
-	SceneEntity* SceneEntity::GetChild(uint32_t uid)
+	SceneEntity* SceneEntity::FindChild(uint32_t uid)
 	{
 		for (auto entity : childs)
 		{
@@ -299,7 +299,27 @@ namespace Oak
 				return entity;
 			}
 
-			SceneEntity* child = entity->GetChild(uid);
+			SceneEntity* child = entity->FindChild(uid);
+
+			if (child)
+			{
+				return child;
+			}
+		}
+
+		return nullptr;
+	}
+
+	SceneEntity* SceneEntity::FindChild(const char* name)
+	{
+		for (auto entity : childs)
+		{
+			if (entity && StringUtils::IsEqual(entity->GetName(), name))
+			{
+				return entity;
+			}
+
+			SceneEntity* child = entity->FindChild(name);
 
 			if (child)
 			{

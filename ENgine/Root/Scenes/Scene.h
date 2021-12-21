@@ -120,8 +120,6 @@ namespace Oak
 		\brief Find a scene entity by UID
 
 		\param[in] uid UID of a scene object
-		\param[in] child_uid UID of a child scene object (0 if neede only parent)
-		\param[in] is_asset Is scene object is an asset
 
 		\return Pointer to a scene object
 		*/

@@ -241,7 +241,34 @@ namespace Oak
 			\param[in] uid UID of a child
 			\return Return pointer to a child
 		*/
-		virtual SceneEntity* GetChild(uint32_t uid);
+		SceneEntity* FindChild(uint32_t uid);
+
+		SceneEntity* FindChild(const char* name);
+
+		template<class T>
+		T* FindChild()
+		{
+			for (auto entity : childs)
+			{
+				T* casted = dynamic_cast<T*>(entity);
+
+				if (casted)
+				{
+					return casted;
+				}
+
+				T* childCasted = entity->FindChild<T>();
+
+				if (childCasted)
+				{
+					return childCasted;
+				}
+			}
+
+			return nullptr;
+		}
+
+		SceneEntity* FindEntity(uint32_t uid);
 
 		/**
 		\brief Register script class for a scene object

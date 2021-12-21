@@ -70,7 +70,7 @@ namespace Oak
 				return entity;
 			}
 
-			SceneEntity* child = entity->GetChild(uid);
+			SceneEntity* child = entity->FindChild(uid);
 
 			if (child)
 			{
