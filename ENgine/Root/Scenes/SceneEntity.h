@@ -23,9 +23,12 @@ namespace Oak
 
 	*/
 
+	struct SceneEntityRefBase;
+
 	class CLASS_DECLSPEC SceneEntity : public Object
 	{
 		friend class Scene;
+		friend struct SceneEntityRefBase;
 
 	protected:
 
@@ -45,6 +48,14 @@ namespace Oak
 	#ifdef OAK_EDITOR
 		bool edited = false;
 	#endif
+
+		struct Holder
+		{
+			std::size_t typeHash;
+			void* ptr = nullptr;
+		};
+
+		eastl::map<eastl::string, Holder> callbacks;
 
 	public:
 
@@ -285,15 +296,6 @@ namespace Oak
 		\return True will be returned in case injection was successfully.
 		*/
 		virtual bool InjectIntoScript(const char* typeName, int name, void* property, const char* prefix);
-
-
-		struct Holder
-		{
-			std::size_t typeHash;
-			void* ptr = nullptr;
-		};
-
-		eastl::map<eastl::string, Holder> callbacks;
 		
 		template<class T>
 		void RegisterCallback(eastl::string name, T callback)
@@ -331,6 +333,8 @@ namespace Oak
 			return T();
 		}
 
+		eastl::vector<SceneEntityRefBase*> referenced;
+
 		/**
 		\brief SceneObject should released only via this method
 		*/
@@ -350,7 +354,25 @@ namespace Oak
 		T* entity = nullptr;
 		virtual void SetEntity(SceneEntity* setEntity) override
 		{
+			if (entity)
+			{
+				for (int i = 0; i < entity->referenced.size(); i++)
+				{
+					if (entity->referenced[i] == this)
+					{
+						entity->referenced.erase(entity->referenced.begin() + i);
+						break;
+					}
+				}
+			}
+
 			entity = dynamic_cast<T*>(setEntity);
+
+			if (entity)
+			{
+				entity->referenced.push_back(this);
+			}
+
 			uid = entity ? entity->GetUID() : 0;
 		};
 

@@ -209,6 +209,20 @@ namespace Oak
 
 	void SceneEntity::Release()
 	{
+		for (auto entry : callbacks)
+		{
+			delete entry.second.ptr;
+		}
+
+		GetMetaData()->Prepare(this);
+		GetMetaData()->PreapareToRelease();
+
+		for (int k = 0; k < referenced.size(); k++)
+		{
+			referenced[k]->SetEntity(nullptr);
+			k--;
+		}
+
 		for (auto* child : childs)
 		{
 			RELEASE(child)

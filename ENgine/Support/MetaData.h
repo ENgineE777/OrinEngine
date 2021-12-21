@@ -170,6 +170,7 @@ namespace Oak
 		void Load(JsonReader& reader);
 		void PostLoad(Scene* scene);
 		void Save(JsonWriter& writer);
+		void PreapareToRelease();
 
 		void Copy(void* source, eastl::vector<Property>& sourceProperties);
 

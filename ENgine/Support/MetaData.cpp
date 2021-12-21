@@ -343,6 +343,27 @@ namespace Oak
 		}
 	}
 
+	void MetaData::PreapareToRelease()
+	{
+		for (auto& prop : properties)
+		{
+			if (prop.type == Type::Array)
+			{
+				for (int i = 0; i < prop.adapter->GetSize(); i++)
+				{
+					prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem(i), root);
+					prop.adapter->GetMetaData()->PreapareToRelease();
+				}
+			}
+			else
+			if (prop.type == Type::SceneEntity)
+			{
+				SceneEntityRefBase* ref = (SceneEntityRefBase*)prop.value;
+				ref->SetEntity(nullptr);
+			}
+		}
+	}
+
 	void MetaData::Copy(void* source, eastl::vector<Property>& sourceProperties)
 	{
 		for (auto& prop : properties)
