@@ -2052,12 +2052,12 @@ namespace Oak
 		ShowEditorSettings();
 		ShowViewport();
 
-		if (SpriteWindow::instance && SpriteWindow::instance->opened)
+		if (SpriteWindow::instance)
 		{
 			SpriteWindow::instance->ImGui();
 		}
 
-		if (TileSetWindow::instance && TileSetWindow::instance->opened)
+		if (TileSetWindow::instance)
 		{
 			TileSetWindow::instance->ImGui();
 		}

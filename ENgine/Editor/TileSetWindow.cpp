@@ -33,6 +33,11 @@ namespace Oak
 			instance = new TileSetWindow();
 		}
 
+		if (tileSet)
+		{
+			tileSet->SaveMetaData();
+		}
+
 		tileSet = setTileSet;
 		instance->Prepare();
 		instance->opened = true;
@@ -46,6 +51,11 @@ namespace Oak
 	{
 		if (!opened)
 		{
+			if (tileSet)
+			{
+				tileSet->SaveMetaData();
+			}
+
 			tileSet = nullptr;
 			return;
 		}
