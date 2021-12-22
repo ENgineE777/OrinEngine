@@ -209,11 +209,6 @@ namespace Oak
 
 	void SceneEntity::Release()
 	{
-		for (auto entry : callbacks)
-		{
-			delete entry.second.ptr;
-		}
-
 		GetMetaData()->Prepare(this);
 		GetMetaData()->PreapareToRelease();
 
@@ -294,12 +289,26 @@ namespace Oak
 		}
 	}
 
+	void SceneEntity::SetSelfAsChild(SceneEntity* setParent, int index)
+	{
+		parent = setParent;
+
+		if (parent)
+		{
+			parent->childs[index]->parent = nullptr;
+			parent->childs[index]->transform.parent = nullptr;
+
+			parent->childs[index] = this;
+			parent->GetTransform().childs[index] = &transform;
+		}
+	}
+
 	SceneEntity* SceneEntity::GetParent()
 	{
 		return parent;
 	}
 
-	const eastl::vector<SceneEntity*>& SceneEntity::GetChilds()
+	eastl::vector<SceneEntity*>& SceneEntity::GetChilds()
 	{
 		return childs;
 	}

@@ -1086,6 +1086,7 @@ namespace Oak
 			childCopy->SetParent(copy, nullptr);
 
 			childCopy->Copy(child);
+			childCopy->PostLoad();
 
 			CopyChilds(child, childCopy);
 		}
@@ -1171,6 +1172,7 @@ namespace Oak
 				}
 
 				copy->Copy(selectedEntity);
+				copy->PostLoad();
 
 				CopyChilds(selectedEntity, copy);
 				copy->UpdateVisibility();

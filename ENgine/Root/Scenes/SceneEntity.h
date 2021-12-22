@@ -52,7 +52,7 @@ namespace Oak
 		struct Holder
 		{
 			std::size_t typeHash;
-			void* ptr = nullptr;
+			uint8_t data[256];
 		};
 
 		eastl::map<eastl::string, Holder> callbacks;
@@ -235,6 +235,13 @@ namespace Oak
 		virtual void SetParent(SceneEntity* parent, SceneEntity* entityBefore = nullptr);
 
 		/**
+			\brief Replase child in parent by self
+			\param[in] parent Pointer to a parent
+			\param[in] index Index of child of a parent to replce self
+		*/
+		void SetSelfAsChild(SceneEntity* parent, int index);
+
+		/**
 			\brief Get parent
 			\return Pointer to a parent
 		*/
@@ -245,17 +252,26 @@ namespace Oak
 
 			\return return list of childs
 		*/
-		virtual const eastl::vector<SceneEntity*>& GetChilds();
+		virtual eastl::vector<SceneEntity*>& GetChilds();
 
 		/**
-			\brief Fin a child by UID
+			\brief Find a child by UID
 			\param[in] uid UID of a child
 			\return Return pointer to a child
 		*/
 		SceneEntity* FindChild(uint32_t uid);
 
+		/**
+			\brief Find a child by name
+			\param[in] name Name of a child
+			\return Return pointer to a child
+		*/
 		SceneEntity* FindChild(const char* name);
 
+		/**
+			\brief Find a child by type
+			\return Return pointer to a child
+		*/
 		template<class T>
 		T* FindChild()
 		{
@@ -279,8 +295,6 @@ namespace Oak
 			return nullptr;
 		}
 
-		SceneEntity* FindEntity(uint32_t uid);
-
 		/**
 		\brief Register script class for a scene object
 		*/
@@ -297,6 +311,12 @@ namespace Oak
 		*/
 		virtual bool InjectIntoScript(const char* typeName, int name, void* property, const char* prefix);
 		
+		/**
+			\brief Register callback by name
+			\param[in] name Name of a callback
+			\param[in] callback Provided callback
+			\return Return pointer to a child
+		*/
 		template<class T>
 		void RegisterCallback(eastl::string name, T callback)
 		{
@@ -309,12 +329,16 @@ namespace Oak
 				Holder& holder = callbacks[name];
 
 				holder.typeHash = typeHash;
-				T* call = new T();
+				T* call = (T*)holder.data;
 				*call = callback;
-				holder.ptr = call;
 			}
 		}
 
+		/**
+			\brief Get callback by name and type
+			\param[in] name Name of a callback
+			\return Return a callback
+		*/
 		template<class T>
 		T GetCallback(eastl::string name)
 		{
@@ -326,7 +350,7 @@ namespace Oak
 			{
 				if ((*iter).second.typeHash == typeHash)
 				{
-					return *((T*)((*iter).second.ptr));
+					return *((T*)((*iter).second.data));
 				}
 			}
 

@@ -20,13 +20,15 @@ void register_code(eastl::vector<Oak::ClassFactorySceneEntity*>& Decls)
 	}
 }
 
-void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
+void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls, 
+				   eastl::vector<Oak::SceneEntity*>& entities,
+				   eastl::vector<Oak::SceneEntity*>& toDelete, eastl::vector<Oak::SceneEntity*>& copies)
 {
-	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
-
 	for (int i = 0; i < entities.size(); i++)
 	{
 		Oak::SceneEntity* entity = entities[i];
+
+		gather_copies(localDecls, entity->GetChilds(), toDelete, copies);
 
 		bool needRecreate = false;
 
@@ -47,7 +49,7 @@ void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
 
 			if (parent)
 			{
-				copy->SetParent(parent, nullptr);
+				copy->ReplaseSelfInParent(parent, i);
 			}
 			else
 			{
@@ -65,8 +67,29 @@ void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
 				child->SetParent(copy);
 			}
 
-			entity->Release();
+			toDelete.push_back(entity);
+			copies.push_back(copy);
 		}
+	}
+}
+
+void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
+{
+	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
+
+	eastl::vector<Oak::SceneEntity*> toDelete;
+	eastl::vector<Oak::SceneEntity*> copies;
+
+	gather_copies(localDecls, entities, toDelete, copies);
+
+	for (auto copy : copies)
+	{
+		copy->PostLoad();
+	}
+
+	for (auto entity : toDelete)
+	{
+		entity->Release();
 	}
 }
 

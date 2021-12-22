@@ -216,7 +216,7 @@ namespace Oak
 		}
 
 		uint64_t lastWriteTime;
-		if (GetFileTime(hDLLFile, NULL, NULL, (FILETIME*)&lastWriteTime) && LastWrite != lastWriteTime)
+		if (GetFileTime(hDLLFile, NULL, NULL, (FILETIME*)&lastWriteTime) && LastWrite != lastWriteTime || root.controls.DebugKeyPressed("KEY_P"))
 		{
 			pingPong = 1 - pingPong;
 			char tmpname[256];

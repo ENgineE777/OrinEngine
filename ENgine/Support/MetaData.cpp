@@ -451,7 +451,7 @@ namespace Oak
 				SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(prop.value);
 				SceneEntityRefBase* ref2 = reinterpret_cast<SceneEntityRefBase*>(src);
 
-				ref->SetEntity(ref2->GetSceneEntity());
+				ref->uid = ref2->uid;
 			}
 			else
 			if (prop.type == Type::Array)
