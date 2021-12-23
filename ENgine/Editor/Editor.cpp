@@ -2247,6 +2247,7 @@ namespace Oak
 			editorDrawer.DrawSkyBox();
 		}
 
+		root.render.ExecutePool(-10, dt);
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(10, dt);
 		root.render.ExecutePool(100, dt);

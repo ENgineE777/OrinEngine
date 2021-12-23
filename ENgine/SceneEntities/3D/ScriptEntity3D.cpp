@@ -17,11 +17,11 @@ namespace Oak
 
 		if (set)
 		{
-			Tasks(false)->AddTask(50, this, (Object::Delegate) & ScriptEntity3D::Update);
+			Tasks(false)->AddTask(-50, this, (Object::Delegate) & ScriptEntity3D::Update);
 		}
 		else
 		{
-			Tasks(false)->DelTask(50, this);
+			Tasks(false)->DelTask(-50, this);
 		}
 	}
 
@@ -31,7 +31,7 @@ namespace Oak
 
 		if (IsVisible())
 		{
-			Tasks(false)->AddTask(50, this, (Object::Delegate) & ScriptEntity3D::Update);
+			Tasks(false)->AddTask(-50, this, (Object::Delegate) & ScriptEntity3D::Update);
 		}
 	}
 
