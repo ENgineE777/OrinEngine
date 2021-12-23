@@ -163,6 +163,8 @@ namespace Oak
 		{
 			RELEASE(item);
 		}
+
+		SceneEntity::Release();
 	}
 
 #ifdef OAK_EDITOR
