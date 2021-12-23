@@ -159,6 +159,7 @@ namespace Oak
 				loader.Read("upLeftOffset", slice.upLeftOffset);
 				loader.Read("downRightOffset", slice.downRightOffset);
 				loader.Read("offset", slice.offset);
+				loader.Read("hasCollision", slice.hasCollision);
 
 				loader.LeaveBlock();
 			}
@@ -226,6 +227,7 @@ namespace Oak
 			saver.Write("upLeftOffset", slice.upLeftOffset);
 			saver.Write("downRightOffset", slice.downRightOffset);
 			saver.Write("offset", slice.offset);
+			saver.Write("hasCollision", slice.hasCollision);
 
 			saver.FinishBlock();
 		}
@@ -418,6 +420,22 @@ namespace Oak
 
 		AssetTexture::Slice& slice = Get()->slices[sliceIndex];
 		return slice.size;
+	}
+
+	bool AssetTextureRef::HasCollision()
+	{
+		if (!Get())
+		{
+			return false;
+		}
+
+		if (sliceIndex == -1 || sliceIndex >= Get()->slices.size())
+		{
+			return false;
+		}
+
+		AssetTexture::Slice& slice = Get()->slices[sliceIndex];
+		return slice.hasCollision;
 	}
 
 	void AssetTextureRef::ResetAnim(bool looped, bool reversed, eastl::function<void(int)> setOnFrameChange)

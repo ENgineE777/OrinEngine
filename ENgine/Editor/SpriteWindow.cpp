@@ -464,6 +464,10 @@ namespace Oak
 
 			if (ImGui::Checkbox("###Is9Slice", &slice.isNineSliced)) changed = true;
 
+			Text("Has collision");
+
+			if (ImGui::Checkbox("###hasCollision", &slice.hasCollision)) changed = true;
+
 			if (changed)
 			{
 				FillRects();

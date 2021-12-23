@@ -27,6 +27,7 @@ namespace Oak
 			Math::Vector2 upLeftOffset = 10.0f;
 			Math::Vector2 downRightOffset = 10.0f;
 			Math::Vector2 offset = 0.5f;
+			bool hasCollision = false;
 		};
 
 		struct CLASS_DECLSPEC Frame
@@ -110,6 +111,7 @@ namespace Oak
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 
 		Math::Vector2 GetSize();
+		bool HasCollision();
 
 		void ResetAnim(bool looped, bool reversed, eastl::function<void(int)> onFrameChange);
 		bool IsAnimFinished();
