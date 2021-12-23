@@ -49,7 +49,7 @@ void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls,
 
 			if (parent)
 			{
-				copy->ReplaseSelfInParent(parent, i);
+				copy->SetSelfAsChild(parent, i);
 			}
 			else
 			{

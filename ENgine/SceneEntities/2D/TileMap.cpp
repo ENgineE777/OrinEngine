@@ -14,6 +14,7 @@ namespace Oak
 	META_DATA_DESC(TileMap)
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
+		INT_PROP(TileMap, physGroup, 1, "Physics", "Physical group", "Physical group")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
 	META_DATA_DESC_END()
 
@@ -38,6 +39,44 @@ namespace Oak
 	#endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&TileMap::Draw);
+	}
+
+	void TileMap::OnVisiblityChange(bool state)
+	{
+		for (auto* item : collition)
+		{
+			item->SetActive(state);
+		}
+	}
+
+	void TileMap::Play()
+	{
+		Math::Matrix mat = transform.global;
+		auto pos = mat.Pos();
+		auto size = transform.size;
+		size.z = 16.0f;
+		size *= Sprite::pixelsPerUnitInvert;
+		
+		for (auto tile : tiles)
+		{
+			if (!tile.texture.HasCollision())
+			{
+				continue;
+			}
+
+			Math::Matrix mat = transform.global;
+			auto pos = mat.Pos();
+
+			int k = 0;
+
+			mat.Pos() = pos + mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y;
+			mat.Pos() *= Sprite::pixelsPerUnitInvert;
+
+			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, physGroup);
+			box->SetActive(IsVisible());
+
+			collition.push_back(box);
+		}
 	}
 
 	void TileMap::Draw(float dt)
@@ -116,6 +155,14 @@ namespace Oak
 		}
 
 		writer.FinishArray();
+	}
+
+	void TileMap::Release()
+	{
+		for (auto* item : collition)
+		{
+			RELEASE(item);
+		}
 	}
 
 #ifdef OAK_EDITOR
