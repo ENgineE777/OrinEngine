@@ -18,6 +18,8 @@ namespace Oak
 		bool affectOnParent = false;
 		float height = 0.5f;
 		float radius = 0.5f;
+		float slopeLimit = cosf(Math::Radian * 20.0f);
+		float stepOffset = 0.5f;
 
 	public:
 

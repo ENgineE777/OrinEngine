@@ -332,8 +332,8 @@ namespace Oak
 			texture->slices.clear();
 			selSlice = -1;
 
-			float stepX = (typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX;
-			float stepY = (typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY;
+			int stepX = (int) ((typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX);
+			int stepY = (int) ((typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY);
 
 			FileInMemory buffer;
 
@@ -348,19 +348,19 @@ namespace Oak
 
 				if (typeAutoSlice == 0 || typeAutoSlice == 1)
 				{
-					float posY = 0;
+					int posY = 0;
 
 					int index = 0;
 
 					while (posY + stepY <= texture->size.y)
 					{
-						float posX = 0;
+						int posX = 0;
 
 						while (posX + stepX <= texture->size.x)
 						{
 							bool empty = true;
 
-							for (int j = posY; j < posY + stepY; j++)
+							for (int j = (int)posY; j < posY + stepY; j++)
 							{
 								for (int i = posX; i < posX + stepX; i++)
 								{
@@ -380,8 +380,8 @@ namespace Oak
 							if (!empty)
 							{
 								AssetTexture::Slice slice;
-								slice.pos = Math::Vector2(posX, posY);
-								slice.size = Math::Vector2(stepX, stepY);
+								slice.pos = Math::Vector2((float)posX, (float)posY);
+								slice.size = Math::Vector2((float)stepX, (float)stepY);
 
 								slice.name = StringUtils::PrintTemp("Slice%i", index);
 

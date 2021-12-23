@@ -12,6 +12,8 @@ namespace Oak
 		BOOL_PROP(KinematicCapsule3D, affectOnParent, false, "Physics", "Affect on parent", "Affect on parent")
 		FLOAT_PROP(KinematicCapsule3D, height, 0.5f, "Physics", "height", "height")
 		FLOAT_PROP(KinematicCapsule3D, radius, 0.5f, "Physics", "radius", "radius")
+		FLOAT_PROP(KinematicCapsule3D, slopeLimit, cosf(Math::Radian * 20.0f), "Physics", "slopeLimit", "slopeLimit")
+		FLOAT_PROP(KinematicCapsule3D, stepOffset, 0.5f, "Physics", "stepOffset", "stepOffset")
 	META_DATA_DESC_END()
 
 	void KinematicCapsule3D::Init()
@@ -39,8 +41,10 @@ namespace Oak
 		desc.upVector = upVector;
 		desc.upVector.Normalize();
 		desc.pos = transform.global.Pos();
+		desc.slopeLimit = slopeLimit;
+		desc.stepOffset = stepOffset;
 
-		controller = GetRoot()->GetPhysScene()->CreateController(desc, 2);
+		controller = GetRoot()->GetPhysScene()->CreateController(desc, physGroup);
 		controller->SetActive(IsVisible());
 
 		bodyData.object = this;

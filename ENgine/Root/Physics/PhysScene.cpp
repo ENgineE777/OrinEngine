@@ -88,7 +88,7 @@ namespace Oak
 		pxdesc.density = 1.0f;
 		pxdesc.slopeLimit = desc.slopeLimit;
 		pxdesc.contactOffset = 0.01f;
-		pxdesc.stepOffset = 0.5f;
+		pxdesc.stepOffset = desc.stepOffset;
 		pxdesc.scaleCoeff = 0.8f;
 		pxdesc.material = root.physics.defMaterial;
 

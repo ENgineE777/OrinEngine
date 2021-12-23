@@ -18,6 +18,8 @@ namespace Oak
 
 		float height = 16.0f;
 		float radius = 16.0f;
+		float slopeLimit = cosf(Math::Radian * 20.0f);
+		float stepOffset = 0.5f;
 
 		bool YOriented = true;; 
 

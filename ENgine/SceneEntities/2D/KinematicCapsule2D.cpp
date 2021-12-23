@@ -13,6 +13,8 @@ namespace Oak
 		BOOL_PROP(KinematicCapsule2D, YOriented, true, "Physics", "YOriented", "Affect on parent")
 		FLOAT_PROP(KinematicCapsule2D, height, 16.0f, "Physics", "height", "height")
 		FLOAT_PROP(KinematicCapsule2D, radius, 16.0f, "Physics", "radius", "radius")
+		FLOAT_PROP(KinematicCapsule2D, slopeLimit, 0.0f, "Physics", "slopeLimit", "slopeLimit")
+		FLOAT_PROP(KinematicCapsule2D, stepOffset, 0.0f, "Physics", "stepOffset", "stepOffset")
 	META_DATA_DESC_END()
 
 	void KinematicCapsule2D::Init()
@@ -44,8 +46,10 @@ namespace Oak
 		}
 
 		desc.pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
+		desc.slopeLimit = slopeLimit;
+		desc.stepOffset = stepOffset * Sprite::pixelsPerUnitInvert;
 
-		controller = GetRoot()->GetPhysScene()->CreateController(desc, 2);
+		controller = GetRoot()->GetPhysScene()->CreateController(desc, physGroup);
 		controller->RestrictZAxis();
 		controller->SetActive(IsVisible());
 

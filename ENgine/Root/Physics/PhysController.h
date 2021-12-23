@@ -60,6 +60,9 @@ namespace Oak
 
 		/** \brief The maximum slope which the character can walk up. */
 		float slopeLimit = cosf(Math::Radian * 20.0f);
+
+		/** \brief  Defines the maximum height of an obstacle which the character can climb. */
+		float stepOffset = 0.5f;
 	};
 
 	/**
