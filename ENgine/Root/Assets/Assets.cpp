@@ -95,7 +95,7 @@ namespace Oak
 					}
 				}
 				else
-				if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && strcmp(ffd.cFileName, ".") != 0 && strcmp(ffd.cFileName, "..") != 0)
+				if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && ffd.cFileName[0] != '.')
 				{
 					char subPath[512];
 					StringUtils::Printf(subPath, 512, "%s%s/", path, ffd.cFileName);
