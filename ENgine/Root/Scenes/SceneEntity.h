@@ -216,6 +216,8 @@ namespace Oak
 		virtual void OnLeftMouseUp();
 		virtual	void OnRightMouseDown();
 		virtual void OnRightMouseUp();
+		virtual	void OnMiddleMouseDown();
+		virtual void OnMiddleMouseUp();
 	#endif
 
 		/**

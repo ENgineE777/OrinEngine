@@ -68,7 +68,8 @@ namespace Oak
 		{
 			None,
 			LeftButton,
-			RightButton
+			RightButton,
+			MiddleButton
 		};
 
 		bool projectTreePopup = false;

@@ -172,6 +172,16 @@ namespace Oak
 	{
 
 	}
+
+	void Asset::OnMiddleMouseDown()
+	{
+
+	}
+
+	void Asset::OnMiddleMouseUp()
+	{
+
+	}
 	#endif
 
 	void Asset::Reload()

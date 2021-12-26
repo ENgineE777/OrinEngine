@@ -470,6 +470,21 @@ namespace Oak
 
 				viewportCaptured = ViewportCature::RightButton;
 			}
+			else
+			if (ImGui::IsMouseClicked(2))
+			{
+				if (selectedAsset && selectedAsset->HasOwnTasks())
+				{
+					selectedAsset->OnMiddleMouseDown();
+				}
+				else
+				if (selectedEntity)
+				{
+					//selectedEntity->OnMidleMouseDown();
+				}
+
+				viewportCaptured = ViewportCature::MiddleButton;
+			}
 		}
 
 		if (!selectMode)
@@ -518,6 +533,21 @@ namespace Oak
 			if (selectedEntity)
 			{
 				selectedEntity->OnRightMouseUp();
+			}
+
+			viewportCaptured = ViewportCature::None;
+		}
+		else
+		if (viewportCaptured == ViewportCature::MiddleButton && ImGui::IsMouseReleased(2))
+		{
+			if (selectedAsset && selectedAsset->HasOwnTasks())
+			{
+				selectedAsset->OnMiddleMouseUp();
+			}
+			else
+			if (selectedEntity)
+			{
+				selectedEntity->OnMiddleMouseUp();
 			}
 
 			viewportCaptured = ViewportCature::None;

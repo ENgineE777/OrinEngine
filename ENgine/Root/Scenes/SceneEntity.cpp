@@ -205,6 +205,16 @@ namespace Oak
 	{
 
 	}
+
+	void SceneEntity::OnMiddleMouseDown()
+	{
+
+	}
+
+	void SceneEntity::OnMiddleMouseUp()
+	{
+
+	}
 	#endif
 
 	void SceneEntity::Release()

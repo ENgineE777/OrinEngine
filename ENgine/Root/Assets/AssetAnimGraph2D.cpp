@@ -624,8 +624,6 @@ namespace Oak
 
 	void AssetAnimGraph2D::OnLeftMouseDown()
 	{
-		drag = DragMode::Field;
-
 		selNode = GetNodeIndex(mousePos);
 		selLink = -1;
 
@@ -702,6 +700,16 @@ namespace Oak
 			SaveMetaData();
 		}
 
+		drag = DragMode::None;
+	}
+
+	void AssetAnimGraph2D::OnMiddleMouseDown()
+	{
+		drag = DragMode::Field;
+	}
+
+	void AssetAnimGraph2D::OnMiddleMouseUp()
+	{
 		drag = DragMode::None;
 	}
 	#endif
