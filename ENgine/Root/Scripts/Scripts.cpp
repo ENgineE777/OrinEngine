@@ -106,41 +106,34 @@ namespace Oak
 							eastl::string lineVersion;
 							reader.Read("productLineVersion", lineVersion);
 
-							if (StringUtils::IsEqual(lineVersion.c_str(), "2019"))
+							reader.LeaveBlock();
+
+							reader.Read("productPath", vsPath);
+
+							DeleteFileA("errors.txt");
+
+							if (system(StringUtils::PrintTemp("%s gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) != 0)
 							{
-								reader.LeaveBlock();
+								FileInMemory errors;
 
-								reader.Read("productPath", vsPath);
-
-								DeleteFileA("errors.txt");
-
-								if (system(StringUtils::PrintTemp("%s gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) != 0)
+								if (errors.Load("errors.txt"))
 								{
-									FileInMemory errors;
-
-									if (errors.Load("errors.txt"))
-									{
-										eastl::string str = (const char*)errors.GetPtr();
-										MESSAGE_BOX("Can't compile script", str.c_str());
-									}
+									eastl::string str = (const char*)errors.GetPtr();
+									MESSAGE_BOX("Can't compile script", str.c_str());
 								}
-							}
-							else
-							{
-								MESSAGE_BOX("Can't compile script", "Visual Studio was found but it is not 2019. Please install Visual Studio 2019");
 							}
 						}
 					}
 					else
 					{
-						MESSAGE_BOX("Can't compile script", "Visual Studio was found but can't be launched. Please reinstall Visual Studio 2019");
+						MESSAGE_BOX("Can't compile script", "Visual Studio was found but can't be launched. Please reinstall Visual Studio");
 					}
 
 					free(programFiles);
 				}
 				else
 				{
-					MESSAGE_BOX("Can't compile script", "Visual Studio was not found. Please install Visual Studio 2019");
+					MESSAGE_BOX("Can't compile script", "Visual Studio was not found. Please install Visual Studio");
 				}
 			}
 
