@@ -36,6 +36,7 @@ namespace Oak
 		void MouseToCell(int& x, int& y);
 		int FindTileIndex(int x, int y);
 		void DrawCell(int x, int y);
+		void TryAddSlice(AssetTextureRef& texture, Math::Vector2 offset, int sliseIndex);
 
 	public:
 

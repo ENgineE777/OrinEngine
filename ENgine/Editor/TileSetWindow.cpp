@@ -219,6 +219,22 @@ namespace Oak
 		ImGui::End();
 	}
 
+	void TileSetWindow::TryAddSlice(AssetTextureRef& texture, Math::Vector2 offset, int sliseIndex)
+	{
+		AssetTextureRef subSlice = texture;
+		subSlice.sliceIndex = sliseIndex;
+
+		auto& slice = texture.Get()->slices[sliseIndex];
+
+		int x = dragX + (int)((slice.pos.x - offset.x) / (float)tileSet->sizeX);
+		int y = dragY - (int)((slice.pos.y - offset.y) / (float)tileSet->sizeY);
+
+		if (FindTileIndex(x, y) == -1)
+		{
+			tileSet->tiles.push_back({ x, y, subSlice });
+		}
+	}
+
 	void TileSetWindow::ShowImage()
 	{
 		ImGui::Begin("ImageTileSet");
@@ -263,20 +279,16 @@ namespace Oak
 
 				if (texture.sliceIndex == -1 && texture.animIndex == -1)
 				{
+					Math::Vector2 offset = texture.GetSize();
+
+					for (auto slice : texture.Get()->slices)
+					{
+						offset.Min(slice.pos);
+					}
+
 					for (int i = 0; i < texture.Get()->slices.size(); i++)
 					{
-						AssetTextureRef subSlice = texture;
-						subSlice.sliceIndex = i;
-
-						auto& slice = texture.Get()->slices[i];
-
-						int x = dragX + (int)(slice.pos.x / (float)tileSet->sizeX);
-						int y = dragY - (int)(slice.pos.y / (float)tileSet->sizeY);
-
-						if (FindTileIndex(x, y) == -1)
-						{
-							tileSet->tiles.push_back({ x, y, subSlice });
-						}
+						TryAddSlice(texture, offset, i);
 					}
 
 					tileSet->SaveMetaData();
@@ -295,37 +307,18 @@ namespace Oak
 			{
 				AssetTextureRef texture = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
 
-				Math::Vector2 pos = texture.GetSize();
+				Math::Vector2 offset = texture.GetSize();
 
 				for (auto sliceIndex : SpriteWindow::instance->selectedSlices)
 				{
 					auto& slice = texture.Get()->slices[sliceIndex];
 
-					if (pos.x > slice.pos.x)
-					{
-						pos.x = slice.pos.x;
-					}
-
-					if (pos.y > slice.pos.y)
-					{
-						pos.y = slice.pos.y;
-					}
+					offset.Min(slice.pos);
 				}
 
 				for (auto sliceIndex : SpriteWindow::instance->selectedSlices)
 				{
-					AssetTextureRef subSlice = texture;
-					subSlice.sliceIndex = sliceIndex;
-
-					auto& slice = subSlice.Get()->slices[sliceIndex];
-
-					int x = dragX + (int)((slice.pos.x - pos.x) / (float)tileSet->sizeX);
-					int y = dragY - (int)((slice.pos.y - pos.y) / (float)tileSet->sizeY);
-
-					if (FindTileIndex(x, y) == -1)
-					{
-						tileSet->tiles.push_back({ x, y, subSlice });
-					}
+					TryAddSlice(texture, offset, sliceIndex);
 				}
 
 				tileSet->SaveMetaData();
