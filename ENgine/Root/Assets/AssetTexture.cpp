@@ -24,7 +24,7 @@ namespace Oak
 			ENUM_ELEM("Clamp", TextureAddress::Clamp)
 			ENUM_ELEM("Mirror", TextureAddress::Mirror)
 		ENUM_END
-		CALLBACK_PROP(AssetTexture, AssetTexture::StartEditAssetTexture, "Properties", "Sprite Editor")
+		CALLBACK_PROP(AssetTexture, AssetTexture::StartEditAssetTexture, "Properties", "Open Sprite Editor")
 	META_DATA_DESC_END()
 
 	bool AssetTexture::Animation::AdvanceFrame(float dt, int& currentFrame, float& currentTime, bool looped, bool reversed, eastl::function<void(int)> onFrameChange)

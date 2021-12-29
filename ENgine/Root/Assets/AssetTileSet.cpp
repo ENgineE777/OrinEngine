@@ -17,7 +17,7 @@ namespace Oak
 	META_DATA_DESC(AssetTileSet)
 		INT_PROP(AssetTileSet, sizeX, 16, "Properties", "cell size X", "Horizontal size of a cell")
 		INT_PROP(AssetTileSet, sizeY, 16, "Properties", "cell size Y", "Vertical size of a cell")
-		CALLBACK_PROP(AssetTileSet, AssetTileSet::StartEditTileSet, "Properties", "TileSet Editor")
+		CALLBACK_PROP(AssetTileSet, AssetTileSet::StartEditTileSet, "Properties", "Open TileSet Editor")
 	META_DATA_DESC_END()
 
 	void AssetTileSet::StartEditTileSet(void* owner)
