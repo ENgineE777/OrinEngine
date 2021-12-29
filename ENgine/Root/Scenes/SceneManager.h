@@ -38,6 +38,8 @@ namespace Oak
 
 		eastl::map<eastl::string, SceneHolder*> scenesSearch;
 
+		TaskExecutor::GroupTaskPool* groupTaskPool;
+
 		void LoadScene(SceneHolder* holder);
 		void UnloadScene(SceneHolder* holder);
 
@@ -46,6 +48,10 @@ namespace Oak
 	#ifndef DOXYGEN_SKIP
 		void Init();
 		void LoadProject(const char* projectName);
+
+		TaskExecutor::SingleTaskPool* AddTaskPool(const char* file, int line);
+		void DelTaskPool(TaskExecutor::SingleTaskPool* pool);
+
 		void Execute(float dt);
 		void UnloadAll();
 	#endif
@@ -78,5 +84,9 @@ namespace Oak
 		\param[in] name Name of a scene (filename without extension)
 		*/
 		void UnloadScene(const char* name);
+
+		#ifndef DOXYGEN_SKIP
+		void Release();
+		#endif
 	};
 }

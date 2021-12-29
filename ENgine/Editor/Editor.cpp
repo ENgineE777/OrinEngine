@@ -2261,7 +2261,6 @@ namespace Oak
 				}
 
 				project.EnableScene(project.selectedScene, true);
-				project.selectedScene->scene->Execute(dt);
 			}
 		}
 

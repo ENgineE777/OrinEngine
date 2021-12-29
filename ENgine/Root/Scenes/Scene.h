@@ -85,7 +85,6 @@ namespace Oak
 		void Clear();
 		void Load(const char* name);
 		void Save(const char* name);
-		void Execute(float dt);
 
 		void Play();
 		void AddPostPlay(int level, Object* entity, Object::DelegateSimple call);

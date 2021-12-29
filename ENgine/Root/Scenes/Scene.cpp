@@ -6,7 +6,7 @@ namespace Oak
 {
 	void Scene::Init()
 	{
-		taskPool = root.taskExecutor.CreateSingleTaskPool(_FL_);
+		taskPool = root.scenes.AddTaskPool(_FL_);
 		renderTaskPool = root.render.AddTaskPool(_FL_);
 	}
 
@@ -202,11 +202,6 @@ namespace Oak
 		}
 	}
 
-	void Scene::Execute(float dt)
-	{
-		taskPool->Execute(dt);
-	}
-
 	void Scene::Play()
 	{
 		if (playing)
@@ -381,7 +376,7 @@ namespace Oak
 	{
 		Clear();
 
-		delete taskPool;
+		root.scenes.DelTaskPool(taskPool);
 		root.render.DelTaskPool(renderTaskPool);
 
 		delete this;

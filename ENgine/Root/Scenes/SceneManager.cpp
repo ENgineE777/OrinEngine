@@ -7,6 +7,8 @@ namespace Oak
 	void SceneManager::Init()
 	{
 		ClassFactorySceneEntity::Sort();
+
+		groupTaskPool = root.taskExecutor.CreateGroupTaskPool(_FL_);
 	}
 
 	void SceneManager::LoadProject(const char* projectName)
@@ -106,6 +108,16 @@ namespace Oak
 		return scenesSearch[name]->scene;
 	}
 
+	TaskExecutor::SingleTaskPool* SceneManager::AddTaskPool(const char* file, int line)
+	{
+		return groupTaskPool->AddTaskPool(file, line);
+	}
+
+	void SceneManager::DelTaskPool(TaskExecutor::SingleTaskPool* pool)
+	{
+		groupTaskPool->DelTaskPool(pool);
+	}
+
 	void SceneManager::Execute(float dt)
 	{
 		for (auto* holder : scenesToLoad)
@@ -122,18 +134,7 @@ namespace Oak
 
 		scenesToDelete.clear();
 
-		for (int i = 0; i < scenes.size(); i++)
-		{
-			auto& scn = scenes[i];
-
-			if (scn.scene)
-			{
-				if (scn.refCounter != 0)
-				{
-					scn.scene->Execute(dt);
-				}
-			}
-		}
+		groupTaskPool->Execute(dt);
 	}
 
 	void SceneManager::SetScenesGroupsVisibilty(const char* groupName, bool set)
@@ -171,6 +172,7 @@ namespace Oak
 
 			if (holder->refCounter == 0)
 			{
+				holder->scene->EnableTasks(false);
 				scenesToDelete.push_back(holder);
 			}
 		}
@@ -198,5 +200,12 @@ namespace Oak
 
 		scenes.clear();
 		scenesSearch.clear();
+	}
+
+	void SceneManager::Release()
+	{
+		UnloadAll();
+
+		delete groupTaskPool;
 	}
 }

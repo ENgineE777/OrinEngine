@@ -205,6 +205,7 @@ namespace Oak
 
 		Sprite::Release();
 
+		scenes.Release();
 		fonts.Release();
 		render.Release();
 		controls.Release();
