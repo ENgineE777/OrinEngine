@@ -44,26 +44,7 @@ namespace Oak
 	{
 	protected:
 
-		enum class BodyType
-		{
-			Static = 0,
-			Dynamic = 1,
-			DynamicCCD = 2,
-			Kinematic = 3,
-			Trigger = 4
-		};
-
-		/**
-		\brief Group of a body
-		*/
-
 		uint32_t physGroup;
-
-		/**
-		\brief Controls if box static or dynamic.
-		*/
-
-		BodyType bodyType;
 
 		/**
 		\brief Color of a box.
@@ -81,11 +62,30 @@ namespace Oak
 		*/
 		bool affectOnParent = false;
 
-		PhysScene::BodyUserData body;
-
 	public:
 
 	#ifndef DOXYGEN_SKIP
+
+		enum class BodyType
+		{
+			Static = 0,
+			Dynamic = 1,
+			DynamicCCD = 2,
+			Kinematic = 3,
+			Trigger = 4
+		};
+
+		/**
+			\brief Group of a body
+		*/
+
+		/**
+			\brief Controls if box static or dynamic.
+		*/
+
+		BodyType bodyType;
+
+		PhysScene::BodyUserData body;
 
 		META_DATA_DECL(PhysBox3D)
 

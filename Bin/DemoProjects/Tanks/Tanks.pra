@@ -16,7 +16,7 @@
 	"pixelsHeight" : 1080.000000,
 	"scenes" : [
 		{
-			"path" : "Scene.sca",
+			"path" : "Scene.scn",
 			"selected_entity" : 292792,
 			"camera2DMode" : false,
 			"camera3DAngles" :
@@ -38,5 +38,5 @@
 			"camera2DZoom" : 1.000000
 		}
 	],
-	"selected_scene" : "Scene.sca"
+	"selected_scene" : "Scene.scn"
 }

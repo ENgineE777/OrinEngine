@@ -654,7 +654,7 @@ namespace Oak
 				else
 				if (assetDialog == CreateAssetDialog::Scene)
 				{
-					path = StringUtils::PrintTemp("%s.sca", path.c_str());
+					path = StringUtils::PrintTemp("%s.scn", path.c_str());
 
 					if (std::filesystem::exists(path.c_str()))
 					{

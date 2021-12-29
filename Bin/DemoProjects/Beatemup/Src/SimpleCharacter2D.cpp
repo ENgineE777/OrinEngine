@@ -111,8 +111,10 @@ namespace Oak
 			}
 			else
 			{
-				transform.position.x = Math::Clamp(transform.position.x + dt * speed * dir_horz, -floor_width, floor_width);
-				transform.position.y = Math::Clamp(transform.position.y + dt * speed * 0.75f * dir_vert, 0.0f, floor_height);
+				auto pos = transform.position;
+				pos.x = Math::Clamp(transform.position.x + dt * speed * dir_horz, -floor_width, floor_width);
+				pos.y = Math::Clamp(transform.position.y + dt * speed * 0.75f * dir_vert, 0.0f, floor_height);
+				transform.position = pos;
 			}
 
 			if (resp_time > 0.0f)
@@ -143,7 +145,7 @@ namespace Oak
 			{
 				death_fly -= dt;
 
-				transform.position.x += dt * (flipped ? 105.0f : -105.0f);
+				transform.position = Math::Vector3(transform.position.x + dt * (flipped ? 105.0f : -105.0f), transform.position.y, transform.position.z);
 
 				if (death_fly < 0.0f)
 				{
@@ -166,11 +168,12 @@ namespace Oak
 			return;
 		}
 
-		transform.position.z = (transform.position.y / floor_height) * 0.9f;
-		transform.position.z = Math::Clamp(transform.position.z, 0.0f, 0.9f);
-		transform.scale.x = (flipped ? -1.0f : 1.0f) * fabsf(transform.scale.x);
-		
-		transform.BuildMatrices();
+		auto position = transform.position;
+		position.z = (transform.position.y / floor_height) * 0.9f;		
+		position.z = Math::Clamp(transform.position.z, 0.0f, 0.9f);
+		transform.position = position;
+
+		transform.scale = Math::Vector3(flipped ? -1.0f : 1.0f, 1.0f, 1.0f);
 
 		if (arraive > 0.0f)
 		{
