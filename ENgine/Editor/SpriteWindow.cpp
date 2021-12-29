@@ -1422,6 +1422,12 @@ namespace Oak
 
 		UpdateSlice();
 	}
+
+	void SpriteWindow::Release()
+	{
+		DELETE_PTR(instance);
+		texture = nullptr;
+	}
 }
 
 #endif

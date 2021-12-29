@@ -2318,6 +2318,9 @@ namespace Oak
 
 	void Editor::Release()
 	{
+		SpriteWindow::Release();
+		TileSetWindow::Release();
+
 		for (auto& entry : projects)
 		{
 			entry.icon.ReleaseRef();

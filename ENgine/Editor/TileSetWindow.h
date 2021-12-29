@@ -58,6 +58,8 @@ namespace Oak
 
 		void OnLeftMouseDown();
 		void OnLeftMouseUp();
+
+		static void Release();
 	};
 }
 

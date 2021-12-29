@@ -470,6 +470,13 @@ namespace Oak
 
 		return -1;
 	}
+
+	void TileSetWindow::Release()
+	{
+		DELETE_PTR(instance);
+
+		tileSet = nullptr;
+	}
 }
 
 #endif
