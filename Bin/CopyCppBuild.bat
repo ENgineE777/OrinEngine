@@ -1,3 +1,4 @@
+RMDIR /s /q ENgine\CppBuild\include
 xcopy ..\Libs\vjson\*.h ENgine\CppBuild\include\Libs\vjson\ /sy
 xcopy ..\Libs\eastl\include\*.* ENgine\CppBuild\include\Libs\eastl\include\ /sy
 xcopy ..\Libs\fmod\include\*.* ENgine\CppBuild\include\Libs\fmod\include\ /sy
