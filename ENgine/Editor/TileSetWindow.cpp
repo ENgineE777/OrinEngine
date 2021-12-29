@@ -2,6 +2,8 @@
 #ifdef OAK_EDITOR
 
 #include "TileSetWindow.h"
+#include "SpriteWindow.h"
+
 #include "Root/Root.h"
 
 #include "Editor/EditorDrawer.h"
@@ -245,29 +247,94 @@ namespace Oak
 			}
 		}
 
-		ImGuiContext* context = ImGui::GetCurrentContext();
-		ImGuiPayload& payload = context->DragDropPayload;
+		ImGuiPayload& payload = ImGui::GetCurrentContext()->DragDropPayload;
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (payload.IsDataType("_ASSET_TEX"))
-			{
-				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect) && tileSet)
-				{
-					AssetTextureRef texture = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
+			Math::Vector2 step = { (float)tileSet->sizeX, (float)tileSet->sizeY };
+			step *= Sprite::pixelsPerUnitInvert;
 
-					if (FindTileIndex(dragX, dragY) == -1)
+			Math::Matrix mat;
+			Math::Vector3 pos = mat.Vx() * (float)dragX * step.x + mat.Vy() * (float)dragY * step.y;
+
+			if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect) && tileSet)
+			{
+				AssetTextureRef texture = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
+
+				if (texture.sliceIndex == -1 && texture.animIndex == -1)
+				{
+					for (int i = 0; i < texture.Get()->slices.size(); i++)
 					{
-						tileSet->tiles.push_back({ dragX, dragY, texture });
-						tileSet->SaveMetaData();
+						AssetTextureRef subSlice = texture;
+						subSlice.sliceIndex = i;
+
+						auto& slice = texture.Get()->slices[i];
+
+						int x = dragX + (int)(slice.pos.x / (float)tileSet->sizeX);
+						int y = dragY - (int)(slice.pos.y / (float)tileSet->sizeY);
+
+						if (FindTileIndex(x, y) == -1)
+						{
+							tileSet->tiles.push_back({ x, y, subSlice });
+						}
 					}
 
-					drag = Drag::DragNone;
+					tileSet->SaveMetaData();
 				}
 				else
+				if (FindTileIndex(dragX, dragY) == -1)
 				{
-					drag = Drag::DragDrop;
+					tileSet->tiles.push_back({ dragX, dragY, texture });
+					tileSet->SaveMetaData();
 				}
+
+				drag = Drag::DragNone;
+			}
+			else
+			if (ImGui::AcceptDragDropPayload("_ANIM_FRAMES", ImGuiDragDropFlags_AcceptNoDrawDefaultRect) && tileSet)
+			{
+				AssetTextureRef texture = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
+
+				Math::Vector2 pos = texture.GetSize();
+
+				for (auto sliceIndex : SpriteWindow::instance->selectedSlices)
+				{
+					auto& slice = texture.Get()->slices[sliceIndex];
+
+					if (pos.x > slice.pos.x)
+					{
+						pos.x = slice.pos.x;
+					}
+
+					if (pos.y > slice.pos.y)
+					{
+						pos.y = slice.pos.y;
+					}
+				}
+
+				for (auto sliceIndex : SpriteWindow::instance->selectedSlices)
+				{
+					AssetTextureRef subSlice = texture;
+					subSlice.sliceIndex = sliceIndex;
+
+					auto& slice = subSlice.Get()->slices[sliceIndex];
+
+					int x = dragX + (int)((slice.pos.x - pos.x) / (float)tileSet->sizeX);
+					int y = dragY - (int)((slice.pos.y - pos.y) / (float)tileSet->sizeY);
+
+					if (FindTileIndex(x, y) == -1)
+					{
+						tileSet->tiles.push_back({ x, y, subSlice });
+					}
+				}
+
+				tileSet->SaveMetaData();
+
+				drag = Drag::DragNone;
+			}
+			else
+			{
+				drag = Drag::DragDrop;
 			}
 
 			ImGui::EndDragDropTarget();

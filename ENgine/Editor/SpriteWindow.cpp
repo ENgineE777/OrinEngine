@@ -494,12 +494,11 @@ namespace Oak
 			animFrameDragChecked = true;
 
 			auto& anim = texture->animations[selAnim];
+			ImGuiPayload& payload = ImGui::GetCurrentContext()->DragDropPayload;
 
-			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
-
-			if (payload)
+			if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 			{
-				AssetTextureRef* assetRef = reinterpret_cast<AssetTextureRef**>(payload->Data)[0];
+				AssetTextureRef* assetRef = reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
 
 				if (assetRef->sliceIndex != -1)
 				{
@@ -533,25 +532,21 @@ namespace Oak
 				}
 			}
 			else
+			if (ImGui::AcceptDragDropPayload("_ANIM_FRAMES", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 			{
-				const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ANIM_FRAMES", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
-
-				if (payload)
+				for (int i = 0; i < selectedSlices.size(); i++)
 				{
-					for (int i = 0; i < selectedSlices.size(); i++)
-					{
-						AssetTexture::Frame frame;
-						frame.slice = selectedSlices[i];
+					AssetTexture::Frame frame;
+					frame.slice = selectedSlices[i];
 
-						if (index == -1)
-						{
-							anim.frames.push_back(frame);
-						}
-						else
-						{
-							anim.frames.insert(anim.frames.begin() + index, frame);
-							index++;
-						}
+					if (index == -1)
+					{
+						anim.frames.push_back(frame);
+					}
+					else
+					{
+						anim.frames.insert(anim.frames.begin() + index, frame);
+						index++;
 					}
 
 					return true;
