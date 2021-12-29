@@ -61,8 +61,6 @@ namespace Oak
 			}
 		}
 
-		transform.BuildMatrices();
-
 	/*	if (netClient.Connect("192.168.0.19", 7890))
 		{
 			netClient.delegedate = this;
@@ -635,15 +633,15 @@ namespace Oak
 	void Tank::AddSplash(Math::Vector3& pos, float radius, float force)
 	{
 		eastl::vector<Scene::Group*> out_group;
-		GetScene()->GetGroup(out_group, "PhysBox");
+		GetScene()->GetGroup(out_group, "PhysBox3D");
 
 		for (auto group : out_group)
 		{
 			for (int i = 0; i < group->entities.size(); i++)
 			{
-				PhysBox* box = (PhysBox*)group->entities[i];
+				PhysBox3D* box = (PhysBox3D*)group->entities[i];
 
-				if (box->isStatic)
+				if (box->bodyType != PhysBox3D::BodyType::Dynamic && box->bodyType != PhysBox3D::BodyType::DynamicCCD)
 				{
 					continue;
 				}

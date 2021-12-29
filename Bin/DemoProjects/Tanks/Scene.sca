@@ -146,7 +146,7 @@
 				},
 				"rotation" :
 				{
-					"x" : -16.746895,
+					"x" : -16.746914,
 					"y" : 9.516846,
 					"z" : 18.922268
 				},
@@ -189,7 +189,7 @@
 						{
 							"position" :
 							{
-								"x" : -36.612213,
+								"x" : -36.612171,
 								"y" : -13.921412,
 								"z" : -27.692863
 							},
@@ -391,6 +391,306 @@
 			},
 			"base_model_name" : "TankModel/AATankBody.FBX",
 			"tower_model_name" : "TankModel/AATankTower.FBX"
+		},
+		{
+			"type" : "PhysBox3D",
+			"uid" : 65447,
+			"name" : "PhysBox3D",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 8.537819,
+					"y" : 8.235730,
+					"z" : -1.379792
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 2.166127,
+					"y" : 2.155425,
+					"z" : 2.224772
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 1.000000
+			},
+			"bodyType" : 1,
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"affectOnParent" : false
+		},
+		{
+			"type" : "PhysBox3D",
+			"uid" : 456630,
+			"name" : "PhysBox3D_copy",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 8.537819,
+					"y" : 8.235730,
+					"z" : 1.428889
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 2.166127,
+					"y" : 2.155425,
+					"z" : 2.224772
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 1.000000
+			},
+			"bodyType" : 1,
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"affectOnParent" : false
+		},
+		{
+			"type" : "PhysBox3D",
+			"uid" : 751604,
+			"name" : "PhysBox3D_copy_copy",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 8.537819,
+					"y" : 8.235730,
+					"z" : 4.189838
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 2.166127,
+					"y" : 2.155425,
+					"z" : 2.224772
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 1.000000
+			},
+			"bodyType" : 1,
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"affectOnParent" : false
+		},
+		{
+			"type" : "PhysBox3D",
+			"uid" : 96253,
+			"name" : "PhysBox3D_copy_copy_copy",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 8.537819,
+					"y" : 10.704866,
+					"z" : 3.083514
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 2.166127,
+					"y" : 2.155425,
+					"z" : 2.224772
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 1.000000
+			},
+			"bodyType" : 1,
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"affectOnParent" : false
+		},
+		{
+			"type" : "PhysBox3D",
+			"uid" : 751523,
+			"name" : "PhysBox3D_copy_copy_copy_copy",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 8.537819,
+					"y" : 10.704866,
+					"z" : 0.262023
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 2.166127,
+					"y" : 2.155425,
+					"z" : 2.224772
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 1.000000
+			},
+			"bodyType" : 1,
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"affectOnParent" : false
+		},
+		{
+			"type" : "PhysBox3D",
+			"uid" : 292792,
+			"name" : "PhysBox3D_copy_copy_copy_copy_copy",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 8.537819,
+					"y" : 13.224090,
+					"z" : 1.646913
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 2.166127,
+					"y" : 2.155425,
+					"z" : 2.224772
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 1.000000
+			},
+			"bodyType" : 1,
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"affectOnParent" : false
 		}
 	]
 }

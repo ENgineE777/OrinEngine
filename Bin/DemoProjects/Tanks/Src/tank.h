@@ -2,7 +2,7 @@
 #pragma once
 
 #include "SceneEntities/3D/terrain.h"
-#include "SceneEntities/3D/PhysBox.h"
+#include "SceneEntities/3D/PhysBox3D.h"
 
 #include "Root/Physics/Physics.h"
 

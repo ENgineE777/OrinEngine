@@ -17,17 +17,18 @@
 	"scenes" : [
 		{
 			"path" : "Scene.sca",
-			"selected_entity" : 653309,
+			"selected_entity" : 292792,
+			"camera2DMode" : false,
 			"camera3DAngles" :
 			{
-				"x" : -2.899987,
-				"y" : -0.730796
+				"x" : -2.629987,
+				"y" : -0.600796
 			},
 			"camera3DPos" :
 			{
-				"x" : 126.322609,
-				"y" : 29.974146,
-				"z" : 23.643793
+				"x" : 37.376877,
+				"y" : 29.570961,
+				"z" : 21.073912
 			},
 			"camera2DPos" :
 			{
