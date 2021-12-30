@@ -843,7 +843,7 @@ namespace Oak
 
 	void AssetAnimGraph2DRef::SetupCreatedSceneEntity(SceneEntity* entity)
 	{
-		AnimGraph2D* sprite = reinterpret_cast<AnimGraph2D*>(entity);
+		AnimGraph2D* sprite = dynamic_cast<AnimGraph2D*>(entity);
 
 		if (sprite)
 		{

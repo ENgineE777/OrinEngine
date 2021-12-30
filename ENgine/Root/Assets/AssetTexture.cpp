@@ -382,7 +382,7 @@ namespace Oak
 
 	void AssetTextureRef::SetupCreatedSceneEntity(SceneEntity* entity)
 	{
-		SpriteEntity* sprite = reinterpret_cast<SpriteEntity*>(entity);
+		SpriteEntity* sprite = dynamic_cast<SpriteEntity*>(entity);
 
 		if (sprite)
 		{

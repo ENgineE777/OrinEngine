@@ -116,7 +116,7 @@ namespace Oak
 
 	void AssetTileSetRef::SetupCreatedSceneEntity(SceneEntity* entity)
 	{
-		TileMap* tileMap = reinterpret_cast<TileMap*>(entity);
+		TileMap* tileMap = dynamic_cast<TileMap*>(entity);
 
 		if (tileMap)
 		{

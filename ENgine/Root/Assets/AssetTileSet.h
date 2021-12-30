@@ -51,7 +51,7 @@ namespace Oak
 	public:
 
 		AssetTileSetRef() : PointerRef() {};
-		AssetTileSetRef(Asset* setPtr, const char* file, int line) : PointerRef(reinterpret_cast<AssetTileSet*>(setPtr), _FL_) {};
+		AssetTileSetRef(Asset* setPtr, const char* file, int line) : PointerRef(dynamic_cast<AssetTileSet*>(setPtr), _FL_) {};
 		AssetTileSetRef(AssetTileSet* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
 
 		AssetTileSetRef& operator=(const AssetTileSetRef& ref)

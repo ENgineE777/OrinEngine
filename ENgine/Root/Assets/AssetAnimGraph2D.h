@@ -121,7 +121,7 @@ namespace Oak
 	public:
 
 		AssetAnimGraph2DRef() : PointerRef() {};
-		AssetAnimGraph2DRef(Asset* setPtr, const char* file, int line) : PointerRef(reinterpret_cast<AssetAnimGraph2D*>(setPtr), _FL_) {};
+		AssetAnimGraph2DRef(Asset* setPtr, const char* file, int line) : PointerRef(dynamic_cast<AssetAnimGraph2D*>(setPtr), _FL_) {};
 		AssetAnimGraph2DRef(AssetAnimGraph2D* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
 		
 		AssetAnimGraph2DRef& operator=(const AssetAnimGraph2DRef& ref)
