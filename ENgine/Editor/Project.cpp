@@ -99,11 +99,6 @@ namespace Oak
 
 		StringUtils::Copy(holder->scene->projectScenePath, 512, holder->path.c_str());
 		holder->scene->Load(path);
-
-		int len = (int)strlen(path);
-
-		path[len - 2] = 'n';
-		path[len - 1] = 't';
 	}
 
 	void Project::Save(const char* fileName)
