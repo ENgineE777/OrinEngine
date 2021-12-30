@@ -49,6 +49,8 @@ namespace Oak
 		Assets::Folder* selectedFolder = nullptr;
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
 		Asset* selectedAsset = nullptr;
+		bool isPrefabSelected = false;
+		Scene* selectedScene = nullptr;
 
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
@@ -114,7 +116,6 @@ namespace Oak
 
 	public:
 
-		Scene* selectedScene = nullptr;
 		SceneEntity* selectedEntity = nullptr;
 		Project project;
 		FreeCamera freeCamera;

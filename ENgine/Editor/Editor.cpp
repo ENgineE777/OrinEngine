@@ -1184,12 +1184,26 @@ namespace Oak
 							}
 							else
 							{
-								selectedScene->AddEntity(entity, selectedEntity);
+								if (!isPrefabSelected)
+								{
+									selectedScene->AddEntity(entity, selectedEntity);
+								}
+								else
+								{
+									RELEASE(entity)
+								}
 							}
 						}
 						else
 						{
-							selectedScene->AddEntity(entity);
+							if (!isPrefabSelected)
+							{
+								selectedScene->AddEntity(entity);
+							}
+							else
+							{
+								RELEASE(entity)
+							}
 						}
 
 						if (entity)
@@ -1207,7 +1221,7 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
-			if (selectedEntity && ImGui::MenuItem("Duplicate"))
+			if (selectedEntity && (!isPrefabSelected || (isPrefabSelected && selectedEntity->GetParent() != nullptr)) && ImGui::MenuItem("Duplicate"))
 			{
 				SceneEntity* copy = selectedScene->CreateEntity(selectedEntity->className);
 
@@ -1465,11 +1479,11 @@ namespace Oak
 				}
 			}
 			else
-			if (payload.IsDataType("_ASSET_SCENE"))
+			if (payload.IsDataType("_ASSET_PREFAB"))
 			{
 				Assets::AssetHolder* holder = reinterpret_cast<Assets::AssetHolder**>(payload.Data)[0];
 
-				if (ImGui::AcceptDragDropPayload("_ASSET_SCENE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+				if (ImGui::AcceptDragDropPayload("_ASSET_PREFAB", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
 					AssetPrefab* prefab = holder->GetAsset<AssetPrefab>();
 					Scene* scene = prefab->GetScene();
@@ -1689,15 +1703,13 @@ namespace Oak
 				{
 					selectedScene->EnableTasks(false);
 
-					if (selectedAssetHolder)
+					if (isPrefabSelected)
 					{
 						selectedScene->Save(selectedAssetHolder->fullName.c_str());
 					}
-					else
-					{
-						project.SelectScene(nullptr);
-						project.Save();
-					}
+
+					project.SelectScene(nullptr);
+					project.Save();
 
 					selectedScene = nullptr;
 				}
@@ -1709,11 +1721,14 @@ namespace Oak
 				{
 					project.SelectScene(project.FindSceneHolder(item->fullName.c_str()));
 					selectedScene = project.selectedScene->scene;
+					isPrefabSelected = false;
 				}
 				else
 				if (prefab)
 				{
 					selectedScene = prefab->GetScene();
+					isPrefabSelected = true;
+
 					selectedScene->EnableTasks(true);
 
 					project.SelectScene(nullptr);
@@ -1721,11 +1736,6 @@ namespace Oak
 				}
 				else
 				{
-					if (selectedScene)
-					{
-						selectedScene->EnableTasks(false);
-					}
-
 					selectedAsset = item->GetAsset<Asset>();
 					SelectEntity(nullptr);
 				}
@@ -1756,7 +1766,7 @@ namespace Oak
 				else
 				if (StringUtils::IsEqual(item->GetAssetType(), "AssetPrefab"))
 				{
-					ImGui::SetDragDropPayload("_ASSET_SCENE", &item, sizeof(item));
+					ImGui::SetDragDropPayload("_ASSET_PREFAB", &item, sizeof(item));
 				}
 
 
@@ -1802,14 +1812,12 @@ namespace Oak
 		{
 			selectedScene->EnableTasks(false);
 
-			if (selectedAssetHolder)
+			if (isPrefabSelected)
 			{
 				selectedScene->Save(selectedAssetHolder->fullName.c_str());
 			}
-			else
-			{
-				project.Save();
-			}
+
+			project.Save();
 		}
 
 		if (selectedAsset)
@@ -1906,7 +1914,7 @@ namespace Oak
 			{
 				if (ImGui::MenuItem("Save"))
 				{
-					if (selectedScene && selectedAssetHolder)
+					if (isPrefabSelected)
 					{
 						selectedScene->Save(selectedAssetHolder->fullName.c_str());
 					}
