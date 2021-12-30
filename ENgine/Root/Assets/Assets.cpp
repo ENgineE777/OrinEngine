@@ -3,7 +3,7 @@
 namespace Oak
 {
 	eastl::map<eastl::string, eastl::string> Assets::assetCreation = { {"jpg", "AssetTexture"}, {"bmp", "AssetTexture"}, {"png", "AssetTexture"}, {"tga", "AssetTexture"},
-	                                                                   {"psd", "AssetTexture"}, {"ang", "AssetAnimGraph2D"}, {"sca", "AssetScene"}, {"tls", "AssetTileSet"} };
+	                                                                   {"psd", "AssetTexture"}, {"ang", "AssetAnimGraph2D"}, {"scn", "AssetScene"}, {"tls", "AssetTileSet"} };
 
 	void Assets::Init()
 	{
