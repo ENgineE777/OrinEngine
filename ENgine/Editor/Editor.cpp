@@ -480,7 +480,7 @@ namespace Oak
 				else
 				if (selectedEntity)
 				{
-					//selectedEntity->OnMidleMouseDown();
+					selectedEntity->OnMiddleMouseDown();
 				}
 
 				viewportCaptured = ViewportCature::MiddleButton;
@@ -649,6 +649,21 @@ namespace Oak
 					{
 						File tls;
 						tls.Open(path.c_str(), File::ModeType::WriteText);
+					}
+				}
+				else
+				if (assetDialog == CreateAssetDialog::Prefab)
+				{
+					path = StringUtils::PrintTemp("%s.prefab", path.c_str());
+
+					if (std::filesystem::exists(path.c_str()))
+					{
+						MESSAGE_BOX("Can't create a prefab file", "Prefab file already exists");
+					}
+					else
+					{
+						File prefab;
+						prefab.Open(path.c_str(), File::ModeType::WriteText);
 					}
 				}
 				else
@@ -1006,6 +1021,12 @@ namespace Oak
 			char curDir[1024];
 			GetCurrentDirectoryA(1024, curDir);
 			project.Load(projectToLoad[1] == ':' ? projectToLoad : StringUtils::PrintTemp("%s/%s", curDir, projectToLoad));
+
+			if (project.selectedScene)
+			{
+				selectedScene = project.selectedScene->scene;
+			}
+
 			ShowWindow(hwnd, SW_MAXIMIZE);
 		}
 	}
@@ -1111,7 +1132,7 @@ namespace Oak
 
 		for (auto* child : childs)
 		{
-			SceneEntity* childCopy = project.selectedScene->scene->CreateEntity(child->className);
+			SceneEntity* childCopy = selectedScene->CreateEntity(child->className);
 
 			childCopy->SetParent(copy, nullptr);
 
@@ -1144,7 +1165,7 @@ namespace Oak
 				{
 					if (ImGui::MenuItem(decl->GetShortName()))
 					{
-						auto* entity = project.selectedScene->scene->CreateEntity(decl->GetName());
+						auto* entity = selectedScene->CreateEntity(decl->GetName());
 
 						if (selectedEntity)
 						{
@@ -1163,12 +1184,12 @@ namespace Oak
 							}
 							else
 							{
-								project.selectedScene->scene->AddEntity(entity, selectedEntity);
+								selectedScene->AddEntity(entity, selectedEntity);
 							}
 						}
 						else
 						{
-							project.selectedScene->scene->AddEntity(entity);
+							selectedScene->AddEntity(entity);
 						}
 
 						if (entity)
@@ -1188,7 +1209,7 @@ namespace Oak
 
 			if (selectedEntity && ImGui::MenuItem("Duplicate"))
 			{
-				SceneEntity* copy = project.selectedScene->scene->CreateEntity(selectedEntity->className);
+				SceneEntity* copy = selectedScene->CreateEntity(selectedEntity->className);
 
 				auto* parent = selectedEntity->GetParent();
 
@@ -1198,7 +1219,7 @@ namespace Oak
 				}
 				else
 				{
-					project.selectedScene->scene->AddEntity(copy, selectedEntity);
+					selectedScene->AddEntity(copy, selectedEntity);
 				}
 
 				copy->Copy(selectedEntity);
@@ -1227,7 +1248,7 @@ namespace Oak
 				}
 				else
 				{
-					project.selectedScene->scene->DeleteEntity(entity, true);
+					selectedScene->DeleteEntity(entity, true);
 				}
 
 				entityDeletedViaPopup = true;
@@ -1271,10 +1292,10 @@ namespace Oak
 					assetDialog = CreateAssetDialog::TileSet;
 				}
 
-				/*if (ImGui::MenuItem("Prefab"))
+				if (ImGui::MenuItem("Prefab"))
 				{
 					assetDialog = CreateAssetDialog::Prefab;
-				}*/
+				}
 
 				if (assetDialog != CreateAssetDialog::Inactive)
 				{
@@ -1370,7 +1391,7 @@ namespace Oak
 							}
 							else
 							{
-								project.selectedScene->scene->DeleteEntity(dragged, false);
+								selectedScene->DeleteEntity(dragged, false);
 							}
 
 							if (parent)
@@ -1379,7 +1400,7 @@ namespace Oak
 							}
 							else
 							{
-								project.selectedScene->scene->AddEntity(dragged);
+								selectedScene->AddEntity(dragged);
 							}
 
 							dragged->UpdateVisibility();
@@ -1396,7 +1417,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
 
 					if (assetEntity)
 					{
@@ -1414,7 +1435,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_ANIM_GRAPH_2D", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
 
 					if (assetEntity)
 					{
@@ -1432,7 +1453,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = project.selectedScene->scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
 
 					if (assetEntity)
 					{
@@ -1443,7 +1464,37 @@ namespace Oak
 					dragFinished = true;
 				}
 			}
+			else
+			if (payload.IsDataType("_ASSET_SCENE"))
+			{
+				Assets::AssetHolder* holder = reinterpret_cast<Assets::AssetHolder**>(payload.Data)[0];
 
+				if (ImGui::AcceptDragDropPayload("_ASSET_SCENE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+				{
+					AssetPrefab* prefab = holder->GetAsset<AssetPrefab>();
+					Scene* scene = prefab->GetScene();
+			
+					auto& entities = scene->GetEntities();
+
+					if (entities.size() > 0)
+					{
+						auto* src = entities[0];
+
+						assetEntity = selectedScene->CreateEntity(src->className);
+
+						assetEntity->Copy(src);
+						assetEntity->PostLoad();
+
+						Scene* scene = prefab->GetScene();
+						assetEntity->SetName(scene->GetName());
+
+						CopyChilds(src, assetEntity);
+						assetEntity->UpdateVisibility();
+					}
+
+					dragFinished = true;
+				}
+			}
 
 			if (assetEntity)
 			{
@@ -1464,7 +1515,7 @@ namespace Oak
 					}
 					else
 					{
-						project.selectedScene->scene->AddEntity(assetEntity);
+						selectedScene->AddEntity(assetEntity);
 					}
 
 					assetEntity->UpdateVisibility();
@@ -1590,6 +1641,7 @@ namespace Oak
 			{
 				selectedFolder = item;
 				selectedAssetHolder = nullptr;
+
 				if (selectedAsset) selectedAsset->EnableTasks(false);
 				selectedAsset = nullptr;
 			}
@@ -1606,8 +1658,6 @@ namespace Oak
 
 		for (auto* item : folder->assets)
 		{
-			auto scene = item->GetAsset<AssetScene>();
-
 			ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
 
 			if (item == selectedAssetHolder)
@@ -1616,6 +1666,9 @@ namespace Oak
 			}
 
 			eastl::string name = item->name;
+
+			auto scene = item->GetAsset<AssetScene>();
+			auto prefab = item->GetAsset<AssetPrefab>();
 
 			if (scene && project.IsStartScene(item->fullName.c_str()))
 			{
@@ -1626,19 +1679,54 @@ namespace Oak
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
+				if (selectedAsset)
+				{
+					selectedAsset->EnableTasks(false);
+					selectedAsset = nullptr;
+				}
+
+				if (selectedScene)
+				{
+					selectedScene->EnableTasks(false);
+
+					if (selectedAssetHolder)
+					{
+						selectedScene->Save(selectedAssetHolder->fullName.c_str());
+					}
+					else
+					{
+						project.SelectScene(nullptr);
+						project.Save();
+					}
+
+					selectedScene = nullptr;
+				}
+
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
-				if (selectedAsset) selectedAsset->EnableTasks(false);
 
 				if (scene)
 				{
 					project.SelectScene(project.FindSceneHolder(item->fullName.c_str()));
-					selectedAsset = nullptr;
+					selectedScene = project.selectedScene->scene;
+				}
+				else
+				if (prefab)
+				{
+					selectedScene = prefab->GetScene();
+					selectedScene->EnableTasks(true);
+
+					project.SelectScene(nullptr);
+					SelectEntity(nullptr);
 				}
 				else
 				{
-					selectedAsset = item->GetAsset<Asset>();
+					if (selectedScene)
+					{
+						selectedScene->EnableTasks(false);
+					}
 
+					selectedAsset = item->GetAsset<Asset>();
 					SelectEntity(nullptr);
 				}
 			}
@@ -1651,20 +1739,26 @@ namespace Oak
 					AssetTextureRef* ptr = (AssetTextureRef*)&draggedTextureAsset;
 					ImGui::SetDragDropPayload("_ASSET_TEX", &ptr, sizeof(AssetTextureRef*));
 				}
-
+				else
 				if (StringUtils::IsEqual(item->GetAssetType(), "AssetAnimGraph2D"))
 				{
 					draggedAssetAnimGraph2D = item->GetAssetRef<AssetAnimGraph2DRef>();
 					AssetAnimGraph2DRef* ptr = (AssetAnimGraph2DRef*)&draggedAssetAnimGraph2D;
 					ImGui::SetDragDropPayload("_ASSET_ANIM_GRAPH_2D", &ptr, sizeof(AssetAnimGraph2DRef*));
 				}
-
+				else
 				if (StringUtils::IsEqual(item->GetAssetType(), "AssetTileSet"))
 				{
 					draggedAssetTileSet = item->GetAssetRef<AssetTileSetRef>();
 					AssetTileSetRef* ptr = (AssetTileSetRef*)&draggedAssetTileSet;
 					ImGui::SetDragDropPayload("_ASSET_TILE_SET", &ptr, sizeof(AssetTileSetRef*));
 				}
+				else
+				if (StringUtils::IsEqual(item->GetAssetType(), "AssetPrefab"))
+				{
+					ImGui::SetDragDropPayload("_ASSET_SCENE", &item, sizeof(item));
+				}
+
 
 				ImGui::EndDragDropSource();
 			}
@@ -1702,13 +1796,20 @@ namespace Oak
 			}
 		}
 
-		project.Save();
-
 		root.scripts.SetAllowDynamicReload(false);
 
-		if (project.selectedScene)
+		if (selectedScene)
 		{
-			project.EnableScene(project.selectedScene, false);
+			selectedScene->EnableTasks(false);
+
+			if (selectedAssetHolder)
+			{
+				selectedScene->Save(selectedAssetHolder->fullName.c_str());
+			}
+			else
+			{
+				project.Save();
+			}
 		}
 
 		if (selectedAsset)
@@ -1735,9 +1836,9 @@ namespace Oak
 
 		root.ClearPhysScene();
 
-		if (project.selectedScene)
+		if (selectedScene)
 		{
-			project.EnableScene(project.selectedScene, true);
+			selectedScene->EnableTasks(true);
 		}
 
 		root.scripts.SetAllowDynamicReload(true);
@@ -1805,6 +1906,11 @@ namespace Oak
 			{
 				if (ImGui::MenuItem("Save"))
 				{
+					if (selectedScene && selectedAssetHolder)
+					{
+						selectedScene->Save(selectedAssetHolder->fullName.c_str());
+					}
+
 					project.Save();
 				}
 
@@ -1987,15 +2093,15 @@ namespace Oak
 		}
 
 		{
-			ImGui::Begin(StringUtils::PrintTemp("%s###Scene", (project.selectedScene->scene ? project.selectedScene->name.c_str() : "Scene")));
+			ImGui::Begin(StringUtils::PrintTemp("%s###Scene", (selectedScene ? selectedScene->GetName() : "Scene")));
 
-			if (project.selectedScene)
+			if (selectedScene)
 			{
 				allowSceneDropTraget = true;
 
 				ImGui::BeginChild("SceneRoot");
 
-				EntitiesTreeView(project.selectedScene->scene->GetEntities());
+				EntitiesTreeView(selectedScene->GetEntities());
 
 				ImGui::EndChild();
 
@@ -2241,12 +2347,10 @@ namespace Oak
 			}
 		}
 
-		if (!projectRunning && project.selectedScene)
+		if (!projectRunning && selectedScene)
 		{
 			if (selectedAsset && selectedAsset->HasOwnTasks())
 			{
-				project.EnableScene(project.selectedScene, false);
-				selectedAsset->EnableTasks(true);
 				if (selectedAsset->Tasks())
 				{
 					selectedAsset->Tasks()->Execute(dt);
@@ -2259,8 +2363,6 @@ namespace Oak
 					selectedEntity->ApplyProperties();
 					selectedEntity->UpdateVisibility();
 				}
-
-				project.EnableScene(project.selectedScene, true);
 			}
 		}
 

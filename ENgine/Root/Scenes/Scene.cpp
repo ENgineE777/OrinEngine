@@ -146,15 +146,15 @@ namespace Oak
 
 	void Scene::Load(const char* name)
 	{
+		StringUtils::GetFileName(name, sceneName);
+		StringUtils::RemoveExtension(sceneName);
+
 		JsonReader reader;
 	
 		StringUtils::GetPath(name, scenePath);
 
 		if (reader.ParseFile(name))
 		{
-			StringUtils::GetFileName(name, sceneName);
-			StringUtils::RemoveExtension(sceneName);
-
 			reader.Read("uid", uid);
 			LoadEntities(reader, "entities", entities);
 

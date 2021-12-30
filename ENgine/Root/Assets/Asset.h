@@ -49,7 +49,7 @@ namespace Oak
 		virtual void SaveData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
 		bool HasOwnTasks();
-		void EnableTasks(bool enable);
+		virtual void EnableTasks(bool enable);
 		TaskExecutor::SingleTaskPool* Tasks();
 		TaskExecutor::SingleTaskPool* RenderTasks();
 		virtual void ImGuiProperties();

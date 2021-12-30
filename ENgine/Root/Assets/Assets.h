@@ -8,6 +8,7 @@
 #include "AssetAnimGraph2D.h"
 #include "AssetScene.h"
 #include "AssetTileSet.h"
+#include "AssetPrefab.h"
 
 namespace Oak
 {

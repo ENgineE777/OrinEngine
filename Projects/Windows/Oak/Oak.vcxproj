@@ -169,6 +169,7 @@
     <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h" />
     <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h" />
@@ -377,6 +378,7 @@
     <ClCompile Include="..\..\..\ENgine\Editor\TileSetWindow.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp" />

@@ -688,6 +688,9 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTileSet.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1312,6 +1315,9 @@
       <Filter>ENgine\Editor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTileSet.h">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h">
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
   </ItemGroup>
