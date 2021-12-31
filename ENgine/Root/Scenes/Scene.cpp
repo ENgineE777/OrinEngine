@@ -98,11 +98,6 @@ namespace Oak
 		}
 	}
 
-	const char* Scene::GetPath()
-	{
-		return scenePath;
-	}
-
 	const char* Scene::GetName()
 	{
 		return sceneName;
@@ -151,7 +146,9 @@ namespace Oak
 
 		JsonReader reader;
 	
-		StringUtils::GetPath(name, scenePath);
+		#ifdef OAK_EDITOR
+		StringUtils::Copy(projectScenePath, 512, name);
+		#endif
 
 		if (reader.ParseFile(name))
 		{

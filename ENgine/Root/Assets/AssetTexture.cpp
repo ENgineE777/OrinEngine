@@ -133,7 +133,7 @@ namespace Oak
 		}
 	}
 
-	void AssetTexture::LoadData(JsonReader& loader)
+	void AssetTexture::LoadMetaData(JsonReader& loader)
 	{
 		if (loader.EnterBlock("spriteSheet"))
 		{
@@ -202,7 +202,7 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
-	void AssetTexture::SaveData(JsonWriter& saver)
+	void AssetTexture::SaveMetaData(JsonWriter& saver)
 	{
 		saver.StartBlock("spriteSheet");
 

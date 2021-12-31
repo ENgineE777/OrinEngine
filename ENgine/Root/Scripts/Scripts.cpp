@@ -180,7 +180,11 @@ namespace Oak
 					void* Procs = GetProcAddress(newModule, "recreate_entites");
 					auto code_ptr = (decltype(recreate_entites)*)Procs;
 
-					code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.project.selectedScene->scene->GetEntities());
+					if (Oak::editor.selectedScene)
+					{
+						code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.selectedScene->GetEntities());
+						code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.selectedScene->GetEntities());
+					}
 				}
 
 				FreeLibrary((HMODULE)Module);
@@ -194,7 +198,7 @@ namespace Oak
 
 			if (uid != 0)
 			{
-				editor.SelectEntity(Oak::editor.project.selectedScene->scene->FindEntity(uid));
+				editor.SelectEntity(Oak::editor.selectedScene->FindEntity(uid));
 			}
 		}
 	}

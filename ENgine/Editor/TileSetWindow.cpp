@@ -37,7 +37,7 @@ namespace Oak
 
 		if (tileSet)
 		{
-			tileSet->SaveMetaData();
+			tileSet->Save();
 		}
 
 		tileSet = setTileSet;
@@ -55,7 +55,7 @@ namespace Oak
 		{
 			if (tileSet)
 			{
-				tileSet->SaveMetaData();
+				tileSet->Save();
 			}
 
 			tileSet = nullptr;
@@ -291,13 +291,13 @@ namespace Oak
 						TryAddSlice(texture, offset, i);
 					}
 
-					tileSet->SaveMetaData();
+					tileSet->Save();
 				}
 				else
 				if (FindTileIndex(dragX, dragY) == -1)
 				{
 					tileSet->tiles.push_back({ dragX, dragY, texture });
-					tileSet->SaveMetaData();
+					tileSet->Save();
 				}
 
 				drag = Drag::DragNone;
@@ -321,7 +321,7 @@ namespace Oak
 					TryAddSlice(texture, offset, sliceIndex);
 				}
 
-				tileSet->SaveMetaData();
+				tileSet->Save();
 
 				drag = Drag::DragNone;
 			}

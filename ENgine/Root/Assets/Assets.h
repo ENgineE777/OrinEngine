@@ -100,6 +100,19 @@ namespace Oak
 
 		void LoadAssets();
 
+		#ifdef OAK_EDITOR
+		template<class T>
+		T* GetAsset(eastl::string& path)
+		{
+			if (assetsMap.count(path) > 0)
+			{
+				return assetsMap[path]->GetAsset<T>();
+			}
+
+			return nullptr;
+		};
+		#endif
+
 		template<class T>
 		T GetAssetRef(eastl::string& path)
 		{

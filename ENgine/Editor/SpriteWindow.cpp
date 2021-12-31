@@ -131,7 +131,7 @@ namespace Oak
 			slice.upLeftOffset.y = floorf(slice.upLeftOffset.y);
 		}
 
-		texture->SaveMetaData();
+		texture->Save();
 	}
 
 	void SpriteWindow::Text(const char* name)
@@ -435,7 +435,7 @@ namespace Oak
 				}
 
 				free(data);
-				texture->SaveMetaData();
+				texture->Save();
 			}
 		}
 
@@ -471,7 +471,7 @@ namespace Oak
 			if (changed)
 			{
 				FillRects();
-				texture->SaveMetaData();
+				texture->Save();
 			}
 		}
 		else
@@ -810,7 +810,7 @@ namespace Oak
 			ImGui::EndChild();
 		}
 
-		if (changed) texture->SaveMetaData();
+		if (changed) texture->Save();
 
 		ImGui::End();
 	}

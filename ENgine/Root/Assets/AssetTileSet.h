@@ -36,12 +36,12 @@ namespace Oak
 
 		void Reload() override;
 
-		void LoadData(JsonReader& loader) override;
+		void LoadMetaData(JsonReader& loader) override;
 
 		#ifdef OAK_EDITOR
 		bool IsTileSelected();
 		AssetTextureRef GetSelectedTile();
-		void SaveData(JsonWriter& saver) override;
+		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif
 	};

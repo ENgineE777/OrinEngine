@@ -44,7 +44,7 @@ namespace Oak
 	{
 	}
 
-	void AssetAnimGraph2D::LoadData(JsonReader& loader)
+	void AssetAnimGraph2D::LoadMetaData(JsonReader& loader)
 	{
 		loader.Read("camPos", camPos);
 		loader.Read("camZoom", camZoom);
@@ -112,7 +112,7 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
-	void AssetAnimGraph2D::SaveData(JsonWriter& saver)
+	void AssetAnimGraph2D::SaveMetaData(JsonWriter& saver)
 	{
 		saver.Write("camPos", camPos);
 		saver.Write("camZoom", camZoom);
@@ -484,7 +484,7 @@ namespace Oak
 
 		if (changed)
 		{
-			SaveMetaData();
+			Save();
 		}
 	}
 
@@ -502,7 +502,7 @@ namespace Oak
 				{
 					nodes[node].texture = *(reinterpret_cast<AssetTextureRef**>(payload->Data)[0]);
 
-					SaveMetaData();
+					Save();
 				}
 			}
 		}
@@ -569,7 +569,7 @@ namespace Oak
 
 			if (changed)
 			{
-				SaveMetaData();
+				Save();
 			}
 
 			ImGui::EndPopup();
@@ -689,7 +689,7 @@ namespace Oak
 
 				selLink = (int)nodes[selNode].links.size() - 1;
 
-				SaveMetaData();
+				Save();
 			}
 
 			targetNode = -1;
@@ -697,7 +697,7 @@ namespace Oak
 
 		if (drag == DragMode::MoveNode)
 		{
-			SaveMetaData();
+			Save();
 		}
 
 		drag = DragMode::None;

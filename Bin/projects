@@ -12,6 +12,10 @@
 		{
 			"name" : "HordeKiller",
 			"path" : "F:/Work/RS/HordeRobbery/HordeKiller.pra"
+		},
+		{
+			"name" : "Rabbithole",
+			"path" : "F:/Work/Rabbithole/Rabbithole.pra"
 		}
 	]
 }

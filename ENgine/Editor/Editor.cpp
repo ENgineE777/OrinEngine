@@ -662,8 +662,16 @@ namespace Oak
 					}
 					else
 					{
-						File prefab;
-						prefab.Open(path.c_str(), File::ModeType::WriteText);
+						AssetPrefab* prefab = new AssetPrefab();
+						prefab->Init();
+						prefab->SetPath(path.c_str());
+
+						project.AddScene(prefab);
+						prefab->Save();
+
+						delete prefab;
+
+						project.Save();
 					}
 				}
 				else
@@ -677,7 +685,15 @@ namespace Oak
 					}
 					else
 					{
-						project.AddScene(path.c_str());
+						AssetScene* scene = new AssetScene();
+						scene->Init();
+						scene->SetPath(path.c_str());
+
+						project.AddScene(scene);
+						scene->Save();
+
+						delete scene;
+
 						project.Save();
 					}
 				}
@@ -1022,11 +1038,6 @@ namespace Oak
 			GetCurrentDirectoryA(1024, curDir);
 			project.Load(projectToLoad[1] == ':' ? projectToLoad : StringUtils::PrintTemp("%s/%s", curDir, projectToLoad));
 
-			if (project.selectedScene)
-			{
-				selectedScene = project.selectedScene->scene;
-			}
-
 			ShowWindow(hwnd, SW_MAXIMIZE);
 		}
 	}
@@ -1067,6 +1078,16 @@ namespace Oak
 				gizmo.mode = TransformMode::Move;
 			}
 		}
+	}
+
+	void Editor::SelectScene(AssetScene* scene)
+	{
+		selectedSceneAsset = scene;
+		selectedSceneAsset->ActivateScene(true);
+
+		selectedScene = selectedSceneAsset->GetScene();
+
+		isPrefabSelected = dynamic_cast<AssetPrefab*>(scene) != nullptr;
 	}
 
 	bool Editor::CreateDeviceD3D()
@@ -1701,43 +1722,25 @@ namespace Oak
 
 				if (selectedScene)
 				{
-					selectedScene->EnableTasks(false);
+					selectedSceneAsset->ActivateScene(false);
+					selectedSceneAsset->Save();
 
-					if (isPrefabSelected)
-					{
-						selectedScene->Save(selectedAssetHolder->fullName.c_str());
-					}
-
-					project.SelectScene(nullptr);
 					project.Save();
 
+					selectedSceneAsset = nullptr;
 					selectedScene = nullptr;
 				}
 
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
 
-				if (scene)
+				if (scene || prefab)
 				{
-					project.SelectScene(project.FindSceneHolder(item->fullName.c_str()));
-					selectedScene = project.selectedScene->scene;
-					isPrefabSelected = false;
-				}
-				else
-				if (prefab)
-				{
-					selectedScene = prefab->GetScene();
-					isPrefabSelected = true;
-
-					selectedScene->EnableTasks(true);
-
-					project.SelectScene(nullptr);
-					SelectEntity(nullptr);
+					SelectScene(scene ? scene : prefab);
 				}
 				else
 				{
 					selectedAsset = item->GetAsset<Asset>();
-					SelectEntity(nullptr);
 				}
 			}
 
@@ -1812,10 +1815,7 @@ namespace Oak
 		{
 			selectedScene->EnableTasks(false);
 
-			if (isPrefabSelected)
-			{
-				selectedScene->Save(selectedAssetHolder->fullName.c_str());
-			}
+			selectedSceneAsset->Save();
 
 			project.Save();
 		}
@@ -1914,9 +1914,9 @@ namespace Oak
 			{
 				if (ImGui::MenuItem("Save"))
 				{
-					if (isPrefabSelected)
+					if (selectedSceneAsset)
 					{
-						selectedScene->Save(selectedAssetHolder->fullName.c_str());
+						selectedSceneAsset->Save();
 					}
 
 					project.Save();

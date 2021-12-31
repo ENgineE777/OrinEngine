@@ -40,13 +40,13 @@ namespace Oak
 		void SetPath(const char* setPath);
 		const eastl::string& GetPath();
 
-		virtual void LoadData(JsonReader& loader);
+		virtual void LoadMetaData(JsonReader& loader);
 
 		#ifdef OAK_EDITOR
 		const eastl::string& GetName();
 		bool WasChanged();
-		void SaveMetaData();
-		virtual void SaveData(JsonWriter& saver);
+		void Save();
+		virtual void SaveMetaData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
 		bool HasOwnTasks();
 		virtual void EnableTasks(bool enable);

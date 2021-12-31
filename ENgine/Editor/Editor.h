@@ -50,7 +50,7 @@ namespace Oak
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
 		Asset* selectedAsset = nullptr;
 		bool isPrefabSelected = false;
-		Scene* selectedScene = nullptr;
+		AssetScene* selectedSceneAsset = nullptr;
 
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
@@ -117,6 +117,7 @@ namespace Oak
 	public:
 
 		SceneEntity* selectedEntity = nullptr;
+		Scene* selectedScene = nullptr;
 		Project project;
 		FreeCamera freeCamera;
 		Gizmo gizmo;
@@ -135,6 +136,7 @@ namespace Oak
 		void OnResize(int width, int height) override;
 
 		void SelectEntity(SceneEntity* entity);
+		void SelectScene(AssetScene* scene);
 
 		void Release() override;
 

@@ -77,7 +77,7 @@ namespace Oak
 
 		void Reload() override;
 
-		void LoadData(JsonReader& loader) override;
+		void LoadMetaData(JsonReader& loader) override;
 
 		#ifdef OAK_EDITOR
 		Math::Vector2 nodeSize = Math::Vector2(150.0f, 80.0f);
@@ -91,7 +91,7 @@ namespace Oak
 		Math::Vector2 camPos;
 		Math::Vector2 mousePos;
 
-		void SaveData(JsonWriter& saver) override;
+		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		void Draw(float dt);
 		int GetNodeIndex(Math::Vector2& ms);

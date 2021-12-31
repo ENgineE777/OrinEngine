@@ -62,12 +62,7 @@ namespace Oak
 				reader.Read("path", str);
 				scn->SetPath(str.c_str());
 
-				reader.Read("selected_entity", scn->selectedEntity);
-				reader.Read("camera2DMode", scn->camera2DMode);
-				reader.Read("camera3DAngles", scn->camera3DAngles);
-				reader.Read("camera3DPos", scn->camera3DPos);
-				reader.Read("camera2DPos", scn->camera2DPos);
-				reader.Read("camera2DZoom", scn->camera2DZoom);
+				reader.Read("uid", scn->uid);
 
 				reader.LeaveBlock();
 			}
@@ -75,30 +70,13 @@ namespace Oak
 			eastl::string edScene;
 			reader.Read("selected_scene", edScene);
 
-			int sceneIndex = FindSceneIndex(edScene.c_str());
+			auto* scene = root.assets.GetAsset<AssetScene>(edScene);
 
-			if (sceneIndex != -1)
+			if (scene)
 			{
-				SelectScene(scenes[sceneIndex]);
+				editor.SelectScene(scene);
 			}
 		}
-	}
-
-	void Project::LoadScene(SceneHolder* holder)
-	{
-		if (holder->scene)
-		{
-			return;
-		}
-
-		holder->scene = new Scene();
-		holder->scene->Init();
-
-		char path[1024];
-		StringUtils::Printf(path, 1024, "%s%s", projectPath, holder->path.c_str());
-
-		StringUtils::Copy(holder->scene->projectScenePath, 512, holder->path.c_str());
-		holder->scene->Load(path);
 	}
 
 	void Project::Save(const char* fileName)
@@ -119,30 +97,6 @@ namespace Oak
 
 	void Project::Save()
 	{
-		if (selectedScene)
-		{
-			FillSelectedObject(selectedScene);
-			SaveCameraPos(selectedScene);
-		}
-
-		for (auto& holder : scenes)
-		{
-			if (!holder->scene)
-			{
-				continue;
-			}
-
-			char path[1024];
-			StringUtils::Printf(path, 1024, "%s%s", projectPath, holder->path.c_str());
-
-			holder->scene->Save(path);
-
-			int len = (int)strlen(path);
-
-			path[len - 2] = 'n';
-			path[len - 1] = 't';
-		}
-
 		JsonWriter writer;
 		writer.Start(projectFullName.c_str());
 
@@ -177,38 +131,14 @@ namespace Oak
 			writer.StartBlock(nullptr);
 
 			writer.Write("path", scn->path.c_str());
-			writer.Write("selected_entity", scn->selectedEntity);
-			writer.Write("camera2DMode", scn->camera2DMode);
-			writer.Write("camera3DAngles", scn->camera3DAngles);
-			writer.Write("camera3DPos", scn->camera3DPos);
-			writer.Write("camera2DPos", scn->camera2DPos);
-			writer.Write("camera2DZoom", scn->camera2DZoom);
+			writer.Write("uid", scn->uid);
 
 			writer.FinishBlock();
 		}
 
 		writer.FinishArray();
 
-		if (selectedScene)
-		{
-			writer.Write("selected_scene", selectedScene->path.c_str());
-		}
-		else
-		{
-			writer.Write("selected_scene", "");
-		}
-	}
-
-	void Project::FillSelectedObject(SceneHolder* holder)
-	{
-		if (editor.selectedEntity)
-		{
-			holder->selectedEntity = editor.selectedEntity->GetUID();
-		}
-		else
-		{
-			holder->selectedEntity = -1;
-		}
+		writer.Write("selected_scene", editor.selectedScene ? editor.selectedScene->projectScenePath : "");
 	}
 
 	void Project::SetStartScene(const char* path)
@@ -229,49 +159,6 @@ namespace Oak
 	bool Project::IsStartScene(const char* path)
 	{
 		return startScene == FindSceneIndex(path);
-	}
-
-	void Project::SelectScene(SceneHolder* holder)
-	{
-		if (holder == selectedScene)
-		{
-			return;
-		}
-
-		if (selectedScene)
-		{
-			SaveCameraPos(selectedScene);
-
-			FillSelectedObject(selectedScene);
-			editor.SelectEntity(nullptr);
-
-			EnableScene(selectedScene, false);
-		}
-
-		selectedScene = holder;
-
-		if (selectedScene)
-		{
-			if (!selectedScene->scene)
-			{
-				LoadScene(selectedScene);
-			}
-
-			editor.freeCamera.mode2D = selectedScene->camera2DMode;
-
-			editor.freeCamera.angles = selectedScene->camera3DAngles;
-			editor.freeCamera.pos = selectedScene->camera3DPos;
-
-			editor.freeCamera.pos2D = selectedScene->camera2DPos;
-			editor.freeCamera.zoom2D = selectedScene->camera2DZoom;
-
-			EnableScene(selectedScene, true);
-
-			if (selectedScene->selectedEntity != -1)
-			{
-				editor.SelectEntity(selectedScene->scene->FindEntity(selectedScene->selectedEntity));
-			}
-		}
 	}
 
 	Project::SceneHolder* Project::FindSceneHolder(const char* path)
@@ -304,74 +191,30 @@ namespace Oak
 		return -1;
 	}
 
-	Scene* Project::GetScene(const char* path)
-	{
-		int index = FindSceneIndex(path);
-
-		if (index != -1)
-		{
-			if (!scenes[index]->scene)
-			{
-				LoadScene(scenes[index]);
-				scenes[index]->scene->EnableTasks(false);
-			}
-
-			return scenes[index]->scene;
-		}
-
-		return nullptr;
-	}
-
-	void Project::AddScene(const char* path)
+	void Project::AddScene(AssetScene* scene)
 	{
 		char cropped_path[1024];
-		StringUtils::GetCropPath(projectPath, path, cropped_path, 1024);
+		StringUtils::GetCropPath(projectPath, scene->GetPath().c_str(), cropped_path, 1024);
 
-		if (FindSceneIndex(cropped_path) != -1)
+		/*if (FindSceneIndex(cropped_path) != -1)
 		{
 			return;
-		}
+		}*/
 
 		SceneHolder* holder = new SceneHolder();
 		holder->SetPath(cropped_path);
 
-		LoadScene(holder);
-
-		if (holder->uid == 0)
-		{
-			GenerateUID(holder);
-		}
-		else
-		{
-			for (auto& scn : scenes)
-			{
-				if (scn == holder)
-				{
-					continue;
-				}
-
-				if (scn->uid == holder->uid)
-				{
-					holder->scene->Clear();
-					delete holder->scene;
-					delete holder;
-
-					return;
-				}
-			}
-		}
-
-		holder->uid = holder->scene->uid;
+		GenerateUID(holder);
 
 		scenes.push_back(holder);
+
+		scene->GetScene()->uid = holder->uid;
 
 		char name[256];
 		StringUtils::GetFileName(cropped_path, name);
 		StringUtils::RemoveExtension(name);
 
 		holder->SetPath(cropped_path);
-
-		SelectScene(holder);
 	}
 
 	void Project::DeleteScene(SceneHolder* holder)
@@ -385,20 +228,9 @@ namespace Oak
 				startScene = -1;
 			}
 
-			if (selectedScene == scenes[index])
-			{
-				SelectScene(nullptr);
-			}
-
-			delete scenes[index]->scene;
 			delete scenes[index];
 			scenes.erase(scenes.begin() + index);
 		}
-	}
-
-	void Project::EnableScene(SceneHolder* holder, bool enable)
-	{
-		holder->scene->EnableTasks(enable);
 	}
 
 	void Project::GenerateUID(SceneHolder* holder)
@@ -427,7 +259,6 @@ namespace Oak
 			if (uid != 0)
 			{
 				holder->uid = uid;
-				holder->scene->uid = uid;
 			}
 		}
 	}
@@ -442,13 +273,7 @@ namespace Oak
 		Sprite::pixelsHeight = 1080.0f;
 
 		editor.SelectEntity(nullptr);
-		selectedScene = nullptr;
-
-		for (auto& scn : scenes)
-		{
-			RELEASE(scn->scene)
-			delete scn;
-		}
+		editor.selectedScene = nullptr;
 
 		scenes.clear();
 
@@ -618,16 +443,5 @@ namespace Oak
 		rename((exportDir + "/Oak.exe").c_str(), (exportDir + "/" + projectName + ".exe").c_str());
 
 		MESSAGE_BOX("Export finished", (eastl::string("Resources of project were exported to folder:\n") + exportDir).c_str());
-	}
-
-	void Project::SaveCameraPos(SceneHolder* holder)
-	{
-		holder->camera2DMode = editor.freeCamera.mode2D;
-
-		holder->camera3DAngles = editor.freeCamera.angles;
-		holder->camera3DPos = editor.freeCamera.pos;
-
-		holder->camera2DPos = editor.freeCamera.pos2D;
-		holder->camera2DZoom = editor.freeCamera.zoom2D;
 	}
 }

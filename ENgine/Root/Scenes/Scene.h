@@ -65,7 +65,6 @@ namespace Oak
 
 		uint16_t uid = 0;
 
-		char scenePath[512];
 		char sceneName[512];
 
 		void LoadEntities(JsonReader& reader, const char* name, eastl::vector<SceneEntity*>& entities);
@@ -79,7 +78,6 @@ namespace Oak
 
 		void Init();
 	
-		const char* GetPath();
 		const char* GetName();
 
 		void Clear();

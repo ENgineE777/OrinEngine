@@ -34,11 +34,11 @@ namespace Oak
 		if (reader.ParseFile(strName))
 		{
 			GetMetaData()->Load(reader);
-			LoadData(reader);
+			LoadMetaData(reader);
 		}
 		else
 		{
-			SaveMetaData();
+			Save();
 		}
 #endif
 	}
@@ -48,7 +48,7 @@ namespace Oak
 		return path;
 	}
 
-	void Asset::LoadData(JsonReader& loader)
+	void Asset::LoadMetaData(JsonReader& loader)
 	{
 
 	}
@@ -77,7 +77,7 @@ namespace Oak
 		return false;
 	}
 
-	void Asset::SaveMetaData()
+	void Asset::Save()
 	{
 		char strName[512];
 
@@ -90,10 +90,10 @@ namespace Oak
 		GetMetaData()->Prepare(this);
 		GetMetaData()->Save(writer);
 
-		SaveData(writer);
+		SaveMetaData(writer);
 	}
 
-	void Asset::SaveData(JsonWriter& saver)
+	void Asset::SaveMetaData(JsonWriter& saver)
 	{
 
 	}
@@ -139,7 +139,7 @@ namespace Oak
 		if (GetMetaData()->IsValueWasChanged())
 		{
 			Reload();
-			SaveMetaData();
+			Save();
 		}
 	}
 

@@ -31,7 +31,7 @@ namespace Oak
 	{
 	}
 
-	void AssetTileSet::LoadData(JsonReader& loader)
+	void AssetTileSet::LoadMetaData(JsonReader& loader)
 	{
 		if (loader.EnterBlock("tileSet"))
 		{
@@ -74,7 +74,7 @@ namespace Oak
 		return selTile != -1 ? tiles[selTile].texture : AssetTextureRef();
 	}
 
-	void AssetTileSet::SaveData(JsonWriter& saver)
+	void AssetTileSet::SaveMetaData(JsonWriter& saver)
 	{
 		saver.StartBlock("tileSet");
 
