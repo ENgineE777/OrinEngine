@@ -25,11 +25,12 @@ The users' games are theirs.
 - Sprite Editor
 - Animation graphs
 - Scripting system based on using C++ as scripting language
-- Hot reload of gameplay code (WIP)
+- Hot reload of gameplay code
 - Render system with support of DX11, OpenGL ES 3, Metal and Vulkan (WIP)
-- Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview) (WIP)
+- Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview)
 - And lots, lots more
 
 **Editor**
 
 Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OakEngine/releases
+Warning: CMAKE and Visual Studio are needed for compilation of gameplay code
