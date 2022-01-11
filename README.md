@@ -29,3 +29,7 @@ The users' games are theirs.
 - Render system with support of DX11, OpenGL ES 3, Metal and Vulkan (WIP)
 - Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview) (WIP)
 - And lots, lots more
+
+**Editor**
+
+Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OakEngine/releases
