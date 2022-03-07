@@ -241,6 +241,36 @@ namespace Oak
 		}
 	}
 
+	void Editor::SelectAsset(Asset* asset)
+	{
+		if (asset == selectedAsset)
+		{
+			return;
+		}
+
+		if (asset == nullptr)
+		{
+			selectedAsset->EnableTasks(false);
+
+			if (selectedScene)
+			{
+				selectedScene->EnableTasks(true);
+			}
+		}
+
+		selectedAsset = asset;
+
+		if (selectedAsset != nullptr)
+		{
+			selectedAsset->EnableTasks(true);
+
+			if (selectedScene)
+			{
+				selectedScene->EnableTasks(false);
+			}
+		}
+	}
+
 	void Editor::SetupImGUI()
 	{
 		IMGUI_CHECKVERSION();
@@ -1046,8 +1076,7 @@ namespace Oak
 	{
 		if (entity != nullptr && selectedAsset)
 		{
-			selectedAsset->EnableTasks(false);
-			selectedAsset = nullptr;
+			SelectAsset(nullptr);
 		}
 
 		if (selectedEntity)
@@ -1677,8 +1706,7 @@ namespace Oak
 				selectedFolder = item;
 				selectedAssetHolder = nullptr;
 
-				if (selectedAsset) selectedAsset->EnableTasks(false);
-				selectedAsset = nullptr;
+				SelectAsset(nullptr);
 			}
 
 			AssetsTreePopup(true);
@@ -1714,11 +1742,7 @@ namespace Oak
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
-				if (selectedAsset)
-				{
-					selectedAsset->EnableTasks(false);
-					selectedAsset = nullptr;
-				}
+				SelectAsset(nullptr);
 
 				if (selectedScene)
 				{
@@ -1740,7 +1764,7 @@ namespace Oak
 				}
 				else
 				{
-					selectedAsset = item->GetAsset<Asset>();
+					SelectAsset(item->GetAsset<Asset>());
 				}
 			}
 

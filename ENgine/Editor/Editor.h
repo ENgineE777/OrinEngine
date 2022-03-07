@@ -146,6 +146,8 @@ namespace Oak
 
 	private:
 
+		void SelectAsset(Asset* asset);
+
 		void SetupImGUI();
 		bool ShowEditor();
 		void ShowCreateAssetDialog();
