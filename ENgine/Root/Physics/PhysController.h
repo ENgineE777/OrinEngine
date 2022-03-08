@@ -76,7 +76,7 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC PhysController : public PxUserControllerHitReport, public PxControllerBehaviorCallback, public PxQueryFilterCallback, public PhysObjectBase
+	class CLASS_DECLSPEC PhysController : public PxUserControllerHitReport, public PxControllerBehaviorCallback, public PxQueryFilterCallback, public PxControllerFilterCallback, public PhysObjectBase
 	{
 		friend class PhysScene;
 		PxController* controller = nullptr;
@@ -106,9 +106,12 @@ namespace Oak
 		void onObstacleHit(const PxControllerObstacleHit& hit) override {};
 
 		// Implements PxControllerBehaviorCallback
-		PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor)  override;
-		PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller)  override;
-		PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle)  override;
+		PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor) override;
+		PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) override;
+		PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) override;
+
+		//PxControllerFilterCallback
+		bool filter(const PxController& a, const PxController& b) override;
 	#endif
 
 		/**

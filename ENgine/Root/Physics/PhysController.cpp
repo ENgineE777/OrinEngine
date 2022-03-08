@@ -126,12 +126,32 @@ namespace Oak
 		return PxControllerBehaviorFlag::eCCT_CAN_RIDE_ON_OBJECT | PxControllerBehaviorFlag::eCCT_SLIDE;
 	}
 
+	bool PhysController::filter(const PxController& a, const PxController& b)
+	{
+		PhysScene::BodyUserData* udataA = static_cast<PhysScene::BodyUserData*>(GetUserData());
+		PhysScene::BodyUserData* udataB = static_cast<PhysScene::BodyUserData*>(GetUserData() == a.getUserData() ? b.getUserData() : a.getUserData());
+
+		auto actor = b.getActor();
+		PxShape* shape;
+		actor->getShapes(&shape, 1);
+
+		if (ignore_group != 0 && (ignore_group & shape->getQueryFilterData().word0))
+		{
+			return false;
+		}
+
+		if (!(collide_group & shape->getQueryFilterData().word0))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	PxQueryHitType::Enum PhysController::preFilter(const PxFilterData& filterData, const PxShape* shape, const PxRigidActor* actor, PxHitFlags& queryFlags)
 	{
 		PhysScene::BodyUserData* udataA = static_cast<PhysScene::BodyUserData*>(GetUserData());
 		PhysScene::BodyUserData* udataB = static_cast<PhysScene::BodyUserData*>(actor->userData);
-
-		auto jkl = shape->getQueryFilterData().word0;
 
 		if (ignore_group != 0 && (ignore_group & shape->getQueryFilterData().word0))
 		{
@@ -258,6 +278,7 @@ namespace Oak
 
 		PxControllerFilters filters = PxControllerFilters();
 		filters.mFilterCallback = this;
+		filters.mCCTFilterCallback = this;
 
 		if (scene->inPhysUpdate)
 		{
