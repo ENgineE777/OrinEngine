@@ -10,7 +10,7 @@
 
 namespace Oak
 {
-	class TileMap : public SceneEntity
+	class CLASS_DECLSPEC TileMap : public SceneEntity
 	{
 	public:
 
@@ -50,6 +50,8 @@ namespace Oak
 
 		void Load(JsonReader& reader) override;
 		void Save(JsonWriter& writer) override;
+
+		bool IsPointHitTileMap(Math::Vector2 point);
 
 		void Release() override;
 

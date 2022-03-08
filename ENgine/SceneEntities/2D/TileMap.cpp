@@ -157,6 +157,32 @@ namespace Oak
 		writer.FinishArray();
 	}
 
+	bool TileMap::IsPointHitTileMap(Math::Vector2 point)
+	{
+		if (point.x < 0.0f)
+		{
+			point.x -= transform.size.x;
+		}
+
+		if (point.y > 0.0f)
+		{
+			point.y += transform.size.x;
+		}
+
+		int x = (int)(point.x / (transform.size.x));
+		int y = (int)(point.y / (transform.size.y));
+
+		for (auto tile : tiles)
+		{
+			if (tile.x == x && tile.y == y)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	void TileMap::Release()
 	{
 		for (auto* item : collition)
