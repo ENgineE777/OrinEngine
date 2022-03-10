@@ -14,9 +14,10 @@ namespace Oak
 		}
 
 		PhysObject* obj = new PhysObject();
-		obj->scene = this;
 
+		obj->scene = this;
 		obj->body_type = type;
+		obj->group = group;
 
 		PxReal density = 1.0f;
 
@@ -126,6 +127,7 @@ namespace Oak
 			hm->body_type = PhysObject::PhysObject::Static;
 
 			hm->heightField = root.physics.physics->createHeightField(reader);
+			hm->group = group;
 
 			if (hm->heightField)
 			{

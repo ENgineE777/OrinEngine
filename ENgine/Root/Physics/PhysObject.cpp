@@ -58,7 +58,12 @@ namespace Oak
 		((PxRigidDynamic*)actor)->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 	}
 
-	void PhysObject::SetGroup(int group)
+	int PhysObject::GetGroup()
+	{
+		return group;
+	}
+
+	void PhysObject::SetGroup(int setGroup)
 	{
 		if (scene->inPhysUpdate)
 		{
@@ -66,6 +71,7 @@ namespace Oak
 			return;
 		}
 
+		group = setGroup;
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 
@@ -150,6 +156,11 @@ namespace Oak
 
 	void PhysObject::ActualRelease()
 	{
+		if (heightField)
+		{
+			heightField->release();
+		}
+
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 		actor->detachShape(*shape);

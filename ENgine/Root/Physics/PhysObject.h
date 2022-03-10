@@ -79,6 +79,13 @@ namespace Oak
 		BodyType GetType();
 
 		/**
+		\brief Get group
+
+		\return Physical group
+		*/
+		int GetGroup();
+
+		/**
 		\brief Set belonging to a physical group
 
 		\param[in] group Physical group
@@ -122,6 +129,7 @@ namespace Oak
 		BodyType body_type;
 		PxHeightField* heightField = nullptr;
 		PxRigidActor* actor = nullptr;
+		int group = 1;
 		bool is_active = true;
 		void ActualRelease() override;
 	};
