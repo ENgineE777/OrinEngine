@@ -75,6 +75,10 @@ namespace Oak
 			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, physGroup);
 			box->SetActive(IsVisible());
 
+			body.object = this;
+			body.body = box;
+			body.body->SetUserData(&body);
+
 			collition.push_back(box);
 		}
 	}

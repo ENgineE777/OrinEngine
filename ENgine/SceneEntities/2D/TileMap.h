@@ -7,6 +7,7 @@
 #include "Root/Assets/AssetTileSet.h"
 #include "Root/Assets/AssetTexture.h"
 #include "Root/Physics/PhysObject.h"
+#include "Root/Physics/PhysScene.h"
 
 namespace Oak
 {
@@ -29,6 +30,8 @@ namespace Oak
 
 		eastl::vector<Tile> tiles;
 		eastl::vector<PhysObject*> collition;
+
+		PhysScene::BodyUserData body;
 
 		int drawLevel = 0;
 		AssetTileSetRef tileSet;
