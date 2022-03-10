@@ -82,9 +82,8 @@ namespace Oak
 		PxController* controller = nullptr;
 		float height = 1.0f;
 		bool active = true;
-		Math::Vector3 deactive_pos;
-		uint32_t collide_group;
-		uint32_t ignore_group;
+		Math::Vector3 deactivePos;
+		uint32_t collideGroup;
 		PhysScene* scene = nullptr;
 
 	public:
@@ -106,7 +105,7 @@ namespace Oak
 		void onObstacleHit(const PxControllerObstacleHit& hit) override {};
 
 		// Implements PxControllerBehaviorCallback
-		PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor) override;
+		PxControllerBehaviorFlags getBehaviorFlags(const PxShape& shape, const PxActor& actor)  override;
 		PxControllerBehaviorFlags getBehaviorFlags(const PxController& controller) override;
 		PxControllerBehaviorFlags getBehaviorFlags(const PxObstacle& obstacle) override;
 
@@ -165,7 +164,7 @@ namespace Oak
 		\param[in] group With which collision group should be collided
 		\param[in] group Which collision group should be ignored
 		*/
-		void Move(Math::Vector3 dir, uint32_t group, uint32_t ignore_group);
+		void Move(Math::Vector3 dir, uint32_t group);
 
 		/**
 		\brief Set up direction

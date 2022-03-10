@@ -53,9 +53,9 @@ namespace Oak
 		controller->SetUserData(&bodyData);
 	}
 
-	void KinematicCapsule3D::Move(Math::Vector3 dir, uint32_t ignoreGroup)
+	void KinematicCapsule3D::Move(Math::Vector3 dir, uint32_t group)
 	{
-		controller->Move(dir * root.GetDeltaTime(), physGroup, ignoreGroup);
+		controller->Move(dir * root.GetDeltaTime(), group == 0 ? physGroup : group);
 
 		Math::Vector3 pos;
 		controller->GetPosition(pos);

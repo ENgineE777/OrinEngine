@@ -135,12 +135,7 @@ namespace Oak
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 
-		if (ignore_group != 0 && (ignore_group & shape->getQueryFilterData().word0))
-		{
-			return false;
-		}
-
-		if (!(collide_group & shape->getQueryFilterData().word0))
+		if (!(collideGroup & shape->getQueryFilterData().word0))
 		{
 			return false;
 		}
@@ -153,12 +148,7 @@ namespace Oak
 		PhysScene::BodyUserData* udataA = static_cast<PhysScene::BodyUserData*>(GetUserData());
 		PhysScene::BodyUserData* udataB = static_cast<PhysScene::BodyUserData*>(actor->userData);
 
-		if (ignore_group != 0 && (ignore_group & shape->getQueryFilterData().word0))
-		{
-			return PxQueryHitType::eNONE;
-		}
-
-		if (!(collide_group & shape->getQueryFilterData().word0))
+		if (!(collideGroup & shape->getQueryFilterData().word0))
 		{
 			return PxQueryHitType::eNONE;
 		}
@@ -212,10 +202,10 @@ namespace Oak
 		if (!active)
 		{
 			PxExtendedVec3 cpos = controller->getFootPosition();
-			deactive_pos = Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
+			deactivePos = Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
 		}
 
-		controller->setFootPosition(active ? PxExtendedVec3(deactive_pos.x, deactive_pos.y, deactive_pos.z) : PxExtendedVec3(-100000.0f, -100000.0f, -100000.0f));
+		controller->setFootPosition(active ? PxExtendedVec3(deactivePos.x, deactivePos.y, deactivePos.z) : PxExtendedVec3(-100000.0f, -100000.0f, -100000.0f));
 
 		auto actor = controller->getActor();
 		PxShape* shape;
@@ -265,17 +255,25 @@ namespace Oak
 
 	}
 
-	void PhysController::Move(Math::Vector3 dir, uint32_t group, uint32_t set_ignore_group)
+	void PhysController::Move(Math::Vector3 dir, uint32_t group)
 	{
 		if (!active)
 		{
-			deactive_pos += dir;
+			deactivePos += dir;
 			return;
 		}
 
-		collide_group = group;
-		ignore_group = set_ignore_group;
+		if (dir.Length2() < 0.0001f)
+		{
+			return;
+		}
 
+		if (collideGroup != group)
+		{
+			collideGroup = group;
+			controller->invalidateCache();
+		}
+ 
 		PxControllerFilters filters = PxControllerFilters();
 		filters.mFilterCallback = this;
 		filters.mCCTFilterCallback = this;
@@ -323,7 +321,7 @@ namespace Oak
 	{
 		if (!active)
 		{
-			deactive_pos = pos;
+			deactivePos = pos;
 			return;
 		}
 
@@ -341,7 +339,7 @@ namespace Oak
 	{
 		if (!active)
 		{
-			pos = deactive_pos;
+			pos = deactivePos;
 			return;
 		}
 

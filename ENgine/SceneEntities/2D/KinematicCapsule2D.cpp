@@ -59,9 +59,9 @@ namespace Oak
 		controller->SetUserData(&bodyData);
 	}
 
-	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t group, uint32_t ignoreGroup)
+	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t group)
 	{
-		controller->Move(Math::Vector3(dir.x, dir.y, 0.0f) * Sprite::pixelsPerUnitInvert * root.GetDeltaTime(), group == 0 ? physGroup : group, ignoreGroup);
+		controller->Move(Math::Vector3(dir.x, dir.y, 0.0f) * Sprite::pixelsPerUnitInvert * root.GetDeltaTime(), group == 0 ? physGroup : group);
 
 		Math::Vector3 pos;
 		controller->GetPosition(pos);
