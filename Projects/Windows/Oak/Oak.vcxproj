@@ -145,6 +145,7 @@
       <AdditionalIncludeDirectories>..\..\..\ENgine;..\..\..\ENgine\Support\PugiXml;..\..\..\ENgine\Support\SPARK;..\..\..\Libs\jemalloc\include\msvc_compat;..\..\..\Libs\jemalloc\include;..\..\..\Libs\fmod\include;..\..\..\Libs\vjson;..\..\..\Libs\eastl\include\Common;..\..\..\Libs\eastl\include;..\..\..\Libs\physx\include;..\..\..\Libs\imgui;..\..\..\Libs\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -173,6 +174,7 @@
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTileSet.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
@@ -382,6 +384,7 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTileSet.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />
@@ -461,6 +464,7 @@
     <ClCompile Include="..\..\..\ENgine\Support\ImGuiHelper.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Support\PointerRef.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\PugiXml\pugixml.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Buffer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Descriptor.cpp" />

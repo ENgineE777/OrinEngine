@@ -691,6 +691,12 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Support\PointerRef.cpp">
+      <Filter>ENgine\Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
@@ -1318,6 +1324,9 @@
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.h">
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
   </ItemGroup>
