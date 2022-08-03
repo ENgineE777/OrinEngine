@@ -15,6 +15,13 @@ namespace Oak
 	{
 	public:
 
+		enum class TileHit
+		{
+			NoHit,
+			Tile,
+			TileWithCollision
+		};
+
 		/**
 			\brief Group of a body
 		*/
@@ -25,6 +32,7 @@ namespace Oak
 		{
 			int x = 0;
 			int y = 0;
+			int data = 0;
 			AssetTextureRef texture;
 		};
 
@@ -54,7 +62,7 @@ namespace Oak
 		void Load(JsonReader& reader) override;
 		void Save(JsonWriter& writer) override;
 
-		bool IsPointHitTileMap(Math::Vector2 point);
+		TileHit IsPointHitTiles(Math::Vector2 point);
 
 		void Release() override;
 

@@ -161,7 +161,7 @@ namespace Oak
 		writer.FinishArray();
 	}
 
-	bool TileMap::IsPointHitTileMap(Math::Vector2 point)
+	TileMap::TileHit TileMap::IsPointHitTiles(Math::Vector2 point)
 	{
 		if (point.x < 0.0f)
 		{
@@ -180,11 +180,11 @@ namespace Oak
 		{
 			if (tile.x == x && tile.y == y)
 			{
-				return true;
+				return !tile.texture.HasCollision() ? TileHit::Tile : TileHit::TileWithCollision;
 			}
 		}
 
-		return false;
+		return TileHit::NoHit;
 	}
 
 	void TileMap::Release()
@@ -266,7 +266,7 @@ namespace Oak
 
 			if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
 			{
-				tiles.push_back({ x, y, tileSet->GetSelectedTile() });
+				tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
 			}
 		}
 	}
