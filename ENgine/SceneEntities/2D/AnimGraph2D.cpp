@@ -9,6 +9,7 @@ namespace Oak
 	META_DATA_DESC(AnimGraph2D)
 		BASE_SCENE_ENTITY_PROP(AnimGraph2D)
 		ASSET_ANIM_GRAPH_2D_PROP(AnimGraph2D, anim, "Visual", "Anim")
+		COLOR_PROP(AnimGraph2D, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
 
 	AnimGraph2D::AnimGraph2D() : SceneEntity()
@@ -29,7 +30,7 @@ namespace Oak
 	{
 		if (IsVisible() && anim.Get())
 		{
-			anim.Draw(&transform, COLOR_WHITE, dt);
+			anim.Draw(&transform, color, dt);
 		}
 	}
 }

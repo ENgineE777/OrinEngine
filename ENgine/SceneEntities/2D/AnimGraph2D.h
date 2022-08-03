@@ -13,6 +13,7 @@ namespace Oak
 	{
 	public:
 
+		Color color;
 		AssetAnimGraph2DRef anim;
 
 		META_DATA_DECL_BASE(AnimGraph2D)
