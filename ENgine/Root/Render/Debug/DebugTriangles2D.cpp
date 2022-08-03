@@ -12,7 +12,10 @@ namespace Oak
 
 		prg = root.render.GetProgram("DbgTriangle2D", _FL_);
 
-		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugTriangles2D::Draw);
+		if (debugTaskPool)
+		{
+			debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugTriangles2D::Draw);
+		}
 	}
 
 	void DebugTriangles2D::AddTriangle(Math::Vector2 p1, Math::Vector2 p2, Math::Vector2 p3, Color color)

@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	class DebugTriangles2D : public Object
+	class CLASS_DECLSPEC DebugTriangles2D : public Object
 	{
 		struct Triangle
 		{

@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	class DebugSprites : public Object
+	class CLASS_DECLSPEC DebugSprites : public Object
 	{
 		struct SpriteVertex
 		{

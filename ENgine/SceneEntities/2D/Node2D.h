@@ -8,7 +8,7 @@
 
 namespace Oak
 {
-	class Node2D : public SceneEntity
+	class CLASS_DECLSPEC Node2D : public SceneEntity
 	{
 	public:
 

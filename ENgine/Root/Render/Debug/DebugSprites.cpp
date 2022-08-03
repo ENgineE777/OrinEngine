@@ -8,7 +8,10 @@ namespace Oak
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float2, ElementSemantic::Texcoord, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(2, desc, _FL_);
 
-		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugSprites::Draw);
+		if (debugTaskPool)
+		{
+			debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugSprites::Draw);
+		}
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(sizeof(SpriteVertex) * 4, sizeof(SpriteVertex), _FL_);
 
