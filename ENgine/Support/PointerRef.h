@@ -10,22 +10,19 @@
 
 namespace Oak
 {
+	struct CLASS_DECLSPEC FileLine
+	{
+		const char* file = nullptr;
+		int line = 0;
+
+		static FileLine* Alloc(const char* file, int line);
+		static void Free(FileLine* fl);
+	};
+
 	template<class T>
 	class PointerRef
 	{
 		T* ptr = nullptr;
-
-		struct FileLine
-		{
-			const char* file = nullptr;
-			int line = 0;
-
-			FileLine(const char* setFile, int setLine)
-			{
-				file = setFile;
-				line = setLine;
-			}
-		};
 
 		FileLine* fileLine = nullptr;
 
@@ -38,7 +35,7 @@ namespace Oak
 			ptr = setPtr;
 			ptr->refCounter++;
 
-			fileLine = new(file, line) FileLine(file, line);
+			fileLine = FileLine::Alloc(file, line);
 		}
 
 		PointerRef(const PointerRef& ref)
@@ -91,13 +88,17 @@ namespace Oak
 
 			if (ref.fileLine)
 			{
-				fileLine = new(ref.fileLine->file, ref.fileLine->line) FileLine(ref.fileLine->file, ref.fileLine->line);
+				fileLine = FileLine::Alloc(ref.fileLine->file, ref.fileLine->line);
 			}
 		}
 
 		void ReleaseRef()
 		{
-			DELETE_PTR(fileLine)
+			if (fileLine != nullptr)
+			{
+				FileLine::Free(fileLine);
+				fileLine = nullptr;
+			}
 
 			if (ptr)
 			{
