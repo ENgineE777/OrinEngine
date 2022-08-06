@@ -29,13 +29,14 @@
 		{
 			"name" : "FreeCamera.MOVE2D_ACTIVE",
 			"AliasesRef" : [
-				{ "names" : ["MS_BTN2"] }
+				{ "names" : ["MS_BTN2"] },
+				{ "names" : ["KEY_LCONTROL", "MS_BTN0"] }
 			]
 		},
 		{
 			"name" : "FreeCamera.MOVE2D_ZOOM",
 			"AliasesRef" : [
-				{ "names" : ["MS_Z"], "modifier" : 0.02 }
+				{ "names" : ["MS_Z"], "modifier" : 0.01 }
 			]
 		},
 		{
