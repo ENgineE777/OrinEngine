@@ -1234,26 +1234,11 @@ namespace Oak
 							}
 							else
 							{
-								if (!isPrefabSelected)
-								{
-									selectedScene->AddEntity(entity, selectedEntity);
-								}
-								else
-								{
-									RELEASE(entity)
-								}
-							}
+								selectedScene->AddEntity(entity, selectedEntity);							}
 						}
 						else
 						{
-							if (!isPrefabSelected)
-							{
-								selectedScene->AddEntity(entity);
-							}
-							else
-							{
-								RELEASE(entity)
-							}
+							selectedScene->AddEntity(entity);
 						}
 
 						if (entity)
