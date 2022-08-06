@@ -548,9 +548,9 @@ namespace Oak
 						anim.frames.insert(anim.frames.begin() + index, frame);
 						index++;
 					}
-
-					return true;
 				}
+
+				return true;
 			}
 		}
 
