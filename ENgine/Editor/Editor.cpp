@@ -1904,7 +1904,7 @@ namespace Oak
 			ImGui::DockBuilderDockWindow("###Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("###Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
-			ImGui::DockBuilderDockWindow("Assets", dock_bottom_id);
+			ImGui::DockBuilderDockWindow("Assets", dock_bottom_id); 
 			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
@@ -2141,11 +2141,6 @@ namespace Oak
 				selectedEntity->GetMetaData()->ImGuiWidgets();
 			}
 
-			if (selectedAsset)
-			{
-				selectedAsset->ImGuiProperties();
-			}
-
 			ImGui::Columns(1);
 
 			ImGui::End();
@@ -2154,7 +2149,28 @@ namespace Oak
 		{
 			ImGui::Begin("Assets");
 
+			ImVec2 size = ImGui::GetContentRegionAvail();
+
+			ImGui::BeginChild("AssetsList", ImVec2(size.x - 300, 0), true);
+
 			AssetsFolder(&root.assets.rootFolder);
+
+			ImGui::EndChild();
+
+			ImGui::SameLine();
+
+			ImGui::BeginChild("AssetProperty", ImVec2(300, 0), true);
+
+			ImGui::Columns(2);
+
+			if (selectedAsset)
+			{
+				selectedAsset->ImGuiProperties();
+			}
+
+			ImGui::Columns(1);
+
+			ImGui::EndChild();
 
 			AssetsTreePopup(false);
 
