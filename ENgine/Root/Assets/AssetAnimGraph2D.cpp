@@ -758,12 +758,14 @@ namespace Oak
 			return;
 		}
 
-		if (!reset && curNode == &Get()->nodes[index])
+		auto* node = &Get()->nodes[index];
+
+		if (!reset && curNode == node)
 		{
 			return;
 		}
 
-		gotoNode = &Get()->nodes[index];
+		gotoNode = node;
 	}
 
 	bool AssetAnimGraph2DRef::GotoNode(const char* nodeName, bool reset)
