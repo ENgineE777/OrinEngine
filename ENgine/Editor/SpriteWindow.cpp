@@ -55,6 +55,8 @@ namespace Oak
 		selSlice = -1;
 		selAnim = (texture && texture->animations.size() > 0) ? 0 : -1;
 
+		selectedSlices.clear();
+
 		curAnimPlayFrame = -1;
 
 		selAnimFrame = -1;
