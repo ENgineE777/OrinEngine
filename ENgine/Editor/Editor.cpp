@@ -1904,7 +1904,7 @@ namespace Oak
 			ImGui::DockBuilderDockWindow("###Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("###Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
-			ImGui::DockBuilderDockWindow("Assets", dock_bottom_id); 
+			ImGui::DockBuilderDockWindow("Assets browser", dock_bottom_id); 
 			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
@@ -2147,7 +2147,7 @@ namespace Oak
 		}
 
 		{
-			ImGui::Begin("Assets");
+			ImGui::Begin("Assets browser");
 
 			ImVec2 size = ImGui::GetContentRegionAvail();
 
