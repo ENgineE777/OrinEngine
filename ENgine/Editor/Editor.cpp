@@ -1897,13 +1897,15 @@ namespace Oak
 			ImGuiID dock_main_id = dockspaceID;
 			ImGuiID dock_top_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.05f, nullptr, &dock_main_id);
 			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
+			ImGuiID dock_right_up_id = ImGui::DockBuilderSplitNode(dock_right_id, ImGuiDir_Up, 0.2f, nullptr, &dock_right_id);
+			ImGuiID dock_right_down_id = ImGui::DockBuilderSplitNode(dock_right_id, ImGuiDir_Down, 0.2f, nullptr, &dock_right_id);
 			ImGuiID dock_bottom_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.2f, nullptr, &dock_main_id);
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
-			ImGui::DockBuilderDockWindow("###Scene", dock_left_id);
 			ImGui::DockBuilderDockWindow("###Game", dock_main_id);
-			ImGui::DockBuilderDockWindow("Properties", dock_right_id);
+			ImGui::DockBuilderDockWindow("###Scene", dock_right_up_id);
+			ImGui::DockBuilderDockWindow("Properties", dock_right_down_id);
 			ImGui::DockBuilderDockWindow("Assets browser", dock_bottom_id); 
 			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
 
@@ -2110,7 +2112,7 @@ namespace Oak
 		}
 
 		{
-			ImGui::Begin(StringUtils::PrintTemp("%s###Scene", (selectedScene ? selectedScene->GetName() : "Scene")));
+			ImGui::Begin(StringUtils::PrintTemp("%s###Scene", (selectedScene ? selectedScene->GetName() : "Hierarchy")));
 
 			if (selectedScene)
 			{
