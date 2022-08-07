@@ -118,6 +118,8 @@ namespace Oak
 		AssetAnimGraph2D::Node* curNode = nullptr;
 		eastl::function<void(int, eastl::string&, eastl::string&)> onFrameChange;
 
+		void GotoNode(int index, bool reset);
+
 	public:
 
 		AssetAnimGraph2DRef() : PointerRef() {};
@@ -137,8 +139,7 @@ namespace Oak
 
 		void Reset();
 		bool ActivateLink(const char* link);
-		void GotoNode(int index);
-		bool GotoNode(const char* node);
+		bool GotoNode(const char* node, bool reset);
 
 		void Draw(Transform* trans, Color clr, float dt);
 

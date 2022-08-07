@@ -727,7 +727,7 @@ namespace Oak
 			return;
 		}
 
-		GotoNode(Get()->defNode);
+		GotoNode(Get()->defNode, true);
 	}
 
 	bool AssetAnimGraph2DRef::ActivateLink(const char* linkName)
@@ -743,7 +743,7 @@ namespace Oak
 		{
 			if (StringUtils::IsEqual(link.name.c_str(), linkName))
 			{
-				GotoNode(link.index);
+				GotoNode(link.index, true);
 				return true;
 			}
 		}
@@ -751,9 +751,14 @@ namespace Oak
 		return false;
 	}
 
-	void AssetAnimGraph2DRef::GotoNode(int index)
+	void AssetAnimGraph2DRef::GotoNode(int index, bool reset)
 	{
 		if (!Get())
+		{
+			return;
+		}
+
+		if (!reset && curNode == &Get()->nodes[index])
 		{
 			return;
 		}
@@ -761,7 +766,7 @@ namespace Oak
 		gotoNode = &Get()->nodes[index];
 	}
 
-	bool AssetAnimGraph2DRef::GotoNode(const char* nodeName)
+	bool AssetAnimGraph2DRef::GotoNode(const char* nodeName, bool reset)
 	{
 		if (!Get())
 		{
@@ -774,7 +779,7 @@ namespace Oak
 		{
 			if (StringUtils::IsEqual(node.name.c_str(), nodeName))
 			{
-				GotoNode(index);
+				GotoNode(index, reset);
 				return true;
 			}
 
@@ -831,12 +836,12 @@ namespace Oak
 		{
 			if (curNode->defLink != -1)
 			{
-				GotoNode(curNode->links[curNode->defLink].index);
+				GotoNode(curNode->links[curNode->defLink].index, true);
 			}
 			else
 			if (curNode->links.size() > 0)
 			{
-				GotoNode(curNode->links[0].index);
+				GotoNode(curNode->links[0].index, true);
 			}
 		}
 	}
