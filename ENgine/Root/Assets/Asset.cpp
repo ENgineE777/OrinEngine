@@ -131,7 +131,7 @@ namespace Oak
 		return renderTaskPool;
 	}
 
-	void Asset::ImGuiProperties()
+	void Asset::ImGuiMetaProperties()
 	{
 		GetMetaData()->Prepare(this);
 		GetMetaData()->ImGuiWidgets();
@@ -141,6 +141,11 @@ namespace Oak
 			Reload();
 			Save();
 		}
+	}
+
+	void Asset::ImGuiProperties()
+	{
+
 	}
 
 	void Asset::ImGui(bool viewportFocused)

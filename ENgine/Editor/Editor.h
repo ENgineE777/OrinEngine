@@ -118,6 +118,9 @@ namespace Oak
 
 		SceneEntity* selectedEntity = nullptr;
 		Scene* selectedScene = nullptr;
+		Asset* selectedEdidedAsset = nullptr;
+
+
 		Project project;
 		FreeCamera freeCamera;
 		Gizmo gizmo;

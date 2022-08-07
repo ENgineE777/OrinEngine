@@ -52,6 +52,7 @@ namespace Oak
 		virtual void EnableTasks(bool enable);
 		TaskExecutor::SingleTaskPool* Tasks();
 		TaskExecutor::SingleTaskPool* RenderTasks();
+		virtual void ImGuiMetaProperties();
 		virtual void ImGuiProperties();
 		virtual void ImGui(bool viewportFocused);
 		virtual void OnMouseMove(Math::Vector2 ms);

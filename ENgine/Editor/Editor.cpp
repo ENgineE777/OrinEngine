@@ -2143,6 +2143,11 @@ namespace Oak
 				selectedEntity->GetMetaData()->ImGuiWidgets();
 			}
 
+			if (selectedAsset)
+			{
+				selectedAsset->ImGuiProperties();
+			}
+
 			ImGui::Columns(1);
 
 			ImGui::End();
@@ -2167,7 +2172,7 @@ namespace Oak
 
 			if (selectedAsset)
 			{
-				selectedAsset->ImGuiProperties();
+				selectedAsset->ImGuiMetaProperties();
 			}
 
 			ImGui::Columns(1);
