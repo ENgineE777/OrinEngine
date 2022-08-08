@@ -98,12 +98,12 @@ namespace Oak
 
 	}
 
-	bool Asset::HasOwnTasks()
+	bool Asset::IsEditable()
 	{
 		return taskPool || renderTaskPool;
 	}
 
-	void Asset::EnableTasks(bool enable)
+	void Asset::EnableEditing(bool enable)
 	{
 		if (taskPool) taskPool->SetActive(enable);
 		if (renderTaskPool) renderTaskPool->SetActive(enable);

@@ -49,8 +49,9 @@ namespace Oak
 		Assets::Folder* selectedFolder = nullptr;
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
 		Asset* selectedAsset = nullptr;
-		bool isPrefabSelected = false;
-		AssetScene* selectedSceneAsset = nullptr;
+
+		Asset* selectedEditAsset = nullptr;
+		bool isSelecteEditScenePrefab = false;
 
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
@@ -118,8 +119,6 @@ namespace Oak
 
 		SceneEntity* selectedEntity = nullptr;
 		Scene* selectedScene = nullptr;
-		Asset* selectedEdidedAsset = nullptr;
-
 
 		Project project;
 		FreeCamera freeCamera;
@@ -138,8 +137,8 @@ namespace Oak
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) override;
 		void OnResize(int width, int height) override;
 
+		void SelectEditAsset(Asset* asset);
 		void SelectEntity(SceneEntity* entity);
-		void SelectScene(AssetScene* scene);
 
 		void Release() override;
 
@@ -148,8 +147,6 @@ namespace Oak
 		void CopyChilds(SceneEntity* entity, SceneEntity* copy);
 
 	private:
-
-		void SelectAsset(Asset* asset);
 
 		void SetupImGUI();
 		bool ShowEditor();

@@ -27,9 +27,8 @@ namespace Oak
 
 		Scene* GetScene();
 
-		void EnableTasks(bool set) override;
-
-		void ActivateScene(bool act);
+		bool IsEditable() override;
+		void EnableEditing(bool enable) override;
 
 		void Reload() override;
 
@@ -38,6 +37,7 @@ namespace Oak
 #ifdef OAK_EDITOR
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
+		void GrabEditorData();
 #endif
 
 		void Release() override;

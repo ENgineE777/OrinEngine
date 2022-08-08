@@ -48,8 +48,8 @@ namespace Oak
 		void Save();
 		virtual void SaveMetaData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
-		bool HasOwnTasks();
-		virtual void EnableTasks(bool enable);
+		virtual bool IsEditable();
+		virtual void EnableEditing(bool enable);
 		TaskExecutor::SingleTaskPool* Tasks();
 		TaskExecutor::SingleTaskPool* RenderTasks();
 		virtual void ImGuiMetaProperties();

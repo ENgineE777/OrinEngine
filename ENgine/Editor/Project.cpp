@@ -68,13 +68,13 @@ namespace Oak
 			}
 
 			eastl::string edScene;
-			reader.Read("selected_scene", edScene);
+			reader.Read("edited_asset", edScene);
 
-			auto* scene = root.assets.GetAsset<AssetScene>(edScene);
+			auto* asset = root.assets.GetAsset<Asset>(edScene);
 
-			if (scene)
+			if (asset)
 			{
-				editor.SelectScene(scene);
+				editor.SelectEditAsset(asset);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ namespace Oak
 
 		writer.FinishArray();
 
-		writer.Write("selected_scene", editor.selectedScene ? editor.selectedScene->projectScenePath : "");
+		writer.Write("edited_asset", editor.selectedEditAsset ? editor.selectedEditAsset->GetPath().c_str() : "");
 	}
 
 	void Project::SetStartScene(const char* path)

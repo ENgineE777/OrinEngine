@@ -12,11 +12,6 @@ namespace Oak
 	META_DATA_DESC(AssetScene)
 	META_DATA_DESC_END()
 
-	void AssetScene::EnableTasks(bool set)
-	{
-		GetScene()->EnableTasks(set);
-	}
-
 	Scene* AssetScene::GetScene()
 	{
 		if (!scene)
@@ -47,8 +42,26 @@ namespace Oak
 	}
 
 #ifdef OAK_EDITOR
+	void AssetScene::GrabEditorData()
+	{
+		camera2DMode = editor.freeCamera.mode2D;
+
+		camera3DAngles = editor.freeCamera.angles;
+		camera3DPos = editor.freeCamera.pos;
+
+		camera2DPos = editor.freeCamera.pos2D;
+		camera2DZoom = editor.freeCamera.zoom2D;
+
+		selectedEntityID = editor.selectedEntity ? editor.selectedEntity->GetUID() : -1;
+	}
+
 	void AssetScene::SaveMetaData(JsonWriter& writer)
 	{
+		if (GetScene()->taskPool->IsActive())
+		{
+			GrabEditorData();
+		}
+
 		writer.Write("selected_entity", selectedEntityID);
 		writer.Write("camera2DMode", camera2DMode);
 		writer.Write("camera3DAngles", camera3DAngles);
@@ -59,23 +72,20 @@ namespace Oak
 		GetScene()->Save(GetScene()->projectScenePath);
 	}
 
-	void AssetScene::ActivateScene(bool act)
+	bool AssetScene::IsEditable()
 	{
-		if (!act)
+		return true;
+	}
+
+	void AssetScene::EnableEditing(bool enable)
+	{
+		GetScene()->EnableTasks(enable);
+	
+		if (!enable)
 		{
-			camera2DMode = editor.freeCamera.mode2D;
-
-			camera3DAngles = editor.freeCamera.angles;
-			camera3DPos = editor.freeCamera.pos;
-
-			camera2DPos = editor.freeCamera.pos2D;
-			camera2DZoom = editor.freeCamera.zoom2D;
-
-			selectedEntityID = editor.selectedEntity ? editor.selectedEntity->GetUID() : -1;
+			GrabEditorData();
 
 			editor.SelectEntity(nullptr);
-
-			EnableTasks(false);
 		}
 		else
 		{
@@ -86,8 +96,6 @@ namespace Oak
 
 			editor.freeCamera.pos2D = camera2DPos;
 			editor.freeCamera.zoom2D = camera2DZoom;
-
-			EnableTasks(true);
 
 			if (selectedEntityID != -1)
 			{

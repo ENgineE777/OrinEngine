@@ -241,7 +241,7 @@ namespace Oak
 		}
 	}
 
-	void Editor::SelectAsset(Asset* asset)
+	/*void Editor::SelectAsset(Asset* asset)
 	{
 		if (asset == selectedAsset)
 		{
@@ -252,9 +252,9 @@ namespace Oak
 		{
 			selectedAsset->EnableTasks(false);
 
-			if (selectedScene)
+			if (selectedEditScene)
 			{
-				selectedScene->EnableTasks(true);
+				selectedEditScene->EnableTasks(true);
 			}
 		}
 
@@ -264,12 +264,12 @@ namespace Oak
 		{
 			selectedAsset->EnableTasks(true);
 
-			if (selectedScene)
+			if (selectedEditScene)
 			{
-				selectedScene->EnableTasks(false);
+				selectedEditScene->EnableTasks(false);
 			}
 		}
-	}
+	}*/
 
 	void Editor::SetupImGUI()
 	{
@@ -441,7 +441,7 @@ namespace Oak
 
 	void Editor::ShowViewport()
 	{
-		ImGui::Begin(StringUtils::PrintTemp("%s###Game", selectedAsset != nullptr ? selectedAsset->GetName().c_str() : "Viewport"),
+		ImGui::Begin(StringUtils::PrintTemp("%s###Game", selectedEditAsset != nullptr ? selectedEditAsset->GetName().c_str() : "Viewport"),
 					nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -473,9 +473,9 @@ namespace Oak
 					gizmo.OnLeftMouseDown();
 				}
 
-				if (selectedAsset && selectedAsset->HasOwnTasks())
+				if (selectedEditAsset && selectedEditAsset->IsEditable())
 				{
-					selectedAsset->OnLeftMouseDown();
+					selectedEditAsset->OnLeftMouseDown();
 				}
 				else
 				if (selectedEntity)
@@ -488,9 +488,9 @@ namespace Oak
 			else
 			if (ImGui::IsMouseClicked(1))
 			{
-				if (selectedAsset && selectedAsset->HasOwnTasks())
+				if (selectedEditAsset && selectedEditAsset->IsEditable())
 				{
-					selectedAsset->OnRightMouseDown();
+					selectedEditAsset->OnRightMouseDown();
 				}
 				else
 				if (selectedEntity)
@@ -503,9 +503,9 @@ namespace Oak
 			else
 			if (ImGui::IsMouseClicked(2))
 			{
-				if (selectedAsset && selectedAsset->HasOwnTasks())
+				if (selectedEditAsset && selectedEditAsset->IsEditable())
 				{
-					selectedAsset->OnMiddleMouseDown();
+					selectedEditAsset->OnMiddleMouseDown();
 				}
 				else
 				if (selectedEntity)
@@ -522,10 +522,10 @@ namespace Oak
 			gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 		}
 
-		if (selectedAsset && selectedAsset->HasOwnTasks())
+		if (selectedEditAsset && selectedEditAsset->IsEditable())
 		{
-			selectedAsset->ImGui(viewportFocused);
-			selectedAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+			selectedEditAsset->ImGui(viewportFocused);
+			selectedEditAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 		}
 		else
 		if (selectedEntity)
@@ -540,9 +540,9 @@ namespace Oak
 				gizmo.OnLeftMouseUp();
 			}
 
-			if (selectedAsset && selectedAsset->HasOwnTasks())
+			if (selectedEditAsset && selectedEditAsset->IsEditable())
 			{
-				selectedAsset->OnLeftMouseUp();
+				selectedEditAsset->OnLeftMouseUp();
 			}
 			else
 			if (selectedEntity)
@@ -555,9 +555,9 @@ namespace Oak
 		else
 		if (viewportCaptured == ViewportCature::RightButton && ImGui::IsMouseReleased(1))
 		{
-			if (selectedAsset && selectedAsset->HasOwnTasks())
+			if (selectedEditAsset && selectedEditAsset->IsEditable())
 			{
-				selectedAsset->OnRightMouseUp();
+				selectedEditAsset->OnRightMouseUp();
 			}
 			else
 			if (selectedEntity)
@@ -570,9 +570,9 @@ namespace Oak
 		else
 		if (viewportCaptured == ViewportCature::MiddleButton && ImGui::IsMouseReleased(2))
 		{
-			if (selectedAsset && selectedAsset->HasOwnTasks())
+			if (selectedEditAsset && selectedEditAsset->IsEditable())
 			{
-				selectedAsset->OnMiddleMouseUp();
+				selectedEditAsset->OnMiddleMouseUp();
 			}
 			else
 			if (selectedEntity)
@@ -1072,13 +1072,40 @@ namespace Oak
 		}
 	}
 
-	void Editor::SelectEntity(SceneEntity* entity)
+	void Editor::SelectEditAsset(Asset* asset)
 	{
-		if (entity != nullptr && selectedAsset)
+		if (!asset->IsEditable())
 		{
-			SelectAsset(nullptr);
+			return;
 		}
 
+		selectedAsset = asset;
+
+		if (selectedEditAsset)
+		{
+			selectedEditAsset->EnableEditing(false);
+			selectedEditAsset->Save();
+
+			project.Save();
+
+			selectedScene = nullptr;
+			selectedEntity = nullptr;
+		}
+
+		selectedEditAsset = asset;
+		selectedEditAsset->EnableEditing(true);
+
+		auto* scene = dynamic_cast<AssetScene*>(asset);
+
+		if (scene)
+		{
+			selectedScene = scene->GetScene();
+			isSelecteEditScenePrefab = dynamic_cast<AssetPrefab*>(asset) != nullptr;
+		}
+	}
+
+	void Editor::SelectEntity(SceneEntity* entity)
+	{
 		if (selectedEntity)
 		{
 			selectedEntity->SetEditMode(false);
@@ -1107,16 +1134,6 @@ namespace Oak
 				gizmo.mode = TransformMode::Move;
 			}
 		}
-	}
-
-	void Editor::SelectScene(AssetScene* scene)
-	{
-		selectedSceneAsset = scene;
-		selectedSceneAsset->ActivateScene(true);
-
-		selectedScene = selectedSceneAsset->GetScene();
-
-		isPrefabSelected = dynamic_cast<AssetPrefab*>(scene) != nullptr;
 	}
 
 	bool Editor::CreateDeviceD3D()
@@ -1256,7 +1273,7 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
-			if (selectedEntity && (!isPrefabSelected || (isPrefabSelected && selectedEntity->GetParent() != nullptr)) && ImGui::MenuItem("Duplicate"))
+			if (selectedEntity && (!isSelecteEditScenePrefab || (isSelecteEditScenePrefab && selectedEntity->GetParent() != nullptr)) && ImGui::MenuItem("Duplicate"))
 			{
 				SceneEntity* copy = selectedScene->CreateEntity(selectedEntity->className);
 
@@ -1690,8 +1707,7 @@ namespace Oak
 			{
 				selectedFolder = item;
 				selectedAssetHolder = nullptr;
-
-				SelectAsset(nullptr);
+				selectedAsset = nullptr;
 			}
 
 			AssetsTreePopup(true);
@@ -1714,43 +1730,28 @@ namespace Oak
 			}
 
 			eastl::string name = item->name;
+			auto* asset = item->GetAsset<Asset>();
 
-			auto scene = item->GetAsset<AssetScene>();
-			auto prefab = item->GetAsset<AssetPrefab>();
-
-			if (scene && project.IsStartScene(item->fullName.c_str()))
+			if (item->GetAsset<AssetScene>() && project.IsStartScene(item->fullName.c_str()))
 			{
 				name += "(Main)";
 			}
 
 			bool open = ImGui::TreeNodeEx(item, nodeFlags, name.c_str());
 
-			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 			{
-				SelectAsset(nullptr);
-
-				if (selectedScene)
-				{
-					selectedSceneAsset->ActivateScene(false);
-					selectedSceneAsset->Save();
-
-					project.Save();
-
-					selectedSceneAsset = nullptr;
-					selectedScene = nullptr;
-				}
-
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
 
-				if (scene || prefab)
-				{
-					SelectScene(scene ? scene : prefab);
-				}
-				else
-				{
-					SelectAsset(item->GetAsset<Asset>());
-				}
+				SelectEditAsset(asset);
+			}
+
+			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
+			{
+				selectedFolder = nullptr;
+				selectedAssetHolder = item;
+				selectedAsset = asset;
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
@@ -1820,18 +1821,13 @@ namespace Oak
 
 		root.scripts.SetAllowDynamicReload(false);
 
-		if (selectedScene)
+		if (selectedEditAsset)
 		{
-			selectedScene->EnableTasks(false);
+			selectedEditAsset->EnableEditing(false);
 
-			selectedSceneAsset->Save();
+			selectedEditAsset->Save();
 
 			project.Save();
-		}
-
-		if (selectedAsset)
-		{
-			selectedAsset->EnableTasks(false);
 		}
 
 		root.PreparePhysScene();
@@ -1853,9 +1849,9 @@ namespace Oak
 
 		root.ClearPhysScene();
 
-		if (selectedScene)
+		if (selectedEditAsset)
 		{
-			selectedScene->EnableTasks(true);
+			selectedEditAsset->EnableEditing(true);
 		}
 
 		root.scripts.SetAllowDynamicReload(true);
@@ -1925,9 +1921,9 @@ namespace Oak
 			{
 				if (ImGui::MenuItem("Save"))
 				{
-					if (selectedSceneAsset)
+					if (selectedEditAsset)
 					{
-						selectedSceneAsset->Save();
+						selectedEditAsset->Save();
 					}
 
 					project.Save();
@@ -2143,9 +2139,9 @@ namespace Oak
 				selectedEntity->GetMetaData()->ImGuiWidgets();
 			}
 
-			if (selectedAsset)
+			if (selectedEditAsset)
 			{
-				selectedAsset->ImGuiProperties();
+				selectedEditAsset->ImGuiProperties();
 			}
 
 			ImGui::Columns(1);
@@ -2349,7 +2345,7 @@ namespace Oak
 			}
 		}
 
-		if (!projectRunning && (!selectedAsset || !selectedAsset->HasOwnTasks()))
+		if (!projectRunning && (!selectedEditAsset || !selectedEditAsset->IsEditable()))
 		{
 			float width = Sprite::pixelsHeight / root.render.GetDevice()->GetHeight() * root.render.GetDevice()->GetWidth();
 
@@ -2377,7 +2373,7 @@ namespace Oak
 			editorDrawer.DrawWindowBorder();
 		}
 
-		if (!projectRunning && (!selectedAsset || !selectedAsset->HasOwnTasks()))
+		if (!projectRunning)
 		{
 			freeCamera.Update(dt);
 
@@ -2389,11 +2385,11 @@ namespace Oak
 
 		if (!projectRunning && selectedScene)
 		{
-			if (selectedAsset && selectedAsset->HasOwnTasks())
+			if (selectedEditAsset && selectedEditAsset->IsEditable())
 			{
-				if (selectedAsset->Tasks())
+				if (selectedEditAsset->Tasks())
 				{
-					selectedAsset->Tasks()->Execute(dt);
+					selectedEditAsset->Tasks()->Execute(dt);
 				}
 			}
 			else
