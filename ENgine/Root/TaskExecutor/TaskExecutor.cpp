@@ -16,6 +16,11 @@ namespace Oak
 		active = set;
 	}
 
+	bool TaskExecutor::SingleTaskPool::IsActive()
+	{
+		return active;
+	}
+
 	void TaskExecutor::SingleTaskPool::ExecuteList(TaskList* list, float dt)
 	{
 		for (int j = 0; j<list->list.size(); j++)

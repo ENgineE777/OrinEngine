@@ -73,6 +73,13 @@ namespace Oak
 			void SetActive(bool set);
 
 			/**
+			\brief Check if tasks is acvtive
+
+			\return state is task is active
+			*/
+			bool IsActive();
+
+			/**
 			\brief Execute all tasks in a pool
 
 			\param[in] dt Deltatime since last frame.
