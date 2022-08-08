@@ -183,7 +183,6 @@ namespace Oak
 					if (Oak::editor.selectedScene)
 					{
 						code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.selectedScene->GetEntities());
-						code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.selectedScene->GetEntities());
 					}
 				}
 
