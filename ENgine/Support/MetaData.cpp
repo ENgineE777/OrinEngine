@@ -109,9 +109,16 @@ namespace Oak
 				AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(prop.value);
 				ref->ReleaseRef();
 			}
+			else
 			if (prop.type == Type::AssetTileSet)
 			{
 				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
+				ref->ReleaseRef();
+			}
+			else
+			if (prop.type == Type::AssetSpritesLayer)
+			{
+				AssetSpritesLayerRef* ref = reinterpret_cast<AssetSpritesLayerRef*>(prop.value);
 				ref->ReleaseRef();
 			}
 			else
@@ -184,6 +191,12 @@ namespace Oak
 			if (prop.type == Type::AssetTileSet)
 			{
 				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
+				ref->LoadData(reader, prop.name.c_str());
+			}
+			else
+			if (prop.type == Type::AssetSpritesLayer)
+			{
+				AssetSpritesLayerRef* ref = reinterpret_cast<AssetSpritesLayerRef*>(prop.value);
 				ref->LoadData(reader, prop.name.c_str());
 			}
 			else
@@ -300,6 +313,13 @@ namespace Oak
 				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
 				ref->SaveData(writer, prop.name.c_str());
 			}
+			else
+			if (prop.type == Type::AssetSpritesLayer)
+			{
+				AssetSpritesLayerRef* ref = reinterpret_cast<AssetSpritesLayerRef*>(prop.value);
+				ref->SaveData(writer, prop.name.c_str());
+			}
+			else
 			if (prop.type == Type::Transform)
 			{
 				Transform* transform = (Transform*)prop.value;
@@ -430,6 +450,14 @@ namespace Oak
 			{
 				AssetTileSetRef* refSrc = reinterpret_cast<AssetTileSetRef*>(src);
 				AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(prop.value);
+
+				*ref = *refSrc;
+			}
+			else
+			if (prop.type == Type::AssetSpritesLayer)
+			{
+				AssetSpritesLayerRef* refSrc = reinterpret_cast<AssetSpritesLayerRef*>(src);
+				AssetSpritesLayerRef* ref = reinterpret_cast<AssetSpritesLayerRef*>(prop.value);
 
 				*ref = *refSrc;
 			}
@@ -1070,6 +1098,45 @@ namespace Oak
 							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
 							{
 								*ref = AssetTileSetRef();
+								prop.changed = true;
+							}
+						}
+						else
+						if (prop.type == Type::AssetSpritesLayer)
+						{
+							AssetSpritesLayerRef* ref = reinterpret_cast<AssetSpritesLayerRef*>(prop.value);
+
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->Get() ? ref->Get()->GetName().c_str() : "None", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 70.0f, 0.0f)))
+							{
+							}
+
+							if (ref->Get() && (ImGui::IsItemActive() || ImGui::IsItemHovered()))
+							{
+								ImGui::SetTooltip(ref->Get()->GetPath().c_str());
+							}
+
+							if (ImGui::BeginDragDropTarget())
+							{
+								const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("_ASSET_SPRITES_LAYER", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+								if (payload)
+								{
+									AssetSpritesLayerRef* assetRef = reinterpret_cast<AssetSpritesLayerRef**>(payload->Data)[0];
+
+									*ref = *assetRef;
+									prop.changed = true;
+								}
+							}
+
+							ImGui::SameLine();
+
+							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							{
+								*ref = AssetSpritesLayerRef();
 								prop.changed = true;
 							}
 						}

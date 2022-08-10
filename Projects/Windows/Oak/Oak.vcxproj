@@ -170,11 +170,12 @@
     <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h" />
     <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetNavigable2D.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h" />
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.h" />
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpritesLayer.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTileSet.h" />
     <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h" />
@@ -245,6 +246,7 @@
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h" />
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpritesLayer.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\TileMap.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h" />
     <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h" />
@@ -380,11 +382,12 @@
     <ClCompile Include="..\..\..\ENgine\Editor\TileSetWindow.cpp" />
     <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetNavigable2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp" />
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.cpp" />
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpritesLayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTileSet.cpp" />
     <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp" />
@@ -446,6 +449,7 @@
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp" />
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpritesLayer.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\TileMap.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp" />
     <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp" />

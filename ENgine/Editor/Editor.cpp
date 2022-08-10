@@ -667,6 +667,21 @@ namespace Oak
 					}
 				}
 				else
+				if (assetDialog == CreateAssetDialog::SpritesLayer)
+				{
+					path = StringUtils::PrintTemp("%s.spl", path.c_str());
+
+					if (std::filesystem::exists(path.c_str()))
+					{
+						MESSAGE_BOX("Can't create a spl file", "Ang file already exists");
+					}
+					else
+					{
+						File ang;
+						ang.Open(path.c_str(), File::ModeType::WriteText);
+					}
+				}
+				else
 				if (assetDialog == CreateAssetDialog::TileSet)
 				{
 					path = StringUtils::PrintTemp("%s.tls", path.c_str());
@@ -1353,6 +1368,11 @@ namespace Oak
 					assetDialog = CreateAssetDialog::AnimGraph2D;
 				}
 
+				if (ImGui::MenuItem("Sprites Layer"))
+				{
+					assetDialog = CreateAssetDialog::SpritesLayer;
+				}
+
 				if (ImGui::MenuItem("TileSet"))
 				{
 					assetDialog = CreateAssetDialog::TileSet;
@@ -1518,6 +1538,24 @@ namespace Oak
 				auto& assetRef = *reinterpret_cast<AssetTileSetRef**>(payload.Data)[0];
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
+				{
+					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
+
+					if (assetEntity)
+					{
+						assetRef.SetupCreatedSceneEntity(assetEntity);
+						assetEntity->ApplyProperties();
+					}
+
+					dragFinished = true;
+				}
+			}
+			else
+			if (payload.IsDataType("_ASSET_SPRITES_LAYER"))
+			{
+				auto& assetRef = *reinterpret_cast<AssetSpritesLayerRef**>(payload.Data)[0];
+
+				if (ImGui::AcceptDragDropPayload("_ASSET_SPRITES_LAYER", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
 					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
 
@@ -1775,6 +1813,13 @@ namespace Oak
 					draggedAssetTileSet = item->GetAssetRef<AssetTileSetRef>();
 					AssetTileSetRef* ptr = (AssetTileSetRef*)&draggedAssetTileSet;
 					ImGui::SetDragDropPayload("_ASSET_TILE_SET", &ptr, sizeof(AssetTileSetRef*));
+				}
+				else
+				if (StringUtils::IsEqual(item->GetAssetType(), "AssetSpritesLayer"))
+				{
+					draggeSpriteLayerSet = item->GetAssetRef<AssetSpritesLayerRef>();
+					AssetSpritesLayerRef* ptr = (AssetSpritesLayerRef*)&draggeSpriteLayerSet;
+					ImGui::SetDragDropPayload("_ASSET_SPRITES_LAYER", &ptr, sizeof(AssetSpritesLayerRef*));
 				}
 				else
 				if (StringUtils::IsEqual(item->GetAssetType(), "AssetPrefab"))
@@ -2108,7 +2153,7 @@ namespace Oak
 		}
 
 		{
-			ImGui::Begin(StringUtils::PrintTemp("%s###Scene", (selectedScene ? selectedScene->GetName() : "Hierarchy")));
+			ImGui::Begin("Hierarchy###Scene");
 
 			if (selectedScene)
 			{

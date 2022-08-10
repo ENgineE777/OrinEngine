@@ -691,11 +691,17 @@
     <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.cpp">
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpritesLayer.cpp">
       <Filter>ENgine\Root\Assets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\ENgine\Support\PointerRef.cpp">
       <Filter>ENgine\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetNavigable2D.cpp">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpritesLayer.cpp">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1326,8 +1332,14 @@
     <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h">
       <Filter>ENgine\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpriteLayer.h">
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpritesLayer.h">
       <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetNavigable2D.h">
+      <Filter>ENgine\Root\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpritesLayer.h">
+      <Filter>ENgine\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

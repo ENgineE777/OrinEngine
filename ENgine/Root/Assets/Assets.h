@@ -9,7 +9,7 @@
 #include "AssetScene.h"
 #include "AssetTileSet.h"
 #include "AssetPrefab.h"
-#include "AssetSpriteLayer.h"
+#include "AssetSpritesLayer.h"
 
 namespace Oak
 {

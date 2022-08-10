@@ -50,6 +50,7 @@ namespace Oak
 			AssetTexture,
 			AssetAnimGraph2D,
 			AssetTileSet,
+			AssetSpritesLayer,
 			SceneEntity,
 			Array
 		};
@@ -395,6 +396,17 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::AssetTileSet;\
+		prop.name = #classMember;\
+		prop.catName = strCatName;\
+		prop.propName = strPropName;\
+		properties.push_back(prop);\
+	}
+
+	#define ASSET_SPRITES_LAYER_PROP(className, classMember, strCatName, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::AssetSpritesLayer;\
 		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
