@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include "Support/Defines.h"
+#include "Vector2.h"
 
 namespace Oak::Math
 {
@@ -41,6 +42,11 @@ namespace Oak::Math
 			Set(x, y, z);
 		}
 
+		Vector3(const Vector2& v)
+		{
+			Set(v);
+		}
+
 		void Set(float f)
 		{
 			x = y = z= f;
@@ -58,6 +64,13 @@ namespace Oak::Math
 			x = v.x;
 			y = v.y;
 			z = v.z;
+		}
+
+		void Set(const Vector2& v)
+		{
+			x = v.x;
+			y = v.y;
+			z = 0.0f;
 		}
 
 		Vector3 operator - () const
