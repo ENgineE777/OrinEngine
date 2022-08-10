@@ -8,22 +8,27 @@
 
 namespace Oak
 {
-	/*class SpriteEntity : public SceneEntity
+	class ParalaxedSpriteEntity : public SceneEntity
 	{
 	public:
 
+		/**
+		\brief Strength of paralax
+		*/
+		Math::Vector2 paralax = 1.0f;
+
 		AssetTextureRef texture;
 
-		META_DATA_DECL_BASE(SpriteEntity)
+		META_DATA_DECL_BASE(ParalaxedSpriteEntity)
 
 	#ifndef DOXYGEN_SKIP
 
-		SpriteEntity();
-		virtual ~SpriteEntity() = default;
+			ParalaxedSpriteEntity();
+		virtual ~ParalaxedSpriteEntity() = default;
 
 		void Init() override;
 		void ApplyProperties() override;
 		void Draw(float dt);
 	#endif
-	};*/
+	};
 }
