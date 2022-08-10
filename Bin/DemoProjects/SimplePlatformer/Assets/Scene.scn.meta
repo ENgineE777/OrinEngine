@@ -1,0 +1,22 @@
+﻿{
+
+	"selected_entity" : -1,
+	"camera2DMode" : true,
+	"camera3DAngles" :
+	{
+		"x" : 0.000000,
+		"y" : -0.500000
+	},
+	"camera3DPos" :
+	{
+		"x" : 0.000000,
+		"y" : 6.000000,
+		"z" : 0.000000
+	},
+	"camera2DPos" :
+	{
+		"x" : 1535.124512,
+		"y" : 338.528259
+	},
+	"camera2DZoom" : 0.508000
+}

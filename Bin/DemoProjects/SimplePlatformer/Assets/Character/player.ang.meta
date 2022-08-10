@@ -1,0 +1,138 @@
+﻿{
+
+	"camPos" :
+	{
+		"x" : 118.855385,
+		"y" : -47.239754
+	},
+	"camZoom" : 0.900000,
+	"def_node" : 0,
+	"Count" : 5,
+	"Node" : [
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -275.000000,
+				"y" : 73.000000
+			},
+			"name" : "Idle",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Assets/Character/player-idle.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -81.889023,
+				"y" : 70.000000
+			},
+			"name" : "run",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Assets/Character/payer-run.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : 140.111206,
+				"y" : 67.000000
+			},
+			"name" : "hit",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Assets/Character/player-hurt.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -201.888870,
+				"y" : -68.000000
+			},
+			"name" : "jump",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Assets/Character/player-jump.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : 28.111111,
+				"y" : -70.000000
+			},
+			"name" : "fall",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Assets/Character/player-jump.png",
+				"sliceIndex" : -1,
+				"animIndex" : 1
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		}
+	]
+}

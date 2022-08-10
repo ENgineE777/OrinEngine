@@ -1,0 +1,1858 @@
+﻿{
+
+	"uid" : 3200,
+	"entities" : [
+		{
+			"type" : "TileMap",
+			"uid" : 498923,
+			"name" : "Level",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 142.292419,
+					"y" : -123.320068,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 16.000000,
+					"y" : 16.000000,
+					"z" : 0.000000
+				},
+				"offset" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.500000
+				}
+			},
+			"drawLevel" : 0,
+			"physGroup" : 1,
+			"tileSet" :
+			{
+				"Path" : "Assets/Level/Level.tls"
+			},
+			"count" : 147,
+			"Tile" : [
+				{
+					"x" : 79,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 78,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 77,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 76,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 75,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 78,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 77,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 76,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 75,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 74,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 0,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 74,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 9,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 73,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 72,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 71,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 70,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 69,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 68,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 67,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 66,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 65,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 64,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 63,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 62,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 61,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 60,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 59,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 58,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 57,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 56,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 0,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 56,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 9,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 56,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 18,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 57,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 58,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 59,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 60,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 61,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 62,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 63,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 64,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 65,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 66,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 67,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 68,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 69,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 70,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 71,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 72,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 73,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 74,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 75,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 76,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 77,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 78,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 79,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 80,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 81,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 82,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 83,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 84,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 85,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 79,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 78,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 77,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 76,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 75,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 74,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 75,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 76,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 77,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 78,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 79,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 80,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 80,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 81,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 82,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 74,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 73,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 72,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 71,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 70,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 69,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 68,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 67,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 66,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 65,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 64,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 63,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 57,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 58,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 59,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 60,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 61,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 62,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 79,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 80,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 81,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 82,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 83,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 84,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 85,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 86,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 87,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 88,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 0,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 89,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 90,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 91,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 92,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 2,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 93,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 94,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 95,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 96,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 97,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 2,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 97,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 11,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 97,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 20,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 96,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 95,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 94,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 93,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 92,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 91,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 90,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 89,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 88,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 86,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 87,
+					"y" : 24,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 19,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 96,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 95,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 94,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 93,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 92,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 91,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 90,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 89,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 88,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 88,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 89,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 90,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 91,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 92,
+					"y" : 26,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 87,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 86,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 85,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 83,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 84,
+					"y" : 25,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 10,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 80,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 1,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 81,
+					"y" : 28,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 2,
+						"animIndex" : -1
+					}
+				},
+				{
+					"x" : 81,
+					"y" : 27,
+					"Texture" :
+					{
+						"Path" : "Assets/Level/tileset.png",
+						"sliceIndex" : 11,
+						"animIndex" : -1
+					}
+				}
+			]
+		},
+		{
+			"type" : "Camera2D",
+			"uid" : 835248,
+			"name" : "Camera2D",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 1408.387573,
+					"y" : 354.031036,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 624.163452,
+					"y" : 240.000000,
+					"z" : 1.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"zoom" : 1.000000,
+			"Target" :
+			{
+				"uid" : 815089
+			},
+			"border.x" : 100.000000,
+			"border.y" : 100.000000,
+			"useLimits" : false,
+			"leftup.x" : -1000.000000,
+			"rightdown.x" : 1000.000000,
+			"leftup.y" : 1000.000000,
+			"rightdown.y" : -1000.000000
+		},
+		{
+			"type" : "SpritesLayer",
+			"uid" : 524173,
+			"name" : "Skies",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 1400.000000,
+					"y" : 340.000000,
+					"z" : 0.010000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 240.000000,
+					"y" : 312.000000,
+					"z" : 0.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"paralax.x" : 0.250000,
+			"paralax.y" : 0.050000,
+			"drawLevel" : 0,
+			"spritesAsset" :
+			{
+				"Path" : "Assets/Background/Skies.spl"
+			}
+		},
+		{
+			"type" : "SpritesLayer",
+			"uid" : 48608,
+			"name" : "Mountains",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 1400.000000,
+					"y" : 340.000000,
+					"z" : 0.007500
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 240.000000,
+					"y" : 312.000000,
+					"z" : 0.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"paralax.x" : 0.500000,
+			"paralax.y" : 0.100000,
+			"drawLevel" : 0,
+			"spritesAsset" :
+			{
+				"Path" : "Assets/Background/Mountains.spl"
+			}
+		},
+		{
+			"type" : "SpritesLayer",
+			"uid" : 138731,
+			"name" : "Trees",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 1400.000000,
+					"y" : 340.000000,
+					"z" : 0.005000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 240.000000,
+					"y" : 312.000000,
+					"z" : 0.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"paralax.x" : 0.600000,
+			"paralax.y" : 0.150000,
+			"drawLevel" : 0,
+			"spritesAsset" :
+			{
+				"Path" : "Assets/Background/Trees.spl"
+			}
+		},
+		{
+			"type" : "Character",
+			"uid" : 815089,
+			"name" : "player",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 1387.262817,
+					"y" : 331.629120,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : -0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 100.000000,
+					"y" : 100.000000,
+					"z" : 100.000000
+				},
+				"offset" :
+				{
+					"x" : 0.500000,
+					"y" : 0.500000,
+					"z" : 0.500000
+				}
+			},
+			"anim" :
+			{
+				"uid" : 761558
+			},
+			"controller" :
+			{
+				"uid" : 675724
+			},
+			"childs" : [
+				{
+					"type" : "AnimGraph2D",
+					"uid" : 761558,
+					"name" : "anim",
+					"visible" : true,
+					"Transform" :
+					{
+						"position" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000,
+							"z" : 0.000000
+						},
+						"rotation" :
+						{
+							"x" : -0.000000,
+							"y" : 0.000000,
+							"z" : 0.000000
+						},
+						"scale" :
+						{
+							"x" : 1.000000,
+							"y" : 1.000000,
+							"z" : 1.000000
+						},
+						"size" :
+						{
+							"x" : 33.000000,
+							"y" : 32.000000,
+							"z" : 1.000000
+						},
+						"offset" :
+						{
+							"x" : 0.500000,
+							"y" : 1.000000,
+							"z" : 0.500000
+						}
+					},
+					"anim" :
+					{
+						"Path" : "Assets/Character/player.ang"
+					},
+					"color" :
+					{
+						"r" : 1.000000,
+						"g" : 1.000000,
+						"b" : 1.000000,
+						"a" : 1.000000
+					}
+				},
+				{
+					"type" : "KinematicCapsule2D",
+					"uid" : 675724,
+					"name" : "controller",
+					"visible" : true,
+					"Transform" :
+					{
+						"position" :
+						{
+							"x" : 0.000000,
+							"y" : 0.000000,
+							"z" : 0.000000
+						},
+						"rotation" :
+						{
+							"x" : -0.000000,
+							"y" : 0.000000,
+							"z" : 0.000000
+						},
+						"scale" :
+						{
+							"x" : 1.000000,
+							"y" : 1.000000,
+							"z" : 1.000000
+						},
+						"size" :
+						{
+							"x" : 1.000000,
+							"y" : 1.000000,
+							"z" : 1.000000
+						},
+						"offset" :
+						{
+							"x" : 0.500000,
+							"y" : 0.500000,
+							"z" : 0.500000
+						}
+					},
+					"physGroup" : 1,
+					"affectOnParent" : true,
+					"YOriented" : true,
+					"height" : 8.000000,
+					"radius" : 8.000000,
+					"slopeLimit" : 0.000000,
+					"stepOffset" : 0.000000
+				}
+			]
+		}
+	]
+}

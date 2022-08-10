@@ -1,0 +1,110 @@
+﻿{
+
+	"sizeX" : 16,
+	"sizeY" : 16,
+	"tileSet" :
+	{
+		"camPos" :
+		{
+			"x" : 0.000000,
+			"y" : 0.000000
+		},
+		"camZoom" : 2.000000,
+		"selTile" : 4,
+		"sizeX" : 16,
+		"sizeY" : 16,
+		"count" : 9,
+		"Tile" : [
+			{
+				"x" : -1,
+				"y" : 4,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 0,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : 0,
+				"y" : 3,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 10,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : 0,
+				"y" : 4,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 1,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : -1,
+				"y" : 3,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 9,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : 1,
+				"y" : 3,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 11,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : 1,
+				"y" : 4,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 2,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : 1,
+				"y" : 2,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 20,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : 0,
+				"y" : 2,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 19,
+					"animIndex" : -1
+				}
+			},
+			{
+				"x" : -1,
+				"y" : 2,
+				"Texture" :
+				{
+					"Path" : "Assets/Level/tileset.png",
+					"sliceIndex" : 18,
+					"animIndex" : -1
+				}
+			}
+		]
+	}
+}
