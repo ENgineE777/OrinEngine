@@ -14,7 +14,6 @@ namespace Oak
 
 	SpriteEntity::SpriteEntity() : SceneEntity()
 	{
-		//inst_class_name = "SpriteInst";
 	}
 
 	void SpriteEntity::Init()
