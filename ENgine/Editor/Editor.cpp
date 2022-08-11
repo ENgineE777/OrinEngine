@@ -1277,7 +1277,14 @@ namespace Oak
 						{
 							auto& transform = entity->GetTransform();
 
-							transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+							if (transform.unitsScale)
+							{
+								transform.position = freeCamera.pos2D;
+							}
+							else
+							{
+								transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+							}
 
 							entity->UpdateVisibility();
 							SelectEntity(entity);
@@ -1624,6 +1631,17 @@ namespace Oak
 
 					assetEntity->UpdateVisibility();
 					SelectEntity(assetEntity);
+
+					auto& transform = assetEntity->GetTransform();
+
+					if (transform.unitsScale)
+					{
+						transform.position = freeCamera.pos2D;
+					}
+					else
+					{
+						transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
+					}
 				}
 				else
 				{
