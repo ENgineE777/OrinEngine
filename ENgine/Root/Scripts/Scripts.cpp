@@ -112,7 +112,7 @@ namespace Oak
 
 							DeleteFileA("errors.txt");
 
-							if (system(StringUtils::PrintTemp("%s gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) != 0)
+							if (system(StringUtils::PrintTemp("\"%s\" gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) != 0)
 							{
 								FileInMemory errors;
 
