@@ -53,9 +53,8 @@ namespace Oak
 
 		eastl::vector<SceneHolder*> scenes;
 
-
 		bool CanRun();
-		void Load(const char* fileName);
+		bool Load(const char* fileName);
 
 		void Save(const char* fileName);
 		void Save();

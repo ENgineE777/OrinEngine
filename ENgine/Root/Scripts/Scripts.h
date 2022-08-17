@@ -22,14 +22,14 @@ namespace Oak
 		eastl::string configName = "Release";
 #endif
 
-		void CheckGamePlayDll();
+		bool CheckGamePlayDll();
 		void LoadGamePlayDll(const char* path);
 		#endif
 
 	public:
 
 		#ifdef PLATFORM_WIN
-		void CompileProjectCode(bool forceCompile);
+		bool CompileProjectCode(bool forceCompile);
 		void SetAllowDynamicReload(bool val);
 		#endif
 

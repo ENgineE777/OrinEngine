@@ -16,7 +16,7 @@ namespace Oak
 		return true;
 	}
 
-	void Project::Load(const char* fileName)
+	bool Project::Load(const char* fileName)
 	{
 		Reset();
 
@@ -27,7 +27,11 @@ namespace Oak
 		root.SetRootPath(projectPath);
 		root.assets.LoadAssets();
 
-		root.scripts.CompileProjectCode(false);
+		if (!root.scripts.CompileProjectCode(false))
+		{
+			projectFullName = "";
+			return false;
+		}
 
 		JsonReader reader;
 
@@ -77,6 +81,8 @@ namespace Oak
 				editor.SelectEditAsset(asset);
 			}
 		}
+
+		return true;
 	}
 
 	void Project::Save(const char* fileName)

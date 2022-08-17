@@ -28,7 +28,7 @@ namespace Oak
 		return result;
 	}
 
-	void Scripts::CompileProjectCode(bool forceCompile)
+	bool Scripts::CompileProjectCode(bool forceCompile)
 	{
 		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str())))
 		{
@@ -140,7 +140,7 @@ namespace Oak
 			SetCurrentDirectoryA(curDir);
 		}
 
-		CheckGamePlayDll();
+		return CheckGamePlayDll();
 	}
 
 	void Scripts::LoadGamePlayDll(const char* path)
@@ -202,13 +202,13 @@ namespace Oak
 		}
 	}
 
-	void Scripts::CheckGamePlayDll()
+	bool Scripts::CheckGamePlayDll()
 	{
 		HANDLE hDLLFile = CreateFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if (hDLLFile == INVALID_HANDLE_VALUE)
 		{
-			return;
+			return false;
 		}
 
 		uint64_t lastWriteTime;
@@ -227,6 +227,8 @@ namespace Oak
 		}
 
 		CloseHandle(hDLLFile);
+
+		return true;
 	}
 	#endif
 
