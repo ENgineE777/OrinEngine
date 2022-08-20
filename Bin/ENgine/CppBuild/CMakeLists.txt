@@ -23,7 +23,7 @@ add_library(gameplay SHARED ${SOURCES})
 
 set_target_properties(gameplay PROPERTIES OUTPUT_NAME "gameplay_Release")
 set_target_properties(gameplay PROPERTIES DEBUG_OUTPUT_NAME "gameplay_Debug")
-set_target_properties(gameplay PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_SOURCE_DIR}/../>)
+set_target_properties(gameplay PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_SOURCE_DIR}/../Binaries/Win64>)
 
 target_link_options(gameplay PUBLIC /DEBUG)
 
