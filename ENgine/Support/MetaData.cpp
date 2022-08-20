@@ -906,7 +906,7 @@ namespace Oak
 								if (fileName)
 								{
 									char relativeName[512];
-									StringUtils::GetCropPath(Oak::root.GetRootPath(), fileName, relativeName, 512);
+									StringUtils::GetCropPath(Oak::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 									str->assign(relativeName);
 									prop.changed = true;

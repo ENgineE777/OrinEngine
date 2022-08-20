@@ -20,7 +20,7 @@
 				"y" : 4,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 0,
 					"animIndex" : -1
 				}
@@ -30,7 +30,7 @@
 				"y" : 3,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 10,
 					"animIndex" : -1
 				}
@@ -40,7 +40,7 @@
 				"y" : 4,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 1,
 					"animIndex" : -1
 				}
@@ -50,7 +50,7 @@
 				"y" : 3,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 9,
 					"animIndex" : -1
 				}
@@ -60,7 +60,7 @@
 				"y" : 3,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 11,
 					"animIndex" : -1
 				}
@@ -70,7 +70,7 @@
 				"y" : 4,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 2,
 					"animIndex" : -1
 				}
@@ -80,7 +80,7 @@
 				"y" : 2,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 20,
 					"animIndex" : -1
 				}
@@ -90,7 +90,7 @@
 				"y" : 2,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 19,
 					"animIndex" : -1
 				}
@@ -100,7 +100,7 @@
 				"y" : 2,
 				"Texture" :
 				{
-					"Path" : "Assets/Level/tileset.png",
+					"Path" : "Level/tileset.png",
 					"sliceIndex" : 18,
 					"animIndex" : -1
 				}

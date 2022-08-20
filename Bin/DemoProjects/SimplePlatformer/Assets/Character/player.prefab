@@ -87,10 +87,6 @@
 							"z" : 0.500000
 						}
 					},
-					"anim" :
-					{
-						"Path" : "Assets/Character/player.ang"
-					},
 					"color" :
 					{
 						"r" : 1.000000,

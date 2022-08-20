@@ -13,7 +13,7 @@ namespace Oak
 
 	void Assets::LoadAssets()
 	{
-		const char* rootPath = root.GetRootPath();
+		const char* rootPath = root.GetPath(Root::Path::Assets);
 
 		if (rootPath[0] == 0)
 		{
@@ -61,7 +61,7 @@ namespace Oak
 						StringUtils::Printf(fileName, 512, "%s%s", path, ffd.cFileName);
 
 						char relativeName[512];
-						StringUtils::GetCropPath(root.GetRootPath(), fileName, relativeName, 512);
+						StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 						bool found = false;
 
@@ -102,7 +102,7 @@ namespace Oak
 					StringUtils::Printf(subPath, 512, "%s%s/", path, ffd.cFileName);
 
 					char relativePath[512];
-					StringUtils::GetCropPath(root.GetRootPath(), subPath, relativePath, 512);
+					StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), subPath, relativePath, 512);
 
 					bool found = false;
 
@@ -143,7 +143,7 @@ namespace Oak
 		DWORD waitStatus;
 		HANDLE changeHandles;
 
-		changeHandles = FindFirstChangeNotificationA(root.GetRootPath(), true, FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME);
+		changeHandles = FindFirstChangeNotificationA(root.GetPath(Root::Path::Assets), true, FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME);
 
 		/*if (changeHandles == INVALID_HANDLE_VALUE || changeHandles == NULL)
 		{
@@ -174,7 +174,7 @@ namespace Oak
 		#ifdef OAK_EDITOR
 		if (needRescan.load(std::memory_order_acquire))
 		{
-			LoadAssets(root.GetRootPath(), &rootFolder, true);
+			LoadAssets(root.GetPath(Root::Path::Assets), &rootFolder, true);
 
 			needRescan.store(false, std::memory_order_release);
 		}

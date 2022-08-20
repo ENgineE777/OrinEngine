@@ -36,7 +36,7 @@ namespace Oak
 		FILE* file = nullptr;
 
 		#ifdef PLATFORM_WIN
-		const char* rootPath = root.GetRootPath();
+		const char* rootPath = root.GetPath(Root::Path::Assets);
 
 		if (rootPath[0])
 		{
@@ -65,7 +65,7 @@ namespace Oak
 	#ifdef PLATFORM_WIN
 	bool Files::IsFileExist(const char* name)
 	{
-		const char* rootPath = root.GetRootPath();
+		const char* rootPath = root.GetPath(Root::Path::Assets);
 
 		struct stat buffer;
 

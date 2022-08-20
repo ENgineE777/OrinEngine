@@ -17,7 +17,7 @@ namespace Oak
 		StringUtils::GetFileName(path.c_str(), strName);
 		name = strName;
 
-		fullPath = root.GetRootPath() + path;
+		fullPath = root.GetPath(Root::Path::Assets) + path;
 
 		if (!fullPath.empty())
 		{

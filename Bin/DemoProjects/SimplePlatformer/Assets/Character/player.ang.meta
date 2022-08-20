@@ -23,7 +23,7 @@
 			"def_link" : -1,
 			"texture" :
 			{
-				"Path" : "Assets/Character/player-idle.png",
+				"Path" : "Character/player-idle.png",
 				"sliceIndex" : -1,
 				"animIndex" : 0
 			},
@@ -40,7 +40,7 @@
 			"reverse" : false,
 			"pos" :
 			{
-				"x" : -81.889023,
+				"x" : -81.889046,
 				"y" : 70.000000
 			},
 			"name" : "run",
@@ -48,7 +48,7 @@
 			"def_link" : -1,
 			"texture" :
 			{
-				"Path" : "Assets/Character/payer-run.png",
+				"Path" : "Character/payer-run.png",
 				"sliceIndex" : -1,
 				"animIndex" : 0
 			},
@@ -73,7 +73,7 @@
 			"def_link" : -1,
 			"texture" :
 			{
-				"Path" : "Assets/Character/player-hurt.png",
+				"Path" : "Character/player-hurt.png",
 				"sliceIndex" : -1,
 				"animIndex" : 0
 			},
@@ -98,7 +98,7 @@
 			"def_link" : -1,
 			"texture" :
 			{
-				"Path" : "Assets/Character/player-jump.png",
+				"Path" : "Character/player-jump.png",
 				"sliceIndex" : -1,
 				"animIndex" : 0
 			},
@@ -123,7 +123,7 @@
 			"def_link" : -1,
 			"texture" :
 			{
-				"Path" : "Assets/Character/player-jump.png",
+				"Path" : "Character/player-jump.png",
 				"sliceIndex" : -1,
 				"animIndex" : 1
 			},

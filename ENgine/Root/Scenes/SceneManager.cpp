@@ -90,10 +90,7 @@ namespace Oak
 		holder->scene = new Scene();
 		holder->scene->Init();
 
-		char path[1024];
-		StringUtils::Printf(path, 1024, "%s%s", projectPath, holder->path.c_str());
-
-		holder->scene->Load(path);
+		holder->scene->Load(holder->path.c_str());
 
 		holder->scene->Play();
 	}

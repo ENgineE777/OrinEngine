@@ -357,12 +357,12 @@ namespace Oak
 		int sizes[] = { 16, 24, 32, 48, 64, 72, 96, 128, 256 };
 
 		char icoPath[512];
-		StringUtils::Printf(icoPath, 512, "%s/%s", root.GetRootPath(), path);
+		StringUtils::Printf(icoPath, 512, "%s%s", root.GetPath(Root::Path::Assets), path);
 		StringUtils::RemoveExtension(icoPath);
 
 		for (int i = 0; i < sizeof(sizes) / sizeof(int); i++)
 		{
-			if (system(StringUtils::PrintTemp("%s/ENgine/Tools/nconvert/nconvert.exe -resize %i %i -overwrite -out ico \"%s%s\"", applicationDir, sizes[i], sizes[i], root.GetRootPath(), path)) == 0)
+			if (system(StringUtils::PrintTemp("%s/ENgine/Tools/nconvert/nconvert.exe -resize %i %i -overwrite -out ico \"%s%s\"", applicationDir, sizes[i], sizes[i], root.GetPath(Root::Path::Assets), path)) == 0)
 			{
 				FileInMemory ico;
 

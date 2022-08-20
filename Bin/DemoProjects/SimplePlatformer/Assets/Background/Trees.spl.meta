@@ -10,7 +10,7 @@
 				"scale" : 1.500000,
 				"texture" :
 				{
-					"Path" : "Assets/Background/bg-trees.png",
+					"Path" : "Background/bg-trees.png",
 					"sliceIndex" : -1,
 					"animIndex" : -1
 				}

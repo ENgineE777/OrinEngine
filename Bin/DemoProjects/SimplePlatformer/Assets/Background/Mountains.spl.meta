@@ -10,7 +10,7 @@
 				"scale" : 1.500000,
 				"texture" :
 				{
-					"Path" : "Assets/Background/bg-mountains.png",
+					"Path" : "Background/bg-mountains.png",
 					"sliceIndex" : -1,
 					"animIndex" : -1
 				}

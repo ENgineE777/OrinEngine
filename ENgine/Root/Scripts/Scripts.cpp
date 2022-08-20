@@ -30,16 +30,16 @@ namespace Oak
 
 	bool Scripts::CompileProjectCode(bool forceCompile)
 	{
-		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str())))
+		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str())))
 		{
-			CreateDirectoryA(StringUtils::PrintTemp("%s/_Code", root.GetRootPath()), nullptr);
+			CreateDirectoryA(root.GetPath(Root::Path::VcProj), nullptr);
 
 			char curDir[256];
 			GetCurrentDirectoryA(256, curDir);
 			StringUtils::FixSlashes(curDir);
 
 			char path[256];
-			StringUtils::Printf(path, 256, "%s/_Code/CMakeLists.txt", root.GetRootPath());
+			StringUtils::Printf(path, 256, "%sCMakeLists.txt", root.GetPath(Root::Path::VcProj));
 			StringUtils::FixSlashes(path);
 
 			CopyFileA(StringUtils::PrintTemp("%s/ENgine/CppBuild/CMakeLists.txt", curDir), path, false);
@@ -60,7 +60,7 @@ namespace Oak
 				}
 			}	
 
-			SetCurrentDirectoryA(StringUtils::PrintTemp("%s/_Code", root.GetRootPath()));
+			SetCurrentDirectoryA(root.GetPath(Root::Path::VcProj));
 
 			if (system("cmake") != 0)
 			{
@@ -189,7 +189,7 @@ namespace Oak
 				FreeLibrary((HMODULE)Module);
 
 				char tmpname[256];
-				StringUtils::Printf(tmpname, 256, "%s/Gameplay_%s.rcpp%i.dll", root.GetRootPath(), configName.c_str(), 1 - pingPong);
+				StringUtils::Printf(tmpname, 256, "%sGameplay_%s.rcpp%i.dll", root.GetPath(Root::Path::Binaries), configName.c_str(), 1 - pingPong);
 				DeleteFileA(tmpname);
 			}
 
@@ -204,7 +204,7 @@ namespace Oak
 
 	bool Scripts::CheckGamePlayDll()
 	{
-		HANDLE hDLLFile = CreateFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		HANDLE hDLLFile = CreateFileA(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str()), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		if (hDLLFile == INVALID_HANDLE_VALUE)
 		{
@@ -216,9 +216,9 @@ namespace Oak
 		{
 			pingPong = 1 - pingPong;
 			char tmpname[256];
-			StringUtils::Printf(tmpname, 256, "%s/gameplay_%s.rcpp%i.dll", root.GetRootPath(), configName.c_str(), pingPong);
+			StringUtils::Printf(tmpname, 256, "%sgameplay_%s.rcpp%i.dll", root.GetPath(Root::Path::Binaries), configName.c_str(), pingPong);
 
-			if (CopyFileA(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()), tmpname, FALSE))
+			if (CopyFileA(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str()), tmpname, FALSE))
 			{
 				LoadGamePlayDll(tmpname);
 
@@ -253,7 +253,7 @@ namespace Oak
 		}
 		else
 		{
-			LoadGamePlayDll(StringUtils::PrintTemp("%s/gameplay_%s.dll", root.GetRootPath(), configName.c_str()));
+			LoadGamePlayDll(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str()));
 		}
 
 		return true;

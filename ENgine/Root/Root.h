@@ -41,8 +41,10 @@ namespace Oak
 		float dt = 0.0f;
 		#endif
 
+		eastl::string rootPathAssets;
+		eastl::string rootPathBinaries;
+		eastl::string rootPathVcProj;
 		#ifdef PLATFORM_WIN
-		eastl::string rootPath;
 		bool redirectLog = true;
 		#endif
 
@@ -51,6 +53,13 @@ namespace Oak
 		#endif
 
 	public:
+
+		enum class Path
+		{
+			Assets,
+			Binaries,
+			VcProj
+		};
 
 		/**
 			\brief Access to Assets
@@ -143,7 +152,7 @@ namespace Oak
 		void ClearPhysScene();
 	
 		void SetRootPath(const char* rootPath);
-		const char* GetRootPath();
+		const char* GetPath(Path path);
 
 		#endif
 

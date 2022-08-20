@@ -638,7 +638,7 @@ namespace Oak
 					path = assetPath + createAssetName;
 				}
 
-				path = root.GetRootPath() + path;
+				path = root.GetPath(Root::Path::Assets) + path;
 
 				if (assetDialog == CreateAssetDialog::Folder)
 				{
@@ -834,7 +834,7 @@ namespace Oak
 				if (fileName)
 				{
 					char relativeName[512];
-					StringUtils::GetCropPath(Oak::root.GetRootPath(), fileName, relativeName, 512);
+					StringUtils::GetCropPath(Oak::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 					project.iconPath = relativeName;
 					project.icon = root.render.LoadTexture(project.iconPath.c_str(), _FL_);
@@ -855,7 +855,7 @@ namespace Oak
 				if (fileName)
 				{
 					char relativeName[512];
-					StringUtils::GetCropPath(Oak::root.GetRootPath(), fileName, relativeName, 512);
+					StringUtils::GetCropPath(Oak::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 					project.iconSmallPath = relativeName;
 					project.iconSmall = root.render.LoadTexture(project.iconSmallPath.c_str(), _FL_);

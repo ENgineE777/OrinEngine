@@ -16,13 +16,13 @@
 	"pixelsHeight" : 240.000000,
 	"scenes" : [
 		{
-			"path" : "Assets/Scene.scn",
+			"path" : "Scene.scn",
 			"uid" : 3200
 		},
 		{
-			"path" : "Assets/Character/player.prefab",
+			"path" : "Character/player.prefab",
 			"uid" : 41136
 		}
 	],
-	"edited_asset" : "Assets/Scene.scn"
+	"edited_asset" : "Scene.scn"
 }

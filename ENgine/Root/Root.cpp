@@ -191,12 +191,31 @@ namespace Oak
 
 	void Root::SetRootPath(const char* setRootPath)
 	{
-		rootPath = setRootPath;
+		#ifdef PLATFORM_WIN
+		rootPathAssets = eastl::string(setRootPath) + "Assets/";
+		rootPathBinaries = eastl::string(setRootPath) + "Binaries/Win64/";
+		rootPathVcProj = eastl::string(setRootPath) + "VcProj/";
+		#endif
 	}
 
-	const char* Root::GetRootPath()
+	const char* Root::GetPath(Path path)
 	{
-		return rootPath.c_str();
+		#ifdef PLATFORM_WIN
+		switch (path)
+		{
+			case Path::Assets:
+				return rootPathAssets.c_str();
+			break;
+			case Path::Binaries:
+				return rootPathBinaries.c_str();
+			break;
+			case Path::VcProj:
+				return rootPathVcProj.c_str();
+			break;
+		}
+		#endif
+
+		return nullptr;
 	}
 
 	void Root::Release()
