@@ -153,11 +153,11 @@ namespace Oak
 		{
 			if (Module && allowDynamicReload)
 			{
-				if (editor.selectedEntity)
+				/*if (editor.selectedEntity)
 				{
 					uid = editor.selectedEntity->GetUID();
 					editor.SelectEntity(nullptr);
-				}
+				}*/
 
 				void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
 				auto code_ptr = (decltype(unregister_code)*)Procs;
@@ -180,10 +180,10 @@ namespace Oak
 					void* Procs = GetProcAddress(newModule, "recreate_entites");
 					auto code_ptr = (decltype(recreate_entites)*)Procs;
 
-					if (Oak::editor.selectedScene)
+					/*if (Oak::editor.selectedScene)
 					{
 						code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.selectedScene->GetEntities());
-					}
+					}*/
 				}
 
 				FreeLibrary((HMODULE)Module);
@@ -197,7 +197,7 @@ namespace Oak
 
 			if (uid != 0)
 			{
-				editor.SelectEntity(Oak::editor.selectedScene->FindEntity(uid));
+				//editor.SelectEntity(Oak::editor.selectedScene->FindEntity(uid));
 			}
 		}
 	}

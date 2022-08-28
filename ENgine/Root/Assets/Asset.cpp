@@ -109,6 +109,14 @@ namespace Oak
 		if (renderTaskPool) renderTaskPool->SetActive(enable);
 	}
 
+	void Asset::Update(float dt)
+	{
+		if (Tasks())
+		{
+			Tasks()->Execute(dt);
+		}
+	}
+
 	TaskExecutor::SingleTaskPool* Asset::Tasks()
 	{
 		if (!taskPool)
@@ -143,12 +151,21 @@ namespace Oak
 		}
 	}
 
+	bool Asset::ImGuiHasHierarchy()
+	{
+		return false;
+	}
+
+	void Asset::ImGuiHierarchy()
+	{
+	}
+
 	void Asset::ImGuiProperties()
 	{
 
 	}
 
-	void Asset::ImGui(bool viewportFocused)
+	void Asset::ImGuiViewport(bool viewportFocused)
 	{
 
 	}

@@ -35,11 +35,38 @@ namespace Oak
 		void LoadMetaData(JsonReader& loader) override;
 
 #ifdef OAK_EDITOR
+		SceneEntity* selectedEntity = nullptr;
+
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		void GrabEditorData();
+
+		void SelectEntity(SceneEntity* entity);
+
+		void ImGuiProperties() override;
+		bool ImGuiHasHierarchy() override;
+		void ImGuiHierarchy() override;
+
+		void OnMouseMove(Math::Vector2 ms) override;
+		void OnLeftMouseDown() override;
+		void OnLeftMouseUp() override;
+		void OnRightMouseDown() override;
+		void OnRightMouseUp() override;
+		void OnMiddleMouseDown() override;
+		void OnMiddleMouseUp() override;
 #endif
 
 		void Release() override;
+
+	protected:
+		bool sceneTreePopup = false;
+		bool entityDeletedViaPopup = false;
+		bool allowSceneDropTraget = true;
+		bool isSelecteEditScenePrefab = false;
+
+		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
+		void SceneDropTraget(SceneEntity* entity);
+		void SceneTreePopup(bool contextItem);
+		void CopyChilds(SceneEntity* entity, SceneEntity* copy);
 	};
 }

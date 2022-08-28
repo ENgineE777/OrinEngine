@@ -51,7 +51,6 @@ namespace Oak
 		Asset* selectedAsset = nullptr;
 
 		Asset* selectedEditAsset = nullptr;
-		bool isSelecteEditScenePrefab = false;
 
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
@@ -78,17 +77,14 @@ namespace Oak
 		};
 
 		bool projectTreePopup = false;
-		bool sceneTreePopup = false; 
 		bool assetsTreePopup = false;
 		bool need2openAssetPopup = false;
 		eastl::string createAssetName;
 		CreateAssetDialog assetDialog = CreateAssetDialog::Inactive;
 		ViewportCature viewportCaptured = ViewportCature::None;
 		bool vireportHowered = false;
-		bool entityDeletedViaPopup = false;
 
 		bool projectRunning = false;
-		bool allowSceneDropTraget = true;
 
 		bool needSetSizePrjSet = true; 
 		bool needSetSizeEdSet = true;
@@ -119,9 +115,6 @@ namespace Oak
 
 	public:
 
-		SceneEntity* selectedEntity = nullptr;
-		Scene* selectedScene = nullptr;
-
 		Project project;
 		FreeCamera freeCamera;
 		Gizmo gizmo;
@@ -140,13 +133,10 @@ namespace Oak
 		void OnResize(int width, int height) override;
 
 		void SelectEditAsset(Asset* asset);
-		void SelectEntity(SceneEntity* entity);
 
 		void Release() override;
 
 		void ApplySelecetedTheme();
-
-		void CopyChilds(SceneEntity* entity, SceneEntity* copy);
 
 	private:
 
@@ -158,10 +148,8 @@ namespace Oak
 		void ShowEditorSettings();
 		void ShowViewport();
 		void ShowSelectProject();
-		void SceneTreePopup(bool contextItem);
+
 		void AssetsTreePopup(bool contextItem);
-		void SceneDropTraget(SceneEntity* entity);
-		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 		void AssetsFolder(Assets::Folder* folder);
 
 		void StartProject();

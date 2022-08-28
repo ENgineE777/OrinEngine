@@ -50,11 +50,14 @@ namespace Oak
 		virtual const char* GetSceneEntityType() = 0;
 		virtual bool IsEditable();
 		virtual void EnableEditing(bool enable);
+		virtual void Update(float dt);
 		TaskExecutor::SingleTaskPool* Tasks();
 		TaskExecutor::SingleTaskPool* RenderTasks();
 		virtual void ImGuiMetaProperties();
+		virtual bool ImGuiHasHierarchy();
+		virtual void ImGuiHierarchy();
 		virtual void ImGuiProperties();
-		virtual void ImGui(bool viewportFocused);
+		virtual void ImGuiViewport(bool viewportFocused);
 		virtual void OnMouseMove(Math::Vector2 ms);
 		virtual	void OnLeftMouseDown();
 		virtual void OnLeftMouseUp();

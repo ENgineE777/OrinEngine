@@ -100,7 +100,7 @@ namespace Oak
 		void MakeNodeAsDefault();
 
 		void ImGuiProperties() override;
-		void ImGui(bool viewportFocused) override;
+		void ImGuiViewport(bool viewportFocused) override;
 
 		void OnMouseMove(Math::Vector2 ms) override;
 		void OnLeftMouseDown() override;

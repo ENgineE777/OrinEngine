@@ -6,4 +6,9 @@ namespace Oak
 
 	META_DATA_DESC(AssetPrefab)
 	META_DATA_DESC_END()
+
+	AssetPrefab::AssetPrefab() : AssetScene()
+	{
+		isSelecteEditScenePrefab = true;
+	}
 };

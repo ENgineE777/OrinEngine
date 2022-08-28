@@ -15,5 +15,7 @@ namespace Oak
 	public:
 
 		META_DATA_DECL_BASE(AssetPrefab)
+
+			AssetPrefab();
 	};
 }

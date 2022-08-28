@@ -278,8 +278,7 @@ namespace Oak
 		Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
 		Sprite::pixelsHeight = 1080.0f;
 
-		editor.SelectEntity(nullptr);
-		editor.selectedScene = nullptr;
+		editor.SelectEditAsset(nullptr);
 
 		scenes.clear();
 

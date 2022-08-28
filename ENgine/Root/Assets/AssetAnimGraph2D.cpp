@@ -488,7 +488,7 @@ namespace Oak
 		}
 	}
 
-	void AssetAnimGraph2D::ImGui(bool viewportFocused)
+	void AssetAnimGraph2D::ImGuiViewport(bool viewportFocused)
 	{
 		if (ImGui::BeginDragDropTarget())
 		{

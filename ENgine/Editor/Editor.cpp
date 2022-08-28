@@ -473,14 +473,9 @@ namespace Oak
 					gizmo.OnLeftMouseDown();
 				}
 
-				if (selectedEditAsset && selectedEditAsset->IsEditable())
+				if (selectedEditAsset)
 				{
 					selectedEditAsset->OnLeftMouseDown();
-				}
-				else
-				if (selectedEntity)
-				{
-					selectedEntity->OnLeftMouseDown();
 				}
 
 				viewportCaptured = ViewportCature::LeftButton;
@@ -488,14 +483,9 @@ namespace Oak
 			else
 			if (ImGui::IsMouseClicked(1))
 			{
-				if (selectedEditAsset && selectedEditAsset->IsEditable())
+				if (selectedEditAsset)
 				{
 					selectedEditAsset->OnRightMouseDown();
-				}
-				else
-				if (selectedEntity)
-				{
-					selectedEntity->OnRightMouseDown();
 				}
 
 				viewportCaptured = ViewportCature::RightButton;
@@ -503,14 +493,9 @@ namespace Oak
 			else
 			if (ImGui::IsMouseClicked(2))
 			{
-				if (selectedEditAsset && selectedEditAsset->IsEditable())
+				if (selectedEditAsset)
 				{
 					selectedEditAsset->OnMiddleMouseDown();
-				}
-				else
-				if (selectedEntity)
-				{
-					selectedEntity->OnMiddleMouseDown();
 				}
 
 				viewportCaptured = ViewportCature::MiddleButton;
@@ -522,15 +507,10 @@ namespace Oak
 			gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 		}
 
-		if (selectedEditAsset && selectedEditAsset->IsEditable())
+		if (selectedEditAsset)
 		{
-			selectedEditAsset->ImGui(viewportFocused);
+			selectedEditAsset->ImGuiViewport(viewportFocused);
 			selectedEditAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
-		}
-		else
-		if (selectedEntity)
-		{
-			selectedEntity->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 		}
 
 		if (viewportCaptured == ViewportCature::LeftButton && ImGui::IsMouseReleased(0))
@@ -540,14 +520,9 @@ namespace Oak
 				gizmo.OnLeftMouseUp();
 			}
 
-			if (selectedEditAsset && selectedEditAsset->IsEditable())
+			if (selectedEditAsset)
 			{
 				selectedEditAsset->OnLeftMouseUp();
-			}
-			else
-			if (selectedEntity)
-			{
-				selectedEntity->OnLeftMouseUp();
 			}
 
 			viewportCaptured = ViewportCature::None;
@@ -555,14 +530,9 @@ namespace Oak
 		else
 		if (viewportCaptured == ViewportCature::RightButton && ImGui::IsMouseReleased(1))
 		{
-			if (selectedEditAsset && selectedEditAsset->IsEditable())
+			if (selectedEditAsset)
 			{
 				selectedEditAsset->OnRightMouseUp();
-			}
-			else
-			if (selectedEntity)
-			{
-				selectedEntity->OnRightMouseUp();
 			}
 
 			viewportCaptured = ViewportCature::None;
@@ -570,14 +540,9 @@ namespace Oak
 		else
 		if (viewportCaptured == ViewportCature::MiddleButton && ImGui::IsMouseReleased(2))
 		{
-			if (selectedEditAsset && selectedEditAsset->IsEditable())
+			if (selectedEditAsset)
 			{
 				selectedEditAsset->OnMiddleMouseUp();
-			}
-			else
-			if (selectedEntity)
-			{
-				selectedEntity->OnMiddleMouseUp();
 			}
 
 			viewportCaptured = ViewportCature::None;
@@ -1094,7 +1059,7 @@ namespace Oak
 
 	void Editor::SelectEditAsset(Asset* asset)
 	{
-		if (!asset->IsEditable())
+		if (asset && !asset->IsEditable())
 		{
 			return;
 		}
@@ -1104,55 +1069,13 @@ namespace Oak
 		if (selectedEditAsset)
 		{
 			selectedEditAsset->EnableEditing(false);
-			selectedEditAsset->Save();
-
-			project.Save();
-
-			selectedScene = nullptr;
-			selectedEntity = nullptr;
 		}
 
 		selectedEditAsset = asset;
-		selectedEditAsset->EnableEditing(true);
 
-		auto* scene = dynamic_cast<AssetScene*>(asset);
-
-		if (scene)
+		if (selectedEditAsset)
 		{
-			selectedScene = scene->GetScene();
-			isSelecteEditScenePrefab = dynamic_cast<AssetPrefab*>(asset) != nullptr;
-		}
-	}
-
-	void Editor::SelectEntity(SceneEntity* entity)
-	{
-		if (selectedEntity)
-		{
-			selectedEntity->SetEditMode(false);
-			gizmo.Disable();
-		}
-
-		selectedEntity = entity;
-
-		if (selectedEntity)
-		{
-			selectedEntity->SetEditMode(true);
-
-			auto& transform = selectedEntity->GetTransform();
-
-			gizmo.SetTransform(&selectedEntity->GetTransform());
-
-			if (transform.transformFlag & TransformFlag::RectFull)
-			{
-				gizmo.mode = TransformMode::Rectangle;
-			}
-			else
-			if ((gizmo.mode == TransformMode::Rotate && !(transform.transformFlag & TransformFlag::RotateXYZ)) ||
-				(gizmo.mode == TransformMode::Scale && !(transform.transformFlag & TransformFlag::ScaleXYZ)) ||
-				(gizmo.mode == TransformMode::Rectangle && !(transform.transformFlag & TransformFlag::RectFull)))
-			{
-				gizmo.mode = TransformMode::Move;
-			}
+			selectedEditAsset->EnableEditing(true);
 		}
 	}
 
@@ -1211,144 +1134,6 @@ namespace Oak
 	void Editor::CleanupRenderTarget()
 	{
 		RELEASE(mainRenderTargetView)
-	}
-
-	void Editor::CopyChilds(SceneEntity* entity, SceneEntity* copy)
-	{
-		auto& childs = entity->GetChilds();
-
-		for (auto* child : childs)
-		{
-			SceneEntity* childCopy = selectedScene->CreateEntity(child->className);
-
-			childCopy->SetParent(copy, nullptr);
-
-			childCopy->Copy(child);
-			childCopy->PostLoad();
-
-			CopyChilds(child, childCopy);
-		}
-	}
-
-	void Editor::SceneTreePopup(bool contextItem)
-	{
-		entityDeletedViaPopup = false;
-
-		if (sceneTreePopup)
-		{
-			return;
-		}
-
-		if ((contextItem && ImGui::BeginPopupContextItem("CreateEntity")) ||
-			(!contextItem && ImGui::BeginPopupContextWindow("CreateEntity")))
-		{
-			sceneTreePopup = true;
-
-			if (ImGui::BeginMenu("Create Entity"))
-			{
-				auto& decls = ClassFactorySceneEntity::Decls();
-
-				for (auto& decl : decls)
-				{
-					if (ImGui::MenuItem(decl->GetShortName()))
-					{
-						auto* entity = selectedScene->CreateEntity(decl->GetName());
-
-						if (selectedEntity)
-						{
-							auto* parent = selectedEntity->GetParent();
-
-							if (parent)
-							{
-								if (entity->GetTransform().unitsInvScale == parent->GetTransform().unitsInvScale)
-								{
-									entity->SetParent(parent, selectedEntity);
-								}
-								else
-								{
-									RELEASE(entity)
-								}
-							}
-							else
-							{
-								selectedScene->AddEntity(entity, selectedEntity);							}
-						}
-						else
-						{
-							selectedScene->AddEntity(entity);
-						}
-
-						if (entity)
-						{
-							auto& transform = entity->GetTransform();
-
-							if (transform.unitsScale)
-							{
-								transform.position = freeCamera.pos2D;
-							}
-							else
-							{
-								transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-							}
-
-							entity->UpdateVisibility();
-							SelectEntity(entity);
-						}
-					}
-				}
-
-				ImGui::EndMenu();
-			}
-
-			if (selectedEntity && (!isSelecteEditScenePrefab || (isSelecteEditScenePrefab && selectedEntity->GetParent() != nullptr)) && ImGui::MenuItem("Duplicate"))
-			{
-				SceneEntity* copy = selectedScene->CreateEntity(selectedEntity->className);
-
-				auto* parent = selectedEntity->GetParent();
-
-				if (parent)
-				{
-					copy->SetParent(parent, selectedEntity);
-				}
-				else
-				{
-					selectedScene->AddEntity(copy, selectedEntity);
-				}
-
-				copy->Copy(selectedEntity);
-				copy->PostLoad();
-
-				CopyChilds(selectedEntity, copy);
-				copy->UpdateVisibility();
-
-				SelectEntity(copy);
-
-				eastl::string name = selectedEntity->GetName();
-				name += "_copy";
-
-				copy->SetName(name.c_str());
-			}
-
-			if (selectedEntity && ImGui::MenuItem("Delete"))
-			{
-				SceneEntity* entity = selectedEntity;
-				SelectEntity(nullptr);
-
-				if (entity->GetParent())
-				{
-					entity->SetParent(nullptr);
-					entity->Release();
-				}
-				else
-				{
-					selectedScene->DeleteEntity(entity, true);
-				}
-
-				entityDeletedViaPopup = true;
-			}
-
-			ImGui::EndPopup();
-		}
 	}
 
 	void Editor::AssetsTreePopup(bool contextItem)
@@ -1429,293 +1214,6 @@ namespace Oak
 			}*/
 
 			ImGui::EndPopup();
-		}
-	}
-
-	void Editor::SceneDropTraget(SceneEntity* entity)
-	{
-		ImGuiContext* context = ImGui::GetCurrentContext();
-		ImGuiWindow* window = context->CurrentWindow;
-
-		if (allowSceneDropTraget && ImGui::BeginDragDropTarget())
-		{
-			allowSceneDropTraget = false;
-
-			auto rect = window->DC.LastItemRect;
-			bool asChild = false;
-
-			if (entity && context->IO.MousePos.y > (rect.Min.y + rect.Max.y) * 0.5f)
-			{
-				rect.Min.x += 20;
-				rect.Min.y = (rect.Min.y + rect.Max.y) * 0.5f;
-				asChild = true;
-			}
-
-			SceneEntity* transformEntity = entity;
-
-			if (!asChild && entity)
-			{
-				transformEntity = transformEntity->GetParent();
-			}
-
-			ImGuiPayload& payload = context->DragDropPayload;
-			bool dragFinished = false;
-
-			SceneEntity* assetEntity = nullptr;
-
-			if (payload.IsDataType("_TREENODE"))
-			{
-				uint64_t temp = *((uint64_t*)payload.Data);
-				SceneEntity* dragged = (SceneEntity*)temp;
-
-				if (!dragged->ContainEntity(entity))
-				{
-					if (ImGui::AcceptDragDropPayload("_TREENODE", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
-					{
-						bool allowDrag = true;
-
-						SceneEntity* parent = asChild ? entity : (entity ? entity->GetParent() : nullptr);
-
-						if (parent && parent->GetTransform().unitsInvScale != dragged->GetTransform().unitsInvScale)
-						{
-							allowDrag = false;
-						}
-
-						if (allowDrag)
-						{
-							if (dragged->GetParent())
-							{
-								dragged->SetParent(nullptr);
-							}
-							else
-							{
-								selectedScene->DeleteEntity(dragged, false);
-							}
-
-							if (parent)
-							{
-								dragged->SetParent(parent, asChild ? nullptr : entity);
-							}
-							else
-							{
-								selectedScene->AddEntity(dragged);
-							}
-
-							dragged->UpdateVisibility();
-						}
-
-						dragFinished = true;
-					}
-				}
-			}
-			else
-			if (payload.IsDataType("_ASSET_TEX"))
-			{
-				auto& assetRef = *reinterpret_cast<AssetTextureRef**>(payload.Data)[0];
-
-				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
-				{
-					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
-
-					if (assetEntity)
-					{
-						assetRef.SetupCreatedSceneEntity(assetEntity);
-						assetEntity->ApplyProperties();
-					}
-
-					dragFinished = true;
-				}
-			}
-			else
-			if (payload.IsDataType("_ASSET_ANIM_GRAPH_2D"))
-			{
-				auto& assetRef = *reinterpret_cast<AssetAnimGraph2DRef**>(payload.Data)[0];
-
-				if (ImGui::AcceptDragDropPayload("_ASSET_ANIM_GRAPH_2D", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
-				{
-					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
-
-					if (assetEntity)
-					{
-						assetRef.SetupCreatedSceneEntity(assetEntity);
-						assetEntity->ApplyProperties();
-					}
-
-					dragFinished = true;
-				}
-			}
-			else
-			if (payload.IsDataType("_ASSET_TILE_SET"))
-			{
-				auto& assetRef = *reinterpret_cast<AssetTileSetRef**>(payload.Data)[0];
-
-				if (ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
-				{
-					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
-
-					if (assetEntity)
-					{
-						assetRef.SetupCreatedSceneEntity(assetEntity);
-						assetEntity->ApplyProperties();
-					}
-
-					dragFinished = true;
-				}
-			}
-			else
-			if (payload.IsDataType("_ASSET_SPRITES_LAYER"))
-			{
-				auto& assetRef = *reinterpret_cast<AssetSpritesLayerRef**>(payload.Data)[0];
-
-				if (ImGui::AcceptDragDropPayload("_ASSET_SPRITES_LAYER", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
-				{
-					assetEntity = selectedScene->CreateEntity(assetRef->GetSceneEntityType());
-
-					if (assetEntity)
-					{
-						assetRef.SetupCreatedSceneEntity(assetEntity);
-						assetEntity->ApplyProperties();
-					}
-
-					dragFinished = true;
-				}
-			}
-			else
-			if (payload.IsDataType("_ASSET_PREFAB"))
-			{
-				Assets::AssetHolder* holder = reinterpret_cast<Assets::AssetHolder**>(payload.Data)[0];
-
-				if (ImGui::AcceptDragDropPayload("_ASSET_PREFAB", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
-				{
-					AssetPrefab* prefab = holder->GetAsset<AssetPrefab>();
-					Scene* scene = prefab->GetScene();
-			
-					auto& entities = scene->GetEntities();
-
-					if (entities.size() > 0)
-					{
-						auto* src = entities[0];
-
-						assetEntity = selectedScene->CreateEntity(src->className);
-
-						assetEntity->Copy(src);
-						assetEntity->PostLoad();
-
-						Scene* scene = prefab->GetScene();
-						assetEntity->SetName(scene->GetName());
-
-						CopyChilds(src, assetEntity);
-						assetEntity->UpdateVisibility();
-					}
-
-					dragFinished = true;
-				}
-			}
-
-			if (assetEntity)
-			{
-				bool allowAdd = true;
-
-				SceneEntity* parent = asChild ? entity : (entity ? entity->GetParent() : nullptr);
-
-				if (parent && parent->GetTransform().unitsInvScale != assetEntity->GetTransform().unitsInvScale)
-				{
-					allowAdd = false;
-				}
-
-				if (allowAdd)
-				{
-					if (parent)
-					{
-						assetEntity->SetParent(parent, asChild ? nullptr : entity);
-					}
-					else
-					{
-						selectedScene->AddEntity(assetEntity);
-					}
-
-					assetEntity->UpdateVisibility();
-					SelectEntity(assetEntity);
-
-					auto& transform = assetEntity->GetTransform();
-
-					if (transform.unitsScale)
-					{
-						transform.position = freeCamera.pos2D;
-					}
-					else
-					{
-						transform.local.Pos() = freeCamera.pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
-					}
-				}
-				else
-				{
-					RELEASE(assetEntity)
-				}
-			}
-
-			if (dragFinished)
-			{
-				ImGui::EndDragDropTarget();
-			}
-			else
-			if (entity)
-			{
-				window->DrawList->AddRect(rect.Min, rect.Max /*- ImVec2(10.0f, 10.0f)*/, ImGui::GetColorU32(ImGuiCol_DragDropTarget), 0.0f, ~0, 2.0f);
-			}
-		}
-	}
-
-	void Editor::EntitiesTreeView(const eastl::vector<SceneEntity*>& entities)
-	{
-		ImGuiContext* context = ImGui::GetCurrentContext();
-		ImGuiWindow* window = context->CurrentWindow;
-
-		if (entities.size() > 0)
-		{
-			for (int i = 0; i < entities.size(); i++)
-			{
-				SceneEntity* entity = entities[i];
-
-				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
-
-				if (entity->GetChilds().size() > 0)
-				{
-					nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
-				}
-
-				if (selectedEntity == entity)
-				{
-					nodeFlags |= ImGuiTreeNodeFlags_Selected;
-				}
-
-				bool open = ImGui::TreeNodeEx(entity, nodeFlags, entity->GetName()[0] == 0 ? "[Name not set]" : entity->GetName());
-
-				if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
-				{
-					SelectEntity(entity);
-				}
-
-				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
-				{
-					ImGui::SetDragDropPayload("_TREENODE", &entity, sizeof(SceneEntity*));
-					ImGui::EndDragDropSource();
-				}
-
-				SceneDropTraget(entity);
-
-				SceneTreePopup(true);
-
-				if (open)
-				{
-					if (!entityDeletedViaPopup)
-					{
-						EntitiesTreeView(entity->GetChilds());
-					}
-
-					ImGui::TreePop();
-				}
-			}
 		}
 	}
 
@@ -1804,6 +1302,13 @@ namespace Oak
 			{
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
+
+				if (selectedEditAsset)
+				{
+					selectedEditAsset->Save();
+
+					project.Save();
+				}
 
 				SelectEditAsset(asset);
 			}
@@ -2058,7 +1563,6 @@ namespace Oak
 		//ImGui::ShowDemoWindow();
 
 		projectTreePopup = false;
-		sceneTreePopup = false;
 		assetsTreePopup = false;
 
 		{
@@ -2104,7 +1608,7 @@ namespace Oak
 
 			if (gizmo.IsEnabled())
 			{
-				auto* transform = selectedEntity ? &selectedEntity->GetTransform() : nullptr;
+				auto* transform = gizmo.transform;
 
 				PushButton("Select", selectMode, [this]() { selectMode = true; });
 
@@ -2175,23 +1679,11 @@ namespace Oak
 			ImGui::End();
 		}
 
+		if (selectedEditAsset && selectedEditAsset->ImGuiHasHierarchy())
 		{
 			ImGui::Begin("Hierarchy###Scene");
 
-			if (selectedScene)
-			{
-				allowSceneDropTraget = true;
-
-				ImGui::BeginChild("SceneRoot");
-
-				EntitiesTreeView(selectedScene->GetEntities());
-
-				ImGui::EndChild();
-
-				SceneDropTraget(nullptr);
-
-				SceneTreePopup(true);
-			}
+			selectedEditAsset->ImGuiHierarchy();
 
 			ImGui::End();
 		}
@@ -2200,12 +1692,6 @@ namespace Oak
 			ImGui::Begin("Properties");
 
 			ImGui::Columns(2);
-
-			if (selectedEntity)
-			{
-				selectedEntity->GetMetaData()->Prepare(selectedEntity);
-				selectedEntity->GetMetaData()->ImGuiWidgets();
-			}
 
 			if (selectedEditAsset)
 			{
@@ -2353,7 +1839,7 @@ namespace Oak
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
-		if (!projectRunning && ((gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect && selectedEntity) || (ownGrid && gridStep.Length2() > 0.1f)))
+		if (!projectRunning && ((gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect) || (ownGrid && gridStep.Length2() > 0.1f)))
 		{
 			Math::Vector2 step = ownGrid ? gridStep : gizmo.alignRect;
 
@@ -2451,23 +1937,9 @@ namespace Oak
 			}
 		}
 
-		if (!projectRunning && selectedScene)
+		if (!projectRunning && selectedEditAsset)
 		{
-			if (selectedEditAsset && selectedEditAsset->IsEditable())
-			{
-				if (selectedEditAsset->Tasks())
-				{
-					selectedEditAsset->Tasks()->Execute(dt);
-				}
-			}
-			else
-			{
-				if (selectedEntity && selectedEntity->GetMetaData()->IsValueWasChanged())
-				{
-					selectedEntity->ApplyProperties();
-					selectedEntity->UpdateVisibility();
-				}
-			}
+			selectedEditAsset->Update(dt);
 		}
 
 		root.Update();
