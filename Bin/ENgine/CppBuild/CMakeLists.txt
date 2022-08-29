@@ -5,8 +5,8 @@ set (CMAKE_CXX_STANDARD 17)
 
 add_definitions("-DOAK_EDITOR")
 
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /wd4251 /wd4275")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd /wd4251 /wd4275")
 
 include_directories ("$EDITOR_DIR/ENgine/CppBuild/include/Libs/vjson"
 					 "$EDITOR_DIR/ENgine/CppBuild/include/Libs/eastl/include"
