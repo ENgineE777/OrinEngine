@@ -200,7 +200,7 @@ namespace Oak
 	void Project::AddScene(AssetScene* scene)
 	{
 		char cropped_path[1024];
-		StringUtils::GetCropPath(projectPath, scene->GetPath().c_str(), cropped_path, 1024);
+		StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), scene->GetPath().c_str(), cropped_path, 1024);
 
 		/*if (FindSceneIndex(cropped_path) != -1)
 		{
