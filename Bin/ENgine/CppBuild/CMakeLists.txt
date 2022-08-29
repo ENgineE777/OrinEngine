@@ -25,7 +25,7 @@ set_target_properties(gameplay PROPERTIES OUTPUT_NAME "gameplay_Release")
 set_target_properties(gameplay PROPERTIES DEBUG_OUTPUT_NAME "gameplay_Debug")
 set_target_properties(gameplay PROPERTIES RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_SOURCE_DIR}/../Binaries/Win64>)
 
-target_link_options(gameplay PUBLIC /DEBUG)
+target_link_options(gameplay PUBLIC /DEBUG:FASTLINK)
 
 target_link_libraries(gameplay optimized "$EDITOR_DIR/ENgine/CppBuild/lib/eastl.lib" optimized "$EDITOR_DIR/ENgine/CppBuild/lib/Oak.lib")
 target_link_libraries(gameplay debug "$EDITOR_DIR/ENgine/CppBuild/lib/eastl_Debug.lib" debug "$EDITOR_DIR/ENgine/CppBuild/lib/Oak_Debug.lib")
