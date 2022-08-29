@@ -76,6 +76,8 @@ namespace Oak
 
 		Mode mode = Mode::Inactive;
 
+		static void ShowTilsetWindow(void* owner);
+
 		void SetEditMode(bool ed) override;
 
 		void Copy(SceneEntity* source) override;

@@ -9,6 +9,18 @@
 
 namespace Oak
 {
+#ifdef OAK_EDITOR
+	void TileMap::ShowTilsetWindow(void* owner)
+	{
+		TileMap* tileMap = (TileMap*)owner;
+
+		if (tileMap->tileSet.Get())
+		{
+			TileSetWindow::StartEdit(tileMap->tileSet.Get());
+		}
+	}
+#endif
+
 	CLASSREG(SceneEntity, TileMap, "TileMap")
 
 	META_DATA_DESC(TileMap)
@@ -16,6 +28,9 @@ namespace Oak
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		INT_PROP(TileMap, physGroup, 1, "Physics", "Physical group", "Physical group")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
+#ifdef OAK_EDITOR
+		CALLBACK_PROP(TileMap, TileMap::ShowTilsetWindow, "Properties", "Open Tileset")
+#endif
 	META_DATA_DESC_END()
 
 	void TileMap::Init()
@@ -208,13 +223,6 @@ namespace Oak
 		{
 			mode = Mode::Inactive;
 		}
-		else
-		{
-			if (tileSet.Get())
-			{
-				TileSetWindow::StartEdit(tileSet.Get());
-			}
-		}
 	}
 
 	void TileMap::Copy(SceneEntity* source)
@@ -226,7 +234,7 @@ namespace Oak
 
 	void TileMap::OnMouseMove(Math::Vector2 ms)
 	{
-		if (mode != Mode::Inactive)
+		if (mode != Mode::Inactive && TileSetWindow::tileSet)
 		{
 			Math::Vector3 mouseOrigin;
 			Math::Vector3 mouseDirection;
