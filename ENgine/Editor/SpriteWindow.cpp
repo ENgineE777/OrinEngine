@@ -334,8 +334,8 @@ namespace Oak
 			texture->slices.clear();
 			selSlice = -1;
 
-			int stepX = (int) ((typeAutoSlice == 0) ? (texture->size.x / AutoSliceRows) : AutoSliceCellSizeX);
-			int stepY = (int) ((typeAutoSlice == 0) ? (texture->size.y / AutoSliceCols) : AutoSliceCellSizeY);
+			int stepX = (int) ((typeAutoSlice == 0) ? (texture->size.x / AutoSliceCols) : AutoSliceCellSizeX);
+			int stepY = (int) ((typeAutoSlice == 0) ? (texture->size.y / AutoSliceRows) : AutoSliceCellSizeY);
 
 			FileInMemory buffer;
 
