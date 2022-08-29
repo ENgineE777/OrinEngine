@@ -60,10 +60,10 @@ void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls,
 			copy->SetName(entity->GetName());
 			copy->SetUID(entity->GetUID());
 
-			copy->referenced = entity->referenced;
+			auto references = entity->referenced;
 			entity->referenced.clear();
 
-			for (auto* ref : copy->referenced)
+			for (auto* ref : references)
 			{
 				ref->SetEntity(copy);
 			}

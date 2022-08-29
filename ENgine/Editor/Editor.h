@@ -50,8 +50,6 @@ namespace Oak
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
 		Asset* selectedAsset = nullptr;
 
-		Asset* selectedEditAsset = nullptr;
-
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
 		AssetTileSetRef draggedAssetTileSet;
@@ -119,6 +117,8 @@ namespace Oak
 		FreeCamera freeCamera;
 		Gizmo gizmo;
 		bool viewportFocused = false;
+
+		Asset* selectedEditAsset = nullptr;
 
 		bool ownGrid = false;
 		Math::Vector3 gridOrigin = 0.0f;

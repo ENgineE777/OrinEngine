@@ -147,17 +147,14 @@ namespace Oak
 	{
 		HMODULE newModule = LoadLibraryA(path);
 
-		uint32_t uid = 0;
-
 		if (newModule)
 		{
+			Asset* selectedEditAsset = nullptr;
+
 			if (Module && allowDynamicReload)
 			{
-				/*if (editor.selectedEntity)
-				{
-					uid = editor.selectedEntity->GetUID();
-					editor.SelectEntity(nullptr);
-				}*/
+				selectedEditAsset = editor.selectedEditAsset;
+				editor.SelectEditAsset(nullptr);
 
 				void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
 				auto code_ptr = (decltype(unregister_code)*)Procs;
@@ -180,10 +177,14 @@ namespace Oak
 					void* Procs = GetProcAddress(newModule, "recreate_entites");
 					auto code_ptr = (decltype(recreate_entites)*)Procs;
 
-					/*if (Oak::editor.selectedScene)
+					eastl::vector<AssetScene*> scenes;
+
+					root.assets.GetAssetsByType<AssetScene>(scenes);
+
+					for (auto* scene : scenes)
 					{
-						code_ptr((eastl::vector<SceneEntity*>&)Oak::editor.selectedScene->GetEntities());
-					}*/
+						code_ptr((eastl::vector<SceneEntity*>&)scene->GetScene()->GetEntities());
+					}
 				}
 
 				FreeLibrary((HMODULE)Module);
@@ -195,9 +196,9 @@ namespace Oak
 
 			Module = newModule;
 
-			if (uid != 0)
+			if (selectedEditAsset)
 			{
-				//editor.SelectEntity(Oak::editor.selectedScene->FindEntity(uid));
+				editor.SelectEditAsset(selectedEditAsset);
 			}
 		}
 	}
