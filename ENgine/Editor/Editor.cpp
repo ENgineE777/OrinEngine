@@ -1269,7 +1269,7 @@ namespace Oak
 				selectedAsset = nullptr;
 			}
 
-			AssetsTreePopup(true);
+			AssetsTreePopup(false);
 
 			if (open)
 			{
@@ -1714,6 +1714,8 @@ namespace Oak
 
 			ImGui::EndChild();
 
+			AssetsTreePopup(true);
+
 			ImGui::SameLine();
 
 			ImGui::BeginChild("AssetProperty", ImVec2(300, 0), true);
@@ -1728,8 +1730,6 @@ namespace Oak
 			ImGui::Columns(1);
 
 			ImGui::EndChild();
-
-			AssetsTreePopup(false);
 
 			ImGui::End();
 		}
