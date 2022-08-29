@@ -8,13 +8,19 @@ namespace Oak
 
 	META_DATA_DESC(Character)
 		BASE_SCENE_ENTITY_PROP(Character)
-		SCENEOBJECT_PROP(Character, animRef, "Properties", "anim")
-		SCENEOBJECT_PROP(Character, controllerRef, "Properties", "controller")
 	META_DATA_DESC_END()
+
+	void Character::Play()
+	{
+		ScriptEntity2D::Play();
+
+		animRef = FindChild<AnimGraph2D>();
+		controllerRef = FindChild<KinematicCapsule2D>();
+	}
 
 	void Character::Update(float dt)
 	{
-		if (!animRef.entity || !controllerRef.entity)
+		if (animRef == nullptr || controllerRef == nullptr)
 		{
 			return;
 		}
