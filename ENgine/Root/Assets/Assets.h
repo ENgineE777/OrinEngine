@@ -126,6 +126,25 @@ namespace Oak
 		};
 
 		#ifdef OAK_EDITOR
+		template<class T>
+		void GetAssetsByType(eastl::vector<T*>& assets)
+		{
+			assets.clear();
+
+			for (auto& holder : assetsMap)
+			{
+				if (holder.second->asset)
+				{
+					T* asset = dynamic_cast<T*>(holder.second->asset);
+
+					if (asset)
+					{
+						assets.push_back(asset);
+					}
+				}
+			}
+		};
+
 		void LoadAssets(const char* path, Folder* folder, bool update);
 		void ObserveRoot();
 		#endif
