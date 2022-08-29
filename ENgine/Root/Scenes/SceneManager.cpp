@@ -13,8 +13,6 @@ namespace Oak
 
 	void SceneManager::LoadProject(const char* projectName)
 	{
-		StringUtils::GetPath(projectName, projectPath);
-
 		JsonReader reader;
 		if (reader.ParseFile(projectName))
 		{

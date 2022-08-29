@@ -29,8 +29,6 @@ namespace Oak
 			int refCounter = 0;
 		};
 
-		char projectPath[1024];
-
 		eastl::vector<SceneHolder> scenes;
 
 		eastl::vector<SceneHolder*> scenesToLoad;
