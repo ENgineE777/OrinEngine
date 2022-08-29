@@ -1,0 +1,15 @@
+.vs
+Debug
+Release
+**/Logs/*.txt
+*.vcxproj.user
+ENgineRelease
+Bin/DebugInfo
+Bin/ENgine/ExportBinaries/Oak*.dll
+Bin/ENgine/ExportBinaries/Oak*.exe
+Bin/ENgine/CppBuild/include
+Bin/ENgine/CppBuild/lib
+Bin/eastl*.dll
+Bin/Oak*.dll
+Bin/Oak*.exe
+Bin/imgui.ini
