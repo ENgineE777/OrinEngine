@@ -389,7 +389,7 @@ namespace Oak
 							{
 								chraracter->cur_hp = 0;
 								chraracter->target = nullptr;
-								chraracter->animGraph.GotoNode("Death");
+								chraracter->animGraph.GotoNode("Death", true);
 								chraracter->death_fly = 0.75f;
 							}
 						}
@@ -405,7 +405,7 @@ namespace Oak
 
 		arraive = 1.0f;
 
-		animGraph.GotoNode("Resp");
+		animGraph.GotoNode("Resp", true);
 	}
 
 	void SimpleCharacter2D::Reset()
