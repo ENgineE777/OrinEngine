@@ -1747,14 +1747,6 @@
 					"z" : 0.500000
 				}
 			},
-			"anim" :
-			{
-				"uid" : 761558
-			},
-			"controller" :
-			{
-				"uid" : 675724
-			},
 			"childs" : [
 				{
 					"type" : "AnimGraph2D",

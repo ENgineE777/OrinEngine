@@ -146,7 +146,7 @@ namespace Oak
 				reader.Read("name", entry.name);
 				reader.Read("path", entry.path);
 
-				LoadPorjectIcon(entry);
+				LoadProjectIcon(entry);
 
 				projects.push_back(entry);
 
@@ -157,7 +157,7 @@ namespace Oak
 		return true;
 	}
 
-	void Editor::LoadPorjectIcon(ProjectEntry& entry)
+	void Editor::LoadProjectIcon(ProjectEntry& entry)
 	{
 		JsonReader reader;
 
@@ -170,7 +170,7 @@ namespace Oak
 			StringUtils::GetPath(entry.path.c_str(), projectPath);
 			StringUtils::FixSlashes(projectPath);
 
-			entry.icon = root.render.LoadTexture((projectPath + iconPath).c_str(), _FL_);
+			entry.icon = root.render.LoadTexture((projectPath + eastl::string("/Assets/") + iconPath).c_str(), _FL_);
 		}
 	}
 
@@ -966,7 +966,7 @@ namespace Oak
 			entry.name = name;
 			entry.path = projectToAdd;
 
-			LoadPorjectIcon(entry);
+			LoadProjectIcon(entry);
 
 			projects.push_back(entry);
 

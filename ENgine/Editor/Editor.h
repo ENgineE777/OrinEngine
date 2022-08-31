@@ -109,7 +109,7 @@ namespace Oak
 		eastl::map<eastl::string, LogCategory*> logCategories;
 
 		void CaptureLog(const char* name, const char* text);
-		void LoadPorjectIcon(ProjectEntry& entry);
+		void LoadProjectIcon(ProjectEntry& entry);
 
 	public:
 

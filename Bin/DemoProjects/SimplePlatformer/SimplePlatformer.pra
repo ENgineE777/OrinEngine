@@ -1,8 +1,8 @@
 ﻿{
 
 	"export_dir" : "",
-	"iconPath" : "",
-	"iconSmallPath" : "",
+	"iconPath" : "Icon.png",
+	"iconSmallPath" : "Icon.png",
 	"projectName" : "Simple",
 	"start_scene" : 0,
 	"scenes_count" : 2,
