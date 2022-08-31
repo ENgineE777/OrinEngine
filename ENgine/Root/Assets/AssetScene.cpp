@@ -401,6 +401,11 @@ namespace Oak
 
 				for (auto& decl : decls)
 				{
+					if (StringUtils::IsEqual(decl->GetShortName(), "PrefabInstance"))
+					{
+						continue;
+					}
+
 					if (ImGui::MenuItem(decl->GetShortName()))
 					{
 						auto* entity = scene->CreateEntity(decl->GetName());

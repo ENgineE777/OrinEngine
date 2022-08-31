@@ -1,0 +1,13 @@
+﻿{
+
+	"themeName" : "orange",
+	"FreeCamera" :
+	{
+		"rotationSensivity" : 10.000000,
+		"moveSpeed" : 100.000000,
+		"moveFastSpeed" : 350.000000,
+		"moveAcceleration" : 50.000000,
+		"moveDeacceleration" : 100.000000,
+		"zoom2Dsensivity" : 5.000000
+	}
+}

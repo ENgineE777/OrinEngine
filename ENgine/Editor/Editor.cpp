@@ -200,7 +200,7 @@ namespace Oak
 	{
 		JsonReader reader;
 
-		if (reader.ParseFile(StringUtils::PrintTemp("%s/editor", std::filesystem::current_path().string().c_str())))
+		if (reader.ParseFile(StringUtils::PrintTemp("%s/ENgine/editor_settings", std::filesystem::current_path().string().c_str())))
 		{
 			reader.Read("themeName", selectedThemeName);
 
@@ -224,7 +224,7 @@ namespace Oak
 	{
 		JsonWriter writer;
 
-		if (writer.Start(StringUtils::PrintTemp("%s/editor", std::filesystem::current_path().string().c_str())))
+		if (writer.Start(StringUtils::PrintTemp("%s/ENgine/editor_settings", std::filesystem::current_path().string().c_str())))
 		{
 			writer.Write("themeName", selectedThemeName);
 
@@ -378,6 +378,7 @@ namespace Oak
 			{
 				selectedThemeName = themes[selectedTheme];
 				ApplySelecetedTheme();
+				changed = true;
 			}
 
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
