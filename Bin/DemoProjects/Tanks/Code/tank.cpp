@@ -466,7 +466,7 @@ namespace Oak
 			dir.y = -9.8f;
 			dir *= dt;
 
-			inst.serverState.controller->Move(dir, 1, 0);
+			inst.serverState.controller->Move(dir, 1);
 
 			if (inst.serverState.shoot_cooldown > 0.0f)
 			{

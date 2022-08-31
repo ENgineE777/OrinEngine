@@ -17,26 +17,8 @@
 	"scenes" : [
 		{
 			"path" : "Scene.scn",
-			"selected_entity" : 292792,
-			"camera2DMode" : false,
-			"camera3DAngles" :
-			{
-				"x" : -2.629987,
-				"y" : -0.600796
-			},
-			"camera3DPos" :
-			{
-				"x" : 37.376877,
-				"y" : 29.570961,
-				"z" : 21.073912
-			},
-			"camera2DPos" :
-			{
-				"x" : 0.000000,
-				"y" : 0.000000
-			},
-			"camera2DZoom" : 1.000000
+			"uid" : 0
 		}
 	],
-	"selected_scene" : "Scene.scn"
+	"edited_asset" : "Scene.scn"
 }
