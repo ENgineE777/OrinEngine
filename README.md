@@ -11,8 +11,8 @@ mobile platforms like iOS and Android.
 
 **Free and open source**
 
-Oak is completely free and open source, distributed under the zlib license. That means no royalties.
-The users' games are theirs.
+Oak is completely free open source, distributed under the zlib license. That means no royalties.
+The users games are theirs.
 
 **Features**
 
@@ -27,6 +27,7 @@ The users' games are theirs.
 - Scripting system based on using C++ as scripting language
 - Hot reload of gameplay code
 - Render system with support of DX11, OpenGL ES 3, Metal and Vulkan (WIP)
+- Support of iOS and Android
 - Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview)
 - And lots, lots more
 
