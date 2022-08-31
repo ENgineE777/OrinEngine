@@ -18,6 +18,7 @@ The users games are theirs.
 
 - Editor with ability to play test edited scenes
 - Support of project files
+- Support of Prefabs
 - Powerful system for binding properties into the editor
 - Powerful assets system
 - Font system with support of True-Type fonts
