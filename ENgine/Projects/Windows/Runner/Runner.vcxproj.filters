@@ -21,7 +21,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ENgine\Platform\Win\main.cpp">
+    <ClCompile Include="..\..\..\Source\Platform\Win\main.cpp">
       <Filter>Platform\Win</Filter>
     </ClCompile>
   </ItemGroup>

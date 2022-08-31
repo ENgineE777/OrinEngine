@@ -5,1364 +5,1364 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ENgine">
+    <Filter Include="Source">
       <UniqueIdentifier>{1fc6e991-1ec1-4520-94d2-e8f73c03c996}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root">
+    <Filter Include="Source\Root">
       <UniqueIdentifier>{cb699a75-3020-429d-92e5-adc52009f7ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support">
+    <Filter Include="Source\Support">
       <UniqueIdentifier>{8a7c89f7-cd92-46d0-88ad-a574d8e06132}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Math">
+    <Filter Include="Source\Support\Math">
       <UniqueIdentifier>{93faa772-3936-464b-bdf3-1b4b64d61c70}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Files">
+    <Filter Include="Source\Root\Files">
       <UniqueIdentifier>{964983e8-fa2d-4b80-81c5-e703fe3ca080}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs">
+    <Filter Include="Thirdparty">
       <UniqueIdentifier>{5f2e6ccd-2903-4835-a7f3-3ec9a674ad6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\vjson">
+    <Filter Include="Thirdparty\vjson">
       <UniqueIdentifier>{745e19cb-ee68-4327-b669-1f7e8cc62ed0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\TaskExecutor">
+    <Filter Include="Source\Root\TaskExecutor">
       <UniqueIdentifier>{5c1ffedd-4fff-40e4-8b4a-273b587dfbeb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Render">
+    <Filter Include="Source\Root\Render">
       <UniqueIdentifier>{b43779a7-158f-4b98-82bd-2819f9b8b888}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Render\Debug">
+    <Filter Include="Source\Root\Render\Debug">
       <UniqueIdentifier>{eed1eee6-1f8c-47d1-9a17-d0cdb657b7b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Render\DX11">
+    <Filter Include="Source\Root\Render\DX11">
       <UniqueIdentifier>{cb133488-17fc-4e45-8189-f3f5060fd33b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Fonts">
+    <Filter Include="Source\Root\Fonts">
       <UniqueIdentifier>{8c17a77d-4582-4e6f-95e5-94dc2541b000}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Editor">
+    <Filter Include="Source\Editor">
       <UniqueIdentifier>{55e9d59d-c8a8-4755-82a8-5a73491b7dc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Platform">
+    <Filter Include="Source\Platform">
       <UniqueIdentifier>{1719761c-68d3-4f42-8861-c7373fb7aa94}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Platform\Win">
+    <Filter Include="Source\Platform\Win">
       <UniqueIdentifier>{be6a7cfb-edf8-4fee-be24-aa9bc793325d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Controls">
+    <Filter Include="Source\Root\Controls">
       <UniqueIdentifier>{7987f5a7-6656-4ee5-b28a-9a10fbc0a48b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Memory">
+    <Filter Include="Source\Root\Memory">
       <UniqueIdentifier>{a6416540-89d9-4bb1-992a-ddf2a986d3ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\jemalloc">
+    <Filter Include="Thirdparty\jemalloc">
       <UniqueIdentifier>{d5ea55af-219e-4ff8-9cce-6f306a1dae4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\jemalloc\include">
+    <Filter Include="Thirdparty\jemalloc\include">
       <UniqueIdentifier>{a77d28a9-33c3-4c9e-8ce6-461a389ae69c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\jemalloc\src">
+    <Filter Include="Thirdparty\jemalloc\src">
       <UniqueIdentifier>{93707235-edbe-4c82-8b1a-27306be09667}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libs\imgui">
+    <Filter Include="Thirdparty\imgui">
       <UniqueIdentifier>{ed4bf8b4-850d-4f30-9eb1-122b1c9102b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Scenes">
+    <Filter Include="Source\Root\Scenes">
       <UniqueIdentifier>{57a969e5-1214-48e9-9a38-5dd51eff646d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\SceneEntities">
+    <Filter Include="Source\SceneEntities">
       <UniqueIdentifier>{dc103d28-c185-44bd-a1f1-5ff137295566}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Assets">
+    <Filter Include="Source\Root\Assets">
       <UniqueIdentifier>{6dbbb2eb-94d7-49f4-b1a8-58c6aec721ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\SceneEntities\2D">
+    <Filter Include="Source\SceneEntities\2D">
       <UniqueIdentifier>{59941c46-96f9-4802-a797-ce956c114903}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Scripts">
+    <Filter Include="Source\Root\Scripts">
       <UniqueIdentifier>{c7567920-e509-4db9-a2d9-f69c3b27a225}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Network">
+    <Filter Include="Source\Root\Network">
       <UniqueIdentifier>{e265f699-7a37-4cd5-bf15-e1f5e1fe08f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Meshes">
+    <Filter Include="Source\Root\Meshes">
       <UniqueIdentifier>{3a99e783-956d-459d-83c3-a2b3a7d19483}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\fbx">
+    <Filter Include="Source\Support\fbx">
       <UniqueIdentifier>{c11e7d4d-4610-424b-9728-29dd8bca4644}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\SceneEntities\3D">
+    <Filter Include="Source\SceneEntities\3D">
       <UniqueIdentifier>{19e21794-0edd-402a-8a42-e6edae6a523f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Physics">
+    <Filter Include="Source\Root\Physics">
       <UniqueIdentifier>{61698f00-9229-4221-8918-bf00cd73469b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark">
+    <Filter Include="Source\Support\Spark">
       <UniqueIdentifier>{73760ef3-bdbe-4665-93a7-f9aebfefd446}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions">
+    <Filter Include="Source\Support\Spark\Extensions">
       <UniqueIdentifier>{265495a2-b860-4758-9b1d-f9c92db97739}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\Actions">
+    <Filter Include="Source\Support\Spark\Extensions\Actions">
       <UniqueIdentifier>{3ab68248-3c00-4d85-a92e-d16d46726bb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\Emitters">
+    <Filter Include="Source\Support\Spark\Extensions\Emitters">
       <UniqueIdentifier>{1b760a8b-3c43-4bd9-91de-ab79fd6ef07a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\Interpolators">
+    <Filter Include="Source\Support\Spark\Extensions\Interpolators">
       <UniqueIdentifier>{3be60307-cda4-4dcb-bfe3-d828e34832ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\IOConverters">
+    <Filter Include="Source\Support\Spark\Extensions\IOConverters">
       <UniqueIdentifier>{93b14209-2fc6-486c-9c9e-1ba4d5926f4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\Modifiers">
+    <Filter Include="Source\Support\Spark\Extensions\Modifiers">
       <UniqueIdentifier>{a5c6f8a7-3eef-47cb-8859-6621096536af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\Renderers">
+    <Filter Include="Source\Support\Spark\Extensions\Renderers">
       <UniqueIdentifier>{b386ca80-d12b-430a-9499-89757b8300ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Extensions\Zones">
+    <Filter Include="Source\Support\Spark\Extensions\Zones">
       <UniqueIdentifier>{4817d1ac-b99b-42b9-9fb2-1d0973e2b76d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\PugiXml">
+    <Filter Include="Source\Support\PugiXml">
       <UniqueIdentifier>{7ff3c585-a9b8-4aae-b50f-e6bd324ff2a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Core">
+    <Filter Include="Source\Support\Spark\Core">
       <UniqueIdentifier>{6d679a2e-622f-4d3b-86c4-b60f5bfc80fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Support\Spark\Core\IO">
+    <Filter Include="Source\Support\Spark\Core\IO">
       <UniqueIdentifier>{b010296a-ece8-47cd-8841-cac121bf725d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Particles">
+    <Filter Include="Source\Root\Particles">
       <UniqueIdentifier>{06e124e9-5a00-4e0b-9c7a-e58838da69b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Particles\Renderer">
+    <Filter Include="Source\Root\Particles\Renderer">
       <UniqueIdentifier>{0920ef16-efc9-4afd-aeb6-3f35e6f6e956}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Root\Sounds">
+    <Filter Include="Source\Root\Sounds">
       <UniqueIdentifier>{53a5fc59-3399-499b-b7d8-7f26d521c1c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\SceneEntities\Common">
+    <Filter Include="Source\SceneEntities\Common">
       <UniqueIdentifier>{935bf47d-ba5c-4549-bf36-4de6b8b75507}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\Platform\Common">
+    <Filter Include="Source\Platform\Common">
       <UniqueIdentifier>{afbdecd7-3e84-491e-91ee-b3946ce49ff4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ENgine\SceneEntities\UI">
+    <Filter Include="Source\SceneEntities\UI">
       <UniqueIdentifier>{6b8bd6e8-c0e1-4b3d-ad4e-e23a0805705f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\ENgine\Support\Timer.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Timer.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Root.cpp">
-      <Filter>ENgine\Root</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Root.cpp">
+      <Filter>Source\Root</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\StringUtils.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\StringUtils.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Math\Math.cpp">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Math\Math.cpp">
+      <Filter>Source\Support\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\FileInMemory.cpp">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Files\FileInMemory.cpp">
+      <Filter>Source\Root\Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\Files.cpp">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Files\Files.cpp">
+      <Filter>Source\Root\Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\File.cpp">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Files\File.cpp">
+      <Filter>Source\Root\Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\vjson\block_allocator.cpp">
-      <Filter>Libs\vjson</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\vjson\block_allocator.cpp">
+      <Filter>Thirdparty\vjson</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\vjson\json.cpp">
-      <Filter>Libs\vjson</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\vjson\json.cpp">
+      <Filter>Thirdparty\vjson</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\JsonReader.cpp">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Files\JsonReader.cpp">
+      <Filter>Source\Root\Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Files\JsonWriter.cpp">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Files\JsonWriter.cpp">
+      <Filter>Source\Root\Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.cpp">
-      <Filter>ENgine\Root\TaskExecutor</Filter>
+    <ClCompile Include="..\..\..\Source\Root\TaskExecutor\TaskExecutor.cpp">
+      <Filter>Source\Root\TaskExecutor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Program.cpp">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Program.cpp">
+      <Filter>Source\Root\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Render.cpp">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Render.cpp">
+      <Filter>Source\Root\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Texture.cpp">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Texture.cpp">
+      <Filter>Source\Root\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\DataBufferDX11.cpp">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\DX11\DataBufferDX11.cpp">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\DeviceDX11.cpp">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\DX11\DeviceDX11.cpp">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.cpp">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\DX11\ShaderDX11.cpp">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.cpp">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\DX11\TextureDX11.cpp">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.cpp">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.cpp">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugBoxes.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugFont.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugLines.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugPrograms.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugPrograms.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugSpheres.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugSpheres.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugSprites.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugSprites.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugTriangles.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.cpp">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugTriangles2D.cpp">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRes.cpp">
-      <Filter>ENgine\Root\Fonts</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Fonts\FontRes.cpp">
+      <Filter>Source\Root\Fonts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Fonts\Fonts.cpp">
-      <Filter>ENgine\Root\Fonts</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Fonts\Fonts.cpp">
+      <Filter>Source\Root\Fonts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\Editor.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\Editor.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Controls\Controls.cpp">
-      <Filter>ENgine\Root\Controls</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Controls\Controls.cpp">
+      <Filter>Source\Root\Controls</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\Freecamera.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\Freecamera.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Memory\MemoryManager.cpp">
-      <Filter>ENgine\Root\Memory</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Memory\MemoryManager.cpp">
+      <Filter>Source\Root\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\arena.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\arena.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\background_thread.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\background_thread.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\base.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\base.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\bin.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\bin.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\bitmap.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\bitmap.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\ckh.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\ckh.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\ctl.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\ctl.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\div.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\div.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\extent.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent_dss.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\extent_dss.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\extent_mmap.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\extent_mmap.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\hash.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\hash.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\hooks.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\hooks.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\jemalloc.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\jemalloc.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\large.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\large.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\log.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\log.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\malloc_io.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\malloc_io.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\mutex.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\mutex.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\mutex_pool.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\mutex_pool.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\nstime.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\nstime.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\pages.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\pages.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\prng.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\prng.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\prof.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\prof.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\rtree.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\rtree.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\stats.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\stats.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\sz.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\sz.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\tcache.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\tcache.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\ticker.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\ticker.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\tsd.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\tsd.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\jemalloc\src\witness.c">
-      <Filter>Libs\jemalloc\src</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\witness.c">
+      <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\imgui\imgui.cpp">
-      <Filter>Libs\imgui</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui.cpp">
+      <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\imgui\imgui_draw.cpp">
-      <Filter>Libs\imgui</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_draw.cpp">
+      <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\imgui\imgui_widgets.cpp">
-      <Filter>Libs\imgui</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_widgets.cpp">
+      <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\imgui\imgui_impl_win32.cpp">
-      <Filter>Libs\imgui</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.cpp">
+      <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\imgui\imgui_impl_dx11.cpp">
-      <Filter>Libs\imgui</Filter>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.cpp">
+      <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Fonts\FontRef.cpp">
-      <Filter>ENgine\Root\Fonts</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Fonts\FontRef.cpp">
+      <Filter>Source\Root\Fonts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\MetaData.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\MetaData.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneEntity.cpp">
-      <Filter>ENgine\Root\Scenes</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Scenes\SceneEntity.cpp">
+      <Filter>Source\Root\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Scenes\SceneManager.cpp">
-      <Filter>ENgine\Root\Scenes</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Scenes\SceneManager.cpp">
+      <Filter>Source\Root\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Scenes\Scene.cpp">
-      <Filter>ENgine\Root\Scenes</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Scenes\Scene.cpp">
+      <Filter>Source\Root\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\Project.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\Project.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Sprite.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Sprite.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\EditorDrawer.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\EditorDrawer.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\Gizmo.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\Gizmo.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\Assets.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\Assets.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\ThreadExecutor.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\ThreadExecutor.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTexture.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetTexture.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\Asset.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\Asset.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\Camera2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\SpriteWindow.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\SpriteWindow.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetAnimGraph2D.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\AnimGraph2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Scripts\Scripts.cpp">
-      <Filter>ENgine\Root\Scripts</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Scripts\Scripts.cpp">
+      <Filter>Source\Root\Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Network\Network.cpp">
-      <Filter>ENgine\Root\Network</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Network\Network.cpp">
+      <Filter>Source\Root\Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Meshes\Meshes.cpp">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Meshes\Meshes.cpp">
+      <Filter>Source\Root\Meshes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.cpp">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Meshes\MeshPrograms.cpp">
+      <Filter>Source\Root\Meshes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Meshes\MeshRes.cpp">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Meshes\MeshRes.cpp">
+      <Filter>Source\Root\Meshes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Model.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\Model.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\fbx\miniz.c">
-      <Filter>ENgine\Support\fbx</Filter>
+    <ClCompile Include="..\..\..\Source\Support\fbx\miniz.c">
+      <Filter>Source\Support\fbx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\fbx\ofbx.cpp">
-      <Filter>ENgine\Support\fbx</Filter>
+    <ClCompile Include="..\..\..\Source\Support\fbx\ofbx.cpp">
+      <Filter>Source\Support\fbx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysController.cpp">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Physics\PhysController.cpp">
+      <Filter>Source\Root\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Physics\Physics.cpp">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Physics\Physics.cpp">
+      <Filter>Source\Root\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysObject.cpp">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Physics\PhysObject.cpp">
+      <Filter>Source\Root\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysObjectBase.cpp">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Physics\PhysObjectBase.cpp">
+      <Filter>Source\Root\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Physics\PhysScene.cpp">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Physics\PhysScene.cpp">
+      <Filter>Source\Root\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\Terrain.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\Terrain.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Actions\SPK_ActionSet.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Actions</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Actions\SPK_ActionSet.cpp">
+      <Filter>Source\Support\Spark\Extensions\Actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Actions\SPK_SpawnParticlesAction.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Actions</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Actions\SPK_SpawnParticlesAction.cpp">
+      <Filter>Source\Support\Spark\Extensions\Actions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_NormalEmitter.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_NormalEmitter.cpp">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_RandomEmitter.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_RandomEmitter.cpp">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_SphericEmitter.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_SphericEmitter.cpp">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_StraightEmitter.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_StraightEmitter.cpp">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_SPKLoader.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_SPKLoader.cpp">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_SPKSaver.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_SPKSaver.cpp">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_XMLLoader.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_XMLLoader.cpp">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_XMLSaver.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_XMLSaver.cpp">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_BasicModifiers.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_BasicModifiers.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Collider.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Collider.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_EmitterAttacher.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_EmitterAttacher.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_LinearForce.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_LinearForce.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Obstacle.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Obstacle.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_PointMass.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_PointMass.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_RandomForce.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_RandomForce.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Rotator.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Rotator.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Vortex.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Vortex.cpp">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Renderers\SPK_Oriented3DRenderBehavior.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Renderers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Renderers\SPK_Oriented3DRenderBehavior.cpp">
+      <Filter>Source\Support\Spark\Extensions\Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Renderers\SPK_QuadRenderBehavior.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Renderers</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Renderers\SPK_QuadRenderBehavior.cpp">
+      <Filter>Source\Support\Spark\Extensions\Renderers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Box.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Box.cpp">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Cylinder.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Cylinder.cpp">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Plane.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Plane.cpp">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Ring.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Ring.cpp">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Sphere.cpp">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Sphere.cpp">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\PugiXml\pugixml.cpp">
-      <Filter>ENgine\Support\PugiXml</Filter>
+    <ClCompile Include="..\..\..\Source\Support\PugiXml\pugixml.cpp">
+      <Filter>Source\Support\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Buffer.cpp">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Buffer.cpp">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Descriptor.cpp">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Descriptor.cpp">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Loader.cpp">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Loader.cpp">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Manager.cpp">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Manager.cpp">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Saver.cpp">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Saver.cpp">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Renderer.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Renderer.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_System.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_System.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Transform.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Transform.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Transformable.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Transformable.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Zone.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Zone.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_ZonedModifier.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_ZonedModifier.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_DataSet.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_DataSet.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_DEF.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_DEF.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Emitter.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Emitter.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Group.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Group.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Logger.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Logger.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_MemoryTracer.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_MemoryTracer.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Object.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Object.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\Spark\Core\SPK_Octree.cpp">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClCompile Include="..\..\..\Source\Support\Spark\Core\SPK_Octree.cpp">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Particles\Particles.cpp">
-      <Filter>ENgine\Root\Particles</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Particles\Particles.cpp">
+      <Filter>Source\Root\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Particles\ParticleSystem.cpp">
-      <Filter>ENgine\Root\Particles</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Particles\ParticleSystem.cpp">
+      <Filter>Source\Root\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_BaseRenderer.cpp">
-      <Filter>ENgine\Root\Particles\Renderer</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Particles\Renderer\SPK_BaseRenderer.cpp">
+      <Filter>Source\Root\Particles\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_Buffer.cpp">
-      <Filter>ENgine\Root\Particles\Renderer</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Particles\Renderer\SPK_Buffer.cpp">
+      <Filter>Source\Root\Particles\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_QuadRenderer.cpp">
-      <Filter>ENgine\Root\Particles\Renderer</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Particles\Renderer\SPK_QuadRenderer.cpp">
+      <Filter>Source\Root\Particles\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Sounds\Sounds.cpp">
-      <Filter>ENgine\Root\Sounds</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Sounds\Sounds.cpp">
+      <Filter>Source\Root\Sounds</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundRes.cpp">
-      <Filter>ENgine\Root\Sounds</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Sounds\SoundRes.cpp">
+      <Filter>Source\Root\Sounds</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Sounds\SoundInstance.cpp">
-      <Filter>ENgine\Root\Sounds</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Sounds\SoundInstance.cpp">
+      <Filter>Source\Root\Sounds</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.cpp">
-      <Filter>ENgine\SceneEntities\Common</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Common\MusicPlayer.cpp">
+      <Filter>Source\SceneEntities\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\GenericMarker.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.cpp">
-      <Filter>ENgine\SceneEntities\Common</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.cpp">
+      <Filter>Source\SceneEntities\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Platform\Common\Runner.cpp">
-      <Filter>ENgine\Platform\Common</Filter>
+    <ClCompile Include="..\..\..\Source\Platform\Common\Runner.cpp">
+      <Filter>Source\Platform\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Node2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\Node2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.cpp">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\UI\ContainerWidget.cpp">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.cpp">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\UI\ButtonWidget.cpp">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.cpp">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\UI\ImageWidget.cpp">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.cpp">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\UI\LabelWidget.cpp">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PointLight2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\ImGuiHelper.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\ImGuiHelper.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\KinematicCapsule3D.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\KinematicCapsule3D.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\PhysBox3D.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\PhysBox3D.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\PhysBox2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysBox2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\KinematicCapsule2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\KinematicCapsule2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\3D\ScriptEntity3D.cpp">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\ScriptEntity3D.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetScene.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetScene.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\TileMap.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\TileMap.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Editor\TileSetWindow.cpp">
-      <Filter>ENgine\Editor</Filter>
+    <ClCompile Include="..\..\..\Source\Editor\TileSetWindow.cpp">
+      <Filter>Source\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetTileSet.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetTileSet.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetPrefab.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetPrefab.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetSpritesLayer.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetSpritesLayer.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Support\PointerRef.cpp">
-      <Filter>ENgine\Support</Filter>
+    <ClCompile Include="..\..\..\Source\Support\PointerRef.cpp">
+      <Filter>Source\Support</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\Root\Assets\AssetNavigable2D.cpp">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Assets\AssetNavigable2D.cpp">
+      <Filter>Source\Root\Assets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\ENgine\SceneEntities\2D\SpritesLayer.cpp">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpritesLayer.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\ENgine\Support\Timer.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Timer.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Root.h">
-      <Filter>ENgine\Root</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Root.h">
+      <Filter>Source\Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\StringUtils.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\StringUtils.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Math\Math.h">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Math\Math.h">
+      <Filter>Source\Support\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Math\Matrix.h">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Math\Matrix.h">
+      <Filter>Source\Support\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Math\Quaternion.h">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Math\Quaternion.h">
+      <Filter>Source\Support\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector2.h">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Math\Vector2.h">
+      <Filter>Source\Support\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector3.h">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Math\Vector3.h">
+      <Filter>Source\Support\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Math\Vector4.h">
-      <Filter>ENgine\Support\Math</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Math\Vector4.h">
+      <Filter>Source\Support\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\FileInMemory.h">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Files\FileInMemory.h">
+      <Filter>Source\Root\Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\Files.h">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Files\Files.h">
+      <Filter>Source\Root\Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\File.h">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Files\File.h">
+      <Filter>Source\Root\Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\vjson\block_allocator.h">
-      <Filter>Libs\vjson</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\vjson\block_allocator.h">
+      <Filter>Thirdparty\vjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\vjson\json.h">
-      <Filter>Libs\vjson</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\vjson\json.h">
+      <Filter>Thirdparty\vjson</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Color.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Color.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Defines.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Defines.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Support.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Support.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\JsonReader.h">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Files\JsonReader.h">
+      <Filter>Source\Root\Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Files\JsonWriter.h">
-      <Filter>ENgine\Root\Files</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Files\JsonWriter.h">
+      <Filter>Source\Root\Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\TaskExecutor\TaskExecutor.h">
-      <Filter>ENgine\Root\TaskExecutor</Filter>
+    <ClInclude Include="..\..\..\Source\Root\TaskExecutor\TaskExecutor.h">
+      <Filter>Source\Root\TaskExecutor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Delegate.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Delegate.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\DataBuffer.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\DataBuffer.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Device.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Device.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Program.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Program.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Render.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Render.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Shader.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Shader.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Texture.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Texture.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\VertexDecl.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\VertexDecl.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\DataBufferDX11.h">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\DX11\DataBufferDX11.h">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\DeviceDX11.h">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\DX11\DeviceDX11.h">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\ShaderDX11.h">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\DX11\ShaderDX11.h">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\TextureDX11.h">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\DX11\TextureDX11.h">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\DX11\VertexDeclDX11.h">
-      <Filter>ENgine\Root\Render\DX11</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.h">
+      <Filter>Source\Root\Render\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\Debug.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\Debug.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugBoxes.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugBoxes.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugFont.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugFont.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugLines.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugLines.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugPrograms.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugPrograms.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugSpheres.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugSpheres.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugSprites.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugSprites.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugTriangles.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\Debug\DebugTriangles2D.h">
-      <Filter>ENgine\Root\Render\Debug</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugTriangles2D.h">
+      <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\ClassFactory.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\ClassFactory.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRes.h">
-      <Filter>ENgine\Root\Fonts</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Fonts\FontRes.h">
+      <Filter>Source\Root\Fonts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Fonts\Fonts.h">
-      <Filter>ENgine\Root\Fonts</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Fonts\Fonts.h">
+      <Filter>Source\Root\Fonts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\Editor.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\Editor.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Controls\Controls.h">
-      <Filter>ENgine\Root\Controls</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Controls\Controls.h">
+      <Filter>Source\Root\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\Freecamera.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\Freecamera.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Memory\MemoryManager.h">
-      <Filter>ENgine\Root\Memory</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Memory\MemoryManager.h">
+      <Filter>Source\Root\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_defs.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_macros.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_mangle.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle_jet.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_mangle_jet.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_protos.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos_jet.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_protos_jet.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_rename.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h">
-      <Filter>Libs\jemalloc\include</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_typedefs.h">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imgui.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imgui_internal.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_internal.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imstb_rectpack.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_rectpack.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imstb_textedit.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_textedit.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imstb_truetype.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_truetype.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_win32.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\imgui\imgui_impl_dx11.h">
-      <Filter>Libs\imgui</Filter>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Fonts\FontRef.h">
-      <Filter>ENgine\Root\Fonts</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Fonts\FontRef.h">
+      <Filter>Source\Root\Fonts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\MetaData.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\MetaData.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\PointerRef.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\PointerRef.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneEntity.h">
-      <Filter>ENgine\Root\Scenes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Scenes\SceneEntity.h">
+      <Filter>Source\Root\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Scenes\SceneManager.h">
-      <Filter>ENgine\Root\Scenes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Scenes\SceneManager.h">
+      <Filter>Source\Root\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Scenes\Scene.h">
-      <Filter>ENgine\Root\Scenes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Scenes\Scene.h">
+      <Filter>Source\Root\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Transform.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Transform.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\Project.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\Project.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Sprite.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Sprite.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\EditorDrawer.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\EditorDrawer.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\Gizmo.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\Gizmo.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\Assets.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\Assets.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\ThreadExecutor.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\ThreadExecutor.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\Asset.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\Asset.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTexture.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetTexture.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpriteEntity.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Camera2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\Camera2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\SpriteWindow.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\SpriteWindow.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetAnimGraph2D.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetAnimGraph2D.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\AnimGraph2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\AnimGraph2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ParalaxedSpriteEntity.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Scripts\Scripts.h">
-      <Filter>ENgine\Root\Scripts</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Scripts\Scripts.h">
+      <Filter>Source\Root\Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Network\Network.h">
-      <Filter>ENgine\Root\Network</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Network\Network.h">
+      <Filter>Source\Root\Network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Meshes\Meshes.h">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Meshes\Meshes.h">
+      <Filter>Source\Root\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshPrograms.h">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Meshes\MeshPrograms.h">
+      <Filter>Source\Root\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Meshes\MeshRes.h">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Meshes\MeshRes.h">
+      <Filter>Source\Root\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Model.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\Model.h">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\fbx\miniz.h">
-      <Filter>ENgine\Support\fbx</Filter>
+    <ClInclude Include="..\..\..\Source\Support\fbx\miniz.h">
+      <Filter>Source\Support\fbx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\fbx\ofbx.h">
-      <Filter>ENgine\Support\fbx</Filter>
+    <ClInclude Include="..\..\..\Source\Support\fbx\ofbx.h">
+      <Filter>Source\Support\fbx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysController.h">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Physics\PhysController.h">
+      <Filter>Source\Root\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Physics\Physics.h">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Physics\Physics.h">
+      <Filter>Source\Root\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysObject.h">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Physics\PhysObject.h">
+      <Filter>Source\Root\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysObjectBase.h">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Physics\PhysObjectBase.h">
+      <Filter>Source\Root\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Physics\PhysScene.h">
-      <Filter>ENgine\Root\Physics</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Physics\PhysScene.h">
+      <Filter>Source\Root\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\Terrain.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\Terrain.h">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\SPARK.h">
-      <Filter>ENgine\Support\Spark</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\SPARK.h">
+      <Filter>Source\Support\Spark</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\SPARK_Core.h">
-      <Filter>ENgine\Support\Spark</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\SPARK_Core.h">
+      <Filter>Source\Support\Spark</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Actions\SPK_ActionSet.h">
-      <Filter>ENgine\Support\Spark\Extensions\Actions</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Actions\SPK_ActionSet.h">
+      <Filter>Source\Support\Spark\Extensions\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Actions\SPK_SpawnParticlesAction.h">
-      <Filter>ENgine\Support\Spark\Extensions\Actions</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Actions\SPK_SpawnParticlesAction.h">
+      <Filter>Source\Support\Spark\Extensions\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_NormalEmitter.h">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_NormalEmitter.h">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_RandomEmitter.h">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_RandomEmitter.h">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_SphericEmitter.h">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_SphericEmitter.h">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_StaticEmitter.h">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_StaticEmitter.h">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Emitters\SPK_StraightEmitter.h">
-      <Filter>ENgine\Support\Spark\Extensions\Emitters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Emitters\SPK_StraightEmitter.h">
+      <Filter>Source\Support\Spark\Extensions\Emitters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Interpolators\SPK_DefaultInitializer.h">
-      <Filter>ENgine\Support\Spark\Extensions\Interpolators</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Interpolators\SPK_DefaultInitializer.h">
+      <Filter>Source\Support\Spark\Extensions\Interpolators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Interpolators\SPK_GraphInterpolator.h">
-      <Filter>ENgine\Support\Spark\Extensions\Interpolators</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Interpolators\SPK_GraphInterpolator.h">
+      <Filter>Source\Support\Spark\Extensions\Interpolators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Interpolators\SPK_RandomInitializer.h">
-      <Filter>ENgine\Support\Spark\Extensions\Interpolators</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Interpolators\SPK_RandomInitializer.h">
+      <Filter>Source\Support\Spark\Extensions\Interpolators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Interpolators\SPK_RandomInterpolator.h">
-      <Filter>ENgine\Support\Spark\Extensions\Interpolators</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Interpolators\SPK_RandomInterpolator.h">
+      <Filter>Source\Support\Spark\Extensions\Interpolators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Interpolators\SPK_SimpleInterpolator.h">
-      <Filter>ENgine\Support\Spark\Extensions\Interpolators</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Interpolators\SPK_SimpleInterpolator.h">
+      <Filter>Source\Support\Spark\Extensions\Interpolators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_SPKLoader.h">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_SPKLoader.h">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_SPKSaver.h">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_SPKSaver.h">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_XMLLoader.h">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_XMLLoader.h">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\IOConverters\SPK_IO_XMLSaver.h">
-      <Filter>ENgine\Support\Spark\Extensions\IOConverters</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\IOConverters\SPK_IO_XMLSaver.h">
+      <Filter>Source\Support\Spark\Extensions\IOConverters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_BasicModifiers.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_BasicModifiers.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Collider.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Collider.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Destroyer.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Destroyer.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_EmitterAttacher.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_EmitterAttacher.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_LinearForce.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_LinearForce.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Obstacle.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Obstacle.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_PointMass.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_PointMass.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_RandomForce.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_RandomForce.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Rotator.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Rotator.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Modifiers\SPK_Vortex.h">
-      <Filter>ENgine\Support\Spark\Extensions\Modifiers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Modifiers\SPK_Vortex.h">
+      <Filter>Source\Support\Spark\Extensions\Modifiers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Renderers\SPK_LineRenderBehavior.h">
-      <Filter>ENgine\Support\Spark\Extensions\Renderers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Renderers\SPK_LineRenderBehavior.h">
+      <Filter>Source\Support\Spark\Extensions\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Renderers\SPK_Oriented3DRenderBehavior.h">
-      <Filter>ENgine\Support\Spark\Extensions\Renderers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Renderers\SPK_Oriented3DRenderBehavior.h">
+      <Filter>Source\Support\Spark\Extensions\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Renderers\SPK_PointRenderBehavior.h">
-      <Filter>ENgine\Support\Spark\Extensions\Renderers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Renderers\SPK_PointRenderBehavior.h">
+      <Filter>Source\Support\Spark\Extensions\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Renderers\SPK_QuadRenderBehavior.h">
-      <Filter>ENgine\Support\Spark\Extensions\Renderers</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Renderers\SPK_QuadRenderBehavior.h">
+      <Filter>Source\Support\Spark\Extensions\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Box.h">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Box.h">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Cylinder.h">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Cylinder.h">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Plane.h">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Plane.h">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Point.h">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Point.h">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Ring.h">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Ring.h">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Extensions\Zones\SPK_Sphere.h">
-      <Filter>ENgine\Support\Spark\Extensions\Zones</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Extensions\Zones\SPK_Sphere.h">
+      <Filter>Source\Support\Spark\Extensions\Zones</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\PugiXml\pugiconfig.hpp">
-      <Filter>ENgine\Support\PugiXml</Filter>
+    <ClInclude Include="..\..\..\Source\Support\PugiXml\pugiconfig.hpp">
+      <Filter>Source\Support\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\PugiXml\pugixml.hpp">
-      <Filter>ENgine\Support\PugiXml</Filter>
+    <ClInclude Include="..\..\..\Source\Support\PugiXml\pugixml.hpp">
+      <Filter>Source\Support\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Attribute.h">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Attribute.h">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Buffer.h">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Buffer.h">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Descriptor.h">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Descriptor.h">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Loader.h">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Loader.h">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Manager.h">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Manager.h">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\IO\SPK_IO_Saver.h">
-      <Filter>ENgine\Support\Spark\Core\IO</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\IO\SPK_IO_Saver.h">
+      <Filter>Source\Support\Spark\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Renderer.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Renderer.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_System.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_System.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Transform.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Transform.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Transformable.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Transformable.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Vector3D.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Vector3D.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Zone.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Zone.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_ZonedModifier.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_ZonedModifier.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Action.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Action.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_ArrayData.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_ArrayData.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Color.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Color.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_DataHandler.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_DataHandler.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_DataSet.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_DataSet.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_DEF.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_DEF.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Emitter.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Emitter.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Enum.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Enum.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Group.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Group.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Interpolator.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Interpolator.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Iterator.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Iterator.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Logger.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Logger.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_MemoryTracer.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_MemoryTracer.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Modifier.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Modifier.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Object.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Object.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Octree.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Octree.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Particle.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Particle.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_Reference.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_Reference.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\Spark\Core\SPK_RenderBuffer.h">
-      <Filter>ENgine\Support\Spark\Core</Filter>
+    <ClInclude Include="..\..\..\Source\Support\Spark\Core\SPK_RenderBuffer.h">
+      <Filter>Source\Support\Spark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Particles\Particles.h">
-      <Filter>ENgine\Root\Particles</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Particles\Particles.h">
+      <Filter>Source\Root\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Particles\ParticleSystem.h">
-      <Filter>ENgine\Root\Particles</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Particles\ParticleSystem.h">
+      <Filter>Source\Root\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_BaseRenderer.h">
-      <Filter>ENgine\Root\Particles\Renderer</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Particles\Renderer\SPK_BaseRenderer.h">
+      <Filter>Source\Root\Particles\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_Buffer.h">
-      <Filter>ENgine\Root\Particles\Renderer</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Particles\Renderer\SPK_Buffer.h">
+      <Filter>Source\Root\Particles\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Particles\Renderer\SPK_QuadRenderer.h">
-      <Filter>ENgine\Root\Particles\Renderer</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Particles\Renderer\SPK_QuadRenderer.h">
+      <Filter>Source\Root\Particles\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Sounds\Sounds.h">
-      <Filter>ENgine\Root\Sounds</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Sounds\Sounds.h">
+      <Filter>Source\Root\Sounds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundRes.h">
-      <Filter>ENgine\Root\Sounds</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Sounds\SoundRes.h">
+      <Filter>Source\Root\Sounds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Sounds\SoundInstance.h">
-      <Filter>ENgine\Root\Sounds</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Sounds\SoundInstance.h">
+      <Filter>Source\Root\Sounds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\MusicPlayer.h">
-      <Filter>ENgine\SceneEntities\Common</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Common\MusicPlayer.h">
+      <Filter>Source\SceneEntities\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\IRoot.h">
-      <Filter>ENgine\Root</Filter>
+    <ClInclude Include="..\..\..\Source\Root\IRoot.h">
+      <Filter>Source\Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Controls\IControls.h">
-      <Filter>ENgine\Root\Controls</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Controls\IControls.h">
+      <Filter>Source\Root\Controls</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\IEditor.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\IEditor.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\GenericMarker.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\GenericMarker.h">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\Common\ControlsAliases.h">
-      <Filter>ENgine\SceneEntities\Common</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.h">
+      <Filter>Source\SceneEntities\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Render\IRender.h">
-      <Filter>ENgine\Root\Render</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Render\IRender.h">
+      <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Meshes\IMeshes.h">
-      <Filter>ENgine\Root\Meshes</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Meshes\IMeshes.h">
+      <Filter>Source\Root\Meshes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Platform\Common\Runner.h">
-      <Filter>ENgine\Platform\Common</Filter>
+    <ClInclude Include="..\..\..\Source\Platform\Common\Runner.h">
+      <Filter>Source\Platform\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Platform\Common\IRunner.h">
-      <Filter>ENgine\Platform\Common</Filter>
+    <ClInclude Include="..\..\..\Source\Platform\Common\IRunner.h">
+      <Filter>Source\Platform\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Node2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\Node2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ContainerWidget.h">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\UI\ContainerWidget.h">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ButtonWidget.h">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\UI\ButtonWidget.h">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\ImageWidget.h">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\UI\ImageWidget.h">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\UI\LabelWidget.h">
-      <Filter>ENgine\SceneEntities\UI</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\UI\LabelWidget.h">
+      <Filter>Source\SceneEntities\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PointLight2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PointLight2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\Lights2DRenderer.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Support\ImGuiHelper.h">
-      <Filter>ENgine\Support</Filter>
+    <ClInclude Include="..\..\..\Source\Support\ImGuiHelper.h">
+      <Filter>Source\Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\KinematicCapsule3D.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\KinematicCapsule3D.h">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\PhysBox3D.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysBox3D.h">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\PhysBox2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PhysBox2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\KinematicCapsule2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\KinematicCapsule2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\ScriptEntity2D.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\3D\ScriptEntity3D.h">
-      <Filter>ENgine\SceneEntities\3D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\ScriptEntity3D.h">
+      <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetScene.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetScene.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\TileMap.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\TileMap.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Editor\TileSetWindow.h">
-      <Filter>ENgine\Editor</Filter>
+    <ClInclude Include="..\..\..\Source\Editor\TileSetWindow.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetTileSet.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetTileSet.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetPrefab.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetPrefab.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetSpritesLayer.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetSpritesLayer.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\Root\Assets\AssetNavigable2D.h">
-      <Filter>ENgine\Root\Assets</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Assets\AssetNavigable2D.h">
+      <Filter>Source\Root\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\ENgine\SceneEntities\2D\SpritesLayer.h">
-      <Filter>ENgine\SceneEntities\2D</Filter>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpritesLayer.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc.sh">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc.sh">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_defs.h.in">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_defs.h.in">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_macros.h.in">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_macros.h.in">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_mangle.sh">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_mangle.sh">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_protos.h.in">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_protos.h.in">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_rename.sh">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_rename.sh">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Libs\jemalloc\include\jemalloc\jemalloc_typedefs.h.in">
-      <Filter>Libs\jemalloc\include</Filter>
+    <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_typedefs.h.in">
+      <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
   </ItemGroup>
 </Project>

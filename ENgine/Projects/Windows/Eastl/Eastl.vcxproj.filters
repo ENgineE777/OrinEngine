@@ -27,302 +27,302 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\algorithm.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\algorithm.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\allocator.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\allocator.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\allocator_malloc.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\allocator_malloc.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\any.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\any.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\array.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\array.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bitset.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bitset.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bitvector.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bitvector.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\chrono.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\chrono.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\core_allocator.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\core_allocator.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\core_allocator_adapter.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\core_allocator_adapter.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\deque.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\deque.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\finally.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\finally.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_allocator.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_allocator.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_function.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_function.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_hash_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_hash_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_hash_set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_hash_set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_list.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_list.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_slist.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_slist.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_string.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_string.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_substring.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_substring.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\fixed_vector.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\fixed_vector.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\functional.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\functional.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\hash_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\hash_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\hash_set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\hash_set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\heap.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\heap.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\initializer_list.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\initializer_list.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_hash_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\intrusive_hash_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_hash_set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\intrusive_hash_set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_list.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\intrusive_list.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\intrusive_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\intrusive_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\iterator.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\iterator.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\linked_array.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\linked_array.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\linked_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\linked_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\list.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\list.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\memory.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\memory.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\meta.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\meta.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\numeric.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\numeric.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\numeric_limits.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\numeric_limits.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\optional.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\optional.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\priority_queue.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\priority_queue.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\queue.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\queue.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\random.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\random.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\ratio.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\ratio.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\safe_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\safe_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\scoped_array.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\scoped_array.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\scoped_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\scoped_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\segmented_vector.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\segmented_vector.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\shared_array.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\shared_array.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\shared_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\shared_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\slist.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\slist.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\sort.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\sort.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\span.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\span.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\stack.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\stack.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\string.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string_hash_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\string_hash_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\string_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\string_view.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\string_view.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\tuple.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\tuple.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\type_traits.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\type_traits.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\unique_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\unique_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\unordered_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\unordered_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\unordered_set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\unordered_set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\utility.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\utility.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\variant.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\variant.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\vector.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\vector_map.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_multimap.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\vector_multimap.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_multiset.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\vector_multiset.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\vector_set.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\vector_set.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\version.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\version.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\weak_ptr.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\weak_ptr.h">
       <Filter>eastl\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\adaptors.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\adaptors.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\call_traits.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\call_traits.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\compressed_pair.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\compressed_pair.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\fixed_ring_buffer.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\fixed_ring_buffer.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\fixed_tuple_vector.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\fixed_tuple_vector.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\intrusive_sdlist.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\intrusive_sdlist.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\intrusive_slist.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\intrusive_slist.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\list_map.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\list_map.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\lru_cache.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\lru_cache.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\ring_buffer.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\ring_buffer.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\sort_extra.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\sort_extra.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\sparse_matrix.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\sparse_matrix.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Libs\eastl\include\EASTL\bonus\tuple_vector.h">
+    <ClInclude Include="..\..\..\Thirdparty\eastl\include\EASTL\bonus\tuple_vector.h">
       <Filter>eastl\include\bonus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="..\..\..\Libs\eastl\source\EASTL.natvis">
+    <Natvis Include="..\..\..\Thirdparty\eastl\source\EASTL.natvis">
       <Filter>eastl\source</Filter>
     </Natvis>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Libs\eastl\source\allocator_eastl.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\allocator_eastl.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\assert.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\assert.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\fixed_pool.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\fixed_pool.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\hashtable.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\hashtable.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\intrusive_list.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\intrusive_list.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\numeric_limits.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\numeric_limits.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\red_black_tree.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\red_black_tree.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\string.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\string.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Libs\eastl\source\thread_support.cpp">
+    <ClCompile Include="..\..\..\Thirdparty\eastl\source\thread_support.cpp">
       <Filter>eastl\source</Filter>
     </ClCompile>
   </ItemGroup>
