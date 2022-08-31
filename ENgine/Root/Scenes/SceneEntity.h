@@ -296,22 +296,6 @@ namespace Oak
 
 			return nullptr;
 		}
-
-		/**
-		\brief Register script class for a scene object
-		*/
-		virtual void BindClassToScript();
-
-		/**
-		\brief Inject properties into script property
-
-		\param[in] type Type of a script property
-		\param[in] property Pointer to a script property
-		\param[in] prefix Prefix which will be used to names of fileds
-
-		\return True will be returned in case injection was successfully.
-		*/
-		virtual bool InjectIntoScript(const char* typeName, int name, void* property, const char* prefix);
 		
 		/**
 			\brief Register callback by name

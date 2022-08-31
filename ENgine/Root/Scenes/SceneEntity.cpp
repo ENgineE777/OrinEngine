@@ -362,20 +362,4 @@ namespace Oak
 
 		return nullptr;
 	}
-
-	void SceneEntity::BindClassToScript()
-	{
-	}
-
-	bool SceneEntity::InjectIntoScript(const char* typeName, int name, void* property, const char* prefix)
-	{
-		if (!StringUtils::IsEqual(typeName, scriptClassName))
-		{
-			return false;
-		}
-
-		//*(asPWORD*)(property) = (asPWORD)this;
-
-		return true;
-	}
 }
