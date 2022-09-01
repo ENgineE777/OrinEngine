@@ -1,6 +1,6 @@
 .vs
-Debug
-Release
+ENgine/Projects/Windows/**/x64/Debug
+ENgine/Projects/Windows/**/x64/Release
 **/Logs/*.txt
 *.vcxproj.user
 EditorRelease
