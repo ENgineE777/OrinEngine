@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\"
+		}
+	],
+	"settings": {
+		"C_Cpp.default.defines": [
+			"PLATFORM_WIN",
+			"OAK_EXPORTING",
+			"OAK_EDITOR"
+		],
+		"files.associations": {
+		},
+		"C_Cpp.files.exclude": {
+			"**/.vscode": true,
+			"**/.vs": true,
+			"**/ENgine/CppBuild/include": true
+		}
+	}
+}
