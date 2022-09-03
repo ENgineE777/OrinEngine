@@ -136,6 +136,8 @@ namespace Oak
 				reader.Read("size", size);
 				reader.Read("offset", offset);
 
+				SetDirty();
+
 				reader.LeaveBlock();
 			}
 		};
