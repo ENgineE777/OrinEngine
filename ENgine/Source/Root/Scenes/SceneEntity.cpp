@@ -2,8 +2,22 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Root/Root.h"
 
+#ifdef OAK_EDITOR
+#include "Editor/Editor.h"
+#endif
+
 namespace Oak
 {
+	void SceneEntity::OpenSourcePrefab(void* owner)
+	{
+		SceneEntity* entity = (SceneEntity*)owner;
+
+		if (entity->prefabRef.Get())
+		{
+			editor.SelectEditAsset(entity->prefabRef.Get());
+		}
+	}
+
 	void SceneEntity::ApplyProperties()
 	{
 
@@ -123,6 +137,7 @@ namespace Oak
 			baseProprties.push_back(eastl::string("Visibile"));
 			baseProprties.push_back(eastl::string("Name"));
 			baseProprties.push_back(eastl::string("Transform"));
+			baseProprties.push_back(eastl::string("Edit Prefab"));
 		}
 
 		return &baseProprties;
@@ -193,7 +208,22 @@ namespace Oak
 	bool SceneEntity::ImGuiProperties()
 	{
 		GetMetaData()->Prepare(this);
-		GetMetaData()->ImGuiWidgets(prefabInstance ? GetBaseProperties() : nullptr);
+
+		if (prefabInstance)
+		{
+			GetMetaData()->ImGuiWidgets(GetBaseProperties());
+		}
+		else
+		{
+			static eastl::vector<eastl::string> ignorePrefabInstanceProprties;
+
+			if (ignorePrefabInstanceProprties.empty())
+			{
+				ignorePrefabInstanceProprties.push_back(eastl::string("Edit Prefab"));
+			}
+
+			GetMetaData()->ImGuiWidgets(&ignorePrefabInstanceProprties, true);
+		}
 
 		if (GetMetaData()->IsValueWasChanged())
 		{

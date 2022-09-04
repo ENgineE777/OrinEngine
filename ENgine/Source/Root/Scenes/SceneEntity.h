@@ -52,9 +52,9 @@ namespace Oak
 		AssetPrefabRef prefabRef;
 		bool prefabInstance = false;
 
-	#ifdef OAK_EDITOR
+#ifdef OAK_EDITOR
 		bool edited = false;
-	#endif
+#endif
 
 		struct Holder
 		{
@@ -68,7 +68,7 @@ namespace Oak
 
 	public:
 
-	#ifndef DOXYGEN_SKIP
+#ifndef DOXYGEN_SKIP
 
 		eastl::string groupName;
 
@@ -82,7 +82,7 @@ namespace Oak
 		virtual void SetUID(uint32_t uid);
 
 		virtual MetaData* GetMetaData() = 0;
-	#endif
+#endif
 
 		/**
 		\brief Initialization of a scene object. This is a place where all task should be registered
@@ -175,7 +175,7 @@ namespace Oak
 		*/
 		virtual void Play();
 
-	#ifdef OAK_EDITOR
+#ifdef OAK_EDITOR
 		/**
 		\brief Set new scene
 
@@ -228,7 +228,8 @@ namespace Oak
 		virtual void OnRightMouseUp();
 		virtual	void OnMiddleMouseDown();
 		virtual void OnMiddleMouseUp();
-	#endif
+#endif
+		static void OpenSourcePrefab(void* owner);
 
 		/**
 		\brief Get pointer to a scene owner
@@ -306,7 +307,7 @@ namespace Oak
 
 			return nullptr;
 		}
-		
+
 		/**
 			\brief Register callback by name
 			\param[in] name Name of a callback
@@ -415,5 +416,6 @@ namespace Oak
 	#define BASE_SCENE_ENTITY_PROP(className)\
 	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\
 	BOOL_PROP(className, visible, true, "Common", "Visibile", "State of visibility of an object")\
-	TRANSFORM_PROP(className, transform, "Transform")
+	TRANSFORM_PROP(className, transform, "Transform")\
+	CALLBACK_PROP(className, SceneEntity::OpenSourcePrefab, "Common", "Edit Prefab")
 }

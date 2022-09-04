@@ -177,7 +177,7 @@ namespace Oak
 
 		#ifndef DOXYGEN_SKIP
 		#ifdef OAK_EDITOR
-		void ImGuiWidgets(eastl::vector<eastl::string>* allowedProprties = nullptr);
+		void ImGuiWidgets(eastl::vector<eastl::string>* whitelistedProprties = nullptr, bool useAsBlacklisted = false);
 		bool ImGuiVector(float* x, float* y, float* z, float* w, const char* name, const char* propID);
 		void ConstructCategoriesData();
 		bool IsValueWasChanged();

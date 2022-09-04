@@ -598,7 +598,7 @@ namespace Oak
 		return changed;
 	}
 
-	void MetaData::ImGuiWidgets(eastl::vector<eastl::string>* allowedProprties)
+	void MetaData::ImGuiWidgets(eastl::vector<eastl::string>* whitelistedProprties, bool useAsBlacklisted)
 	{
 		if (categoriesData.size() == 0)
 		{
@@ -640,9 +640,14 @@ namespace Oak
 				{
 					auto& prop = properties[categoriesData[j].indices[i]];
 
-					if (allowedProprties && allowedProprties->end() != find(allowedProprties->begin(), allowedProprties->end(), prop.name))
+					if (whitelistedProprties)
 					{
-						continue;
+						bool found = whitelistedProprties->end() != find(whitelistedProprties->begin(), whitelistedProprties->end(), prop.propName);
+
+						if ((!useAsBlacklisted && !found) || (useAsBlacklisted && found))
+						{
+							continue;
+						}
 					}
 
 					if (prop.type != Type::FileName && prop.type != Type::Callback && prop.type != Type::Array)
