@@ -114,7 +114,7 @@ namespace Oak
 	{
 		if (selectedEntity)
 		{
-			selectedEntity->ImGuiProperties();
+			containsUnsavedChanges |= selectedEntity->ImGuiProperties();
 		}
 	}
 
@@ -198,6 +198,8 @@ namespace Oak
 							}
 
 							dragged->UpdateVisibility();
+
+							containsUnsavedChanges = true;
 						}
 
 						dragFinished = true;
@@ -285,6 +287,8 @@ namespace Oak
 				{
 					AssetPrefab* prefab = holder->GetAsset<AssetPrefab>();
 					assetEntity = prefab->CreateInstance(scene);
+
+					containsUnsavedChanges = true;
 			
 					dragFinished = true;
 				}
@@ -303,6 +307,8 @@ namespace Oak
 
 				if (allowAdd)
 				{
+					containsUnsavedChanges = true;
+
 					if (parent)
 					{
 						assetEntity->SetParent(parent, asChild ? nullptr : entity);
@@ -442,6 +448,8 @@ namespace Oak
 
 							entity->UpdateVisibility();
 							SelectEntity(entity);
+
+							containsUnsavedChanges = true;
 						}
 					}
 				}
@@ -476,6 +484,8 @@ namespace Oak
 				name += "_copy";
 
 				copy->SetName(name.c_str());
+
+				containsUnsavedChanges = true;
 			}
 
 			if (selectedEntity && ImGui::MenuItem("Delete"))
@@ -492,6 +502,8 @@ namespace Oak
 				{
 					scene->DeleteEntity(entity, true);
 				}
+
+				containsUnsavedChanges = true;
 
 				entityDeletedViaPopup = true;
 			}

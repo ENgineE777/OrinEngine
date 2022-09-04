@@ -71,7 +71,7 @@ namespace Oak
 							{
 								if (StringUtils::IsEqual(item->fullName.c_str(), relativeName))
 								{
-									if (item->asset && item->asset->WasChanged())
+									if (item->asset && item->asset->SourceFileWasChanged())
 									{
 										item->asset->Reload();
 									}

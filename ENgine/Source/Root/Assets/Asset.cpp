@@ -59,7 +59,7 @@ namespace Oak
 		return name;
 	}
 
-	bool Asset::WasChanged()
+	bool Asset::SourceFileWasChanged()
 	{
 		struct stat info;
 
@@ -77,8 +77,15 @@ namespace Oak
 		return false;
 	}
 
+	bool Asset::ContainsUnsavedChanges()
+	{
+		return containsUnsavedChanges;
+	}
+
 	void Asset::Save()
 	{
+		containsUnsavedChanges = false;
+
 		char strName[512];
 
 		StringUtils::Copy(strName, 512, path.c_str());

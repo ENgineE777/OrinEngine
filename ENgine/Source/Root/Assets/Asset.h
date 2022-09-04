@@ -30,6 +30,7 @@ namespace Oak
 #ifdef OAK_EDITOR
 		TaskExecutor::SingleTaskPool* taskPool = nullptr;
 		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
+		bool containsUnsavedChanges = false;
 #endif
 
 	public:
@@ -44,7 +45,8 @@ namespace Oak
 
 		#ifdef OAK_EDITOR
 		const eastl::string& GetName();
-		bool WasChanged();
+		bool SourceFileWasChanged();
+		bool ContainsUnsavedChanges();
 		void Save();
 		virtual void SaveMetaData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;

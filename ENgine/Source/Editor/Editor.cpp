@@ -442,8 +442,8 @@ namespace Oak
 
 	void Editor::ShowViewport()
 	{
-		ImGui::Begin(StringUtils::PrintTemp("%s###Game", selectedEditAsset != nullptr ? selectedEditAsset->GetName().c_str() : "Viewport"),
-					nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+		ImGui::Begin(selectedEditAsset ? StringUtils::PrintTemp("%s%s###Game", selectedEditAsset->GetName().c_str(), selectedEditAsset->ContainsUnsavedChanges() ? "*" : "") : "Viewport",
+					 nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImGuiIO& io = ImGui::GetIO();
 

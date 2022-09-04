@@ -218,7 +218,7 @@ namespace Oak
 		*/
 		virtual void Export();
 
-		virtual void ImGuiProperties();
+		virtual bool ImGuiProperties();
 		virtual bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 
 		virtual void OnMouseMove(Math::Vector2 ms);

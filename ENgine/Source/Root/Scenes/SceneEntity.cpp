@@ -190,7 +190,7 @@ namespace Oak
 
 	}
 
-	void SceneEntity::ImGuiProperties()
+	bool SceneEntity::ImGuiProperties()
 	{
 		GetMetaData()->Prepare(this);
 		GetMetaData()->ImGuiWidgets(prefabInstance ? GetBaseProperties() : nullptr);
@@ -199,7 +199,11 @@ namespace Oak
 		{
 			ApplyProperties();
 			UpdateVisibility();
+
+			return true;
 		}
+
+		return false;
 	}
 
 	bool SceneEntity::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
