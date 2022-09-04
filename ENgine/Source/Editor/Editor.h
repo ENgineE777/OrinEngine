@@ -78,6 +78,10 @@ namespace Oak
 		bool assetsTreePopup = false;
 		bool need2openAssetPopup = false;
 		eastl::string createAssetName;
+		eastl::string createPrefabType;
+		eastl::vector<eastl::string> createPrefabTypesList;
+		int createPrefabTypesIndex;
+		eastl::string createPrefabTypesListFlat;
 		CreateAssetDialog assetDialog = CreateAssetDialog::Inactive;
 		ViewportCature viewportCaptured = ViewportCature::None;
 		bool vireportHowered = false;

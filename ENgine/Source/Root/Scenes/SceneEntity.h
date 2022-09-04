@@ -9,6 +9,8 @@
 #include "Root/Files/Files.h"
 #include "Support/Transform.h"
 #include <typeinfo>
+#include "Scene.h"
+#include "Root/Assets/AssetPrefab.h"
 
 namespace Oak
 {
@@ -28,6 +30,8 @@ namespace Oak
 	class CLASS_DECLSPEC SceneEntity : public Object
 	{
 		friend class Scene;
+		friend class AssetScene;
+		friend class AssetPrefab;
 		friend struct SceneEntityRefBase;
 
 	protected:
@@ -45,6 +49,9 @@ namespace Oak
 		SceneEntity* parent = nullptr;
 		eastl::vector<SceneEntity*> childs;
 
+		AssetPrefabRef prefabRef;
+		bool prefabInstance = false;
+
 	#ifdef OAK_EDITOR
 		bool edited = false;
 	#endif
@@ -56,6 +63,8 @@ namespace Oak
 		};
 
 		eastl::map<eastl::string, Holder> callbacks;
+
+		static eastl::vector<eastl::string>* GetBaseProperties();
 
 	public:
 
@@ -209,6 +218,7 @@ namespace Oak
 		*/
 		virtual void Export();
 
+		virtual void ImGuiProperties();
 		virtual bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 
 		virtual void OnMouseMove(Math::Vector2 ms);
@@ -402,11 +412,8 @@ namespace Oak
 	CLASSFACTORYDEF(SceneEntity)
 	CLASSFACTORYDEF_END()
 
-	#define BASE_SCENE_ENTITY_STATE_PROP(className)\
-	BOOL_PROP(className, visible, true, "Common", "Visibile", "State of visibility of an object")
-
 	#define BASE_SCENE_ENTITY_PROP(className)\
 	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\
-	BASE_SCENE_ENTITY_STATE_PROP(className)\
+	BOOL_PROP(className, visible, true, "Common", "Visibile", "State of visibility of an object")\
 	TRANSFORM_PROP(className, transform, "Transform")
 }

@@ -133,11 +133,16 @@ namespace Oak
 		}
 	}
 
-	void MetaData::Load(JsonReader& reader)
+	void MetaData::Load(JsonReader& reader, eastl::vector<eastl::string>* allowedProprties)
 	{
 		for (int i = 0; i < properties.size(); i++)
 		{
 			Property& prop = properties[i];
+
+			if (allowedProprties && allowedProprties->end() != find(allowedProprties->begin(), allowedProprties->end(), prop.name))
+			{
+				continue;
+			}
 
 			if (prop.type == Type::Boolean)
 			{
@@ -265,11 +270,16 @@ namespace Oak
 		}
 	}
 
-	void MetaData::Save(JsonWriter& writer)
+	void MetaData::Save(JsonWriter& writer, eastl::vector<eastl::string>* allowedProprties)
 	{
 		for (int i = 0; i < properties.size(); i++)
 		{
 			Property& prop = properties[i];
+
+			if (allowedProprties && allowedProprties->end() != find(allowedProprties->begin(), allowedProprties->end(), prop.name))
+			{
+				continue;
+			}
 
 			if (prop.type == Type::Boolean)
 			{
@@ -588,7 +598,7 @@ namespace Oak
 		return changed;
 	}
 
-	void MetaData::ImGuiWidgets()
+	void MetaData::ImGuiWidgets(eastl::vector<eastl::string>* allowedProprties)
 	{
 		if (categoriesData.size() == 0)
 		{
@@ -629,6 +639,11 @@ namespace Oak
 				for (int i = 0; i < categoriesData[j].indices.size(); i++)
 				{
 					auto& prop = properties[categoriesData[j].indices[i]];
+
+					if (allowedProprties && allowedProprties->end() != find(allowedProprties->begin(), allowedProprties->end(), prop.name))
+					{
+						continue;
+					}
 
 					if (prop.type != Type::FileName && prop.type != Type::Callback && prop.type != Type::Array)
 					{

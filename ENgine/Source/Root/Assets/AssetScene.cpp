@@ -114,14 +114,7 @@ namespace Oak
 	{
 		if (selectedEntity)
 		{
-			selectedEntity->GetMetaData()->Prepare(selectedEntity);
-			selectedEntity->GetMetaData()->ImGuiWidgets();
-
-			if (selectedEntity->GetMetaData()->IsValueWasChanged())
-			{
-				selectedEntity->ApplyProperties();
-				selectedEntity->UpdateVisibility();
-			}
+			selectedEntity->ImGuiProperties();
 		}
 	}
 
@@ -173,6 +166,11 @@ namespace Oak
 						bool allowDrag = true;
 
 						SceneEntity* parent = asChild ? entity : (entity ? entity->GetParent() : nullptr);
+
+						if (isPrefab && !parent)
+						{
+							allowDrag = false;
+						}
 
 						if (parent && parent->GetTransform().unitsInvScale != dragged->GetTransform().unitsInvScale)
 						{
@@ -286,26 +284,8 @@ namespace Oak
 				if (ImGui::AcceptDragDropPayload("_ASSET_PREFAB", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
 					AssetPrefab* prefab = holder->GetAsset<AssetPrefab>();
-					Scene* scene = prefab->GetScene();
+					assetEntity = prefab->CreateInstance(scene);
 			
-					auto& entities = scene->GetEntities();
-
-					if (entities.size() > 0)
-					{
-						auto* src = entities[0];
-
-						assetEntity = scene->CreateEntity(src->className);
-
-						assetEntity->Copy(src);
-						assetEntity->PostLoad();
-
-						Scene* scene = prefab->GetScene();
-						assetEntity->SetName(scene->GetName());
-
-						CopyChilds(src, assetEntity);
-						assetEntity->UpdateVisibility();
-					}
-
 					dragFinished = true;
 				}
 			}
@@ -364,25 +344,30 @@ namespace Oak
 		}
 	}
 
-	void AssetScene::CopyChilds(SceneEntity* entity, SceneEntity* copy)
+	void AssetScene::CopyChilds(SceneEntity* entity, SceneEntity* copy, Scene* sceneOwner)
 	{
 		auto& childs = entity->GetChilds();
 
 		for (auto* child : childs)
 		{
-			SceneEntity* childCopy = scene->CreateEntity(child->className);
+			SceneEntity* childCopy = sceneOwner->CreateEntity(child->className);
 
 			childCopy->SetParent(copy, nullptr);
-
+			childCopy->prefabInstance = isPrefab;
 			childCopy->Copy(child);
 			childCopy->PostLoad();
 
-			CopyChilds(child, childCopy);
+			CopyChilds(child, childCopy, sceneOwner);
 		}
 	}
 
 	void AssetScene::SceneTreePopup(bool contextItem)
 	{
+		if (isPrefab && (selectedEntity == nullptr || isPrefab && selectedEntity->GetParent() == nullptr))
+		{
+			return;
+		}
+
 		entityDeletedViaPopup = false;
 
 		if (sceneTreePopup)
@@ -427,7 +412,15 @@ namespace Oak
 							}
 							else
 							{
-								scene->AddEntity(entity, selectedEntity);							}
+								if (!isPrefab)
+								{
+									scene->AddEntity(entity, selectedEntity);
+								}
+								else
+								{
+									RELEASE(entity)
+								}
+							}
 						}
 						else
 						{
@@ -456,7 +449,7 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
-			if (selectedEntity && (!isSelecteEditScenePrefab || (isSelecteEditScenePrefab && selectedEntity->GetParent() != nullptr)) && ImGui::MenuItem("Duplicate"))
+			if (selectedEntity && ImGui::MenuItem("Duplicate"))
 			{
 				SceneEntity* copy = scene->CreateEntity(selectedEntity->className);
 
@@ -474,7 +467,7 @@ namespace Oak
 				copy->Copy(selectedEntity);
 				copy->PostLoad();
 
-				CopyChilds(selectedEntity, copy);
+				CopyChilds(selectedEntity, copy, scene);
 				copy->UpdateVisibility();
 
 				SelectEntity(copy);
@@ -518,11 +511,30 @@ namespace Oak
 			{
 				SceneEntity* entity = entities[i];
 
+				if (entity->prefabInstance && entity->parent && entity->parent->prefabInstance)
+				{
+					continue;
+				}
+
 				ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_Leaf;
 
 				if (entity->GetChilds().size() > 0)
 				{
-					nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+					bool onlyePrefabChild = true;
+
+					for (auto* child : entity->GetChilds())
+					{
+						if (!child->prefabInstance)
+						{
+							onlyePrefabChild = false;
+							break;
+						}
+					}
+					
+					if (!onlyePrefabChild)
+					{
+						nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
+					}
 				}
 
 				if (selectedEntity == entity)

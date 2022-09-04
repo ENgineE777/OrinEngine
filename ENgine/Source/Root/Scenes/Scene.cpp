@@ -115,14 +115,25 @@ namespace Oak
 
 	void Scene::LoadEntities(JsonReader& reader, const char* name, eastl::vector<SceneEntity*>& entities)
 	{
+		eastl::string type;
+
 		while (reader.EnterBlock(name))
 		{
-			char type[512];
-			reader.Read("type", type, 512);
+			bool prefabInstance = false;;
+			reader.Read("prefabInstance", prefabInstance);
+			reader.Read("type", type);
 
 			SceneEntity* entity = nullptr;
 
-			entity = CreateEntity(type, false);
+			if (prefabInstance)
+			{
+				auto* prefab = root.assets.GetAsset<AssetPrefab>(type);
+				entity = prefab->CreateInstance(this);
+			}
+			else
+			{
+				entity = CreateEntity(type.c_str(), false);
+			}
 
 			if (entity)
 			{
@@ -169,10 +180,18 @@ namespace Oak
 
 		for (auto& entity : entities)
 		{
+			if (entity->prefabInstance && entity->parent && entity->parent->prefabInstance)
+			{
+				continue;
+			}
+
 			writer.StartBlock(nullptr);
 
-			writer.Write("type", entity->className);
+			writer.Write("prefabInstance", entity->prefabInstance);
+
 			writer.Write("uid", entity->GetUID());
+
+			writer.Write("type", entity->prefabInstance ? entity->prefabRef.Get()->GetPath().c_str() : entity->className);
 
 			entity->Save(writer);
 

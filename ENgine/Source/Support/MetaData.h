@@ -168,16 +168,16 @@ namespace Oak
 
 		void Prepare(void* owner, void* root = nullptr);
 		void SetDefValues();
-		void Load(JsonReader& reader);
+		void Load(JsonReader& reader, eastl::vector<eastl::string>* allowedProprties = nullptr);
 		void PostLoad(Scene* scene);
-		void Save(JsonWriter& writer);
+		void Save(JsonWriter& writer, eastl::vector<eastl::string>* allowedProprties = nullptr);
 		void PreapareToRelease();
 
 		void Copy(void* source, eastl::vector<Property>& sourceProperties);
 
 		#ifndef DOXYGEN_SKIP
 		#ifdef OAK_EDITOR
-		void ImGuiWidgets();
+		void ImGuiWidgets(eastl::vector<eastl::string>* allowedProprties = nullptr);
 		bool ImGuiVector(float* x, float* y, float* z, float* w, const char* name, const char* propID);
 		void ConstructCategoriesData();
 		bool IsValueWasChanged();

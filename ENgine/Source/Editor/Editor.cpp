@@ -567,6 +567,8 @@ namespace Oak
 			ImGui::OpenPopup("Enter name");
 		}
 
+		ImGui::SetNextWindowSize(ImVec2(300.0f, 130.0f));
+
 		if (ImGui::BeginPopupModal("Enter name", &open, ImGuiWindowFlags_NoResize))
 		{
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
@@ -578,6 +580,17 @@ namespace Oak
 			ImGui::SameLine();
 
 			Oak::ImGuiHelper::InputString("##NewName", createAssetName);
+
+			if (assetDialog == CreateAssetDialog::Prefab)
+			{
+				ImGui::Dummy(ImVec2(3.0f, 3.0f));
+				ImGui::SameLine();
+
+				ImGui::Text("Type");
+				ImGui::SameLine();
+
+				ImGuiHelper::InputCombobox("##PrefabType", createPrefabTypesIndex, createPrefabTypesList, createPrefabTypesListFlat);
+			}
 
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
 
@@ -676,6 +689,7 @@ namespace Oak
 						AssetPrefab* prefab = new AssetPrefab();
 						prefab->Init();
 						prefab->SetPath(path.c_str());
+						prefab->SetRootEntityType(createPrefabTypesList[createPrefabTypesIndex].c_str());
 
 						project.AddScene(prefab);
 						prefab->Save();
@@ -1178,6 +1192,17 @@ namespace Oak
 
 				if (ImGui::MenuItem("Prefab"))
 				{
+					createPrefabTypesIndex = 0;
+					
+					createPrefabTypesList.clear();
+
+					auto& decls = ClassFactorySceneEntity::Decls();
+
+					for (auto& decl : decls)
+					{
+						createPrefabTypesList.push_back(decl->GetShortName());
+					}
+
 					assetDialog = CreateAssetDialog::Prefab;
 				}
 

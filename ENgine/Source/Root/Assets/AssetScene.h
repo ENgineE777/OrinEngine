@@ -62,11 +62,11 @@ namespace Oak
 		bool sceneTreePopup = false;
 		bool entityDeletedViaPopup = false;
 		bool allowSceneDropTraget = true;
-		bool isSelecteEditScenePrefab = false;
+		bool isPrefab = false;
 
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 		void SceneDropTraget(SceneEntity* entity);
 		void SceneTreePopup(bool contextItem);
-		void CopyChilds(SceneEntity* entity, SceneEntity* copy);
+		void CopyChilds(SceneEntity* entity, SceneEntity* copy, Scene* sceneOwner);
 	};
 }
