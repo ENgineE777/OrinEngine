@@ -36,3 +36,8 @@ The users games are theirs.
 
 Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OakEngine/releases
 Warning: CMAKE and Visual Studio are needed for compilation of gameplay code
+
+**Tutorial**
+
+Small tutorial how to make simple platformer can be found at
+https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/edit?usp=sharing
