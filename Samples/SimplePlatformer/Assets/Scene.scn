@@ -3,8 +3,9 @@
 	"uid" : 3200,
 	"entities" : [
 		{
-			"type" : "TileMap",
+			"prefabInstance" : false,
 			"uid" : 498923,
+			"type" : "TileMap",
 			"name" : "Level",
 			"visible" : true,
 			"Transform" :
@@ -1521,8 +1522,9 @@
 			]
 		},
 		{
-			"type" : "Camera2D",
+			"prefabInstance" : false,
 			"uid" : 835248,
+			"type" : "Camera2D",
 			"name" : "Camera2D",
 			"visible" : true,
 			"Transform" :
@@ -1561,7 +1563,7 @@
 			"zoom" : 1.000000,
 			"Target" :
 			{
-				"uid" : 815089
+				"uid" : 446100
 			},
 			"border.x" : 100.000000,
 			"border.y" : 100.000000,
@@ -1572,8 +1574,9 @@
 			"rightdown.y" : -1000.000000
 		},
 		{
-			"type" : "SpritesLayer",
+			"prefabInstance" : false,
 			"uid" : 524173,
+			"type" : "SpritesLayer",
 			"name" : "Skies",
 			"visible" : true,
 			"Transform" :
@@ -1618,8 +1621,9 @@
 			}
 		},
 		{
-			"type" : "SpritesLayer",
+			"prefabInstance" : false,
 			"uid" : 48608,
+			"type" : "SpritesLayer",
 			"name" : "Mountains",
 			"visible" : true,
 			"Transform" :
@@ -1664,8 +1668,9 @@
 			}
 		},
 		{
-			"type" : "SpritesLayer",
+			"prefabInstance" : false,
 			"uid" : 138731,
+			"type" : "SpritesLayer",
 			"name" : "Trees",
 			"visible" : true,
 			"Transform" :
@@ -1710,21 +1715,22 @@
 			}
 		},
 		{
-			"type" : "Character",
-			"uid" : 815089,
+			"prefabInstance" : true,
+			"uid" : 446100,
+			"type" : "Character/player.prefab",
 			"name" : "player",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 1387.262817,
-					"y" : 331.629120,
+					"x" : 1514.969360,
+					"y" : 326.435059,
 					"z" : 0.000000
 				},
 				"rotation" :
 				{
-					"x" : -0.000000,
+					"x" : 0.000000,
 					"y" : 0.000000,
 					"z" : 0.000000
 				},
@@ -1748,102 +1754,6 @@
 				}
 			},
 			"childs" : [
-				{
-					"type" : "AnimGraph2D",
-					"uid" : 761558,
-					"name" : "anim",
-					"visible" : true,
-					"Transform" :
-					{
-						"position" :
-						{
-							"x" : 0.000000,
-							"y" : 0.000000,
-							"z" : 0.000000
-						},
-						"rotation" :
-						{
-							"x" : -0.000000,
-							"y" : 0.000000,
-							"z" : 0.000000
-						},
-						"scale" :
-						{
-							"x" : 1.000000,
-							"y" : 1.000000,
-							"z" : 1.000000
-						},
-						"size" :
-						{
-							"x" : 33.000000,
-							"y" : 32.000000,
-							"z" : 1.000000
-						},
-						"offset" :
-						{
-							"x" : 0.500000,
-							"y" : 1.000000,
-							"z" : 0.500000
-						}
-					},
-					"anim" :
-					{
-						"Path" : "Character/player.ang"
-					},
-					"color" :
-					{
-						"r" : 1.000000,
-						"g" : 1.000000,
-						"b" : 1.000000,
-						"a" : 1.000000
-					}
-				},
-				{
-					"type" : "KinematicCapsule2D",
-					"uid" : 675724,
-					"name" : "controller",
-					"visible" : true,
-					"Transform" :
-					{
-						"position" :
-						{
-							"x" : 0.000000,
-							"y" : 0.000000,
-							"z" : 0.000000
-						},
-						"rotation" :
-						{
-							"x" : -0.000000,
-							"y" : 0.000000,
-							"z" : 0.000000
-						},
-						"scale" :
-						{
-							"x" : 1.000000,
-							"y" : 1.000000,
-							"z" : 1.000000
-						},
-						"size" :
-						{
-							"x" : 1.000000,
-							"y" : 1.000000,
-							"z" : 1.000000
-						},
-						"offset" :
-						{
-							"x" : 0.500000,
-							"y" : 0.500000,
-							"z" : 0.500000
-						}
-					},
-					"physGroup" : 1,
-					"affectOnParent" : true,
-					"YOriented" : true,
-					"height" : 8.000000,
-					"radius" : 8.000000,
-					"slopeLimit" : 0.000000,
-					"stepOffset" : 0.000000
-				}
 			]
 		}
 	]

@@ -3,8 +3,9 @@
 	"uid" : 41136,
 	"entities" : [
 		{
-			"type" : "Character",
+			"prefabInstance" : false,
 			"uid" : 254962,
+			"type" : "Character",
 			"name" : "Character",
 			"visible" : true,
 			"Transform" :
@@ -40,18 +41,11 @@
 					"z" : 0.500000
 				}
 			},
-			"anim" :
-			{
-				"uid" : 959740
-			},
-			"controller" :
-			{
-				"uid" : 715451
-			},
 			"childs" : [
 				{
-					"type" : "AnimGraph2D",
+					"prefabInstance" : false,
 					"uid" : 959740,
+					"type" : "AnimGraph2D",
 					"name" : "anim",
 					"visible" : true,
 					"Transform" :
@@ -87,6 +81,10 @@
 							"z" : 0.500000
 						}
 					},
+					"anim" :
+					{
+						"Path" : "Character/player.ang"
+					},
 					"color" :
 					{
 						"r" : 1.000000,
@@ -96,8 +94,9 @@
 					}
 				},
 				{
-					"type" : "KinematicCapsule2D",
+					"prefabInstance" : false,
 					"uid" : 715451,
+					"type" : "KinematicCapsule2D",
 					"name" : "controller",
 					"visible" : true,
 					"Transform" :
