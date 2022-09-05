@@ -47,7 +47,7 @@ namespace Oak
 		const eastl::string& GetName();
 		bool SourceFileWasChanged();
 		bool ContainsUnsavedChanges();
-		void Save();
+		virtual void Save();
 		virtual void SaveMetaData(JsonWriter& saver);
 		virtual const char* GetSceneEntityType() = 0;
 		virtual bool IsEditable();

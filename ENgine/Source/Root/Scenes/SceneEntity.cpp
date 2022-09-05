@@ -305,6 +305,13 @@ namespace Oak
 
 		if (scene) scene->DelFromAllGroups(this);
 
+#ifdef OAK_EDITOR
+		if (prefabRef.Get())
+		{
+			prefabRef->UnregisterIntstance(this);
+		}
+#endif
+
 		delete this;
 	}
 

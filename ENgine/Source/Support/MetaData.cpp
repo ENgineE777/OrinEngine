@@ -642,7 +642,7 @@ namespace Oak
 
 					if (whitelistedProprties)
 					{
-						bool found = whitelistedProprties->end() != find(whitelistedProprties->begin(), whitelistedProprties->end(), prop.propName);
+						bool found = whitelistedProprties->end() != eastl::find(whitelistedProprties->begin(), whitelistedProprties->end(), prop.propName);
 
 						if ((!useAsBlacklisted && !found) || (useAsBlacklisted && found))
 						{

@@ -6,14 +6,13 @@
 
 namespace Oak
 {
-	class Scene;
-
 	class CLASS_DECLSPEC AssetPrefab : public AssetScene
 	{
 		friend class PointerRef<AssetPrefab>;
 
-		Scene* scene = nullptr;
-
+#ifdef OAK_EDITOR
+		eastl::vector<SceneEntity*> instances;
+#endif
 	public:
 
 		META_DATA_DECL_BASE(AssetPrefab)
@@ -23,6 +22,11 @@ namespace Oak
 		void SetRootEntityType(const char* type);
 
 		SceneEntity* CreateInstance(Scene* sceneOwner);
+
+#ifdef OAK_EDITOR
+		void UnregisterIntstance(SceneEntity* entity);
+		void Save() override;
+#endif
 	};
 
 	class CLASS_DECLSPEC AssetPrefabRef : public PointerRef<AssetPrefab>
