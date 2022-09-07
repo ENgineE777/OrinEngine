@@ -128,25 +128,10 @@ namespace Oak
 		return transform;
 	}
 
-	eastl::vector<eastl::string>* SceneEntity::GetBaseProperties()
-	{
-		static eastl::vector<eastl::string> baseProprties;
-
-		if (baseProprties.empty())
-		{
-			baseProprties.push_back(eastl::string("Visibile"));
-			baseProprties.push_back(eastl::string("Name"));
-			baseProprties.push_back(eastl::string("Transform"));
-			baseProprties.push_back(eastl::string("Edit Prefab"));
-		}
-
-		return &baseProprties;
-	}
-
 	void SceneEntity::Load(JsonReader& reader)
 	{
 		GetMetaData()->Prepare(this);
-		GetMetaData()->Load(reader, prefabInstance ? GetBaseProperties() : nullptr);
+		GetMetaData()->Load(reader);
 	}
 
 	void SceneEntity::PostLoad()
@@ -170,7 +155,7 @@ namespace Oak
 	void SceneEntity::Save(JsonWriter& writer)
 	{
 		GetMetaData()->Prepare(this);
-		GetMetaData()->Save(writer, prefabInstance ? GetBaseProperties() : nullptr);
+		GetMetaData()->Save(writer);
 	}
 
 	TaskExecutor::SingleTaskPool* SceneEntity::Tasks(bool render)
@@ -211,7 +196,7 @@ namespace Oak
 
 		if (prefabInstance)
 		{
-			GetMetaData()->ImGuiWidgets(GetBaseProperties());
+			GetMetaData()->ImGuiWidgets(nullptr);
 		}
 		else
 		{

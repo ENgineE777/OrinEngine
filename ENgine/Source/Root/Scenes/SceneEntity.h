@@ -64,8 +64,6 @@ namespace Oak
 
 		eastl::map<eastl::string, Holder> callbacks;
 
-		static eastl::vector<eastl::string>* GetBaseProperties();
-
 	public:
 
 #ifndef DOXYGEN_SKIP
