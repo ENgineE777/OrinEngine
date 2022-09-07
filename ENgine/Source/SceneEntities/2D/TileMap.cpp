@@ -246,21 +246,21 @@ namespace Oak
 			Math::Vector3 pos;
 			Math::IntersectPlaneRay(trans.Pos(), trans.Vz(), mouseOrigin, mouseDirection, pos);
 
-			pos = pos - trans.Pos();
+			pos = (pos - trans.Pos()) * Sprite::pixelsPerUnit;
 
 			if (pos.x < 0.0f)
 			{
-				pos.x -= (transform.size.x * Sprite::pixelsPerUnitInvert);
+				pos.x -= transform.size.x;
 			}
 
-			int x = (int)(pos.x / (transform.size.x * Sprite::pixelsPerUnitInvert));
+			int x = (int)(pos.x / transform.size.x);
 
 			if (pos.y > 0.0f)
 			{
-				pos.y += (transform.size.x * Sprite::pixelsPerUnitInvert);
+				pos.y += transform.size.x;
 			}
 
-			int y = (int)(pos.y / (transform.size.y * Sprite::pixelsPerUnitInvert));
+			int y = (int)(pos.y / transform.size.y);
 
 			for (int i = 0; i < tiles.size(); i++)
 			{
