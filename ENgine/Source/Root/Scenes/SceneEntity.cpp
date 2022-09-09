@@ -339,15 +339,14 @@ namespace Oak
 					{
 						parent->childs.insert(parent->childs.begin() + i + 1, this);
 						parent->transform.childs.insert(parent->transform.childs.begin() + i + 1, &transform);
+
 						return;
 					}
 				}
 			}
-			else
-			{
-				parent->childs.push_back(this);
-				parent->transform.childs.push_back(&transform);
-			}
+
+			parent->childs.push_back(this);
+			parent->transform.childs.push_back(&transform);
 		}
 	}
 
