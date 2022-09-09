@@ -67,67 +67,70 @@ namespace Oak
 
 		int count = (int)instances.size();
 
-		auto* root = GetScene()->GetEntities()[0];
-		auto& rootChilds = root->GetChilds();
-
-		for (int i = 0; i < count; i++)
+		if (count > 0)
 		{
-			auto* instance = instances[i];
-			auto* scene = instance->GetScene();
+			auto* root = GetScene()->GetEntities()[0];
+			auto& rootChilds = root->GetChilds();
 
-			bool visible = instance->visible;
-			eastl::string name = instance->GetName();
-			auto& transform = instance->GetTransform();
-
-			auto position = transform.position;
-			auto scale = transform.scale;
-			auto rotation = transform.rotation;
-
-			instance->Copy(root);
-
-			instance->SetVisiblity(visible);
-			instance->SetName(name.c_str());
-			transform.position = position;
-			transform.scale = scale;
-			transform.rotation = rotation;
-
-			auto& childs = instance->GetChilds();
-
-			for (int j = 0; j < childs.size(); j++)
+			for (int i = 0; i < count; i++)
 			{
-				if (childs[j]->prefabInstance)
+				auto* instance = instances[i];
+				auto* scene = instance->GetScene();
+
+				bool visible = instance->visible;
+				eastl::string name = instance->GetName();
+				auto& transform = instance->GetTransform();
+
+				auto position = transform.position;
+				auto scale = transform.scale;
+				auto rotation = transform.rotation;
+
+				instance->Copy(root);
+
+				instance->SetVisiblity(visible);
+				instance->SetName(name.c_str());
+				transform.position = position;
+				transform.scale = scale;
+				transform.rotation = rotation;
+
+				auto& childs = instance->GetChilds();
+
+				for (int j = 0; j < childs.size(); j++)
 				{
-					auto* child = childs[j];
-					child->SetParent(nullptr);
-					RELEASE(child)
-					j--;
+					if (childs[j]->prefabInstance)
+					{
+						auto* child = childs[j];
+						child->SetParent(nullptr);
+						RELEASE(child)
+							j--;
+					}
 				}
-			}
 
-			eastl::vector<SceneEntity*> tmp = childs;
+				eastl::vector<SceneEntity*> tmp = childs;
 
-			for (int j = 0; j < tmp.size(); j++)
-			{
-				tmp[j]->SetParent(nullptr, nullptr);
-			}
+				for (int j = 0; j < tmp.size(); j++)
+				{
+					tmp[j]->SetParent(nullptr, nullptr);
+				}
 
-			for (int j = 0; j < root->childs.size(); j++)
-			{
-				auto* childSrc = root->childs[j];
-				auto* childCopy = scene->CreateEntity(childSrc->className);
+				for (int j = 0; j < root->childs.size(); j++)
+				{
+					auto* childSrc = root->childs[j];
+					auto* childCopy = scene->CreateEntity(childSrc->className);
 
-				childCopy->SetParent(instance, nullptr);
-				childCopy->prefabInstance = true;
-				childCopy->Copy(childSrc);
-				childCopy->PostLoad();
+					childCopy->SetParent(instance, nullptr);
+					childCopy->prefabInstance = true;
+					childCopy->Copy(childSrc);
+					childCopy->PostLoad();
 
-				CopyChilds(childSrc, childCopy, scene);
-				childCopy->UpdateVisibility();
-			}
+					CopyChilds(childSrc, childCopy, scene);
+					childCopy->UpdateVisibility();
+				}
 
-			for (int j = 0; j < tmp.size(); j++)
-			{
-				tmp[j]->SetParent(instance, nullptr);
+				for (int j = 0; j < tmp.size(); j++)
+				{
+					tmp[j]->SetParent(instance, nullptr);
+				}
 			}
 		}
 	}

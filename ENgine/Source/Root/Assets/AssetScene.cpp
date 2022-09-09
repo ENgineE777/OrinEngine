@@ -70,7 +70,7 @@ namespace Oak
 		writer.Write("camera2DPos", camera2DPos);
 		writer.Write("camera2DZoom", camera2DZoom);
 
-		GetScene()->Save(GetScene()->projectScenePath);
+		GetScene()->Save(GetPath().c_str());
 	}
 
 	bool AssetScene::IsEditable()
@@ -356,6 +356,11 @@ namespace Oak
 
 		for (auto* child : childs)
 		{
+			if (child->prefabInstance)
+			{
+				continue;
+			}
+
 			SceneEntity* childCopy = sceneOwner->CreateEntity(child->className);
 
 			childCopy->SetParent(copy, nullptr);
@@ -369,10 +374,12 @@ namespace Oak
 
 	void AssetScene::SceneTreePopup(bool contextItem)
 	{
-		if (isPrefab && (selectedEntity == nullptr || isPrefab && selectedEntity->GetParent() == nullptr))
+		if (isPrefab && (selectedEntity == nullptr))
 		{
 			return;
 		}
+
+		bool onlyToCreate = isPrefab && !selectedEntity->GetParent();
 
 		entityDeletedViaPopup = false;
 
@@ -403,7 +410,7 @@ namespace Oak
 
 						if (selectedEntity)
 						{
-							auto* parent = selectedEntity->GetParent();
+							auto* parent = onlyToCreate ? selectedEntity : selectedEntity->GetParent();
 
 							if (parent)
 							{
@@ -457,9 +464,18 @@ namespace Oak
 				ImGui::EndMenu();
 			}
 
-			if (selectedEntity && ImGui::MenuItem("Duplicate"))
+			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Duplicate"))
 			{
-				SceneEntity* copy = scene->CreateEntity(selectedEntity->className);
+				SceneEntity* copy = nullptr;
+
+				if (selectedEntity->prefabInstance)
+				{
+					copy = selectedEntity->prefabRef->CreateInstance(selectedEntity->GetScene());
+				}
+				else
+				{
+					copy = scene->CreateEntity(selectedEntity->className);
+				}
 
 				auto* parent = selectedEntity->GetParent();
 
@@ -476,6 +492,7 @@ namespace Oak
 				copy->PostLoad();
 
 				CopyChilds(selectedEntity, copy, scene);
+
 				copy->UpdateVisibility();
 
 				SelectEntity(copy);
@@ -488,7 +505,7 @@ namespace Oak
 				containsUnsavedChanges = true;
 			}
 
-			if (selectedEntity && ImGui::MenuItem("Delete"))
+			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Delete"))
 			{
 				SceneEntity* entity = selectedEntity;
 				SelectEntity(nullptr);
