@@ -23,8 +23,24 @@ namespace Oak
 		ARRAY_PROP_INST_CALLGIZMO(GenericMarker, instances, Instance, "Prop", "inst", GenericMarker, selInst, SetGizmo)
 	META_DATA_DESC_END()
 
+	Math::Vector3 GenericMarker::Instance::GetPosition()
+	{
+		if (transform.parent)
+		{
+			return transform.parent->global.MulVertex(transform.position);
+		}
+
+		return transform.position;
+	}
+
 	void GenericMarker::Init()
 	{
+		if (is2D)
+		{
+			transform.unitsScale = &Sprite::pixelsPerUnit;
+			transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		}
+
 		transform.transformFlag = MoveXYZ | RotateXYZ;
 
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&GenericMarker::Draw);
@@ -66,6 +82,12 @@ namespace Oak
 			{
 				Instance inst;
 
+				if (is2D)
+				{
+					inst.transform.unitsScale = &Sprite::pixelsPerUnit;
+					inst.transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+				}
+
 				if (add_copy)
 				{
 					inst.color = instances[selInst].color;
@@ -74,7 +96,14 @@ namespace Oak
 				}
 				else
 				{
-					inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
+					if (is2D)
+					{
+						inst.transform.position = editor.freeCamera.pos2D;
+					}
+					else
+					{
+						inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
+					}
 
 					Math::Matrix invMat = transform.global;
 					invMat.Inverse();
@@ -97,12 +126,32 @@ namespace Oak
 		{
 			inst.transform.parent = &transform;
 
-			root.render.DebugSphere(inst.transform.global.Pos(), inst.color, inst.radius, fullShade);
+			if (is2D)
+			{
+				inst.transform.unitsScale = &Sprite::pixelsPerUnit;
+				inst.transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+			}
+
+			Math::Vector3 pos = inst.GetPosition();
+			
+			if (is2D)
+			{
+				pos *= Sprite::pixelsPerUnitInvert;
+			}
+
+			root.render.DebugSphere(pos, inst.color, inst.radius, fullShade);
 
 			if (index != 0 && isPath)
 			{
 				auto prevInst = instances[index - 1];
-				root.render.DebugLine(inst.transform.global.Pos(), inst.color, prevInst.transform.global.Pos(), prevInst.color);
+				Math::Vector3 prevPos = prevInst.GetPosition();
+
+				if (is2D)
+				{
+					prevPos *= Sprite::pixelsPerUnitInvert;
+				}
+
+				root.render.DebugLine(pos, inst.color, prevPos, prevInst.color);
 			}
 
 			index++;
@@ -146,6 +195,12 @@ namespace Oak
 		for (auto& inst : instances)
 		{
 			inst.transform.parent = &transform;
+
+			if (is2D)
+			{
+				inst.transform.unitsScale = &Sprite::pixelsPerUnit;
+				inst.transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+			}
 		}
 	}
 

@@ -703,6 +703,9 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpritesLayer.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1339,6 +1342,9 @@
       <Filter>Source\Root\Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpritesLayer.h">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.h">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>

@@ -35,19 +35,22 @@ namespace Oak
 
 	*/
 
-	class GenericMarker : public SceneEntity
+	class CLASS_DECLSPEC GenericMarker : public SceneEntity
 	{
 	public:
 
-		struct Instance
+		struct CLASS_DECLSPEC Instance
 		{
 			META_DATA_DECL_BASE(Instance)
 
 			Transform transform;
 			Color color;
 			float radius = 1.0f;
+
+			Math::Vector3 GetPosition();
 		};
 
+		bool is2D = false;
 		bool fullShade = true;
 		bool isPath = false;
 		eastl::vector<int> mapping;

@@ -238,6 +238,7 @@
     <ClInclude Include="..\..\..\Source\Root\TaskExecutor\TaskExecutor.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\AnimGraph2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Camera2D.h" />
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\KinematicCapsule2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Node2D.h" />
@@ -441,6 +442,7 @@
     <ClCompile Include="..\..\..\Source\Root\TaskExecutor\TaskExecutor.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\AnimGraph2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Camera2D.cpp" />
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\KinematicCapsule2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Node2D.cpp" />
