@@ -364,8 +364,8 @@ namespace Oak
 			SceneEntity* childCopy = sceneOwner->CreateEntity(child->className);
 
 			childCopy->SetParent(copy, nullptr);
-			childCopy->prefabInstance = isPrefab;
 			childCopy->Copy(child);
+			childCopy->prefabInstance = isPrefab;
 			childCopy->PostLoad();
 
 			CopyChilds(child, childCopy, sceneOwner);

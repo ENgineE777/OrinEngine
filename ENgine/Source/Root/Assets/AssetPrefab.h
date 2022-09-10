@@ -24,6 +24,7 @@ namespace Oak
 		SceneEntity* CreateInstance(Scene* sceneOwner);
 
 #ifdef OAK_EDITOR
+		void RegisterIntstance(SceneEntity* entity);
 		void UnregisterIntstance(SceneEntity* entity);
 		void Save() override;
 #endif

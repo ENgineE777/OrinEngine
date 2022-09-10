@@ -43,7 +43,7 @@ namespace Oak
 			instance->UpdateVisibility();
 
 #ifdef OAK_EDITOR
-			instances.push_back(instance);
+			RegisterIntstance(instance);
 #endif
 		}
 
@@ -51,6 +51,11 @@ namespace Oak
 	}
 
 #ifdef OAK_EDITOR
+	void AssetPrefab::RegisterIntstance(SceneEntity* entity)
+	{
+		instances.push_back(entity);
+	}
+
 	void AssetPrefab::UnregisterIntstance(SceneEntity* entity)
 	{
 		auto iterator = eastl::find(instances.begin(), instances.end(), entity);
@@ -102,7 +107,7 @@ namespace Oak
 						auto* child = childs[j];
 						child->SetParent(nullptr);
 						RELEASE(child)
-							j--;
+						j--;
 					}
 				}
 
