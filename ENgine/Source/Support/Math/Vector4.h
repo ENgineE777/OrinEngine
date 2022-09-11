@@ -289,12 +289,12 @@ namespace Oak::Math
 			if (w < v.w) w = v.w;
 		}
 
-		float Length()
+		float Length() const
 		{
 			return sqrtf(x*x + y * y + z * z + w * w);
 		}
 
-		float Length(Vector4 v)
+		float Length(Vector4 v) const
 		{
 			float dx = x - v.x;
 			float dy = y - v.y;
@@ -303,12 +303,12 @@ namespace Oak::Math
 			return sqrtf(dx * dx + dy * dy + dz * dz + dw * dw);
 		}
 
-		float Length2()
+		float Length2() const
 		{
 			return x * x + y * y + z * z + w * w;
 		}
 
-		float Length2(Vector4 v)
+		float Length2(Vector4 v) const
 		{
 			float dx = x - v.x;
 			float dy = y - v.y;
@@ -325,12 +325,12 @@ namespace Oak::Math
 			w = from.w + (to.w - from.w) * k;
 		}
 
-		float Dot(Vector4 v)
+		float Dot(Vector4 v) const
 		{
 			return x * v.x + y * v.y + z * v.z + w * v.w;
 		}
 
-		Vector4 Cross(Vector4 v)
+		Vector4 Cross(Vector4 v) const
 		{
 			Vector4 v_res;
 			v_res.x = y * v.w - w * v.y;

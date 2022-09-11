@@ -252,24 +252,24 @@ namespace Oak::Math
 			if (y < v.y) y = v.y;
 		}
 
-		float Length()
+		float Length() const
 		{
 			return sqrtf(x * x + y * y);
 		}
 
-		float Length(const Vector2& v)
+		float Length(const Vector2& v) const
 		{
 			float dx = x - v.x;
 			float dy = y - v.y;
 			return sqrtf(dx * dx + dy * dy);
 		}
 
-		float Length2()
+		float Length2() const
 		{
 			return x * x + y * y;
 		}
 
-		float Length2(const Vector2& v)
+		float Length2(const Vector2& v) const
 		{
 			float dx = x - v.x;
 			float dy = y - v.y;
@@ -282,12 +282,12 @@ namespace Oak::Math
 			y = from.y + (to.y - from.y) * k;
 		}
 
-		float Dot(const Vector2& v)
+		float Dot(const Vector2& v) const
 		{
 			return x * v.x + y * v.y;
 		}
 
-		float Cross(const Vector2& v)
+		float Cross(const Vector2& v) const
 		{
 			return x * v.y - y * v.x;
 		}

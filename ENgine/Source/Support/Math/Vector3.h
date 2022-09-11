@@ -282,12 +282,12 @@ namespace Oak::Math
 			if (z < v.z) z = v.z;
 		}
 
-		float Length()
+		float Length() const
 		{
 			return sqrtf(x*x + y * y + z * z);
 		}
 
-		float Length(const Vector3& v)
+		float Length(const Vector3& v) const
 		{
 			float dx = x - v.x;
 			float dy = y - v.y;
@@ -295,12 +295,12 @@ namespace Oak::Math
 			return sqrtf(dx * dx + dy * dy + dz * dz);
 		}
 
-		float Length2()
+		float Length2() const
 		{
 			return x * x + y * y + z * z;
 		}
 
-		float Length2(const Vector3& v)
+		float Length2(const Vector3& v) const
 		{
 			float dx = x - v.x;
 			float dy = y - v.y;
@@ -354,12 +354,12 @@ namespace Oak::Math
 			z = float(from.z * k0 + to.z * k1);
 		}
 
-		float Dot(const Vector3& v)
+		float Dot(const Vector3& v) const
 		{
 			return x * v.x + y * v.y + z * v.z;
 		}
 
-		Vector3 Cross(const Vector3& v)
+		Vector3 Cross(const Vector3& v) const
 		{
 			Vector3 v_res;
 			v_res.x = y * v.z - z * v.y;
