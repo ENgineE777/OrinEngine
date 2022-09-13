@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Scene.h"
+#include "ISceneManager.h"
 
 namespace Oak
 {
@@ -18,7 +19,7 @@ namespace Oak
 	extenstion is needed.
 	*/
 
-	class SceneManager : public Object
+	class SceneManager : public ISceneManager
 	{
 		friend class SceneEntity;
 

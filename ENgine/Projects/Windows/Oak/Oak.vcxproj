@@ -228,6 +228,7 @@
     <ClInclude Include="..\..\..\Source\Root\Render\Texture.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\VertexDecl.h" />
     <ClInclude Include="..\..\..\Source\Root\Root.h" />
+    <ClInclude Include="..\..\..\Source\Root\Scenes\ISceneManager.h" />
     <ClInclude Include="..\..\..\Source\Root\Scenes\Scene.h" />
     <ClInclude Include="..\..\..\Source\Root\Scenes\SceneEntity.h" />
     <ClInclude Include="..\..\..\Source\Root\Scenes\SceneManager.h" />

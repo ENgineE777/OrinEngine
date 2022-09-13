@@ -113,6 +113,8 @@ namespace Oak
 		*/
 		SceneManager scenes;
 
+		ISceneManager* GetSceneManager() override { return &scenes; };
+
 		/**
 			\brief Access to scipts manager
 		*/

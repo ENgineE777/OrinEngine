@@ -1347,6 +1347,9 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.h">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Scenes\ISceneManager.h">
+      <Filter>Source\Root\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc.sh">

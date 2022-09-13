@@ -11,7 +11,7 @@
 #include "Root/Render/IRender.h"
 #include "Root/Physics/PhysScene.h"
 //#include "Root/Physics/Physics.h"
-//#include "Root/Scenes/SceneManager.h"
+#include "Root/Scenes/ISceneManager.h"
 //#include "Root/Scripts/Scripts.h"
 //#include "Root/Sounds/Sounds.h"
 //#include "Root/TaskExecutor/TaskExecutor.h"
@@ -54,6 +54,11 @@ namespace Oak
 			\brief Get instance of physic scene 
 		*/
 		virtual PhysScene* GetPhysScene() = 0;
+
+		/**
+			\brief Get instance of physic scene
+		*/
+		virtual ISceneManager* GetSceneManager() = 0;
 
 		virtual void Log(const char* name, const char* text, ...) = 0;
 		virtual float GetDeltaTime() = 0;
