@@ -82,22 +82,6 @@ namespace Oak
 				auto* instance = instances[i];
 				auto* scene = instance->GetScene();
 
-				bool visible = instance->visible;
-				eastl::string name = instance->GetName();
-				auto& transform = instance->GetTransform();
-
-				auto position = transform.position;
-				auto scale = transform.scale;
-				auto rotation = transform.rotation;
-
-				instance->Copy(root);
-
-				instance->SetVisiblity(visible);
-				instance->SetName(name.c_str());
-				transform.position = position;
-				transform.scale = scale;
-				transform.rotation = rotation;
-
 				auto& childs = instance->GetChilds();
 
 				for (int j = 0; j < childs.size(); j++)
@@ -124,8 +108,8 @@ namespace Oak
 					auto* childCopy = scene->CreateEntity(childSrc->className);
 
 					childCopy->SetParent(instance, nullptr);
-					childCopy->prefabInstance = true;
 					childCopy->Copy(childSrc);
+					childCopy->prefabInstance = true;
 					childCopy->PostLoad();
 
 					CopyChilds(childSrc, childCopy, scene);
