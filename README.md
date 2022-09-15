@@ -41,3 +41,7 @@ Warning: CMAKE and Visual Studio are needed for compilation of gameplay code
 
 Small tutorial how to make simple platformer can be found at
 https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/edit?usp=sharing
+
+**Discord**
+
+If you interested in Oak Engine then you can jouin discord server https://discord.gg/dCTzMYZc
