@@ -77,14 +77,17 @@ namespace Oak
 			transform.size.y = parentSize.y - rightPadding.y - leftPadding.y;
 		}
 
-		/*if (parentWidget)
-		{
-			Math::Vector3 offset = parentWidget->GetTransform().size * parentWidget->GetTransform().offset;
-			transform.global.Pos().x -= offset.x;
-			transform.global.Pos().y -= offset.y;
-		}*/
+		transform.axis.x = (horzAlign == Align::alignRight) ? -1.0f : 1.0f;
+		transform.axis.y = (vertAlign == Align::alignBottom) ? 1.0f : -1.0f;
 
 		Math::Matrix global = transform.GetGlobal();
+
+		if (parentWidget)
+		{
+			Math::Vector3 offset = parentWidget->GetTransform().size * parentWidget->GetTransform().offset;
+			global.Pos().x += -offset.x;
+			global.Pos().y += offset.y;
+		}
 
 		if (horzAlign == Align::alignLeft)
 		{
@@ -93,44 +96,27 @@ namespace Oak
 		else
 		if (horzAlign == Align::alignCenter)
 		{
-			global.Pos().x += leftPadding.x + (parentSize.x - rightPadding.x - leftPadding.x) * 0.5f;
+			global.Pos().x += leftPadding.x + (parentSize.x - rightPadding.x - leftPadding.x) * 0.5f + transform.size.x * (transform.offset.x - 0.5f);
 		}
 		else
 		if (horzAlign == Align::alignRight)
 		{
-			global.Pos().x += -rightPadding.x + parentSize.x;
+			global.Pos().x += -rightPadding.x - transform.size.x + parentSize.x;
 		}
 
 		if (vertAlign == Align::alignTop)
 		{
-			global.Pos().y += leftPadding.y;
+			global.Pos().y -= leftPadding.y;
 		}
 		else
 		if (vertAlign == Align::alignCenter)
 		{
-			global.Pos().y += leftPadding.y + (parentSize.y - rightPadding.x - leftPadding.x) * 0.5f;
+			global.Pos().y -= leftPadding.y + (parentSize.y - rightPadding.y - leftPadding.y) * 0.5f + transform.size.y * (transform.offset.y - 0.5f);
 		}
 		else
 		if (vertAlign == Align::alignBottom)
 		{
-			global.Pos().y += (-rightPadding.y) + parentSize.y;
-		}
-
-		//transform.global.Pos().y = Sprite::pixelsHeight - transform.global.Pos().y;
-
-		if (scene->IsPlaying() && !parent)
-		{
-			Math::Matrix view;
-			root.render.GetTransform(TransformStage::View, view);
-
-			view.Inverse();
-
-			view.Pos() *= Sprite::pixelsPerUnit;
-
-			float k = Sprite::pixelsHeight / root.render.GetDevice()->GetHeight();
-
-			global.Pos().x += view.Pos().x - root.render.GetDevice()->GetWidth() * 0.5f * k;
-			global.Pos().y += view.Pos().y - root.render.GetDevice()->GetHeight() * 0.5f * k;
+			global.Pos().y -= -rightPadding.y - transform.size.y + parentSize.y;
 		}
 
 		transform.SetGlobal(global, false);
@@ -142,6 +128,18 @@ namespace Oak
 		{
 			return;
 		}
+
+		Math::Vector2 pos = Math::Vector2(Sprite::pixelsHeight / root.render.GetDevice()->GetAspect(), -Sprite::pixelsHeight) * 0.5f * Sprite::pixelsPerUnitInvert;
+
+		float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian));
+		Math::Matrix view;
+		view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
+
+		root.render.SetTransform(TransformStage::View, view);
+
+		Math::Matrix proj;
+		proj.BuildProjection(45.0f * Math::Radian, (float)root.render.GetDevice()->GetHeight() / (float)root.render.GetDevice()->GetWidth(), 1.0f, 1000.0f);
+		root.render.SetTransform(TransformStage::Projection, proj);
 
 		DrawSelfWithChilds(dt);
 	}
