@@ -105,6 +105,11 @@ namespace Oak
 		float* unitsInvScale = nullptr;
 
 		/**
+			\brief axis scale
+		*/
+		Math::Vector3 axis = 1.0f;
+
+		/**
 			\brief Transform flag
 		*/
 		TransformFlag transformFlag = TransformFlag::MoveRotateScaleFull;
@@ -271,7 +276,7 @@ namespace Oak
 			localValue.Identity();
 			localValue.Rotate(rotation * Math::Radian);
 			localValue.Scale(scale);
-			localValue.Pos() = position;
+			localValue.Pos() = position * axis;
 
 			if (parent)
 			{
