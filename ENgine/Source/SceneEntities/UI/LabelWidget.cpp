@@ -48,7 +48,7 @@ namespace Oak
 
 	void LabelWidget::Draw(float dt)
 	{
-		Math::Vector3 pos3d = Math::Vector3(transform.global.Pos().x * Sprite::pixelsPerUnitInvert, transform.global.Pos().y * Sprite::pixelsPerUnitInvert, 0.0f);
+		Math::Vector3 pos3d = Math::Vector3(transform.GetGlobal().Pos().x * Sprite::pixelsPerUnitInvert, transform.GetGlobal().Pos().y * Sprite::pixelsPerUnitInvert, 0.0f);
 
 		pos3d = root.render.TransformToScreen(pos3d, 2);
 

@@ -270,7 +270,7 @@ namespace Oak
 		Math::Matrix mat;
 		if (useLocalSpace)
 		{
-			mat = transform->global;
+			mat = transform->GetGlobal();
 		}
 		
 		mat.Pos() = GetGlobalPos();
@@ -669,7 +669,7 @@ namespace Oak
 
 	void Gizmo::MoveTransRect(Math::Vector2 ms)
 	{
-		Math::Matrix inv = transform->global;
+		Math::Matrix inv = transform->GetGlobal();
 		inv.Inverse();
 
 		Math::Vector3 delta = trans2DProjection * (*transform->unitsScale) * inv - trans2DPrevProjection * (*transform->unitsScale) * inv;
@@ -681,11 +681,11 @@ namespace Oak
 
 		if (selAxis == 0)
 		{
-			rectPos.x += delta.x * transform->local.Vx().x;
-			rectPos.y += delta.x * transform->local.Vx().y;
+			rectPos.x += delta.x * transform->GetLocal().Vx().x;
+			rectPos.y += delta.x * transform->GetLocal().Vx().y;
 
-			rectPos.x += delta.y * transform->local.Vy().x;
-			rectPos.y += delta.y * transform->local.Vy().y;
+			rectPos.x += delta.y * transform->GetLocal().Vy().x;
+			rectPos.y += delta.y * transform->GetLocal().Vy().y;
 
 			transform->position = AligneRectPos(rectPos);
 		}
@@ -697,7 +697,7 @@ namespace Oak
 				return;
 			}
 
-			float sign = mouseDirection.Dot(transform->global.Vz()) > 0.1f ? -1.0f : 1.0f ;
+			float sign = mouseDirection.Dot(transform->GetGlobal().Vz()) > 0.1f ? -1.0f : 1.0f ;
 
 			Math::Vector2 p1 = prevMouse + ms - origin;
 			p1.Normalize();
@@ -770,28 +770,28 @@ namespace Oak
 
 			if (selAxis == 1 || selAxis == 4 || selAxis == 8)
 			{
-				pos.x -= (1.0f - transform->offset.x) * delta.x * transform->local.Vx().x;
-				pos.y -= (1.0f - transform->offset.x) * delta.x * transform->local.Vx().y;
+				pos.x -= (1.0f - transform->offset.x) * delta.x * transform->GetLocal().Vx().x;
+				pos.y -= (1.0f - transform->offset.x) * delta.x * transform->GetLocal().Vx().y;
 			}
 			else
 			if (selAxis == 2 || selAxis == 3 || selAxis == 6)
 			{
-				pos.x += transform->offset.x * delta.x * transform->local.Vx().x;
-				pos.y += transform->offset.x * delta.x * transform->local.Vx().y;
+				pos.x += transform->offset.x * delta.x * transform->GetLocal().Vx().x;
+				pos.y += transform->offset.x * delta.x * transform->GetLocal().Vx().y;
 			}
 
 			transform->size.y += delta.y;
 
 			if (selAxis == 1 || selAxis == 2 || selAxis == 5)
 			{
-				pos.x -= delta.y * transform->offset.y * transform->local.Vy().x;
-				pos.y -= delta.y * transform->offset.y * transform->local.Vy().y;
+				pos.x -= delta.y * transform->offset.y * transform->GetLocal().Vy().x;
+				pos.y -= delta.y * transform->offset.y * transform->GetLocal().Vy().y;
 			}
 			else
 			if (selAxis == 3 || selAxis == 4 || selAxis == 7)
 			{
-				pos.x += delta.y * (1.0f - transform->offset.y) * transform->local.Vy().x;
-				pos.y += delta.y * (1.0f - transform->offset.y) * transform->local.Vy().y;
+				pos.x += delta.y * (1.0f - transform->offset.y) * transform->GetLocal().Vy().x;
+				pos.y += delta.y * (1.0f - transform->offset.y) * transform->GetLocal().Vy().y;
 			}
 
 			transform->position = pos;
@@ -836,7 +836,7 @@ namespace Oak
 
 	Math::Vector3 Gizmo::GetGlobalPos()
 	{
-		return transform->unitsInvScale ? (transform->global.Pos() * (*transform->unitsInvScale)) : transform->global.Pos();
+		return transform->GetGlobal().Pos() * (transform->unitsInvScale ? (*transform->unitsInvScale) : 1.0f);
 	}
 
 	void Gizmo::SetGlobalPos(Math::Vector3 pos)
@@ -846,9 +846,9 @@ namespace Oak
 			pos *= (*transform->unitsScale);
 		}
 
-		auto tr = transform->global;
+		auto tr = transform->GetGlobal();
 		tr.Pos() = pos;
-		transform->global = tr;
+		transform->SetGlobal(tr);
 
 	}
 
@@ -921,17 +921,18 @@ namespace Oak
 			if (useLocalSpace)
 			{
 				Math::Matrix scaleMat;
-				scaleMat.Scale(Math::Vector3(transform->local.Vx().Normalize(), transform->local.Vy().Normalize(), transform->local.Vz().Normalize()));
+				scaleMat.Scale(Math::Vector3(transform->GetLocal().Vx().Normalize(), transform->GetLocal().Vy().Normalize(), transform->GetLocal().Vz().Normalize()));
 
-				transform->local = scaleMat * rot * transform->local;
+				transform->SetLocal(scaleMat * rot * transform->GetLocal());
 			}
 			else
 			{
-				Math::Vector3 tr = transform->global.Pos();
-				auto global = transform->global * rot;
-				global.Pos() = tr;
+				Math::Matrix mat = transform->GetGlobal();
+				Math::Vector3 pos = mat.Pos();
+				auto global = mat * rot;
+				global.Pos() = pos;
 				
-				transform->global = global;
+				transform->SetGlobal(global);
 			}
 		}
 		else
@@ -1037,10 +1038,10 @@ namespace Oak
 				}
 
 				p1 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
-				p1 = p1 * transform->global;
+				p1 = p1 * transform->GetGlobal();
 				p1 *= *transform->unitsInvScale;
 				p2 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
-				p2 = p2 * transform->global;
+				p2 = p2 * transform->GetGlobal();
 				p2 *= *transform->unitsInvScale;
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
@@ -1077,7 +1078,7 @@ namespace Oak
 		else
 		{
 			p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
-			p1 = p1 * transform->global;
+			p1 = p1 * transform->GetGlobal();
 			p1 *= *transform->unitsInvScale;;
 		}
 
@@ -1129,7 +1130,7 @@ namespace Oak
 
 	Math::Vector3 Gizmo::TransformVetcor(Math::Vector3 pos)
 	{
-		Math::Matrix matrix = transform->global;
+		Math::Matrix matrix = transform->GetGlobal();
 		matrix.RemoveScale();
 
 		return matrix.MulNormal(pos);
@@ -1215,7 +1216,7 @@ namespace Oak
 
 		if (selAxis == 10 && mode == TransformMode::Rectangle)
 		{
-			Math::Matrix inv = transform->global;
+			Math::Matrix inv = transform->GetGlobal();
 			inv.Inverse();
 
 			Math::Vector3 pos = movedOrigin * (*transform->unitsScale) * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
@@ -1223,11 +1224,11 @@ namespace Oak
 
 			auto position = transform->position;
 
-			position.x += pos.x * transform->local.Vx().x * transform->size.x;
-			position.y += pos.x * transform->local.Vx().y * transform->size.x;
+			position.x += pos.x * transform->GetLocal().Vx().x * transform->size.x;
+			position.y += pos.x * transform->GetLocal().Vx().y * transform->size.x;
 
-			position.x += pos.y * transform->local.Vy().x * transform->size.y;
-			position.y += pos.y * transform->local.Vy().y * transform->size.y;
+			position.x += pos.y * transform->GetLocal().Vy().x * transform->size.y;
+			position.y += pos.y * transform->GetLocal().Vy().y * transform->size.y;
 
 			transform->position = position;
 

@@ -84,34 +84,36 @@ namespace Oak
 			transform.global.Pos().y -= offset.y;
 		}*/
 
+		Math::Matrix global = transform.GetGlobal();
+
 		if (horzAlign == Align::alignLeft)
 		{
-			transform.global.Pos().x += leftPadding.x;
+			global.Pos().x += leftPadding.x;
 		}
 		else
 		if (horzAlign == Align::alignCenter)
 		{
-			transform.global.Pos().x += leftPadding.x + (parentSize.x - rightPadding.x - leftPadding.x) * 0.5f;
+			global.Pos().x += leftPadding.x + (parentSize.x - rightPadding.x - leftPadding.x) * 0.5f;
 		}
 		else
 		if (horzAlign == Align::alignRight)
 		{
-			transform.global.Pos().x += -rightPadding.x + parentSize.x;
+			global.Pos().x += -rightPadding.x + parentSize.x;
 		}
 
 		if (vertAlign == Align::alignTop)
 		{
-			transform.global.Pos().y += leftPadding.y;
+			global.Pos().y += leftPadding.y;
 		}
 		else
 		if (vertAlign == Align::alignCenter)
 		{
-			transform.global.Pos().y += leftPadding.y + (parentSize.y - rightPadding.x - leftPadding.x) * 0.5f;
+			global.Pos().y += leftPadding.y + (parentSize.y - rightPadding.x - leftPadding.x) * 0.5f;
 		}
 		else
 		if (vertAlign == Align::alignBottom)
 		{
-			transform.global.Pos().y += (-rightPadding.y) + parentSize.y;
+			global.Pos().y += (-rightPadding.y) + parentSize.y;
 		}
 
 		//transform.global.Pos().y = Sprite::pixelsHeight - transform.global.Pos().y;
@@ -127,12 +129,11 @@ namespace Oak
 
 			float k = Sprite::pixelsHeight / root.render.GetDevice()->GetHeight();
 
-			transform.global.Pos().x += view.Pos().x - root.render.GetDevice()->GetWidth() * 0.5f * k;
-			transform.global.Pos().y += view.Pos().y - root.render.GetDevice()->GetHeight() * 0.5f * k;
+			global.Pos().x += view.Pos().x - root.render.GetDevice()->GetWidth() * 0.5f * k;
+			global.Pos().y += view.Pos().y - root.render.GetDevice()->GetHeight() * 0.5f * k;
 		}
 
-		//trans.axis.x = (horzAlign == align_right) ? -1.0f : 1.0f;
-		//trans.axis.y = (vertAlign == align_bottom) ? -1.0f : 1.0f;
+		transform.SetGlobal(global, false);
 	}
 
 	void ContainerWidget::FullDraw(float dt)

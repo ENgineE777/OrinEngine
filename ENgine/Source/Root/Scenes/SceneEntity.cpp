@@ -324,7 +324,7 @@ namespace Oak
 				}
 			}
 
-			transform.local = transform.global;
+			transform.SetLocal(transform.GetGlobal());
 			transform.parent = nullptr;
 		}
 
@@ -332,10 +332,10 @@ namespace Oak
 
 		if (parent)
 		{
-			Math::Matrix invParent = parent->transform.global;
+			Math::Matrix invParent = parent->transform.GetGlobal();
 			invParent.Inverse();
 
-			transform.local = transform.global * invParent;
+			transform.SetLocal(transform.GetGlobal() * invParent);
 
 			transform.parent = setParent ? &setParent->transform : nullptr;
 

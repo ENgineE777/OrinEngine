@@ -42,21 +42,21 @@ namespace Oak
 			Math::Matrix mat;
 			body.body->GetTransform(mat);
 
-			transform.global = mat;
+			transform.SetGlobal(mat);
 
 			if (affectOnParent && parent)
 			{
 				auto& parentTrans = parent->GetTransform();
-				parentTrans.position = transform.global.Pos();
-				parentTrans.rotation = transform.global.GetRotation() / Math::Radian;
+				parentTrans.position = mat.Pos();
+				parentTrans.rotation = mat.GetRotation() / Math::Radian;
 
-				transform.local = Math::Matrix();
+				transform.SetLocal(Math::Matrix());
 			}
 		}
 
 		if (visibleDuringPlay || !GetScene()->IsPlaying())
 		{
-			root.render.DebugBox(transform.global, color, transform.size);
+			root.render.DebugBox(transform.GetGlobal(), color, transform.size);
 		}
 	}
 
@@ -73,7 +73,7 @@ namespace Oak
 		SceneEntity::Play();
 
 		body.object = this;
-		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.global, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
+		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.GetGlobal(), Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 		body.body->SetActive(IsVisible());
 
 		body.body->SetUserData(&body);
@@ -88,7 +88,7 @@ namespace Oak
 	#ifdef OAK_EDITOR
 	bool PhysBox3D::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
 	{
-		return Math::IntersectBBoxRay(transform.global.Pos() - transform.size * 0.5f, transform.global.Pos() + transform.size * 0.5f, start, dir);
+		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);
 	}
 	#endif
 }

@@ -287,7 +287,7 @@ namespace Oak
 
 	void AssetTextureRef::Draw(Transform* trans, Color clr, float dt)
 	{
-		Math::Matrix local_trans = trans->global;
+		Math::Matrix local_trans = trans->GetGlobal();
 		Math::Vector3 pos3d = Math::Vector3(trans->offset.x, trans->offset.y, trans->offset.z) * trans->size * Math::Vector3(-1.0f, 1.0f, -1.0f);
 		Math::Vector2 pos = Math::Vector2(pos3d.x, pos3d.y);
 		Math::Vector2 size = Math::Vector2(trans->size.x, trans->size.y);

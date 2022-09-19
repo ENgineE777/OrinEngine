@@ -38,7 +38,7 @@ namespace Oak
 	{
 		SceneEntity::Play();
 
-		Math::Matrix mat = transform.global;
+		Math::Matrix mat = transform.GetGlobal();
 		mat.Pos() *= Sprite::pixelsPerUnitInvert;
 
 		body.object = this;
@@ -74,13 +74,13 @@ namespace Oak
 			}
 			else
 			{
-				transform.global = mat;
+				transform.SetGlobal(mat);
 			}
 		}
 
 		if (visibleDuringPlay || !GetScene()->IsPlaying())
 		{
-			Math::Matrix mat = transform.global;
+			Math::Matrix mat = transform.GetGlobal();
 			mat.Pos() *= Sprite::pixelsPerUnitInvert;
 
 			root.render.DebugBox(mat, color, transform.size * Sprite::pixelsPerUnitInvert);

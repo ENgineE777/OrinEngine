@@ -85,16 +85,6 @@ namespace Oak
 		Math::Vector3 offset = 0.5f;
 
 		/**
-		\brief Calulated local matrix
-		*/
-		__declspec(property(get = GetLocal, put = SetLocal)) Math::Matrix local;
-
-		/**
-		\brief Final matrix
-		*/
-		__declspec(property(get = GetGlobal, put = SetGlobal)) Math::Matrix global;
-
-		/**
 		\brief Matrix of a parent
 		*/
 		Transform* parent = nullptr;
@@ -231,9 +221,14 @@ namespace Oak
 		/**
 			\brief Set local transform
 		*/
-		void SetGlobal(Math::Matrix set)
+		void SetGlobal(Math::Matrix set, bool recalcLocal = true)
 		{
 			globalValue = set;
+
+			if (!recalcLocal)
+			{
+				return;
+			}
 
 			if (parent)
 			{

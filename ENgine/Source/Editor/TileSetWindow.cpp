@@ -170,7 +170,7 @@ namespace Oak
 
 				mat.Pos() = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
 
-				transform.global = mat;
+				transform.SetGlobal(mat);
 				tile.texture.Draw(&transform, COLOR_WHITE, root.GetDeltaTime());
 			}
 

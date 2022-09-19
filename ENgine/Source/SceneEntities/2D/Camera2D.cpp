@@ -39,7 +39,7 @@ namespace Oak
 	{
 		if (IsVisible())
 		{
-			auto pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
+			auto pos = transform.GetGlobal().Pos() * Sprite::pixelsPerUnitInvert;
 
 			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom);
 			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
@@ -62,25 +62,26 @@ namespace Oak
 				transform.size.y = Sprite::pixelsHeight;
 
 				Math::Vector3 pos = transform.position;
+				Math::Vector3 targetPos = targetRef.entity->GetTransform().GetGlobal().Pos();
 
-				if (-transform.size.x * 0.5f + border.x > targetRef.entity->GetTransform().global.Pos().x - pos.x)
+				if (-transform.size.x * 0.5f + border.x > targetPos.x - pos.x)
 				{
-					pos.x = targetRef.entity->GetTransform().global.Pos().x + transform.size.x * 0.5f - border.x;
+					pos.x = targetPos.x + transform.size.x * 0.5f - border.x;
 				}
 
-				if ( transform.size.x * 0.5f - border.x < targetRef.entity->GetTransform().global.Pos().x - pos.x)
+				if ( transform.size.x * 0.5f - border.x < targetPos.x - pos.x)
 				{
-					pos.x = targetRef.entity->GetTransform().global.Pos().x - transform.size.x * 0.5f + border.x;
+					pos.x = targetPos.x - transform.size.x * 0.5f + border.x;
 				}
 
-				if (-transform.size.y * 0.5f + border.y > targetRef.entity->GetTransform().global.Pos().y - pos.y)
+				if (-transform.size.y * 0.5f + border.y > targetPos.y - pos.y)
 				{
-					pos.y = targetRef.entity->GetTransform().global.Pos().y + transform.size.y * 0.5f - border.y;
+					pos.y = targetPos.y + transform.size.y * 0.5f - border.y;
 				}
 
-				if (transform.size.y * 0.5f - border.y < targetRef.entity->GetTransform().global.Pos().y - pos.y)
+				if (transform.size.y * 0.5f - border.y < targetPos.y - pos.y)
 				{
-					pos.y = targetRef.entity->GetTransform().global.Pos().y - transform.size.y * 0.5f + border.y;
+					pos.y = targetPos.y - transform.size.y * 0.5f + border.y;
 				}
 
 				if (useLimits)
@@ -127,10 +128,10 @@ namespace Oak
 				}
 
 				p1 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
-				p1 = p1 * transform.global;
+				p1 = p1 * transform.GetGlobal();
 				p1 *= *transform.unitsInvScale;
 				p2 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
-				p2 = p2 * transform.global;
+				p2 = p2 * transform.GetGlobal();
 				p2 *= *transform.unitsInvScale;
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);

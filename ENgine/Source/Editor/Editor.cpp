@@ -1655,7 +1655,7 @@ namespace Oak
 
 				if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
 				{
-					auto pos = transform->global.Pos() * (transform->unitsInvScale ? (*transform->unitsInvScale) : 1.0f);
+					auto pos = transform->GetGlobal().Pos() * (transform->unitsInvScale ? (*transform->unitsInvScale) : 1.0f);
 					freeCamera.pos = pos - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
 
@@ -1881,7 +1881,7 @@ namespace Oak
 				step *= 2.0f;
 			}
 
-			Math::Vector3 pos = ownGrid ? gridOrigin : gizmo.transform->global.Pos();
+			Math::Vector3 pos = ownGrid ? gridOrigin : gizmo.transform->GetGlobal().Pos();
 
 			if (freeCamera.mode2D)
 			{

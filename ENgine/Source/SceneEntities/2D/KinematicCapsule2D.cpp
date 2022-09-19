@@ -45,7 +45,7 @@ namespace Oak
 			desc.upVector.Set(0.0f, 0.0f, 1.0f);
 		}
 
-		desc.pos = transform.global.Pos() * Sprite::pixelsPerUnitInvert;
+		desc.pos = transform.GetGlobal().Pos() * Sprite::pixelsPerUnitInvert;
 		desc.slopeLimit = slopeLimit;
 		desc.stepOffset = stepOffset * Sprite::pixelsPerUnitInvert;
 
@@ -74,10 +74,10 @@ namespace Oak
 		}
 		else
 		{
-			Math::Matrix trans = transform.global;
+			Math::Matrix trans = transform.GetGlobal();
 			trans.Pos() = pos;
 
-			transform.global = trans;
+			transform.SetGlobal(trans);
 		}
 	}
 
@@ -93,7 +93,7 @@ namespace Oak
 	{
 		if (IsVisible() && !scene->IsPlaying())
 		{
-			Math::Matrix mat = transform.global;
+			Math::Matrix mat = transform.GetGlobal();
 			Math::Vector3 dir = YOriented ? mat.Vy() : mat.Vz();
 
 			root.render.DebugSphere((mat.Pos() + dir * radius) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);

@@ -40,7 +40,7 @@ namespace Oak
 		desc.radius = fminf(size.x, size.y) * 0.5f * 0.65f;
 		desc.upVector = upVector;
 		desc.upVector.Normalize();
-		desc.pos = transform.global.Pos();
+		desc.pos = transform.GetGlobal().Pos();
 		desc.slopeLimit = slopeLimit;
 		desc.stepOffset = stepOffset;
 
@@ -63,7 +63,7 @@ namespace Oak
 		if (affectOnParent && parent)
 		{
 			auto& parentTrans = parent->GetTransform();
-			parentTrans.position = transform.global.Pos();
+			parentTrans.position = transform.GetGlobal().Pos();
 		}
 	}
 
@@ -71,7 +71,7 @@ namespace Oak
 	{
 		if (IsVisible() && !scene->IsPlaying())
 		{
-			Math::Matrix mat = transform.global;
+			Math::Matrix mat = transform.GetGlobal();
 			Math::Vector3 dir = mat.Vy();
 
 			root.render.DebugSphere((mat.Pos() + dir * radius) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);

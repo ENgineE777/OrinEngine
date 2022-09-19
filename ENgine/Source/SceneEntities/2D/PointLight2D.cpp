@@ -52,7 +52,7 @@ namespace Oak
 		{
 			transform.size.y = transform.size.x;
 
-			Sprite::Draw(nullptr, color, transform.global, Math::Vector2(-transform.size.x, transform.size.y) * 0.5f, transform.size.x, 0.0f, 1.0f, spriteLight);
+			Sprite::Draw(nullptr, color, transform.GetGlobal(), Math::Vector2(-transform.size.x, transform.size.y) * 0.5f, transform.size.x, 0.0f, 1.0f, spriteLight);
 		}
 	}
 }

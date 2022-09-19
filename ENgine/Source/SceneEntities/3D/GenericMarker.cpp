@@ -27,7 +27,7 @@ namespace Oak
 	{
 		if (transform.parent)
 		{
-			return transform.parent->global.MulVertex(transform.position);
+			return transform.parent->GetGlobal().MulVertex(transform.position);
 		}
 
 		return transform.position;
@@ -105,7 +105,7 @@ namespace Oak
 						inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
 					}
 
-					Math::Matrix invMat = transform.global;
+					Math::Matrix invMat = transform.GetGlobal();
 					invMat.Inverse();
 
 					inst.transform.position = invMat.MulVertex(inst.transform.position);

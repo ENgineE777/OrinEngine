@@ -66,7 +66,7 @@ namespace Oak
 
 	void TileMap::Play()
 	{
-		Math::Matrix mat = transform.global;
+		Math::Matrix mat = transform.GetGlobal();
 		auto pos = mat.Pos();
 		auto size = transform.size;
 		size.z = 16.0f;
@@ -79,7 +79,7 @@ namespace Oak
 				continue;
 			}
 
-			Math::Matrix mat = transform.global;
+			Math::Matrix mat = transform.GetGlobal();
 			auto pos = mat.Pos();
 
 			int k = 0;
@@ -112,14 +112,14 @@ namespace Oak
 		{
 			auto trans = transform;
 
-			Math::Matrix mat = trans.global;
+			Math::Matrix mat = trans.GetGlobal();
 			auto pos = mat.Pos();
 
 			for (auto tile : tiles)
 			{
 				mat.Pos() = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
 
-				trans.global = mat;
+				trans.SetGlobal(mat);
 				auto sz = tile.texture.GetSize();
 				trans.size.x = sz.x;
 				trans.size.y = sz.y;

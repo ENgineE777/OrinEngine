@@ -31,7 +31,7 @@ namespace Oak
 	{
 		if (mesh)
 		{
-			mesh->transform = transform.global;
+			mesh->transform = transform.GetGlobal();
 		}
 	}
 }
