@@ -79,6 +79,9 @@ namespace Oak
 			/** \brief Hit normal of a ray */
 			Math::Vector3 hitNormal;
 
+			/** \brief Hit length of a ray */
+			float hitLength;
+
 			/** \brief Group which should be tested */
 			uint32_t group;
 

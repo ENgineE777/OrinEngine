@@ -189,6 +189,7 @@ namespace Oak
 			desc.userdata = (BodyUserData*)(hit.block.actor->userData);
 			desc.hitPos = Math::Vector3(hit.block.position.x, hit.block.position.y, hit.block.position.z);
 			desc.hitNormal = Math::Vector3(hit.block.normal.x, hit.block.normal.y, hit.block.normal.z);
+			desc.hitLength = hit.block.distance;
 
 			return true;
 		}
