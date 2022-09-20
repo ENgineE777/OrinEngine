@@ -85,6 +85,11 @@ namespace Oak
 				memcpy(prop.value, prop.defvalue.color, sizeof(float) * 4);
 			}
 			else
+			if (prop.type == Type::Vector3)
+			{
+				memcpy(prop.value, prop.defvalue.vector3, sizeof(float) * 3);
+			}
+			else
 			if (prop.type == Type::Enum)
 			{
 				MetaDataEnum& enm = enums[prop.defvalue.enumIndex];
@@ -179,6 +184,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				reader.Read(prop.name.c_str(), *((Oak::Color*)prop.value));
+			}
+			else
+			if (prop.type == Type::Vector3)
+			{
+				reader.Read(prop.name.c_str(), *((Math::Vector3*)prop.value));
 			}
 			else
 			if (prop.type == Type::AssetTexture)
@@ -304,6 +314,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				writer.Write(prop.name.c_str(), *((Oak::Color*)prop.value));
+			}
+			else
+			if (prop.type == Type::Vector3)
+			{
+				writer.Write(prop.name.c_str(), *((Math::Vector3*)prop.value));
 			}
 			else
 			if (prop.type == Type::AssetTexture)
@@ -437,6 +452,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				memcpy(prop.value, src, sizeof(float) * 4);
+			}
+			else
+			if (prop.type == Type::Vector3)
+			{
+				memcpy(prop.value, src, sizeof(float) * 3);
 			}
 			else
 			if (prop.type == Type::AssetTexture)
@@ -952,6 +972,14 @@ namespace Oak
 						if (prop.type == Type::Color)
 						{
 							if (ImGui::ColorEdit4(propGuiID, (float*)prop.value))
+							{
+								prop.changed = true;
+							}
+						}
+						else
+						if (prop.type == Type::Vector3)
+						{
+							if (ImGui::InputFloat3(propGuiID, (float*)prop.value))
 							{
 								prop.changed = true;
 							}

@@ -43,6 +43,7 @@ namespace Oak
 			String,
 			FileName,
 			Color,
+			Vector3,
 			Enum,
 			EnumString,
 			Callback,
@@ -62,6 +63,7 @@ namespace Oak
 			float flt;
 			int   string;
 			float color[4];
+			float vector3[3];
 			int   enumIndex;
 		};
 
@@ -263,6 +265,19 @@ namespace Oak
 		prop.type = Type::Color;\
 		Oak::Color tmp = Oak::defValue;\
 		memcpy(prop.defvalue.color, &tmp.r, sizeof(float) * 4);\
+		prop.name = #classMember;\
+		prop.catName = strCatName;\
+		prop.propName = strPropName;\
+		properties.push_back(prop);\
+	}
+
+	#define VECTOR3_PROP(className, classMember, defValue, strCatName, strPropName)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::Vector3;\
+		Math::Vector3 tmp = defValue;\
+		memcpy(prop.defvalue.vector3, tmp.v, sizeof(float) * 3);\
 		prop.name = #classMember;\
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
