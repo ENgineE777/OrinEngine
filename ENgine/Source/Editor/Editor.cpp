@@ -860,7 +860,8 @@ namespace Oak
 
 			ImGui::SetNextItemWidth(-1);
 
-			ImGui::InputFloat("###ProjectSettings2DPH", &Sprite::pixelsHeight);
+			float pixelsHeight = Sprite::GetPixelsHeight();
+			ImGui::InputFloat("###ProjectSettings2DPH", &pixelsHeight);
 
 			ImGui::NextColumn();
 
@@ -869,15 +870,17 @@ namespace Oak
 
 			ImGui::SetNextItemWidth(-1);
 
-			if (ImGui::InputFloat("###ProjectSettings2DPPU", &Sprite::pixelsPerUnit))
-			{
-				if (Sprite::pixelsPerUnit < 1.0f)
-				{
-					Sprite::pixelsPerUnit = 1.0f;
-				}
+			float pixelsPerUnit = Sprite::ToPixels(1.0f);
 
-				Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
+			if (ImGui::InputFloat("###ProjectSettings2DPPU", &pixelsPerUnit))
+			{
+				if (pixelsPerUnit < 1.0f)
+				{
+					pixelsPerUnit = 1.0f;
+				}
 			}
+
+			Sprite::SetData(pixelsHeight, pixelsPerUnit);
 
 			ImGui::NextColumn();
 
@@ -1655,7 +1658,7 @@ namespace Oak
 
 				if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
 				{
-					auto pos = transform->GetGlobal().Pos() * (transform->unitsInvScale ? (*transform->unitsInvScale) : 1.0f);
+					auto pos = transform->GetGlobal().Pos();
 					freeCamera.pos = pos - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
 
@@ -1663,7 +1666,7 @@ namespace Oak
 
 				if (ImGui::Button("To Camera", ImVec2(75.0f, 25.0f)) && transform)
 				{
-					auto pos = freeCamera.pos * (transform->unitsScale ? (*transform->unitsScale) : 1.0f);
+					auto pos = freeCamera.pos;
 					transform->position = pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
 
@@ -1900,8 +1903,8 @@ namespace Oak
 				pos.y = step.y * (int)((pos.y - gridOrigin.y) / step.y) + gridOrigin.y;
 			}
 
-			pos *= (*gizmo.transform->unitsInvScale);
-			step *= (*gizmo.transform->unitsInvScale);
+			pos *= Sprite::ToUnits(1.0f);
+			step *= Sprite::ToUnits(1.0f);
 
 			Color color = COLOR_LIGHT_GRAY_A(0.5f);
 
@@ -1910,8 +1913,8 @@ namespace Oak
 
 			if (freeCamera.mode2D)
 			{
-				numCellsX = (int)(Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / root.render.GetDevice()->GetAspect() / freeCamera.zoom2D / step.y + 2);
-				numCellsY = (int)(Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert / freeCamera.zoom2D / step.y + 2);
+				numCellsX = (int)(Sprite::GetPixelsHeight() * 0.5f * Sprite::ToUnits(1.0f) / root.render.GetDevice()->GetAspect() / freeCamera.zoom2D / step.y + 2);
+				numCellsY = (int)(Sprite::GetPixelsHeight() * 0.5f * Sprite::ToUnits(1.0f) / freeCamera.zoom2D / step.y + 2);
 			}
 			
 			for (int i = -numCellsY; i <= numCellsY; i++)
@@ -1927,17 +1930,15 @@ namespace Oak
 
 		if (!projectRunning && (!selectedEditAsset || !selectedEditAsset->IsEditable()))
 		{
-			float width = Sprite::pixelsHeight / root.render.GetDevice()->GetHeight() * root.render.GetDevice()->GetWidth();
+			float width = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetHeight() * root.render.GetDevice()->GetWidth();
 
 			Math::Vector3 rect[] = { Math::Vector3(0, 0, 0), Math::Vector3(width, 0, 0),
-									Math::Vector3(width, Sprite::pixelsHeight, 0), Math::Vector3(0, Sprite::pixelsHeight, 0) } ;
+									Math::Vector3(width, Sprite::GetPixelsHeight(), 0), Math::Vector3(0, Sprite::GetPixelsHeight(), 0) } ;
 
 			for (int i = 0; i < 4; i++)
 			{
-				Math::Vector3 p1 = rect[i], p2 = rect[(i + 1) % 4];
-
-				p1 *= Sprite::pixelsPerUnitInvert;
-				p2 *= Sprite::pixelsPerUnitInvert;
+				Math::Vector3 p1 = Sprite::ToUnits(rect[i]);
+				Math::Vector3 p2 = Sprite::ToUnits(rect[(i + 1) % 4]);
 
 				root.render.DebugLine(p1, COLOR_CYAN, p2, COLOR_CYAN, false);
 			}

@@ -29,7 +29,7 @@ namespace Oak
 		{
 			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
 			{
-				float k = root.render.GetDevice()->GetHeight() / Sprite::pixelsHeight;
+				float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
 				pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;
 				pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) / zoom2D / k;
 			}
@@ -94,8 +94,8 @@ namespace Oak
 
 		if (mode2D)
 		{
-			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom2D);
-			Math::Vector2 pos = pos2D * Sprite::pixelsPerUnitInvert;
+			float dist = Sprite::GetPixelsHeight() * 0.5f * Sprite::ToUnits(1.0f) / (tanf(22.5f * Math::Radian) * zoom2D);
+			Math::Vector2 pos = Sprite::ToUnits(pos2D);
 
 			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
 		}

@@ -135,16 +135,16 @@ namespace Oak
 				pos.x = step.x * (int)(pos.x / step.x);
 				pos.y = step.y * (int)(pos.y / step.y);
 
-				pos *= Sprite::pixelsPerUnitInvert;
-				step *= Sprite::pixelsPerUnitInvert;
+				pos *= Sprite::ToUnits(1.0f);
+				step *= Sprite::ToUnits(1.0f);
 
 				Color color = COLOR_WHITE_A(0.5f);
 
 				int numCellsY = 30;
 				int numCellsX = 45;
 
-				numCellsX = (int)(viewportSize.y * 0.5f * Sprite::pixelsPerUnitInvert / root.render.GetDevice()->GetAspect() / tileSet->camZoom / step.y + 2);
-				numCellsY = (int)(viewportSize.y * 0.5f * Sprite::pixelsPerUnitInvert / tileSet->camZoom / step.y + 2);
+				numCellsX = (int)(Sprite::ToUnits(viewportSize.y * 0.5f) / root.render.GetDevice()->GetAspect() / tileSet->camZoom / step.y + 2);
+				numCellsY = (int)(Sprite::ToUnits(viewportSize.y * 0.5f) / tileSet->camZoom / step.y + 2);
 
 				for (int i = -numCellsY; i <= numCellsY; i++)
 				{
@@ -199,7 +199,7 @@ namespace Oak
 	void TileSetWindow::DrawCell(int x, int y)
 	{
 		Math::Vector2 step = { (float)tileSet->sizeX, (float)tileSet->sizeY };
-		step *= Sprite::pixelsPerUnitInvert;
+		step *= Sprite::ToUnits(1.0f);
 
 		Math::Matrix mat;
 		Math::Vector3 p1 = mat.Vx() * (float)x * step.x + mat.Vy() * (float)y * step.y;
@@ -268,7 +268,7 @@ namespace Oak
 		if (ImGui::BeginDragDropTarget())
 		{
 			Math::Vector2 step = { (float)tileSet->sizeX, (float)tileSet->sizeY };
-			step *= Sprite::pixelsPerUnitInvert;
+			step *= Sprite::ToUnits(1.0f);
 
 			Math::Matrix mat;
 			Math::Vector3 pos = mat.Vx() * (float)dragX * step.x + mat.Vy() * (float)dragY * step.y;
@@ -436,17 +436,17 @@ namespace Oak
 
 		if (pos.x < 0.0f)
 		{
-			pos.x -= ((float)tileSet->sizeX * Sprite::pixelsPerUnitInvert);
+			pos.x -= Sprite::ToUnits((float)tileSet->sizeX);
 		}
 
-		x = (int)(pos.x / ((float)tileSet->sizeX * Sprite::pixelsPerUnitInvert));
+		x = (int)(pos.x / Sprite::ToUnits((float)tileSet->sizeX));
 
 		if (pos.y > 0.0f)
 		{
-			pos.y += ((float)tileSet->sizeX * Sprite::pixelsPerUnitInvert);
+			pos.y += Sprite::ToUnits((float)tileSet->sizeX);
 		}
 
-		y = (int)(pos.y / ((float)tileSet->sizeY * Sprite::pixelsPerUnitInvert));
+		y = (int)(pos.y / Sprite::ToUnits((float)tileSet->sizeY));
 	}
 
 	int TileSetWindow::FindTileIndex(int x, int y)

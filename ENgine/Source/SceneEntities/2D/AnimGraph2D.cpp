@@ -19,8 +19,7 @@ namespace Oak
 
 	void AnimGraph2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY | RectMoveXY | RectAnchorn;
 
 		Tasks(true)->AddTask(0, this, (Object::Delegate)&AnimGraph2D::Draw);

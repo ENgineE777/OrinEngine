@@ -3,25 +3,50 @@
 #include "Support/Support.h"
 #include "Root/Files/Files.h"
 #include "Root/Render/Render.h"
-#include "Support/Transform.h"
 
 /**
 \ingroup gr_code_common
 */
 
-namespace Oak::Sprite
+namespace Oak
 {
+	class CLASS_DECLSPEC Sprite
+	{
+		friend class SceneManager;
+		friend class Project;
+		friend class Editor;
+
 #ifndef DOXYGEN_SKIP
+		static float _pixelsPerUnit;
+		static float _pixelsPerUnitInvert;
+		static float _pixelsHeight;
 
-	extern CLASS_DECLSPEC float pixelsPerUnit;
-	extern CLASS_DECLSPEC float pixelsPerUnitInvert;
-	extern CLASS_DECLSPEC float pixelsHeight;
+		static VertexDeclRef _vdecl;
+		static DataBufferRef _buffer;
 
-	extern CLASS_DECLSPEC ProgramRef quadPrg;
-	extern CLASS_DECLSPEC ProgramRef quadPrgNoZ;
+		static void SetData(float pixelsHeight, float pixelsPerUnit);
 
-	CLASS_DECLSPEC void Init();
-	CLASS_DECLSPEC void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg = quadPrg);
-	CLASS_DECLSPEC void Release();
-}
+	public:
+
+		static ProgramRef quadPrg;
+		static ProgramRef quadPrgNoZ;
+
+		static void Init();
+		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg = quadPrg);
+
+		static inline float GetPixelsHeight() { return _pixelsHeight; };
+
+		template<typename T>
+		static inline T ToUnits(const T& val) { return val * _pixelsPerUnitInvert; }
+
+		template<typename T>
+		static inline T ToPixels(const T& val) { return val * _pixelsPerUnit; }
+
+		static void DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color);
+		static void DebugSphere(const Math::Vector3& pos, float radius, const Color& color);
+		static void DebugRect(const Math::Vector2& p1, const Math::Vector2& p2, Color color);
+
+		static void Release();
 #endif
+	};
+}

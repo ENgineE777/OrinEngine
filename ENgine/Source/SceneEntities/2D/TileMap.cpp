@@ -35,9 +35,7 @@ namespace Oak
 
 	void TileMap::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
-
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = MoveXYZ;
 	}
 
@@ -67,10 +65,11 @@ namespace Oak
 	void TileMap::Play()
 	{
 		Math::Matrix mat = transform.GetGlobal();
-		auto pos = mat.Pos();
+		auto pos = Sprite::ToPixels(mat.Pos());
+
 		auto size = transform.size;
 		size.z = 16.0f;
-		size *= Sprite::pixelsPerUnitInvert;
+		size *= Sprite::ToUnits(1.0f);
 		
 		for (auto tile : tiles)
 		{
@@ -82,10 +81,8 @@ namespace Oak
 			Math::Matrix mat = transform.GetGlobal();
 			auto pos = mat.Pos();
 
-			int k = 0;
-
 			mat.Pos() = pos + mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y;
-			mat.Pos() *= Sprite::pixelsPerUnitInvert;
+			mat.Pos() *= Sprite::ToUnits(1.0f);
 
 			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, physGroup);
 			box->SetActive(IsVisible());
@@ -113,11 +110,11 @@ namespace Oak
 			auto trans = transform;
 
 			Math::Matrix mat = trans.GetGlobal();
-			auto pos = mat.Pos();
+			auto pos = Sprite::ToPixels(mat.Pos());
 
 			for (auto tile : tiles)
 			{
-				mat.Pos() = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
+				mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
 
 				trans.SetGlobal(mat);
 				auto sz = tile.texture.GetSize();
@@ -241,12 +238,11 @@ namespace Oak
 
 			Math::GetMouseRay(ms, mouseOrigin, mouseDirection);
 			auto trans = transform.GetGlobal();
-			trans.Pos() *= Sprite::pixelsPerUnitInvert;
 
 			Math::Vector3 pos;
 			Math::IntersectPlaneRay(trans.Pos(), trans.Vz(), mouseOrigin, mouseDirection, pos);
 
-			pos = (pos - trans.Pos()) * Sprite::pixelsPerUnit;
+			pos = Sprite::ToPixels(pos - trans.Pos());
 
 			if (pos.x < 0.0f)
 			{

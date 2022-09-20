@@ -70,10 +70,6 @@ namespace Oak
 
 		void Draw(float dt);
 
-		void Play() override;
-
-		void UpdateTransforms();
-
 	#ifdef OAK_EDITOR
 		//bool CheckSelection(Vector2 ms, Vector3 start, Vector3 dir) override;
 		void SetEditMode(bool ed) override;

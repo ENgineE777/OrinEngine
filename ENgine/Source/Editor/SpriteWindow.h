@@ -57,8 +57,6 @@ namespace Oak
 		int AutoSliceMinSizeX = 16;
 		int AutoSliceMinSizeY = 16;
 
-		void DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color);
-
 		int selAnim = -1;
 		int selAnimFrame = -1;
 		int animFrameToPaste = -1;

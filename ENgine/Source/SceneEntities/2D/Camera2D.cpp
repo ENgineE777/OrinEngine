@@ -26,10 +26,9 @@ namespace Oak
 
 	void Camera2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
-		transform.size.x = Sprite::pixelsHeight * 16.0f / 9.0f;
-		transform.size.y = Sprite::pixelsHeight;
+		transform.objectType = ObjectType::Object2D;
+		transform.size.x = Sprite::GetPixelsHeight() * 16.0f / 9.0f;
+		transform.size.y = Sprite::GetPixelsHeight();
 		transform.transformFlag = TransformFlag::MoveX | TransformFlag::MoveY | RectMoveXY;
 
 		Tasks(true)->AddTask(-10, this, (Object::Delegate)&Camera2D::Update);
@@ -39,9 +38,9 @@ namespace Oak
 	{
 		if (IsVisible())
 		{
-			auto pos = transform.GetGlobal().Pos() * Sprite::pixelsPerUnitInvert;
+			auto pos = transform.GetGlobal().Pos();
 
-			float dist = (Sprite::pixelsHeight * 0.5f * Sprite::pixelsPerUnitInvert) / (tanf(22.5f * Math::Radian) * zoom);
+			float dist = Sprite::ToUnits(Sprite::GetPixelsHeight() * 0.5f) / (tanf(22.5f * Math::Radian) * zoom);
 			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
 
 			root.render.SetTransform(TransformStage::View, view);
@@ -58,11 +57,11 @@ namespace Oak
 		{
 			if (targetRef.entity)
 			{
-				transform.size.x = Sprite::pixelsHeight / root.render.GetDevice()->GetAspect();
-				transform.size.y = Sprite::pixelsHeight;
+				transform.size.x = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect();
+				transform.size.y = Sprite::GetPixelsHeight();
 
 				Math::Vector3 pos = transform.position;
-				Math::Vector3 targetPos = targetRef.entity->GetTransform().GetGlobal().Pos();
+				Math::Vector3 targetPos = Sprite::ToPixels(targetRef.entity->GetTransform().GetGlobal().Pos());
 
 				if (-transform.size.x * 0.5f + border.x > targetPos.x - pos.x)
 				{
@@ -129,10 +128,9 @@ namespace Oak
 
 				p1 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
 				p1 = p1 * transform.GetGlobal();
-				p1 *= *transform.unitsInvScale;
+
 				p2 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
 				p2 = p2 * transform.GetGlobal();
-				p2 *= *transform.unitsInvScale;
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
 				p1 = Math::Vector3(tmp.x, tmp.y, p1.z);

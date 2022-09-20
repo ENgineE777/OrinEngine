@@ -16,8 +16,7 @@ namespace Oak
 
 	void SpritesLayer::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectMoveXY;
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&SpritesLayer::Draw);
@@ -40,9 +39,9 @@ namespace Oak
 			root.render.GetTransform(TransformStage::View, view);
 			view.Inverse();
 
-			camPos = view.Pos() * Sprite::pixelsPerUnit;
+			camPos = Sprite::ToPixels(view.Pos());
 
-			float scale = root.render.GetDevice()->GetHeight() / Sprite::pixelsHeight;
+			float scale = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
 			to = (int)(((root.render.GetDevice()->GetWidth() / scale) / size.x + 1) * 0.5f);
 			from = -to;
 

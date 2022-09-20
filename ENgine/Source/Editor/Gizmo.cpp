@@ -414,7 +414,15 @@ namespace Oak
 			origin.y - 7 < ms.y && ms.y < origin.y + 7 && transform->transformFlag & TransformFlag::RectAnchorn)
 		{
 			selAxis = 10;
-			movedOrigin = trans2DProjection;
+
+			if (transform->objectType == ObjectType::ObjectUI)
+			{
+				movedOrigin = origin;
+			}
+			else
+			{
+				movedOrigin = trans2DProjection;
+			}
 		}
 
 		if (selAxis == -1)
@@ -672,7 +680,14 @@ namespace Oak
 		Math::Matrix inv = transform->GetGlobal();
 		inv.Inverse();
 
-		Math::Vector3 delta = trans2DProjection * (*transform->unitsScale) * inv - trans2DPrevProjection * (*transform->unitsScale) * inv;
+		Math::Vector3 delta = Sprite::ToPixels(trans2DProjection * inv - trans2DPrevProjection * inv);
+
+		if (transform->objectType == ObjectType::ObjectUI)
+		{
+			float scale = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetHeight();
+			delta = ms;
+			delta *= scale;
+		}
 
 		if (ms.Length() < 0.001f)
 		{
@@ -728,7 +743,14 @@ namespace Oak
 		else
 		if (selAxis == 10)
 		{
-			movedOrigin = trans2DProjection;
+			if (transform->objectType == ObjectType::ObjectUI)
+			{
+				movedOrigin += delta;
+			}
+			else
+			{
+				movedOrigin = trans2DProjection;
+			}
 		}
 		else
 		if (selAxis > 0)
@@ -836,20 +858,14 @@ namespace Oak
 
 	Math::Vector3 Gizmo::GetGlobalPos()
 	{
-		return transform->GetGlobal().Pos() * (transform->unitsInvScale ? (*transform->unitsInvScale) : 1.0f);
+		return transform->GetGlobal().Pos();
 	}
 
 	void Gizmo::SetGlobalPos(Math::Vector3 pos)
 	{
-		if (transform->unitsScale)
-		{
-			pos *= (*transform->unitsScale);
-		}
-
 		auto tr = transform->GetGlobal();
 		tr.Pos() = pos;
 		transform->SetGlobal(tr);
-
 	}
 
 	void Gizmo::MoveTrans3D(Math::Vector2 ms)
@@ -1037,12 +1053,39 @@ namespace Oak
 					p1 = Math::Vector3(0, transform->size.y * 0.5f, 0);
 				}
 
-				p1 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
-				p1 = p1 * transform->GetGlobal();
-				p1 *= *transform->unitsInvScale;
-				p2 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
-				p2 = p2 * transform->GetGlobal();
-				p2 *= *transform->unitsInvScale;
+				if (transform->objectType == ObjectType::ObjectUI)
+				{
+					p1 -= Math::Vector3(transform->offset.x * transform->size.x, (transform->offset.y) * transform->size.y, 0);
+					p1.y = -p1.y;
+				}
+				else
+				{
+					p1 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
+				}
+
+				p1 = Sprite::ToUnits(p1) * transform->GetGlobal();
+				
+				if (transform->objectType == ObjectType::ObjectUI)
+				{
+					p1.y = -p1.y;
+				}
+
+				if (transform->objectType == ObjectType::ObjectUI)
+				{
+					p2 -= Math::Vector3(transform->offset.x * transform->size.x, (transform->offset.y) * transform->size.y, 0);
+					p2.y = -p2.y;
+				}
+				else
+				{
+					p2 -= Math::Vector3(transform->offset.x * transform->size.x, (1.0f - transform->offset.y) * transform->size.y, 0);
+				}
+
+				p2 = Sprite::ToUnits(p2) * transform->GetGlobal();
+
+				if (transform->objectType == ObjectType::ObjectUI)
+				{
+					p2.y = -p2.y;
+				}
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
 				p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
@@ -1050,25 +1093,74 @@ namespace Oak
 				tmp = Math::Vector2(p2.x, p2.y);
 				p2 = Math::Vector3(tmp.x, tmp.y, p1.z);
 
-				if (phase == 1)
+				if (transform->objectType == ObjectType::ObjectUI)
 				{
-					root.render.DebugLine(p1, COLOR_WHITE, p2, COLOR_WHITE, false);
-				}
-				else
-				{
-					Math::Vector3 pos = root.render.TransformToScreen(p1, 2);
+					p1 = Sprite::ToPixels(p1);
+					p2 = Sprite::ToPixels(p2);
 
-					if (pos.z > 0.01f)
+					float scale = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
+
+					p1 *= scale;
+					p2 *= scale;
+
+					if (phase == 1)
 					{
-						ancorns[i] = Math::Vector2(pos.x, pos.y);
-						root.render.DebugSprite(editorDrawer.anchornTex, ancorns[i] - Math::Vector2(4.0f), Math::Vector2(8.0f), selAxis == (i + 1) ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE);
+						root.render.DebugLine2D(Math::Vector2(p1.x, p1.y), COLOR_WHITE, Math::Vector2(p2.x, p2.y), COLOR_WHITE);
 					}
 					else
 					{
-						ancorns[i] = -100.0f;
+						ancorns[i] = Math::Vector2(p1.x, p1.y);
+						root.render.DebugSprite(editorDrawer.anchornTex, ancorns[i] - Math::Vector2(4.0f), Math::Vector2(8.0f), selAxis == (i + 1) ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE);
+					}
+				}
+				else
+				{
+					if (phase == 1)
+					{
+						root.render.DebugLine(p1, COLOR_WHITE, p2, COLOR_WHITE, false);
+					}
+					else
+					{
+						Math::Vector3 pos = root.render.TransformToScreen(p1, 2);
+
+						if (pos.z > 0.01f)
+						{
+							ancorns[i] = Math::Vector2(pos.x, pos.y);
+							root.render.DebugSprite(editorDrawer.anchornTex, ancorns[i] - Math::Vector2(4.0f), Math::Vector2(8.0f), selAxis == (i + 1) ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE);
+						}
+						else
+						{
+							ancorns[i] = -100.0f;
+						}
 					}
 				}
 			}
+		}
+
+		if (transform->objectType == ObjectType::ObjectUI)
+		{
+			if (selAxis == 10 && mousedPressed)
+			{
+				p1 = movedOrigin;
+			}
+			else
+			{
+				p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
+				p1 = p1 * transform->GetGlobal();
+				p1.y = -p1.y;
+
+				p1 = Sprite::ToPixels(p1);
+
+				float scale = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
+
+				p1 *= scale;
+
+				origin = Math::Vector2(p1.x, p1.y);
+			}
+
+			root.render.DebugSprite(editorDrawer.centerTex, Math::Vector2(p1.x, p1.y) - Math::Vector2(4.0f), Math::Vector2(8.0f), (selAxis == 10 ? Color(1.0, 0.9f, 0.0f, 1.0f) : COLOR_WHITE));
+
+			return;
 		}
 
 		if (selAxis == 10 && mousedPressed)
@@ -1079,7 +1171,6 @@ namespace Oak
 		{
 			p1 = Math::Vector3(0.0f, 0.0f, 0.0f);
 			p1 = p1 * transform->GetGlobal();
-			p1 *= *transform->unitsInvScale;;
 		}
 
 		p1 = root.render.TransformToScreen(p1, 2);
@@ -1219,18 +1310,35 @@ namespace Oak
 			Math::Matrix inv = transform->GetGlobal();
 			inv.Inverse();
 
-			Math::Vector3 pos = movedOrigin * (*transform->unitsScale) * inv / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
-			transform->offset = Math::Vector3(transform->offset.x + pos.x, transform->offset.y - pos.y, 0.0f);
+			Math::Vector3 pos;
 
-			auto position = transform->position;
+			if (transform->objectType == ObjectType::Object2D)
+			{
+				pos = movedOrigin;
+			}
+			else
+			{
+				float scale = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetHeight();
 
-			position.x += pos.x * transform->GetLocal().Vx().x * transform->size.x;
-			position.y += pos.x * transform->GetLocal().Vx().y * transform->size.x;
+				pos = Sprite::ToUnits(movedOrigin * scale);
+				pos.y = -pos.y;
+			}
 
-			position.x += pos.y * transform->GetLocal().Vy().x * transform->size.y;
-			position.y += pos.y * transform->GetLocal().Vy().y * transform->size.y;
+			Math::Vector3 offset = Sprite::ToPixels(pos * inv) / Math::Vector3(transform->size.x, transform->size.y, 1.0f);
+			transform->offset = Math::Vector3(transform->offset.x + offset.x, transform->offset.y - offset.y, 0.0f);
 
-			transform->position = position;
+			if (transform->objectType == ObjectType::Object2D)
+			{
+				auto position = transform->position;
+
+				position.x += offset.x * transform->GetLocal().Vx().x * transform->size.x;
+				position.y += (offset.x * transform->GetLocal().Vx().y * transform->size.x);
+
+				position.x += offset.y * transform->GetLocal().Vy().x * transform->size.y;
+				position.y += offset.y * transform->GetLocal().Vy().y * transform->size.y;
+
+				transform->position = position;
+			}
 
 			selAxis = -1;
 		}

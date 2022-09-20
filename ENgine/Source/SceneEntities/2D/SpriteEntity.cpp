@@ -18,8 +18,7 @@ namespace Oak
 
 	void SpriteEntity::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = SpriteTransformFlags;
 
 		Tasks(true)->AddTask(0, this, (Object::Delegate)&SpriteEntity::Draw);

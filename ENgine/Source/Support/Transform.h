@@ -3,6 +3,7 @@
 
 #include "Root/Files/JsonReader.h"
 #include "Root/Files/JsonWriter.h"
+#include "Sprite.h"
 
 /**
 \ingroup gr_code_common
@@ -16,6 +17,13 @@ namespace Oak
 	This base class of transformation
 
 	*/
+
+	enum class CLASS_DECLSPEC ObjectType : uint32_t
+	{
+		Object3D,
+		Object2D,
+		ObjectUI
+	};
 
 	enum CLASS_DECLSPEC TransformFlag : uint32_t
 	{
@@ -95,16 +103,6 @@ namespace Oak
 		eastl::vector<Transform*> childs;
 
 		/**
-			\brief Units scale
-		*/
-		float* unitsScale = nullptr;
-
-		/**
-			\brief Units invert scale
-		*/
-		float* unitsInvScale = nullptr;
-
-		/**
 			\brief axis scale
 		*/
 		Math::Vector3 axis = 1.0f;
@@ -113,6 +111,11 @@ namespace Oak
 			\brief Transform flag
 		*/
 		TransformFlag transformFlag = TransformFlag::MoveRotateScaleFull;
+
+		/**
+			\brief Type of object
+		*/
+		ObjectType objectType = ObjectType::Object3D;
 
 		/**
 		\brief Load data of transform
@@ -206,7 +209,7 @@ namespace Oak
 		*/
 		void SetLocal(Math::Matrix set)
 		{
-			positionValue = set.Pos();
+			positionValue = (objectType == ObjectType::Object2D || objectType == ObjectType::ObjectUI) ? Sprite::ToPixels(set.Pos()) : set.Pos();
 			scaleValue = set.GetScale();
 			rotationValue = set.GetRotation() / Math::Radian;
 
@@ -277,6 +280,11 @@ namespace Oak
 			localValue.Rotate(rotation * Math::Radian);
 			localValue.Scale(scale);
 			localValue.Pos() = position * axis;
+
+			if (objectType == ObjectType::Object2D || objectType == ObjectType::ObjectUI)
+			{
+				localValue.Pos() *= Sprite::ToUnits(1.0f);
+			}
 
 			if (parent)
 			{

@@ -16,8 +16,6 @@ namespace Oak
 {
 	class CLASS_DECLSPEC EditorDrawer
 	{
-		Transform trans;
-
 		struct VertexSkyBox
 		{
 			Math::Vector3 pos;

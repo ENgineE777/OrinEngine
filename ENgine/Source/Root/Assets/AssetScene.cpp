@@ -172,11 +172,6 @@ namespace Oak
 							allowDrag = false;
 						}
 
-						if (parent && parent->GetTransform().unitsInvScale != dragged->GetTransform().unitsInvScale)
-						{
-							allowDrag = false;
-						}
-
 						if (allowDrag)
 						{
 							if (dragged->GetParent())
@@ -300,11 +295,6 @@ namespace Oak
 
 				SceneEntity* parent = asChild ? entity : (entity ? entity->GetParent() : nullptr);
 
-				if (parent && parent->GetTransform().unitsInvScale != assetEntity->GetTransform().unitsInvScale)
-				{
-					allowAdd = false;
-				}
-
 				if (allowAdd)
 				{
 					containsUnsavedChanges = true;
@@ -323,7 +313,7 @@ namespace Oak
 
 					auto& transform = assetEntity->GetTransform();
 
-					if (transform.unitsScale)
+					if (transform.objectType == ObjectType::Object2D)
 					{
 						transform.position = editor.freeCamera.pos2D;
 					}
@@ -414,14 +404,7 @@ namespace Oak
 
 							if (parent)
 							{
-								if (entity->GetTransform().unitsInvScale == parent->GetTransform().unitsInvScale)
-								{
-									entity->SetParent(parent, selectedEntity);
-								}
-								else
-								{
-									RELEASE(entity)
-								}
+								entity->SetParent(parent, selectedEntity);
 							}
 							else
 							{
@@ -444,7 +427,7 @@ namespace Oak
 						{
 							auto& transform = entity->GetTransform();
 
-							if (transform.unitsScale)
+							if (transform.objectType == ObjectType::Object2D)
 							{
 								transform.position = editor.freeCamera.pos2D;
 							}

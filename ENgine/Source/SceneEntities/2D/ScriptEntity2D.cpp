@@ -5,8 +5,7 @@ namespace Oak
 {
 	void ScriptEntity2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = MoveXYZ;
 
 		transform.size = 100.0f;

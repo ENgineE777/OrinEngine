@@ -25,20 +25,31 @@ namespace Oak
 
 	Math::Vector3 GenericMarker::Instance::GetPosition()
 	{
+		auto pos = transform.position;
+
 		if (transform.parent)
 		{
-			return transform.parent->GetGlobal().MulVertex(transform.position);
+			if (transform.objectType == ObjectType::Object2D)
+			{
+				pos *= Sprite::ToUnits(1.0f);
+			}
+
+			pos = transform.parent->GetGlobal().MulVertex(pos);
+
+			if (transform.objectType == ObjectType::Object2D)
+			{
+				pos *= Sprite::ToPixels(1.0f);
+			}
 		}
 
-		return transform.position;
+		return pos;
 	}
 
 	void GenericMarker::Init()
 	{
 		if (is2D)
 		{
-			transform.unitsScale = &Sprite::pixelsPerUnit;
-			transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+			transform.objectType = ObjectType::Object2D;
 		}
 
 		transform.transformFlag = MoveXYZ | RotateXYZ;
@@ -49,6 +60,16 @@ namespace Oak
 	void GenericMarker::ApplyProperties()
 	{
 		GetScene()->DelFromAllGroups(this);
+
+		for (auto& inst : instances)
+		{
+			inst.transform.parent = &transform;
+
+			if (is2D)
+			{
+				inst.transform.objectType = ObjectType::Object2D;
+			}
+		}	
 
 		if (sceneGroup.c_str()[0] != 0)
 		{
@@ -62,8 +83,6 @@ namespace Oak
 		{
 			return;
 		}
-
-		UpdateTransforms();
 
 	#ifdef OAK_EDITOR
 		if (edited)
@@ -84,8 +103,7 @@ namespace Oak
 
 				if (is2D)
 				{
-					inst.transform.unitsScale = &Sprite::pixelsPerUnit;
-					inst.transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+					inst.transform.objectType = ObjectType::Object2D;
 				}
 
 				if (add_copy)
@@ -124,19 +142,11 @@ namespace Oak
 
 		for (auto& inst : instances)
 		{
-			inst.transform.parent = &transform;
-
-			if (is2D)
-			{
-				inst.transform.unitsScale = &Sprite::pixelsPerUnit;
-				inst.transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
-			}
-
 			Math::Vector3 pos = inst.GetPosition();
-			
+
 			if (is2D)
 			{
-				pos *= Sprite::pixelsPerUnitInvert;
+				pos *= Sprite::ToUnits(1.0f);
 			}
 
 			root.render.DebugSphere(pos, inst.color, inst.radius, fullShade);
@@ -148,7 +158,7 @@ namespace Oak
 
 				if (is2D)
 				{
-					prevPos *= Sprite::pixelsPerUnitInvert;
+					prevPos = Sprite::ToUnits(prevPos);
 				}
 
 				root.render.DebugLine(pos, inst.color, prevPos, prevInst.color);
@@ -182,27 +192,6 @@ namespace Oak
 
 		return false;
 	}*/
-
-	void GenericMarker::Play()
-	{
-		SceneEntity::Play();
-
-		UpdateTransforms();
-	}
-
-	void GenericMarker::UpdateTransforms()
-	{
-		for (auto& inst : instances)
-		{
-			inst.transform.parent = &transform;
-
-			if (is2D)
-			{
-				inst.transform.unitsScale = &Sprite::pixelsPerUnit;
-				inst.transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
-			}
-		}
-	}
 
 	void GenericMarker::SetEditMode(bool ed)
 	{

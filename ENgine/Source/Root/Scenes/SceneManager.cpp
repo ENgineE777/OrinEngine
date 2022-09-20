@@ -22,10 +22,13 @@ namespace Oak
 				return;
 			}
 
-			reader.Read("pixelsPerUnit", Sprite::pixelsPerUnit);
-			Sprite::pixelsPerUnitInvert = 1.0f / Sprite::pixelsPerUnit;
+			float pixelsPerUnit = 50.0f;
+			reader.Read("pixelsPerUnit", pixelsPerUnit);
 
-			reader.Read("pixelsHeight", Sprite::pixelsHeight);
+			float pixelsHeight = 1080.0f;
+			reader.Read("pixelsHeight", pixelsHeight);
+
+			Sprite::SetData(pixelsHeight, pixelsPerUnit);
 
 			int count = 0;
 			reader.Read("scenes_count", count);

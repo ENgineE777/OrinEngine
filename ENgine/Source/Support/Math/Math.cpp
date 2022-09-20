@@ -97,8 +97,7 @@ namespace Oak::Math
 			for (int i = 0; i < polygon.size(); i++)
 			{
 				int nextIndex = (i + 1) % polygon.size();
-				root.render.DebugLine(Vector3(polygon[i].x, polygon[i].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN,
-					Vector3(polygon[nextIndex].x, polygon[nextIndex].y, 0.0f) * Sprite::pixelsPerUnitInvert, COLOR_GREEN, false);
+				Sprite::DebugLine(polygon[i], polygon[nextIndex], COLOR_GREEN);
 			}
 		}
 

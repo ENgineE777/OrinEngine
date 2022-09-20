@@ -1021,21 +1021,6 @@ namespace Oak
 		ShowImage();
 	}
 
-	void SpriteWindow::DrawRect(Math::Vector2 p1, Math::Vector2 p2, Color color)
-	{
-		root.render.DebugLine(Math::Vector3(p1.x, p1.y, 0.0f) * Sprite::pixelsPerUnitInvert, color,
-			Math::Vector3(p2.x, p1.y, 0.0f) * Sprite::pixelsPerUnitInvert, color, false);
-
-		root.render.DebugLine(Math::Vector3(p2.x, p1.y, 0.0f) * Sprite::pixelsPerUnitInvert, color,
-			Math::Vector3(p2.x, p2.y, 0.0f) * Sprite::pixelsPerUnitInvert, color, false);
-
-		root.render.DebugLine(Math::Vector3(p2.x, p2.y, 0.0f) * Sprite::pixelsPerUnitInvert, color,
-			Math::Vector3(p1.x, p2.y, 0.0f) * Sprite::pixelsPerUnitInvert, color, false);
-
-		root.render.DebugLine(Math::Vector3(p1.x, p2.y, 0.0f) * Sprite::pixelsPerUnitInvert, color,
-			Math::Vector3(p1.x, p1.y, 0.0f) * Sprite::pixelsPerUnitInvert, color, false);
-	}
-
 	void SpriteWindow::DrawViewport(Math::Vector2 viewportSize)
 	{
 		lastViewportSize = viewportSize;
@@ -1065,12 +1050,12 @@ namespace Oak
 
 			auto& slice = texture->slices[i];
 			Math::Vector2 pos(slice.pos.x, texture->size.y - slice.pos.y);
-			DrawRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), color);
+			Sprite::DebugRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), color);
 		}
 
 		if (drag == Drag::DragNewSlice)
 		{
-			DrawRect(rectStart, rectEnd, color);
+			Sprite::DebugRect(rectStart, rectEnd, color);
 		}
 
 		if (selSlice != -1)
@@ -1084,19 +1069,13 @@ namespace Oak
 
 					if (j < rectWidth - 1 && i < rectHeight - 1)
 					{
-						root.render.DebugLine((Math::Vector3(points[index + rectWidth].x, points[index + rectWidth].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color,
-											  (Math::Vector3(points[index].x, points[index].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color, false);
-
-						root.render.DebugLine((Math::Vector3(points[index].x, points[index].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color,
-												(Math::Vector3(points[index + 1].x, points[index + 1].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color, false);
+						Sprite::DebugLine(points[index + rectWidth], points[index], color);
+						Sprite::DebugLine(points[index], points[index + 1], color);
 
 						if (i == rectHeight - 2 || j == rectWidth - 2)
 						{
-							root.render.DebugLine((Math::Vector3(points[index + 1].x, points[index + 1].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color,
-													(Math::Vector3(points[index + rectWidth + 1].x, points[index + rectWidth + 1].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color, false);
-
-							root.render.DebugLine((Math::Vector3(points[index + rectWidth + 1].x, points[index + rectWidth + 1].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color,
-													(Math::Vector3(points[index + rectWidth].x, points[index + rectWidth].y, 0.0f)) * Sprite::pixelsPerUnitInvert, color, false);
+							Sprite::DebugLine(points[index + 1], points[index + rectWidth + 1], color);
+							Sprite::DebugLine(points[index + rectWidth + 1], points[index + rectWidth], color);
 						}
 					}
 
@@ -1107,7 +1086,7 @@ namespace Oak
 						color.Set(1.0, 0.9f, 0.0f, 1.0f);
 					}
 
-					Math::Vector3 pos = root.render.TransformToScreen((Math::Vector3(points[index].x, points[index].y, 0.0f)) * Sprite::pixelsPerUnitInvert, 2);
+					Math::Vector3 pos = root.render.TransformToScreen(Sprite::ToUnits(Math::Vector3(points[index].x, points[index].y, 0.0f)), 2);
 					root.render.DebugSprite(editorDrawer.anchornTex, Math::Vector2(pos.x - 4, pos.y - 4), Math::Vector2(8.0f), color);
 				}
 		}
@@ -1118,7 +1097,7 @@ namespace Oak
 				auto& slice = texture->slices[selectedSlices[i]];
 
 				Math::Vector2 pos(slice.pos.x, texture->size.y - slice.pos.y);
-				DrawRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), COLOR_GREEN);
+				Sprite::DebugRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), COLOR_GREEN);
 			}
 		}
 

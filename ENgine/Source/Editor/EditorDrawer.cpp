@@ -95,11 +95,13 @@ namespace Oak
 
 	void EditorDrawer::SetCameraMatrices(Math::Vector2 pos, float pixelHeight, float aspect)
 	{
-		float dist = pixelHeight * 0.5f * Sprite::pixelsPerUnitInvert / tanf(22.5f * Math::Radian);
+		float dist = Sprite::ToUnits(pixelHeight) * 0.5f / tanf(22.5f * Math::Radian);
+
+		pos = Sprite::ToUnits(pos);
 
 		Math::Matrix view;
-		view.BuildView(Math::Vector3(pos.x * Sprite::pixelsPerUnitInvert, pos.y * Sprite::pixelsPerUnitInvert, -dist),
-						Math::Vector3(pos.x * Sprite::pixelsPerUnitInvert, pos.y * Sprite::pixelsPerUnitInvert, -dist + 1.0f), Math::Vector3(0, 1, 0));
+		view.BuildView(Math::Vector3(pos.x, pos.y, -dist),
+						Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
 		root.render.SetTransform(TransformStage::View, view);
 
 		Math::Matrix proj;
@@ -142,7 +144,7 @@ namespace Oak
 
 	void EditorDrawer::PrintText(Math::Vector2 pos, float fontScale, Color color, const char* text)
 	{
-		Math::Vector3 pos3d = Math::Vector3(pos.x * Sprite::pixelsPerUnitInvert, pos.y * Sprite::pixelsPerUnitInvert, 0.0f);
+		Math::Vector3 pos3d = Sprite::ToUnits(Math::Vector3(pos));
 
 		pos3d = root.render.TransformToScreen(pos3d, 2);
 
@@ -151,8 +153,8 @@ namespace Oak
 		mat.Pos().x = pos3d.x;
 		mat.Pos().y = pos3d.y;
 
-		if (pos3d.x + 250 < 0 || root.render.GetDevice()->GetWidth() < pos3d.x ||
-			pos3d.y + 15 < 0 || root.render.GetDevice()->GetHeight() < pos3d.y)
+		if (pos3d.x + 250.0f < 0.0f || (float)root.render.GetDevice()->GetWidth() < pos3d.x ||
+			pos3d.y + 15.0f < 0.0f || (float)root.render.GetDevice()->GetHeight() < pos3d.y)
 		{
 			return;
 		}

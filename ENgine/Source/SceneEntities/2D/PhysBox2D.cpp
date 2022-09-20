@@ -23,8 +23,7 @@ namespace Oak
 
 	void PhysBox2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = MoveXYZ | RectMoveXY | RectSizeXY;
 
 		transform.size = 100.0f;
@@ -39,10 +38,9 @@ namespace Oak
 		SceneEntity::Play();
 
 		Math::Matrix mat = transform.GetGlobal();
-		mat.Pos() *= Sprite::pixelsPerUnitInvert;
 
 		body.object = this;
-		body.body = root.GetPhysScene()->CreateBox(transform.size * Sprite::pixelsPerUnitInvert, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
+		body.body = root.GetPhysScene()->CreateBox(Sprite::ToUnits(transform.size), mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 		body.body->SetActive(IsVisible());
 
 		if (bodyType == BodyType::Dynamic || bodyType == BodyType::DynamicCCD)
@@ -64,7 +62,6 @@ namespace Oak
 		{
 			Math::Matrix mat;
 			body.body->GetTransform(mat);
-			mat.Pos() *= Sprite::pixelsPerUnit;
 
 			if (affectOnParent && parent)
 			{
@@ -81,9 +78,7 @@ namespace Oak
 		if (visibleDuringPlay || !GetScene()->IsPlaying())
 		{
 			Math::Matrix mat = transform.GetGlobal();
-			mat.Pos() *= Sprite::pixelsPerUnitInvert;
-
-			root.render.DebugBox(mat, color, transform.size * Sprite::pixelsPerUnitInvert);
+			root.render.DebugBox(mat, color, Sprite::ToUnits(transform.size));
 		}
 	}
 }

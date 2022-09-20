@@ -19,8 +19,7 @@ namespace Oak
 
 	void ParalaxedSpriteEntity::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = SpriteTransformFlags;
 
 		Tasks(true)->AddTask(0, this, (Object::Delegate)&ParalaxedSpriteEntity::Draw);
@@ -40,7 +39,7 @@ namespace Oak
 			root.render.GetTransform(TransformStage::View, view);
 			view.Inverse();
 
-			auto camPos = view.Pos() * Sprite::pixelsPerUnit;
+			auto camPos = Sprite::ToPixels(view.Pos());
 
 			Transform trans = transform;
 

@@ -42,15 +42,13 @@ namespace Oak
 
 	void LabelWidget::ApplyProperties()
 	{
-		float k = root.render.GetDevice()->GetHeight() / Sprite::pixelsHeight;
+		float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
 		font = root.fonts.LoadFont(fontName.c_str(), false, false, (int)(k * (float)fontHeight), _FL_);
 	}
 
 	void LabelWidget::Draw(float dt)
 	{
-		Math::Vector3 pos3d = Math::Vector3(transform.GetGlobal().Pos().x * Sprite::pixelsPerUnitInvert, transform.GetGlobal().Pos().y * Sprite::pixelsPerUnitInvert, 0.0f);
-
-		pos3d = root.render.TransformToScreen(pos3d, 2);
+		auto pos3d = root.render.TransformToScreen(transform.GetGlobal().Pos(), 2);
 
 		Math::Matrix mat;
 		mat.Pos().x = pos3d.x;

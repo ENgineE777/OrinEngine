@@ -74,8 +74,8 @@ namespace Oak
 			Math::Matrix mat = transform.GetGlobal();
 			Math::Vector3 dir = mat.Vy();
 
-			root.render.DebugSphere((mat.Pos() + dir * radius) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
-			root.render.DebugSphere((mat.Pos() + dir * (radius + height)) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
+			root.render.DebugSphere((mat.Pos() + dir * radius), COLOR_CYAN, radius);
+			root.render.DebugSphere((mat.Pos() + dir * (radius + height)), COLOR_CYAN, radius);
 		}
 	}
 }

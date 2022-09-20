@@ -3,6 +3,7 @@
 #include "Asset.h"
 #include "root/Render/Render.h"
 #include "support/Sprite.h"
+#include "support/Transform.h"
 
 namespace Oak
 {

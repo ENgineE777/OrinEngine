@@ -37,8 +37,7 @@ namespace Oak
 
 	void PointLight2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectSizeX;
 
 		spriteLight = root.render.GetProgram("PointLight2DProgram", _FL_);

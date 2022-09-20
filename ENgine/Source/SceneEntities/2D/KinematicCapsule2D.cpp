@@ -19,8 +19,7 @@ namespace Oak
 
 	void KinematicCapsule2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = MoveXYZ;
 
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule2D::EditorDraw);
@@ -37,17 +36,17 @@ namespace Oak
 	void KinematicCapsule2D::Play()
 	{
 		PhysControllerDesc desc;
-		desc.height = height * Sprite::pixelsPerUnitInvert;
-		desc.radius = radius * Sprite::pixelsPerUnitInvert;
+		desc.height = Sprite::ToUnits(height);
+		desc.radius = Sprite::ToUnits(radius);
 
 		if (!YOriented)
 		{
 			desc.upVector.Set(0.0f, 0.0f, 1.0f);
 		}
 
-		desc.pos = transform.GetGlobal().Pos() * Sprite::pixelsPerUnitInvert;
+		desc.pos = transform.GetGlobal().Pos();
 		desc.slopeLimit = slopeLimit;
-		desc.stepOffset = stepOffset * Sprite::pixelsPerUnitInvert;
+		desc.stepOffset = Sprite::ToUnits(stepOffset);
 
 		controller = GetRoot()->GetPhysScene()->CreateController(desc, physGroup);
 		controller->RestrictZAxis();
@@ -61,16 +60,14 @@ namespace Oak
 
 	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t group)
 	{
-		controller->Move(Math::Vector3(dir.x, dir.y, 0.0f) * Sprite::pixelsPerUnitInvert * root.GetDeltaTime(), group == 0 ? physGroup : group);
+		controller->Move(Sprite::ToUnits(Math::Vector3(dir)) * root.GetDeltaTime(), group == 0 ? physGroup : group);
 
 		Math::Vector3 pos;
 		controller->GetPosition(pos);
 
-		pos *= Sprite::pixelsPerUnit;
-
 		if (affectOnParent && parent)
 		{
-			parent->GetTransform().position = pos;
+			parent->GetTransform().position = Sprite::ToPixels(pos);
 		}
 		else
 		{
@@ -85,7 +82,7 @@ namespace Oak
 	{
 		if (controller)
 		{
-			controller->SetPosition(pos * Sprite::pixelsPerUnitInvert);
+			controller->SetPosition(Sprite::ToUnits(pos));
 		}
 	}
 
@@ -94,10 +91,11 @@ namespace Oak
 		if (IsVisible() && !scene->IsPlaying())
 		{
 			Math::Matrix mat = transform.GetGlobal();
+			float unitRadius = Sprite::ToUnits(radius);
 			Math::Vector3 dir = YOriented ? mat.Vy() : mat.Vz();
 
-			root.render.DebugSphere((mat.Pos() + dir * radius) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
-			root.render.DebugSphere((mat.Pos() + dir * (radius + height)) * Sprite::pixelsPerUnitInvert, COLOR_CYAN, radius * Sprite::pixelsPerUnitInvert);
+			root.render.DebugSphere(mat.Pos() + dir * unitRadius, COLOR_CYAN, unitRadius);
+			root.render.DebugSphere(mat.Pos() + dir * Sprite::ToUnits(radius + height), COLOR_CYAN, unitRadius);
 		}
 	}
 }
