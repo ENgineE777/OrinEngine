@@ -302,6 +302,18 @@ namespace Oak
 		}
 	}
 
+	Math::Vector3 PhysController::GetUpDirection() const
+	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call GetUpDirection for controller during phys update");
+			return Math::Vector3{};
+		}
+
+		const physx::PxVec3 up = controller->getUpDirection();
+		return Math::Vector3(up.x, up.y, up.z);
+	}
+
 	void PhysController::SetGroup(int group)
 	{
 		if (scene->inPhysUpdate)
@@ -317,7 +329,7 @@ namespace Oak
 		PhysScene::SetShapeGroup(shape, group);
 	}
 
-	void PhysController::SetPosition(Math::Vector3 pos)
+	void PhysController::SetFootPosition(Math::Vector3 pos)
 	{
 		if (!active)
 		{
@@ -335,16 +347,44 @@ namespace Oak
 		}
 	}
 
-	void PhysController::GetPosition(Math::Vector3& pos)
+	Math::Vector3 PhysController::GetFootPosition()
 	{
 		if (!active)
 		{
-			pos = deactivePos;
-			return;
+			return deactivePos;
 		}
 
 		PxExtendedVec3 cpos = controller->getFootPosition();
-		pos = Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
+		return Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
+	}
+
+	void PhysController::SetPosition(Math::Vector3 pos)
+	{
+		if (!active)
+		{
+			deactivePos = pos;
+			return;
+		}
+
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetPosition for controller during phys update");
+		}
+		else
+		{
+			controller->setPosition(PxExtendedVec3(pos.x, pos.y, pos.z));
+		}
+	}
+
+	Math::Vector3 PhysController::GetPosition()
+	{
+		if (!active)
+		{
+			return deactivePos;
+		}
+
+		PxExtendedVec3 cpos = controller->getPosition();
+		return Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
 	}
 
 	void PhysController::RestrictZAxis()

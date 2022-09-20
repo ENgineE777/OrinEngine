@@ -174,11 +174,32 @@ namespace Oak
 		void SetUpDirection(Math::Vector3 up);
 
 		/**
+		\brief Get up direction
+
+		\return up direction
+		*/
+		Math::Vector3 GetUpDirection() const;
+
+		/**
 		\brief Set belonging to a physical group
 
 		\param[in] group Physical group
 		*/
 		void SetGroup(int group);
+
+		/**
+		\brief Set foot position of a controller
+
+		\param[in] pos New foot position of a controller
+		*/
+		void SetFootPosition(Math::Vector3 pos);
+
+		/**
+		\brief Get foot position of a controller
+
+		\return Current foot position of a controller
+		*/
+		Math::Vector3 GetFootPosition();
 
 		/**
 		\brief Set position of a controller
@@ -190,9 +211,9 @@ namespace Oak
 		/**
 		\brief Get position of a controller
 
-		\param[out] pos Current position of a controller
+		\return pos Current position of a controller
 		*/
-		void GetPosition(Math::Vector3& pos);
+		Math::Vector3 GetPosition();
 
 		/**
 		\brief Restrict axis for making object as 2D
