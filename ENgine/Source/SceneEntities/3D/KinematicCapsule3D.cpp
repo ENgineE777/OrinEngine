@@ -57,8 +57,7 @@ namespace Oak
 	{
 		controller->Move(dir * root.GetDeltaTime(), group == 0 ? physGroup : group);
 
-		Math::Vector3 pos;
-		controller->GetPosition(pos);
+		Math::Vector3 pos = controller->GetFootPosition();
 
 		if (affectOnParent && parent)
 		{

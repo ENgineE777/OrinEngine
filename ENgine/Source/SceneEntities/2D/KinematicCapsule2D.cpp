@@ -10,7 +10,6 @@ namespace Oak
 		BASE_SCENE_ENTITY_PROP(KinematicCapsule2D)
 		INT_PROP(KinematicCapsule2D, physGroup, 1, "Physics", "Physical group", "Physical group")
 		BOOL_PROP(KinematicCapsule2D, affectOnParent, false, "Physics", "Affect on parent", "Affect on parent")
-		BOOL_PROP(KinematicCapsule2D, YOriented, true, "Physics", "YOriented", "Affect on parent")
 		FLOAT_PROP(KinematicCapsule2D, height, 16.0f, "Physics", "height", "height")
 		FLOAT_PROP(KinematicCapsule2D, radius, 16.0f, "Physics", "radius", "radius")
 		FLOAT_PROP(KinematicCapsule2D, slopeLimit, 0.0f, "Physics", "slopeLimit", "slopeLimit")
@@ -20,7 +19,7 @@ namespace Oak
 	void KinematicCapsule2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = MoveXYZ;
+		transform.transformFlag = MoveXYZ | RotateZ | RectAnchorn;
 
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule2D::EditorDraw);
 	}
@@ -33,18 +32,32 @@ namespace Oak
 		}
 	}
 
+	Math::Vector3 KinematicCapsule2D::GetTopOffset() const
+	{
+		return Sprite::ToUnits(Math::Vector3{radius, -radius, 0.f} - transform.offset * transform.size * Math::Vector3{1.f, -1.f, 0.f});
+	}
+
+	Math::Vector3 KinematicCapsule2D::GetBottomOffset() const
+	{
+		return Sprite::ToUnits(Math::Vector3{radius, -radius - height, 0.f} - transform.offset * transform.size * Math::Vector3{1.f, -1.f, 0.f});
+	}
+
 	void KinematicCapsule2D::Play()
 	{
+		Math::Matrix mat = transform.GetGlobal();
+		Math::Vector3 upVector = mat.Vy();
+
+		transform.size.x = 2.f * radius;
+		transform.size.y = 2.f * radius + height;
+
 		PhysControllerDesc desc;
 		desc.height = Sprite::ToUnits(height);
 		desc.radius = Sprite::ToUnits(radius);
+		desc.upVector = upVector;
 
-		if (!YOriented)
-		{
-			desc.upVector.Set(0.0f, 0.0f, 1.0f);
-		}
+		const Math::Vector3 caplusePos = mat * GetBottomOffset();
 
-		desc.pos = transform.GetGlobal().Pos();
+		desc.pos = caplusePos;
 		desc.slopeLimit = slopeLimit;
 		desc.stepOffset = Sprite::ToUnits(stepOffset);
 
@@ -62,12 +75,13 @@ namespace Oak
 	{
 		controller->Move(Sprite::ToUnits(Math::Vector3(dir)) * root.GetDeltaTime(), group == 0 ? physGroup : group);
 
-		Math::Vector3 pos;
-		controller->GetPosition(pos);
+		const Math::Vector3 pos = Sprite::ToPixels(controller->GetPosition());
 
 		if (affectOnParent && parent)
 		{
-			parent->GetTransform().position = Sprite::ToPixels(pos);
+			Math::Matrix mat = transform.GetGlobal();
+			const Math::Vector3 offset = mat.MulNormal(GetBottomOffset());
+			parent->GetTransform().position = pos - offset - transform.GetLocal().Pos();
 		}
 		else
 		{
@@ -78,24 +92,48 @@ namespace Oak
 		}
 	}
 
+	Math::Vector3 KinematicCapsule2D::GetPosition()
+	{
+		if (controller)
+		{
+			return Sprite::ToPixels(controller->GetPosition());
+		}
+		return {};
+	}
+
 	void KinematicCapsule2D::SetPosition(Math::Vector3 pos)
 	{
 		if (controller)
 		{
 			controller->SetPosition(Sprite::ToUnits(pos));
+
+			if (affectOnParent && parent)
+			{
+				Math::Matrix mat = transform.GetGlobal();
+				const Math::Vector3 offset = mat.MulNormal(GetBottomOffset());
+				parent->GetTransform().position = pos - offset - transform.GetLocal().Pos();
+			}
 		}
 	}
 
 	void KinematicCapsule2D::EditorDraw(float dt)
 	{
+		transform.size.x = 2.f * radius;
+		transform.size.y = 2.f * radius + height;
+
 		if (IsVisible() && !scene->IsPlaying())
 		{
-			Math::Matrix mat = transform.GetGlobal();
-			float unitRadius = Sprite::ToUnits(radius);
-			Math::Vector3 dir = YOriented ? mat.Vy() : mat.Vz();
-
-			root.render.DebugSphere(mat.Pos() + dir * unitRadius, COLOR_CYAN, unitRadius);
-			root.render.DebugSphere(mat.Pos() + dir * Sprite::ToUnits(radius + height), COLOR_CYAN, unitRadius);
+			DebugDraw();
 		}
+	}
+
+	void KinematicCapsule2D::DebugDraw()
+	{
+		Math::Matrix mat = transform.GetGlobal();
+		const Math::Vector3 top    = mat * (GetTopOffset());
+		const Math::Vector3 bottom = mat * (GetBottomOffset());
+
+		root.render.DebugSphere(top, COLOR_CYAN, Sprite::ToUnits(radius));
+		root.render.DebugSphere(bottom, COLOR_CYAN, Sprite::ToUnits(radius));
 	}
 }

@@ -21,7 +21,8 @@ namespace Oak
 		float slopeLimit = cosf(Math::Radian * 20.0f);
 		float stepOffset = 0.5f;
 
-		bool YOriented = true;; 
+		Math::Vector3 GetTopOffset() const;
+		Math::Vector3 GetBottomOffset() const;
 
 	public:
 
@@ -37,9 +38,11 @@ namespace Oak
 		void Init() override;
 		void OnVisiblityChange(bool set) override;
 		void Play() override;
+		Math::Vector3 GetPosition();
 		void SetPosition(Math::Vector3 pos);
 		void Move(Math::Vector2 dir, uint32_t group = 0);
 		void EditorDraw(float dt);
+		void DebugDraw();
 	#endif
 	};
 }
