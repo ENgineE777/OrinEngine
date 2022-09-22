@@ -36,6 +36,7 @@ namespace Oak
 		virtual ~KinematicCapsule2D() = default;
 
 		void Init() override;
+		void ApplyProperties() override;
 		void OnVisiblityChange(bool set) override;
 		void Play() override;
 		Math::Vector3 GetPosition();

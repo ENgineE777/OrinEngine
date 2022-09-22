@@ -19,9 +19,16 @@ namespace Oak
 	void KinematicCapsule2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = MoveXYZ | RotateZ | RectAnchorn;
+		transform.transformFlag = MoveXYZ | RotateZ;
 
 		Tasks(false)->AddTask(0, this, (Object::Delegate)&KinematicCapsule2D::EditorDraw);
+	}
+
+	void KinematicCapsule2D::ApplyProperties()
+	{
+		transform.size.x = 2.f * radius;
+		transform.size.y = 2.f * radius + height;
+		transform.offset = 0.5f;
 	}
 
 	void KinematicCapsule2D::OnVisiblityChange(bool state)
@@ -34,21 +41,19 @@ namespace Oak
 
 	Math::Vector3 KinematicCapsule2D::GetTopOffset() const
 	{
-		return Sprite::ToUnits(Math::Vector3{radius, -radius, 0.f} - transform.offset * transform.size * Math::Vector3{1.f, -1.f, 0.f});
+		const auto offset = transform.size * transform.offset;
+		return Sprite::ToUnits(Math::Vector3(-offset.x + radius, offset.y, 0.0f));
 	}
 
 	Math::Vector3 KinematicCapsule2D::GetBottomOffset() const
 	{
-		return Sprite::ToUnits(Math::Vector3{radius, -radius - height, 0.f} - transform.offset * transform.size * Math::Vector3{1.f, -1.f, 0.f});
+		return GetTopOffset() + Sprite::ToUnits(Math::Vector3(0.0f, -transform.size.y, 0.0f));
 	}
 
 	void KinematicCapsule2D::Play()
 	{
 		Math::Matrix mat = transform.GetGlobal();
 		Math::Vector3 upVector = mat.Vy();
-
-		transform.size.x = 2.f * radius;
-		transform.size.y = 2.f * radius + height;
 
 		PhysControllerDesc desc;
 		desc.height = Sprite::ToUnits(height);
@@ -79,9 +84,7 @@ namespace Oak
 
 		if (affectOnParent && parent)
 		{
-			Math::Matrix mat = transform.GetGlobal();
-			const Math::Vector3 offset = mat.MulNormal(GetBottomOffset());
-			parent->GetTransform().position = pos - offset - transform.GetLocal().Pos();
+			parent->GetTransform().position = pos - transform.position;
 		}
 		else
 		{
@@ -109,18 +112,13 @@ namespace Oak
 
 			if (affectOnParent && parent)
 			{
-				Math::Matrix mat = transform.GetGlobal();
-				const Math::Vector3 offset = mat.MulNormal(GetBottomOffset());
-				parent->GetTransform().position = pos - offset - transform.GetLocal().Pos();
+				parent->GetTransform().position = pos - transform.position;
 			}
 		}
 	}
 
 	void KinematicCapsule2D::EditorDraw(float dt)
 	{
-		transform.size.x = 2.f * radius;
-		transform.size.y = 2.f * radius + height;
-
 		if (IsVisible() && !scene->IsPlaying())
 		{
 			DebugDraw();
@@ -130,8 +128,8 @@ namespace Oak
 	void KinematicCapsule2D::DebugDraw()
 	{
 		Math::Matrix mat = transform.GetGlobal();
-		const Math::Vector3 top    = mat * (GetTopOffset());
-		const Math::Vector3 bottom = mat * (GetBottomOffset());
+		const Math::Vector3 top    = mat * (GetTopOffset() - Sprite::ToUnits(Math::Vector3(0.0f, radius, 0.0f)));
+		const Math::Vector3 bottom = mat * (GetBottomOffset() + Sprite::ToUnits(Math::Vector3(0.0f, radius, 0.0f)));
 
 		root.render.DebugSphere(top, COLOR_CYAN, Sprite::ToUnits(radius));
 		root.render.DebugSphere(bottom, COLOR_CYAN, Sprite::ToUnits(radius));
