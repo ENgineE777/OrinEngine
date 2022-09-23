@@ -15,7 +15,8 @@ include_directories ("$EDITOR_DIR/ENgine/CppBuild/include/Libs/vjson"
 					 "$EDITOR_DIR/ENgine/CppBuild/include/Libs/physx/include"
 					 "$EDITOR_DIR/ENgine/CppBuild/include/ENgine/Support/PugiXml"
 					 "$EDITOR_DIR/ENgine/CppBuild/include/ENgine/Support/SPARK"
-					 "$EDITOR_DIR/ENgine/CppBuild/include/ENgine")
+					 "$EDITOR_DIR/ENgine/CppBuild/include/ENgine"
+					 "../Code")
 
 file (GLOB_RECURSE SOURCES "../*.cpp" "../*.h" "$EDITOR_DIR/ENgine/CppBuild/Gameplay.cpp")
 
