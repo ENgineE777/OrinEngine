@@ -79,6 +79,9 @@ namespace Oak
 		transform.axis.x = (horzAlign == Align::alignRight) ? -1.0f : 1.0f;
 		transform.axis.y = (vertAlign == Align::alignBottom) ? 1.0f : -1.0f;
 
+		//HAck to force recalc transform
+		transform.position = transform.position;
+
 		Math::Matrix global = transform.GetGlobal();
 		auto globalPos = Sprite::ToPixels(global.Pos());
 
