@@ -39,6 +39,8 @@ namespace Oak
 				zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * (0.015f + rotationSensivity * 0.007f);
 				ClampZoom2D();
 			}
+
+			Sprite::camPos = pos2D;
 		}
 		else
 		{

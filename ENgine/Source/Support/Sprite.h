@@ -15,6 +15,8 @@ namespace Oak
 		friend class SceneManager;
 		friend class Project;
 		friend class Editor;
+		friend class FreeCamera;
+		friend class Camera2D;
 
 #ifndef DOXYGEN_SKIP
 		static float _pixelsPerUnit;
@@ -26,6 +28,8 @@ namespace Oak
 
 		static void SetData(float pixelsHeight, float pixelsPerUnit);
 
+		static Math::Vector2 camPos;
+
 	public:
 
 		static ProgramRef quadPrg;
@@ -33,6 +37,8 @@ namespace Oak
 
 		static void Init();
 		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg = quadPrg);
+
+		static Math::Vector2 GetCamPos() { return camPos; }
 
 		static inline float GetPixelsHeight() { return _pixelsHeight; };
 

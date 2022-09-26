@@ -42,6 +42,7 @@ namespace Oak
 	float Sprite::_pixelsPerUnit = 50.0f;
 	float Sprite::_pixelsPerUnitInvert = 1.0f / _pixelsPerUnit;
 	float Sprite::_pixelsHeight = 1080.0f;
+	Math::Vector2 Sprite::camPos;
 
 	ProgramRef Sprite::quadPrg;
 	ProgramRef Sprite::quadPrgNoZ;
