@@ -58,6 +58,8 @@ namespace Oak
 
 			Sprite::SetData(pixelsHeight, pixelsPerUnit);
 
+			reader.Read("hideCursor", hideCursor);
+
 			bool useAlignRect = false;
 
 			while (reader.EnterBlock("scenes"))
@@ -132,6 +134,8 @@ namespace Oak
 
 		writer.Write("pixelsPerUnit", Sprite::ToPixels(1.0f));
 		writer.Write("pixelsHeight", Sprite::GetPixelsHeight());
+
+		writer.Write("hideCursor", hideCursor);
 
 		writer.StartArray("scenes");
 

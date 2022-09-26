@@ -50,6 +50,7 @@ namespace Oak
 
 		Math::Vector2 alignRect = 32.0f;
 		bool useAlignRect = false;
+		bool hideCursor = false;
 
 		eastl::vector<SceneHolder*> scenes;
 

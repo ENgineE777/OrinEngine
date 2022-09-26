@@ -3,6 +3,7 @@
 #include "Root/Root.h"
 #include "Support/Sprite.h"
 #include "EditorDrawer.h"
+#include "imgui.h"
 
 namespace Oak
 {
@@ -430,7 +431,7 @@ namespace Oak
 			if (Math::IsPointInTriangle(ms, ancorns[0], ancorns[1], ancorns[2]) ||
 				Math::IsPointInTriangle(ms, ancorns[0], ancorns[2], ancorns[3]))
 			{
-				//SetCursor(cr_move);
+				ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
 
 				selAxis = 0;
 
@@ -438,7 +439,7 @@ namespace Oak
 			}
 			else
 			{
-				//SetCursor(cr_rotate);
+				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
 
 				selAxis = 9;
 			}
