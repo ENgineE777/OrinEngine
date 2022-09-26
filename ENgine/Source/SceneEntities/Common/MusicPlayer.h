@@ -37,7 +37,7 @@ namespace Oak
 
 	*/
 
-	class MusicPlayer : public SceneEntity
+	class CLASS_DECLSPEC MusicPlayer : public SceneEntity
 	{
 	public:
 		META_DATA_DECL(MusicPlayer)

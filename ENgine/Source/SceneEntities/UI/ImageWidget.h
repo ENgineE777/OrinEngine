@@ -9,7 +9,7 @@
 
 namespace Oak
 {
-	class ImageWidget : public ContainerWidget
+	class CLASS_DECLSPEC ImageWidget : public ContainerWidget
 	{
 	public:
 

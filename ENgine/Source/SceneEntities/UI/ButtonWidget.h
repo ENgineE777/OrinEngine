@@ -9,7 +9,7 @@
 
 namespace Oak
 {
-	class ButtonWidget : public ContainerWidget
+	class CLASS_DECLSPEC ButtonWidget : public ContainerWidget
 	{
 	public:
 

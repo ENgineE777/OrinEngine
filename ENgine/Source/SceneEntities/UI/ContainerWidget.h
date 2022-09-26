@@ -8,7 +8,7 @@
 
 namespace Oak
 {
-	class ContainerWidget : public SceneEntity
+	class CLASS_DECLSPEC ContainerWidget : public SceneEntity
 	{
 	public:
 

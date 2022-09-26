@@ -10,7 +10,7 @@
 
 namespace Oak
 {
-	class LabelWidget : public ContainerWidget
+	class CLASS_DECLSPEC LabelWidget : public ContainerWidget
 	{
 	public:
 

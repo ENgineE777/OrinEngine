@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	class ControlsAliases : public SceneEntity
+	class CLASS_DECLSPEC ControlsAliases : public SceneEntity
 	{
 	public:
 		META_DATA_DECL(ControlsAliases)
