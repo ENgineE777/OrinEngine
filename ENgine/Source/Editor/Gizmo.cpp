@@ -406,6 +406,27 @@ namespace Oak
 					ancorns[i].y - 7 < ms.y && ms.y < ancorns[i].y + 7)
 				{
 					selAxis = i + 1;
+
+					if (selAxis == 1 || selAxis == 3)
+					{
+						ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNESW);
+					}
+					else
+					if (selAxis == 2 || selAxis == 4)
+					{
+						ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNWSE);
+					}
+					else
+					if (selAxis == 5 || selAxis == 7)
+					{
+						ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNS);
+					}
+					else
+					if (selAxis == 6 || selAxis == 8)
+					{
+						ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNS);
+					}
+
 					break;
 				}
 			}
@@ -431,16 +452,13 @@ namespace Oak
 			if (Math::IsPointInTriangle(ms, ancorns[0], ancorns[1], ancorns[2]) ||
 				Math::IsPointInTriangle(ms, ancorns[0], ancorns[2], ancorns[3]))
 			{
-				ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
-
 				selAxis = 0;
+				ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
 
 				rectPos = transform->position;
 			}
 			else
 			{
-				ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
-
 				selAxis = 9;
 			}
 		}
