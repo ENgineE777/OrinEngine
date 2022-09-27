@@ -87,9 +87,20 @@ namespace Oak
 							folder->assets.push_back(NEW AssetHolder());
 
 							AssetHolder* ref = folder->assets.back();
-							ref->name = ffd.cFileName;
+
+							char name[128];
+							StringUtils::Copy(name, 128, ffd.cFileName);
+							StringUtils::RemoveExtension(name);
+
+							ref->name = name;
+
 							ref->ext = extension;
 							ref->fullName = relativeName;
+
+							if (StringUtils::IsEqual(ref->ext.c_str(), "scn"))
+							{
+								root.scenes.RegisterScene(relativeName, name);
+							}
 
 							assetsMap[relativeName] = ref;
 						}

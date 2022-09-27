@@ -696,7 +696,7 @@ namespace Oak
 						prefab->SetPath(path.c_str());
 						prefab->SetRootEntityType(createPrefabTypesList[createPrefabTypesIndex].c_str());
 
-						project.AddScene(prefab);
+						prefab->uid = root.scenes.GenerateUID();
 						prefab->Save();
 
 						delete prefab;
@@ -719,7 +719,7 @@ namespace Oak
 						scene->Init();
 						scene->SetPath(path.c_str());
 
-						project.AddScene(scene);
+						scene->uid = root.scenes.GenerateUID();
 						scene->Save();
 
 						delete scene;
@@ -1238,7 +1238,7 @@ namespace Oak
 				{
 					if (ImGui::MenuItem("Mark as start scne"))
 					{
-						project.SetStartScene(scene->GetPath().c_str());
+						project.SetStartScene(scene->GetPath());
 					}
 				}
 			}
@@ -1332,7 +1332,7 @@ namespace Oak
 			eastl::string name = item->name;
 			auto* asset = item->GetAsset<Asset>();
 
-			if (item->GetAsset<AssetScene>() && project.IsStartScene(item->fullName.c_str()))
+			if (item->GetAsset<AssetScene>() && project.IsStartScene(item->name.c_str()))
 			{
 				name += "(Main)";
 			}

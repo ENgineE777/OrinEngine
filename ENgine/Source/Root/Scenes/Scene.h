@@ -21,7 +21,6 @@ namespace Oak
 
 	class CLASS_DECLSPEC Scene
 	{
-		friend class Project;
 		friend class SceneEntity;
 		friend class SceneManager;
 

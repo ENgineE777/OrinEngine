@@ -16,8 +16,8 @@ namespace Oak
 		JsonReader reader;
 		if (reader.ParseFile(projectName))
 		{
-			int startScene = -1;
-			if (!reader.Read("start_scene", startScene))
+			char startScene[128];
+			if (!reader.Read("start_scene", startScene, 128))
 			{
 				return;
 			}
@@ -30,59 +30,60 @@ namespace Oak
 
 			Sprite::SetData(pixelsHeight, pixelsPerUnit);
 
-			int count = 0;
-			reader.Read("scenes_count", count);
-			scenes.resize(count);
-
-			int index = 0;
-			char name[256];
-
-			while (reader.EnterBlock("scenes"))
-			{
-				SceneHolder& scn = scenes[index];
-
-				reader.Read("path", scn.path);
-
-				StringUtils::GetFileName(scn.path.c_str(), name);
-				StringUtils::RemoveExtension(name);
-
-				scenesSearch[name] = &scenes[index];
-
-				while (reader.EnterBlock("include"))
-				{
-					reader.Read("path", name, 256);
-
-					char inclName[256];
-
-					StringUtils::GetFileName(name, inclName);
-					StringUtils::RemoveExtension(inclName);
-
-					reader.LeaveBlock();
-				}
-
-				reader.LeaveBlock();
-
-				index++;
-			}
-
 			LoadScene(&scenes[startScene]);
 		}
 	}
 
+	void SceneManager::RegisterScene(const eastl::string& path, const eastl::string& name)
+	{
+		SceneHolder& sceneHolder = scenes[name];
+		sceneHolder.path = path;
+	}
+
+	uint16_t SceneManager::GenerateUID()
+	{
+		uint16_t uid = 0;
+
+		while (uid == 0)
+		{
+			float koef = Math::Rand() * 0.99f;
+			uid = (uint16_t)(koef * 4096) << 4;
+
+			/*for (auto& scn : scenes)
+			{
+				if (scn == holder)
+				{
+					continue;
+				}
+
+				if (scn->uid == uid)
+				{
+					uid = 0;
+					break;
+				}
+			}*/
+
+			if (uid != 0)
+			{
+				break;
+			}
+		}
+
+		return uid;
+	}
+
 	void SceneManager::LoadScene(const char* name)
 	{
-		if (scenesSearch.find(name) == scenesSearch.end())
+		if (scenes.find(name) == scenes.end())
 		{
 			return;
 		}
 
-		scenesToLoad.push_back(scenesSearch[name]);
+		scenesToLoad.push_back(&scenes[name]);
 	}
 
 	void SceneManager::LoadScene(SceneHolder* holder)
 	{
-		holder->refCounter++;
-
 		if (holder->scene)
 		{
 			return;
@@ -98,12 +99,12 @@ namespace Oak
 
 	Scene* SceneManager::GetScene(const char* name)
 	{
-		if (scenesSearch.find(name) == scenesSearch.end())
+		if (scenes.find(name) == scenes.end())
 		{
 			return nullptr;
 		}
 
-		return scenesSearch[name]->scene;
+		return scenes[name].scene;
 	}
 
 	TaskExecutor::SingleTaskPool* SceneManager::AddTaskPool(const char* file, int line)
@@ -139,10 +140,10 @@ namespace Oak
 	{
 		for (auto& scn : scenes)
 		{
-			if (scn.scene)
+			if (scn.second.scene)
 			{
 				eastl::vector<Scene::Group*> outGroup;
-				scn.scene->GetGroup(outGroup, groupName);
+				scn.second.scene->GetGroup(outGroup, groupName);
 
 				for (auto group : outGroup)
 				{
@@ -157,28 +158,20 @@ namespace Oak
 
 	void SceneManager::UnloadScene(const char* name)
 	{
-		if (scenesSearch.find(name) == scenesSearch.end())
+		if (scenes.find(name) == scenes.end())
 		{
 			return;
 		}
 
-		SceneHolder* holder = scenesSearch[name];
+		SceneHolder& holder = scenes[name];
 
-		if (holder->refCounter > 0)
-		{
-			holder->refCounter--;
-
-			if (holder->refCounter == 0)
-			{
-				holder->scene->EnableTasks(false);
-				scenesToDelete.push_back(holder);
-			}
-		}
+		holder.scene->EnableTasks(false);
+		scenesToDelete.push_back(&holder);
 	}
 
 	void SceneManager::UnloadScene(SceneHolder* holder)
 	{
-		if (holder->refCounter == 0)
+		if (holder->scene)
 		{
 			auto* scene = holder->scene;
 			RELEASE(holder->scene)
@@ -190,14 +183,11 @@ namespace Oak
 	{
 		for (auto& scn : scenes)
 		{
-			if (scn.scene)
+			if (scn.second.scene)
 			{
-				RELEASE(scn.scene)
+				RELEASE(scn.second.scene)
 			}
 		}
-
-		scenes.clear();
-		scenesSearch.clear();
 	}
 
 	void SceneManager::Release()

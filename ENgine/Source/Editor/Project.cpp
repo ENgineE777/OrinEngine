@@ -6,7 +6,7 @@ namespace Oak
 {
 	bool Project::CanRun()
 	{
-		if (startScene == -1)
+		if (startScene.empty())
 		{
 			MESSAGE_BOX("Can't start", "Please define a start scene");
 
@@ -60,22 +60,6 @@ namespace Oak
 
 			reader.Read("hideCursor", hideCursor);
 
-			bool useAlignRect = false;
-
-			while (reader.EnterBlock("scenes"))
-			{
-				scenes.push_back(new SceneHolder());
-				SceneHolder* scn = scenes.back();
-
-				eastl::string str;
-				reader.Read("path", str);
-				scn->SetPath(str.c_str());
-
-				reader.Read("uid", scn->uid);
-
-				reader.LeaveBlock();
-			}
-
 			eastl::string edScene;
 			reader.Read("edited_asset", edScene);
 
@@ -127,7 +111,6 @@ namespace Oak
 		writer.Write("projectName", projectName.c_str());
 
 		writer.Write("start_scene", startScene);
-		writer.Write("scenes_count", (int)scenes.size());
 
 		writer.Write("alignRect", editor.gizmo.alignRect);
 		writer.Write("useAlignRect", editor.gizmo.useAlignRect);
@@ -137,143 +120,21 @@ namespace Oak
 
 		writer.Write("hideCursor", hideCursor);
 
-		writer.StartArray("scenes");
-
-		for (auto& scn : scenes)
-		{
-			writer.StartBlock(nullptr);
-
-			writer.Write("path", scn->path.c_str());
-			writer.Write("uid", scn->uid);
-
-			writer.FinishBlock();
-		}
-
-		writer.FinishArray();
-
 		writer.Write("edited_asset", editor.selectedEditAsset ? editor.selectedEditAsset->GetPath().c_str() : "");
 	}
 
-	void Project::SetStartScene(const char* path)
+	void Project::SetStartScene(const eastl::string& path)
 	{
-		if (startScene != -1)
-		{
-			startScene = -1;
-		}
+		char name[128];
+		StringUtils::GetFileName(path.c_str(), name);
 
-		int index = FindSceneIndex(path);
-
-		if (index != -1)
-		{
-			startScene = index;
-		}
-	}
-
-	bool Project::IsStartScene(const char* path)
-	{
-		return startScene == FindSceneIndex(path);
-	}
-
-	Project::SceneHolder* Project::FindSceneHolder(const char* path)
-	{
-		for (int i = 0; i < scenes.size(); i++)
-		{
-			if (StringUtils::IsEqual(scenes[i]->path.c_str(), path))
-			{
-				return scenes[i];
-			}
-		}
-
-		return nullptr;
-	}
-
-	int Project::FindSceneIndex(const char* path)
-	{
-		char name[256];
-		StringUtils::GetFileName(path, name);
 		StringUtils::RemoveExtension(name);
-
-		for (int i = 0; i<scenes.size(); i++)
-		{
-			if (StringUtils::IsEqual(scenes[i]->name.c_str(), name))
-			{
-				return i;
-			}
-		}
-
-		return -1;
+		startScene = name;
 	}
 
-	void Project::AddScene(AssetScene* scene)
+	bool Project::IsStartScene(const eastl::string& name)
 	{
-		char cropped_path[1024];
-		StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), scene->GetPath().c_str(), cropped_path, 1024);
-
-		/*if (FindSceneIndex(cropped_path) != -1)
-		{
-			return;
-		}*/
-
-		SceneHolder* holder = new SceneHolder();
-		holder->SetPath(cropped_path);
-
-		GenerateUID(holder);
-
-		scenes.push_back(holder);
-
-		scene->GetScene()->uid = holder->uid;
-
-		char name[256];
-		StringUtils::GetFileName(cropped_path, name);
-		StringUtils::RemoveExtension(name);
-
-		holder->SetPath(cropped_path);
-	}
-
-	void Project::DeleteScene(SceneHolder* holder)
-	{
-		int index = FindSceneIndex(holder->path.c_str());
-
-		if (index != -1)
-		{
-			if (startScene == index)
-			{
-				startScene = -1;
-			}
-
-			delete scenes[index];
-			scenes.erase(scenes.begin() + index);
-		}
-	}
-
-	void Project::GenerateUID(SceneHolder* holder)
-	{
-		uint16_t uid = 0;
-
-		while (uid == 0)
-		{
-			float koef = Math::Rand() * 0.99f;
-			uid = (uint16_t)(koef * 4096) << 4;
-
-			for (auto& scn : scenes)
-			{
-				if (scn == holder)
-				{
-					continue;
-				}
-
-				if (scn->uid == uid)
-				{
-					uid = 0;
-					break;
-				}
-			}
-
-			if (uid != 0)
-			{
-				holder->uid = uid;
-			}
-		}
+		return StringUtils::IsEqual(startScene.c_str(), name.c_str());
 	}
 
 	void Project::Reset()
@@ -284,8 +145,6 @@ namespace Oak
 		Sprite::SetData(1080.0f, 50.0f);
 
 		editor.SelectEditAsset(nullptr);
-
-		scenes.clear();
 
 		root.assets.Clear();
 

@@ -22,6 +22,7 @@ namespace Oak
 		float camera2DZoom = 1.0f;
 
 		Math::Vector2 gizmoAlign2D = 0.0f;
+		uint16_t uid = 0;
 
 		META_DATA_DECL_BASE(AssetPrefab)
 

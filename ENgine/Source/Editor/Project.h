@@ -15,25 +15,6 @@ namespace Oak
 	{
 	public:
 
-		struct SceneHolder
-		{
-			eastl::string path;
-			eastl::string name;
-
-			uint16_t uid = 0;
-
-			void SetPath(const char* set_path)
-			{
-				path = set_path;
-
-				char setName[256];
-				StringUtils::GetFileName(path.c_str(), setName);
-				StringUtils::RemoveExtension(setName);
-
-				name = setName;
-			}
-		};
-
 		eastl::string projectFullName;
 		eastl::string projectName;
 		char projectPath[1024];
@@ -46,13 +27,11 @@ namespace Oak
 		eastl::string iconSmallPath;
 		TextureRef iconSmall;
 
-		int startScene = -1;
+		eastl::string startScene;
 
 		Math::Vector2 alignRect = 32.0f;
 		bool useAlignRect = false;
 		bool hideCursor = false;
-
-		eastl::vector<SceneHolder*> scenes;
 
 		bool CanRun();
 		bool Load(const char* fileName);
@@ -60,14 +39,9 @@ namespace Oak
 		void Save(const char* fileName);
 		void Save();
 
-		void SetStartScene(const char* path);
-		bool IsStartScene(const char* path);
-		int  FindSceneIndex(const char* path);
-		SceneHolder* FindSceneHolder(const char* path);
-		void AddScene(AssetScene* scene);
-		void DeleteScene(SceneHolder* holder);
+		void SetStartScene(const eastl::string& path);
+		bool IsStartScene(const eastl::string& name);
 
-		void GenerateUID(SceneHolder* holder);
 		void Reset();
 
 		void SelectExportDir();

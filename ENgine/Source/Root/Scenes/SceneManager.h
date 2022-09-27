@@ -22,25 +22,27 @@ namespace Oak
 	class SceneManager : public ISceneManager
 	{
 		friend class SceneEntity;
+		friend class Assets;
+		friend class Editor;
 
 		struct SceneHolder
 		{
 			eastl::string path;
 			Scene* scene = nullptr;
-			int refCounter = 0;
 		};
-
-		eastl::vector<SceneHolder> scenes;
 
 		eastl::vector<SceneHolder*> scenesToLoad;
 		eastl::vector<SceneHolder*> scenesToDelete;
 
-		eastl::map<eastl::string, SceneHolder*> scenesSearch;
+		eastl::map<eastl::string, SceneHolder> scenes;
 
 		TaskExecutor::GroupTaskPool* groupTaskPool;
 
 		void LoadScene(SceneHolder* holder);
 		void UnloadScene(SceneHolder* holder);
+
+		void RegisterScene(const eastl::string& path, const eastl::string& name);
+		uint16_t GenerateUID();
 
 	public:
 

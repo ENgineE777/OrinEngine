@@ -34,6 +34,7 @@ namespace Oak
 
 	void AssetScene::LoadMetaData(JsonReader& reader)
 	{
+		reader.Read("uid", uid);
 		reader.Read("selected_entity", selectedEntityID);
 		reader.Read("camera2DMode", camera2DMode);
 		reader.Read("camera3DAngles", camera3DAngles);
@@ -63,6 +64,7 @@ namespace Oak
 			GrabEditorData();
 		}
 
+		writer.Write("uid", uid);
 		writer.Write("selected_entity", selectedEntityID);
 		writer.Write("camera2DMode", camera2DMode);
 		writer.Write("camera3DAngles", camera3DAngles);
