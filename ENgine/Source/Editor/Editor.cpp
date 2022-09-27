@@ -462,6 +462,11 @@ namespace Oak
 
 		if (vireportHowered)
 		{
+			if (projectRunning && project.hideCursor)
+			{
+				ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+			}
+
 			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(2) || fabsf(io.MouseWheel > 0.01f))
 			{
 				ImGui::SetWindowFocus();
@@ -847,6 +852,13 @@ namespace Oak
 			ImGui::NextColumn();
 
 			ImGui::Columns(1);
+		}
+
+		is_open = ImGui::CollapsingHeader("General###ProjectSettingsGeneral", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+			ImGui::Checkbox("Hide Cursor", &project.hideCursor);
 		}
 
 		is_open = ImGui::CollapsingHeader("2D###ProjectSettings2D", ImGuiTreeNodeFlags_DefaultOpen);
