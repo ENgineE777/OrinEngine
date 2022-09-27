@@ -95,6 +95,8 @@ namespace Oak
 		holder->scene->Load(holder->path.c_str());
 
 		holder->scene->Play();
+
+		orderToUnload.push_back(holder);
 	}
 
 	Scene* SceneManager::GetScene(const char* name)
@@ -174,6 +176,14 @@ namespace Oak
 		if (holder->scene)
 		{
 			auto* scene = holder->scene;
+
+			auto iter = eastl::find(orderToUnload.begin(), orderToUnload.end(), holder);
+
+			if (iter != orderToUnload.end())
+			{
+				orderToUnload.erase(iter);
+			}
+
 			RELEASE(holder->scene)
 			root.sounds.DeleteSceneSounds(scene);
 		}
@@ -181,13 +191,15 @@ namespace Oak
 
 	void SceneManager::UnloadAll()
 	{
-		for (auto& scn : scenes)
+		for (int i = orderToUnload.size() - 1; i >= 0; i--)
 		{
-			if (scn.second.scene)
+			if (orderToUnload[i]->scene)
 			{
-				RELEASE(scn.second.scene)
+				RELEASE(orderToUnload[i]->scene)
 			}
 		}
+
+		orderToUnload.clear();
 	}
 
 	void SceneManager::Release()

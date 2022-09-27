@@ -31,6 +31,7 @@ namespace Oak
 			Scene* scene = nullptr;
 		};
 
+		eastl::vector<SceneHolder*> orderToUnload;
 		eastl::vector<SceneHolder*> scenesToLoad;
 		eastl::vector<SceneHolder*> scenesToDelete;
 
