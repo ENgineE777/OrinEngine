@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, ContainerWidget, "ContainerWidget")
+	ENTITYREG(SceneEntity, ContainerWidget, "UI", "ContainerWidget")
 
 	META_DATA_DESC(ContainerWidget)
 		BASE_SCENE_ENTITY_PROP(ContainerWidget)

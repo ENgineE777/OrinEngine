@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, KinematicCapsule2D, "KinematicCapsule2D")
+	ENTITYREG(SceneEntity, KinematicCapsule2D, "2D/Physics","KinematicCapsule2D")
 
 	META_DATA_DESC(KinematicCapsule2D)
 		BASE_SCENE_ENTITY_PROP(KinematicCapsule2D)

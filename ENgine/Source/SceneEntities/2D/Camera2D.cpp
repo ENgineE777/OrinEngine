@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, Camera2D, "Camera2D")
+	ENTITYREG(SceneEntity, Camera2D, "2D", "Camera2D")
 
 	META_DATA_DESC(Camera2D)
 		BASE_SCENE_ENTITY_PROP(Camera2D)

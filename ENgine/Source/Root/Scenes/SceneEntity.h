@@ -371,7 +371,7 @@ namespace Oak
 	struct SceneEntityRef : SceneEntityRefBase
 	{
 		T* entity = nullptr;
-		virtual void SetEntity(SceneEntity* setEntity) override
+		void SetEntity(SceneEntity* setEntity) override
 		{
 			if (entity)
 			{
@@ -405,11 +405,71 @@ namespace Oak
 			return entity;
 		}
 
-		virtual SceneEntity* GetSceneEntity() override { return entity; };
+		SceneEntity* GetSceneEntity() override { return entity; };
 	};
 
 	CLASSFACTORYDEF(SceneEntity)
+		eastl::vector<eastl::string> groups;
+		static void SortGrouped()
+		{
+			auto& decls = GropedDecls();
+
+			for (int i = 0; i < decls.size(); i++)
+			{
+				if (decls[i]->groups.size() == 0)
+				{
+					int index = 0;
+					const char* group = decls[i]->GetGroup();
+					char subGroup[128];
+					const char* nextGroup = strstr(group, "/");
+
+					while (nextGroup)
+					{
+						int len = (int)(nextGroup - group);
+						memcpy(subGroup, group, len);
+						subGroup[len] = 0;
+						decls[i]->groups.push_back(eastl::string(subGroup));
+
+						nextGroup++;
+						group = nextGroup;
+						nextGroup = strstr(group, "/");
+					}
+
+					decls[i]->groups.push_back(eastl::string(group));
+				}
+			}
+
+			for (int i = 0; i < decls.size() - 1; i++)
+			{
+				for (int j = i + 1; j < decls.size(); j++)
+				{
+					bool sameGroup = StringUtils::IsEqual(decls[i]->GetGroup(), decls[j]->GetGroup());
+
+					if ((!sameGroup && !StringUtils::CompareABC(decls[i]->GetGroup(), decls[j]->GetGroup())) || (sameGroup && !StringUtils::CompareABC(decls[i]->GetName(), decls[j]->GetName())))
+					{
+						ClassFactorySceneEntity* tmp = decls[i];
+						decls[i] = decls[j];
+						decls[j] = tmp;
+					}
+				}
+			}
+		}
+		static eastl::vector<ClassFactorySceneEntity*>& GropedDecls()
+		{
+			static eastl::vector<ClassFactorySceneEntity*> decls;
+			if (decls.size() != Decls().size())
+			{
+				decls = Decls();
+			}
+			return decls;
+		}
+		virtual const char* GetGroup() = 0;
 	CLASSFACTORYDEF_END()
+
+	#define ENTITYREG(baseClass, className, groupName, shortName)\
+	CLASSREGEX(baseClass, className, className, shortName)\
+			const char* GetGroup() { return groupName; };\
+	CLASSREGEX_END(baseClass, className)
 
 	#define BASE_SCENE_ENTITY_PROP(className)\
 	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\

@@ -21,7 +21,7 @@ namespace Oak
 	}
 #endif
 
-	CLASSREG(SceneEntity, TileMap, "TileMap")
+	ENTITYREG(SceneEntity, TileMap, "2D/Sprites", "TileMap")
 
 	META_DATA_DESC(TileMap)
 		BASE_SCENE_ENTITY_PROP(TileMap)

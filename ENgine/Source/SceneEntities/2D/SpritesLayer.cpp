@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, SpritesLayer, "SpritesLayer")
+	ENTITYREG(SceneEntity, SpritesLayer, "2D", "SpritesLayer")
 
 	META_DATA_DESC(SpritesLayer)
 		BASE_SCENE_ENTITY_PROP(SpritesLayer)

@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, ButtonWidget, "ButtonWidget")
+	ENTITYREG(SceneEntity, ButtonWidget, "UI", "ButtonWidget")
 
 	META_DATA_DESC(ButtonWidget)
 		BASE_SCENE_ENTITY_PROP(ButtonWidget)

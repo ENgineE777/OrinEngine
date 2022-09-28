@@ -13,7 +13,7 @@ namespace Oak
 		TRANSFORM_PROP(GenericMarker::Instance, transform, "Transform")
 	META_DATA_DESC_END()
 
-	CLASSREG(SceneEntity, GenericMarker, "GenericMarker")
+	ENTITYREG(SceneEntity, GenericMarker, "3D", "GenericMarker")
 
 	META_DATA_DESC(GenericMarker)
 		BASE_SCENE_ENTITY_PROP(GenericMarker)

@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, Node2D, "Node2D")
+	ENTITYREG(SceneEntity, Node2D, "2D", "Node2D")
 
 	META_DATA_DESC(Node2D)
 		BASE_SCENE_ENTITY_PROP(Node2D)

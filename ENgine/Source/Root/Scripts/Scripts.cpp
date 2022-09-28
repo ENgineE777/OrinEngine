@@ -169,6 +169,7 @@ namespace Oak
 				code_ptr(ClassFactorySceneEntity::Decls());
 
 				ClassFactorySceneEntity::Sort();
+				ClassFactorySceneEntity::SortGrouped();
 			}
 
 			if (Module && allowDynamicReload)

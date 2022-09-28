@@ -3,7 +3,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, ControlsAliases, "ControlsAliases")
+	ENTITYREG(SceneEntity, ControlsAliases, "Common", "ControlsAliases")
 
 	META_DATA_DESC(ControlsAliases)
 		BASE_SCENE_ENTITY_PROP(ControlsAliases)

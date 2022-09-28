@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, AnimGraph2D, "AnimGraph2D")
+	ENTITYREG(SceneEntity, AnimGraph2D, "2D/Sprites","AnimGraph2D")
 
 	META_DATA_DESC(AnimGraph2D)
 		BASE_SCENE_ENTITY_PROP(AnimGraph2D)

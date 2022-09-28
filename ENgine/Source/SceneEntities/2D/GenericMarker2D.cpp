@@ -7,7 +7,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, GenericMarker2D, "GenericMarker2D")
+	ENTITYREG(SceneEntity, GenericMarker2D, "2D", "GenericMarker2D")
 
 	META_DATA_DESC(GenericMarker2D)
 		BASE_SCENE_ENTITY_PROP(GenericMarker2D)

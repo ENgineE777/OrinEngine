@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, ParalaxedSpriteEntity, "ParalaxedSprite")
+	ENTITYREG(SceneEntity, ParalaxedSpriteEntity, "2D/Sprites", "ParalaxedSprite")
 
 	META_DATA_DESC(ParalaxedSpriteEntity)
 		BASE_SCENE_ENTITY_PROP(ParalaxedSpriteEntity)

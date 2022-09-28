@@ -5,7 +5,7 @@
 namespace Oak
 {
 
-	CLASSREG(SceneEntity, PhysBox3D, "PhysBox3D")
+	ENTITYREG(SceneEntity, PhysBox3D, "3D/Physics", "PhysBox3D")
 
 	META_DATA_DESC(PhysBox3D)
 		BASE_SCENE_ENTITY_PROP(PhysBox3D)

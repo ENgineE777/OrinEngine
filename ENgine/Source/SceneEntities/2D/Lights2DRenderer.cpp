@@ -23,7 +23,7 @@ namespace Oak
 	CLASSREGEX(Program, LightMap2DProgram, LightMap2DProgram, "LightMap2DProgram")
 	CLASSREGEX_END(Program, LightMap2DProgram)
 
-	CLASSREG(SceneEntity, Lights2DRenderer, "Lights2DRenderer")
+		ENTITYREG(SceneEntity, Lights2DRenderer, "2D/Lights", "Lights2DRenderer")
 
 	META_DATA_DESC(Lights2DRenderer)
 		BASE_SCENE_ENTITY_PROP(Lights2DRenderer)

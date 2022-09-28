@@ -7,6 +7,7 @@ namespace Oak
 	void SceneManager::Init()
 	{
 		ClassFactorySceneEntity::Sort();
+		ClassFactorySceneEntity::SortGrouped();
 
 		groupTaskPool = root.taskExecutor.CreateGroupTaskPool(_FL_);
 	}
@@ -191,7 +192,7 @@ namespace Oak
 
 	void SceneManager::UnloadAll()
 	{
-		for (int i = orderToUnload.size() - 1; i >= 0; i--)
+		for (int i = (int)orderToUnload.size() - 1; i >= 0; i--)
 		{
 			if (orderToUnload[i]->scene)
 			{

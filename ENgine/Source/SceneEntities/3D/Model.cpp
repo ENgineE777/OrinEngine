@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, ModelEntity, "Mesh3D")
+	ENTITYREG(SceneEntity, ModelEntity, "3D/Geometry", "Mesh3D")
 
 	META_DATA_DESC(ModelEntity)
 		BASE_SCENE_ENTITY_PROP(ModelEntity)

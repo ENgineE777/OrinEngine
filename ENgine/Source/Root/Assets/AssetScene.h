@@ -65,6 +65,7 @@ namespace Oak
 		bool allowSceneDropTraget = true;
 		bool isPrefab = false;
 
+		void CreateEntityPopupEntry(const eastl::vector<class ClassFactorySceneEntity*>& decls, int& curIndex, int curDepth, bool onlyToCreate);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
 		void SceneDropTraget(SceneEntity* entity);
 		void SceneTreePopup(bool contextItem);

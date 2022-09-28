@@ -3,7 +3,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, MusicPlayer, "MusicPlayer")
+	ENTITYREG(SceneEntity, MusicPlayer, "Sound", "MusicPlayer")
 
 	META_DATA_DESC(MusicPlayer)
 		BASE_SCENE_ENTITY_PROP(MusicPlayer)

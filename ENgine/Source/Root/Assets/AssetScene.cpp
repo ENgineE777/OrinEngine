@@ -364,6 +364,91 @@ namespace Oak
 		}
 	}
 
+	void AssetScene::CreateEntityPopupEntry(const eastl::vector<ClassFactorySceneEntity*>& decls, int& curIndex, int curDepth, bool onlyToCreate)
+	{
+		while (curIndex < decls.size())
+		{
+			if (decls[curIndex]->groups.size() == curDepth)
+			{
+				if (ImGui::MenuItem(decls[curIndex]->GetShortName()))
+				{
+					auto* entity = scene->CreateEntity(decls[curIndex]->GetName());
+
+					if (selectedEntity)
+					{
+						auto* parent = onlyToCreate ? selectedEntity : selectedEntity->GetParent();
+
+						if (parent)
+						{
+							entity->SetParent(parent, selectedEntity);
+						}
+						else
+						{
+							if (!isPrefab)
+							{
+								scene->AddEntity(entity, selectedEntity);
+							}
+							else
+							{
+								RELEASE(entity)
+							}
+						}
+					}
+					else
+					{
+						scene->AddEntity(entity);
+					}
+
+					if (entity)
+					{
+						auto& transform = entity->GetTransform();
+
+						if (transform.objectType == ObjectType::Object2D)
+						{
+							transform.position = editor.freeCamera.pos2D;
+						}
+						else
+						{
+							transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
+						}
+
+						entity->UpdateVisibility();
+						SelectEntity(entity);
+
+						containsUnsavedChanges = true;
+					}
+				}
+			}
+			else
+			if (ImGui::BeginMenu(decls[curIndex]->groups[curDepth].c_str()))
+			{
+				CreateEntityPopupEntry(decls, curIndex, curDepth + 1, onlyToCreate);
+
+				ImGui::EndMenu();
+			}
+
+			if (curDepth > 0 && curIndex + 1 < decls.size())
+			{
+				if (decls[curIndex + 1]->groups.size() < curDepth)
+				{
+					return;
+				}
+
+				if (!StringUtils::IsEqual(decls[curIndex]->groups[curDepth - 1].c_str(), decls[curIndex + 1]->groups[curDepth - 1].c_str()))
+				{
+					return;
+				}
+			}
+
+			curIndex++;
+
+			if (curIndex == decls.size())
+			{
+				break;
+			}
+		}
+	}
+
 	void AssetScene::SceneTreePopup(bool contextItem)
 	{
 		if (isPrefab && (selectedEntity == nullptr))
@@ -387,65 +472,12 @@ namespace Oak
 
 			if (ImGui::BeginMenu("Create Entity"))
 			{
-				auto& decls = ClassFactorySceneEntity::Decls();
+				auto& decls = ClassFactorySceneEntity::GropedDecls();
+				int index = 0;
+				int curDepth = 0;
 
-				for (auto& decl : decls)
-				{
-					if (StringUtils::IsEqual(decl->GetShortName(), "PrefabInstance"))
-					{
-						continue;
-					}
-
-					if (ImGui::MenuItem(decl->GetShortName()))
-					{
-						auto* entity = scene->CreateEntity(decl->GetName());
-
-						if (selectedEntity)
-						{
-							auto* parent = onlyToCreate ? selectedEntity : selectedEntity->GetParent();
-
-							if (parent)
-							{
-								entity->SetParent(parent, selectedEntity);
-							}
-							else
-							{
-								if (!isPrefab)
-								{
-									scene->AddEntity(entity, selectedEntity);
-								}
-								else
-								{
-									RELEASE(entity)
-								}
-							}
-						}
-						else
-						{
-							scene->AddEntity(entity);
-						}
-
-						if (entity)
-						{
-							auto& transform = entity->GetTransform();
-
-							if (transform.objectType == ObjectType::Object2D)
-							{
-								transform.position = editor.freeCamera.pos2D;
-							}
-							else
-							{
-								transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
-							}
-
-							entity->UpdateVisibility();
-							SelectEntity(entity);
-
-							containsUnsavedChanges = true;
-						}
-					}
-				}
-
+				CreateEntityPopupEntry(decls, index, curDepth, onlyToCreate);
+				
 				ImGui::EndMenu();
 			}
 

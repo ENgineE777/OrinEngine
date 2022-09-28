@@ -23,7 +23,7 @@ namespace Oak
 	CLASSREGEX(Program, PointLight2DProgram, PointLight2DProgram, "PointLight2DProgram")
 	CLASSREGEX_END(Program, PointLight2DProgram)
 
-	CLASSREG(SceneEntity, PointLight2D, "PointLight2D")
+	ENTITYREG(SceneEntity, PointLight2D, "2D/Lights", "PointLight2D")
 
 	META_DATA_DESC(PointLight2D)
 		BASE_SCENE_ENTITY_PROP(PointLight2D)

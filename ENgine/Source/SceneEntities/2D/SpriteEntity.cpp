@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, SpriteEntity, "Sprite")
+	ENTITYREG(SceneEntity, SpriteEntity, "2D/Sprites", "Sprite")
 
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)

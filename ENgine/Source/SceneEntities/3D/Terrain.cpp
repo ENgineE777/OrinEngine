@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, Terrain, "Terrain")
+	ENTITYREG(SceneEntity, Terrain, "3D/Geometry", "Terrain")
 
 	META_DATA_DESC(Terrain)
 		BASE_SCENE_ENTITY_PROP(Terrain)
