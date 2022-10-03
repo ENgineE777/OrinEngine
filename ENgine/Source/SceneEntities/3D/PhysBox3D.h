@@ -94,6 +94,8 @@ namespace Oak
 		void Init() override;
 		virtual void Draw(float dt);
 
+		void ApplyProperties() override;
+
 		void OnVisiblityChange(bool set) override;
 
 		void Play() override;

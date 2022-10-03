@@ -706,6 +706,12 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.cpp">
+      <Filter>Source\SceneEntities\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1349,6 +1355,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Scenes\ISceneManager.h">
       <Filter>Source\Root\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.h">
+      <Filter>Source\SceneEntities\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

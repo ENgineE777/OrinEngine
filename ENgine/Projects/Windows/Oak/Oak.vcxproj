@@ -245,6 +245,7 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Node2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\PhysBox2D.h" />
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\PointLight2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.h" />
@@ -254,6 +255,7 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\Model.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysBox3D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\KinematicCapsule3D.h" />
+    <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\ScriptEntity3D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\Terrain.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.h" />
@@ -449,6 +451,7 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Node2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysBox2D.cpp" />
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PointLight2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.cpp" />
@@ -458,6 +461,7 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\Model.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\PhysBox3D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\KinematicCapsule3D.cpp" />
+    <ClCompile Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\ScriptEntity3D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\Terrain.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.cpp" />

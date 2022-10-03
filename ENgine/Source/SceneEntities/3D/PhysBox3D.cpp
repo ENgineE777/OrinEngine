@@ -15,7 +15,6 @@ namespace Oak
 			ENUM_ELEM("Dynamic", 1)
 			ENUM_ELEM("DynamicCCD", 2)
 			ENUM_ELEM("Kinematic", 3)
-			ENUM_ELEM("Trigger", 4)
 		ENUM_END
 		INT_PROP(PhysBox3D, physGroup, 1, "Physics", "Physical group", "Physical group")
 		BOOL_PROP(PhysBox3D, visibleDuringPlay, true, "Physics", "visibleDuringPlay", "Show collision during play")
@@ -28,6 +27,11 @@ namespace Oak
 
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&PhysBox3D::Draw);
 		GetScene()->AddToGroup(this, "PhysBox3D");
+	}
+
+	void PhysBox3D::ApplyProperties()
+	{
+		color.a = 0.25f;
 	}
 
 	void PhysBox3D::Draw(float dt)
