@@ -134,4 +134,10 @@ namespace Oak
 		root.render.DebugSphere(top, COLOR_CYAN, Sprite::ToUnits(radius));
 		root.render.DebugSphere(bottom, COLOR_CYAN, Sprite::ToUnits(radius));
 	}
+
+	void KinematicCapsule2D::Release()
+	{
+		RELEASE(controller)
+		SceneEntity::Release();
+	}
 }

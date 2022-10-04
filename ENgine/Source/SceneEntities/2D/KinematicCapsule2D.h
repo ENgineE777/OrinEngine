@@ -44,6 +44,8 @@ namespace Oak
 		void Move(Math::Vector2 dir, uint32_t group = 0);
 		void EditorDraw(float dt);
 		void DebugDraw();
+
+		void Release() override;
 	#endif
 	};
 }

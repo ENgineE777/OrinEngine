@@ -77,4 +77,10 @@ namespace Oak
 			root.render.DebugSphere((mat.Pos() + dir * (radius + height)), COLOR_CYAN, radius);
 		}
 	}
+
+	void KinematicCapsule3D::Release()
+	{
+		RELEASE(controller)
+		SceneEntity::Release();
+	}
 }
