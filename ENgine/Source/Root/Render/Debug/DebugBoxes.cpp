@@ -123,8 +123,6 @@ namespace Oak
 		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
 		prg->SetVector(ShaderType::Pixel, "lightDir", &vz, 1);
 
-		root.render.GetDevice()->SetAlphaBlend(false);
-
 		for (int i=0;i<boxes.size();i++)
 		{
 			Box& box = boxes[i];

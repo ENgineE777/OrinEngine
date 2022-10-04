@@ -124,8 +124,6 @@ namespace Oak
 			root.render.GetDevice()->DrawIndexed(PrimitiveTopology::TrianglesList, 0, 0, PrimCount);
 		}
 
-		root.render.GetDevice()->SetAlphaBlend(false);
-
 		spheres.clear();
 	}
 
