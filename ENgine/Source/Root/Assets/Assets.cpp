@@ -92,7 +92,7 @@ namespace Oak
 							StringUtils::Copy(name, 128, ffd.cFileName);
 							StringUtils::RemoveExtension(name);
 
-							ref->name = name;
+							ref->name = ffd.cFileName;
 
 							ref->ext = extension;
 							ref->fullName = relativeName;
