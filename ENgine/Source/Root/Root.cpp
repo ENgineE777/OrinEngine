@@ -150,6 +150,8 @@ namespace Oak
 
 		scenes.Execute(dt);
 
+		physics.DeleteObjects();
+
 		scripts.Update();
 
 		physics.Update(dt);
@@ -159,7 +161,6 @@ namespace Oak
 		sounds.Update(dt);
 
 		physics.Fetch();
-
 	}
 
 	float Root::GetDeltaTime()
