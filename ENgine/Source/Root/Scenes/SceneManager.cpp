@@ -122,19 +122,19 @@ namespace Oak
 
 	void SceneManager::Execute(float dt)
 	{
-		for (auto* holder : scenesToLoad)
-		{
-			LoadScene(holder);
-		}
-
-		scenesToLoad.clear();
-
 		for (auto* holder : scenesToDelete)
 		{
 			UnloadScene(holder);
 		}
 
 		scenesToDelete.clear();
+
+		for (auto* holder : scenesToLoad)
+		{
+			LoadScene(holder);
+		}
+
+		scenesToLoad.clear();
 
 		groupTaskPool->Execute(dt);
 	}
