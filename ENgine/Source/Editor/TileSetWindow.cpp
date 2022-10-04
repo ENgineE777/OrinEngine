@@ -168,7 +168,7 @@ namespace Oak
 				Math::Vector2 size = tile.texture.GetSize();
 				transform.size = Math::Vector3(size.x, size.y, 0.0f);
 
-				mat.Pos() = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
+				mat.Pos() = Sprite::ToUnits(mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
 
 				transform.SetGlobal(mat);
 				tile.texture.Draw(&transform, COLOR_WHITE, root.GetDeltaTime());
