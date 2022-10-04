@@ -1880,9 +1880,9 @@ namespace Oak
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
-		if (!projectRunning && ((gizmo.mode == TransformMode::Rectangle && gizmo.useAlignRect) || (ownGrid && gridStep.Length2() > 0.1f)))
+		if (!projectRunning && freeCamera.mode2D)
 		{
-			Math::Vector2 step = ownGrid ? gridStep : gizmo.alignRect;
+			Math::Vector2 step = (ownGrid) ? gridStep : gizmo.alignRect;
 
 			float minStep = 16.0f;
 
@@ -1896,7 +1896,7 @@ namespace Oak
 				step *= 2.0f;
 			}
 
-			Math::Vector3 pos = ownGrid ? gridOrigin : gizmo.transform->GetGlobal().Pos();
+			Math::Vector3 pos = ownGrid ? gridOrigin : (gizmo.transform ? gizmo.transform->GetGlobal().Pos() : 0.0f);
 
 			if (freeCamera.mode2D)
 			{

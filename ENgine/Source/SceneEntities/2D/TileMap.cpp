@@ -97,14 +97,6 @@ namespace Oak
 
 	void TileMap::Draw(float dt)
 	{
-#ifdef OAK_EDITOR
-		if (IsEditMode())
-		{
-			editor.gridOrigin = transform.GetGlobal().Pos();
-			editor.gridStep = tileSet.GetSize();
-		}
-#endif
-
 		if (IsVisible())
 		{
 			auto trans = transform;
@@ -219,6 +211,11 @@ namespace Oak
 		if (!ed)
 		{
 			mode = Mode::Inactive;
+		}
+		else
+		{
+			editor.gridOrigin = transform.GetGlobal().Pos();
+			editor.gridStep = tileSet.GetSize();
 		}
 	}
 
