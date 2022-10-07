@@ -755,7 +755,7 @@ namespace Oak
 				}
 
 				auto rotation = transform->rotation;
-				rotation.z -= k * sign / Math::Radian;
+				rotation.z += k * sign / Math::Radian;
 				transform->rotation = rotation;
 			}
 		}

@@ -277,7 +277,16 @@ namespace Oak
 		void BuildMatrices()
 		{
 			localValue.Identity();
-			localValue.Rotate(rotation * Math::Radian);
+
+			if (objectType == ObjectType::Object3D)
+			{
+				localValue.Rotate(rotation * Math::Radian);
+			}
+			else
+			{
+				localValue.RotateZ(-rotation.z * Math::Radian);
+			}
+
 			localValue.Scale(scale);
 			localValue.Pos() = position * axis;
 
