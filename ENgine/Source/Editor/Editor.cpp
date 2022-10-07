@@ -981,6 +981,7 @@ namespace Oak
 				}
 				else
 				{
+					root.files.CreateFolder(StringUtils::PrintTemp("%sAssets/tst", path));
 					projectToAdd = fileName;
 					projectToLoad = fileName;
 				}
