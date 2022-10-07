@@ -1,6 +1,6 @@
 ![Oak Game Engine logo](/logo.png)
 
-**Oak Game Engine**
+## Oak Game Engine
 
 Oak Game Engine is a cross-platform game engine for creating 2D and 3D
 games from an unified interface. In Oak Game Engine big focus was made on
@@ -9,12 +9,12 @@ game engine for indie games. Games can be exported in one click to a number of
 platforms, including desktop platforms like Windows, Unix, macOS as well as
 mobile platforms like iOS and Android.
 
-**Free and open source**
+## Free and open source
 
 Oak is completely free open source, distributed under the zlib license. That means no royalties.
 The users games are theirs.
 
-**Features**
+## Features
 
 - Editor with ability to play test edited scenes
 - Support of project files
@@ -32,16 +32,16 @@ The users games are theirs.
 - Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview)
 - And lots, lots more
 
-**Editor**
+## Editor
 
 Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OakEngine/releases
 Warning: CMAKE and Visual Studio are needed for compilation of gameplay code
 
-**Tutorial**
+## Tutorial
 
 Small tutorial how to make simple platformer can be found at
 https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/edit?usp=sharing
 
-**Discord**
+## Discord
 
 If you interested in Oak Engine then you can jouin discord server https://discord.gg/dCTzMYZc
