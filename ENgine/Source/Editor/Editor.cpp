@@ -472,39 +472,42 @@ namespace Oak
 				ImGui::SetWindowFocus();
 			}
 
-			if (ImGui::IsMouseClicked(0))
+			if (viewportFocused)
 			{
-				if (!selectMode)
+				if (ImGui::IsMouseClicked(0))
 				{
-					gizmo.OnLeftMouseDown();
-				}
+					if (!selectMode)
+					{
+						gizmo.OnLeftMouseDown();
+					}
 
-				if (selectedEditAsset)
+					if (selectedEditAsset)
+					{
+						selectedEditAsset->OnLeftMouseDown();
+					}
+
+					viewportCaptured = ViewportCature::LeftButton;
+				}
+				else
+				if (ImGui::IsMouseClicked(1))
 				{
-					selectedEditAsset->OnLeftMouseDown();
-				}
+					if (selectedEditAsset)
+					{
+						selectedEditAsset->OnRightMouseDown();
+					}
 
-				viewportCaptured = ViewportCature::LeftButton;
-			}
-			else
-			if (ImGui::IsMouseClicked(1))
-			{
-				if (selectedEditAsset)
+					viewportCaptured = ViewportCature::RightButton;
+				}
+				else
+				if (ImGui::IsMouseClicked(2))
 				{
-					selectedEditAsset->OnRightMouseDown();
-				}
+					if (selectedEditAsset)
+					{
+						selectedEditAsset->OnMiddleMouseDown();
+					}
 
-				viewportCaptured = ViewportCature::RightButton;
-			}
-			else
-			if (ImGui::IsMouseClicked(2))
-			{
-				if (selectedEditAsset)
-				{
-					selectedEditAsset->OnMiddleMouseDown();
+					viewportCaptured = ViewportCature::MiddleButton;
 				}
-
-				viewportCaptured = ViewportCature::MiddleButton;
 			}
 		}
 
