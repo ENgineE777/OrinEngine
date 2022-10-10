@@ -81,8 +81,7 @@ namespace Oak
 			Math::Matrix mat = transform.GetGlobal();
 			auto pos = mat.Pos();
 
-			mat.Pos() = pos + mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y;
-			mat.Pos() *= Sprite::ToUnits(1.0f);
+			mat.Pos() += Sprite::ToUnits(mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y);
 
 			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, physGroup);
 			box->SetActive(IsVisible());
