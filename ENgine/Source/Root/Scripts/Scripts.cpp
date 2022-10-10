@@ -168,6 +168,9 @@ namespace Oak
 
 				code_ptr(ClassFactorySceneEntity::Decls());
 
+				// We must reinit GroupedDecls because it contains dead pointers from old DLL
+				ClassFactorySceneEntity::GropedDecls() = ClassFactorySceneEntity::Decls();
+
 				ClassFactorySceneEntity::Sort();
 				ClassFactorySceneEntity::SortGrouped();
 			}
