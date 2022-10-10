@@ -97,6 +97,19 @@ namespace Oak
 
 	void TileMap::Draw(float dt)
 	{
+		if (IsEditMode())
+		{
+			lastViewportSize = {(float)root.GetRender()->GetDevice()->GetWidth(), (float)root.GetRender()->GetDevice()->GetHeight()};
+
+			if (mode == Mode::RectPlace || mode == Mode::RectErase)
+			{
+				root.render.DebugLine2D({ rectStart.x, rectStart.y }, COLOR_GREEN, { rectEnd.x, rectStart.y }, COLOR_GREEN);
+				root.render.DebugLine2D({ rectStart.x, rectEnd.y }, COLOR_GREEN, { rectEnd.x, rectEnd.y }, COLOR_GREEN);
+				root.render.DebugLine2D({ rectStart.x, rectStart.y }, COLOR_GREEN, { rectStart.x, rectEnd.y }, COLOR_GREEN);
+				root.render.DebugLine2D({ rectEnd.x, rectStart.y }, COLOR_GREEN, { rectEnd.x, rectEnd.y }, COLOR_GREEN);
+			}
+		}
+
 		if (IsVisible())
 		{
 			auto trans = transform;
@@ -202,6 +215,63 @@ namespace Oak
 	}
 
 #ifdef OAK_EDITOR
+	Math::Vector2 TileMap::MouseToTile(Math::Vector2 ms)
+	{
+		Math::Vector3 mouseOrigin;
+		Math::Vector3 mouseDirection;
+
+		Math::GetMouseRay(ms, mouseOrigin, mouseDirection);
+		auto trans = transform.GetGlobal();
+
+		Math::Vector3 pos;
+		Math::IntersectPlaneRay(trans.Pos(), trans.Vz(), mouseOrigin, mouseDirection, pos);
+
+		pos = Sprite::ToPixels(pos - trans.Pos());
+
+		if (pos.x < 0.0f)
+		{
+			pos.x -= transform.size.x;
+		}
+
+		if (pos.y > 0.0f)
+		{
+			pos.y += transform.size.x;
+		}
+
+		return { pos.x / transform.size.x, pos.y / transform.size.y };
+	}
+
+	void TileMap::RectFill()
+	{
+		auto pos1 = MouseToTile(rectStart);
+		auto pos2 = MouseToTile(rectEnd);
+
+		int startX = (int)fmin(pos1.x, pos2.x);
+		int endX = (int)fmax(pos1.x, pos2.x);
+
+		int startY = (int)fmin(pos1.y, pos2.y);
+		int endY = (int)fmax(pos1.y, pos2.y);
+
+		for (int y = startY; y <= endY; y++)
+			for (int x = startX; x <= endX; x++)
+			{
+				for (int i = 0; i < tiles.size(); i++)
+				{
+					if (tiles[i].x == x && tiles[i].y == y)
+					{
+						tiles.erase(tiles.begin() + i);
+
+						break;
+					}
+				}
+
+				if (mode == Mode::RectPlace && tileSet->IsTileSelected())
+				{
+					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
+				}
+			}
+	}
+
 	void TileMap::SetEditMode(bool ed)
 	{
 		SceneEntity::SetEditMode(ed);
@@ -211,6 +281,7 @@ namespace Oak
 		if (!ed)
 		{
 			mode = Mode::Inactive;
+			TileSetWindow::StopEdit();
 		}
 		else
 		{
@@ -228,62 +299,63 @@ namespace Oak
 
 	void TileMap::OnMouseMove(Math::Vector2 ms)
 	{
-		if (mode != Mode::Inactive && TileSetWindow::tileSet)
+		if (TileSetWindow::tileSet)
 		{
-			Math::Vector3 mouseOrigin;
-			Math::Vector3 mouseDirection;
-
-			Math::GetMouseRay(ms, mouseOrigin, mouseDirection);
-			auto trans = transform.GetGlobal();
-
-			Math::Vector3 pos;
-			Math::IntersectPlaneRay(trans.Pos(), trans.Vz(), mouseOrigin, mouseDirection, pos);
-
-			pos = Sprite::ToPixels(pos - trans.Pos());
-
-			if (pos.x < 0.0f)
+			if (mode == Mode::Erase || mode == Mode::Place)
 			{
-				pos.x -= transform.size.x;
-			}
+				auto pos = MouseToTile(ms);
 
-			int x = (int)(pos.x / transform.size.x);
+				int x = (int)pos.x;
+				int y = (int)pos.y;
 
-			if (pos.y > 0.0f)
-			{
-				pos.y += transform.size.x;
-			}
-
-			int y = (int)(pos.y / transform.size.y);
-
-			for (int i = 0; i < tiles.size(); i++)
-			{
-				if (tiles[i].x == x && tiles[i].y == y)
+				for (int i = 0; i < tiles.size(); i++)
 				{
-					tiles.erase(tiles.begin() + i);
+					if (tiles[i].x == x && tiles[i].y == y)
+					{
+						tiles.erase(tiles.begin() + i);
 
-					break;
+						break;
+					}
+				}
+
+				if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
+				{
+					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
 				}
 			}
-
-			if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
-			{
-				tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
-			}
 		}
+		
+		if (mode == Mode::RectPlace || mode == Mode::RectErase)
+		{
+			rectEnd = ms;
+		}
+
+		prevMs = ms;
 	}
 
 	void TileMap::OnLeftMouseDown()
 	{
-		if (tileSet.Get())
+		if (tileSet)
 		{
 			mode = Mode::Place;
+
+			if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
+			{
+				mode = Mode::RectPlace;
+				rectStart = prevMs;
+			}
 		}
 	}
 
 	void TileMap::OnLeftMouseUp()
 	{
-		if (tileSet.Get())
+		if (tileSet)
 		{
+			if (mode == Mode::RectPlace)
+			{
+				RectFill();
+			}
+
 			mode = Mode::Inactive;
 		}
 	}
@@ -291,10 +363,21 @@ namespace Oak
 	void TileMap::OnRightMouseDown()
 	{
 		mode = Mode::Erase;
+
+		if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
+		{
+			mode = Mode::RectErase;
+			rectStart = prevMs;
+		}
 	}
 
 	void TileMap::OnRightMouseUp()
 	{
+		if (mode == Mode::RectErase)
+		{
+			RectFill();
+		}
+
 		mode = Mode::Inactive;
 	}
 #endif

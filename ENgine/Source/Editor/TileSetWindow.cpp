@@ -45,6 +45,17 @@ namespace Oak
 		instance->opened = true;
 	}
 
+	void TileSetWindow::StopEdit()
+	{
+		tileSet = nullptr;
+
+		if (instance)
+		{
+			instance->Prepare();
+			instance->opened = false;
+		}
+	}
+
 	void TileSetWindow::Prepare()
 	{
 	}

@@ -71,10 +71,21 @@ namespace Oak
 		{
 			Inactive,
 			Place,
-			Erase
+			RectPlace,
+			Erase,
+			RectErase
 		};
 
 		Mode mode = Mode::Inactive;
+
+		Math::Vector2 prevMs;
+		Math::Vector2 lastViewportSize = Math::Vector2(800.f, 600.0f);
+
+		Math::Vector2 rectStart;
+		Math::Vector2 rectEnd;
+
+		Math::Vector2 MouseToTile(Math::Vector2 ms);
+		void RectFill();
 
 		static void ShowTilsetWindow(void* owner);
 

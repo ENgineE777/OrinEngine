@@ -46,6 +46,7 @@ namespace Oak
 		static TileSetWindow* instance;
 
 		static void StartEdit(AssetTileSet* setTileSet);
+		static void StopEdit();
 
 		void Prepare();
 

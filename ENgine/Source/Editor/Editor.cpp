@@ -1657,7 +1657,7 @@ namespace Oak
 				PushButton("Move", !selectMode && gizmo.mode == TransformMode::Move, [this]() { gizmo.mode = TransformMode::Move; selectMode = false; });
 				PushButton("Rotate", !selectMode && gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) { gizmo.mode = TransformMode::Rotate; selectMode = false; }});
 				PushButton("Scale", !selectMode && gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) { gizmo.mode = TransformMode::Scale; selectMode = false; }});
-				PushButton("Rect", !selectMode && gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) { gizmo.mode = TransformMode::Rectangle; selectMode = false;	}});
+				PushButton("Rect", !selectMode && gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) { gizmo.mode = TransformMode::Rectangle; selectMode = false; }});
 
 				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
@@ -1689,31 +1689,31 @@ namespace Oak
 
 				ImGui::Separator();
 				ImGui::SameLine();
+			}
 
-				if (gizmo.mode == TransformMode::Rectangle)
-				{
-					PushButton("Snap", gizmo.useAlignRect, [this]() { gizmo.useAlignRect = !gizmo.useAlignRect; });
+			if (freeCamera.mode2D)
+			{
+				PushButton("Snap", gizmo.useAlignRect, [this]() { gizmo.useAlignRect = !gizmo.useAlignRect; });
 
-					ImGui::Text("SnapX");
-					ImGui::SameLine();
+				ImGui::Text("SnapX");
+				ImGui::SameLine();
 
-					ImGui::SetNextItemWidth(100.0f);
-					int value = (int)gizmo.alignRect.x;
-					ImGui::InputInt("##SnapXID", &value);
-					if (value < 2) value = 2;
-					gizmo.alignRect.x = (float)value;
-					ImGui::SameLine();
+				ImGui::SetNextItemWidth(100.0f);
+				int value = (int)gizmo.alignRect.x;
+				ImGui::InputInt("##SnapXID", &value);
+				if (value < 2) value = 2;
+				gizmo.alignRect.x = (float)value;
+				ImGui::SameLine();
 
-					ImGui::Text("SnapY");
-					ImGui::SameLine();
+				ImGui::Text("SnapY");
+				ImGui::SameLine();
 
-					ImGui::SetNextItemWidth(100.0f);
-					value = (int)gizmo.alignRect.y;
-					ImGui::InputInt("##SnapYID", &value, ImGuiInputTextFlags_CharsDecimal);
-					if (value < 2) value = 2;
-					gizmo.alignRect.y = (float)value;
-					ImGui::SameLine();
-				}
+				ImGui::SetNextItemWidth(100.0f);
+				value = (int)gizmo.alignRect.y;
+				ImGui::InputInt("##SnapYID", &value, ImGuiInputTextFlags_CharsDecimal);
+				if (value < 2) value = 2;
+				gizmo.alignRect.y = (float)value;
+				ImGui::SameLine();
 			}
 
 			ImGui::PopStyleColor(1);
