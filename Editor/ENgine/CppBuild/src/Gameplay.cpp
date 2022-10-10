@@ -1,5 +1,7 @@
 #include "Gameplay.h"
 
+#include "EASTL/algorithm.h"
+
 void* operator new (size_t size, const char* file, int line)
 {
 	return malloc(size);
@@ -12,12 +14,12 @@ void operator delete(void* ptr, const char* file, int line)
 
 void register_code(eastl::vector<Oak::ClassFactorySceneEntity*>& Decls)
 {
+	const size_t wasSize = Decls.size();
+
 	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
 
-	for(auto decl : localDecls)
-	{
-		Decls.push_back(decl);
-	}
+	Decls.resize(wasSize + localDecls.size());
+	eastl::copy(localDecls.begin(), localDecls.end(), Decls.begin() + wasSize);
 }
 
 void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls, 
@@ -105,23 +107,8 @@ void unregister_code(eastl::vector<Oak::ClassFactorySceneEntity*>& Decls)
 {
 	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
 
-	for (int i = 0; i < Decls.size(); i++)
+	Decls.erase(eastl::remove_if(Decls.begin(), Decls.end(), [&](Oak::ClassFactorySceneEntity *decl)
 	{
-		bool needDelete = false;
-
-		for (auto decl : localDecls)
-		{
-			if (Decls[i] == decl)
-			{
-				needDelete = true;
-				break;
-			}
-		}
-
-		if (needDelete)
-		{
-			Decls.erase(Decls.begin() + i);
-			i--;
-		}
-	}
+		return eastl::find(localDecls.begin(), localDecls.end(), decl) != localDecls.end();
+	}),	Decls.end());
 }
