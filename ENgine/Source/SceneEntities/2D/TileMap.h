@@ -73,7 +73,10 @@ namespace Oak
 			Place,
 			RectPlace,
 			Erase,
-			RectErase
+			RectErase,
+			TilesSelection,
+			TilesSelected,
+			TilesMove
 		};
 
 		Mode mode = Mode::Inactive;
@@ -84,6 +87,11 @@ namespace Oak
 		Math::Vector2 rectStart;
 		Math::Vector2 rectEnd;
 
+		Math::Vector2 deltaMove;
+
+		eastl::vector<Tile> tilesSelected;
+
+		Math::Vector2 MouseToWorldPos(Math::Vector2 ms);
 		Math::Vector2 MouseToTile(Math::Vector2 ms);
 		void RectFill();
 

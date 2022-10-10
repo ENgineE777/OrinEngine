@@ -101,7 +101,7 @@ namespace Oak
 		{
 			lastViewportSize = {(float)root.GetRender()->GetDevice()->GetWidth(), (float)root.GetRender()->GetDevice()->GetHeight()};
 
-			if (mode == Mode::RectPlace || mode == Mode::RectErase)
+			if (mode == Mode::RectPlace || mode == Mode::RectErase || mode == Mode::TilesSelection)
 			{
 				root.render.DebugLine2D({ rectStart.x, rectStart.y }, COLOR_GREEN, { rectEnd.x, rectStart.y }, COLOR_GREEN);
 				root.render.DebugLine2D({ rectStart.x, rectEnd.y }, COLOR_GREEN, { rectEnd.x, rectEnd.y }, COLOR_GREEN);
@@ -117,7 +117,7 @@ namespace Oak
 			Math::Matrix mat = trans.GetGlobal();
 			auto pos = Sprite::ToPixels(mat.Pos());
 
-			for (auto tile : tiles)
+			for (auto& tile : tiles)
 			{
 				mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
 
@@ -127,6 +127,27 @@ namespace Oak
 				trans.size.y = sz.y;
 
 				tile.texture.Draw(&trans, COLOR_WHITE, dt);
+			}
+
+			if (IsEditMode())
+			{
+				for (auto& tile : tilesSelected)
+				{
+					mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
+
+					trans.SetGlobal(mat);
+					auto sz = tile.texture.GetSize();
+					trans.size.x = sz.x;
+					trans.size.y = sz.y;
+
+					tile.texture.Draw(&trans, COLOR_WHITE, dt);
+				}
+
+				for (auto& tile : tilesSelected)
+				{
+					Sprite::DebugRect({ tile.x * transform.size.x, tile.y * transform.size.y },
+									  { (tile.x + 1) * transform.size.x, (tile.y - 1) * transform.size.y }, COLOR_WHITE);
+				}
 			}
 		}
 	}
@@ -215,7 +236,7 @@ namespace Oak
 	}
 
 #ifdef OAK_EDITOR
-	Math::Vector2 TileMap::MouseToTile(Math::Vector2 ms)
+	Math::Vector2 TileMap::MouseToWorldPos(Math::Vector2 ms)
 	{
 		Math::Vector3 mouseOrigin;
 		Math::Vector3 mouseDirection;
@@ -227,6 +248,13 @@ namespace Oak
 		Math::IntersectPlaneRay(trans.Pos(), trans.Vz(), mouseOrigin, mouseDirection, pos);
 
 		pos = Sprite::ToPixels(pos - trans.Pos());
+
+		return { pos.x, pos.y };
+	}
+
+	Math::Vector2 TileMap::MouseToTile(Math::Vector2 ms)
+	{
+		auto pos = MouseToWorldPos(ms);
 
 		if (pos.x < 0.0f)
 		{
@@ -259,6 +287,11 @@ namespace Oak
 				{
 					if (tiles[i].x == x && tiles[i].y == y)
 					{
+						if (mode == Mode::TilesSelection)
+						{
+							tilesSelected.push_back(tiles[i]);
+						}
+
 						tiles.erase(tiles.begin() + i);
 
 						break;
@@ -323,9 +356,41 @@ namespace Oak
 					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
 				}
 			}
+			else
+			if (mode == Mode::TilesMove)
+			{
+				auto prevPos = MouseToWorldPos(prevMs);
+				auto pos = MouseToWorldPos(ms);
+
+				deltaMove += pos - prevPos;
+
+				if (fabs(deltaMove.x) > transform.size.x || fabs(deltaMove.y) > transform.size.y)
+				{
+					int dx = (int)(deltaMove.x / transform.size.x);
+					deltaMove.x -= dx * transform.size.x;
+
+					int dy = (int)(deltaMove.y / transform.size.y);
+					deltaMove.y -= dy * transform.size.y;
+
+					for (auto& tile : tilesSelected)
+					{
+						tile.x += dx;
+						tile.y += dy;
+
+						for (int i = 0; i < tiles.size(); i++)
+						{
+							if (tiles[i].x == tile.x && tiles[i].y == tile.y)
+							{
+								tiles.erase(tiles.begin() + i);
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 		
-		if (mode == Mode::RectPlace || mode == Mode::RectErase)
+		if (mode == Mode::RectPlace || mode == Mode::RectErase || mode == Mode::TilesSelection)
 		{
 			rectEnd = ms;
 		}
@@ -337,12 +402,46 @@ namespace Oak
 	{
 		if (tileSet)
 		{
-			mode = Mode::Place;
-
-			if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
+			if (mode == Mode::TilesSelected)
 			{
-				mode = Mode::RectPlace;
-				rectStart = prevMs;
+				mode = Mode::Inactive;
+
+				auto pos = MouseToTile(prevMs);
+
+				int x = (int)pos.x;
+				int y = (int)pos.y;
+
+				for (auto& tile : tilesSelected)
+				{
+					if (tile.x == x && tile.y == y)
+					{
+						mode = Mode::TilesMove;
+
+						break;
+					}
+				}
+
+				if (mode == Mode::Inactive)
+				{
+					tiles.insert(tiles.end(), tilesSelected.begin(), tilesSelected.end());
+					tilesSelected.clear();
+				}
+			}
+			else
+			{
+				mode = Mode::Place;
+
+				if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
+				{
+					mode = Mode::RectPlace;
+					rectStart = prevMs;
+				}
+				else
+				if (root.controls.DebugKeyPressed("KEY_X", AliasAction::Pressed))
+				{
+					mode = Mode::TilesSelection;
+					rectStart = prevMs;
+				}
 			}
 		}
 	}
@@ -351,12 +450,24 @@ namespace Oak
 	{
 		if (tileSet)
 		{
-			if (mode == Mode::RectPlace)
+			if (mode == Mode::RectPlace || mode == Mode::TilesSelection)
 			{
 				RectFill();
 			}
 
-			mode = Mode::Inactive;
+			if (mode == Mode::TilesSelection)
+			{
+				mode = Mode::TilesSelected;
+			}
+			else
+			if (mode == Mode::TilesMove)
+			{
+				mode = Mode::TilesSelected;
+			}
+			else
+			{
+				mode = Mode::Inactive;
+			}
 		}
 	}
 
