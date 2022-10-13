@@ -1,7 +1,7 @@
 
 #pragma once
 
-//#include "Root/Assets/Assets.h"
+#include "Root/Assets/Assets.h"
 #include "Root/Controls/IControls.h"
 //#include "Root/Files/Files.h"
 //#include "Root/Fonts/Fonts.h"
@@ -34,6 +34,11 @@ namespace Oak
 	class CLASS_DECLSPEC IRoot
 	{
 	public:
+
+		/**
+			\brief Get instance of assets
+		*/
+		virtual Assets* GetAssets() = 0;
 
 		/**
 			\brief Access to controls service

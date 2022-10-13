@@ -13,7 +13,7 @@
 
 namespace Oak
 {
-	class Assets : public ThreadCaller
+	class CLASS_DECLSPEC Assets : public ThreadCaller
 	{
 		friend class Asset;
 
@@ -100,6 +100,11 @@ namespace Oak
 		void Init();
 
 		void LoadAssets();
+
+		const eastl::map<eastl::string, AssetHolder*>& GetAssetsMap()
+		{
+			return assetsMap;
+		}
 
 		#ifdef OAK_EDITOR
 		template<class T>

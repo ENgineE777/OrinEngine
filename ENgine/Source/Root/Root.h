@@ -66,6 +66,8 @@ namespace Oak
 		*/
 		Assets assets;
 
+		Assets* GetAssets() override { return &assets; };
+
 		Controls controls;
 
 		IControls* GetControls() override { return &controls; };
