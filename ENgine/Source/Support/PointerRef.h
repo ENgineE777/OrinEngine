@@ -33,9 +33,13 @@ namespace Oak
 		PointerRef(T* setPtr, const char* file, int line)
 		{
 			ptr = setPtr;
-			ptr->refCounter++;
 
-			fileLine = FileLine::Alloc(file, line);
+			if (ptr)
+			{
+				ptr->refCounter++;
+
+				fileLine = FileLine::Alloc(file, line);
+			}
 		}
 
 		PointerRef(const PointerRef& ref)
