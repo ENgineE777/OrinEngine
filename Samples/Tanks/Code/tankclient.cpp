@@ -3,7 +3,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, TankClient, "TankClient")
+	ENTITYREG(SceneEntity, TankClient, "Sample", "TankClient")
 
 	META_DATA_DESC(TankClient)
 		BASE_SCENE_ENTITY_PROP(TankClient)

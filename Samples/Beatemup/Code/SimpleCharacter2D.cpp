@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, SimpleCharacter2D, "SimpleCharacter2D")
+	ENTITYREG(SceneEntity, SimpleCharacter2D, "Sample", "SimpleCharacter2D")
 
 	META_DATA_DESC(SimpleCharacter2D)
 		BASE_SCENE_ENTITY_PROP(SimpleCharacter2D)
@@ -18,8 +18,7 @@ namespace Oak
 
 	void SimpleCharacter2D::Init()
 	{
-		transform.unitsScale = &Sprite::pixelsPerUnit;
-		transform.unitsInvScale = &Sprite::pixelsPerUnitInvert;
+		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY | RectMoveXY | RectAnchorn;
 
 		Tasks(false)->AddTask(10, this, (Object::Delegate)&SimpleCharacter2D::Update);
@@ -177,7 +176,9 @@ namespace Oak
 
 		if (arraive > 0.0f)
 		{
-			transform.global.Pos().y += 250.0f * arraive;
+			auto global = transform.GetGlobal();
+			global.Pos().y += 250.0f * arraive;
+			transform.SetGlobal(global, false);
 		}
 
 		animGraph.Draw(&transform, COLOR_WHITE, dt);
@@ -349,7 +350,7 @@ namespace Oak
 					if (animGraph.ActivateLink(sec_kick ? "LegKick1" : "LegKick2"))
 					{
 						cur_time_to_kick = sec_kick ? 0.55f : 0.85f;
-						flipped = transform.global.Pos().x > target->transform.global.Pos().x;
+						flipped = transform.GetGlobal().Pos().x > transform.GetGlobal().Pos().x;
 						allow_move = false;
 					}
 				}

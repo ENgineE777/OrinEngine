@@ -4,8 +4,7 @@
 	"iconPath" : "Icon.png",
 	"iconSmallPath" : "Icon.png",
 	"projectName" : "Simple",
-	"start_scene" : 0,
-	"scenes_count" : 2,
+	"start_scene" : "Scene",
 	"alignRect" :
 	{
 		"x" : 8.000000,
@@ -14,15 +13,6 @@
 	"useAlignRect" : false,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 240.000000,
-	"scenes" : [
-		{
-			"path" : "Scene.scn",
-			"uid" : 3200
-		},
-		{
-			"path" : "Character/player.prefab",
-			"uid" : 41136
-		}
-	],
+	"hideCursor" : false,
 	"edited_asset" : "Scene.scn"
 }

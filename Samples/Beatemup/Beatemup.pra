@@ -4,8 +4,7 @@
 	"iconPath" : "BatIcon.png",
 	"iconSmallPath" : "BatIcon.png",
 	"projectName" : "Beatemup",
-	"start_scene" : 0,
-	"scenes_count" : 1,
+	"start_scene" : "Main",
 	"alignRect" :
 	{
 		"x" : 8.000000,
@@ -14,11 +13,6 @@
 	"useAlignRect" : false,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 200.000000,
-	"scenes" : [
-		{
-			"path" : "Main.scn",
-			"uid" : 0
-		}
-	],
+	"hideCursor" : false,
 	"edited_asset" : "Main.scn"
 }

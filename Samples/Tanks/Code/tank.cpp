@@ -5,7 +5,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, Tank, "Tank")
+	ENTITYREG(SceneEntity, Tank, "Sample", "Tank")
 
 	META_DATA_DESC(Tank)
 		BASE_SCENE_ENTITY_PROP(Tank)
@@ -82,7 +82,7 @@ namespace Oak
 
 	void Tank::OnClientConnected(int id)
 	{
-		AddInstance(id, Math::Vector3(transform.global.Pos().x + id * 10.0f, transform.global.Pos().y, transform.global.Pos().z), false);
+		AddInstance(id, transform.GetGlobal().Pos() + Math::Vector3(id * 10.0f, 0.0f, 0.0f), false);
 
 		char packet[256];
 
@@ -158,7 +158,7 @@ namespace Oak
 				}
 				case ADDINSTANCE:
 				{
-					AddInstance(*((int*)ptr), Math::Vector3(transform.global.Pos().x + *((int*)ptr) * 10.0f, transform.global.Pos().y, transform.global.Pos().z), false);
+					AddInstance(*((int*)ptr), transform.GetGlobal().Pos() + Math::Vector3(id * 10.0f, 0.0f, 0.0f), false);
 					ptr += 4;
 					break;
 				}
@@ -293,7 +293,7 @@ namespace Oak
 
 					for (auto& inst : marker->instances)
 					{
-						AddInstance(index, inst.transform.global.Pos(), false);
+						AddInstance(index, inst.transform.GetGlobal().Pos(), false);
 					}
 
 					index++;
@@ -366,7 +366,7 @@ namespace Oak
 		{
 			Math::Matrix mat;
 			mat.RotateY(inst.serverState.angle);
-			inst.serverState.controller->GetPosition(mat.Pos());
+			mat.Pos() = inst.serverState.controller->GetPosition();
 
 			inst.serverState.pos = mat.Pos();
 
@@ -646,7 +646,7 @@ namespace Oak
 					continue;
 				}
 
-				Math::Vector3 dir = box->GetTransform().global.Pos() - pos;
+				Math::Vector3 dir = box->GetTransform().GetGlobal().Pos() - pos;
 				float len = dir.Normalize();
 
 				if (len < radius)

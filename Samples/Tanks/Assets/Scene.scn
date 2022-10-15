@@ -3,8 +3,9 @@
 	"uid" : 30624,
 	"entities" : [
 		{
-			"type" : "Terrain",
+			"prefabInstance" : false,
 			"uid" : 980907,
+			"type" : "Terrain",
 			"name" : "Terrain",
 			"visible" : true,
 			"Transform" :
@@ -53,8 +54,9 @@
 			}
 		},
 		{
-			"type" : "Tank",
+			"prefabInstance" : false,
 			"uid" : 524287,
+			"type" : "Tank",
 			"name" : "Tank",
 			"visible" : true,
 			"Transform" :
@@ -92,8 +94,9 @@
 			}
 		},
 		{
-			"type" : "ControlsAliases",
+			"prefabInstance" : false,
 			"uid" : 1046458,
+			"type" : "ControlsAliases",
 			"name" : "ControlsAliases",
 			"visible" : true,
 			"Transform" :
@@ -132,8 +135,9 @@
 			"aliases_name" : "tank_aliases"
 		},
 		{
-			"type" : "GenericMarker",
+			"prefabInstance" : false,
 			"uid" : 653309,
+			"type" : "GenericMarker",
 			"name" : "GenericMarker",
 			"visible" : true,
 			"Transform" :
@@ -146,7 +150,7 @@
 				},
 				"rotation" :
 				{
-					"x" : -16.746916,
+					"x" : -16.746918,
 					"y" : 9.516846,
 					"z" : 18.922268
 				},
@@ -189,7 +193,7 @@
 						{
 							"position" :
 							{
-								"x" : -36.612164,
+								"x" : -36.612160,
 								"y" : -13.921412,
 								"z" : -27.692863
 							},
@@ -352,8 +356,9 @@
 			}
 		},
 		{
-			"type" : "TankClient",
+			"prefabInstance" : false,
 			"uid" : 161717,
+			"type" : "TankClient",
 			"name" : "TankClient",
 			"visible" : true,
 			"Transform" :
@@ -393,16 +398,17 @@
 			"tower_model_name" : "TankModel/AATankTower.FBX"
 		},
 		{
-			"type" : "PhysBox3D",
+			"prefabInstance" : false,
 			"uid" : 65447,
+			"type" : "PhysBox3D",
 			"name" : "PhysBox3D",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537818,
-					"y" : 8.235729,
+					"x" : 8.537817,
+					"y" : 8.235728,
 					"z" : -1.379792
 				},
 				"rotation" :
@@ -435,7 +441,7 @@
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 0.000000,
-				"a" : 1.000000
+				"a" : 0.250000
 			},
 			"bodyType" : 1,
 			"physGroup" : 1,
@@ -443,16 +449,17 @@
 			"affectOnParent" : false
 		},
 		{
-			"type" : "PhysBox3D",
+			"prefabInstance" : false,
 			"uid" : 456630,
+			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537818,
-					"y" : 8.235729,
+					"x" : 8.537817,
+					"y" : 8.235728,
 					"z" : 1.428889
 				},
 				"rotation" :
@@ -485,7 +492,7 @@
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 0.000000,
-				"a" : 1.000000
+				"a" : 0.250000
 			},
 			"bodyType" : 1,
 			"physGroup" : 1,
@@ -493,16 +500,17 @@
 			"affectOnParent" : false
 		},
 		{
-			"type" : "PhysBox3D",
+			"prefabInstance" : false,
 			"uid" : 751604,
+			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537818,
-					"y" : 8.235729,
+					"x" : 8.537817,
+					"y" : 8.235728,
 					"z" : 4.189838
 				},
 				"rotation" :
@@ -535,7 +543,7 @@
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 0.000000,
-				"a" : 1.000000
+				"a" : 0.250000
 			},
 			"bodyType" : 1,
 			"physGroup" : 1,
@@ -543,15 +551,16 @@
 			"affectOnParent" : false
 		},
 		{
-			"type" : "PhysBox3D",
+			"prefabInstance" : false,
 			"uid" : 96253,
+			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy_copy",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537818,
+					"x" : 8.537817,
 					"y" : 10.704865,
 					"z" : 3.083514
 				},
@@ -585,7 +594,7 @@
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 0.000000,
-				"a" : 1.000000
+				"a" : 0.250000
 			},
 			"bodyType" : 1,
 			"physGroup" : 1,
@@ -593,15 +602,16 @@
 			"affectOnParent" : false
 		},
 		{
-			"type" : "PhysBox3D",
+			"prefabInstance" : false,
 			"uid" : 751523,
+			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy_copy_copy",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537818,
+					"x" : 8.537817,
 					"y" : 10.704865,
 					"z" : 0.262023
 				},
@@ -635,7 +645,7 @@
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 0.000000,
-				"a" : 1.000000
+				"a" : 0.250000
 			},
 			"bodyType" : 1,
 			"physGroup" : 1,
@@ -643,15 +653,16 @@
 			"affectOnParent" : false
 		},
 		{
-			"type" : "PhysBox3D",
+			"prefabInstance" : false,
 			"uid" : 292792,
+			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy_copy_copy_copy",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537818,
+					"x" : 8.537817,
 					"y" : 13.224090,
 					"z" : 1.646913
 				},
@@ -685,7 +696,7 @@
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 0.000000,
-				"a" : 1.000000
+				"a" : 0.250000
 			},
 			"bodyType" : 1,
 			"physGroup" : 1,

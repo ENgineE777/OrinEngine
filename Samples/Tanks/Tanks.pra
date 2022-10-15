@@ -4,8 +4,7 @@
 	"iconPath" : "TankIcon.png",
 	"iconSmallPath" : "TankIcon.png",
 	"projectName" : "Tanks",
-	"start_scene" : 0,
-	"scenes_count" : 1,
+	"start_scene" : "Scene",
 	"alignRect" :
 	{
 		"x" : 8.000000,
@@ -14,11 +13,6 @@
 	"useAlignRect" : false,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 1080.000000,
-	"scenes" : [
-		{
-			"path" : "Scene.scn",
-			"uid" : 0
-		}
-	],
+	"hideCursor" : false,
 	"edited_asset" : "Scene.scn"
 }

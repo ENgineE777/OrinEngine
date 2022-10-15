@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	CLASSREG(SceneEntity, Character, "Character")
+	ENTITYREG(SceneEntity, Character, "Sample", "Character")
 
 	META_DATA_DESC(Character)
 		BASE_SCENE_ENTITY_PROP(Character)

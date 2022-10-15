@@ -1,0 +1,17 @@
+﻿{
+
+	"projects" : [
+		{
+			"name" : "Beatemup",
+			"path" : "../Samples/Beatemup/Beatemup.pra"
+		},
+		{
+			"name" : "Tanks",
+			"path" : "../Samples/Tanks/Tanks.pra"
+		},
+		{
+			"name" : "SimplePlatformer",
+			"path" : "../Samples/SimplePlatformer/SimplePlatformer.pra"
+		}
+	]
+}
