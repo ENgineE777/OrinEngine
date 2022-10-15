@@ -36,7 +36,7 @@ The users games are theirs.
 ## Editor
 
 Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OakEngine/releases
-Warning: CMAKE and Visual Studio are needed for compilation of gameplay code
+Warning: CMAKE and Visual Studio 2019 are needed for compilation of gameplay code
 
 ## Tutorial
 
