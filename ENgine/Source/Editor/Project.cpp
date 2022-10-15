@@ -134,7 +134,11 @@ namespace Oak
 
 	bool Project::IsStartScene(const eastl::string& name)
 	{
-		return StringUtils::IsEqual(startScene.c_str(), name.c_str());
+		char name_str[128];
+		StringUtils::Copy(name_str, 128, name.c_str());
+		StringUtils::RemoveExtension(name_str);
+
+		return StringUtils::IsEqual(startScene.c_str(), name_str);
 	}
 
 	void Project::Reset()
