@@ -154,6 +154,7 @@ namespace Oak
 		if (asset)
 		{
 			Transform trans;
+			trans.objectType = ObjectType::Object2D;
 
 			for (auto sprite : asset->sprites)
 			{
