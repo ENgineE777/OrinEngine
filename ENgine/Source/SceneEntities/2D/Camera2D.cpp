@@ -129,10 +129,12 @@ namespace Oak
 				}
 
 				p1 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
-				p1 = p1 * transform.GetGlobal();
+				p1 += transform.position;
+				p1 = Sprite::ToUnits(p1);
 
 				p2 -= Math::Vector3(transform.offset.x * (transform.size.x - offset.x), transform.offset.y * (transform.size.y - offset.y), 0);
-				p2 = p2 * transform.GetGlobal();
+				p2 += transform.position;
+				p2 = Sprite::ToUnits(p2);
 
 				Math::Vector2 tmp = Math::Vector2(p1.x, p1.y);
 				p1 = Math::Vector3(tmp.x, tmp.y, p1.z);
