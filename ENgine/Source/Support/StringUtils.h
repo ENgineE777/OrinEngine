@@ -28,7 +28,7 @@ namespace Oak::StringUtils
 	CLASS_DECLSPEC void GetExtension(const char* str, char* ext, int ext_lenght);
 	CLASS_DECLSPEC void RemoveExtension(char* str);
 	CLASS_DECLSPEC void Replace(eastl::string& str, const char* from, const char* to);
-	CLASS_DECLSPEC int  GetNameNumber(const char* str, char* wo_n_str, int len);
+	CLASS_DECLSPEC void InreaseNumberInName(char* str, int len);
 	CLASS_DECLSPEC void EscapeChars(const char* in, char* out, int len);
 	CLASS_DECLSPEC bool BuildUtf16fromUtf8(char c, int& bytes, int& w);
 	CLASS_DECLSPEC void BuildUtf8fromUtf16(int c, eastl::string& dest);

@@ -316,17 +316,12 @@ namespace Oak::StringUtils
 		}
 	}
 
-	int GetNameNumber(const char* str, char* wo_n_str, int len)
+	void InreaseNumberInName(char* str, int len)
 	{
-		Copy(wo_n_str,len,str);
+		int curLen = GetLen(str);
+
 		int number = 0;
-
-		int index = GetLen(str) - 1;
-
-		if (index == 0)
-		{
-			return 0;
-		}
+		int index = curLen - 1;
 
 		int  pow = 1;
 
@@ -337,9 +332,20 @@ namespace Oak::StringUtils
 			index--;
 		}
 
-		wo_n_str[index + 1] = 0;
+		number++;
 
-		return number;
+		char temp[64];
+		Printf(temp, 64, "%i", number);
+
+		int numberLen = GetLen(temp);
+		pow = curLen - index - 1;
+
+		if (pow > numberLen)
+		{
+			index += pow - numberLen;
+		}
+
+		Copy(&str[index + 1], len - (index + 1), temp);
 	}
 
 	void EscapeChars(const char* in, char* out, int len)

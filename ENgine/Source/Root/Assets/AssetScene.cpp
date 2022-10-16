@@ -514,10 +514,11 @@ namespace Oak
 
 				SelectEntity(copy);
 
-				eastl::string name = selectedEntity->GetName();
-				name += "_copy";
-
-				copy->SetName(name.c_str());
+				char temp[1024];
+				StringUtils::Copy(temp, 1024, selectedEntity->GetName());
+				StringUtils::InreaseNumberInName(temp, 1024);
+				
+				copy->SetName(temp);
 
 				containsUnsavedChanges = true;
 			}
