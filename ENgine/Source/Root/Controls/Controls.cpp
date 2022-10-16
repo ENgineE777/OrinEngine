@@ -935,6 +935,21 @@ namespace Oak
 		return false;
 	}
 
+	float Controls::DebugKeyValue(const char* name, bool delta, bool ignoreFocus)
+	{
+		if (!allowDebugKeys || !name)
+		{
+			return 0.0f;
+		}
+
+		if (debeugMap.find(name) == debeugMap.end())
+		{
+			return false;
+		}
+
+		return GetHardwareAliasValue(debeugMap[name], delta, 0, ignoreFocus);
+	}
+
 	bool Controls::IsGamepadConnected()
 	{
 	#ifdef PLATFORM_WIN

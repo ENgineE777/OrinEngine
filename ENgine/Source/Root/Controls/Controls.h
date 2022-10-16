@@ -160,6 +160,7 @@ namespace Oak
 		const char* GetActivatedKey(int& device_index) override;
 		bool  DebugKeyPressed(const char* name, AliasAction action = AliasAction::JustPressed, bool ignore_focus = false) override;
 		bool  DebugHotKeyPressed(const char* name, const char* name2, const char* name3 = nullptr) override;
+		float DebugKeyValue(const char* name, bool delta, bool ignoreFocus) override;
 		bool IsGamepadConnected();
 
 		#ifndef DOXYGEN_SKIP

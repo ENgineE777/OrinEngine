@@ -128,6 +128,16 @@ namespace Oak
 		virtual bool DebugHotKeyPressed(const char* name, const char* name2, const char* name3 = nullptr) = 0;
 
 		/**
+			\brief Get value of hardware alias
+
+			\param[in] name Name of a first hardware alias
+			\param[in] delta Indicates if should returned falue or difference this last frame
+			\param[in] ignore_focus Input are reciving only in focused state. This flag allows to recive stete even in unfocused state.
+
+			\return Value of combination hardare aliases.
+		*/
+		virtual float DebugKeyValue(const char* name, bool delta, bool ignoreFocus) = 0;
+		/**
 			\brief Check if gamepad is connected.
 
 			\return True will be returned if at least one gamepad is connecteds. False will be returned if non og gamepads are connected.
