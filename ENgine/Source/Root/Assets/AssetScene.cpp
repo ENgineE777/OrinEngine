@@ -643,6 +643,86 @@ namespace Oak
 		SceneTreePopup(true);
 	}
 
+	SceneEntity* AssetScene::GetPrefabRoot(SceneEntity* entity)
+	{
+		if (entity->prefabInstance && entity->parent && entity->parent->prefabInstance)
+		{
+			return GetPrefabRoot(entity->parent);
+		}
+
+		return entity;
+	}
+
+	void AssetScene::CheckSelection(SceneEntity* entity, eastl::vector<SceneEntity*>& selection, Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
+	{
+		if (entity->CheckSelection(ms, start, dir))
+		{
+			auto* entityRoot = GetPrefabRoot(entity);
+
+			auto iterator = eastl::find(selection.begin(), selection.end(), entityRoot);
+
+			if (iterator == selection.end())
+			{
+				selection.push_back(entityRoot);
+			}
+		}
+
+		auto& childs = entity->GetChilds();
+
+		for (auto* child : childs)
+		{
+			CheckSelection(child, selection, ms, start, dir);
+		}
+	}
+
+	void AssetScene::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
+	{
+		eastl::vector<SceneEntity*> tmpSelection;
+
+		for (auto* entity : scene->GetEntities())
+		{
+			CheckSelection(entity, tmpSelection, ms, start, dir);
+		}
+
+		bool sameSelection = true;
+
+		if (tmpSelection.size() != underSelection.size())
+		{
+			sameSelection = false;
+		}
+		else
+		{
+			for (int index = 0; index < underSelection.size(); index++)
+			{
+				if (underSelection[index] != tmpSelection[index])
+				{
+					sameSelection = false;
+					break;
+				}
+			}
+		}
+
+		if (sameSelection)
+		{
+			underSelectionIndex++;
+
+			if (underSelectionIndex >= underSelection.size())
+			{
+				underSelectionIndex = 0;
+			}
+		}
+		else
+		{
+			underSelectionIndex = 0;
+			underSelection = tmpSelection;
+		}
+
+		if (underSelection.size() > 0)
+		{
+			SelectEntity(underSelection[underSelectionIndex]);
+		}
+	}
+
 	void AssetScene::SelectEntity(SceneEntity* entity)
 	{
 		auto& gizmo = editor.gizmo;
@@ -660,8 +740,6 @@ namespace Oak
 			selectedEntity->SetEditMode(true);
 
 			auto& transform = selectedEntity->GetTransform();
-
-			gizmo.SetTransform(&selectedEntity->GetTransform());
 
 			if (transform.transformFlag & TransformFlag::RectFull)
 			{
@@ -687,9 +765,35 @@ namespace Oak
 
 	void AssetScene::OnLeftMouseDown()
 	{
-		if (selectedEntity)
+		float mx = root.controls.DebugKeyValue("MS_X", false, false);
+		float my = root.controls.DebugKeyValue("MS_Y", false, false);
+
+		Math::Vector2 screenPos = Math::Vector2((float)mx / (float)root.render.GetDevice()->GetWidth(), (float)my / (float)root.render.GetDevice()->GetHeight());
+
+		Math::Vector3 v;
+		v.x = (2.0f * screenPos.x - 1) / editor.freeCamera.proj._11;
+		v.y = -(2.0f * screenPos.y - 1) / editor.freeCamera.proj._22;
+		v.z = 1.0f;
+
+		Math::Matrix invView = editor.freeCamera.view;
+		invView.Inverse();
+
+		Math::Vector3 dir;
+		dir.x = v.x * invView._11 + v.y * invView._21 + v.z * invView._31;
+		dir.y = v.x * invView._12 + v.y * invView._22 + v.z * invView._32;
+		dir.z = v.x * invView._13 + v.y * invView._23 + v.z * invView._33;
+		dir.Normalize();
+
+		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed))
 		{
-			selectedEntity->OnLeftMouseDown();
+			CheckSelection({ (float)mx, (float)my }, invView.Pos(), dir);
+		}
+		else
+		{
+			if (selectedEntity)
+			{
+				selectedEntity->OnLeftMouseDown();
+			}
 		}
 	}
 

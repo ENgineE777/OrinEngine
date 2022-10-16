@@ -37,10 +37,17 @@ namespace Oak
 
 #ifdef OAK_EDITOR
 		SceneEntity* selectedEntity = nullptr;
+		int underSelectionIndex;
+		eastl::vector<SceneEntity*> underSelection;
 
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		void GrabEditorData();
+
+		SceneEntity* GetPrefabRoot(SceneEntity* entity);
+
+		void CheckSelection(SceneEntity* entity, eastl::vector<SceneEntity*>& selection, Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
+		void CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 
 		void SelectEntity(SceneEntity* entity);
 

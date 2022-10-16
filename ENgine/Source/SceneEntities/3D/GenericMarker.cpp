@@ -169,17 +169,17 @@ namespace Oak
 	}
 
 	#ifdef OAK_EDITOR
-	/*bool GenericMarker::CheckSelection(Vector2 ms, Vector3 start, Vector3 dir)
+	bool GenericMarker::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
 	{
-		sel_inst = -1;
+		selInst = -1;
 
 		for (int i = 0; i < instances.size(); i++)
 		{
 			auto instance = instances[i];
 
-			if (Math::IntersectSphereRay(instance.transform.Pos(), instance.radius, start, dir))
+			if (Math::IntersectSphereRay(instance.transform.GetGlobal().Pos(), instance.radius, start, dir))
 			{
-				sel_inst = i;
+				selInst = i;
 
 				if (IsEditMode())
 				{
@@ -190,14 +190,14 @@ namespace Oak
 			}
 		}
 
-		return false;
-	}*/
+		return SceneEntity::CheckSelection(ms, start, dir);
+	}
 
 	void GenericMarker::SetEditMode(bool ed)
 	{
 		SceneEntity::SetEditMode(ed);
 
-		if (!ed)
+		if (ed)
 		{
 			SetGizmo();
 		}

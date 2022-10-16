@@ -46,6 +46,8 @@ namespace Oak
 	void SceneEntity::SetEditMode(bool ed)
 	{
 		edited = ed;
+
+		editor.gizmo.SetTransform(&transform);
 	}
 
 	bool SceneEntity::IsEditMode()
@@ -231,7 +233,13 @@ namespace Oak
 
 	bool SceneEntity::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
 	{
-		return false;
+		if (transform.objectType == ObjectType::Object2D)
+		{
+			return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - Sprite::ToUnits(transform.size * Math::Vector3(transform.offset.x, 1.0f - transform.offset.y, 0.5f)),
+										transform.GetGlobal().Pos() + Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f)), start, dir);
+		}
+		
+		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);;
 	}
 
 	void SceneEntity::OnMouseMove(Math::Vector2 ms)

@@ -71,7 +71,7 @@ namespace Oak
 		void Draw(float dt);
 
 	#ifdef OAK_EDITOR
-		//bool CheckSelection(Vector2 ms, Vector3 start, Vector3 dir) override;
+		bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir) override;
 		void SetEditMode(bool ed) override;
 		void SetGizmo();
 	#endif

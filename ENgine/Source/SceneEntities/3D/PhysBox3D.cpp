@@ -88,11 +88,4 @@ namespace Oak
 		RELEASE(body.body);
 		SceneEntity::Release();
 	}
-
-	#ifdef OAK_EDITOR
-	bool PhysBox3D::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
-	{
-		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);
-	}
-	#endif
 }

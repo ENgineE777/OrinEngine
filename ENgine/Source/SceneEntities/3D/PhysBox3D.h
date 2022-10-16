@@ -101,10 +101,6 @@ namespace Oak
 		void Play() override;
 		void Release() override;
 
-	#ifdef OAK_EDITOR
-		bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir) override;
-	#endif
-
 	#endif
 	};
 }
