@@ -117,10 +117,10 @@ namespace Oak
 
 		root.scripts.SetAllowDynamicReload(true);
 
-		root.render.AddExecutedLevelPool(1);
+		root.render.AddExecutedLevelPool(-1000);
 
 		renderTaskPool = root.render.AddTaskPool(_FL_);
-		renderTaskPool->AddTask(1, this, (Object::Delegate) & Editor::Render);
+		renderTaskPool->AddTask(-1000, this, (Object::Delegate) & Editor::Render);
 
 		if (!root.render.GetDevice()->SetBackBuffer(0, 800, 600, &hwnd))
 		{
@@ -1999,7 +1999,19 @@ namespace Oak
 
 		root.render.ExecutePool(-10, dt);
 		root.render.ExecutePool(0, dt);
+		root.render.ExecutePool(1, dt);
+		root.render.ExecutePool(2, dt);
+		root.render.ExecutePool(3, dt);
+		root.render.ExecutePool(4, dt);
+		root.render.ExecutePool(5, dt);
+		root.render.ExecutePool(6, dt);
+		root.render.ExecutePool(7, dt);
+		root.render.ExecutePool(8, dt);
+		root.render.ExecutePool(9, dt);
 		root.render.ExecutePool(10, dt);
+		root.render.ExecutePool(11, dt);
+		root.render.ExecutePool(12, dt);
+
 		root.render.ExecutePool(100, dt);
 		root.render.ExecutePool(150, dt);
 		root.render.ExecutePool(199, dt);
