@@ -18,9 +18,17 @@ namespace Oak
 	{
 		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectMoveXY;
+	}
+
+	void SpritesLayer::ApplyProperties()
+	{
+#ifdef OAK_EDITOR
+		Tasks(true)->DelAllTasks(this);
+#endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&SpritesLayer::Draw);
 	}
+
 
 	void SpritesLayer::Draw(float dt)
 	{

@@ -15,6 +15,11 @@ namespace Oak
 		Color color;
 		AssetTextureRef texture;
 
+		/**
+			\brief draw level
+		*/
+		int drawLevel = 0;
+
 		META_DATA_DECL_BASE(SpriteEntity)
 
 	#ifndef DOXYGEN_SKIP

@@ -28,6 +28,7 @@ namespace Oak
 		virtual ~SpritesLayer() = default;
 
 		void Init() override;
+		void ApplyProperties() override;
 		void Draw(float dt);
 	#endif
 	};
