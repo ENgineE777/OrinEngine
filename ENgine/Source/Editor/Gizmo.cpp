@@ -424,7 +424,7 @@ namespace Oak
 					else
 					if (selAxis == 6 || selAxis == 8)
 					{
-						ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeNS);
+						ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeEW);
 					}
 
 					break;
