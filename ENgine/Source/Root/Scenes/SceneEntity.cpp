@@ -257,9 +257,9 @@ namespace Oak
 
 	}
 
-	void SceneEntity::OnRightMouseDown()
+	bool SceneEntity::OnRightMouseDown()
 	{
-
+		return false;
 	}
 
 	void SceneEntity::OnRightMouseUp()

@@ -643,6 +643,14 @@ namespace Oak
 		SceneTreePopup(true);
 	}
 
+	void AssetScene::ImGuiViewport(bool viewportFocused)
+	{
+		if (!blockPopupInViewport)
+		{
+			SceneTreePopup(true);
+		}
+	}
+
 	SceneEntity* AssetScene::GetPrefabRoot(SceneEntity* entity)
 	{
 		if (entity->prefabInstance && entity->parent && entity->parent->prefabInstance)
@@ -809,7 +817,11 @@ namespace Oak
 	{
 		if (selectedEntity)
 		{
-			selectedEntity->OnRightMouseDown();
+			blockPopupInViewport = selectedEntity->OnRightMouseDown();
+		}
+		else
+		{
+			blockPopupInViewport = false;
 		}
 	}
 

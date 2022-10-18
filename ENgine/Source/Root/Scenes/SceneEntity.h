@@ -222,7 +222,7 @@ namespace Oak
 		virtual void OnMouseMove(Math::Vector2 ms);
 		virtual	void OnLeftMouseDown();
 		virtual void OnLeftMouseUp();
-		virtual	void OnRightMouseDown();
+		virtual	bool OnRightMouseDown();
 		virtual void OnRightMouseUp();
 		virtual	void OnMiddleMouseDown();
 		virtual void OnMiddleMouseUp();

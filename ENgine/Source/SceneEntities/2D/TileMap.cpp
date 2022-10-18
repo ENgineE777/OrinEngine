@@ -443,7 +443,7 @@ namespace Oak
 		}
 	}
 
-	void TileMap::OnRightMouseDown()
+	bool TileMap::OnRightMouseDown()
 	{
 		mode = Mode::Erase;
 
@@ -452,6 +452,8 @@ namespace Oak
 			mode = Mode::RectErase;
 			rectStart = prevMs;
 		}
+
+		return true;
 	}
 
 	void TileMap::OnRightMouseUp()

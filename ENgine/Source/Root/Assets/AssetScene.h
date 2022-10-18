@@ -54,6 +54,7 @@ namespace Oak
 		void ImGuiProperties() override;
 		bool ImGuiHasHierarchy() override;
 		void ImGuiHierarchy() override;
+		void ImGuiViewport(bool viewportFocused) override;
 
 		void OnMouseMove(Math::Vector2 ms) override;
 		void OnLeftMouseDown() override;
@@ -71,6 +72,7 @@ namespace Oak
 		bool entityDeletedViaPopup = false;
 		bool allowSceneDropTraget = true;
 		bool isPrefab = false;
+		bool blockPopupInViewport = true;
 
 		void CreateEntityPopupEntry(const eastl::vector<class ClassFactorySceneEntity*>& decls, int& curIndex, int curDepth, bool onlyToCreate);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);

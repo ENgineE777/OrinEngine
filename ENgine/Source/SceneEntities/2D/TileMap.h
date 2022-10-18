@@ -89,7 +89,7 @@ namespace Oak
 		void OnMouseMove(Math::Vector2 ms) override;
 		void OnLeftMouseDown() override;
 		void OnLeftMouseUp() override;
-		void OnRightMouseDown() override;
+		bool OnRightMouseDown() override;
 		void OnRightMouseUp() override;
 	#endif
 
