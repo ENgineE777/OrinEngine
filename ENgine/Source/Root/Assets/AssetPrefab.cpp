@@ -17,7 +17,7 @@ namespace Oak
 	void AssetPrefab::SetRootEntityType(const char* type)
 	{
 		auto* scene = GetScene();
-		scene->AddEntity(scene->CreateEntity(type));
+		scene->AddEntity(scene->CreateEntity(type, false));
 	}
 
 	SceneEntity* AssetPrefab::CreateInstance(Scene* sceneOwner)
@@ -29,13 +29,12 @@ namespace Oak
 		{
 			auto* src = entities[0];
 
-			instance = sceneOwner->CreateEntity(src->className);
+			instance = sceneOwner->CreateEntity(src->className, true);
 
 			instance->Copy(src);
 			instance->PostLoad();
 
 			instance->prefabRef = AssetPrefabRef(this, _FL_);
-			instance->prefabInstance = true;
 
 			instance->SetName(GetName().c_str());
 
@@ -105,11 +104,10 @@ namespace Oak
 				for (int j = 0; j < root->childs.size(); j++)
 				{
 					auto* childSrc = root->childs[j];
-					auto* childCopy = scene->CreateEntity(childSrc->className);
+					auto* childCopy = scene->CreateEntity(childSrc->className, true);
 
 					childCopy->SetParent(instance, nullptr);
 					childCopy->Copy(childSrc);
-					childCopy->prefabInstance = true;
 					childCopy->PostLoad();
 
 					CopyChilds(childSrc, childCopy, scene);

@@ -10,7 +10,7 @@ namespace Oak
 		renderTaskPool = root.render.AddTaskPool(_FL_);
 	}
 
-	SceneEntity* Scene::CreateEntity(const char* name, bool setNameAndUDID)
+	SceneEntity* Scene::CreateEntity(const char* name, bool prefabInstance, bool setNameAndUDID)
 	{
 		ClassFactorySceneEntity* decl = ClassFactorySceneEntity::Find(name);
 
@@ -27,6 +27,7 @@ namespace Oak
 
 			entity->scene = this;
 			entity->className = decl->GetName();
+			entity->prefabInstance = prefabInstance;
 			entity->Init();
 
 			entity->GetMetaData()->Prepare(entity);

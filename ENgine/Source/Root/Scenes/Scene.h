@@ -103,7 +103,7 @@ namespace Oak
 
 		\return Pointer to a scene object
 		*/
-		SceneEntity* CreateEntity(const char* name, bool setNameAndUDID = true);
+		SceneEntity* CreateEntity(const char* name, bool prefabInstance, bool setNameAndUDID = true);
 
 		/**
 		\brief Add entity to a scene

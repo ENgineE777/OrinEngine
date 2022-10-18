@@ -57,8 +57,6 @@ namespace Oak
 
 	void SceneEntity::Copy(SceneEntity* source)
 	{
-		prefabInstance = source->prefabInstance;
-
 		if (source->prefabRef)
 		{
 			prefabRef = source->prefabRef;

@@ -210,7 +210,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -228,7 +228,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_ANIM_GRAPH_2D", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -246,7 +246,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -264,7 +264,7 @@ namespace Oak
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_SPRITES_LAYER", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType());
+					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -353,11 +353,10 @@ namespace Oak
 				continue;
 			}
 
-			SceneEntity* childCopy = sceneOwner->CreateEntity(child->className);
+			SceneEntity* childCopy = sceneOwner->CreateEntity(child->className, isPrefab);
 
 			childCopy->SetParent(copy, nullptr);
 			childCopy->Copy(child);
-			childCopy->prefabInstance = isPrefab;
 			childCopy->PostLoad();
 
 			CopyChilds(child, childCopy, sceneOwner);
@@ -372,7 +371,7 @@ namespace Oak
 			{
 				if (ImGui::MenuItem(decls[curIndex]->GetShortName()))
 				{
-					auto* entity = scene->CreateEntity(decls[curIndex]->GetName());
+					auto* entity = scene->CreateEntity(decls[curIndex]->GetName(), false);
 
 					if (selectedEntity)
 					{
@@ -491,7 +490,7 @@ namespace Oak
 				}
 				else
 				{
-					copy = scene->CreateEntity(selectedEntity->className);
+					copy = scene->CreateEntity(selectedEntity->className, selectedEntity->prefabInstance);
 				}
 
 				auto* parent = selectedEntity->GetParent();

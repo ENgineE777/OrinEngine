@@ -50,7 +50,6 @@ namespace Oak
 		eastl::vector<SceneEntity*> childs;
 
 		AssetPrefabRef prefabRef;
-		bool prefabInstance = false;
 
 #ifdef OAK_EDITOR
 		bool edited = false;
@@ -72,6 +71,8 @@ namespace Oak
 
 		const char* className = nullptr;
 		const char* scriptClassName = nullptr;
+
+		bool prefabInstance = false;
 
 		SceneEntity() = default;
 		virtual ~SceneEntity() = default;
