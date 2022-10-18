@@ -22,12 +22,6 @@ namespace Oak
 			TileWithCollision
 		};
 
-		/**
-			\brief Group of a body
-		*/
-
-		uint32_t physGroup;
-
 		struct Tile
 		{
 			int x = 0;

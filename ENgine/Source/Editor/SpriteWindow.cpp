@@ -470,6 +470,8 @@ namespace Oak
 
 			if (ImGui::Checkbox("###hasCollision", &slice.hasCollision)) changed = true;
 
+			if (InputInt(&slice.physGroup, "Phys Group", true)) changed = true;
+
 			if (changed)
 			{
 				FillRects();

@@ -26,7 +26,6 @@ namespace Oak
 	META_DATA_DESC(TileMap)
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
-		INT_PROP(TileMap, physGroup, 1, "Physics", "Physical group", "Physical group")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
 #ifdef OAK_EDITOR
 		CALLBACK_PROP(TileMap, TileMap::ShowTilsetWindow, "Properties", "Open Tileset")
@@ -83,7 +82,7 @@ namespace Oak
 
 			mat.Pos() += Sprite::ToUnits(mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y);
 
-			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, physGroup);
+			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, tile.texture.GetPhysGroup());
 			box->SetActive(IsVisible());
 
 			body.object = this;
