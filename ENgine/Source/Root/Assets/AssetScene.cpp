@@ -851,6 +851,7 @@ namespace Oak
 
 	void AssetScene::Release()
 	{
+		Asset::Release();
 		DELETE_PTR(scene)
 	}
 };

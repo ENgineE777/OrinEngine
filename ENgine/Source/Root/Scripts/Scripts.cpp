@@ -149,12 +149,12 @@ namespace Oak
 
 		if (newModule)
 		{
-			Asset* selectedEditAsset = nullptr;
+			AssetRef selectedEditAsset;
 
 			if (Module && allowDynamicReload)
 			{
 				selectedEditAsset = editor.selectedEditAsset;
-				editor.SelectEditAsset(nullptr);
+				editor.SelectEditAsset(AssetRef());
 
 				void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
 				auto code_ptr = (decltype(unregister_code)*)Procs;

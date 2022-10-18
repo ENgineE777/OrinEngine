@@ -63,7 +63,7 @@ namespace Oak
 			eastl::string edScene;
 			reader.Read("edited_asset", edScene);
 
-			auto* asset = root.assets.GetAsset<Asset>(edScene);
+			auto asset = root.assets.GetAssetRef<AssetRef>(edScene);
 
 			if (asset)
 			{
@@ -148,7 +148,7 @@ namespace Oak
 
 		Sprite::SetData(1080.0f, 50.0f);
 
-		editor.SelectEditAsset(nullptr);
+		editor.SelectEditAsset(AssetRef());
 
 		root.assets.Clear();
 

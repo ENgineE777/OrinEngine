@@ -14,7 +14,7 @@ namespace Oak
 
 		if (entity->prefabRef.Get())
 		{
-			editor.SelectEditAsset(entity->prefabRef.Get());
+			editor.SelectEditAsset(AssetRef(AssetRef((Asset*)entity->prefabRef.Get(), _FL_)));
 		}
 	}
 

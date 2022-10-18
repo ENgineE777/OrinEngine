@@ -122,7 +122,7 @@ namespace Oak
 		Gizmo gizmo;
 		bool viewportFocused = false;
 
-		Asset* selectedEditAsset = nullptr;
+		AssetRef selectedEditAsset;
 
 		bool ownGrid = false;
 		Math::Vector3 gridOrigin = 0.0f;
@@ -136,7 +136,7 @@ namespace Oak
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) override;
 		void OnResize(int width, int height) override;
 
-		void SelectEditAsset(Asset* asset);
+		void SelectEditAsset(AssetRef asset);
 
 		void Release() override;
 

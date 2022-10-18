@@ -16,6 +16,7 @@ namespace Oak
 
 	class CLASS_DECLSPEC Asset : public Object
 	{
+		friend class PointerRef<Asset>;
 	protected:
 
 		#ifdef OAK_EDITOR
@@ -78,4 +79,19 @@ namespace Oak
 
 	CLASSFACTORYDEF(Asset)
 	CLASSFACTORYDEF_END()
+
+	class CLASS_DECLSPEC AssetRef : public PointerRef<Asset>
+	{
+	public:
+
+		AssetRef() : PointerRef() {};
+		AssetRef(Asset* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
+
+		AssetRef& operator=(const AssetRef& ref)
+		{
+			Copy(ref);
+
+			return *this;
+		}
+	};
 }

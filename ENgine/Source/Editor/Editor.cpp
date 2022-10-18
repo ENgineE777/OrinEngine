@@ -1091,7 +1091,7 @@ namespace Oak
 		}
 	}
 
-	void Editor::SelectEditAsset(Asset* asset)
+	void Editor::SelectEditAsset(AssetRef asset)
 	{
 		if (asset && !asset->IsEditable())
 		{
@@ -1105,7 +1105,7 @@ namespace Oak
 			selectedEditAsset->EnableEditing(false);
 		}
 
-		selectedEditAsset = asset;
+		selectedEditAsset = AssetRef(asset);
 
 		if (selectedEditAsset)
 		{
@@ -1334,7 +1334,7 @@ namespace Oak
 			}
 
 			eastl::string name = item->name;
-			auto* asset = item->GetAsset<Asset>();
+			auto asset = item->GetAssetRef<AssetRef>();
 
 			if (item->GetAsset<AssetScene>() && project.IsStartScene(item->name.c_str()))
 			{

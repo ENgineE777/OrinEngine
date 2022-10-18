@@ -45,7 +45,7 @@ void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls,
 
 		if (needRecreate)
 		{
-			Oak::SceneEntity* copy = entity->GetScene()->CreateEntity(entity->className);
+			Oak::SceneEntity* copy = entity->GetScene()->CreateEntity(entity->className, entity->prefabInstance);
 
 			auto* parent = entity->GetParent();
 
