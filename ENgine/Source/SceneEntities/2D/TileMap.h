@@ -15,13 +15,6 @@ namespace Oak
 	{
 	public:
 
-		enum class TileHit
-		{
-			NoHit,
-			Tile,
-			TileWithCollision
-		};
-
 		struct Tile
 		{
 			int x = 0;
@@ -55,8 +48,6 @@ namespace Oak
 
 		void Load(JsonReader& reader) override;
 		void Save(JsonWriter& writer) override;
-
-		TileHit IsPointHitTiles(Math::Vector2 point);
 
 		void Release() override;
 
