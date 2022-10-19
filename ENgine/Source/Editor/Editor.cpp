@@ -1311,7 +1311,7 @@ namespace Oak
 			{
 				selectedFolder = item;
 				selectedAssetHolder = nullptr;
-				selectedAsset = nullptr;
+				selectedAsset = AssetRef();
 			}
 
 			AssetsTreePopup(false);
@@ -1334,7 +1334,6 @@ namespace Oak
 			}
 
 			eastl::string name = item->name;
-			auto asset = item->GetAssetRef<AssetRef>();
 
 			if (item->GetAsset<AssetScene>() && project.IsStartScene(item->name.c_str()))
 			{
@@ -1355,14 +1354,14 @@ namespace Oak
 					project.Save();
 				}
 
-				SelectEditAsset(asset);
+				SelectEditAsset(item->GetAssetRef<AssetRef>());
 			}
 
 			if (ImGui::IsItemHovered() && (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right)))
 			{
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
-				selectedAsset = asset;
+				selectedAsset = item->GetAssetRef<AssetRef>();
 			}
 
 			if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))

@@ -48,7 +48,7 @@ namespace Oak
 
 		Assets::Folder* selectedFolder = nullptr;
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
-		Asset* selectedAsset = nullptr;
+		AssetRef selectedAsset;
 
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
