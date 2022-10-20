@@ -274,29 +274,28 @@ namespace Oak
 		SceneEntity* FindChild(uint32_t uid);
 
 		/**
-			\brief Find a child by name
-			\param[in] name Name of a child
-			\return Return pointer to a child
-		*/
-		SceneEntity* FindChild(const char* name);
-
-		/**
 			\brief Find a child by type
+			\param[in] name Name of a child, if not set then just checking for type
 			\return Return pointer to a child
 		*/
 		template<class T>
-		T* FindChild()
+		T* FindChild(const char* name = nullptr)
 		{
 			for (auto entity : childs)
 			{
-				T* casted = dynamic_cast<T*>(entity);
+				T* casted = nullptr;
+
+				if (!name || (name && StringUtils::IsEqual(entity->GetName(), name)))
+				{
+					casted = dynamic_cast<T*>(entity);
+				}
 
 				if (casted)
 				{
 					return casted;
 				}
 
-				T* childCasted = entity->FindChild<T>();
+				T* childCasted = entity->FindChild<T>(name);
 
 				if (childCasted)
 				{

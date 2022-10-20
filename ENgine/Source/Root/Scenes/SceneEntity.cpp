@@ -407,24 +407,4 @@ namespace Oak
 
 		return nullptr;
 	}
-
-	SceneEntity* SceneEntity::FindChild(const char* name)
-	{
-		for (auto entity : childs)
-		{
-			if (entity && StringUtils::IsEqual(entity->GetName(), name))
-			{
-				return entity;
-			}
-
-			SceneEntity* child = entity->FindChild(name);
-
-			if (child)
-			{
-				return child;
-			}
-		}
-
-		return nullptr;
-	}
 }
