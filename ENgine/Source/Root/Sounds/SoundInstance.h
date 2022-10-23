@@ -9,7 +9,7 @@ namespace Oak
 	\ingroup gr_code_services_sound
 	*/
 
-	enum class PlaySoundType
+	enum class CLASS_DECLSPEC PlaySoundType
 	{
 		Once = 0 /*!< Sound should be played only once */,
 		Looped /*!< Sound should be played in loop mode */,
@@ -23,7 +23,7 @@ namespace Oak
 
 	*/
 
-	class SoundInstance
+	class CLASS_DECLSPEC SoundInstance
 	{
 		friend class Sounds;
 		friend class SoundInstance;

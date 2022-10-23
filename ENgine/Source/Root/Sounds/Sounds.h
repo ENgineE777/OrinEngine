@@ -26,7 +26,7 @@ namespace Oak
 
 	*/
 
-	class Sounds
+	class CLASS_DECLSPEC Sounds
 	{
 		friend class SoundInstance;
 		friend class SoundRes;

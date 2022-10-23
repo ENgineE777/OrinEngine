@@ -13,7 +13,7 @@
 //#include "Root/Physics/Physics.h"
 #include "Root/Scenes/ISceneManager.h"
 //#include "Root/Scripts/Scripts.h"
-//#include "Root/Sounds/Sounds.h"
+#include "Root/Sounds/Sounds.h"
 //#include "Root/TaskExecutor/TaskExecutor.h"
 
 namespace Oak
@@ -64,6 +64,11 @@ namespace Oak
 			\brief Get instance of physic scene
 		*/
 		virtual ISceneManager* GetSceneManager() = 0;
+
+		/**
+			\brief Get instance of sound manager
+		*/
+		virtual Sounds* GetSounds() = 0;
 
 		virtual void Log(const char* name, const char* text, ...) = 0;
 		virtual float GetDeltaTime() = 0;

@@ -127,6 +127,8 @@ namespace Oak
 		*/
 		Sounds sounds;
 
+		virtual Sounds* GetSounds() override { return &sounds; };
+
 		/**
 		\brief Access to task executor service
 		*/
