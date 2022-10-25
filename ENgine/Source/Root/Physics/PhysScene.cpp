@@ -198,6 +198,39 @@ namespace Oak
 		return false;
 	}
 
+	bool PhysScene::SphereCast(RaycastDesc& desc, float radius)
+	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SphereCast for scene during phys update");
+			return false;
+		}
+
+		if (desc.length < 0.005f)
+		{
+			return false;
+		}
+
+		PxSweepBuffer hit;
+		if (scene->sweep(PxSphereGeometry(radius),
+		                 PxTransform(PxVec3(desc.origin.x, desc.origin.y, desc.origin.z)),
+						 PxVec3(desc.dir.x, desc.dir.y, desc.dir.z),
+						 desc.length,
+						 hit,
+						 PxHitFlags(PxHitFlag::eDEFAULT),
+						 PxQueryFilterData({desc.group, 0, 0, 0}, PxQueryFlag::eDYNAMIC | PxQueryFlag::eSTATIC)))
+		{
+			desc.userdata  = (BodyUserData*)(hit.block.actor->userData);
+			desc.hitPos    = Math::Vector3(hit.block.position.x, hit.block.position.y, hit.block.position.z);
+			desc.hitNormal = Math::Vector3(hit.block.normal.x, hit.block.normal.y, hit.block.normal.z);
+			desc.hitLength = hit.block.distance;
+
+			return true;
+		}
+
+		return false;
+	}
+
 	bool PhysScene::OverlapWithSphere(Math::Vector3 pos, float radius, eastl::vector<BodyUserData*>& bodies)
 	{
 		if (inPhysUpdate)

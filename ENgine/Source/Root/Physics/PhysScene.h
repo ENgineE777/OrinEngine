@@ -132,6 +132,15 @@ namespace Oak
 		*/
 		bool RayCast(RaycastDesc& desc);
 
+		/**
+		\brief Make sphere sweep cast
+
+		\param[in] desc Description of a sphere sweep
+
+		\return True will be return in case sphere hitted something. Otherwise false will be returned 
+		*/
+		bool SphereCast(RaycastDesc& desc, float radius);
+
 		bool OverlapWithSphere(Math::Vector3 pos, float radius, eastl::vector<BodyUserData*>& bodies);
 
 	#ifndef DOXYGEN_SKIP
