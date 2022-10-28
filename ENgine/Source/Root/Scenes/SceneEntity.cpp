@@ -8,6 +8,14 @@
 
 namespace Oak
 {
+	void SceneEntity::FillLayersList(eastl::vector<eastl::string>& names)
+	{
+		for (auto& layer : editor.project.layers)
+		{
+			names.push_back(layer.name);
+		}		
+	}
+
 	void SceneEntity::OpenSourcePrefab(void* owner)
 	{
 		SceneEntity* entity = (SceneEntity*)owner;
@@ -117,9 +125,10 @@ namespace Oak
 	bool SceneEntity::IsVisible()
 	{
 	#ifdef OAK_EDITOR
-		//if (!scene->Playing() && project.LayerHiden(layer_name.c_str()))
-		{
-			//return State::Invisible;
+		if (!GetScene()->IsPlaying() &&
+			editor.project.LayerHiden(prefabInstance ? GetPrefabRoot()->layerName.c_str() : layerName.c_str()))
+		{			
+			return false;
 		}
 	#endif
 
@@ -382,6 +391,17 @@ namespace Oak
 	{
 		return parent;
 	}
+
+	SceneEntity* SceneEntity::GetPrefabRoot()
+	{
+		if (prefabInstance && parent && parent->prefabInstance)
+		{
+			return parent->GetPrefabRoot();
+		}
+
+		return this;
+	}
+
 
 	eastl::vector<SceneEntity*>& SceneEntity::GetChilds()
 	{

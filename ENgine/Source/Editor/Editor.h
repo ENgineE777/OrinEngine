@@ -115,6 +115,11 @@ namespace Oak
 		void CaptureLog(const char* name, const char* text);
 		void LoadProjectIcon(ProjectEntry& entry);
 
+		int selLayer = -1;
+		eastl::string layerName;
+		eastl::vector<eastl::string> layerStateNames;
+		eastl::string layerStateList;
+
 	public:
 
 		Project project;

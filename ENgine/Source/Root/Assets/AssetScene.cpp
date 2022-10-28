@@ -650,27 +650,25 @@ namespace Oak
 		}
 	}
 
-	SceneEntity* AssetScene::GetPrefabRoot(SceneEntity* entity)
-	{
-		if (entity->prefabInstance && entity->parent && entity->parent->prefabInstance)
-		{
-			return GetPrefabRoot(entity->parent);
-		}
-
-		return entity;
-	}
-
 	void AssetScene::CheckSelection(SceneEntity* entity, eastl::vector<SceneEntity*>& selection, Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
 	{
+		if (!entity->IsVisible() || !editor.project.LayerSelectable(entity->layerName.c_str()))
+		{
+			return;
+		}
+
 		if (entity->CheckSelection(ms, start, dir))
 		{
-			auto* entityRoot = GetPrefabRoot(entity);
+			auto* entityRoot = entity->GetPrefabRoot();
 
-			auto iterator = eastl::find(selection.begin(), selection.end(), entityRoot);
-
-			if (iterator == selection.end())
+			if (editor.project.LayerSelectable(entityRoot->layerName.c_str()))
 			{
-				selection.push_back(entityRoot);
+				auto iterator = eastl::find(selection.begin(), selection.end(), entityRoot);
+
+				if (iterator == selection.end())
+				{
+					selection.push_back(entityRoot);
+				}
 			}
 		}
 

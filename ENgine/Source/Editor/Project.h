@@ -15,6 +15,21 @@ namespace Oak
 	{
 	public:
 
+		struct Layer
+		{
+			enum State
+			{
+				Normal,
+				Unselectable,
+				Invisible
+			};
+
+			State state = Normal;
+			eastl::string name;
+		};
+
+		eastl::vector<Layer> layers;
+
 		eastl::string projectFullName;
 		eastl::string projectName;
 		char projectPath[1024];
@@ -41,6 +56,14 @@ namespace Oak
 
 		void SetStartScene(const eastl::string& path);
 		bool IsStartScene(const eastl::string& name);
+
+		int FindLayer(const char* layer);
+
+		void AddLayer(const char* name);
+		void DeleteLayer(const char* name);
+
+		bool LayerHiden(const char* name);
+		bool LayerSelectable(const char* name);
 
 		void Reset();
 

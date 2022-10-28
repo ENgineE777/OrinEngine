@@ -229,6 +229,7 @@ namespace Oak
 		virtual void OnMiddleMouseUp();
 #endif
 		static void OpenSourcePrefab(void* owner);
+		static void FillLayersList(eastl::vector<eastl::string>& names);
 
 		/**
 		\brief Get pointer to a scene owner
@@ -258,6 +259,12 @@ namespace Oak
 			\return Pointer to a parent
 		*/
 		virtual SceneEntity* GetParent();
+
+		/**
+			\brief Get root of prefab instance
+			\return Pointer to a root of prefab instance
+		*/
+		SceneEntity* GetPrefabRoot();
 
 		/**
 			\brief Get list of childs
@@ -473,6 +480,7 @@ namespace Oak
 
 	#define BASE_SCENE_ENTITY_PROP(className)\
 	STRING_PROP(className, name, "SceneEntity", "Common", "Name")\
+	STRING_ENUM_PROP(className, layerName, SceneEntity::FillLayersList, "Common", "Layer")\
 	BOOL_PROP(className, visible, true, "Common", "Visibile", "State of visibility of an object")\
 	TRANSFORM_PROP(className, transform, "Transform")\
 	CALLBACK_PROP(className, SceneEntity::OpenSourcePrefab, "Common", "Edit Prefab")

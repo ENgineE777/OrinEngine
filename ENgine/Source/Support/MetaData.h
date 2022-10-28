@@ -72,7 +72,7 @@ namespace Oak
 
 		#ifdef OAK_EDITOR
 		typedef void(*Callback)(void* owner);
-		typedef void(*EnumStringCallback)(void* owner, void** strings);
+		typedef void(*EnumStringCallback)(eastl::vector<eastl::string>& names);
 		#endif
 
 		struct ArrayAdapter
@@ -316,6 +316,8 @@ namespace Oak
 		prop.catName = strCatName;\
 		prop.propName = strPropName;\
 		prop.enum_callback = set_callback;\
+		enums.push_back(MetaDataEnum());\
+		prop.defvalue.enumIndex = (int)enums.size() - 1;\
 		properties.push_back(prop);\
 	}
 	#else

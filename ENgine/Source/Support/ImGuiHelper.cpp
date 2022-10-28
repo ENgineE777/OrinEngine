@@ -55,7 +55,7 @@ namespace Oak::ImGuiHelper
 
 			for (int i = 0; i < names.size(); i++)
 			{
-				count += (int)names[i].size() + 1;
+				count += StringUtils::GetLen(names[i].c_str()) + 1;
 			}
 
 			namesList.resize(count + 1);
@@ -64,8 +64,9 @@ namespace Oak::ImGuiHelper
 
 			for (int i = 0; i < names.size(); i++)
 			{
-				int sz = (int)names[i].size() + 1;
-				memcpy(&namesList[index], names[i].c_str(), sz);
+				const char* str = names[i].c_str();
+				int sz = StringUtils::GetLen(str) + 1;
+				memcpy(&namesList[index], str, sz);
 				index += sz;
 			}
 		}

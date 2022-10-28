@@ -1518,6 +1518,7 @@ namespace Oak
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
 			ImGui::DockBuilderDockWindow("###Game", dock_main_id);
 			ImGui::DockBuilderDockWindow("###Scene", dock_right_up_id);
+			ImGui::DockBuilderDockWindow("Layers", dock_right_up_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_down_id);
 			ImGui::DockBuilderDockWindow("Assets browser", dock_bottom_id); 
 			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
@@ -1723,6 +1724,90 @@ namespace Oak
 			ImGui::End();
 		}
 
+		{
+			ImGui::Begin("Layers");
+
+			ImGuiHelper::InputString("###LayerName", layerName);
+			ImGui::SameLine();
+
+			if (ImGui::Button("Add"))
+			{
+				auto iter = eastl::find_if(project.layers.begin(), project.layers.end(), [this](const Project::Layer& layer) { return StringUtils::IsEqual(layer.name.c_str(), this->layerName.c_str()); });
+
+				if (iter == project.layers.end() && !layerName.empty())
+				{
+					Project::Layer layer;
+					layer.name = layerName;
+
+					project.layers.push_back(layer);
+					selLayer = (int)project.layers.size() - 1;
+				}
+			}
+			
+			ImGui::SameLine();
+			if (ImGui::Button("Ren") && selLayer != -1)
+			{
+				auto iter = eastl::find_if(project.layers.begin(), project.layers.end(), [this](const Project::Layer& layer) { return StringUtils::IsEqual(layer.name.c_str(), this->layerName.c_str()); });
+
+				if (iter == project.layers.end())
+				{
+					project.layers[selLayer].name = layerName;
+				}
+			}
+
+			ImGui::SameLine();
+			if (ImGui::Button("Del"))
+			{
+				if (selLayer != -1)
+				{
+					project.layers.erase(project.layers.begin() + selLayer);
+					selLayer = -1;
+				}
+			}
+
+			ImGui::BeginChild("LayersList");
+
+			ImGui::Columns(2, "Layers");
+
+			if (layerStateNames.empty())
+			{
+				layerStateNames.push_back("Normal");
+				layerStateNames.push_back("Unselectable");
+				layerStateNames.push_back("Invisible");
+			}
+
+			for (int i = 0; i < project.layers.size(); i++)
+			{
+				auto& layer = project.layers[i];
+
+				char label[32];
+				sprintf(label, "%s###%04d", layer.name.c_str(), i);				
+
+				if (ImGui::Selectable(label, selLayer == i, ImGuiSelectableFlags_None))
+				{
+					selLayer = i;
+					layerName = layer.name;
+				}
+
+				ImGui::NextColumn();
+
+				sprintf(label, "###%07d", i);
+
+				int index = layer.state;
+
+				if (ImGuiHelper::InputCombobox(label, index, layerStateNames, layerStateList))
+				{
+					layer.state = (Project::Layer::State)index;
+				}
+				
+				ImGui::NextColumn();
+			}
+
+			ImGui::EndChild();
+
+			ImGui::End();
+		}
+
 		if (selectedEditAsset && selectedEditAsset->ImGuiHasHierarchy())
 		{
 			ImGui::Begin("Hierarchy###Scene");
@@ -1743,37 +1828,6 @@ namespace Oak
 			}
 
 			ImGui::Columns(1);
-
-			ImGui::End();
-		}
-
-		{
-			ImGui::Begin("Assets browser");
-
-			ImVec2 size = ImGui::GetContentRegionAvail();
-
-			ImGui::BeginChild("AssetsList", ImVec2(size.x - 300, 0), true);
-
-			AssetsFolder(&root.assets.rootFolder);
-
-			ImGui::EndChild();
-
-			AssetsTreePopup(true);
-
-			ImGui::SameLine();
-
-			ImGui::BeginChild("AssetProperty", ImVec2(300, 0), true);
-
-			ImGui::Columns(2);
-
-			if (selectedAsset)
-			{
-				selectedAsset->ImGuiMetaProperties();
-			}
-
-			ImGui::Columns(1);
-
-			ImGui::EndChild();
 
 			ImGui::End();
 		}
@@ -1812,6 +1866,37 @@ namespace Oak
 
 				ImGui::EndTabBar();
 			}
+
+			ImGui::End();
+		}
+
+		{
+			ImGui::Begin("Assets browser");
+
+			ImVec2 size = ImGui::GetContentRegionAvail();
+
+			ImGui::BeginChild("AssetsList", ImVec2(size.x - 300, 0), true);
+
+			AssetsFolder(&root.assets.rootFolder);
+
+			ImGui::EndChild();
+
+			AssetsTreePopup(true);
+
+			ImGui::SameLine();
+
+			ImGui::BeginChild("AssetProperty", ImVec2(300, 0), true);
+
+			ImGui::Columns(2);
+
+			if (selectedAsset)
+			{
+				selectedAsset->ImGuiMetaProperties();
+			}
+
+			ImGui::Columns(1);
+
+			ImGui::EndChild();
 
 			ImGui::End();
 		}

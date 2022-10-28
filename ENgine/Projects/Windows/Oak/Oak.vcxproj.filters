@@ -712,6 +712,9 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_demo.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">

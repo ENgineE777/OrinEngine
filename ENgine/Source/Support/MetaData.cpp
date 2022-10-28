@@ -38,6 +38,15 @@ namespace Oak
 			{
 				prop.value = (uint8_t*)prop.callback;
 			}
+			else
+			if (prop.type == Type::EnumString)
+			{
+				auto& entry = enums[prop.defvalue.enumIndex];
+				entry.enumList.clear();
+				entry.names.clear();
+
+				prop.enum_callback(entry.names);
+			}
 			#endif
 
 			if (prop.adapter)
@@ -1010,7 +1019,25 @@ namespace Oak
 						else
 						if (prop.type == Type::EnumString)
 						{
-							//FIX ME!!!
+							int index = 0;
+
+							MetaDataEnum& enumData = enums[prop.defvalue.enumIndex];
+							eastl::string& str = *((eastl::string*)prop.value);
+
+							for (int i = 0; i < enumData.names.size(); i++)
+							{
+								if (enumData.names[i] == str)
+								{
+									index = i;
+									break;
+								}
+							}
+
+							if (ImGuiHelper::InputCombobox(propGuiID, index, enumData.names, enumData.enumList))
+							{
+								str = enumData.names[index];
+								prop.changed = true;
+							}
 						}
 						else
 						if (prop.type == Type::AssetTexture)

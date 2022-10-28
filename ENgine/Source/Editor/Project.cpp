@@ -69,6 +69,17 @@ namespace Oak
 			{
 				editor.SelectEditAsset(asset);
 			}
+
+			while (reader.EnterBlock("layers"))
+			{
+				layers.push_back(Layer());
+				Layer& layer = layers.back();
+
+				reader.Read("name", layer.name);
+				reader.Read("state", (int&)layer.state);
+
+				reader.LeaveBlock();
+			}
 		}
 
 		return true;
@@ -121,6 +132,20 @@ namespace Oak
 		writer.Write("hideCursor", hideCursor);
 
 		writer.Write("edited_asset", editor.selectedEditAsset ? editor.selectedEditAsset->GetPath().c_str() : "");
+
+		writer.StartArray("layers");
+
+		for (auto& layer : layers)
+		{
+			writer.StartBlock(nullptr);
+
+			writer.Write("name", layer.name.c_str());
+			writer.Write("state", layer.state);
+
+			writer.FinishBlock();
+		}
+
+		writer.FinishArray();
 	}
 
 	void Project::SetStartScene(const eastl::string& path)
@@ -140,6 +165,67 @@ namespace Oak
 
 		return StringUtils::IsEqual(startScene.c_str(), name_str);
 	}
+
+	int Project::FindLayer(const char* layerName)
+	{
+		auto iter = eastl::find_if(layers.begin(), layers.end(), [layerName](const Layer& layer) { return StringUtils::IsEqual(layer.name.c_str(), layerName); });
+
+		
+		return iter == layers.end() ? -1 : iter - layers.begin();
+	}
+
+	void Project::AddLayer(const char* name)
+	{
+		if (!name[0])
+		{
+			return;
+		}
+
+		if (FindLayer(name) != -1)
+		{
+			return;
+		}
+
+		layers.push_back(Layer());
+		Layer& layer = layers.back();
+
+		layer.name = name;
+	}
+
+	void Project::DeleteLayer(const char* name)
+	{
+		int index = FindLayer(name);
+
+		if (index != -1)
+		{
+			layers.erase(layers.begin() + index);
+		}
+	}
+
+	bool Project::LayerHiden(const char* name)
+	{
+		int index = FindLayer(name);
+
+		if (index == -1)
+		{
+			return false;
+		}
+
+		return layers[index].state == Layer::Invisible;
+	}
+
+	bool Project::LayerSelectable(const char* name)
+	{
+		int index = FindLayer(name);
+
+		if (index == -1)
+		{
+			return true;
+		}
+
+		return layers[index].state == Layer::Normal;
+	}
+
 
 	void Project::Reset()
 	{

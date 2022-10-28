@@ -527,6 +527,7 @@
     <ClCompile Include="..\..\..\Source\Support\ThreadExecutor.cpp" />
     <ClCompile Include="..\..\..\Source\Support\Timer.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.cpp" />
