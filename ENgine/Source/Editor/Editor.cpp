@@ -15,7 +15,6 @@
 #include "Support/ImGuiHelper.h"
 #include "Support/Perforce.h"
 
-
 #include <filesystem>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -1105,7 +1104,20 @@ namespace Oak
 		{
 			char curDir[1024];
 			GetCurrentDirectoryA(1024, curDir);
-			if (project.Load(projectToLoad[1] == ':' ? projectToLoad : StringUtils::PrintTemp("%s/%s", curDir, projectToLoad)))
+
+			eastl::string projectFullName;
+			if (projectToLoad[1] == '.')
+			{
+				std::filesystem::path path = StringUtils::PrintTemp("%s/%s", curDir, projectToLoad);
+				projectFullName = std::filesystem::canonical(path).u8string().c_str();
+			}
+			else
+			{
+				projectFullName = projectToLoad;
+			}
+
+
+			if (project.Load(projectFullName.c_str()))
 			{
 				ShowWindow(hwnd, SW_MAXIMIZE);
 			}
