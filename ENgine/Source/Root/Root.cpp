@@ -17,6 +17,7 @@
 #ifdef OAK_EDITOR
 #include "Editor/Editor.h"
 #include <filesystem>
+#include "Support/Perforce.h"
 #endif
 
 namespace Oak
@@ -91,6 +92,8 @@ namespace Oak
 		StringUtils::Init();
 
 		Timer::CountDeltaTime();
+
+		Perforce::Init();
 
 		return true;
 	}
@@ -221,6 +224,8 @@ namespace Oak
 
 	void Root::Release()
 	{
+		Perforce::Close();
+
 		assets.Release();
 
 		Sprite::Release();

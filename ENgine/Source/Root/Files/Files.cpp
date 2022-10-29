@@ -2,6 +2,7 @@
 #ifdef PLATFORM_WIN
 #include "Windows.h"
 #include <sys/stat.h>
+#include "Support/Perforce.h"
 #endif
 
 #include "Root/Root.h"
@@ -20,6 +21,19 @@ namespace Oak
 	{
 		FILE* file = nullptr;
 		#ifdef PLATFORM_WIN
+		if (StringUtils::IsEqual(mode, "wb") && IsFileExist(path))
+		{
+			auto attr = GetFileAttributesA(path) & FILE_ATTRIBUTE_READONLY;
+
+			if (attr)
+			{
+				if (!Perforce::Checkout(path))
+				{
+					MESSAGE_BOX("Can't rewrite readonly file", "Seems you under perfoce. Please setup p4 in project settings");
+				}
+			}
+		}
+
 		fopen_s(&file, path, mode);
 		#endif
 
@@ -67,17 +81,18 @@ namespace Oak
 	{
 		const char* rootPath = root.GetPath(Root::Path::Assets);
 
-		struct stat buffer;
-
 		if (rootPath[0])
 		{
 			char path[1024];
 			StringUtils::Printf(path, 1024, "%s%s", rootPath, name);
 
-			return (stat(path, &buffer) == 0);
+			if (std::filesystem::exists(path))
+			{
+				return true;
+			}
 		}
 
-		return (stat(name, &buffer) == 0);
+		return std::filesystem::exists(name);
 	}
 
 	void Files::CreateFolder(const char* path)

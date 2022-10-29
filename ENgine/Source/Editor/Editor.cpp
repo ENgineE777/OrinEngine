@@ -13,6 +13,7 @@
 
 #include "shellapi.h"
 #include "Support/ImGuiHelper.h"
+#include "Support/Perforce.h"
 
 
 #include <filesystem>
@@ -794,21 +795,7 @@ namespace Oak
 			ImGui::Text("Window title");
 			ImGui::NextColumn();
 
-			struct Funcs
-			{
-				static int ResizeCallback(ImGuiInputTextCallbackData* data)
-				{
-					if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
-					{
-						eastl::string* str = (eastl::string*)data->UserData;
-						str->resize(data->BufSize + 1);
-						data->Buf = str->begin();
-					}
-					return 0;
-				}
-			};
-
-			ImGui::InputText("", project.projectName.begin(), (size_t)project.projectName.size() + 1, ImGuiInputTextFlags_CallbackResize, Funcs::ResizeCallback, (void*)&project.projectName);
+			ImGuiHelper::InputString("###Windowtitle", project.projectName);
 
 			ImGui::NextColumn();
 
@@ -914,6 +901,44 @@ namespace Oak
 			if (ImGui::Button(StringUtils::PrintTemp("%s###ProjectSettingsExportDir", project.exportDir[0] ? project.exportDir.c_str() : "File not set"), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
 			{
 				project.SelectExportDir();
+			}
+
+			ImGui::NextColumn();
+
+			ImGui::Columns(1);
+		}
+
+		is_open = ImGui::CollapsingHeader("P4###ProjectSettingsP4", ImGuiTreeNodeFlags_DefaultOpen);
+
+		if (is_open)
+		{
+			ImGui::Columns(2);
+
+			ImGui::Text("URL");
+			ImGui::NextColumn();
+
+			ImGuiHelper::InputString("###P4URL", project.p4URL);
+			ImGui::NextColumn();
+
+			ImGui::Text("Workspace");
+			ImGui::NextColumn();
+
+			ImGuiHelper::InputString("###P4Workspace", project.p4Workspace);
+			ImGui::NextColumn();
+
+			ImGui::Text("User");
+			ImGui::NextColumn();
+
+			ImGuiHelper::InputString("###P4User", project.p4User);
+			ImGui::NextColumn();
+
+			
+			ImGui::Text("Status");
+			ImGui::NextColumn();
+
+			if (ImGui::Button(project.P4Connected ? "Connect (Connected)" : "Connect", ImVec2(150.0f, 25.0f)))
+			{
+				project.P4Connected = Perforce::Connect(project.p4URL.c_str(), project.p4Workspace.c_str(), project.p4User.c_str());
 			}
 
 			ImGui::NextColumn();

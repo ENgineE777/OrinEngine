@@ -44,6 +44,11 @@ namespace Oak
 
 		eastl::string startScene;
 
+		eastl::string p4URL;
+		eastl::string p4Workspace;
+		eastl::string p4User;
+		bool P4Connected = false;
+
 		Math::Vector2 alignRect = 32.0f;
 		bool useAlignRect = false;
 		bool hideCursor = false;

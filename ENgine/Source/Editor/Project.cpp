@@ -1,6 +1,7 @@
 #include "Editor.h"
 #include "Support/Sprite.h"
 #include "shlobj_core.h"
+#include "Support/Perforce.h"
 
 namespace Oak
 {
@@ -82,6 +83,20 @@ namespace Oak
 			}
 		}
 
+		eastl::string p4FilePath = projectPath + eastl::string("P4Config");
+		if (reader.ParseFile(p4FilePath.c_str()))
+		{
+			reader.Read("p4URL", p4URL);
+			reader.Read("p4Workspace", p4Workspace);
+			reader.Read("p4User", p4User);
+			reader.Read("P4Connected", P4Connected);
+
+			if (P4Connected)
+			{
+				P4Connected = Perforce::Connect(p4URL.c_str(), p4Workspace.c_str(), p4User.c_str());
+			}
+		}
+
 		return true;
 	}
 
@@ -146,6 +161,14 @@ namespace Oak
 		}
 
 		writer.FinishArray();
+
+		eastl::string p4FilePath = projectPath + eastl::string("P4Config");
+		writer.Start(p4FilePath.c_str());
+
+		writer.Write("p4URL", p4URL);
+		writer.Write("p4Workspace", p4Workspace);
+		writer.Write("p4User", p4User);
+		writer.Write("P4Connected", P4Connected);
 	}
 
 	void Project::SetStartScene(const eastl::string& path)
@@ -171,7 +194,7 @@ namespace Oak
 		auto iter = eastl::find_if(layers.begin(), layers.end(), [layerName](const Layer& layer) { return StringUtils::IsEqual(layer.name.c_str(), layerName); });
 
 		
-		return iter == layers.end() ? -1 : iter - layers.begin();
+		return iter == layers.end() ? -1 : (int)(iter - layers.begin());
 	}
 
 	void Project::AddLayer(const char* name)
