@@ -19,7 +19,7 @@ namespace Oak
 
 	public:
 
-		struct AssetHolder
+		struct CLASS_DECLSPEC AssetHolder
 		{
 			Asset* asset = nullptr;
 			eastl::string name;
@@ -31,17 +31,14 @@ namespace Oak
 				return assetCreation[ext].c_str();
 			}
 
+			void CreateAsset();
+
 			template<class T>
 			T* GetAsset()
 			{
 				if (asset == nullptr)
 				{
-					ClassFactoryAsset* decl = ClassFactoryAsset::Find(GetAssetType());
-
-					asset = decl->Create(_FL_);
-					asset->Init();
-					asset->SetPath(fullName.c_str());
-					asset->Reload();
+					CreateAsset();
 				}
 
 				return dynamic_cast<T*>(asset);

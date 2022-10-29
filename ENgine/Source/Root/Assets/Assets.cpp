@@ -6,6 +6,22 @@ namespace Oak
 	                                                                   {"psd", "AssetTexture"}, {"ang", "AssetAnimGraph2D"}, {"scn", "AssetScene"}, {"tls", "AssetTileSet"},
 																		{"prefab", "AssetPrefab"}, {"spl", "AssetSpritesLayer"}};
 
+
+	void Assets::AssetHolder::CreateAsset()
+	{
+		if (asset != nullptr)
+		{
+			return;
+		}
+
+		ClassFactoryAsset* decl = ClassFactoryAsset::Find(GetAssetType());
+
+		asset = decl->Create(_FL_);
+		asset->Init();
+		asset->SetPath(fullName.c_str());
+		asset->Reload();
+	}
+
 	void Assets::Init()
 	{
 
