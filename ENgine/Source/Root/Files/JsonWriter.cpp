@@ -18,6 +18,8 @@ namespace Oak
 
 	bool JsonWriter::Start(const char* name)
 	{
+		Close();
+
 		file = root.files.FileOpen(name, "wb");
 
 		if (file)
