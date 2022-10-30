@@ -246,7 +246,7 @@ namespace Oak::Math
 				float sinXangle = sinf(rot.x);
 				float cosXangle = cosf(rot.x);
 
-				rot.z = atan2f(cosXangle * Vy().x + sinXangle * Vz().x, cosXangle * Vy().y + sinXangle * Vz().y);
+				rot.z = -atan2f(cosXangle * Vy().x + sinXangle * Vz().x, cosXangle * Vy().y + sinXangle * Vz().y);
 			}
 			else
 			{
