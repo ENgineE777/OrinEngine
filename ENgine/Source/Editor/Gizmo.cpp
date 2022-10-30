@@ -4,6 +4,7 @@
 #include "Support/Sprite.h"
 #include "EditorDrawer.h"
 #include "imgui.h"
+#include "editor.h"
 
 namespace Oak
 {
@@ -596,7 +597,9 @@ namespace Oak
 		ms.x /= (float)root.render.GetDevice()->GetWidth();
 		ms.y /= (float)root.render.GetDevice()->GetHeight();
  
-		for (int i = 0; i < 3; i++)
+		int count = editor.freeCamera.mode2D ? 2 : 3;
+
+		for (int i = 0; i < count; i++)
 		{
 			if (CheckSelectionTrans3D(axises[i], ms))
 			{
@@ -624,31 +627,35 @@ namespace Oak
 
 		if (mode == TransformMode::Move)
 		{
-			if (transform->transformFlag & TransformFlag::MoveX && transform->transformFlag & TransformFlag::MoveZ &&
-				(Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				 Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f)))
-			{
-				selAxis = (int)Axis::XZ;
-				Math::IntersectPlaneRay(GetGlobalPos(), axises[1].axis, mouseOrigin, mouseDirection,selectionOffset);
-				selectionOffset -= GetGlobalPos();
-			}
-
 			if (transform->transformFlag & TransformFlag::MoveX && transform->transformFlag & TransformFlag::MoveY &&
 				(Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointLeft, mouseOrigin, mouseDirection, 1000.0f) ||
-				 Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
+					Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
 			{
 				selAxis = (int)Axis::XY;
 				Math::IntersectPlaneRay(GetGlobalPos(), axises[2].axis, mouseOrigin, mouseDirection, selectionOffset);
 				selectionOffset -= GetGlobalPos();
 			}
 
-			if (transform->transformFlag & TransformFlag::MoveY && transform->transformFlag & TransformFlag::MoveZ &&
-				(Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
-				 Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
+			if (!editor.freeCamera.mode2D)
 			{
-				selAxis = (int)Axis::YZ;
-				Math::IntersectPlaneRay(GetGlobalPos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
-				selectionOffset -= GetGlobalPos();
+				if (transform->transformFlag & TransformFlag::MoveX && transform->transformFlag & TransformFlag::MoveZ &&
+					(Math::IntersectTrianglrRay(axises[0].from, axises[0].subPointFrom, axises[0].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+						Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointRight, mouseOrigin, mouseDirection, 1000.0f)))
+				{
+					selAxis = (int)Axis::XZ;
+					Math::IntersectPlaneRay(GetGlobalPos(), axises[1].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= GetGlobalPos();
+				}
+
+
+				if (transform->transformFlag & TransformFlag::MoveY && transform->transformFlag & TransformFlag::MoveZ &&
+					(Math::IntersectTrianglrRay(axises[1].from, axises[1].subPointFrom, axises[1].subPointRight, mouseOrigin, mouseDirection, 1000.0f) ||
+						Math::IntersectTrianglrRay(axises[2].from, axises[2].subPointFrom, axises[2].subPointLeft, mouseOrigin, mouseDirection, 1000.0f)))
+				{
+					selAxis = (int)Axis::YZ;
+					Math::IntersectPlaneRay(GetGlobalPos(), axises[0].axis, mouseOrigin, mouseDirection, selectionOffset);
+					selectionOffset -= GetGlobalPos();
+				}
 			}
 		}
 
