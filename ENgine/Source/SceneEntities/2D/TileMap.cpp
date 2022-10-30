@@ -285,6 +285,9 @@ namespace Oak
 
 		if (!ed)
 		{
+			tiles.insert(tiles.end(), tilesSelected.begin(), tilesSelected.end());
+			tilesSelected.clear();
+
 			mode = Mode::Inactive;
 			TileSetWindow::StopEdit();
 		}
@@ -328,34 +331,34 @@ namespace Oak
 					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
 				}
 			}
-			else
-			if (mode == Mode::TilesMove)
+		}
+		
+		if (mode == Mode::TilesMove)
+		{
+			auto prevPos = MouseToWorldPos(prevMs);
+			auto pos = MouseToWorldPos(ms);
+
+			deltaMove += pos - prevPos;
+
+			if (fabs(deltaMove.x) > transform.size.x || fabs(deltaMove.y) > transform.size.y)
 			{
-				auto prevPos = MouseToWorldPos(prevMs);
-				auto pos = MouseToWorldPos(ms);
+				int dx = (int)(deltaMove.x / transform.size.x);
+				deltaMove.x -= dx * transform.size.x;
 
-				deltaMove += pos - prevPos;
+				int dy = (int)(deltaMove.y / transform.size.y);
+				deltaMove.y -= dy * transform.size.y;
 
-				if (fabs(deltaMove.x) > transform.size.x || fabs(deltaMove.y) > transform.size.y)
+				for (auto& tile : tilesSelected)
 				{
-					int dx = (int)(deltaMove.x / transform.size.x);
-					deltaMove.x -= dx * transform.size.x;
+					tile.x += dx;
+					tile.y += dy;
 
-					int dy = (int)(deltaMove.y / transform.size.y);
-					deltaMove.y -= dy * transform.size.y;
-
-					for (auto& tile : tilesSelected)
+					for (int i = 0; i < tiles.size(); i++)
 					{
-						tile.x += dx;
-						tile.y += dy;
-
-						for (int i = 0; i < tiles.size(); i++)
+						if (tiles[i].x == tile.x && tiles[i].y == tile.y)
 						{
-							if (tiles[i].x == tile.x && tiles[i].y == tile.y)
-							{
-								tiles.erase(tiles.begin() + i);
-								break;
-							}
+							tiles.erase(tiles.begin() + i);
+							break;
 						}
 					}
 				}

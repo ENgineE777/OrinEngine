@@ -1386,6 +1386,7 @@ namespace Oak
 
 				if (selectedEditAsset)
 				{
+					selectedEditAsset->EnableEditing(false);
 					selectedEditAsset->Save();
 
 					project.Save();
