@@ -731,6 +731,8 @@ namespace Oak
 					}
 				}
 
+				Perforce::AddToDepot(path.c_str());
+
 				ImGui::CloseCurrentPopup();
 			}
 
@@ -916,28 +918,41 @@ namespace Oak
 			ImGui::Text("URL");
 			ImGui::NextColumn();
 
-			ImGuiHelper::InputString("###P4URL", project.p4URL);
+			bool changed = false;
+
+			changed |= ImGuiHelper::InputString("###P4URL", project.p4URL);
 			ImGui::NextColumn();
 
 			ImGui::Text("Workspace");
 			ImGui::NextColumn();
 
-			ImGuiHelper::InputString("###P4Workspace", project.p4Workspace);
+			changed |= ImGuiHelper::InputString("###P4Workspace", project.p4Workspace);
 			ImGui::NextColumn();
 
 			ImGui::Text("User");
 			ImGui::NextColumn();
 
-			ImGuiHelper::InputString("###P4User", project.p4User);
+			changed |= ImGuiHelper::InputString("###P4User", project.p4User);
 			ImGui::NextColumn();
 
-			
+			if (changed)
+			{
+				Perforce::SetConfig(project.p4URL.c_str(), project.p4Workspace.c_str(), project.p4User.c_str());
+			}
+
 			ImGui::Text("Status");
 			ImGui::NextColumn();
 
-			if (ImGui::Button(project.P4Connected ? "Connect (Connected)" : "Connect", ImVec2(150.0f, 25.0f)))
-			{
-				project.P4Connected = Perforce::Connect(project.p4URL.c_str(), project.p4Workspace.c_str(), project.p4User.c_str());
+			if (ImGui::Button("Check Connection"))
+			{	
+				if (Perforce::CheckConnection())
+				{
+					MESSAGE_BOX("Connection succeed", "Request to p4 was successfull");
+				}
+				else
+				{
+					MESSAGE_BOX("Connection error", "Failed connect to P4 server. Please check your P4 settings");
+				}
 			}
 
 			ImGui::NextColumn();

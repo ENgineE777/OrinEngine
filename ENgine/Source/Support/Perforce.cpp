@@ -1,124 +1,101 @@
 #include "Perforce.h"
+#include "Utils.h"
 #include "Root/Root.h"
 
 #undef SetPort
 
 namespace Oak
 {
-	bool Perforce::inited = false;
-	bool Perforce::connected = false;
-	ClientApi Perforce::client;
-	Error Perforce::e;
-	ClientUser Perforce::ui;
-	StrBuf Perforce::msg;
+	bool Perforce::connectionChecked = false;
+	bool Perforce::isConnected = false;
+	eastl::string Perforce::config;
+	eastl::vector<eastl::string> Perforce::cmdResult;
 
-	void Perforce::Init()
+	void Perforce::SetConfig(const char* url, const char* workspace, const char* user)
 	{
-		P4Libraries::Initialize(P4LIBRARIES_INIT_ALL, &e);
-
-		if (e.Test())
-		{
-			e.Fmt(&msg);
-			root.Log("Perforce", "%s", msg.Text());
-		}
-		else
-		{
-			inited = true;
-		}
+		config = StringUtils::PrintTemp("p4.exe -p %s -c %s -u %s ", url, workspace, user);
+		connectionChecked = false;
 	}
 
-	bool Perforce::Connect(const char* url, const char* workspace, const char* user)
+	bool Perforce::CheckConnection()
 	{
-		if (!inited)
+		if (connectionChecked)
 		{
-			root.Log("Perforce", "P4Libraries wasn't initialized");
-			return false;
+			return isConnected;
 		}
 
-		StrBuf sbPort = url;// "ssl:52.7.105.9:1666";
-		StrBuf sbClient = workspace;// "eugene.solyanov_MSI_8764";
-		StrBuf sbUser = user;// "eugene.solyanov";
+		connectionChecked = true;
 
-		client.SetPort(&sbPort);
-		client.SetClient(&sbClient);
-		client.SetUser(&sbUser);
+		eastl::string cmd = config + "info";
 
-#ifndef _DEBUG
-		client.Init(&e);
-#endif
-
-		if (e.Test())
-		{
-			e.Fmt(&msg);
-			root.Log("Perforce", "%s", msg.Text());
-		}
-		else
-		{
-			connected = true;
+		if (Utils::Execute(cmd.c_str(), cmdResult))
+		{			
+			isConnected = cmdResult.size() > 1;
 		}
 
-		return connected;
+		return isConnected;
 	}
 
 	bool Perforce::Checkout(const char* fileName)
 	{
-		if (!connected)
+		if (!CheckConnection())
 		{
 			return false;
 		}
 
-		const char* argv[] = { "-c", "default", fileName };
-		int argc = 3;
+		eastl::string cmd = config + StringUtils::PrintTemp("edit -c default %s", fileName);
 
 		root.Log("Perforce", "checkout %s", fileName);
 
-		client.SetArgv(argc, (char* const*)argv);
-		client.Run("edit", &ui);
+		if (Utils::Execute(cmd.c_str(), cmdResult))
+		{
+			return (cmdResult.size() > 0 && strstr(cmdResult[0].c_str(), "opened for edit"));
+		}
 
-		return true;
+		return false;
+	}
+
+	bool Perforce::AddToDepot(const char* fileName)
+	{
+		if(!CheckConnection())
+		{
+			return false;
+		}
+
+		eastl::string cmd = config + StringUtils::PrintTemp("add -c default %s", fileName);
+
+		root.Log("Perforce", "checkout %s", fileName);
+
+		if (Utils::Execute(cmd.c_str(), cmdResult))
+		{
+			return (cmdResult.size() > 0 && strstr(cmdResult[0].c_str(), "opened for add"));
+		}
+
+		return false;
 	}
 
 	int Perforce::GetRevision()
 	{
-		if (connected)
+		if (!CheckConnection())
 		{
-			const char* argv[] = { "-m", "1", "//depot/..." };
-			int argc = 3;
+			return 0;
+		}
 
-			client.SetArgv(argc, (char* const*)argv);
-			client.Run("changes", &ui);
+		eastl::string cmd = config + "changes -m1 //depot/...";
 
-			char buff[1024];
-			ui.OutputText(buff, 1024);
+		if (Utils::Execute(cmd.c_str(), cmdResult))
+		{
+			if (cmdResult.size() == 1)
+			{
+				const char* str = cmdResult[0].c_str();
 
-			root.Log("Perforce", "%s", buff);
-
-			return 1;
+				if (strstr(str, "Change "))
+				{
+					return atoi(&str[7]);
+				}
+			}
 		}
 
 		return 0;
-	}
-
-	void Perforce::Close()
-	{
-		if (connected)
-		{
-			client.Final(&e);
-
-			if (e.Test())
-			{
-				e.Fmt(&msg);
-				root.Log("Perforce", "%s", msg.Text());
-			}
-
-			connected = false;
-		}
-
-		if (inited)
-		{
-			P4Libraries::Shutdown(P4LIBRARIES_INIT_ALL, &e);
-
-			inited = false;
-		}
 	}
 }

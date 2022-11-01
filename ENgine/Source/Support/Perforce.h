@@ -1,23 +1,21 @@
-#include "p4/clientapi.h"
-#include "p4/p4libs.h"
+#include "Support/Support.h"
 
 namespace Oak
 {
-	class Perforce
+	class CLASS_DECLSPEC Perforce
 	{
-		static bool inited;
-		static bool connected;
-		static ClientApi client;
-		static Error e;
-		static ClientUser ui;
-		static StrBuf msg;
+		static bool connectionChecked;
+		static bool isConnected;
+		static eastl::string config;
+		static eastl::vector<eastl::string> cmdResult;
 
 	public:
 
-		static void Init();
-		static bool Connect(const char* url, const char* workspace, const char* user);
+		static void SetConfig(const char* url, const char* workspace, const char* user);
+		static bool CheckConnection();
+
+		static bool AddToDepot(const char* fileName);
 		static bool Checkout(const char* fileName);
 		static int  GetRevision();
-		static void Close();
 	};
 }

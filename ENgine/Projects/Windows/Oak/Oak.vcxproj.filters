@@ -718,6 +718,9 @@
     <ClCompile Include="..\..\..\Source\Support\Perforce.cpp">
       <Filter>Source\Support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Support\Utils.cpp">
+      <Filter>Source\Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1369,6 +1372,9 @@
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Support\Perforce.h">
+      <Filter>Source\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Support\Utils.h">
       <Filter>Source\Support</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,12 +89,8 @@ namespace Oak
 			reader.Read("p4URL", p4URL);
 			reader.Read("p4Workspace", p4Workspace);
 			reader.Read("p4User", p4User);
-			reader.Read("P4Connected", P4Connected);
 
-			if (P4Connected)
-			{
-				P4Connected = Perforce::Connect(p4URL.c_str(), p4Workspace.c_str(), p4User.c_str());
-			}
+			Perforce::SetConfig(p4URL.c_str(), p4Workspace.c_str(), p4User.c_str());
 		}
 
 		return true;
@@ -168,7 +164,6 @@ namespace Oak
 		writer.Write("p4URL", p4URL);
 		writer.Write("p4Workspace", p4Workspace);
 		writer.Write("p4User", p4User);
-		writer.Write("P4Connected", P4Connected);
 	}
 
 	void Project::SetStartScene(const eastl::string& path)
