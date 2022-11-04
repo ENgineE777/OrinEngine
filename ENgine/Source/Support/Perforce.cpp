@@ -6,7 +6,7 @@
 
 namespace Oak
 {
-	bool Perforce::connectionChecked = false;
+	bool Perforce::connectionChecked = true;
 	bool Perforce::isConnected = false;
 	eastl::string Perforce::config;
 	eastl::vector<eastl::string> Perforce::cmdResult;
