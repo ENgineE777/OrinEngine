@@ -29,7 +29,7 @@ The users games are theirs.
 - Animation graphs with events
 - Scripting system based on using C++ as scripting language
 - Hot reload of gameplay code
-- Render system with support of DX11, OpenGL ES 3, Metal and Vulkan (WIP)
+- Render system with support of DX11, OpenGL ES 3(WIP), Metal(WIP) and Vulkan (WIP)
 - Support of iOS and Android
 - Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview)
 - And lots, lots more
