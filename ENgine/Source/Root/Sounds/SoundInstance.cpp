@@ -72,8 +72,8 @@ namespace Oak
 			res->Release();
 		}
 
-		auto interator = eastl::lower_bound(root.sounds.sounds.begin(), root.sounds.sounds.end(), this);
-		root.sounds.sounds.erase(interator);
+		auto iterator = eastl::find(root.sounds.sounds.begin(), root.sounds.sounds.end(), this);
+		root.sounds.sounds.erase(iterator);
 
 		delete this;
 	}
