@@ -42,7 +42,7 @@ namespace Oak
 
 	void JsonWriter::StartArray(const char* name)
 	{
-		WriteFormatedStr(true, "\"%s\" : [", name);
+		WriteFormatedStr(true, "\"%s\" : [\n", name);
 		offset++;
 
 		depth++;
@@ -68,7 +68,7 @@ namespace Oak
 			WriteFormatedStr(false, "\"%s\" :\n", name);
 		}
 
-		WriteFormatedStr(false, "{");
+		WriteFormatedStr(false, "{\n");
 
 		offset++;
 
@@ -260,10 +260,8 @@ namespace Oak
 		}
 		else
 		{
-			WriteStr(",");
+			WriteStr(",\n");
 		}
-
-		WriteStr("\n");
 	}
 
 	void JsonWriter::WriteFormatedStr(bool addComa, const char* format, ...)
@@ -300,9 +298,11 @@ namespace Oak
 
 	void JsonWriter::Close()
 	{
+		block_started[0] = true;
+		offset = 0;
+
 		if (file)
 		{
-			offset = 0;
 			WriteStr("\n}");
 
 			fclose(file);
