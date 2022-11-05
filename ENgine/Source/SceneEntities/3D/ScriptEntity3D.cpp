@@ -15,13 +15,16 @@ namespace Oak
 			return;
 		}
 
-		if (set)
+		if (set  && !taskRegisterd)
 		{
 			Tasks(false)->AddTask(-50, this, (Object::Delegate) & ScriptEntity3D::Update);
+			taskRegisterd = true;
 		}
 		else
+		if (!set && taskRegisterd)
 		{
 			Tasks(false)->DelTask(-50, this);
+			taskRegisterd = false;
 		}
 	}
 
@@ -29,9 +32,10 @@ namespace Oak
 	{
 		SceneEntity::Play();
 
-		if (IsVisible())
+		if (IsVisible() && !taskRegisterd)
 		{
 			Tasks(false)->AddTask(-50, this, (Object::Delegate) & ScriptEntity3D::Update);
+			taskRegisterd = true;
 		}
 	}
 

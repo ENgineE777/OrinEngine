@@ -7,6 +7,8 @@ namespace Oak
 {
 	class CLASS_DECLSPEC ScriptEntity3D : public SceneEntity
 	{
+		bool taskRegisterd = false;
+
 	public:
 
 	#ifndef DOXYGEN_SKIP
