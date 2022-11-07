@@ -67,13 +67,13 @@ namespace Oak
 	{
 		if (GetScene()->IsPlaying())
 		{
-			if (targetRef.entity)
+			if (targetRef)
 			{
 				transform.size.x = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect();
 				transform.size.y = Sprite::GetPixelsHeight();
 
 				Math::Vector3 pos = transform.position;
-				Math::Vector3 targetPos = Sprite::ToPixels(targetRef.entity->GetTransform().GetGlobal().Pos());
+				Math::Vector3 targetPos = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 
 				if (-transform.size.x * 0.5f + border.x > targetPos.x - pos.x)
 				{
@@ -156,6 +156,14 @@ namespace Oak
 
 				root.render.DebugLine(p1, COLOR_YELLOW, p2, COLOR_YELLOW, false);
 			}
+		}
+	}
+
+	void Camera2D::CenterCamera()
+	{
+		if (targetRef)
+		{
+			transform.position = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 		}
 	}
 }

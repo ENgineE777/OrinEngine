@@ -6,9 +6,11 @@
 
 namespace Oak
 {
-	class Camera2D : public SceneEntity
+	class CLASS_DECLSPEC Camera2D : public SceneEntity
 	{
 		Math::Matrix view;
+
+		void UpdateRenderView();
 
 	public:
 
@@ -33,7 +35,7 @@ namespace Oak
 		void Init() override;
 		void Play() override;
 		void Update(float dt);
-		void UpdateRenderView();
+		void CenterCamera();
 #endif
 	};
 }
