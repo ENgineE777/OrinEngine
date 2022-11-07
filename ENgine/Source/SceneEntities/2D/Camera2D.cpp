@@ -34,14 +34,26 @@ namespace Oak
 		Tasks(true)->AddTask(-10, this, (Object::Delegate)&Camera2D::Update);
 	}
 
+	void Camera2D::Play()
+	{
+		SceneEntity::Play();
+
+		addPosition = {};
+		addRotation = {};
+	}
+
 	void Camera2D::UpdateRenderView()
 	{
 		if (IsVisible())
 		{
-			auto pos = transform.GetGlobal().Pos();
+			const Math::Vector3 addPos = Sprite::ToUnits(addPosition);
+			const Math::Vector3 pos    = transform.GetGlobal().Pos() + Math::Vector3{addPos.x, addPos.y, 0.f};
+
+			const float angle = Math::HalfPI + addRotation * Math::Radian;
+			const Math::Vector3 upVector{cosf(angle), sinf(angle), 0.f};
 
 			float dist = Sprite::ToUnits(Sprite::GetPixelsHeight() * 0.5f) / (tanf(22.5f * Math::Radian) * zoom);
-			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), Math::Vector3(0, 1, 0));
+			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), upVector);
 
 			root.render.SetTransform(TransformStage::View, view);
 

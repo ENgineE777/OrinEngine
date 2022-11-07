@@ -12,7 +12,7 @@ namespace Oak
 
 	public:
 
-		META_DATA_DECL_BASE(Camera3D)
+		META_DATA_DECL_BASE(Camera2D)
 
 		float zoom = 1.0f;
 		Math::Vector2 border;
@@ -22,12 +22,16 @@ namespace Oak
 		Math::Vector2 rightdown;
 		SceneEntityRef<SceneEntity> targetRef;
 
+		Math::Vector2 addPosition;
+		float addRotation;
+
 #ifndef DOXYGEN_SKIP
 
 		Camera2D();
 		virtual ~Camera2D() = default;
 
 		void Init() override;
+		void Play() override;
 		void Update(float dt);
 		void UpdateRenderView();
 #endif
