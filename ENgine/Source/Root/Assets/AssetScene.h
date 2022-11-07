@@ -44,6 +44,9 @@ namespace Oak
 		const char* GetSceneEntityType() override;
 		void GrabEditorData();
 
+		bool IsPrefab();
+		void Copy(AssetScene* srcScene);
+
 		void CheckSelection(SceneEntity* entity, eastl::vector<SceneEntity*>& selection, Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 		void CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 

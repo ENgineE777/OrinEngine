@@ -57,6 +57,11 @@ namespace Oak
 		selectedEntityID = selectedEntity ? selectedEntity->GetUID() : -1;
 	}
 
+	bool AssetScene::IsPrefab()
+	{
+		return isPrefab;
+	}
+
 	void AssetScene::SaveMetaData(JsonWriter& writer)
 	{
 		if (GetScene()->taskPool->IsActive())
@@ -348,12 +353,21 @@ namespace Oak
 
 		for (auto* child : childs)
 		{
-			if (child->prefabInstance)
+			if (!child->prefabRef && child->prefabInstance)
 			{
 				continue;
 			}
 
-			SceneEntity* childCopy = sceneOwner->CreateEntity(child->className, isPrefab);
+			SceneEntity* childCopy = nullptr;
+
+			if (child->prefabInstance)
+			{
+				childCopy = child->prefabRef->CreateInstance(sceneOwner);
+			}
+			else
+			{
+				childCopy = sceneOwner->CreateEntity(child->className, isPrefab);
+			}
 
 			childCopy->SetParent(copy, nullptr);
 			childCopy->Copy(child);
@@ -647,6 +661,41 @@ namespace Oak
 		if (!blockPopupInViewport)
 		{
 			SceneTreePopup(true);
+		}
+	}
+
+	void AssetScene::Copy(AssetScene* srcScene)
+	{
+		camera2DMode = srcScene->camera2DMode;
+		camera3DAngles = srcScene->camera3DAngles;
+		camera3DPos = srcScene->camera3DPos;
+		camera2DPos = srcScene->camera2DPos;
+		camera2DZoom = srcScene->camera2DZoom;
+
+		auto& srcEntities = srcScene->GetScene()->GetEntities();
+		auto* scene = GetScene();
+
+		for (auto* entity : srcEntities)
+		{
+			SceneEntity* copy = nullptr;
+
+			if (entity->prefabInstance)
+			{
+				copy = entity->prefabRef->CreateInstance(scene);
+			}
+			else
+			{
+				copy = scene->CreateEntity(entity->className, entity->prefabInstance);
+			}
+
+			scene->AddEntity(copy, nullptr);
+
+			copy->Copy(entity);
+			copy->PostLoad();
+
+			CopyChilds(entity, copy, scene);
+
+			copy->UpdateVisibility();
 		}
 	}
 

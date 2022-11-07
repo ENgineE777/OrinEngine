@@ -562,7 +562,7 @@ namespace Oak
 
 	void Editor::ShowCreateAssetDialog()
 	{
-		if (assetDialog == CreateAssetDialog::Inactive)
+		if (assetDialog == AssetDialog::Inactive)
 		{
 			return;
 		}
@@ -589,7 +589,7 @@ namespace Oak
 
 			Oak::ImGuiHelper::InputString("##NewName", createAssetName);
 
-			if (assetDialog == CreateAssetDialog::Prefab)
+			if (assetDialog == AssetDialog::Prefab && !duplicateAsset)
 			{
 				ImGui::Dummy(ImVec2(3.0f, 3.0f));
 				ImGui::SameLine();
@@ -607,8 +607,6 @@ namespace Oak
 
 			if (ImGui::Button("Ok", ImVec2(50.0f, 0.0f)))
 			{
-				open = false;
-
 				eastl::string path = createAssetName;
 
 				if (selectedFolder != nullptr)
@@ -627,112 +625,75 @@ namespace Oak
 
 				path = root.GetPath(Root::Path::Assets) + path;
 
-				if (assetDialog == CreateAssetDialog::Folder)
+				open = false;
+
+				const char* AssetsExt[] =
 				{
-					if (std::filesystem::exists(path.c_str()))
-					{
-						MESSAGE_BOX("Can't create a folder", "Folder already exists");
-					}
-					else
+					nullptr,
+					nullptr,
+					"scn",
+					"ang",
+					"tls",
+					"prefab",
+					"spl"
+				};
+
+				if (std::filesystem::exists(path.c_str()))
+				{
+					MESSAGE_BOX("Can't create", "Already exists");
+				}
+				else
+				{
+					if (assetDialog == AssetDialog::Folder)
 					{
 						std::filesystem::create_directories(path.c_str());
 					}
+					else
+					{
+						eastl::string metaPath = StringUtils::PrintTemp("%s.%s.meta", path.c_str(), AssetsExt[(int)assetDialog]);
+
+						{
+							File asset;
+							asset.Open(StringUtils::PrintTemp("%s.%s.meta", path.c_str(), AssetsExt[(int)assetDialog]), File::ModeType::WriteText);
+						}
+
+						path = StringUtils::PrintTemp("%s.%s", path.c_str(), AssetsExt[(int)assetDialog]);
+
+						{
+							File asset;
+							asset.Open(path.c_str(), File::ModeType::WriteText);
+						}
+
+						if (assetDialog == AssetDialog::Prefab || assetDialog == AssetDialog::Scene)
+						{
+							AssetScene* scene = assetDialog == AssetDialog::Prefab ? new AssetPrefab() : new AssetScene();
+							scene->Init();
+							scene->SetPath(path.c_str());
+							scene->uid = root.scenes.GenerateUID();
+
+							if (duplicateAsset)
+							{
+								AssetScene* srcScene = selectedAssetHolder->GetAsset<AssetScene>();
+								scene->Copy(srcScene);
+							}
+							else
+							if (scene->IsPrefab())
+							{
+								dynamic_cast<AssetPrefab*>(scene)->SetRootEntityType(createPrefabTypesList[createPrefabTypesIndex].c_str());
+							}
+
+							scene->Save();
+
+							delete scene;
+
+							project.Save();
+						}
+
+						Perforce::AddToDepot(path.c_str());
+						Perforce::AddToDepot(metaPath.c_str());
+					}
 				}
-				else
-				if (assetDialog == CreateAssetDialog::AnimGraph2D)
-				{
-					path = StringUtils::PrintTemp("%s.ang", path.c_str());
 					
-					if (std::filesystem::exists(path.c_str()))
-					{
-						MESSAGE_BOX("Can't create a ang file", "Ang file already exists");
-					}
-					else
-					{
-						File ang;
-						ang.Open(path.c_str(), File::ModeType::WriteText);
-					}
-				}
-				else
-				if (assetDialog == CreateAssetDialog::SpritesLayer)
-				{
-					path = StringUtils::PrintTemp("%s.spl", path.c_str());
-
-					if (std::filesystem::exists(path.c_str()))
-					{
-						MESSAGE_BOX("Can't create a spl file", "Ang file already exists");
-					}
-					else
-					{
-						File ang;
-						ang.Open(path.c_str(), File::ModeType::WriteText);
-					}
-				}
-				else
-				if (assetDialog == CreateAssetDialog::TileSet)
-				{
-					path = StringUtils::PrintTemp("%s.tls", path.c_str());
-					
-					if (std::filesystem::exists(path.c_str()))
-					{
-						MESSAGE_BOX("Can't create a tls file", "Tls file already exists");
-					}
-					else
-					{
-						File tls;
-						tls.Open(path.c_str(), File::ModeType::WriteText);
-					}
-				}
-				else
-				if (assetDialog == CreateAssetDialog::Prefab)
-				{
-					path = StringUtils::PrintTemp("%s.prefab", path.c_str());
-
-					if (std::filesystem::exists(path.c_str()))
-					{
-						MESSAGE_BOX("Can't create a prefab file", "Prefab file already exists");
-					}
-					else
-					{
-						AssetPrefab* prefab = new AssetPrefab();
-						prefab->Init();
-						prefab->SetPath(path.c_str());
-						prefab->SetRootEntityType(createPrefabTypesList[createPrefabTypesIndex].c_str());
-
-						prefab->uid = root.scenes.GenerateUID();
-						prefab->Save();
-
-						delete prefab;
-
-						project.Save();
-					}
-				}
-				else
-				if (assetDialog == CreateAssetDialog::Scene)
-				{
-					path = StringUtils::PrintTemp("%s.scn", path.c_str());
-
-					if (std::filesystem::exists(path.c_str()))
-					{
-						MESSAGE_BOX("Can't create a scene file", "Scene file already exists");
-					}
-					else
-					{
-						AssetScene* scene = new AssetScene();
-						scene->Init();
-						scene->SetPath(path.c_str());
-
-						scene->uid = root.scenes.GenerateUID();
-						scene->Save();
-
-						delete scene;
-
-						project.Save();
-					}
-				}
-
-				Perforce::AddToDepot(path.c_str());
-
 				ImGui::CloseCurrentPopup();
 			}
 
@@ -741,7 +702,7 @@ namespace Oak
 
 		if (open == false)
 		{
-			assetDialog = CreateAssetDialog::Inactive;
+			assetDialog = AssetDialog::Inactive;
 		}
 	}
 
@@ -1238,27 +1199,27 @@ namespace Oak
 			{
 				if (ImGui::MenuItem("Folder"))
 				{
-					assetDialog = CreateAssetDialog::Folder;
+					assetDialog = AssetDialog::Folder;
 				}
 
 				if (ImGui::MenuItem("Scene"))
 				{
-					assetDialog = CreateAssetDialog::Scene;
+					assetDialog = AssetDialog::Scene;
 				}
 
 				if (ImGui::MenuItem("Anim Graph 2D"))
 				{
-					assetDialog = CreateAssetDialog::AnimGraph2D;
+					assetDialog = AssetDialog::AnimGraph2D;
 				}
 
 				if (ImGui::MenuItem("Sprites Layer"))
 				{
-					assetDialog = CreateAssetDialog::SpritesLayer;
+					assetDialog = AssetDialog::SpritesLayer;
 				}
 
 				if (ImGui::MenuItem("TileSet"))
 				{
-					assetDialog = CreateAssetDialog::TileSet;
+					assetDialog = AssetDialog::TileSet;
 				}
 
 				if (ImGui::MenuItem("Prefab"))
@@ -1274,13 +1235,14 @@ namespace Oak
 						createPrefabTypesList.push_back(decl->GetShortName());
 					}
 
-					assetDialog = CreateAssetDialog::Prefab;
+					assetDialog = AssetDialog::Prefab;
 				}
 
-				if (assetDialog != CreateAssetDialog::Inactive)
+				if (assetDialog != AssetDialog::Inactive)
 				{
 					need2openAssetPopup = true;
 					createAssetName = "";
+					duplicateAsset = true;
 				}
 
 				ImGui::EndMenu();
@@ -1292,9 +1254,17 @@ namespace Oak
 
 				if (scene)
 				{
-					if (ImGui::MenuItem("Mark as start scne"))
+					if (ImGui::MenuItem("Mark as start scne") && !scene->IsPrefab())
 					{
 						project.SetStartScene(scene->GetPath());
+					}
+
+					if (ImGui::MenuItem("Duplicate"))
+					{
+						need2openAssetPopup = true;
+						assetDialog = scene->IsPrefab() ? AssetDialog::Prefab : AssetDialog::Scene;
+						createAssetName = "";
+						duplicateAsset = true;
 					}
 				}
 			}

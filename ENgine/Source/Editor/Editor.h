@@ -55,7 +55,7 @@ namespace Oak
 		AssetTileSetRef draggedAssetTileSet;
 		AssetSpritesLayerRef draggeSpriteLayerSet;
 
-		enum class CreateAssetDialog
+		enum class AssetDialog
 		{
 			Inactive,
 			Folder,
@@ -77,12 +77,13 @@ namespace Oak
 		bool projectTreePopup = false;
 		bool assetsTreePopup = false;
 		bool need2openAssetPopup = false;
+		bool duplicateAsset = false;
 		eastl::string createAssetName;
 		eastl::string createPrefabType;
 		eastl::vector<eastl::string> createPrefabTypesList;
 		int createPrefabTypesIndex;
 		eastl::string createPrefabTypesListFlat;
-		CreateAssetDialog assetDialog = CreateAssetDialog::Inactive;
+		AssetDialog assetDialog = AssetDialog::Inactive;
 		ViewportCature viewportCaptured = ViewportCature::None;
 		bool vireportHowered = false;
 
