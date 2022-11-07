@@ -141,7 +141,7 @@ namespace Oak
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
-	void Sprite::DrawFlatPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, ProgramRef prg)
+	void Sprite::DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, ProgramRef prg)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, _polygonBuffer);
 		root.render.GetDevice()->SetVertexDecl(_vdecl);
@@ -153,11 +153,14 @@ namespace Oak
 
 		Math::Vector2* v = (Math::Vector2*)_polygonBuffer->Lock();
 
-		int count = min(pointsCount, _polygonBufferSize);
+		int triangleCount = pointsCount - 2;
+		int index = 0;
 
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < triangleCount; i++)
 		{
-			v[i] = points[i] * _pixelsPerUnitInvert;
+			v[index++] = points[0] * _pixelsPerUnitInvert;
+			v[index++] = points[i + 1] * _pixelsPerUnitInvert;
+			v[index++] = points[i + 2] * _pixelsPerUnitInvert;
 		}
 
 		_polygonBuffer->Unlock();
@@ -167,7 +170,7 @@ namespace Oak
 		prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
 		prg->SetTexture(ShaderType::Pixel, "diffuseMap", root.render.GetWhiteTexture());
 
-		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, pointsCount - 2);
+		root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, pointsCount - 2);
 	}
 
 	void Sprite::DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color)
@@ -189,7 +192,7 @@ namespace Oak
 	}
 
 	void Sprite::Release()
-	{
+	{ 
 		_vdecl.ReleaseRef();
 		_quadBuffer.ReleaseRef();
 		_polygonBuffer.ReleaseRef();
