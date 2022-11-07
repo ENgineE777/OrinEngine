@@ -24,21 +24,27 @@ namespace Oak
 		static float _pixelsHeight;
 
 		static VertexDeclRef _vdecl;
-		static DataBufferRef _buffer;
+		static DataBufferRef _quadBuffer;
+		static constexpr int _polygonBufferSize = 128;
+		static DataBufferRef _polygonBuffer;
 
 		static void SetData(float pixelsHeight, float pixelsPerUnit);
 
-		static Math::Vector2 camPos;
+		static Math::Vector2 _camPos;
 
 	public:
 
 		static ProgramRef quadPrg;
 		static ProgramRef quadPrgNoZ;
 
+		static ProgramRef polygonPrg;
+		static ProgramRef polygonPrgNoZ;
+
 		static void Init();
 		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg = quadPrg);
+		static void DrawFlatPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, ProgramRef prg = polygonPrg);
 
-		static Math::Vector2 GetCamPos() { return camPos; }
+		static Math::Vector2 GetCamPos() { return _camPos; }
 
 		static inline float GetPixelsHeight() { return _pixelsHeight; };
 

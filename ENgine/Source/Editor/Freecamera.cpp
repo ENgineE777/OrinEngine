@@ -40,7 +40,7 @@ namespace Oak
 				ClampZoom2D();
 			}
 
-			Sprite::camPos = pos2D;
+			Sprite::_camPos = pos2D;
 		}
 		else
 		{

@@ -1,7 +1,7 @@
 
 cbuffer vs_params : register( b0 )
 {
-    float4 desc[3];
+    float4 desc[2];
     matrix trans;
     matrix view_proj;
 };
@@ -37,7 +37,7 @@ PS_INPUT VS( VS_INPUT input )
 	
 	PS_INPUT output = (PS_INPUT)0;
 
-    float4 pos = mul(float4(posTemp.x * desc[2].w, posTemp.y * desc[2].w, 0.0f, 1.0f), trans);
+    float4 pos = mul(float4(posTemp.x, posTemp.y, 0.0f, 1.0f), trans);
 	output.pos = mul(pos, view_proj);
 
     output.texCoord = float2(desc[1].x + desc[1].z * input.position.x, desc[1].y + desc[1].w * input.position.y);
@@ -67,4 +67,31 @@ float4 PS_LIGHT(PS_INPUT input) : SV_Target
     }
 
     return float4(1.0f, 1.0f, 1.0f, intense) * color;
+}
+
+struct PS_POLYGON_INPUT
+{
+    float4 pos : SV_POSITION;
+    float2 texCoord : TEXCOORD;
+};
+
+PS_POLYGON_INPUT VS_POLYGON( VS_INPUT input )
+{	
+	PS_POLYGON_INPUT output = (PS_POLYGON_INPUT)0;
+
+    float4 pos = mul(float4(input.position.x, input.position.y, 0.0f, 1.0f), trans);
+	output.pos = mul(pos, view_proj);
+	
+	return output;
+}
+
+float4 PS_POLYGON( PS_INPUT input) : SV_Target
+{
+    float4 clr = color;
+    if (clr.a < 0.05f)
+    {
+       discard;
+    }
+
+    return clr;
 }

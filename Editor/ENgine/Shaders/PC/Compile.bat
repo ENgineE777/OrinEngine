@@ -42,6 +42,9 @@ fxc /E VS /T vs_4_0 /Zi /Od /Fo sprite_vs.shd sprite.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo sprite_ps.shd sprite.shader
 fxc /E PS_LIGHT /T ps_4_0 /Zi /Od /Fo sprite_light_ps.shd sprite.shader
 
+fxc /E VS_POLYGON /T vs_4_0 /Zi /Od /Fo polygon_vs.shd sprite.shader
+fxc /E PS_POLYGON /T ps_4_0 /Zi /Od /Fo polygon_ps.shd sprite.shader
+
 fxc /E VS /T vs_4_0 /Zi /Od /Fo triangle_simplest_vs.shd triangle_simplest.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo triangle_simplest_ps.shd triangle_simplest.shader
 

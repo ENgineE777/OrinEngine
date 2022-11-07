@@ -91,7 +91,7 @@ namespace Oak
 
 				transform.position = pos;
 
-				Sprite::camPos = Math::Vector2(pos.x, pos.y);
+				Sprite::_camPos = Math::Vector2(pos.x, pos.y);
 			}
 
 			UpdateRenderView();

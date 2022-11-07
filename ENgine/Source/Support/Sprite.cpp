@@ -30,22 +30,60 @@ namespace Oak
 		};
 	};
 
+	class PolygonProgram : public Program
+	{
+	public:
+		virtual const char* GetVsName() { return "polygon_vs.shd"; };
+		virtual const char* GetPsName() { return "polygon_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+			root.render.GetDevice()->SetDepthWriting(false);
+		};
+	};
+
+	class PolygonProgramNoZ : public PolygonProgram
+	{
+	public:
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthTest(false);
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+			root.render.GetDevice()->SetDepthWriting(false);
+		};
+	};
+
 	CLASSREGEX(Program, QuadProgram, QuadProgram, "QuadProgram")
 	CLASSREGEX_END(Program, QuadProgram)
 
 	CLASSREGEX(Program, QuadProgramNoZ, QuadProgramNoZ, "QuadProgramNoZ")
 	CLASSREGEX_END(Program, QuadProgramNoZ)
 
+	CLASSREGEX(Program, PolygonProgram, PolygonProgram, "PolygonProgram")
+	CLASSREGEX_END(Program, PolygonProgram)
+
+	CLASSREGEX(Program, PolygonProgramNoZ, PolygonProgramNoZ, "PolygonProgramNoZ")
+	CLASSREGEX_END(Program, PolygonProgramNoZ)
+
 	VertexDeclRef Sprite::_vdecl;
-	DataBufferRef Sprite::_buffer;
+	DataBufferRef Sprite::_quadBuffer;
+	DataBufferRef Sprite::_polygonBuffer;
 
 	float Sprite::_pixelsPerUnit = 50.0f;
 	float Sprite::_pixelsPerUnitInvert = 1.0f / _pixelsPerUnit;
 	float Sprite::_pixelsHeight = 1080.0f;
-	Math::Vector2 Sprite::camPos;
+	Math::Vector2 Sprite::_camPos;
 
 	ProgramRef Sprite::quadPrg;
 	ProgramRef Sprite::quadPrgNoZ;
+
+	ProgramRef Sprite::polygonPrg;
+	ProgramRef Sprite::polygonPrgNoZ;
 
 	void Sprite::SetData(float pixelsHeight, float pixelsPerUnit)
 	{
@@ -60,48 +98,76 @@ namespace Oak
 		_vdecl = root.render.GetDevice()->CreateVertexDecl(1, desc, _FL_);
 
 		int stride = sizeof(Math::Vector2);
-		_buffer = root.render.GetDevice()->CreateBuffer(4, stride, _FL_);
+		_quadBuffer = root.render.GetDevice()->CreateBuffer(4, stride, _FL_);
 
-		Math::Vector2* v = (Math::Vector2*)_buffer->Lock();
+		Math::Vector2* v = (Math::Vector2*)_quadBuffer->Lock();
 
 		v[0] = Math::Vector2(0.0f, 1.0f);
 		v[1] = Math::Vector2(1.0f, 1.0f);
 		v[2] = Math::Vector2(0.0f, 0.0f);
 		v[3] = Math::Vector2(1.0f, 0.0f);
 
-		_buffer->Unlock();
+		_quadBuffer->Unlock();
+
+		_polygonBuffer = root.render.GetDevice()->CreateBuffer(128, stride, _FL_);
 
 		quadPrg = root.render.GetProgram("QuadProgram", _FL_);
 		quadPrgNoZ = root.render.GetProgram("QuadProgramNoZ", _FL_);
+
+		polygonPrg = root.render.GetProgram("PolygonProgram", _FL_);
+		polygonPrgNoZ = root.render.GetProgram("PolygonProgramNoZ", _FL_);
 	}
 
 	void Sprite::Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg)
 	{
-		root.render.GetDevice()->SetVertexBuffer(0, _buffer);
+		root.render.GetDevice()->SetVertexBuffer(0, _quadBuffer);
 		root.render.GetDevice()->SetVertexDecl(_vdecl);
 
 		root.render.GetDevice()->SetProgram(prg);
 
-		Device::Viewport viewport;
-		root.render.GetDevice()->GetViewport(viewport);
-
-		Math::Vector4 params[3];
-		params[0] = Math::Vector4(pos.x, pos.y, size.x, size.y);
+		Math::Vector4 params[2];
+		params[0] = Math::Vector4(pos.x, pos.y, size.x, size.y) * _pixelsPerUnitInvert;
 		params[1] = Math::Vector4(uv.x, uv.y, duv.x, duv.y);
-		params[2] = Math::Vector4((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight(), 0.5f, _pixelsPerUnitInvert);
 
 		Math::Matrix view_proj;
 		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
 
-		trans.Pos() *= _pixelsPerUnitInvert;
-
-		prg->SetVector(ShaderType::Vertex, "desc", &params[0], 3);
+		prg->SetVector(ShaderType::Vertex, "desc", &params[0], 2);
 		prg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
 		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
 		prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
 		prg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
 
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
+	}
+
+	void Sprite::DrawFlatPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, ProgramRef prg)
+	{
+		root.render.GetDevice()->SetVertexBuffer(0, _polygonBuffer);
+		root.render.GetDevice()->SetVertexDecl(_vdecl);
+
+		root.render.GetDevice()->SetProgram(prg);
+
+		Math::Matrix view_proj;
+		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
+
+		Math::Vector2* v = (Math::Vector2*)_polygonBuffer->Lock();
+
+		int count = min(pointsCount, _polygonBufferSize);
+
+		for (int i = 0; i < count; i++)
+		{
+			v[i] = points[i] * _pixelsPerUnitInvert;
+		}
+
+		_polygonBuffer->Unlock();
+
+		prg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
+		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
+		prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
+		prg->SetTexture(ShaderType::Pixel, "diffuseMap", root.render.GetWhiteTexture());
+
+		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, pointsCount - 2);
 	}
 
 	void Sprite::DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color)
@@ -125,9 +191,12 @@ namespace Oak
 	void Sprite::Release()
 	{
 		_vdecl.ReleaseRef();
-		_buffer.ReleaseRef();
+		_quadBuffer.ReleaseRef();
+		_polygonBuffer.ReleaseRef();
 		quadPrg.ReleaseRef();
 		quadPrgNoZ.ReleaseRef();
+		polygonPrg.ReleaseRef();
+		polygonPrg.ReleaseRef();
 	}
 }
 
