@@ -241,36 +241,6 @@ namespace Oak
 		}
 	}
 
-	/*void Editor::SelectAsset(Asset* asset)
-	{
-		if (asset == selectedAsset)
-		{
-			return;
-		}
-
-		if (asset == nullptr)
-		{
-			selectedAsset->EnableTasks(false);
-
-			if (selectedEditScene)
-			{
-				selectedEditScene->EnableTasks(true);
-			}
-		}
-
-		selectedAsset = asset;
-
-		if (selectedAsset != nullptr)
-		{
-			selectedAsset->EnableTasks(true);
-
-			if (selectedEditScene)
-			{
-				selectedEditScene->EnableTasks(false);
-			}
-		}
-	}*/
-
 	void Editor::SetupImGUI()
 	{
 		IMGUI_CHECKVERSION();
@@ -442,122 +412,194 @@ namespace Oak
 
 	void Editor::ShowViewport()
 	{
-		ImGui::Begin(selectedEditAsset ? StringUtils::PrintTemp("%s%s###Game", selectedEditAsset->GetName().c_str(), selectedEditAsset->ContainsUnsavedChanges() ? "*" : "") : "Viewport###Game",
-					 nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-
-		ImGuiIO& io = ImGui::GetIO();
-
-		ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
-
-		Oak::root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
-
-		ImVec2 size = ImGui::GetContentRegionAvail();
-		Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
-
-		UpdateOak();
-
-		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
-
-		vireportHowered = ImGui::IsItemHovered();
-
-		if (vireportHowered)
+		if (openedAssets.size() == 0 || projectRunning)
 		{
-			if (projectRunning && project.hideCursor)
+			ImGui::Begin("Game###Game0", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+			ImGuiIO& io = ImGui::GetIO();
+
+			ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
+
+			Oak::root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
+
+			ImVec2 size = ImGui::GetContentRegionAvail();
+			Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
+
+			UpdateOak();
+
+			ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+
+			ImGui::End();
+
+			return;
+		}
+
+		if (openedAssets.size() == 0)
+		{
+			ImGui::Begin("Viewport###Game0", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+			ImGui::End();
+
+			return;
+		}
+
+		for (int i = 0; i < openedAssets.size(); i++)
+		{
+			auto& asset = openedAssets[i];
+
+			bool opened = true;
+
+			bool selected = asset.Get() == selectedEditAsset.Get();
+
+			if (forceImGUISetViewportFocusCount > 0 && selected)
 			{
-				ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+				ImGui::SetNextWindowFocus();
 			}
 
-			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(2) || fabsf(io.MouseWheel > 0.01f))
+			ImGui::Begin(StringUtils::PrintTemp("%s%s###Game%i", asset->GetName().c_str(), asset->ContainsUnsavedChanges() ? "*" : "", i),
+						openedAssets.size() > 1 ? &opened : nullptr, ImGuiWindowFlags_NoCollapse);
+
+			if (forceImGUISetViewportFocusCount == 0 && ImGui::IsWindowFocused() && !selected)
 			{
-				ImGui::SetWindowFocus();
+				SelectEditAsset(asset);
 			}
 
-			if (viewportFocused)
+			if (selected)
 			{
-				if (ImGui::IsMouseClicked(0))
+				ImGuiIO& io = ImGui::GetIO();
+
+				ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
+
+				Oak::root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
+
+				ImVec2 size = ImGui::GetContentRegionAvail();
+				Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
+
+				UpdateOak();
+
+				ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+
+				vireportHowered = ImGui::IsItemHovered();
+
+				if (vireportHowered)
+				{
+					if (projectRunning && project.hideCursor)
+					{
+						ImGui::SetMouseCursor(ImGuiMouseCursor_None);
+					}
+
+					if (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(2) || fabsf(io.MouseWheel > 0.01f))
+					{
+						ImGui::SetWindowFocus();
+					}
+
+					if (viewportFocused)
+					{
+						if (ImGui::IsMouseClicked(0))
+						{
+							if (!selectMode)
+							{
+								gizmo.OnLeftMouseDown();
+							}
+
+							if (selectedEditAsset)
+							{
+								selectedEditAsset->OnLeftMouseDown();
+							}
+
+							viewportCaptured = ViewportCature::LeftButton;
+						}
+						else
+						if (ImGui::IsMouseClicked(1))
+						{
+							if (selectedEditAsset)
+							{
+								selectedEditAsset->OnRightMouseDown();
+							}
+
+							viewportCaptured = ViewportCature::RightButton;
+						}
+						else
+						if (ImGui::IsMouseClicked(2))
+						{
+							if (selectedEditAsset)
+							{
+								selectedEditAsset->OnMiddleMouseDown();
+							}
+
+							viewportCaptured = ViewportCature::MiddleButton;
+						}
+					}
+				}
+
+				if (!selectMode)
+				{
+					gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+				}
+
+				if (selectedEditAsset)
+				{
+					selectedEditAsset->ImGuiViewport(viewportFocused);
+					selectedEditAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+				}
+
+				if (viewportCaptured == ViewportCature::LeftButton && ImGui::IsMouseReleased(0))
 				{
 					if (!selectMode)
 					{
-						gizmo.OnLeftMouseDown();
+						gizmo.OnLeftMouseUp();
 					}
 
 					if (selectedEditAsset)
 					{
-						selectedEditAsset->OnLeftMouseDown();
+						selectedEditAsset->OnLeftMouseUp();
 					}
 
-					viewportCaptured = ViewportCature::LeftButton;
+					viewportCaptured = ViewportCature::None;
 				}
 				else
-				if (ImGui::IsMouseClicked(1))
+				if (viewportCaptured == ViewportCature::RightButton && ImGui::IsMouseReleased(1))
 				{
 					if (selectedEditAsset)
 					{
-						selectedEditAsset->OnRightMouseDown();
+						selectedEditAsset->OnRightMouseUp();
 					}
 
-					viewportCaptured = ViewportCature::RightButton;
+					viewportCaptured = ViewportCature::None;
 				}
 				else
-				if (ImGui::IsMouseClicked(2))
+				if (viewportCaptured == ViewportCature::MiddleButton && ImGui::IsMouseReleased(2))
 				{
 					if (selectedEditAsset)
 					{
-						selectedEditAsset->OnMiddleMouseDown();
+						selectedEditAsset->OnMiddleMouseUp();
 					}
 
-					viewportCaptured = ViewportCature::MiddleButton;
+					viewportCaptured = ViewportCature::None;
+				}
+			}
+
+			ImGui::End();
+
+			if (!opened)
+			{
+				openedAssets.erase(openedAssets.begin() + i);
+					
+				if (selected)
+				{
+					if (i > 0)
+					{
+						i--;
+					}
+
+					SelectEditAsset(openedAssets[i]);
 				}
 			}
 		}
 
-		if (!selectMode)
+		if (forceImGUISetViewportFocusCount > 0)
 		{
-			gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
+			forceImGUISetViewportFocusCount--;
 		}
-
-		if (selectedEditAsset)
-		{
-			selectedEditAsset->ImGuiViewport(viewportFocused);
-			selectedEditAsset->OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
-		}
-
-		if (viewportCaptured == ViewportCature::LeftButton && ImGui::IsMouseReleased(0))
-		{
-			if (!selectMode)
-			{
-				gizmo.OnLeftMouseUp();
-			}
-
-			if (selectedEditAsset)
-			{
-				selectedEditAsset->OnLeftMouseUp();
-			}
-
-			viewportCaptured = ViewportCature::None;
-		}
-		else
-		if (viewportCaptured == ViewportCature::RightButton && ImGui::IsMouseReleased(1))
-		{
-			if (selectedEditAsset)
-			{
-				selectedEditAsset->OnRightMouseUp();
-			}
-
-			viewportCaptured = ViewportCature::None;
-		}
-		else
-		if (viewportCaptured == ViewportCature::MiddleButton && ImGui::IsMouseReleased(2))
-		{
-			if (selectedEditAsset)
-			{
-				selectedEditAsset->OnMiddleMouseUp();
-			}
-
-			viewportCaptured = ViewportCature::None;
-		}
-
-		ImGui::End();
 	}
 
 	void Editor::ShowCreateAssetDialog()
@@ -1120,6 +1162,18 @@ namespace Oak
 
 		selectedEditAsset = AssetRef(asset);
 
+		forceImGUISetViewportFocusCount = 2;
+
+		if (selectedEditAsset.Get())
+		{
+			auto iter = eastl::find_if(openedAssets.begin(), openedAssets.end(), [this](const AssetRef& asset) { return StringUtils::IsEqual(asset->GetPath().c_str(), selectedEditAsset->GetPath().c_str()); });
+
+			if (iter == openedAssets.end())
+			{
+				openedAssets.push_back(selectedEditAsset);
+			}
+		}
+
 		if (selectedEditAsset)
 		{
 			selectedEditAsset->EnableEditing(true);
@@ -1539,7 +1593,12 @@ namespace Oak
 			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
-			ImGui::DockBuilderDockWindow("###Game", dock_main_id);
+
+			for (int i = 0; i < 100; i++)
+			{
+				ImGui::DockBuilderDockWindow(StringUtils::PrintTemp("###Game%i", i), dock_right_id);
+			}
+
 			ImGui::DockBuilderDockWindow("###Scene", dock_right_up_id);
 			ImGui::DockBuilderDockWindow("Layers", dock_right_up_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_down_id);
@@ -1554,7 +1613,6 @@ namespace Oak
 		}
 
 		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags | ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoWindowMenuButton);
-
 
 		if (ImGui::BeginMenuBar())
 		{

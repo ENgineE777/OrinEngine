@@ -61,10 +61,20 @@ namespace Oak
 
 			reader.Read("hideCursor", hideCursor);
 
-			eastl::string edScene;
-			reader.Read("edited_asset", edScene);
+			eastl::string assetPath;
 
-			auto asset = root.assets.GetAssetRef<AssetRef>(edScene);
+			while (reader.EnterBlock("openedAssets"))
+			{
+				reader.Read("path", assetPath);
+				
+				editor.openedAssets.push_back(root.assets.GetAssetRef<AssetRef>(assetPath));
+
+				reader.LeaveBlock();
+			}
+			
+			reader.Read("edited_asset", assetPath);
+
+			auto asset = root.assets.GetAssetRef<AssetRef>(assetPath);
 
 			if (asset)
 			{
@@ -141,6 +151,19 @@ namespace Oak
 		writer.Write("pixelsHeight", Sprite::GetPixelsHeight());
 
 		writer.Write("hideCursor", hideCursor);
+
+		writer.StartArray("openedAssets");
+
+		for (auto& asset : editor.openedAssets)
+		{
+			writer.StartBlock(nullptr);
+
+			writer.Write("path", asset->GetPath().c_str());
+
+			writer.FinishBlock();
+		}
+
+		writer.FinishArray();
 
 		writer.Write("edited_asset", editor.selectedEditAsset ? editor.selectedEditAsset->GetPath().c_str() : "");
 

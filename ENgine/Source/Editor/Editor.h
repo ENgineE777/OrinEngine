@@ -50,6 +50,9 @@ namespace Oak
 		Assets::AssetHolder* selectedAssetHolder = nullptr;
 		AssetRef selectedAsset;
 
+		int forceImGUISetViewportFocusCount = 0;
+		eastl::vector<AssetRef> openedAssets;
+
 		AssetTextureRef draggedTextureAsset;
 		AssetAnimGraph2DRef draggedAssetAnimGraph2D;
 		AssetTileSetRef draggedAssetTileSet;
