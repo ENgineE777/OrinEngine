@@ -442,6 +442,9 @@ namespace Oak
 			return;
 		}
 
+		int index2Delete = -1;
+		bool needReselect = false;
+
 		for (int i = 0; i < openedAssets.size(); i++)
 		{
 			auto& asset = openedAssets[i];
@@ -582,18 +585,21 @@ namespace Oak
 
 			if (!opened)
 			{
-				openedAssets.erase(openedAssets.begin() + i);
-					
-				if (selected)
-				{
-					if (i > 0)
-					{
-						i--;
-					}
-
-					SelectEditAsset(openedAssets[i]);
-				}
+				index2Delete = i;
+				needReselect = selected;
 			}
+		}
+
+		if (index2Delete != -1)
+		{
+			openedAssets.erase(openedAssets.begin() + index2Delete);
+
+			if (index2Delete >= openedAssets.size())
+			{
+				index2Delete--;
+			}
+
+			SelectEditAsset(openedAssets[index2Delete]);
 		}
 
 		if (forceImGUISetViewportFocusCount > 0)
