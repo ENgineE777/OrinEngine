@@ -414,7 +414,22 @@ namespace Oak
 	{
 		if (openedAssets.size() == 0 || projectRunning)
 		{
-			ImGui::Begin("Game###Game0", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+			if (runningInFullscreen)
+			{
+				ImGui::Begin("Game###GameFullscreen", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking);
+
+				ImGui::SetWindowPos(ImVec2(0.0f, 0.0f));
+
+				RECT desktopRect;
+				HWND hDesktop = GetDesktopWindow();
+				GetWindowRect(hDesktop, &desktopRect);
+
+				ImGui::SetWindowSize(ImVec2((float)desktopRect.right, (float)desktopRect.bottom));
+			}
+			else
+			{
+				ImGui::Begin("Game###Game0", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+			}
 
 			ImGuiIO& io = ImGui::GetIO();
 
@@ -430,6 +445,16 @@ namespace Oak
 			ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
 
 			ImGui::End();
+
+			if (root.controls.DebugKeyPressed("KEY_ESCAPE"))
+			{
+				StopProject();
+			}
+
+			if (root.controls.DebugKeyPressed("KEY_F11"))
+			{
+				runningInFullscreen = !runningInFullscreen;
+			}
 
 			return;
 		}
@@ -2133,7 +2158,7 @@ namespace Oak
 
 		float dt = root.GetDeltaTime();
 
-		viewportFocused = GetActiveWindow() == hwnd && ImGui::IsWindowFocused();
+		viewportFocused = runningInFullscreen ? true : GetActiveWindow() == hwnd && ImGui::IsWindowFocused();
 		root.controls.SetFocused(viewportFocused);
 
 		if (viewportFocused)

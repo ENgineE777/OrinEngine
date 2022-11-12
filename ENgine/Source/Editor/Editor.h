@@ -91,6 +91,7 @@ namespace Oak
 		bool vireportHowered = false;
 
 		bool projectRunning = false;
+		bool runningInFullscreen = false;
 
 		bool needSetSizePrjSet = true; 
 		bool needSetSizeEdSet = true;
