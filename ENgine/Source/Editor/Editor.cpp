@@ -1602,7 +1602,7 @@ namespace Oak
 
 			for (int i = 0; i < 100; i++)
 			{
-				ImGui::DockBuilderDockWindow(StringUtils::PrintTemp("###Game%i", i), dock_right_id);
+				ImGui::DockBuilderDockWindow(StringUtils::PrintTemp("###Game%i", i), dock_main_id);
 			}
 
 			ImGui::DockBuilderDockWindow("###Scene", dock_right_up_id);
