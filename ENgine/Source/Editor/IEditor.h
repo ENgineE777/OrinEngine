@@ -16,7 +16,7 @@ namespace Oak
 	{
 	public:
 
-		virtual bool Init(HWND hwnd) = 0;
+		virtual bool Init(HWND hwnd, const char* startProject) = 0;
 		virtual bool Update() = 0;
 		virtual bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) = 0;
 		virtual void OnResize(int width, int height) = 0;

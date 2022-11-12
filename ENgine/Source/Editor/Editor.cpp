@@ -98,7 +98,7 @@ namespace Oak
 		return nullptr;
 	}
 
-	bool Editor::Init(HWND setHwnd)
+	bool Editor::Init(HWND setHwnd, const char* startProject)
 	{
 		ImGui_ImplWin32_EnableDpiAwareness();
 
@@ -152,6 +152,11 @@ namespace Oak
 
 				reader.LeaveBlock();
 			}
+		}
+
+		if (startProject)
+		{
+			projectToLoad = startProject;
 		}
 
 		return true;
@@ -1038,8 +1043,6 @@ namespace Oak
 
 		ImGui::SameLine();
 
-		const char* projectToLoad = nullptr;
-
 		if (ImGui::Button("New", ImVec2(40.0f, 25.0f)))
 		{
 			const char* fileName = OpenFileDialog("Project file", "pra", false);
@@ -1148,33 +1151,31 @@ namespace Oak
 		ImGui::EndChild();
 
 		ImGui::End();
+	}
 
-		if (projectToLoad)
+	void Editor::LoadProject(const char* projectPath)
+	{
+		char curDir[1024];
+		GetCurrentDirectoryA(1024, curDir);
+
+		eastl::string projectFullName;
+		if (projectPath[1] == '.')
 		{
-			char curDir[1024];
-			GetCurrentDirectoryA(1024, curDir);
-
-			eastl::string projectFullName;
-			if (projectToLoad[1] == '.')
-			{
-				std::filesystem::path path = StringUtils::PrintTemp("%s/%s", curDir, projectToLoad);
-				projectFullName = std::filesystem::canonical(path).u8string().c_str();
-			}
-			else
-			{
-				projectFullName = projectToLoad;
-			}
-
-
-			if (project.Load(projectFullName.c_str()))
-			{
-				ShowWindow(hwnd, SW_MAXIMIZE);
-			}
-			else
-			{
-				projectToLoad = nullptr;
-			}
+			std::filesystem::path path = StringUtils::PrintTemp("%s/%s", curDir, projectPath);
+			projectFullName = std::filesystem::canonical(path).u8string().c_str();
 		}
+		else
+		{
+			projectFullName = projectPath;
+		}
+
+
+		if (project.Load(projectFullName.c_str()))
+		{
+			ShowWindow(hwnd, SW_MAXIMIZE);
+		}
+
+		projectToLoad = nullptr;
 	}
 
 	void Editor::SelectEditAsset(AssetRef asset)
@@ -2037,6 +2038,11 @@ namespace Oak
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
+
+		if (projectToLoad)
+		{
+			LoadProject(projectToLoad);
+		}
 
 		if (project.projectFullName.c_str()[0])
 		{

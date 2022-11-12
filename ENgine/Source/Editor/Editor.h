@@ -93,6 +93,8 @@ namespace Oak
 		bool projectRunning = false;
 		bool runningInFullscreen = false;
 
+		const char* projectToLoad = nullptr;
+
 		bool needSetSizePrjSet = true; 
 		bool needSetSizeEdSet = true;
 
@@ -140,7 +142,7 @@ namespace Oak
 
 		const char* OpenFileDialog(const char* extName, const char* ext, bool open);
 
-		bool Init(HWND hwnd) override;
+		bool Init(HWND hwnd, const char* startProject) override;
 		bool Update() override;
 		void Render(float dt);
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) override;
@@ -162,6 +164,7 @@ namespace Oak
 		void ShowEditorSettings();
 		void ShowViewport();
 		void ShowSelectProject();
+		void LoadProject(const char* path);
 
 		void AssetsTreePopup(bool contextItem);
 		void AssetsFolder(Assets::Folder* folder);
