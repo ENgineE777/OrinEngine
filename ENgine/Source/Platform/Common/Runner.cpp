@@ -18,10 +18,10 @@ namespace Oak
 			return false;
 		}
 
-		root.render.AddExecutedLevelPool(1);
+		root.render.AddExecutedLevelPool(-1000);
 
 		renderTaskPool = root.render.AddTaskPool(_FL_);
-		renderTaskPool->AddTask(1, this, (Object::Delegate) & Runner::Render);
+		renderTaskPool->AddTask(-1000, this, (Object::Delegate) & Runner::Render);
 
 		RECT rect;
 		GetClientRect(hwnd, (LPRECT)&rect);
@@ -73,9 +73,22 @@ namespace Oak
 	void Runner::Render(float dt)
 	{
 		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
-
+		
+		root.render.ExecutePool(-10, dt);
 		root.render.ExecutePool(0, dt);
+		root.render.ExecutePool(1, dt);
+		root.render.ExecutePool(2, dt);
+		root.render.ExecutePool(3, dt);
+		root.render.ExecutePool(4, dt);
+		root.render.ExecutePool(5, dt);
+		root.render.ExecutePool(6, dt);
+		root.render.ExecutePool(7, dt);
+		root.render.ExecutePool(8, dt);
+		root.render.ExecutePool(9, dt);
 		root.render.ExecutePool(10, dt);
+		root.render.ExecutePool(11, dt);
+		root.render.ExecutePool(12, dt);
+
 		root.render.ExecutePool(100, dt);
 		root.render.ExecutePool(150, dt);
 		root.render.ExecutePool(199, dt);
