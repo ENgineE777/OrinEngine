@@ -1578,6 +1578,7 @@ namespace Oak
 		if (selectedEditAsset)
 		{
 			selectedEditAsset->EnableEditing(true);
+			forceImGUISetViewportFocusCount = 2;
 		}
 
 		root.scripts.SetAllowDynamicReload(true);
