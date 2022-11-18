@@ -489,7 +489,7 @@ namespace Oak
 			}
 
 			ImGui::Begin(StringUtils::PrintTemp("%s%s###Game%i", asset->GetName().c_str(), asset->ContainsUnsavedChanges() ? "*" : "", i),
-						openedAssets.size() > 1 ? &opened : nullptr, ImGuiWindowFlags_NoCollapse);
+						openedAssets.size() > 1 ? &opened : nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 			if (forceImGUISetViewportFocusCount == 0 && ImGui::IsWindowFocused() && !selected)
 			{
@@ -1328,7 +1328,7 @@ namespace Oak
 				{
 					need2openAssetPopup = true;
 					createAssetName = "";
-					duplicateAsset = true;
+					duplicateAsset = false;
 				}
 
 				ImGui::EndMenu();
