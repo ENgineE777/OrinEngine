@@ -61,6 +61,8 @@ namespace Oak
 
 			reader.Read("hideCursor", hideCursor);
 
+			reader.Read("runningInFullscreen", runningInFullscreen);
+
 			eastl::string assetPath;
 
 			while (reader.EnterBlock("openedAssets"))
@@ -151,6 +153,8 @@ namespace Oak
 		writer.Write("pixelsHeight", Sprite::GetPixelsHeight());
 
 		writer.Write("hideCursor", hideCursor);
+
+		writer.Write("runningInFullscreen", runningInFullscreen);
 
 		writer.StartArray("openedAssets");
 

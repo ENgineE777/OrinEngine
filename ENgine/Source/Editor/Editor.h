@@ -91,7 +91,6 @@ namespace Oak
 		bool vireportHowered = false;
 
 		bool projectRunning = false;
-		bool runningInFullscreen = false;
 
 		const char* projectToLoad = nullptr;
 

@@ -419,7 +419,7 @@ namespace Oak
 	{
 		if (openedAssets.size() == 0 || projectRunning)
 		{
-			if (runningInFullscreen)
+			if (project.runningInFullscreen)
 			{
 				ImGui::Begin("Game###GameFullscreen", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking);
 
@@ -458,7 +458,7 @@ namespace Oak
 
 			if (root.controls.DebugKeyPressed("KEY_F11"))
 			{
-				runningInFullscreen = !runningInFullscreen;
+				project.runningInFullscreen = !project.runningInFullscreen;
 			}
 
 			return;
@@ -2170,7 +2170,7 @@ namespace Oak
 
 		float dt = root.GetDeltaTime();
 
-		viewportFocused = runningInFullscreen ? true : GetActiveWindow() == hwnd && ImGui::IsWindowFocused();
+		viewportFocused = project.runningInFullscreen ? true : GetActiveWindow() == hwnd && ImGui::IsWindowFocused();
 		root.controls.SetFocused(viewportFocused);
 
 		if (viewportFocused)

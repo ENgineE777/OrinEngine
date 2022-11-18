@@ -30,6 +30,8 @@ namespace Oak
 
 		eastl::vector<Layer> layers;
 
+		bool runningInFullscreen = false;
+
 		eastl::string projectFullName;
 		eastl::string projectName;
 		char projectPath[1024];
