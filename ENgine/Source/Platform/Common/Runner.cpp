@@ -23,10 +23,11 @@ namespace Oak
 		renderTaskPool = root.render.AddTaskPool(_FL_);
 		renderTaskPool->AddTask(-1000, this, (Object::Delegate) & Runner::Render);
 
-		RECT rect;
-		GetClientRect(hwnd, (LPRECT)&rect);
+		RECT desktopRect;
+		HWND hDesktop = GetDesktopWindow();
+		GetWindowRect(hDesktop, &desktopRect);
 
-		if (!root.render.GetDevice()->SetBackBuffer(0, rect.right, rect.bottom, &hwnd))
+		if (!root.render.GetDevice()->SetBackBuffer(0, desktopRect.right, desktopRect.bottom, &hwnd))
 		{
 			return false;
 		}
