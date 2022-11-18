@@ -421,6 +421,15 @@ namespace Oak
 
 		CpyFolder("/ENgine/ExportBinaries", "");
 
+		CpyFile("/eastl.dll");
+		CpyFile("/fmod.dll");
+		CpyFile("/fmodL.dll");
+		CpyFile("/Oak.dll");
+		CpyFile("/PhysX_64.dll");
+		CpyFile("/PhysXCommon_64.dll");
+		CpyFile("/PhysXCooking_64.dll");
+		CpyFile("/PhysXFoundation_64.dll");
+
 		CpyFile("/ENgine/helvetica");
 		CpyFile("/ENgine/low2hi.dat");
 		CpyFile("/ENgine/OpenSans-Regular.ttf");
