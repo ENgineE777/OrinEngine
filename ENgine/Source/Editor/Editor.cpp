@@ -1736,6 +1736,11 @@ namespace Oak
 
 			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
+			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F5"))
+			{
+				StartProject();
+			}
+
 			if (ImGui::Button("Build Code", ImVec2(75.0f, 25.0f)))
 			{
 				root.scripts.CompileProjectCode(true);
