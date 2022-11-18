@@ -11,7 +11,6 @@ namespace Oak
 		INT_PROP(LabelWidget, fontHeight, 20, "Property", "Font Height", "Font Height")
 		FILENAME_PROP(LabelWidget, fontName, "", "Property", "Font Name")
 		STRING_PROP(LabelWidget, text, "Text", "Property", "Text")
-
 		ENUM_PROP(LabelWidget, horzAlign, 0, "Prop", "Horz align", "Horizontal aligment of a widget")
 			ENUM_ELEM("Left", 0)
 			ENUM_ELEM("Center", 1)
@@ -42,13 +41,56 @@ namespace Oak
 
 	void LabelWidget::ApplyProperties()
 	{
-		float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
-		font = root.fonts.LoadFont(fontName.c_str(), false, false, (int)(k * (float)fontHeight), _FL_);
+		screenHeight = -1;
 	}
 
 	void LabelWidget::Draw(float dt)
 	{
-		auto pos3d = root.render.TransformToScreen(transform.GetGlobal().Pos(), 2);
+		int height = root.render.GetDevice()->GetHeight();
+		float k = (float)height / Sprite::GetPixelsHeight();
+
+		if (height != screenHeight)
+		{
+			int calculatedFontHeight = (int)(k * (float)fontHeight);
+			font = root.fonts.LoadFont(fontName.c_str(), false, false, calculatedFontHeight, _FL_);
+
+			screenHeight = height;
+		}
+		
+
+		if (horzSize == Size::wrapContext || vertSize == Size::wrapContext)
+		{
+			float height = font.GetLineBreak(line_breaks, text.c_str(), 10000);
+
+			float width = 1.0f;
+
+			if (line_breaks.size() > 0)
+			{
+
+				for (auto& entry : line_breaks)
+				{
+					if (entry.width > width)
+					{
+						width = entry.width;
+					}
+				}
+			}
+
+			if (horzSize == Size::wrapContext)
+			{
+				transform.size.x = width / k;
+			}
+
+			if (vertSize == Size::wrapContext)
+			{
+				transform.size.y = height / k;
+			}
+		}
+
+		auto offset = Sprite::ToUnits(transform.offset * transform.size);
+		offset.y = -offset.y;
+
+		auto pos3d = root.render.TransformToScreen(transform.GetGlobal().Pos() - offset, 2);
 
 		Math::Matrix mat;
 		mat.Pos().x = pos3d.x;

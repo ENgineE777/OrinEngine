@@ -76,6 +76,47 @@ namespace Oak
 			transform.size.y = parentSize.y - rightPadding.y - leftPadding.y;
 		}
 
+		if ((horzSize == Size::wrapContext || vertSize == Size::wrapContext) && childs.size() > 0)
+		{
+			float width = 1.0f;
+			float height = 1.0f;
+
+			for (auto* child : childs)
+			{
+				ContainerWidget* childWidget = dynamic_cast<ContainerWidget*>(child);
+
+				if (childWidget)
+				{
+					auto& trans = childWidget->GetTransform();
+
+					auto size = (1.0f - trans.offset) * trans.size;
+					size.y = -size.y;
+
+					auto pos = trans.position + size;
+
+					if (pos.x > width)
+					{
+						width = pos.x;
+					}
+
+					if (-pos.y > height)
+					{
+						height = -pos.y;
+					}
+				}
+			}
+
+			if (horzSize == Size::wrapContext)
+			{
+				transform.size.x = width;
+			}
+				
+			if (vertSize == Size::wrapContext)
+			{
+
+			}transform.size.y = height;
+		}
+
 		transform.axis.x = (horzAlign == Align::alignRight) ? -1.0f : 1.0f;
 		transform.axis.y = (vertAlign == Align::alignBottom) ? 1.0f : -1.0f;
 

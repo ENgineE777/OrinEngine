@@ -34,6 +34,7 @@ namespace Oak
 		FLOAT_PROP(ImageWidget, leftPadding.y, 0.0f, "Prop", "top padding", "Top padding of a widget")
 		FLOAT_PROP(ImageWidget, rightPadding.x, 0.0f, "Prop", "right padding", "Right padding of a widget")
 		FLOAT_PROP(ImageWidget, rightPadding.y, 0.0f, "Prop", "bottom padding", "Bottom padding of a widget")
+		COLOR_PROP(ImageWidget, imageColor, COLOR_WHITE, "Prop", "image color")
 		COLOR_PROP(ImageWidget, color, COLOR_WHITE, "Prop", "color")
 
 	META_DATA_DESC_END()
@@ -50,6 +51,6 @@ namespace Oak
 	void ImageWidget::Draw(float dt)
 	{
 		texture.prg = Sprite::quadPrgNoZ;
-		texture.Draw(&transform, curColor, dt);
+		texture.Draw(&transform, curColor * imageColor, dt);
 	}
 }

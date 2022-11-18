@@ -23,6 +23,9 @@ namespace Oak
 
 		eastl::string text;
 
+		int screenHeight = -1;
+		eastl::vector<FontRes::LineBreak> line_breaks;
+
 	#ifndef DOXYGEN_SKIP
 
 		LabelWidget() = default;;

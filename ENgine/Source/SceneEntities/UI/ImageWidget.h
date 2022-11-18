@@ -13,6 +13,8 @@ namespace Oak
 	{
 	public:
 
+		Color imageColor = COLOR_WHITE;
+
 		AssetTextureRef texture;
 		META_DATA_DECL_BASE(ImageWidget)
 
