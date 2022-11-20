@@ -329,4 +329,26 @@ namespace Oak
 			callback(index, contact_object, contact_index);
 		}
 	}
+
+	bool PhysScene::RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize)
+	{
+		PxRaycastHit hit;
+		if (PxGeometryQuery::raycast(PxVec3{desc.origin.x, desc.origin.y, desc.origin.z},
+		                             PxVec3{desc.dir.x, desc.dir.y, desc.dir.z},
+									 PxBoxGeometry(PxVec3{boxHalfSize.x, boxHalfSize.y, boxHalfSize.z}),
+									 PxTransform(PxVec3{boxOrigin.x, boxOrigin.y, boxOrigin.z}),
+									 desc.length,
+									 PxHitFlags(PxHitFlag::eDEFAULT),
+									 1,
+									 &hit))
+		{
+			desc.hitPos    = Math::Vector3{hit.position.x, hit.position.x, hit.position.z};
+			desc.hitNormal = Math::Vector3{hit.normal.x, hit.normal.x, hit.normal.z};
+			desc.hitLength = hit.distance;
+
+			return true;
+		}
+
+		return false;
+	}
 }

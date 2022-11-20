@@ -143,6 +143,15 @@ namespace Oak
 
 		bool OverlapWithSphere(Math::Vector3 pos, float radius, eastl::vector<BodyUserData*>& bodies);
 
+		/**
+		\brief Make ray cast against box
+
+		\param[in] desc Description of a ray
+
+		\return True will be return in case ray hitted given box. Otherwise false will be returned 
+		*/
+		static bool RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize);
+
 	#ifndef DOXYGEN_SKIP
 
 		void SetVisualization(bool set);
