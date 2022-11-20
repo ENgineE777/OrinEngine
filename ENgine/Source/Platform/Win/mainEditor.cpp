@@ -76,14 +76,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     }
 
     char buffer[500];
+    LPWSTR cmdLineBuffer = lpCmdLine && *lpCmdLine ? lpCmdLine : nullptr;
 
-    if (lpCmdLine)
+    if (cmdLineBuffer)
     {
         size_t pReturnValue;
-        wcstombs_s(&pReturnValue, buffer, 500, lpCmdLine, 499);
+        wcstombs_s(&pReturnValue, buffer, 500, cmdLineBuffer, 499);
     }
 
-    if (!Oak::GetEditor()->Init(hwnd, lpCmdLine ? buffer : nullptr))
+    if (!Oak::GetEditor()->Init(hwnd, cmdLineBuffer ? buffer : nullptr))
     {
         UnregisterClass(wcex.lpszClassName, wcex.hInstance);
         return 1;
