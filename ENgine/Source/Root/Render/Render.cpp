@@ -100,6 +100,18 @@ namespace Oak
 		needCalcTrans = false;
 	}
 
+	void Render::InvalidateNonEngineTechiques()
+	{
+		for (auto& iter : renderTechniques)
+		{
+			if (!iter.second.createdFromEngine)
+			{
+				iter.second.dirty = true;
+			}
+		}
+
+	}
+
 	TextureRef Render::LoadTexture(const char* name, const char* file, int line)
 	{
 		Texture* texture = nullptr; 

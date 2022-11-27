@@ -61,7 +61,14 @@ namespace Oak
 
 		eastl::map<eastl::string, Texture*> textures;
 
-		eastl::map<std::size_t, RenderTechnique*> renderTechniques;
+		struct RenderTechniqueHolder
+		{
+			RenderTechnique* renderTechnique = nullptr;
+			bool createdFromEngine = false;
+			bool dirty = false;
+		};
+
+		eastl::map<std::size_t, RenderTechniqueHolder> renderTechniques;
 
 		class DebugLines* lines;
 		class DebugSpheres* spheres;
@@ -99,17 +106,40 @@ namespace Oak
 
 			if (iter == renderTechniques.end())
 			{
+				RenderTechniqueHolder holder;
+
 				T* renderTechnique = new T();
 				renderTechnique->Init();
 				renderTechnique->hash = hash;
 
-				renderTechniques[hash] = renderTechnique;
+				holder.renderTechnique = renderTechnique;
+				holder.createdFromEngine = strstr(file, "Code\\") == nullptr;
+
+				renderTechniques[hash] = holder;
 
 				return RenderTechniqueRef(renderTechnique, _FL_);
 			}
 
-			return RenderTechniqueRef(iter->second, _FL_);
+			RenderTechniqueHolder& holder = iter->second;
+
+			if (holder.dirty)
+			{
+				int refCounter = holder.renderTechnique->refCounter;
+				delete holder.renderTechnique;
+
+				T* renderTechnique = new T();
+				renderTechnique->Init();
+				renderTechnique->hash = hash;
+				renderTechnique->refCounter = refCounter;
+
+				holder.renderTechnique = renderTechnique;
+				holder.dirty = false;
+			}
+
+			return RenderTechniqueRef(holder.renderTechnique, _FL_);
 		}
+
+		void InvalidateNonEngineTechiques();
 
 		TextureRef LoadTexture(const char* name, const char* file, int line);
 

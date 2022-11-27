@@ -177,6 +177,8 @@ namespace Oak
 
 			if (Module && allowDynamicReload)
 			{
+				root.render.InvalidateNonEngineTechiques();
+
 				{
 					void* Procs = GetProcAddress(newModule, "recreate_entites");
 					auto code_ptr = (decltype(recreate_entites)*)Procs;
