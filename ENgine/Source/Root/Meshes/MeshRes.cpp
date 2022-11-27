@@ -53,7 +53,7 @@ namespace Oak
 		Render(MeshPrograms::GetShdTranglPrg());
 	}
 
-	void Mesh::Instance::Render(Program* prg)
+	void Mesh::Instance::Render(RenderTechnique* prg)
 	{
 		if (!visible)
 		{
@@ -63,7 +63,7 @@ namespace Oak
 		Math::Matrix trans;
 		root.render.GetTransform(TransformStage::WrldViewProj, trans);
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		if (transforms.size() == 0)
 		{

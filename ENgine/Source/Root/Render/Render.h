@@ -3,22 +3,23 @@
 
 #include "IRender.h"
 #include "Root/Render/Device.h"
-#include "Root/Render/Program.h"
+#include "Root/Render/RenderTechnique.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 #include <eastl/vector.h>
 #include <eastl/map.h>
+#include <typeinfo>
 
 namespace Oak
 {
 	class Render : public IRender
 	{
 		friend class Root;
-		friend class Program;
+		friend class RenderTechnique;
 		friend class Texture;
 		friend class TextureDX11;
 		friend class TextureGLES;
 
-		#ifndef DOXYGEN_SKIP
+#ifndef DOXYGEN_SKIP
 
 		Device* device = nullptr;
 		Math::Matrix trans[4];
@@ -26,14 +27,14 @@ namespace Oak
 
 		eastl::map<eastl::string, Texture*> textures;
 
-		eastl::map<eastl::string, Program*> programs;
+		eastl::map<std::size_t, RenderTechnique*> renderTechniques;
 
-		class DebugLines*       lines;
-		class DebugSpheres*     spheres;
-		class DebugBoxes*       boxes;
-		class DebugTriangles*   triangles;
-		class DebugFont*        font;
-		class DebugSprites*     sprites;
+		class DebugLines* lines;
+		class DebugSpheres* spheres;
+		class DebugBoxes* boxes;
+		class DebugTriangles* triangles;
+		class DebugFont* font;
+		class DebugSprites* sprites;
 		class DebugTriangles2D* triangles2D;
 
 		TaskExecutor::GroupTaskPool* groupTaskPool;
@@ -45,7 +46,7 @@ namespace Oak
 		void Release();
 		void Execute(float dt);
 
-		#endif
+#endif
 
 	public:
 
@@ -55,7 +56,26 @@ namespace Oak
 
 		void GetTransform(TransformStage trans, Math::Matrix& mat) override;
 
-		ProgramRef GetProgram(const char* name, const char* file, int line) override;
+		template<class T>
+		RenderTechniqueRef GetRenderTechnique(const char* file, int line)
+		{
+			auto hash = typeid(T).hash_code();
+
+			auto iter = renderTechniques.find(hash);
+
+			if (iter == renderTechniques.end())
+			{
+				T* renderTechnique = new T();
+				renderTechnique->Init();
+				renderTechnique->hash = hash;
+
+				renderTechniques[hash] = renderTechnique;
+
+				return RenderTechniqueRef(renderTechnique, _FL_);
+			}
+
+			return RenderTechniqueRef(iter->second, _FL_);
+		}
 
 		TextureRef LoadTexture(const char* name, const char* file, int line) override;
 

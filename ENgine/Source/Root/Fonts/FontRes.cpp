@@ -194,7 +194,7 @@ namespace Oak
 
 		if (len == 0) return;
 
-		root.render.GetDevice()->SetProgram(root.fonts.fntProg);
+		root.render.GetDevice()->SetRenderTechnique(root.fonts.fntProg);
 
 		Math::Matrix tmp;
 

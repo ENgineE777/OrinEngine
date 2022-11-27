@@ -210,7 +210,7 @@
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugBoxes.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugFont.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugLines.h" />
-    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugPrograms.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugTechiques.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugSpheres.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugSprites.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugTriangles.h" />
@@ -222,7 +222,7 @@
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\TextureDX11.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\IRender.h" />
-    <ClInclude Include="..\..\..\Source\Root\Render\Program.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\RenderTechnique.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Render.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Shader.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Texture.h" />
@@ -423,7 +423,6 @@
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugBoxes.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugFont.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugLines.cpp" />
-    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugPrograms.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugSpheres.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugSprites.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugTriangles.cpp" />
@@ -433,7 +432,7 @@
     <ClCompile Include="..\..\..\Source\Root\Render\DX11\ShaderDX11.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\DX11\TextureDX11.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.cpp" />
-    <ClCompile Include="..\..\..\Source\Root\Render\Program.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Render\RenderTechnique.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Render.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Texture.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Root.cpp" />

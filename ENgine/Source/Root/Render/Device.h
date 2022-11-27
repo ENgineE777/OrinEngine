@@ -4,7 +4,7 @@
 #include "Support/Support.h"
 #include "Shader.h"
 #include "DataBuffer.h"
-#include "Program.h"
+#include "RenderTechnique.h"
 #include "VertexDecl.h"
 #include "Texture.h"
 
@@ -94,7 +94,7 @@ namespace Oak
 	class CLASS_DECLSPEC Device
 	{
 		friend class Render;
-		friend class Program;
+		friend class RenderTechnique;
 		friend class DeviceDX11;
 		friend class DeviceGLES;
 
@@ -107,10 +107,10 @@ namespace Oak
 		float cur_aspect = 0.0f;
 
 		virtual bool Init(void* external_device) = 0;
-		virtual void PrepareProgram(Program* program) = 0;
+		virtual void PrepareRenderTechnique(RenderTechnique* program) = 0;
 		virtual void Release() = 0;
 
-		Program* cur_program = nullptr;
+		RenderTechnique* currentRenderTechnique = nullptr;
 
 		#endif
 
@@ -188,7 +188,7 @@ namespace Oak
 
 		\param[in] program Pointer to a Program
 		*/
-		virtual void SetProgram(Program* program) = 0;
+		virtual void SetRenderTechnique(RenderTechnique* renderTechnique) = 0;
 
 		/**
 		\brief Create vertex declaration from an array of element descriptors

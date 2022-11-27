@@ -13,7 +13,7 @@ namespace Oak
 			Math::Vector2 Texcoords;
 		};
 
-		ProgramRef prg;
+		RenderTechniqueRef prg;
 		VertexDeclRef vdecl;
 		DataBufferRef vbuffer;
 

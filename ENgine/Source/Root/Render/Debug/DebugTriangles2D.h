@@ -20,7 +20,7 @@ namespace Oak
 		};
 
 		eastl::vector<Triangle> triangles;
-		ProgramRef prg;
+		RenderTechniqueRef prg;
 		VertexDeclRef vdecl;
 		DataBufferRef vbuffer;
 

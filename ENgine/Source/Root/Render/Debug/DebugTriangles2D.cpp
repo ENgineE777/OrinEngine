@@ -1,5 +1,5 @@
 #include "DebugTriangles2D.h"
-#include "DebugPrograms.h"
+#include "DebugTechiques.h"
 
 namespace Oak
 {
@@ -10,7 +10,7 @@ namespace Oak
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(3000, sizeof(Vertex), _FL_);
 
-		prg = root.render.GetProgram("DbgTriangle2D", _FL_);
+		prg = root.render.GetRenderTechnique<DebugTechiques::Triangle2D>(_FL_);
 
 		if (debugTaskPool)
 		{
@@ -36,7 +36,7 @@ namespace Oak
 			return;
 		}
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, vbuffer);

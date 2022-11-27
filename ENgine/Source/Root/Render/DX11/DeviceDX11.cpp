@@ -353,16 +353,16 @@ namespace Oak
 		}
 	}
 
-	void DeviceDX11::PrepareProgram(Program* program)
+	void DeviceDX11::PrepareRenderTechnique(RenderTechnique* program)
 	{
 
 	}
 
-	void DeviceDX11::SetProgram(Program* program)
+	void DeviceDX11::SetRenderTechnique(RenderTechnique* program)
 	{
-		if (cur_program != program)
+		if (currentRenderTechnique != program)
 		{
-			cur_program = program;
+			currentRenderTechnique = program;
 			need_apply_prog = true;
 			need_apply_vdecl = true;
 		}
@@ -627,12 +627,12 @@ namespace Oak
 			immediateContext->RSSetViewports(1, &vp);
 		}
 
-		if (cur_program)
+		if (currentRenderTechnique)
 		{
 			if (need_apply_prog)
 			{
-				if (cur_program->vshader) cur_program->vshader->Apply();
-				if (cur_program->pshader) cur_program->pshader->Apply();
+				if (currentRenderTechnique->vshader) currentRenderTechnique->vshader->Apply();
+				if (currentRenderTechnique->pshader) currentRenderTechnique->pshader->Apply();
 
 				SetAlphaBlend(false);
 				SetDepthTest(true);
@@ -640,26 +640,26 @@ namespace Oak
 				SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgInvSrcAlpha);
 				SetCulling(CullMode::CullCCW);
 
-				cur_program->ApplyStates();
+				currentRenderTechnique->ApplyStates();
 				need_apply_prog = false;
 			}
 
-			if (cur_program->vshader)
+			if (currentRenderTechnique->vshader)
 			{
-				cur_program->vshader->UpdateConstants();
+				currentRenderTechnique->vshader->UpdateConstants();
 
 				if (need_apply_vdecl)
 				{
 					if (cur_vdecl)
 					{
-						cur_vdecl->Apply((ShaderDX11*)cur_program->vshader);
+						cur_vdecl->Apply((ShaderDX11*)currentRenderTechnique->vshader);
 					}
 
 					need_apply_vdecl = false;
 				}
 			}
 
-			if (cur_program->pshader) cur_program->pshader->UpdateConstants();
+			if (currentRenderTechnique->pshader) currentRenderTechnique->pshader->UpdateConstants();
 		}
 
 		if (blend_changed)

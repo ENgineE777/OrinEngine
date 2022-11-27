@@ -28,7 +28,7 @@ namespace Oak
 			Math::Vector2 uv;
 		};
 
-		ProgramRef fntProg;
+		RenderTechniqueRef fntProg;
 		DataBufferRef vbuffer;
 		VertexDeclRef vdecl;
 		#endif

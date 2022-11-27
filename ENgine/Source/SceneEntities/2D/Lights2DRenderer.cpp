@@ -1,10 +1,11 @@
 
 #include "Lights2DRenderer.h"
 #include "Root/Root.h"
+#include "PointLight2D.h"
 
 namespace Oak
 {
-	class LightMap2DProgram : public Program
+	class LightMap2DProgram : public RenderTechnique
 	{
 	public:
 		virtual const char* GetVsName() { return "drawLightMap2D_vs.shd"; };
@@ -20,10 +21,7 @@ namespace Oak
 		};
 	};
 
-	CLASSREGEX(Program, LightMap2DProgram, LightMap2DProgram, "LightMap2DProgram")
-	CLASSREGEX_END(Program, LightMap2DProgram)
-
-		ENTITYREG(SceneEntity, Lights2DRenderer, "2D/Lights", "Lights2DRenderer")
+	ENTITYREG(SceneEntity, Lights2DRenderer, "2D/Lights", "Lights2DRenderer")
 
 	META_DATA_DESC(Lights2DRenderer)
 		BASE_SCENE_ENTITY_PROP(Lights2DRenderer)
@@ -42,8 +40,8 @@ namespace Oak
 
 		Tasks(true)->AddTask(100, this, (Object::Delegate) & Lights2DRenderer::Draw);
 
-		spriteLight = root.render.GetProgram("PointLight2DProgram", _FL_);
-		lightMap2DProgram = root.render.GetProgram("LightMap2DProgram", _FL_);
+		spriteLight = root.render.GetRenderTechnique<PointLight2DProgram>(_FL_);
+		lightMap2DProgram = root.render.GetRenderTechnique<LightMap2DProgram>(_FL_);
 
 		lightMapRT = root.render.GetDevice()->CreateTexture(512, 512, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 		
@@ -89,7 +87,7 @@ namespace Oak
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 
-		root.render.GetDevice()->SetProgram(lightMap2DProgram);
+		root.render.GetDevice()->SetRenderTechnique(lightMap2DProgram);
 
 		lightMap2DProgram->SetTexture(ShaderType::Pixel, "colorMap", lightMapRT);
 

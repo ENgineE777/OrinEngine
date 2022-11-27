@@ -20,16 +20,15 @@ namespace Oak
 
 	*/
 
-	class CLASS_DECLSPEC Program
+	class CLASS_DECLSPEC RenderTechnique
 	{
 		friend class Render;
-		friend class PointerRef<Program>;
+		friend class PointerRef<RenderTechnique>;
 
 		#ifndef DOXYGEN_SKIP
 
-		eastl::string name;
+		std::size_t hash = 0;
 		int refCounter = 0;
-
 		Shader* vshader = nullptr;
 		Shader* pshader = nullptr;
 
@@ -43,12 +42,19 @@ namespace Oak
 		static eastl::map<eastl::string, Texture*> textures;
 
 		virtual bool Init();
-		void Release();
 		virtual void ApplyStates() {};
+		void Release();
 
 		#endif
 
 	public:
+
+		/**
+		\brief Initialize program
+
+		\return result of initiazlization
+		*/
+		
 
 		/**
 		\brief Store a 4 componet vector in global pool
@@ -122,10 +128,13 @@ namespace Oak
 		\return Result of an operation
 		*/
 		void SetTexture(ShaderType shader_type, const char* param, Texture* texture);
+
+		/**
+		\brief Reload shaders
+
+		*/
+		void ReloadShaders();
 	};
 
-	CLASSFACTORYDEF(Program)
-	CLASSFACTORYDEF_END()
-
-	typedef PointerRef<Program> ProgramRef;
+	typedef PointerRef<RenderTechnique> RenderTechniqueRef;
 }

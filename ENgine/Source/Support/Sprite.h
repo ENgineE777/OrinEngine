@@ -34,15 +34,15 @@ namespace Oak
 
 	public:
 
-		static ProgramRef quadPrg;
-		static ProgramRef quadPrgNoZ;
+		static RenderTechniqueRef quadPrg;
+		static RenderTechniqueRef quadPrgNoZ;
 
-		static ProgramRef polygonPrg;
-		static ProgramRef polygonPrgNoZ;
+		static RenderTechniqueRef polygonPrg;
+		static RenderTechniqueRef polygonPrgNoZ;
 
 		static void Init();
-		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg = quadPrg);
-		static void DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, ProgramRef prg = polygonPrg);
+		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, RenderTechniqueRef prg = quadPrg);
+		static void DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg = polygonPrg);
 
 		static Math::Vector2 GetCamPos() { return _camPos; }
 

@@ -8,6 +8,15 @@
 
 namespace Oak
 {
+	class PointLight2DProgram : public RenderTechnique
+	{
+	public:
+		const char* GetVsName() override;
+		const char* GetPsName() override;
+
+		void ApplyStates() override;
+	};
+
 	class PointLight2D : public SceneEntity
 	{
 	public:
@@ -15,7 +24,7 @@ namespace Oak
 		META_DATA_DECL_BASE(PointLight2D)
 
 		Color color;
-		ProgramRef spriteLight;
+		RenderTechniqueRef spriteLight;
 
 	#ifndef DOXYGEN_SKIP
 

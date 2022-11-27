@@ -28,9 +28,6 @@ using namespace Oak;
 
 namespace SPK
 {
-	CLASSREGEX(Program, ParticleProgram, ParticleProgram, "ParticleProgram")
-	CLASSREGEX_END(Program, ParticleProgram)
-
 	void ParticleProgram::ApplyStates()
 	{
 		root.render.GetDevice()->SetAlphaBlend(true);
@@ -47,7 +44,7 @@ namespace SPK
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float2, ElementSemantic::Texcoord, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc, _FL_);
-		prg = root.render.GetProgram("ParticleProgram", _FL_);
+		prg = root.render.GetRenderTechnique<ParticleProgram>(_FL_);
 	}
 
 	GLQuadRenderer::GLQuadRenderer(const GLQuadRenderer& renderer) :
@@ -58,7 +55,7 @@ namespace SPK
 	{
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float2, ElementSemantic::Texcoord, 0 },{ ElementType::Ubyte4, ElementSemantic::Color, 0 } };
 		vdecl = root.render.GetDevice()->CreateVertexDecl(3, desc, _FL_);
-		prg = root.render.GetProgram("ParticleProgram", _FL_);
+		prg = root.render.GetRenderTechnique<ParticleProgram>(_FL_);
 	}
 
 	bool GLQuadRenderer::setTexturingMode(TextureMode mode)
@@ -218,7 +215,7 @@ namespace SPK
 			core.render.DebugSphere(Vector3(vec.x, vec.y, vec.z), ::Color(color.r, color.g, color.b, color.a), radius);
 		}*/
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		Math::Matrix trans;
 		root.render.GetTransform(TransformStage::WrldViewProj, trans);

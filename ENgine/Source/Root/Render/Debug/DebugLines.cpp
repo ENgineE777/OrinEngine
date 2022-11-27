@@ -1,5 +1,5 @@
 #include "DebugLines.h"
-#include "DebugPrograms.h"
+#include "DebugTechiques.h"
 
 namespace Oak
 {
@@ -10,8 +10,8 @@ namespace Oak
 
 		buffer = root.render.GetDevice()->CreateBuffer(MaxSize * 2, sizeof(Vertex), _FL_);
 
-		prg = root.render.GetProgram("DbgLine", _FL_);
-		prgDepth = root.render.GetProgram("DbgLineWithDepth", _FL_);
+		prg = root.render.GetRenderTechnique<DebugTechiques::Line>(_FL_);
+		prgDepth = root.render.GetRenderTechnique<DebugTechiques::LineWithDepth>(_FL_);
 
 		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugLines::Draw);
 	}
@@ -83,11 +83,11 @@ namespace Oak
 		}
 	}
 
-	void DebugLines::DrawLines(Program* prog, eastl::vector<Vertex>& lines, bool is2d)
+	void DebugLines::DrawLines(RenderTechnique* prog, eastl::vector<Vertex>& lines, bool is2d)
 	{
 		if (lines.size()==0) return;
 
-		root.render.GetDevice()->SetProgram(prog);
+		root.render.GetDevice()->SetRenderTechnique(prog);
 
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);

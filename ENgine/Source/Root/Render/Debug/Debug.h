@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "DebugPrograms.h"
+#include "DebugTechiques.h"
 #include "DebugLines.h"
 #include "DebugSpheres.h"
 #include "DebugTriangles.h"

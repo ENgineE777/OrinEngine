@@ -22,7 +22,7 @@ namespace Oak
 
 		eastl::vector<Box> boxes;
 
-		ProgramRef prg;
+		RenderTechniqueRef prg;
 		DataBufferRef vbuffer;
 		VertexDeclRef vdecl;
 		DataBufferRef ibuffer;

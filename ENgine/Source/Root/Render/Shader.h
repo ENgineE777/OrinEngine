@@ -29,7 +29,7 @@ namespace Oak
 
 	class CLASS_DECLSPEC Shader
 	{
-		friend class Program;
+		friend class RenderTechnique;
 		friend class DeviceDX11;
 
 	public:

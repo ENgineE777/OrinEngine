@@ -4,7 +4,7 @@
 
 namespace Oak
 {
-	class QuadProgram : public Program
+	class QuadRenderTechnique : public RenderTechnique
 	{
 	public:
 		virtual const char* GetVsName() { return "sprite_vs.shd"; };
@@ -17,7 +17,7 @@ namespace Oak
 		};
 	};
 
-	class QuadProgramNoZ : public QuadProgram
+	class QuadRenderNoZTechnique : public QuadRenderTechnique
 	{
 	public:
 
@@ -30,7 +30,7 @@ namespace Oak
 		};
 	};
 
-	class PolygonProgram : public Program
+	class PolygonRenderTechnique : public RenderTechnique
 	{
 	public:
 		virtual const char* GetVsName() { return "polygon_vs.shd"; };
@@ -44,7 +44,7 @@ namespace Oak
 		};
 	};
 
-	class PolygonProgramNoZ : public PolygonProgram
+	class PolygonRenderNoZTechnique : public PolygonRenderTechnique
 	{
 	public:
 
@@ -58,18 +58,6 @@ namespace Oak
 		};
 	};
 
-	CLASSREGEX(Program, QuadProgram, QuadProgram, "QuadProgram")
-	CLASSREGEX_END(Program, QuadProgram)
-
-	CLASSREGEX(Program, QuadProgramNoZ, QuadProgramNoZ, "QuadProgramNoZ")
-	CLASSREGEX_END(Program, QuadProgramNoZ)
-
-	CLASSREGEX(Program, PolygonProgram, PolygonProgram, "PolygonProgram")
-	CLASSREGEX_END(Program, PolygonProgram)
-
-	CLASSREGEX(Program, PolygonProgramNoZ, PolygonProgramNoZ, "PolygonProgramNoZ")
-	CLASSREGEX_END(Program, PolygonProgramNoZ)
-
 	VertexDeclRef Sprite::_vdecl;
 	DataBufferRef Sprite::_quadBuffer;
 	DataBufferRef Sprite::_polygonBuffer;
@@ -79,11 +67,11 @@ namespace Oak
 	float Sprite::_pixelsHeight = 1080.0f;
 	Math::Vector2 Sprite::_camPos;
 
-	ProgramRef Sprite::quadPrg;
-	ProgramRef Sprite::quadPrgNoZ;
+	RenderTechniqueRef Sprite::quadPrg;
+	RenderTechniqueRef Sprite::quadPrgNoZ;
 
-	ProgramRef Sprite::polygonPrg;
-	ProgramRef Sprite::polygonPrgNoZ;
+	RenderTechniqueRef Sprite::polygonPrg;
+	RenderTechniqueRef Sprite::polygonPrgNoZ;
 
 	void Sprite::SetData(float pixelsHeight, float pixelsPerUnit)
 	{
@@ -111,19 +99,18 @@ namespace Oak
 
 		_polygonBuffer = root.render.GetDevice()->CreateBuffer(128, stride, _FL_);
 
-		quadPrg = root.render.GetProgram("QuadProgram", _FL_);
-		quadPrgNoZ = root.render.GetProgram("QuadProgramNoZ", _FL_);
-
-		polygonPrg = root.render.GetProgram("PolygonProgram", _FL_);
-		polygonPrgNoZ = root.render.GetProgram("PolygonProgramNoZ", _FL_);
+		quadPrg = root.render.GetRenderTechnique<QuadRenderTechnique>(_FL_);
+		quadPrgNoZ = root.render.GetRenderTechnique<QuadRenderNoZTechnique>(_FL_);
+		polygonPrg = root.render.GetRenderTechnique<PolygonRenderTechnique> (_FL_);
+		polygonPrgNoZ = root.render.GetRenderTechnique<PolygonRenderNoZTechnique>(_FL_);
 	}
 
-	void Sprite::Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, ProgramRef prg)
+	void Sprite::Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, RenderTechniqueRef prg)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, _quadBuffer);
 		root.render.GetDevice()->SetVertexDecl(_vdecl);
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		Math::Vector4 params[2];
 		params[0] = Math::Vector4(pos.x, pos.y, size.x, size.y) * _pixelsPerUnitInvert;
@@ -141,12 +128,12 @@ namespace Oak
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
-	void Sprite::DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, ProgramRef prg)
+	void Sprite::DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, _polygonBuffer);
 		root.render.GetDevice()->SetVertexDecl(_vdecl);
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		Math::Matrix view_proj;
 		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
@@ -199,7 +186,7 @@ namespace Oak
 		quadPrg.ReleaseRef();
 		quadPrgNoZ.ReleaseRef();
 		polygonPrg.ReleaseRef();
-		polygonPrg.ReleaseRef();
+		polygonPrgNoZ.ReleaseRef();
 	}
 }
 

@@ -34,7 +34,7 @@ namespace Oak
 
 			void Render(float dt);
 			void ShRender(float dt);
-			void Render(Program* prg);
+			void Render(RenderTechnique* prg);
 
 			void GetLocatorTransform(const char* name, Math::Matrix& loc_transform);
 

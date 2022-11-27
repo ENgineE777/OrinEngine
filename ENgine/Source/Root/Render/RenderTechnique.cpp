@@ -3,28 +3,28 @@
 
 namespace Oak
 {
-	eastl::map<eastl::string, Math::Vector4> Program::vectors;
-	eastl::map<eastl::string, Math::Matrix> Program::matrixes;
-	eastl::map<eastl::string, Texture*> Program::textures;
+	eastl::map<eastl::string, Math::Vector4> RenderTechnique::vectors;
+	eastl::map<eastl::string, Math::Matrix> RenderTechnique::matrixes;
+	eastl::map<eastl::string, Texture*> RenderTechnique::textures;
 
-	void Program::SetVector(const char* param, Math::Vector4* v)
+	void RenderTechnique::SetVector(const char* param, Math::Vector4* v)
 	{
 		Math::Vector4& vec = vectors[param];
 		memcpy(&vec.x, &v->x, 4 * 4);
 	}
 
-	void Program::SetMatrix(const char* param, Math::Matrix* mat)
+	void RenderTechnique::SetMatrix(const char* param, Math::Matrix* mat)
 	{
 		Math::Matrix& mt = matrixes[param];
 		memcpy(&mt.m[0][0], &mat->m[0][0], 16 * 4);
 	}
 
-	void Program::SetTexture(const char* param, Texture* texture)
+	void RenderTechnique::SetTexture(const char* param, Texture* texture)
 	{
 		textures[param] = texture;
 	}
 
-	bool Program::Init()
+	bool RenderTechnique::Init()
 	{
 		if (GetVsName())
 		{
@@ -39,7 +39,7 @@ namespace Oak
 		return true;
 	}
 
-	void Program::SetVector(ShaderType shader_type, const char* param, Math::Vector4* v, int count)
+	void RenderTechnique::SetVector(ShaderType shader_type, const char* param, Math::Vector4* v, int count)
 	{
 		if (shader_type == ShaderType::Vertex)
 		{
@@ -52,7 +52,7 @@ namespace Oak
 		}
 	}
 
-	void Program::SetMatrix(ShaderType shader_type, const char* param, Math::Matrix* mat, int count)
+	void RenderTechnique::SetMatrix(ShaderType shader_type, const char* param, Math::Matrix* mat, int count)
 	{
 		if (shader_type == ShaderType::Vertex)
 		{
@@ -65,7 +65,7 @@ namespace Oak
 		}
 	}
 
-	void Program::SetTexture(ShaderType shader_type, const char* param, Texture* texture)
+	void RenderTechnique::SetTexture(ShaderType shader_type, const char* param, Texture* texture)
 	{
 		if (shader_type == ShaderType::Vertex)
 		{
@@ -78,12 +78,28 @@ namespace Oak
 		}
 	}
 
-	void Program::Release()
+	void RenderTechnique::ReloadShaders()
 	{
 		RELEASE(vshader)
 		RELEASE(pshader)
 
-		root.render.programs.erase(name);
+		if (GetVsName())
+		{
+			vshader = root.render.GetDevice()->CreateShader(ShaderType::Vertex, GetVsName());
+		}
+
+		if (GetPsName())
+		{
+			pshader = root.render.GetDevice()->CreateShader(ShaderType::Pixel, GetPsName());
+		}
+	}
+
+	void RenderTechnique::Release()
+	{
+		RELEASE(vshader)
+		RELEASE(pshader)
+
+		root.render.renderTechniques.erase(hash);
 
 		delete this;
 	}

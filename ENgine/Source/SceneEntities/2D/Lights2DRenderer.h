@@ -14,8 +14,8 @@ namespace Oak
 
 		META_DATA_DECL_BASE(Lights2DRenderer)
 
-		ProgramRef spriteLight;
-		ProgramRef lightMap2DProgram;
+		RenderTechniqueRef spriteLight;
+		RenderTechniqueRef lightMap2DProgram;
 		VertexDeclRef vdecl;
 		TextureRef lightMapRT;
 		DataBufferRef buffer;

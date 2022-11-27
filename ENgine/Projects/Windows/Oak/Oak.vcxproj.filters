@@ -190,7 +190,7 @@
     <ClCompile Include="..\..\..\Source\Root\TaskExecutor\TaskExecutor.cpp">
       <Filter>Source\Root\TaskExecutor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Root\Render\Program.cpp">
+    <ClCompile Include="..\..\..\Source\Root\Render\RenderTechnique.cpp">
       <Filter>Source\Root\Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Root\Render\Render.cpp">
@@ -221,9 +221,6 @@
       <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugLines.cpp">
-      <Filter>Source\Root\Render\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugPrograms.cpp">
       <Filter>Source\Root\Render\Debug</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Root\Render\Debug\DebugSpheres.cpp">
@@ -792,7 +789,7 @@
     <ClInclude Include="..\..\..\Source\Root\Render\Device.h">
       <Filter>Source\Root\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Render\Program.h">
+    <ClInclude Include="..\..\..\Source\Root\Render\RenderTechnique.h">
       <Filter>Source\Root\Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Render\Render.h">
@@ -834,7 +831,7 @@
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugLines.h">
       <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugPrograms.h">
+    <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugTechiques.h">
       <Filter>Source\Root\Render\Debug</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Render\Debug\DebugSpheres.h">

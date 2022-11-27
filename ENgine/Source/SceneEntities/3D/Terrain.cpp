@@ -254,12 +254,12 @@ namespace Oak
 		Render(MeshPrograms::GetShdTranglPrg());
 	}
 
-	void Terrain::Render(Program* prg)
+	void Terrain::Render(RenderTechnique* prg)
 	{
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, buffer);
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		root.render.SetTransform(TransformStage::World, Math::Matrix());
 

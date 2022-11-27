@@ -22,7 +22,7 @@ namespace Oak
 			Math::Vector2 uv;
 		};
 
-		ProgramRef skyBoxPrg;
+		RenderTechniqueRef skyBoxPrg;
 		DataBufferRef skyBoxVbuffer;
 		VertexDeclRef skyBoxVdecl;
 		DataBufferRef skyBoxIbuffer;

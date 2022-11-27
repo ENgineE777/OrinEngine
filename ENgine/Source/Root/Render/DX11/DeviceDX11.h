@@ -68,7 +68,7 @@ namespace Oak
 
 		DeviceDX11();
 		bool Init(void* external_device) override;
-		void PrepareProgram(Program* program) override;
+		void PrepareRenderTechnique(RenderTechnique* program) override;
 		void Release() override;
 
 		Shader* CreateShader(ShaderType type, const char* name) override;
@@ -88,7 +88,7 @@ namespace Oak
 		void Clear(bool renderTarget, Color color, bool zbuffer, float zValue) override;
 		void Present() override;
 
-		void SetProgram(Program* program) override;
+		virtual void SetRenderTechnique(RenderTechnique* renderTechnique) override;
 
 		VertexDeclRef CreateVertexDecl(int count, VertexDecl::ElemDesc* elems, const char* file, int line) override;
 		void SetVertexDecl(VertexDecl* vdecl) override;

@@ -7,7 +7,7 @@ namespace Oak
 	{
 	public:
 
-		class QuadProgramDepth : public Program
+		class QuadProgramDepth : public RenderTechnique
 		{
 		public:
 			virtual const char* GetVsName() { return "screen_vs.shd"; };
@@ -30,14 +30,14 @@ namespace Oak
 			};
 		};
 
-		class TriangleProgram : public Program
+		class TriangleProgram : public RenderTechnique
 		{
 		public:
 			virtual const char* GetVsName() { return "triangle_vs.shd"; };
 			virtual const char* GetPsName() { return "triangle_ps.shd"; };
 		};
 
-		class ShTriangleProgram : public Program
+		class ShTriangleProgram : public RenderTechnique
 		{
 		public:
 			virtual const char* GetVsName() { return "sh_triangle_vs.shd"; };
@@ -50,7 +50,7 @@ namespace Oak
 			};
 		};
 
-		class ColorProgram : public Program
+		class ColorProgram : public RenderTechnique
 		{
 		public:
 			virtual const char* GetVsName() { return "correction_vs.shd"; };
@@ -62,7 +62,7 @@ namespace Oak
 			};
 		};
 
-		class BlurProgram : public Program
+		class BlurProgram : public RenderTechnique
 		{
 		public:
 			virtual const char* GetVsName() { return "blur_vs.shd"; };
@@ -74,7 +74,7 @@ namespace Oak
 			};
 		};
 
-		class CombineProgram : public Program
+		class CombineProgram : public RenderTechnique
 		{
 		public:
 			virtual const char* GetVsName() { return "combine_vs.shd"; };
@@ -86,7 +86,7 @@ namespace Oak
 			};
 		};
 
-		static CLASS_DECLSPEC Program* GetTranglPrg();
-		static CLASS_DECLSPEC Program* GetShdTranglPrg();
+		static CLASS_DECLSPEC RenderTechniqueRef GetTranglPrg();
+		static CLASS_DECLSPEC RenderTechniqueRef GetShdTranglPrg();
 	};
 }

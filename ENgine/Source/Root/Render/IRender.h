@@ -2,7 +2,7 @@
 #pragma once
 
 #include "Root/Render/Device.h"
-#include "Root/Render/Program.h"
+#include "Root/Render/RenderTechnique.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 #include <eastl/vector.h>
 #include <eastl/map.h>
@@ -71,17 +71,6 @@ namespace Oak
 		\param[out] mat Trnasform itself
 		*/
 		virtual void GetTransform(TransformStage trans, Math::Matrix& mat) = 0;
-
-		/**
-		\brief Get pointer to a program by name
-
-		\param[in] name Name of a program
-		\param[in] file Name of a file from which ctreation was requested
-		\param[in] line Number of a line from which ctreation was requested
-
-		\return Pointer to a program
-		*/
-		virtual ProgramRef GetProgram(const char* name, const char* file, int line) = 0;
 
 		/**
 		\brief Load texture

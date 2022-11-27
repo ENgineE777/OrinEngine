@@ -30,7 +30,7 @@
 
 namespace SPK
 {
-	class ParticleProgram : public Oak::Program
+	class ParticleProgram : public Oak::RenderTechnique
 	{
 	public:
 		const char* GetVsName() override { return "particle_vs.shd"; };
@@ -59,7 +59,7 @@ namespace SPK
 
 	public :
 
-		Oak::ProgramRef prg;
+		Oak::RenderTechniqueRef prg;
 		Oak::VertexDeclRef vdecl;
 		Oak::TextureRef texture;
 

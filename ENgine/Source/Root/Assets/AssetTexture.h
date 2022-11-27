@@ -89,7 +89,7 @@ namespace Oak
 
 		int sliceIndex = -1;
 		int animIndex = -1;
-		ProgramRef prg = Sprite::quadPrg;
+		RenderTechniqueRef prg = Sprite::quadPrg;
 
 		AssetTextureRef& operator=(const AssetTextureRef& ref)
 		{

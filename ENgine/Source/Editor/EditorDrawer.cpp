@@ -6,7 +6,7 @@ namespace Oak
 {
 	EditorDrawer editorDrawer;
 
-	class TriangleSimplest : public Program
+	class TriangleSimplest : public RenderTechnique
 	{
 	public:
 		virtual const char* GetVsName() { return "triangle_simplest_vs.shd"; };
@@ -19,9 +19,6 @@ namespace Oak
 			root.render.GetDevice()->SetDepthWriting(false);
 		};
 	};
-
-	CLASSREGEX(Program, TriangleSimplest, TriangleSimplest, "TriangleSimplest")
-	CLASSREGEX_END(Program, TriangleSimplest)
 
 	void EditorDrawer::Init()
 	{
@@ -87,7 +84,7 @@ namespace Oak
 
 		skyBoxIbuffer->Unlock();
 
-		skyBoxPrg = root.render.GetProgram("TriangleSimplest", _FL_);
+		skyBoxPrg = root.render.GetRenderTechnique<TriangleSimplest>(_FL_);
 
 		skyBoxTexture = root.render.LoadTexture("ENgine/Editor/skybox.jpg", _FL_);
 		skyBoxTexture->SetAdress(TextureAddress::Clamp);
@@ -211,7 +208,7 @@ namespace Oak
 
 	void EditorDrawer::DrawSkyBox()
 	{
-		root.render.GetDevice()->SetProgram(skyBoxPrg);
+		root.render.GetDevice()->SetRenderTechnique(skyBoxPrg);
 
 		root.render.GetDevice()->SetVertexDecl(skyBoxVdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, skyBoxVbuffer);

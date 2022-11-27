@@ -100,27 +100,6 @@ namespace Oak
 		needCalcTrans = false;
 	}
 
-	ProgramRef Render::GetProgram(const char* name, const char* file, int line)
-	{
-		Program* program = nullptr;
-
-		if (programs.count(name) > 0)
-		{
-			program = programs[name];
-		}
-		else
-		{
-			program = ClassFactoryProgram::Create(name, file, line);
-			program->Init();
-			program->name = name;
-			device->PrepareProgram(program);
-
-			programs[name] = program;
-		}
-
-		return ProgramRef(program, file, line);
-	}
-
 	TextureRef Render::LoadTexture(const char* name, const char* file, int line)
 	{
 		Texture* texture = nullptr; 

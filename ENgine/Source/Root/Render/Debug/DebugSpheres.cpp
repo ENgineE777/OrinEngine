@@ -1,5 +1,5 @@
 #include "DebugSpheres.h"
-#include "DebugPrograms.h"
+#include "DebugTechiques.h"
 
 namespace Oak
 {
@@ -66,7 +66,7 @@ namespace Oak
 
 		ibuffer->Unlock();
 
-		prg = root.render.GetProgram("DbgTriangle", _FL_);
+		prg = root.render.GetRenderTechnique<DebugTechiques::Triangle>(_FL_);
 
 		debugTaskPool->AddTask(199, this, (Object::Delegate)&DebugSpheres::Draw);
 	}
@@ -88,7 +88,7 @@ namespace Oak
 			return;
 		}
 
-		root.render.GetDevice()->SetProgram(prg);
+		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		root.render.GetDevice()->SetVertexDecl(vdecl);
 		root.render.GetDevice()->SetVertexBuffer(0, vbuffer);

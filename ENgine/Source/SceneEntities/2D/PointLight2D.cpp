@@ -4,24 +4,24 @@
 
 namespace Oak
 {
-	class PointLight2DProgram : public Program
+	const char* PointLight2DProgram::GetVsName()
 	{
-	public:
-		virtual const char* GetVsName() { return "sprite_vs.shd"; };
-		virtual const char* GetPsName() { return "sprite_light_ps.shd"; };
-
-		virtual void ApplyStates()
-		{
-			root.render.GetDevice()->SetDepthTest(false);
-			root.render.GetDevice()->SetDepthWriting(false);
-			//root.render.GetDevice()->SetBlendFunc(BlendArg::ArgOne, BlendArg::ArgOne);
-			root.render.GetDevice()->SetAlphaBlend(true);
-			root.render.GetDevice()->SetCulling(CullMode::CullNone);
-		};
+		return "sprite_vs.shd";
 	};
 
-	CLASSREGEX(Program, PointLight2DProgram, PointLight2DProgram, "PointLight2DProgram")
-	CLASSREGEX_END(Program, PointLight2DProgram)
+	const char* PointLight2DProgram::GetPsName()
+	{
+		return "sprite_light_ps.shd";
+	};
+
+	void PointLight2DProgram::ApplyStates()
+	{
+		root.render.GetDevice()->SetDepthTest(false);
+		root.render.GetDevice()->SetDepthWriting(false);
+		//root.render.GetDevice()->SetBlendFunc(BlendArg::ArgOne, BlendArg::ArgOne);
+		root.render.GetDevice()->SetAlphaBlend(true);
+		root.render.GetDevice()->SetCulling(CullMode::CullNone);
+	}
 
 	ENTITYREG(SceneEntity, PointLight2D, "2D/Lights", "PointLight2D")
 
@@ -40,7 +40,7 @@ namespace Oak
 		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectSizeX;
 
-		spriteLight = root.render.GetProgram("PointLight2DProgram", _FL_);
+		spriteLight = root.render.GetRenderTechnique<PointLight2DProgram>(_FL_);
 
 		Tasks(true)->AddTask(555, this, (Object::Delegate) & PointLight2D::Draw);
 	}

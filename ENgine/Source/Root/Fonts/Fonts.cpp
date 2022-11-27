@@ -3,7 +3,7 @@
 
 namespace Oak
 {
-	class FontProgram : public Program
+	class FontProgram : public RenderTechnique
 	{
 	public:
 		virtual const char* GetVsName() { return "font_vs.shd"; };
@@ -17,12 +17,9 @@ namespace Oak
 		}
 	};
 
-	CLASSREGEX(Program, FontProgram, FontProgram, "FontProgram")
-	CLASSREGEX_END(Program, FontProgram)
-
 	bool Fonts::Init()
 	{
-		fntProg = root.render.GetProgram("FontProgram", _FL_);
+		fntProg = root.render.GetRenderTechnique<FontProgram>(_FL_);
 
 		vbuffer = root.render.GetDevice()->CreateBuffer(6 * 1000, sizeof(Fonts::FontVertex), _FL_);
 
