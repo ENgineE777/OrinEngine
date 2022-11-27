@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include "IRender.h"
 #include "Root/Render/Device.h"
 #include "Root/Render/RenderTechnique.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
@@ -11,6 +10,41 @@
 
 namespace Oak
 {
+	/**
+	\ingroup gr_code_root_render
+	*/
+
+	enum class CLASS_DECLSPEC ScreenCorner
+	{
+		LeftTop,
+		RightTop,
+		LeftBottom,
+		RightBottom
+	};
+
+	/**
+	\ingroup gr_code_root_render
+	*/
+
+	enum class CLASS_DECLSPEC TransformStage
+	{
+		World = 0 /*!< World trasformation */,
+		View /*!< View trasformation */,
+		Projection /*!< Projection trasformation */,
+		WrldViewProj /*!< Final transformation */
+	};
+
+	/**
+	\ingroup gr_code_root_render
+	*/
+
+	/**
+	\brief Render
+
+	This is main class of render system.
+
+	*/
+
 	class CLASS_DECLSPEC Render
 	{
 		friend class Root;
