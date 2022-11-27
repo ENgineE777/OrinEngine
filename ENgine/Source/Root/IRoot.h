@@ -2,16 +2,16 @@
 #pragma once
 
 #include "Root/Assets/Assets.h"
-#include "Root/Controls/IControls.h"
+#include "Root/Controls/Controls.h"
 //#include "Root/Files/Files.h"
 //#include "Root/Fonts/Fonts.h"
 //#include "Root/Memory/MemoryManager.h"
-#include "Root/Meshes/IMeshes.h"
+#include "Root/Meshes/Meshes.h"
 //#include "Root/Particles/Particles.h"
-#include "Root/Render/IRender.h"
+#include "Root/Render/Render.h"
 #include "Root/Physics/PhysScene.h"
 //#include "Root/Physics/Physics.h"
-#include "Root/Scenes/ISceneManager.h"
+#include "Root/Scenes/SceneManager.h"
 //#include "Root/Scripts/Scripts.h"
 #include "Root/Sounds/Sounds.h"
 //#include "Root/TaskExecutor/TaskExecutor.h"
@@ -43,17 +43,17 @@ namespace Oak
 		/**
 			\brief Access to controls service
 		*/
-		virtual IControls* GetControls() = 0;
+		virtual Controls* GetControls() = 0;
 
 		/**
 		\brief Access to meshes service
 		*/
-		virtual IMeshes* GetMeshes() = 0;
+		virtual Meshes* GetMeshes() = 0;
 
 		/**
 			\brief Access to render service
 		*/		
-		virtual IRender* GetRender() = 0;
+		virtual Render* GetRender() = 0;
 
 		/**
 			\brief Get instance of physic scene 
@@ -63,7 +63,7 @@ namespace Oak
 		/**
 			\brief Get instance of physic scene
 		*/
-		virtual ISceneManager* GetSceneManager() = 0;
+		virtual SceneManager* GetSceneManager() = 0;
 
 		/**
 			\brief Get instance of sound manager

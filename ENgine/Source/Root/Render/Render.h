@@ -11,7 +11,7 @@
 
 namespace Oak
 {
-	class Render : public IRender
+	class CLASS_DECLSPEC Render
 	{
 		friend class Root;
 		friend class RenderTechnique;
@@ -50,11 +50,11 @@ namespace Oak
 
 	public:
 
-		Device* GetDevice() override;
+		Device* GetDevice();
 
-		void SetTransform(TransformStage trans, Math::Matrix mat) override;
+		void SetTransform(TransformStage trans, Math::Matrix mat);
 
-		void GetTransform(TransformStage trans, Math::Matrix& mat) override;
+		void GetTransform(TransformStage trans, Math::Matrix& mat);
 
 		template<class T>
 		RenderTechniqueRef GetRenderTechnique(const char* file, int line)
@@ -77,41 +77,41 @@ namespace Oak
 			return RenderTechniqueRef(iter->second, _FL_);
 		}
 
-		TextureRef LoadTexture(const char* name, const char* file, int line) override;
+		TextureRef LoadTexture(const char* name, const char* file, int line);
 
-		void LoadTexture(TextureRef& texture, const char* name) override;
+		void LoadTexture(TextureRef& texture, const char* name);
 
-		TaskExecutor::SingleTaskPool* AddTaskPool(const char* file, int line) override;
+		TaskExecutor::SingleTaskPool* AddTaskPool(const char* file, int line);
 
-		void DelTaskPool(TaskExecutor::SingleTaskPool* pool) override;
+		void DelTaskPool(TaskExecutor::SingleTaskPool* pool);
 
-		void AddExecutedLevelPool(int level) override;
+		void AddExecutedLevelPool(int level);
 
-		void ExecutePool(int level, float dt) override;
+		void ExecutePool(int level, float dt);
 
-		void DebugLine(Math::Vector3 from, Color from_clr, Math::Vector3 to, Color to_clr, bool use_depth = true) override;
+		void DebugLine(Math::Vector3 from, Color from_clr, Math::Vector3 to, Color to_clr, bool use_depth = true);
 
-		void DebugLine2D(Math::Vector2 from, Color from_clr, Math::Vector2 to, Color to_clr) override;
+		void DebugLine2D(Math::Vector2 from, Color from_clr, Math::Vector2 to, Color to_clr);
 
-		void DebugRect2D(Math::Vector2 from, Math::Vector2 to, Color color) override;
+		void DebugRect2D(Math::Vector2 from, Math::Vector2 to, Color color);
 
-		void DebugSphere(Math::Vector3 pos, Color color, float radius, bool full_shade = true) override;
+		void DebugSphere(Math::Vector3 pos, Color color, float radius, bool full_shade = true);
 
-		void DebugBox(Math::Matrix transform, Color color, Math::Vector3 scale) override;
+		void DebugBox(Math::Matrix transform, Color color, Math::Vector3 scale);
 
-		void DebugTriangle(Math::Vector3 p1, Math::Vector3 p2, Math::Vector3 p3, Color color) override;
+		void DebugTriangle(Math::Vector3 p1, Math::Vector3 p2, Math::Vector3 p3, Color color);
 
-		void DebugTriangle2D(Math::Vector2 p1, Math::Vector2 p2, Math::Vector2 p3, Color color) override;
+		void DebugTriangle2D(Math::Vector2 p1, Math::Vector2 p2, Math::Vector2 p3, Color color);
 
-		void DebugPrintText(Math::Vector2 pos, ScreenCorner corner, Color color, const char* text, ...) override;
+		void DebugPrintText(Math::Vector2 pos, ScreenCorner corner, Color color, const char* text, ...);
 
-		void DebugPrintText(Math::Vector3 pos, float dist, Color color, const char* text, ...) override;
+		void DebugPrintText(Math::Vector3 pos, float dist, Color color, const char* text, ...);
 
-		void DebugSprite(Texture* texture, Math::Vector2 pos, Math::Vector2 size, Color color = COLOR_WHITE, Math::Vector2 offset = 0.0f, float angle = 0.0f) override;
+		void DebugSprite(Texture* texture, Math::Vector2 pos, Math::Vector2 size, Color color = COLOR_WHITE, Math::Vector2 offset = 0.0f, float angle = 0.0f);
 
-		TextureRef GetWhiteTexture() override;
+		TextureRef GetWhiteTexture();
 
-		Math::Vector3 TransformToScreen(Math::Vector3 pos, int type) override;
+		Math::Vector3 TransformToScreen(Math::Vector3 pos, int type);
 
 	protected:
 

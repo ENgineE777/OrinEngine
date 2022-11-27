@@ -70,7 +70,7 @@ namespace Oak
 
 		Controls controls;
 
-		IControls* GetControls() override { return &controls; };
+		Controls* GetControls() override { return &controls; };
 
 		/**
 		\brief Access to files service
@@ -92,14 +92,14 @@ namespace Oak
 		*/
 		Meshes meshes;
 
-		IMeshes* GetMeshes() override { return &meshes; };
+		Meshes* GetMeshes() override { return &meshes; };
 
 		/**
 		\brief Access to render service
 		*/
 		Render render;
 
-		IRender* GetRender() override { return &render; };
+		Render* GetRender() override { return &render; };
 
 		/**
 		\brief Access to particles service
@@ -115,7 +115,7 @@ namespace Oak
 		*/
 		SceneManager scenes;
 
-		ISceneManager* GetSceneManager() override { return &scenes; };
+		SceneManager* GetSceneManager() override { return &scenes; };
 
 		/**
 			\brief Access to scipts manager

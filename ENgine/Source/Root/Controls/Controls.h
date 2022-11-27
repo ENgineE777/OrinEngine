@@ -6,8 +6,6 @@
 #include <EASTL/vector.h>
 #include <EASTL/map.h>
 
-#include "IControls.h"
-
 #ifdef PLATFORM_WIN
 
 #define DIRECTINPUT_VERSION 0x0800
@@ -18,7 +16,52 @@
 
 namespace Oak
 {
-	class Controls : public IControls
+	enum class CLASS_DECLSPEC AliasAction
+	{
+		Pressed /*!< Hardware button in pressed state */,
+		JustPressed /*!< Harwdware button was just pressed */
+	};
+
+	/**
+	\ingroup gr_code_root_controls
+	*/
+
+	/**
+	\brief Controls
+
+	This service class allows to read user input. System based on work with alliases. That means
+	no hardcoded keys. User will works with alliases that can be accosiated with harwdare keys. This
+	aproach allow to elimanate harcoded names of a hardware keys.
+	Alises store in JSON file and can be loaded via call of Controls::Load.
+	For debug porposes there are methods DebugKeyPressed and DebugHotKeyPressed for direct for with
+	names of hardware keys.
+	Servics also allows to work with differen inpunt devices like keybord, mouse and gamepad.
+	All list of supported hardware kes can be found in files settings/controls/hardware_win and
+	settings/controls/hardware_mobile.
+
+	Sample of declaration of alias
+
+	\code
+	"name" : "Character.MOVE_VERT", // name of alias, index of alias shoudl be obtained via call Controls::GetAlias
+	"AliasesRef" : [
+		{ "names" : ["KEY_W"], "modifier" : 1.0 }, //assoiate key 'W' with alias
+		{ "names" : ["KEY_S"], "modifier" : -1.0 }, //assoiate key 'S' with alias, multiplier -1.0f should aplyed to returned value via call Controls::GetAliasValue
+		{ "names" : ["JOY_LEFT_STICK_V"] }  //assoiate vertical movement of left stick of gamepad
+	]
+	\endcode
+
+	Sample of declaration of alias which uses combination of keys.
+
+	\code
+	"name" : "Character.GRAB", // name of alias, index of alias shoudl be obtained via call Controls::GetAlias
+	"AliasesRef" : [
+		{ "names" : ["KEY_W", "KEY_F"], //assoiate combination of keys 'W' and 'F' with alias
+	]
+	\endcode
+
+	*/
+
+	class CLASS_DECLSPEC Controls
 	{
 	private:
 
@@ -153,14 +196,14 @@ namespace Oak
 		bool  Init(const char* haliases, bool allowDebugKeys);
 		#endif
 
-		bool LoadAliases(const char* aliases) override ;
-		int GetAlias(const char* name) override;
-		bool  GetAliasState(int alias, AliasAction action = AliasAction::JustPressed) override;
-		float GetAliasValue(int alias, bool delta) override;
-		const char* GetActivatedKey(int& device_index) override;
-		bool  DebugKeyPressed(const char* name, AliasAction action = AliasAction::JustPressed, bool ignore_focus = false) override;
-		bool  DebugHotKeyPressed(const char* name, const char* name2, const char* name3 = nullptr) override;
-		float DebugKeyValue(const char* name, bool delta, bool ignoreFocus) override;
+		bool LoadAliases(const char* aliases);
+		int GetAlias(const char* name);
+		bool  GetAliasState(int alias, AliasAction action = AliasAction::JustPressed);
+		float GetAliasValue(int alias, bool delta);
+		const char* GetActivatedKey(int& device_index);
+		bool  DebugKeyPressed(const char* name, AliasAction action = AliasAction::JustPressed, bool ignore_focus = false);
+		bool  DebugHotKeyPressed(const char* name, const char* name2, const char* name3 = nullptr);
+		float DebugKeyValue(const char* name, bool delta, bool ignoreFocus);
 		bool IsGamepadConnected();
 
 		#ifndef DOXYGEN_SKIP

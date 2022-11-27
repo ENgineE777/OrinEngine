@@ -179,7 +179,6 @@
     <ClInclude Include="..\..\..\Source\Root\Assets\AssetTexture.h" />
     <ClInclude Include="..\..\..\Source\Root\Assets\AssetTileSet.h" />
     <ClInclude Include="..\..\..\Source\Root\Controls\Controls.h" />
-    <ClInclude Include="..\..\..\Source\Root\Controls\IControls.h" />
     <ClInclude Include="..\..\..\Source\Root\Files\File.h" />
     <ClInclude Include="..\..\..\Source\Root\Files\FileInMemory.h" />
     <ClInclude Include="..\..\..\Source\Root\Files\Files.h" />
@@ -190,7 +189,6 @@
     <ClInclude Include="..\..\..\Source\Root\Fonts\Fonts.h" />
     <ClInclude Include="..\..\..\Source\Root\IRoot.h" />
     <ClInclude Include="..\..\..\Source\Root\Memory\MemoryManager.h" />
-    <ClInclude Include="..\..\..\Source\Root\Meshes\IMeshes.h" />
     <ClInclude Include="..\..\..\Source\Root\Meshes\Meshes.h" />
     <ClInclude Include="..\..\..\Source\Root\Meshes\MeshPrograms.h" />
     <ClInclude Include="..\..\..\Source\Root\Meshes\MeshRes.h" />
@@ -221,14 +219,12 @@
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\ShaderDX11.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\TextureDX11.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.h" />
-    <ClInclude Include="..\..\..\Source\Root\Render\IRender.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\RenderTechnique.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Render.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Shader.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Texture.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\VertexDecl.h" />
     <ClInclude Include="..\..\..\Source\Root\Root.h" />
-    <ClInclude Include="..\..\..\Source\Root\Scenes\ISceneManager.h" />
     <ClInclude Include="..\..\..\Source\Root\Scenes\Scene.h" />
     <ClInclude Include="..\..\..\Source\Root\Scenes\SceneEntity.h" />
     <ClInclude Include="..\..\..\Source\Root\Scenes\SceneManager.h" />

@@ -1266,9 +1266,6 @@
     <ClInclude Include="..\..\..\Source\Root\IRoot.h">
       <Filter>Source\Root</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Controls\IControls.h">
-      <Filter>Source\Root\Controls</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Editor\IEditor.h">
       <Filter>Source\Editor</Filter>
     </ClInclude>
@@ -1277,12 +1274,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.h">
       <Filter>Source\SceneEntities\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Render\IRender.h">
-      <Filter>Source\Root\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Meshes\IMeshes.h">
-      <Filter>Source\Root\Meshes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Platform\Common\Runner.h">
       <Filter>Source\Platform\Common</Filter>
@@ -1358,9 +1349,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.h">
       <Filter>Source\SceneEntities\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Scenes\ISceneManager.h">
-      <Filter>Source\Root\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.h">
       <Filter>Source\SceneEntities\3D</Filter>
