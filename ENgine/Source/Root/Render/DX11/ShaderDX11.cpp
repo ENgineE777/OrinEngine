@@ -15,8 +15,12 @@ namespace Oak
 		StringUtils::Printf(path, 1024, "ENgine/Shaders/PC/%s", name);
 		if (!buffer.Load(path))
 		{
-			return;
+			if (!buffer.Load(name))
+			{
+				return;
+			}
 		}
+		
 
 		if (tp == ShaderType::Vertex)
 		{
