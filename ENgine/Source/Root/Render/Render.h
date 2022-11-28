@@ -117,7 +117,7 @@ namespace Oak
 
 				renderTechniques[hash] = holder;
 
-				return RenderTechniqueRef(renderTechnique, _FL_);
+				return RenderTechniqueRef(renderTechnique, file, line);
 			}
 
 			RenderTechniqueHolder& holder = iter->second;
@@ -136,7 +136,7 @@ namespace Oak
 				holder.dirty = false;
 			}
 
-			return RenderTechniqueRef(holder.renderTechnique, _FL_);
+			return RenderTechniqueRef(holder.renderTechnique, file, line);
 		}
 
 		void InvalidateNonEngineTechiques();
