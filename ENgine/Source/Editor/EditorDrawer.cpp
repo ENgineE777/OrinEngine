@@ -135,6 +135,7 @@ namespace Oak
 		Math::Matrix mat;
 		mat.RotateZ(-rotate);
 		mat.Pos() = Math::Vector3(pos.x, pos.y, 0.01f);
+		mat.Pos() *= Sprite::ToUnits(1.0f);
 
 		Sprite::Draw(tex, color, mat, offset, size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
 	}
@@ -175,6 +176,7 @@ namespace Oak
 		Math::Matrix mat;
 		mat.RotateZ(-atan2f(dir.y / size.x, dir.x / size.x));
 		mat.Pos() = Math::Vector3(from.x, from.y, 0.01f);
+		mat.Pos() *= Sprite::ToUnits(1.0f);
 
 		Sprite::Draw(nullptr, color, mat, 0.0f, size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
 	}

@@ -1037,11 +1037,8 @@ namespace Oak
 
 		Color color = COLOR_WHITE;
 
-		Math::Matrix spriteTrans;
-		spriteTrans.Pos().y = texture->size.y;
-
-		Sprite::Draw(nullptr, COLOR_GRAY_A(0.65f), spriteTrans, 0.0f, texture->size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
-		Sprite::Draw(texture->texture, COLOR_WHITE, spriteTrans, 0.0f, texture->size, 0.0f, 1.0f, Sprite::quadPrgNoZ);
+		editorDrawer.DrawSprite(nullptr, Math::Vector2(0.0f, texture->size.y), texture->size, 0.0f, 0.0f, COLOR_GRAY_A(0.65f));
+		editorDrawer.DrawSprite(texture->texture, Math::Vector2(0.0f, texture->size.y), texture->size, 0.0f, 0.0f, COLOR_WHITE);
 
 		for (int i = 0; i < texture->slices.size(); i++)
 		{
