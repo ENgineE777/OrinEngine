@@ -840,11 +840,6 @@ namespace Oak
 			{
 				GotoNode(curNode->links[curNode->defLink].index, true);
 			}
-			else
-			if (curNode->links.size() > 0)
-			{
-				GotoNode(curNode->links[0].index, true);
-			}
 		}
 	}
 
