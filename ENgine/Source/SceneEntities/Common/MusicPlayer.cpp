@@ -9,6 +9,7 @@ namespace Oak
 		BASE_SCENE_ENTITY_PROP(MusicPlayer)
 		FILENAME_PROP(MusicPlayer, soundName, "", "Property", "SoundName")
 		BOOL_PROP(MusicPlayer, faded, false, "Property", "Faded", " Is music faded")
+		FLOAT_PROP(MusicPlayer, volume, 1.0f, "Property", "volume", " Volume of music")
 	META_DATA_DESC_END()
 
 	void MusicPlayer::Init()
@@ -33,6 +34,7 @@ namespace Oak
 		if (IsVisible() && !faded)
 		{
 			stream->Play(PlaySoundType::Looped);
+			stream->SetVolume(volume);
 		}
 
 	}
@@ -53,6 +55,7 @@ namespace Oak
 		else
 		{
 			stream->Pause(false);
+			stream->SetVolume(volume);
 		}
 	}
 
@@ -90,7 +93,7 @@ namespace Oak
 				}
 				else
 				{
-					stream->SetVolume(1.0f);
+					stream->SetVolume(volume);
 				}
 
 				fadeMode = 0;
@@ -104,7 +107,7 @@ namespace Oak
 					k = 1.0f - k;
 				}
 
-				stream->SetVolume(k);
+				stream->SetVolume(k * volume);
 			}
 		}
 	}

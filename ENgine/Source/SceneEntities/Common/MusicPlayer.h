@@ -59,6 +59,8 @@ namespace Oak
 		*/
 		bool faded = false;
 
+		float volume = 1.0f;
+
 		int fadeMode = 0;
 		float fadeTime = 0.0f;
 		float curFadeTime = 0.0f;
