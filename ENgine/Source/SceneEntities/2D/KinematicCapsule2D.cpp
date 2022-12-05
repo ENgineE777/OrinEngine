@@ -67,7 +67,6 @@ namespace Oak
 		desc.stepOffset = Sprite::ToUnits(stepOffset);
 
 		controller = GetRoot()->GetPhysScene()->CreateController(desc, physGroup);
-		controller->RestrictZAxis();
 		controller->SetActive(IsVisible());
 
 		bodyData.object = this;
@@ -78,9 +77,19 @@ namespace Oak
 
 	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t group)
 	{
+		auto prevPos = controller->GetPosition();
+
 		controller->Move(Sprite::ToUnits(Math::Vector3(dir)) * root.GetDeltaTime(), group == 0 ? physGroup : group);
 
-		const Math::Vector3 pos = Sprite::ToPixels(controller->GetPosition());
+		Math::Vector3 pos = controller->GetPosition();
+
+		if (fabs(prevPos.z - pos.z) > 0.001f)
+		{
+			pos.z = prevPos.z;
+			controller->SetPosition(pos);
+		}
+
+		pos *= Sprite::ToPixels(1.0f);
 
 		if (affectOnParent && parent)
 		{
@@ -89,7 +98,7 @@ namespace Oak
 		else
 		{
 			Math::Matrix trans = transform.GetGlobal();
-			trans.Pos() = pos;
+			trans.Pos() = Sprite::ToUnits(pos);
 
 			transform.SetGlobal(trans);
 		}

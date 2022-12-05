@@ -216,11 +216,6 @@ namespace Oak
 		Math::Vector3 GetPosition();
 
 		/**
-		\brief Restrict axis for making object as 2D
-		*/
-		void RestrictZAxis();
-
-		/**
 		\brief PhysController should released only via this mehod
 		*/
 		void Release() override;

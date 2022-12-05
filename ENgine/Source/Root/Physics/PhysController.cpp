@@ -387,22 +387,6 @@ namespace Oak
 		return Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
 	}
 
-	void PhysController::RestrictZAxis()
-	{
-		if (scene->inPhysUpdate)
-		{
-			root.Log("Physics", "Can't call RestrictZAxis for controller during phys update");
-			return;
-		}
-
-		auto actor = controller->getActor();
-
-		if (actor)
-		{
-			actor->setRigidDynamicLockFlags(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y);
-		}
-	}
-
 	void PhysController::Release()
 	{
 		SetUserData(nullptr);
