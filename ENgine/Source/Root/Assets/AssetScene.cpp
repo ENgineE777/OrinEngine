@@ -580,18 +580,18 @@ namespace Oak
 
 				if (entity->GetChilds().size() > 0)
 				{
-					bool onlyePrefabChild = true;
+					bool onlyPrefabChild = true;
 
 					for (auto* child : entity->GetChilds())
 					{
 						if (!child->prefabInstance)
 						{
-							onlyePrefabChild = false;
+							onlyPrefabChild = false;
 							break;
 						}
 					}
 					
-					if (!onlyePrefabChild)
+					if (!onlyPrefabChild || !entity->prefabInstance)
 					{
 						nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow;
 					}
