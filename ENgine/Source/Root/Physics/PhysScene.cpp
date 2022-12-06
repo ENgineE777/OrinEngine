@@ -231,7 +231,7 @@ namespace Oak
 		return false;
 	}
 
-	bool PhysScene::OverlapWithSphere(Math::Vector3 pos, float radius, eastl::vector<BodyUserData*>& bodies)
+	bool PhysScene::OverlapWithSphere(Math::Vector3 pos, float radius, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies)
 	{
 		if (inPhysUpdate)
 		{
@@ -246,7 +246,7 @@ namespace Oak
 		PxTransform pose = PxTransform(PxVec3(pos.x, pos.y, pos.z));
 
 		PxQueryFilterData filterData = PxQueryFilterData();
-		filterData.data.word0 = 1;
+		filterData.data.word0 = physGroup;
 
 		if (scene->overlap(sphere, pose, hit, filterData))
 		{
@@ -330,7 +330,7 @@ namespace Oak
 		}
 	}
 
-	bool PhysScene::RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize)
+	bool PhysScene::RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize, uint32_t physGroup)
 	{
 		PxRaycastHit hit;
 		if (PxGeometryQuery::raycast(PxVec3{desc.origin.x, desc.origin.y, desc.origin.z},
@@ -339,12 +339,50 @@ namespace Oak
 									 PxTransform(PxVec3{boxOrigin.x, boxOrigin.y, boxOrigin.z}),
 									 desc.length,
 									 PxHitFlags(PxHitFlag::eDEFAULT),
-									 1,
+									 physGroup,
 									 &hit))
 		{
 			desc.hitPos    = Math::Vector3{hit.position.x, hit.position.x, hit.position.z};
 			desc.hitNormal = Math::Vector3{hit.normal.x, hit.normal.x, hit.normal.z};
 			desc.hitLength = hit.distance;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	bool PhysScene::OverlapWithBox(Math::Matrix trans, Math::Vector3 size, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies)
+	{
+		if (inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call OverlapWithSphere for scene during phys update");
+			return false;
+		}
+
+		PxOverlapHit aTouches[128];
+
+		PxOverlapBuffer hit(aTouches, 128);
+
+		PxVec3 dimensions(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+
+		PxBoxGeometry geometry(dimensions);
+
+		Math::Quaternion q(trans);
+
+		PxTransform transform(PxVec3(trans.Pos().x, trans.Pos().y, trans.Pos().z), PxQuat(q.x, q.y, q.z, q.w));
+
+		PxQueryFilterData filterData = PxQueryFilterData();
+		filterData.data.word0 = physGroup;
+
+		if (scene->overlap(geometry, transform, hit, filterData))
+		{
+			bodies.resize(hit.getNbTouches());
+
+			for (int i = 0; i < (int)hit.getNbTouches(); i++)
+			{
+				bodies[i] = (BodyUserData*)(aTouches[i].actor->userData);
+			}
 
 			return true;
 		}
