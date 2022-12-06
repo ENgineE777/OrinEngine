@@ -137,7 +137,7 @@ namespace Oak
 
 		bool ownGrid = false;
 		Math::Vector3 gridOrigin = 0.0f;
-		Math::Vector2 gridStep = 0.0f;
+		Math::Vector3 gridStep = 0.0f;
 
 		const char* OpenFileDialog(const char* extName, const char* ext, bool open);
 

@@ -1815,27 +1815,72 @@ namespace Oak
 
 			if (freeCamera.mode2D)
 			{
-				PushButton("Snap", gizmo.useAlignRect, [this]() { gizmo.useAlignRect = !gizmo.useAlignRect; });
+				PushButton("Snap", gizmo.useAlignGrid, [this]() { gizmo.useAlignGrid = !gizmo.useAlignGrid; });
 
-				ImGui::Text("SnapX");
+				ImGui::Text("X");
 				ImGui::SameLine();
 
-				ImGui::SetNextItemWidth(100.0f);
-				int value = (int)gizmo.alignRect.x;
+				ImGui::SetNextItemWidth(80.0f);
+				int value = (int)gizmo.alignGrid.x;
 				ImGui::InputInt("##SnapXID", &value);
 				if (value < 2) value = 2;
-				gizmo.alignRect.x = (float)value;
+				gizmo.alignGrid.x = (float)value;
 				ImGui::SameLine();
 
-				ImGui::Text("SnapY");
+				ImGui::Text("Y");
 				ImGui::SameLine();
 
-				ImGui::SetNextItemWidth(100.0f);
-				value = (int)gizmo.alignRect.y;
+				ImGui::SetNextItemWidth(80.0f);
+				value = (int)gizmo.alignGrid.y;
 				ImGui::InputInt("##SnapYID", &value, ImGuiInputTextFlags_CharsDecimal);
 				if (value < 2) value = 2;
-				gizmo.alignRect.y = (float)value;
+				gizmo.alignGrid.y = (float)value;
 				ImGui::SameLine();
+
+				ImGui::Text("Z");
+				ImGui::SameLine();
+
+				ImGui::SetNextItemWidth(80.0f);
+				value = (int)gizmo.alignGrid.z;
+				ImGui::InputInt("##SnapZID", &value, ImGuiInputTextFlags_CharsDecimal);
+				if (value < 2) value = 2;
+				gizmo.alignGrid.z = (float)value;
+				ImGui::SameLine();
+
+				if (gizmo.useAlignGrid)
+				{
+					PushButton("Offset", gizmo.useAlignGridOffset, [this]() { gizmo.useAlignGridOffset = !gizmo.useAlignGridOffset; });
+
+					ImGui::Text("X");
+					ImGui::SameLine();
+
+					ImGui::SetNextItemWidth(80.0f);
+					value = (int)gizmo.alignGridOffset.x;
+					ImGui::InputInt("##SnapOffsetXID", &value);
+					if (value < 2) value = 2;
+					gizmo.alignGridOffset.x = (float)value;
+					ImGui::SameLine();
+
+					ImGui::Text("Y");
+					ImGui::SameLine();
+
+					ImGui::SetNextItemWidth(80.0f);
+					value = (int)gizmo.alignGridOffset.y;
+					ImGui::InputInt("##SnapOffsetYID", &value, ImGuiInputTextFlags_CharsDecimal);
+					if (value < 2) value = 2;
+					gizmo.alignGridOffset.y = (float)value;
+					ImGui::SameLine();
+
+					ImGui::Text("Z");
+					ImGui::SameLine();
+
+					ImGui::SetNextItemWidth(80.0f);
+					value = (int)gizmo.alignGridOffset.z;
+					ImGui::InputInt("##SnapOffsetZID", &value, ImGuiInputTextFlags_CharsDecimal);
+					if (value < 2) value = 2;
+					gizmo.alignGridOffset.z = (float)value;
+					ImGui::SameLine();
+				}
 			}
 
 			ImGui::PopStyleColor(1);
@@ -2094,7 +2139,7 @@ namespace Oak
 
 		if (!projectRunning && freeCamera.mode2D)
 		{
-			Math::Vector2 step = (ownGrid) ? gridStep : gizmo.alignRect;
+			Math::Vector3 step = (ownGrid) ? gridStep : gizmo.alignGrid;
 
 			float minStep = 16.0f;
 
@@ -2102,7 +2147,7 @@ namespace Oak
 			{
 				minStep = 16.0f / freeCamera.zoom2D;
 			}
-			
+
 			while (step.x < minStep)
 			{
 				step *= 2.0f;
@@ -2115,7 +2160,7 @@ namespace Oak
 				pos.x = freeCamera.pos2D.x;
 				pos.y = freeCamera.pos2D.y;
 			}
-			
+
 			if (!ownGrid)
 			{
 				pos.x = step.x * (int)(pos.x / step.x);

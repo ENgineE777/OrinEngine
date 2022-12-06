@@ -126,8 +126,10 @@ namespace Oak
 		Transform* transform = nullptr;
 		TransformMode mode = TransformMode::Move;
 		bool useLocalSpace = false;
-		Math::Vector2 alignRect = 8.0f;
-		bool useAlignRect = false;
+		Math::Vector3 alignGrid = 8.0f;
+		bool useAlignGrid = false;
+		Math::Vector3 alignGridOffset = 8.0f;
+		bool useAlignGridOffset = false;
 
 		Gizmo();
 

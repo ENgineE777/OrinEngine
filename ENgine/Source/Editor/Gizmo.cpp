@@ -889,6 +889,22 @@ namespace Oak
 
 	void Gizmo::SetGlobalPos(Math::Vector3 pos)
 	{
+		if (transform->objectType == ObjectType::Object2D && useAlignGrid)
+		{
+			auto rectSize = Sprite::ToUnits(alignGrid);
+
+			pos.x = rectSize.x * ((int)(pos.x / rectSize.x));
+			pos.y = rectSize.y * ((int)(pos.y / rectSize.y));
+
+			if (useAlignGridOffset)
+			{
+				auto rectOffset = Sprite::ToUnits(alignGridOffset);
+
+				pos.x += rectOffset.x;
+				pos.y += rectOffset.y;
+			}
+		}
+
 		auto tr = transform->GetGlobal();
 		tr.Pos() = pos;
 		transform->SetGlobal(tr);
@@ -1257,10 +1273,16 @@ namespace Oak
 	{
 		Math::Vector3 res = pos;
 
-		if (useAlignRect)
+		if (useAlignGrid)
 		{
-			res.x = alignRect.x * ((int)(res.x / alignRect.x));
-			res.y = alignRect.y * ((int)(res.y / alignRect.y));
+			res.x = alignGrid.x * ((int)(res.x / alignGrid.x));
+			res.y = alignGrid.y * ((int)(res.y / alignGrid.y));
+
+			if (useAlignGridOffset)
+			{
+				res.x += alignGridOffset.x;
+				res.y += alignGridOffset.y;
+			}
 		}
 
 		return res;

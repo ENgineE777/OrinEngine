@@ -48,8 +48,10 @@ namespace Oak
 			iconSmall = root.render.LoadTexture(iconSmallPath.c_str(), _FL_);
 
 			reader.Read("projectName", projectName);
-			reader.Read("alignRect", editor.gizmo.alignRect);
-			reader.Read("useAlignRect", editor.gizmo.useAlignRect);
+			reader.Read("alignGrid", editor.gizmo.alignGrid);
+			reader.Read("useAlignGrid", editor.gizmo.useAlignGrid);
+			reader.Read("alignGridOffset", editor.gizmo.alignGridOffset);
+			reader.Read("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
 
 			float pixelsPerUnit = 50.0f;
 			float pixelsHeight = 1080.0f;
@@ -146,8 +148,10 @@ namespace Oak
 
 		writer.Write("start_scene", startScene);
 
-		writer.Write("alignRect", editor.gizmo.alignRect);
-		writer.Write("useAlignRect", editor.gizmo.useAlignRect);
+		writer.Write("alignGrid", editor.gizmo.alignGrid);
+		writer.Write("useAlignGrid", editor.gizmo.useAlignGrid);
+		writer.Write("alignGridOffset", editor.gizmo.alignGridOffset);
+		writer.Write("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
 
 		writer.Write("pixelsPerUnit", Sprite::ToPixels(1.0f));
 		writer.Write("pixelsHeight", Sprite::GetPixelsHeight());
