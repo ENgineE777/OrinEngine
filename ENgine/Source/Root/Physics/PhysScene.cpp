@@ -43,7 +43,6 @@ namespace Oak
 			{
 				shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
 				shape->setFlag(PxShapeFlag::eTRIGGER_SHAPE, true);
-				shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
 			}
 		}
 		else

@@ -141,8 +141,6 @@ namespace Oak
 		*/
 		bool SphereCast(RaycastDesc& desc, float radius);
 
-		bool OverlapWithSphere(Math::Vector3 pos, float radius, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);
-
 		/**
 		\brief Make ray cast against box
 
@@ -152,6 +150,7 @@ namespace Oak
 		*/
 		bool RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize, uint32_t physGroup);
 
+		bool OverlapWithSphere(Math::Vector3 pos, float radius, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);
 		bool OverlapWithBox(Math::Matrix trans, Math::Vector3 size, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);
 
 	#ifndef DOXYGEN_SKIP
