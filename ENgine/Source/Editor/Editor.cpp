@@ -479,6 +479,14 @@ namespace Oak
 		{
 			auto& asset = openedAssets[i];
 
+			if (!asset.Get())
+			{
+				openedAssets.erase(openedAssets.begin() + i);
+				i--;
+
+				continue;
+			}
+
 			bool opened = true;
 
 			bool selected = asset.Get() == selectedEditAsset.Get();
