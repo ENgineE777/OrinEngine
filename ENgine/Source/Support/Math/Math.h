@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include "Vector4.h"
 #include "Quaternion.h"
+#include <eastl/vector.h>
 
 /**
 \ingroup gr_code_common_math
@@ -33,4 +34,30 @@ namespace Oak::Math
 	CLASS_DECLSPEC bool IntersectTrianglrRay(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 orig, Vector3 dir, float distance);
 	CLASS_DECLSPEC bool IntersectPlaneRay(Vector3 planeP, Vector3 planeN, Vector3 rayP, Vector3 rayD, Vector3& intersection);
 	CLASS_DECLSPEC void GetMouseRay(Math::Vector2 ms, Math::Vector3& mouseOrigin, Math::Vector3& mouseDirection);
+
+	//https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+	CLASS_DECLSPEC inline bool IsRelativeEqual(float a, float b, float max_diff = 1e-5f, float max_rel_diff = FLT_EPSILON)
+	{
+		const float diff = fabsf(a - b);
+		if (diff < max_diff)
+			return true;
+		a = fabsf(a);
+		b = fabsf(b);
+		return diff < (a < b ? b : a)* max_rel_diff;
+	}
+
+	CLASS_DECLSPEC inline bool IsEqual(float a, float b, float eps = 1e-5f)
+	{
+		return IsRelativeEqual(a, b, eps, FLT_EPSILON);
+	}
+
+	CLASS_DECLSPEC inline bool AreApproximatelyEqual(float a, float b, float epsilon = 8.f * FLT_EPSILON)
+	{
+		return IsRelativeEqual(a, b, epsilon, epsilon);
+	}
+
+	CLASS_DECLSPEC inline bool IsNonZero(float a, float eps = 1e-5f)
+	{
+		return fabsf(a) >= eps;
+	}
 }

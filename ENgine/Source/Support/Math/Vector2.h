@@ -227,6 +227,8 @@ namespace Oak::Math
 			return tv;
 		}
 
+		bool IsEqual(const Vector2& v);
+
 		float Normalize()
 		{
 			float len = sqrtf(x * x + y * y);
