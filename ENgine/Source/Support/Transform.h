@@ -254,6 +254,44 @@ namespace Oak
 			dirty = false;
 		}
 
+		void SetLocalData(Transform& data)
+		{
+			position = data.position;
+			rotation = data.rotation;
+			scale = data.scale;
+			size = data.size;
+			offset = data.offset;
+		}
+
+		bool IsLocalDataEqual(Transform& data)
+		{
+			bool equal = true;
+			equal &= position.IsEqual(data.position);
+			equal &= rotation.IsEqual(data.rotation);
+			equal &= scale.IsEqual(data.scale);
+			equal &= size.IsEqual(data.size);
+			equal &= offset.IsEqual(data.offset);
+
+			return equal;
+		}
+
+		eastl::function<void()> onBecameDirty;
+
+		void SetDirty()
+		{
+			dirty = true;
+
+			if (onBecameDirty)
+			{
+				onBecameDirty();
+			}
+
+			for (auto child : childs)
+			{
+				child->SetDirty();
+			}
+		}
+
 		private:
 
 		bool dirty = true;
@@ -263,16 +301,6 @@ namespace Oak
 		Math::Vector3 scaleValue = 1.0f;
 		Math::Matrix localValue;
 		Math::Matrix globalValue;
-
-		void SetDirty()
-		{
-			dirty = true;
-
-			for (auto child : childs)
-			{
-				child->SetDirty();
-			}
-		}
 
 		void BuildMatrices()
 		{
