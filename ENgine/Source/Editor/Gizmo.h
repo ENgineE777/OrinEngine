@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Support/Transform.h"
+#include "EditorAction.h"
 
 /**
 \ingroup gr_code_editor
@@ -19,6 +20,19 @@ namespace Oak
 
 	class Gizmo
 	{
+		class TransformAction : public IEditorAction
+		{
+			Transform* target = nullptr;
+			Transform savedData;
+			Transform data;
+
+		public:
+
+			TransformAction(void* owner, Transform* target, Transform& savedData);
+			void Apply() override;
+			void Undo() override;
+		};
+
 		enum class Axis
 		{
 			X = 1,
@@ -123,7 +137,10 @@ namespace Oak
 
 	public:
 
+		void* owner = nullptr;
 		Transform* transform = nullptr;
+		Transform* savedTransformPtr = nullptr;
+		Transform savedTransform;
 		TransformMode mode = TransformMode::Move;
 		bool useLocalSpace = false;
 		Math::Vector3 alignGrid = 8.0f;
@@ -133,7 +150,7 @@ namespace Oak
 
 		Gizmo();
 
-		void SetTransform(Transform* transform);
+		void SetTransform(void* owner, Transform* transform);
 
 		bool IsEnabled();
 		void Disable();

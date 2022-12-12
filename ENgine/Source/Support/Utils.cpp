@@ -57,7 +57,7 @@ namespace Oak::Utils
             {
                 bSuccess = ReadFile(childStdRead, chBuf, BUFSIZE, &dwRead, nullptr);
 
-                for (int i = 0; i < dwRead; i++)
+                for (DWORD i = 0; i < dwRead; i++)
                 {
                     char symbol = chBuf[i];
 

@@ -8,6 +8,24 @@
 
 namespace Oak
 {
+	Gizmo::TransformAction::TransformAction(void* owner, Transform* setOwner, Transform& setSavedData) : IEditorAction(owner)
+	{
+		target = setOwner;
+
+		savedData.SetLocalData(setSavedData);
+		data.SetLocalData(*target);
+	}
+
+	void Gizmo::TransformAction::Apply()
+	{
+		target->SetLocalData(data);
+	}
+
+	void Gizmo::TransformAction::Undo()
+	{
+		target->SetLocalData(savedData);
+	}
+
 	Gizmo::Gizmo()
 	{
 		axises[0].type = Axis::X;
@@ -15,10 +33,11 @@ namespace Oak
 		axises[2].type = Axis::Z;
 	}
 
-	void Gizmo::SetTransform(Transform* set_transform)
+	void Gizmo::SetTransform(void* setOwner, Transform* setTransform)
 	{
-		OAK_ASSERT(set_transform != nullptr, "Gizmo::set_transform3d == null")
-		transform = set_transform;
+		owner = setOwner;
+		OAK_ASSERT(setTransform != nullptr, "Gizmo::set_transform3d == null")
+		transform = setTransform;
 	}
 
 	bool Gizmo::IsEnabled()
@@ -1341,9 +1360,12 @@ namespace Oak
 
 	void Gizmo::OnLeftMouseDown()
 	{
-		if (selAxis != -1)
+		if (selAxis != -1 && transform)
 		{
 			mousedPressed = true;
+
+			savedTransformPtr = transform;
+			savedTransform.SetLocalData(*transform);
 		}
 	}
 
@@ -1387,7 +1409,15 @@ namespace Oak
 
 				transform->position = position;
 			}
+		}
 
+		if (selAxis != -1 && savedTransformPtr == transform && !transform->IsLocalDataEqual(savedTransform))
+		{
+			editor.AddAction(new TransformAction(owner, transform, savedTransform));
+		}
+
+		if (selAxis == 10 && mode == TransformMode::Rectangle)
+		{
 			selAxis = -1;
 		}
 	}

@@ -120,7 +120,7 @@ namespace Oak
 		root.render.AddExecutedLevelPool(-1000);
 
 		renderTaskPool = root.render.AddTaskPool(_FL_);
-		renderTaskPool->AddTask(-1000, this, (Object::Delegate) & Editor::Render);
+		renderTaskPool->AddTask(-1000, this, (Object::Delegate)&Editor::Render);
 
 		if (!root.render.GetDevice()->SetBackBuffer(0, 800, 600, &hwnd))
 		{
@@ -186,7 +186,7 @@ namespace Oak
 		if (writer.Start("projects"))
 		{
 			writer.StartArray("projects");
-			
+
 			for (auto& entry : projects)
 			{
 				writer.StartBlock(nullptr);
@@ -302,6 +302,56 @@ namespace Oak
 		}
 
 		ImGuiHelper::LoadStyle(selectedThemeName.c_str());
+	}
+
+	void Editor::AddAction(IEditorAction* action)
+	{
+		curAction++;
+
+		for (int i = curAction; i < actions.size(); i++)
+		{
+			actions[i]->Release();
+		}
+
+		actions.erase(actions.begin() + curAction, actions.end());
+
+		actions.push_back(action);
+	}
+
+	void Editor::DeleteActionsFromHistory(void* owner)
+	{
+		for (int i = 0; i < actions.size(); i++)
+		{
+			if (actions[i]->owner == owner)
+			{
+				if (curAction >= i)
+				{
+					actions[i]->Release();
+					actions.erase(actions.begin() + i);
+					curAction--;
+				}
+
+				i--;
+			}
+		}
+	}
+
+	void Editor::RedoAction()
+	{
+		if (curAction < (int)actions.size() - 1)
+		{
+			curAction++;
+			actions[curAction]->Apply();
+		}
+	}
+
+	void Editor::UndoAction()
+	{
+		if (curAction >= 0)
+		{
+			actions[curAction]->Undo();
+			curAction--;
+		}
 	}
 
 	void Editor::ShowEditorSettings()
@@ -537,14 +587,14 @@ namespace Oak
 					{
 						if (ImGui::IsMouseClicked(0))
 						{
-							if (!selectMode)
-							{
-								gizmo.OnLeftMouseDown();
-							}
-
 							if (selectedEditAsset)
 							{
 								selectedEditAsset->OnLeftMouseDown();
+							}
+
+							if (!selectMode)
+							{
+								gizmo.OnLeftMouseDown();
 							}
 
 							viewportCaptured = ViewportCature::LeftButton;
@@ -2229,6 +2279,16 @@ namespace Oak
 		if (viewportFocused)
 		{
 			editorDrawer.DrawWindowBorder();
+
+			if (root.controls.DebugHotKeyPressed("KEY_LCONTROL", "KEY_LSHIFT", "KEY_Z"))
+			{
+				RedoAction();
+			}
+			else
+			if (root.controls.DebugHotKeyPressed("KEY_LCONTROL", "KEY_Z"))
+			{
+				UndoAction();
+			}
 		}
 
 		if (!projectRunning)

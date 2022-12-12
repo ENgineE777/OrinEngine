@@ -25,21 +25,11 @@ namespace Oak
 
 	Math::Vector3 GenericMarker::Instance::GetPosition()
 	{
-		auto pos = transform.position;
+		auto pos = transform.GetGlobal().Pos();
 
-		if (transform.parent)
+		if (transform.objectType == ObjectType::Object2D)
 		{
-			if (transform.objectType == ObjectType::Object2D)
-			{
-				pos *= Sprite::ToUnits(1.0f);
-			}
-
-			pos = transform.parent->GetGlobal().MulVertex(pos);
-
-			if (transform.objectType == ObjectType::Object2D)
-			{
-				pos *= Sprite::ToPixels(1.0f);
-			}
+			pos *= Sprite::ToPixels(1.0f);
 		}
 
 		return pos;
@@ -55,6 +45,13 @@ namespace Oak
 		transform.transformFlag = MoveXYZ | RotateXYZ;
 
 		Tasks(false)->AddTask(100, this, (Object::Delegate)&GenericMarker::Draw);
+
+		auto onBecameDirty = [this]()
+		{
+			this->OnTransformBecameDirty();
+		};
+
+		transform.onBecameDirty = onBecameDirty;
 	}
 
 	void GenericMarker::ApplyProperties()
@@ -90,6 +87,7 @@ namespace Oak
 			if (root.controls.DebugKeyPressed("KEY_I") && selInst != -1)
 			{
 				instances.erase(selInst + instances.begin());
+				editor.DeleteActionsFromHistory(this);
 				selInst = -1;
 				SetGizmo();
 			}
@@ -130,6 +128,7 @@ namespace Oak
 				}
 
 				instances.push_back(inst);
+				editor.DeleteActionsFromHistory(this);
 
 				selInst = (int)instances.size() - 1;
 
@@ -208,11 +207,19 @@ namespace Oak
 		if (selInst != -1)
 		{
 			instances[selInst].transform.transformFlag = MoveXYZ;
-			editor.gizmo.SetTransform(&instances[selInst].transform);
+			editor.gizmo.SetTransform(this, &instances[selInst].transform);
 		}
 		else
 		{
-			editor.gizmo.SetTransform(&transform);
+			editor.gizmo.SetTransform(this, &transform);
+		}
+	}
+
+	void GenericMarker::OnTransformBecameDirty()
+	{
+		for (auto& inst : instances)
+		{
+			inst.transform.SetDirty();
 		}
 	}
 #endif

@@ -541,6 +541,8 @@ namespace Oak
 				SceneEntity* entity = selectedEntity;
 				SelectEntity(nullptr);
 
+				editor.DeleteActionsFromHistory(entity);
+
 				if (entity->GetParent())
 				{
 					entity->SetParent(nullptr);

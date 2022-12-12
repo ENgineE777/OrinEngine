@@ -76,6 +76,7 @@ namespace Oak
 		void SetGizmo();
 	#endif
 
+		void OnTransformBecameDirty();
 	#endif
 	};
 }

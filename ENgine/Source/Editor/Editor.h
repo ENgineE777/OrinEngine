@@ -12,6 +12,8 @@
 #include "eastl/bonus/ring_buffer.h"
 #include "Root/Assets/Assets.h"
 
+#include "EditorAction.h"
+
 /**
 \ingroup gr_code_editor
 */
@@ -126,6 +128,9 @@ namespace Oak
 		eastl::vector<eastl::string> layerStateNames;
 		eastl::string layerStateList;
 
+		int curAction = -1;
+		eastl::vector<IEditorAction*> actions;
+
 	public:
 
 		Project project;
@@ -153,8 +158,13 @@ namespace Oak
 
 		void ApplySelecetedTheme();
 
+		void AddAction(IEditorAction* action);
+		void DeleteActionsFromHistory(void* owner);
+
 	private:
 
+		void RedoAction();
+		void UndoAction();
 		void SetupImGUI();
 		bool ShowEditor();
 		void ShowCreateAssetDialog();

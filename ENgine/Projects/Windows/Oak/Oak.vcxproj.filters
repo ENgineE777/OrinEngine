@@ -718,6 +718,15 @@
     <ClCompile Include="..\..\..\Source\Support\Utils.cpp">
       <Filter>Source\Support</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Support\Math\Vector2.cpp">
+      <Filter>Source\Support\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Support\Math\Vector3.cpp">
+      <Filter>Source\Support\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Support\Math\Vector4.cpp">
+      <Filter>Source\Support\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1361,6 +1370,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Support\Utils.h">
       <Filter>Source\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Editor\EditorAction.h">
+      <Filter>Source\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

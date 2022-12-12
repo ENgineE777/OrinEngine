@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Editor\Editor.h" />
+    <ClInclude Include="..\..\..\Source\Editor\EditorAction.h" />
     <ClInclude Include="..\..\..\Source\Editor\EditorDrawer.h" />
     <ClInclude Include="..\..\..\Source\Editor\Freecamera.h" />
     <ClInclude Include="..\..\..\Source\Editor\Gizmo.h" />
@@ -471,6 +472,9 @@
     <ClCompile Include="..\..\..\Source\Support\fbx\ofbx.cpp" />
     <ClCompile Include="..\..\..\Source\Support\ImGuiHelper.cpp" />
     <ClCompile Include="..\..\..\Source\Support\Math\Math.cpp" />
+    <ClCompile Include="..\..\..\Source\Support\Math\Vector2.cpp" />
+    <ClCompile Include="..\..\..\Source\Support\Math\Vector3.cpp" />
+    <ClCompile Include="..\..\..\Source\Support\Math\Vector4.cpp" />
     <ClCompile Include="..\..\..\Source\Support\MetaData.cpp" />
     <ClCompile Include="..\..\..\Source\Support\Perforce.cpp" />
     <ClCompile Include="..\..\..\Source\Support\PointerRef.cpp" />

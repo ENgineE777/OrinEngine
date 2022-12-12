@@ -55,7 +55,7 @@ namespace Oak
 	{
 		edited = ed;
 
-		editor.gizmo.SetTransform(&transform);
+		editor.gizmo.SetTransform(this, &transform);
 	}
 
 	bool SceneEntity::IsEditMode()
