@@ -9,6 +9,10 @@
 #include "Root/Physics/PhysObject.h"
 #include "Root/Physics/PhysScene.h"
 
+#ifdef OAK_EDITOR
+#include "Editor/EditorAction.h"
+#endif
+
 namespace Oak
 {
 	class CLASS_DECLSPEC TileMap : public SceneEntity
@@ -52,6 +56,28 @@ namespace Oak
 		void Release() override;
 
 	#ifdef OAK_EDITOR
+
+		class TileMapAction : public IEditorAction
+		{
+			eastl::vector<Tile> savedData;
+			eastl::vector<Tile> savedSelectedData;
+			eastl::vector<Tile> data;
+			eastl::vector<Tile> selectedData;
+
+			void ApplyTileSet(eastl::vector<Tile>& data, eastl::vector<Tile>& selectedData);
+
+		public:
+
+			TileMapAction(void* owner, eastl::vector<Tile>& savedTiles, eastl::vector<Tile>& savedSelectedTiles, 
+							eastl::vector<Tile>& tiles, eastl::vector<Tile>& selectedTiles);
+			void Apply() override;
+			void Undo() override;
+		};
+
+		bool changed = false;
+		eastl::vector<Tile> savedTiles;
+		eastl::vector<Tile> savedSelectedTiles;
+
 		enum class Mode
 		{
 			Inactive,
@@ -79,6 +105,8 @@ namespace Oak
 		Math::Vector2 MouseToWorldPos(Math::Vector2 ms);
 		Math::Vector2 MouseToTile(Math::Vector2 ms);
 		void RectFill();
+
+		void AddEditorAction();
 
 		static void ShowTilsetWindow(void* owner);
 

@@ -19,6 +19,34 @@ namespace Oak
 			TileSetWindow::StartEdit(tileMap->tileSet.Get());
 		}
 	}
+
+	TileMap::TileMapAction::TileMapAction(void* owner, eastl::vector<Tile>& savedTiles, eastl::vector<Tile>& savedSelectedTiles,
+											eastl::vector<Tile>& tiles, eastl::vector<Tile>& selectedTiles) : IEditorAction(owner)
+	{
+		savedData = savedTiles;
+		savedSelectedData = savedSelectedTiles;
+
+		data = tiles;
+		selectedData = selectedTiles;
+	}
+
+	void TileMap::TileMapAction::ApplyTileSet(eastl::vector<Tile>& data, eastl::vector<Tile>& selectedData)
+	{
+		auto* tileMap = reinterpret_cast<TileMap*>(owner);
+		tileMap->tiles = data;
+		tileMap->tilesSelected = selectedData;
+	}
+
+	void TileMap::TileMapAction::Apply()
+	{
+		ApplyTileSet(data, selectedData);
+	}
+
+
+	void TileMap::TileMapAction::Undo()
+	{
+		ApplyTileSet(savedData, savedSelectedData);
+	}
 #endif
 
 	ENTITYREG(SceneEntity, TileMap, "2D/Sprites", "TileMap")
@@ -265,6 +293,7 @@ namespace Oak
 						}
 
 						tiles.erase(tiles.begin() + i);
+						changed = true;
 
 						break;
 					}
@@ -273,6 +302,7 @@ namespace Oak
 				if (mode == Mode::RectPlace && tileSet->IsTileSelected())
 				{
 					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
+					changed = true;
 				}
 			}
 	}
@@ -321,6 +351,7 @@ namespace Oak
 					if (tiles[i].x == x && tiles[i].y == y)
 					{
 						tiles.erase(tiles.begin() + i);
+						changed = true;
 
 						break;
 					}
@@ -329,6 +360,7 @@ namespace Oak
 				if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
 				{
 					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
+					changed = true;
 				}
 			}
 		}
@@ -358,6 +390,8 @@ namespace Oak
 						if (tiles[i].x == tile.x && tiles[i].y == tile.y)
 						{
 							tiles.erase(tiles.begin() + i);
+							changed = true;
+
 							break;
 						}
 					}
@@ -377,6 +411,10 @@ namespace Oak
 	{
 		if (tileSet)
 		{
+			changed = false;
+			savedTiles = tiles;
+			savedSelectedTiles = tilesSelected;
+
 			if (mode == Mode::TilesSelected)
 			{
 				mode = Mode::Inactive;
@@ -443,11 +481,16 @@ namespace Oak
 			{
 				mode = Mode::Inactive;
 			}
+
+			AddEditorAction();
 		}
 	}
 
 	bool TileMap::OnRightMouseDown()
 	{
+		changed = false;
+		savedTiles = tiles;
+
 		mode = Mode::Erase;
 
 		if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
@@ -466,7 +509,17 @@ namespace Oak
 			RectFill();
 		}
 
+		AddEditorAction();
+
 		mode = Mode::Inactive;
+	}
+
+	void TileMap::AddEditorAction()
+	{
+		if (changed)
+		{
+			editor.AddAction(new TileMapAction(this, savedTiles, savedSelectedTiles, tiles, tilesSelected));
+		}
 	}
 #endif
 }

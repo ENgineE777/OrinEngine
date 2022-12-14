@@ -6,6 +6,7 @@ namespace Oak
 	{
 		friend class Editor;
 
+	protected:
 		void* owner = nullptr;
 	public:
 
