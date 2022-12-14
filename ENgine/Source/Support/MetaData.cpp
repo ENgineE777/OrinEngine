@@ -13,6 +13,214 @@
 
 namespace Oak
 {
+#ifdef OAK_EDITOR
+	MetaData::MetaDataPropertyAction::MetaDataPropertyAction() : IEditorAction(nullptr)
+	{
+
+	}
+
+	MetaData::MetaDataPropertyAction::MetaDataPropertyAction(MetaDataPropertyAction& action) : IEditorAction(action.owner)
+	{
+		propertyOwner = action.propertyOwner;
+
+		prop = action.prop;
+
+		memcpy(storage, action.storage, sizeof(storage));
+		memcpy(savedStorage, action.savedStorage, sizeof(savedStorage));
+	}
+
+	void MetaData::MetaDataPropertyAction::SetOwners(void* setOwner, void* setPropertyOwner, Property& setProp)
+	{
+		owner = setOwner;
+		propertyOwner = setPropertyOwner;
+		prop = setProp;
+
+		InitStorage((uint8_t*)&storage);
+		InitStorage((uint8_t*)&savedStorage);
+	}
+
+	void MetaData::MetaDataPropertyAction::InitStorage(uint8_t* dest)
+	{
+		if (prop.type == Type::Boolean)
+		{
+			bool* boolValue = (bool*)dest;
+			*dest = false;
+		}
+		else
+		if (prop.type == Type::Integer || prop.type == Type::Enum)
+		{
+			int* intValue = (int*)dest;
+			*intValue = 0;
+		}
+		else
+		if (prop.type == Type::Float)
+		{
+			float* floatValue = (float*)dest;
+			*floatValue = 0.0f;
+		}
+		else
+		if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
+		{
+			eastl::string* stringValue = (eastl::string*)dest;
+			*stringValue = eastl::string();
+		}
+		else
+		if (prop.type == Type::Color)
+		{
+			Color* colorValue = (Color*)dest;
+			*colorValue = COLOR_WHITE;
+		}
+		else
+		if (prop.type == Type::Vector3)
+		{
+			Math::Vector3* vectorValue = (Math::Vector3*)dest;
+			*vectorValue = Math::Vector3();
+		}
+		else
+		if (prop.type == Type::AssetTexture)
+		{
+			AssetTextureRef* refValue = (AssetTextureRef*)dest;
+			*refValue = AssetTextureRef();
+		}
+		else
+		if (prop.type == Type::AssetAnimGraph2D)
+		{
+			AssetAnimGraph2DRef* refValue = (AssetAnimGraph2DRef*)dest;
+			*refValue = AssetAnimGraph2DRef();
+		}
+		else
+		if (prop.type == Type::AssetTileSet)
+		{
+			AssetTileSetRef* refValue = (AssetTileSetRef*)dest;
+			*refValue = AssetTileSetRef();
+		}
+		else
+		if (prop.type == Type::AssetSpritesLayer)
+		{
+			AssetSpritesLayerRef* refValue = (AssetSpritesLayerRef*)dest;
+			*refValue = AssetSpritesLayerRef();
+		}
+		else
+		if (prop.type == Type::Transform)
+		{
+			Transform* transformValue = (Transform*)dest;
+			*transformValue = Transform();
+		}
+		else
+		if (prop.type == Type::SceneEntity)
+		{
+			//SceneEntityRefBase* refValue = (SceneEntityRefBase*)dest;
+			//*refValue = SceneEntityRefBase();
+		}
+	}
+
+	void MetaData::MetaDataPropertyAction::CopyPropertyData(uint8_t* src, uint8_t* dest)
+	{
+		if (prop.type == Type::Boolean)
+		{
+			memcpy(dest, src, sizeof(bool));
+		}
+		else
+		if (prop.type == Type::Integer || prop.type == Type::Enum)
+		{
+			memcpy(dest, src, sizeof(int));
+		}
+		else
+		if (prop.type == Type::Float)
+		{
+			memcpy(dest, src, sizeof(float));
+		}
+		else
+		if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
+		{
+			*((eastl::string*)dest) = *((eastl::string*)src);
+		}
+		else
+		if (prop.type == Type::Color)
+		{
+			memcpy(dest, src, sizeof(float) * 4);
+		}
+		else
+		if (prop.type == Type::Vector3)
+		{
+			memcpy(dest, src, sizeof(float) * 3);
+		}
+		else
+		if (prop.type == Type::AssetTexture)
+		{
+			AssetTextureRef* refSrc = reinterpret_cast<AssetTextureRef*>(src);
+			AssetTextureRef* ref = reinterpret_cast<AssetTextureRef*>(dest);
+
+			*ref = *refSrc;
+		}
+		else
+		if (prop.type == Type::AssetAnimGraph2D)
+		{
+			AssetAnimGraph2DRef* refSrc = reinterpret_cast<AssetAnimGraph2DRef*>(src);
+			AssetAnimGraph2DRef* ref = reinterpret_cast<AssetAnimGraph2DRef*>(dest);
+
+			*ref = *refSrc;
+			ref->Reset();
+		}
+		else
+		if (prop.type == Type::AssetTileSet)
+		{
+			AssetTileSetRef* refSrc = reinterpret_cast<AssetTileSetRef*>(src);
+			AssetTileSetRef* ref = reinterpret_cast<AssetTileSetRef*>(dest);
+
+			*ref = *refSrc;
+		}
+		else
+		if (prop.type == Type::AssetSpritesLayer)
+		{
+			AssetSpritesLayerRef* refSrc = reinterpret_cast<AssetSpritesLayerRef*>(src);
+			AssetSpritesLayerRef* ref = reinterpret_cast<AssetSpritesLayerRef*>(dest);
+
+			*ref = *refSrc;
+		}
+		else
+		if (prop.type == Type::Transform)
+		{
+			Transform* transformSrc = (Transform*)src;
+			Transform* transformDest = (Transform*)dest;
+
+			transformDest->position = transformSrc->position;
+			transformDest->rotation = transformSrc->rotation;
+			transformDest->scale = transformSrc->scale;
+			transformDest->size = transformSrc->size;
+			transformDest->offset = transformSrc->offset;
+		}
+		else
+		if (prop.type == Type::SceneEntity)
+		{
+			SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(dest);
+			SceneEntityRefBase* ref2 = reinterpret_cast<SceneEntityRefBase*>(src);
+
+			ref->uid = ref2->uid;
+		}
+	}
+	
+	void MetaData::MetaDataPropertyAction::SaveAsSavedProperty()
+	{
+		CopyPropertyData((uint8_t*)propertyOwner + prop.offset, (uint8_t*)&savedStorage);
+	}
+
+	void MetaData::MetaDataPropertyAction::SaveAsProperty()
+	{
+		CopyPropertyData((uint8_t*)propertyOwner + prop.offset, (uint8_t*)&storage);
+	}
+
+	void MetaData::MetaDataPropertyAction::Apply()
+	{
+		CopyPropertyData((uint8_t*)&storage, (uint8_t*)propertyOwner + prop.offset);
+	}
+
+	void MetaData::MetaDataPropertyAction::Undo()
+	{
+		CopyPropertyData((uint8_t*)&savedStorage, (uint8_t*)propertyOwner + prop.offset);
+	}
+#endif
+
 	void MetaData::Prepare(void* set_owner, void* set_root)
 	{
 		if (!inited)
@@ -669,6 +877,9 @@ namespace Oak
 				{
 					auto& prop = properties[categoriesData[j].indices[i]];
 
+					editorAction.SetOwners(nullptr, owner, prop);
+					editorAction.SaveAsSavedProperty();
+
 					if (whitelistedProprties)
 					{
 						bool found = whitelistedProprties->end() != eastl::find(whitelistedProprties->begin(), whitelistedProprties->end(), prop.propName);
@@ -851,6 +1062,7 @@ namespace Oak
 											nullptr, "Position", propGuiID))
 							{
 								transform->position = position;
+								prop.changed = true;
 							}
 						}
 
@@ -864,6 +1076,7 @@ namespace Oak
 											nullptr, "Rotation", propGuiID))
 							{
 								transform->rotation = rotation;
+								prop.changed = true;
 							}
 						}
 
@@ -877,28 +1090,38 @@ namespace Oak
 											nullptr, "Scale", propGuiID))
 							{
 								transform->scale = scale;
+								prop.changed = true;
 							}
 						}
 
 						if (transform->transformFlag & TransformFlag::SizeXYZ)
 						{
-							ImGuiVector(transform->transformFlag & TransformFlag::SizeX ? &transform->size.x : nullptr,
-										transform->transformFlag & TransformFlag::SizeY ? &transform->size.y : nullptr,
-										transform->transformFlag & TransformFlag::SizeZ ? &transform->size.z : nullptr, nullptr, "Size", propGuiID);
+							if (ImGuiVector(transform->transformFlag & TransformFlag::SizeX ? &transform->size.x : nullptr,
+											transform->transformFlag & TransformFlag::SizeY ? &transform->size.y : nullptr,
+											transform->transformFlag & TransformFlag::SizeZ ? &transform->size.z : nullptr, nullptr, "Size", propGuiID))
+							{
+								prop.changed = true;
+							}
 						}
 
 						if (transform->transformFlag & TransformFlag::RectSizeXY)
 						{
-							ImGuiVector(transform->transformFlag & TransformFlag::RectSizeX ? &transform->size.x : nullptr,
-										transform->transformFlag & TransformFlag::RectSizeY ? &transform->size.y : nullptr,
-										nullptr, nullptr, "Size", propGuiID);
+							if (ImGuiVector(transform->transformFlag & TransformFlag::RectSizeX ? &transform->size.x : nullptr,
+											transform->transformFlag & TransformFlag::RectSizeY ? &transform->size.y : nullptr,
+											nullptr, nullptr, "Size", propGuiID))
+							{
+								prop.changed = true;
+							}
 						}
 
 						if (transform->transformFlag & TransformFlag::RectAnchorn)
 						{
-							ImGuiVector(transform->transformFlag & TransformFlag::RectAnchorn ? &transform->offset.x : nullptr,
-										transform->transformFlag & TransformFlag::RectAnchorn ? &transform->offset.y : nullptr,
-										nullptr, nullptr, "Offset", propGuiID);
+							if (ImGuiVector(transform->transformFlag & TransformFlag::RectAnchorn ? &transform->offset.x : nullptr,
+											transform->transformFlag & TransformFlag::RectAnchorn ? &transform->offset.y : nullptr,
+											nullptr, nullptr, "Offset", propGuiID))
+							{
+								prop.changed = true;
+							}
 						}
 					}
 					else
@@ -1256,6 +1479,13 @@ namespace Oak
 						}
 
 						ImGui::NextColumn();
+					}
+
+					if (prop.changed)
+					{
+						editorAction.SaveAsProperty();
+
+						editor.AddAction(new MetaDataPropertyAction(editorAction));
 					}
 				}
 			}

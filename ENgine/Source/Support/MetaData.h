@@ -6,6 +6,10 @@
 #include "Root/Files/JSONReader.h"
 #include "Root/Files/JSONWriter.h"
 
+#ifdef OAK_EDITOR
+#include "Editor/EditorAction.h"
+#endif
+
 /**
 \ingroup gr_code_common
 */
@@ -151,6 +155,28 @@ namespace Oak
 		void* root = nullptr;
 
 		#ifdef OAK_EDITOR
+
+		class MetaDataPropertyAction : public IEditorAction
+		{
+			void* propertyOwner = nullptr;
+			Property prop;
+
+			uint8_t storage[1024];
+			uint8_t savedStorage[1024];
+			void InitStorage(uint8_t* dest);
+			void CopyPropertyData(uint8_t* src, uint8_t* dest);
+
+		public:
+
+			MetaDataPropertyAction();
+			MetaDataPropertyAction(MetaDataPropertyAction& action);
+			void SetOwners(void* owner, void* propertyOwner, Property& prop);
+			void SaveAsSavedProperty();
+			void SaveAsProperty();
+			void Apply() override;
+			void Undo() override;
+		};
+
 		char guiID[64];
 
 		struct CategoryData
@@ -179,6 +205,8 @@ namespace Oak
 
 		#ifndef DOXYGEN_SKIP
 		#ifdef OAK_EDITOR
+		MetaDataPropertyAction editorAction;
+
 		void ImGuiWidgets(eastl::vector<eastl::string>* whitelistedProprties = nullptr, bool useAsBlacklisted = false);
 		bool ImGuiVector(float* x, float* y, float* z, float* w, const char* name, const char* propID);
 		void ConstructCategoriesData();
