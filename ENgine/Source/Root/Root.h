@@ -54,13 +54,6 @@ namespace Oak
 
 	public:
 
-		enum class Path
-		{
-			Assets,
-			Binaries,
-			VcProj
-		};
-
 		/**
 			\brief Access to Assets
 		*/

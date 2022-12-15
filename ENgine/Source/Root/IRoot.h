@@ -35,6 +35,13 @@ namespace Oak
 	{
 	public:
 
+		enum class Path
+		{
+			Assets,
+			Binaries,
+			VcProj
+		};
+
 		/**
 			\brief Get instance of assets
 		*/
@@ -73,6 +80,8 @@ namespace Oak
 		virtual void Log(const char* name, const char* text, ...) = 0;
 		virtual float GetDeltaTime() = 0;
 		virtual int GetFPS() = 0;
+
+		virtual const char* GetPath(Path path) = 0;
 	};
 
 	CLASS_DECLSPEC IRoot* GetRoot();
