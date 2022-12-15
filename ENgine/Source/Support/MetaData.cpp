@@ -306,6 +306,11 @@ namespace Oak
 				memcpy(prop.value, prop.defvalue.color, sizeof(float) * 4);
 			}
 			else
+			if (prop.type == Type::Vector2)
+			{
+				memcpy(prop.value, prop.defvalue.vector2, sizeof(float) * 2);
+			}
+			else
 			if (prop.type == Type::Vector3)
 			{
 				memcpy(prop.value, prop.defvalue.vector3, sizeof(float) * 3);
@@ -405,6 +410,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				reader.Read(prop.name.c_str(), *((Oak::Color*)prop.value));
+			}
+			else
+			if (prop.type == Type::Vector2)
+			{
+				reader.Read(prop.name.c_str(), *((Math::Vector2*)prop.value));
 			}
 			else
 			if (prop.type == Type::Vector3)
@@ -535,6 +545,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				writer.Write(prop.name.c_str(), *((Oak::Color*)prop.value));
+			}
+			else
+			if (prop.type == Type::Vector2)
+			{
+				writer.Write(prop.name.c_str(), *((Math::Vector2*)prop.value));
 			}
 			else
 			if (prop.type == Type::Vector3)
@@ -673,6 +688,11 @@ namespace Oak
 			if (prop.type == Type::Color)
 			{
 				memcpy(prop.value, src, sizeof(float) * 4);
+			}
+			else
+			if (prop.type == Type::Vector2)
+			{
+				memcpy(prop.value, src, sizeof(float) * 2);
 			}
 			else
 			if (prop.type == Type::Vector3)
@@ -1208,6 +1228,14 @@ namespace Oak
 						if (prop.type == Type::Color)
 						{
 							if (ImGui::ColorEdit4(propGuiID, (float*)prop.value))
+							{
+								prop.changed = true;
+							}
+						}
+						else
+						if (prop.type == Type::Vector2)
+						{
+							if (ImGui::InputFloat2(propGuiID, (float*)prop.value))
 							{
 								prop.changed = true;
 							}
