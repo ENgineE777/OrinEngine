@@ -69,36 +69,36 @@ namespace Oak
 		{
 			if (targetRef)
 			{
-				transform.size.x = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect();
-				transform.size.y = Sprite::GetPixelsHeight();
+				halfScreenSize.x = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f;
+				halfScreenSize.y = Sprite::GetPixelsHeight() * 0.5f;
 
 				Math::Vector3 pos = transform.position;
 				Math::Vector3 targetPos = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 
-				if (-transform.size.x * 0.5f + border.x > targetPos.x - pos.x)
+				if (-halfScreenSize.x + border.x > targetPos.x - pos.x)
 				{
-					pos.x = targetPos.x + transform.size.x * 0.5f - border.x;
+					pos.x = targetPos.x + halfScreenSize.x - border.x;
 				}
 
-				if ( transform.size.x * 0.5f - border.x < targetPos.x - pos.x)
+				if (halfScreenSize.x - border.x < targetPos.x - pos.x)
 				{
-					pos.x = targetPos.x - transform.size.x * 0.5f + border.x;
+					pos.x = targetPos.x - halfScreenSize.x + border.x;
 				}
 
-				if (-transform.size.y * 0.5f + border.y > targetPos.y - pos.y)
+				if (-halfScreenSize.y + border.y > targetPos.y - pos.y)
 				{
-					pos.y = targetPos.y + transform.size.y * 0.5f - border.y;
+					pos.y = targetPos.y + halfScreenSize.y - border.y;
 				}
 
-				if (transform.size.y * 0.5f - border.y < targetPos.y - pos.y)
+				if (halfScreenSize.y - border.y < targetPos.y - pos.y)
 				{
-					pos.y = targetPos.y - transform.size.y * 0.5f + border.y;
+					pos.y = targetPos.y - halfScreenSize.y + border.y;
 				}
 
 				if (useLimits)
 				{
-					pos.x = Math::Clamp(pos.x, leftup.x + transform.size.x * 0.5f, rightdown.x - transform.size.x * 0.5f);
-					pos.y = Math::Clamp(pos.y, rightdown.y + transform.size.y * 0.5f, leftup.y - transform.size.y * 0.5f);
+					pos.x = Math::Clamp(pos.x, leftup.x + halfScreenSize.x, rightdown.x - halfScreenSize.x);
+					pos.y = Math::Clamp(pos.y, rightdown.y + halfScreenSize.y, leftup.y - transform.size.y);
 				}
 
 				transform.position = pos;
@@ -165,5 +165,16 @@ namespace Oak
 		{
 			transform.position = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 		}
+	}
+
+	bool Camera2D::IsPointVisibile(Math::Vector3 point)
+	{
+		if (transform.position.x - halfScreenSize.x < point.x && point.x < transform.position.x + halfScreenSize.x &&
+			transform.position.y - halfScreenSize.y < point.y && point.y < transform.position.y + halfScreenSize.y)
+		{
+			return true;
+		}
+
+		return false;
 	}
 }
