@@ -108,7 +108,7 @@ namespace Oak
 			{
 				RenderTechniqueHolder holder;
 
-				T* renderTechnique = new T();
+				T* renderTechnique = new (AllocMemory(sizeof(T), file, line)) T();
 				renderTechnique->Init();
 				renderTechnique->hash = hash;
 
@@ -125,9 +125,9 @@ namespace Oak
 			if (holder.dirty)
 			{
 				int refCounter = holder.renderTechnique->refCounter;
-				delete holder.renderTechnique;
+				FreeMemory(holder.renderTechnique);
 
-				T* renderTechnique = new T();
+				T* renderTechnique = new (AllocMemory(sizeof(T), file, line)) T();
 				renderTechnique->Init();
 				renderTechnique->hash = hash;
 				renderTechnique->refCounter = refCounter;
@@ -182,6 +182,8 @@ namespace Oak
 		#ifndef DOXYGEN_SKIP
 
 		void CalcTrans();
+		void FreeMemory(void* ptr);
+		void* AllocMemory(size_t sz, const char* file, int line);
 
 		#endif
 	};

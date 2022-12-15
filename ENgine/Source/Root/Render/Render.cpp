@@ -1,6 +1,7 @@
 
 #include "Render.h"
 #include "Root/Files/FileInMemory.h"
+#include "Root/Memory/MemoryManager.h"
 
 #include "Debug/Debug.h"
 #include <memory>
@@ -331,6 +332,16 @@ namespace Oak
 		}
 
 		return ps;
+	}
+
+	void Render::FreeMemory(void* ptr)
+	{
+		root.memory.Free(ptr);
+	}
+
+	void* Render::AllocMemory(size_t sz, const char* file, int line)
+	{
+		return root.memory.Alloc(sz, file, line);
 	}
 
 	void Render::Release()
