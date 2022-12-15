@@ -17,8 +17,8 @@ namespace Oak
 	{
 		friend class VertexDeclDX11;
 
-		ID3D11VertexShader* vshader;
-		ID3D11PixelShader*  pshader;
+		ID3D11VertexShader* vshader = nullptr;
+		ID3D11PixelShader*  pshader = nullptr;
 
 		struct ConstantBuffer
 		{
