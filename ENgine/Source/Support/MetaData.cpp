@@ -80,25 +80,29 @@ namespace Oak
 		if (prop.type == Type::AssetTexture)
 		{
 			AssetTextureRef* refValue = (AssetTextureRef*)dest;
-			*refValue = AssetTextureRef();
+			memset(refValue, 0, sizeof(AssetTextureRef));
+			refValue->AssetTextureRef::AssetTextureRef();
 		}
 		else
 		if (prop.type == Type::AssetAnimGraph2D)
 		{
 			AssetAnimGraph2DRef* refValue = (AssetAnimGraph2DRef*)dest;
-			*refValue = AssetAnimGraph2DRef();
+			memset(refValue, 0, sizeof(AssetAnimGraph2DRef));
+			refValue->AssetAnimGraph2DRef::AssetAnimGraph2DRef();
 		}
 		else
 		if (prop.type == Type::AssetTileSet)
 		{
 			AssetTileSetRef* refValue = (AssetTileSetRef*)dest;
-			*refValue = AssetTileSetRef();
+			memset(refValue, 0, sizeof(AssetTileSetRef));
+			refValue->AssetTileSetRef::AssetTileSetRef();
 		}
 		else
 		if (prop.type == Type::AssetSpritesLayer)
 		{
 			AssetSpritesLayerRef* refValue = (AssetSpritesLayerRef*)dest;
-			*refValue = AssetSpritesLayerRef();
+			memset(refValue, 0, sizeof(AssetSpritesLayerRef));
+			refValue->AssetSpritesLayerRef::AssetSpritesLayerRef();
 		}
 		else
 		if (prop.type == Type::Transform)
@@ -190,14 +194,14 @@ namespace Oak
 			transformDest->size = transformSrc->size;
 			transformDest->offset = transformSrc->offset;
 		}
-		else
+		/*else
 		if (prop.type == Type::SceneEntity)
 		{
 			SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(dest);
 			SceneEntityRefBase* ref2 = reinterpret_cast<SceneEntityRefBase*>(src);
 
 			ref->uid = ref2->uid;
-		}
+		}*/
 	}
 	
 	void MetaData::MetaDataPropertyAction::SaveAsSavedProperty()
