@@ -60,4 +60,52 @@ namespace Oak::Math
 	{
 		return fabsf(a) >= eps;
 	}
+
+	CLASS_DECLSPEC inline float SafeAtan2(float y, float x)
+	{
+		return (x != 0.f || y != 0.f) ? ::atan2f(y, x) : 0.f;
+	}
+
+	CLASS_DECLSPEC inline float Atan2(float y, float x)
+	{
+		return ::atan2f(y, x);
+	}
+
+	CLASS_DECLSPEC inline float EaseInQuad(float k)
+	{
+		return k * k;
+	}
+
+	CLASS_DECLSPEC inline float EaseInCubic(float k)
+	{
+		return k * k * k;
+	}
+
+	CLASS_DECLSPEC inline float EaseInQuart(float k)
+	{
+		return k * k * k * k;
+	}
+
+	CLASS_DECLSPEC inline float EaseOutQuad(float k)
+	{
+		return 1 - (1 - k) * (1 - k);
+	}
+
+	CLASS_DECLSPEC inline float EaseOutCubic(float k)
+	{
+		return 1 - (1 - k) * (1 - k) * (1 - k);
+	}
+
+	CLASS_DECLSPEC inline float EaseOutQuart(float k)
+	{
+		return 1 - (1 - k) * (1 - k) * (1 - k) * (1 - k);
+	}
+
+	CLASS_DECLSPEC inline float EaseInBack(float k)
+	{
+		const float c1 = 1.70158f;
+		const float c3 = c1 + 1.f;
+
+		return c3 * k * k * k - c1 * k * k;
+	}
 }
