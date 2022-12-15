@@ -2311,7 +2311,7 @@ namespace Oak
 
 	void Editor::Render(float dt)
 	{
-		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
+		root.render.GetDevice()->Clear(true, projectRunning ? COLOR_BLACK : COLOR_GRAY, true, 1.0f);
 
 		if (!projectRunning && !freeCamera.mode2D)
 		{
