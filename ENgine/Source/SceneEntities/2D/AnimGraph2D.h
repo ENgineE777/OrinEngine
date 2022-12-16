@@ -16,6 +16,8 @@ namespace Oak
 		Color color;
 		AssetAnimGraph2DRef anim;
 
+		int drawLevel = 0;
+
 		META_DATA_DECL_BASE(AnimGraph2D)
 
 	#ifndef DOXYGEN_SKIP
@@ -24,6 +26,7 @@ namespace Oak
 		virtual ~AnimGraph2D() = default;
 
 		void Init() override;
+		void ApplyProperties() override;
 		void Draw(float dt);
 	#endif
 	};

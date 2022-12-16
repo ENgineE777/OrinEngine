@@ -9,6 +9,7 @@ namespace Oak
 	META_DATA_DESC(AnimGraph2D)
 		BASE_SCENE_ENTITY_PROP(AnimGraph2D)
 		ASSET_ANIM_GRAPH_2D_PROP(AnimGraph2D, anim, "Visual", "Anim")
+		INT_PROP(AnimGraph2D, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		COLOR_PROP(AnimGraph2D, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
 
@@ -23,6 +24,15 @@ namespace Oak
 		transform.transformFlag = MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY | RectMoveXY | RectAnchorn;
 
 		Tasks(true)->AddTask(0, this, (Object::Delegate)&AnimGraph2D::Draw);
+	}
+
+	void AnimGraph2D::ApplyProperties()
+	{
+#ifdef OAK_EDITOR
+		Tasks(true)->DelAllTasks(this);
+#endif
+
+		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&AnimGraph2D::Draw);
 	}
 
 	void AnimGraph2D::Draw(float dt)
