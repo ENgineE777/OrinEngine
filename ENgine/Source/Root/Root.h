@@ -151,7 +151,7 @@ namespace Oak
 		void ClearPhysScene();
 	
 		void SetRootPath(const char* rootPath);
-		const char* GetPath(Path path);
+		const char* GetPath(Path path) override;
 
 		#endif
 
