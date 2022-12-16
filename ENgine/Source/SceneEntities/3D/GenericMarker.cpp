@@ -148,6 +148,7 @@ namespace Oak
 				pos *= Sprite::ToUnits(1.0f);
 			}
 
+			inst.color.a = 0.75f;
 			root.render.DebugSphere(pos, inst.color, inst.radius, fullShade);
 
 			if (index != 0 && isPath)
