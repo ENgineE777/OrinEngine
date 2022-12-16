@@ -62,13 +62,20 @@ namespace Oak
 		if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
 		{
 			eastl::string* stringValue = (eastl::string*)dest;
-			*stringValue = eastl::string();
+			memset(stringValue, 0, sizeof(eastl::string));
+			stringValue->eastl::string::basic_string();
 		}
 		else
 		if (prop.type == Type::Color)
 		{
 			Color* colorValue = (Color*)dest;
 			*colorValue = COLOR_WHITE;
+		}
+		else
+		if (prop.type == Type::Vector2)
+		{
+			Math::Vector2* vectorValue = (Math::Vector2*)dest;
+			*vectorValue = Math::Vector2();
 		}
 		else
 		if (prop.type == Type::Vector3)
@@ -108,7 +115,8 @@ namespace Oak
 		if (prop.type == Type::Transform)
 		{
 			Transform* transformValue = (Transform*)dest;
-			*transformValue = Transform();
+			memset(transformValue, 0, sizeof(Transform));
+			transformValue->Transform::Transform();
 		}
 		else
 		if (prop.type == Type::SceneEntity)
@@ -143,6 +151,11 @@ namespace Oak
 		if (prop.type == Type::Color)
 		{
 			memcpy(dest, src, sizeof(float) * 4);
+		}
+		else
+		if (prop.type == Type::Vector2)
+		{
+			memcpy(dest, src, sizeof(float) * 2);
 		}
 		else
 		if (prop.type == Type::Vector3)
