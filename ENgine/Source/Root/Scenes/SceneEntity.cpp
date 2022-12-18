@@ -242,8 +242,26 @@ namespace Oak
 	{
 		if (transform.objectType == ObjectType::Object2D)
 		{
-			return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - Sprite::ToUnits(transform.size * Math::Vector3(transform.offset.x, 1.0f - transform.offset.y, 0.5f)),
-										transform.GetGlobal().Pos() + Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f)), start, dir);
+			auto mat = transform.GetGlobal();
+
+			if (transform.rotation.z > 90.0f)
+			{
+				int k = 0;
+				k++;
+			}
+
+			auto leftCorner = -mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(transform.offset.x, 1.0f - transform.offset.y, 0.5f)));
+			auto rightCorner = mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f)));
+
+			Math::Vector3 vmin = FLT_MAX;
+			vmin.Min(leftCorner);
+			vmin.Min(rightCorner);
+
+			Math::Vector3 vmax = FLT_MIN;
+			vmax.Max(leftCorner);
+			vmax.Max(rightCorner);
+
+			return Math::IntersectBBoxRay(mat.Pos() + vmin, mat.Pos() + vmax, start, dir);
 		}
 		
 		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);;
