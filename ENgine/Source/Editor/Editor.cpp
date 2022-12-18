@@ -1915,7 +1915,7 @@ namespace Oak
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.x;
 					ImGui::InputInt("##SnapOffsetXID", &value);
-					if (value < 2) value = 2;
+					if (value < 0) value = 0;
 					gizmo.alignGridOffset.x = (float)value;
 					ImGui::SameLine();
 
@@ -1925,7 +1925,7 @@ namespace Oak
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.y;
 					ImGui::InputInt("##SnapOffsetYID", &value, ImGuiInputTextFlags_CharsDecimal);
-					if (value < 2) value = 2;
+					if (value < 0) value = 0;
 					gizmo.alignGridOffset.y = (float)value;
 					ImGui::SameLine();
 
@@ -1935,7 +1935,7 @@ namespace Oak
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.z;
 					ImGui::InputInt("##SnapOffsetZID", &value, ImGuiInputTextFlags_CharsDecimal);
-					if (value < 2) value = 2;
+					if (value < 0) value = 0;
 					gizmo.alignGridOffset.z = (float)value;
 					ImGui::SameLine();
 				}
