@@ -1256,7 +1256,7 @@ namespace Oak
 
 		if (selectedEditAsset.Get())
 		{
-			auto iter = eastl::find_if(openedAssets.begin(), openedAssets.end(), [this](const AssetRef& asset) { return StringUtils::IsEqual(asset->GetPath().c_str(), selectedEditAsset->GetPath().c_str()); });
+			auto iter = eastl::find_if(openedAssets.begin(), openedAssets.end(), [this](const AssetRef& asset) { return asset && StringUtils::IsEqual(asset->GetPath().c_str(), selectedEditAsset->GetPath().c_str()); });
 
 			if (iter == openedAssets.end())
 			{
