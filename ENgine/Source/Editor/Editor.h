@@ -161,6 +161,8 @@ namespace Oak
 		void AddAction(IEditorAction* action);
 		void DeleteActionsFromHistory(void* owner);
 
+		void Save();
+
 	private:
 
 		void RedoAction();

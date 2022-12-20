@@ -336,6 +336,16 @@ namespace Oak
 		}
 	}
 
+	void Editor::Save()
+	{
+		if (selectedEditAsset)
+		{
+			selectedEditAsset->Save();
+		}
+
+		project.Save();
+	}
+
 	void Editor::RedoAction()
 	{
 		if (curAction < (int)actions.size() - 1)
@@ -1513,13 +1523,7 @@ namespace Oak
 				selectedFolder = nullptr;
 				selectedAssetHolder = item;
 
-				if (selectedEditAsset)
-				{
-					selectedEditAsset->EnableEditing(false);
-					selectedEditAsset->Save();
-
-					project.Save();
-				}
+				Save();
 
 				SelectEditAsset(item->GetAssetRef<AssetRef>());
 			}
@@ -1608,11 +1612,9 @@ namespace Oak
 		if (selectedEditAsset)
 		{
 			selectedEditAsset->EnableEditing(false);
-
-			selectedEditAsset->Save();
-
-			project.Save();
 		}
+
+		Save();
 
 		root.PreparePhysScene();
 		root.scenes.LoadProject(project.projectFullName.c_str());
@@ -1708,15 +1710,10 @@ namespace Oak
 		if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("File"))
-			{
+			{				
 				if (ImGui::MenuItem("Save"))
 				{
-					if (selectedEditAsset)
-					{
-						selectedEditAsset->Save();
-					}
-
-					project.Save();
+					Save();
 				}
 
 				ImGui::Separator();
@@ -2298,6 +2295,11 @@ namespace Oak
 			if (!selectMode)
 			{
 				gizmo.Render();
+			}
+
+			if (root.controls.DebugHotKeyPressed("KEY_LCONTROL", "KEY_S"))
+			{
+				Save();
 			}
 		}
 
