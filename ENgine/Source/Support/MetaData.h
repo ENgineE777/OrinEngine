@@ -139,6 +139,7 @@ namespace Oak
 			DefValue defvalue;
 			uint8_t* value;
 			eastl::string name;
+			bool enabledState = true;
 
 			#ifdef OAK_EDITOR
 			eastl::string catName;
@@ -155,6 +156,7 @@ namespace Oak
 		bool inited = false;
 		void* owner = nullptr;
 		void* root = nullptr;
+		bool checkEnabledState = false;
 
 		#ifdef OAK_EDITOR
 
@@ -195,6 +197,8 @@ namespace Oak
 		virtual void Init() = 0;
 
 	#endif
+
+		void SetPropertyStateAsDisabled(const char* name);
 
 		void Prepare(void* owner, void* root = nullptr);
 		void SetDefValues();

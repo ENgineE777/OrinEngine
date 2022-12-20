@@ -238,6 +238,18 @@ namespace Oak
 	}
 #endif
 
+	void MetaData::SetPropertyStateAsDisabled(const char* name)
+	{
+		for (auto& prop : properties)
+		{
+			if (StringUtils::IsEqual(prop.name.c_str(), name))
+			{
+				prop.enabledState = false;
+				return;
+			}
+		}
+	}
+
 	void MetaData::Prepare(void* set_owner, void* set_root)
 	{
 		if (!inited)
@@ -245,6 +257,8 @@ namespace Oak
 			Init();
 			inited = true;
 		}
+
+		checkEnabledState = false;
 
 		owner = set_owner;
 		root = set_root ? set_root : owner;
@@ -382,6 +396,11 @@ namespace Oak
 		for (int i = 0; i < properties.size(); i++)
 		{
 			Property& prop = properties[i];
+
+			if (checkEnabledState && !prop.enabledState)
+			{
+				continue;
+			}
 
 			if (allowedProprties && allowedProprties->end() != find(allowedProprties->begin(), allowedProprties->end(), prop.name))
 			{
@@ -529,6 +548,11 @@ namespace Oak
 		for (int i = 0; i < properties.size(); i++)
 		{
 			Property& prop = properties[i];
+
+			if (checkEnabledState && !prop.enabledState)
+			{
+				continue;
+			}
 
 			if (allowedProprties && allowedProprties->end() != find(allowedProprties->begin(), allowedProprties->end(), prop.name))
 			{
@@ -917,6 +941,11 @@ namespace Oak
 					editorAction.SetOwners(nullptr, owner, prop);
 					editorAction.SaveAsSavedProperty();
 
+					if (checkEnabledState && !prop.enabledState)
+					{
+						continue;
+					}
+
 					if (whitelistedProprties)
 					{
 						bool found = whitelistedProprties->end() != eastl::find(whitelistedProprties->begin(), whitelistedProprties->end(), prop.propName);
@@ -967,7 +996,7 @@ namespace Oak
 						if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
 						{
 							prop.adapter->PushBack();
-							prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem((int)prop.adapter->GetSize() - 1));
+							prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem((int)prop.adapter->GetSize() - 1), root);
 							prop.adapter->GetMetaData()->SetDefValues();
 							prop.changed = true;
 

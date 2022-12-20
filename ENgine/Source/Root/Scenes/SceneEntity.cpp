@@ -148,6 +148,7 @@ namespace Oak
 	void SceneEntity::Load(JsonReader& reader)
 	{
 		GetMetaData()->Prepare(this);
+		GetMetaData()->checkEnabledState = prefabInstance;
 		GetMetaData()->Load(reader);
 	}
 
@@ -172,6 +173,7 @@ namespace Oak
 	void SceneEntity::Save(JsonWriter& writer)
 	{
 		GetMetaData()->Prepare(this);
+		GetMetaData()->checkEnabledState = prefabInstance;
 		GetMetaData()->Save(writer);
 	}
 
@@ -210,6 +212,7 @@ namespace Oak
 	bool SceneEntity::ImGuiProperties()
 	{
 		GetMetaData()->Prepare(this);
+		GetMetaData()->checkEnabledState = prefabInstance;
 
 		if (prefabInstance)
 		{
