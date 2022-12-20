@@ -38,7 +38,7 @@ namespace Oak
 
 	public:
 
-	#ifndef DOXYGEN_SKIP
+#ifndef DOXYGEN_SKIP
 		enum class Type
 		{
 			Boolean,
@@ -76,20 +76,20 @@ namespace Oak
 		eastl::vector<MetaDataEnum> enums;
 		eastl::vector<eastl::string> defStrings;
 
-		#ifdef OAK_EDITOR
+#ifdef OAK_EDITOR
 		typedef void(*Callback)(void* owner);
 		typedef void(*EnumStringCallback)(eastl::vector<eastl::string>& names);
-		#endif
+#endif
 
 		struct ArrayAdapter
 		{
 			uint8_t* value = nullptr;
 
-			#ifdef OAK_EDITOR
+#ifdef OAK_EDITOR
 			int64_t selItemOffset = -1;
 			int32_t* selItem = nullptr;
 			Object::DelegateSimple gizmoCallback = nullptr;
-			#endif
+#endif
 
 			virtual void Resize(int length) {};
 			virtual int GetSize() { return 0; };
@@ -141,16 +141,16 @@ namespace Oak
 			eastl::string name;
 			bool enabledState = true;
 
-			#ifdef OAK_EDITOR
+#ifdef OAK_EDITOR
 			eastl::string catName;
 			eastl::string propName;
 			eastl::string brief;
 			Callback callback;
 			EnumStringCallback enum_callback;
 			bool changed = false;
-			#endif
+#endif
 
-			ArrayAdapter*  adapter = nullptr;
+			ArrayAdapter* adapter = nullptr;
 		};
 
 		bool inited = false;
@@ -158,7 +158,7 @@ namespace Oak
 		void* root = nullptr;
 		bool checkEnabledState = false;
 
-		#ifdef OAK_EDITOR
+#ifdef OAK_EDITOR
 
 		class MetaDataPropertyAction : public IEditorAction
 		{
@@ -186,19 +186,17 @@ namespace Oak
 		struct CategoryData
 		{
 			eastl::string name;
-			eastl::vector<int> indices; 
+			eastl::vector<int> indices;
 		};
 
 		eastl::vector<CategoryData> categoriesData;
-		#endif
+#endif
 		eastl::vector<Property> properties;
 
 		MetaData() = default;
 		virtual void Init() = 0;
 
-	#endif
-
-		void SetPropertyStateAsDisabled(const char* name);
+#endif
 
 		void Prepare(void* owner, void* root = nullptr);
 		void SetDefValues();
@@ -209,19 +207,19 @@ namespace Oak
 
 		void Copy(void* source, eastl::vector<Property>& sourceProperties);
 
-		#ifndef DOXYGEN_SKIP
-		#ifdef OAK_EDITOR
+#ifndef DOXYGEN_SKIP
+#ifdef OAK_EDITOR
 		MetaDataPropertyAction editorAction;
 
 		void ImGuiWidgets(eastl::vector<eastl::string>* whitelistedProprties = nullptr, bool useAsBlacklisted = false);
 		bool ImGuiVector(float* x, float* y, float* z, float* w, const char* name, const char* propID);
 		void ConstructCategoriesData();
 		bool IsValueWasChanged();
-		#endif
-		#endif
+#endif
+#endif
 	};
 
-	#define META_DATA_DECL(className)\
+#define META_DATA_DECL(className)\
 	class MetaDataImpl : public MetaData\
 	{\
 	public:\
@@ -230,7 +228,7 @@ namespace Oak
 	static MetaDataImpl meta_data;\
 	MetaData* GetMetaData() override;
 
-	#define META_DATA_DECL_BASE(className)\
+#define META_DATA_DECL_BASE(className)\
 	class MetaDataImpl : public MetaData\
 	{\
 	public:\
@@ -239,18 +237,18 @@ namespace Oak
 	static MetaDataImpl meta_data;\
 	virtual MetaData* GetMetaData();
 
-	#define META_DATA_DESC(className)\
+#define META_DATA_DESC(className)\
 	className::MetaDataImpl className::meta_data;\
 	MetaData* className::GetMetaData() { return &className::meta_data; };\
 	void className::MetaDataImpl::Init()\
 	{
 
-	#define META_DATA_DESC_END()\
+#define META_DATA_DESC_END()\
 	}
 
-	#define memberOFFSET(s,m) ((size_t)(&reinterpret_cast<s*>(100000)->m)-100000)
+#define memberOFFSET(s,m) ((size_t)(&reinterpret_cast<s*>(100000)->m)-100000)
 
-	#define BASE_PROP(className, classMember, defValue, strCatName, strPropName, tp, defValueName, doxy_brief)\
+#define BASE_PROP(className, classMember, defValue, strCatName, strPropName, tp, defValueName, doxy_brief)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -263,16 +261,16 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define BOOL_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
+#define BOOL_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
 	BASE_PROP(className, classMember, defValue, strCatName, strPropName, Type::Boolean, boolean, doxy_brief)
 
-	#define INT_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
+#define INT_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
 	BASE_PROP(className, classMember, defValue, strCatName, strPropName, Type::Integer, integer, doxy_brief)
 
-	#define FLOAT_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
+#define FLOAT_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
 	BASE_PROP(className, classMember, defValue, strCatName, strPropName, Type::Float, flt, doxy_brief)
 
-	#define BASE_STRING_PROP(className, classMember, defValue, strCatName, strPropName, tp)\
+#define BASE_STRING_PROP(className, classMember, defValue, strCatName, strPropName, tp)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -286,13 +284,13 @@ namespace Oak
 	}
 
 
-	#define STRING_PROP(className, classMember, defValue, strCatName, strPropName)\
+#define STRING_PROP(className, classMember, defValue, strCatName, strPropName)\
 	BASE_STRING_PROP(className, classMember, defValue, strCatName, strPropName, Type::String)
 
-	#define FILENAME_PROP(className, classMember, defValue, strCatName, strPropName)\
+#define FILENAME_PROP(className, classMember, defValue, strCatName, strPropName)\
 	BASE_STRING_PROP(className, classMember, defValue, strCatName, strPropName, Type::FileName)
 
-	#define COLOR_PROP(className, classMember, defValue, strCatName, strPropName)\
+#define COLOR_PROP(className, classMember, defValue, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -305,7 +303,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define VECTOR2_PROP(className, classMember, defValue, strCatName, strPropName)\
+#define VECTOR2_PROP(className, classMember, defValue, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -318,7 +316,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define VECTOR3_PROP(className, classMember, defValue, strCatName, strPropName)\
+#define VECTOR3_PROP(className, classMember, defValue, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -331,7 +329,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ENUM_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
+#define ENUM_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -343,18 +341,18 @@ namespace Oak
 		MetaDataEnum enm;\
 		enm.defIndex = (int)defValue;
 
-	#define ENUM_ELEM(name, value)\
+#define ENUM_ELEM(name, value)\
 		enm.names.push_back(name);\
 		enm.values.push_back((int)value);
 
-	#define ENUM_END\
+#define ENUM_END\
 		enums.push_back(enm);\
 		prop.defvalue.enumIndex = (int)enums.size() - 1;\
 		properties.push_back(prop);\
 	}
 
-	#ifdef OAK_EDITOR
-	#define STRING_ENUM_PROP(className, classMember, set_callback, strCatName, strPropName)\
+#ifdef OAK_EDITOR
+#define STRING_ENUM_PROP(className, classMember, set_callback, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -367,8 +365,8 @@ namespace Oak
 		prop.defvalue.enumIndex = (int)enums.size() - 1;\
 		properties.push_back(prop);\
 	}
-	#else
-	#define STRING_ENUM_PROP(className, classMember, strCatName, strPropName)\
+#else
+#define STRING_ENUM_PROP(className, classMember, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -378,10 +376,10 @@ namespace Oak
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
 	}
-	#endif
+#endif
 
-	#ifdef OAK_EDITOR
-	#define CALLBACK_PROP(className, set_callback, strCatName, strPropName)\
+#ifdef OAK_EDITOR
+#define CALLBACK_PROP(className, set_callback, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.type = Type::Callback;\
@@ -390,9 +388,9 @@ namespace Oak
 		prop.callback = set_callback;\
 		properties.push_back(prop);\
 	}
-	#endif
+#endif
 
-	#define ARRAY_PROP_INST(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember)\
+#define ARRAY_PROP_INST(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -406,7 +404,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ARRAY_PROP_INST_CALLGIZMO(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember, setGizmoCallback)\
+#define ARRAY_PROP_INST_CALLGIZMO(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember, setGizmoCallback)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -421,7 +419,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ARRAY_PROP(className, classMember, structType, strCatName, strPropName)\
+#define ARRAY_PROP(className, classMember, structType, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -433,7 +431,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ASSET_TEXTURE_PROP(className, classMember, strCatName, strPropName)\
+#define ASSET_TEXTURE_PROP(className, classMember, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -444,7 +442,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ASSET_ANIM_GRAPH_2D_PROP(className, classMember, strCatName, strPropName)\
+#define ASSET_ANIM_GRAPH_2D_PROP(className, classMember, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -455,7 +453,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ASSET_TILE_SET_PROP(className, classMember, strCatName, strPropName)\
+#define ASSET_TILE_SET_PROP(className, classMember, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -466,7 +464,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define ASSET_SPRITES_LAYER_PROP(className, classMember, strCatName, strPropName)\
+#define ASSET_SPRITES_LAYER_PROP(className, classMember, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -477,7 +475,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define TRANSFORM_PROP(className, classMember, strPropName)\
+#define TRANSFORM_PROP(className, classMember, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -488,7 +486,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-	#define SCENEOBJECT_PROP(className, classMember, strCatName, strPropName)\
+#define SCENEOBJECT_PROP(className, classMember, strCatName, strPropName)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -498,4 +496,7 @@ namespace Oak
 		prop.propName = strPropName;\
 		properties.push_back(prop);\
 	}
+
+	#define MARK_DISABLED_FOR_INSTANCE()\
+	properties.back().enabledState = false;
 }

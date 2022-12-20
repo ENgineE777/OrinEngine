@@ -238,18 +238,6 @@ namespace Oak
 	}
 #endif
 
-	void MetaData::SetPropertyStateAsDisabled(const char* name)
-	{
-		for (auto& prop : properties)
-		{
-			if (StringUtils::IsEqual(prop.name.c_str(), name))
-			{
-				prop.enabledState = false;
-				return;
-			}
-		}
-	}
-
 	void MetaData::Prepare(void* set_owner, void* set_root)
 	{
 		if (!inited)
