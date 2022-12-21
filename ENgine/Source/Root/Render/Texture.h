@@ -16,7 +16,8 @@ namespace Oak
 		FMT_A8R8,
 		FMT_A8,
 		FMT_R16_FLOAT,
-		FMT_D16
+		FMT_D16,
+		FMT_D24,
 	};
 
 	/**

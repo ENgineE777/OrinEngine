@@ -805,17 +805,6 @@ namespace Oak
 		{
 			TextureDX11* depth_dx11 = (TextureDX11*)depth;
 
-			if (!depth_dx11->depth)
-			{
-			D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
-			ZeroMemory(&descDSV, sizeof(descDSV));
-			descDSV.Format = DXGI_FORMAT_D16_UNORM;
-			descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-			descDSV.Texture2D.MipSlice = 0;
-
-				pd3dDevice->CreateDepthStencilView(depth_dx11->texture, &descDSV, &depth_dx11->depth);
-			}
-
 			cur_depth_w = depth_dx11->GetWidth();
 			cur_depth_h = depth_dx11->GetHeight();
 

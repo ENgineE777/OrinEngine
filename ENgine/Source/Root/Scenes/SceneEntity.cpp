@@ -247,12 +247,6 @@ namespace Oak
 		{
 			auto mat = transform.GetGlobal();
 
-			if (transform.rotation.z > 90.0f)
-			{
-				int k = 0;
-				k++;
-			}
-
 			auto leftCorner = -mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(transform.offset.x, 1.0f - transform.offset.y, 0.5f)));
 			auto rightCorner = mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f)));
 

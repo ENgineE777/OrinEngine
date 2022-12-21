@@ -16,6 +16,7 @@ namespace Oak
 			case TextureFormat::FMT_A8: return DXGI_FORMAT_R8_UNORM;
 			case TextureFormat::FMT_R16_FLOAT: return DXGI_FORMAT_R16_FLOAT;
 			case TextureFormat::FMT_D16: return DXGI_FORMAT_R16_TYPELESS;
+			case TextureFormat::FMT_D24: return DXGI_FORMAT_R24G8_TYPELESS;
 		}
 
 		return 0;
@@ -52,7 +53,19 @@ namespace Oak
 		desc.CPUAccessFlags = 0;
 		desc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
 
+		DXGI_FORMAT depthFormat = DXGI_FORMAT_UNKNOWN;
+		
 		if (fmt == DXGI_FORMAT_R16_TYPELESS)
+		{
+			depthFormat = DXGI_FORMAT_R16_UNORM;
+		}
+		else
+		if (fmt == DXGI_FORMAT_R24G8_TYPELESS)
+		{
+			depthFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		}
+
+		if (depthFormat != DXGI_FORMAT_UNKNOWN)
 		{
 			desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_DEPTH_STENCIL;
 			desc.Usage = D3D11_USAGE_DEFAULT;
@@ -67,7 +80,7 @@ namespace Oak
 
 		srvDesc.Format = fmt;
 
-		if (fmt == DXGI_FORMAT_R16_TYPELESS)
+		if (depthFormat != DXGI_FORMAT_UNKNOWN)
 		{
 			srvDesc.Format = DXGI_FORMAT_R16_UNORM;
 		}
@@ -80,6 +93,17 @@ namespace Oak
 		sampler_need_recrete = true;
 
 		DeviceDX11::instance->pd3dDevice->CreateShaderResourceView(texture, &srvDesc, &srview);
+
+		if (depthFormat != DXGI_FORMAT_UNKNOWN)
+		{
+			D3D11_DEPTH_STENCIL_VIEW_DESC descDSV;
+			ZeroMemory(&descDSV, sizeof(descDSV));
+			descDSV.Format = depthFormat;
+			descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+			descDSV.Texture2D.MipSlice = 0;
+
+			DeviceDX11::instance->pd3dDevice->CreateDepthStencilView(texture, &descDSV, &depth);
+		}
 	}
 
 	void TextureDX11::Resize(int setWidth, int setHeight)
