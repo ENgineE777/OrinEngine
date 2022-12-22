@@ -2392,6 +2392,13 @@ namespace Oak
 
 		editorDrawer.Release();
 
+		projects.clear();
+
+		draggedTextureAsset.ReleaseRef();
+		draggedAssetAnimGraph2D.ReleaseRef();
+		draggedAssetTileSet.ReleaseRef();
+		draggeSpriteLayerSet.ReleaseRef();
+
 		project.Reset();
 
 		root.render.DelTaskPool(renderTaskPool);

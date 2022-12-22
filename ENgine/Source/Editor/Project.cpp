@@ -281,6 +281,10 @@ namespace Oak
 		icon.ReleaseRef();
 		iconSmall.ReleaseRef();
 
+		editor.selectedAsset.ReleaseRef();
+		editor.selectedEditAsset.ReleaseRef();
+		editor.openedAssets.clear();
+
 		Sprite::SetData(1080.0f, 50.0f);
 
 		editor.SelectEditAsset(AssetRef());
