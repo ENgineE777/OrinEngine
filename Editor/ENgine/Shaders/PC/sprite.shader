@@ -30,11 +30,6 @@ PS_INPUT VS( VS_INPUT input )
 	float4 posTemp = float4(desc[0].x + desc[0].z * input.position.x,
 							desc[0].y - desc[0].w * input.position.y, 0, 1.0f);
 	
-	/*posTemp = mul(posTemp, trans);
-
-	posTemp.x = -1.0f + posTemp.x/desc[2].x * 2.0f;
-	posTemp.y = 1.0f - posTemp.y/desc[2].y * 2.0f;*/
-	
 	PS_INPUT output = (PS_INPUT)0;
 
     float4 pos = mul(float4(posTemp.x, posTemp.y, 0.0f, 1.0f), trans);
@@ -69,29 +64,26 @@ float4 PS_LIGHT(PS_INPUT input) : SV_Target
     return float4(1.0f, 1.0f, 1.0f, intense) * color;
 }
 
-struct PS_POLYGON_INPUT
+struct VS_POLYGON_INPUT
 {
-    float4 pos : SV_POSITION;
+    float2 position : POSITION;
     float2 texCoord : TEXCOORD;
 };
 
-PS_POLYGON_INPUT VS_POLYGON( VS_INPUT input )
+struct PS_POLYGON_INPUT
+{
+    float4 position : POSITION;
+    float2 texCoord : TEXCOORD;
+};
+
+PS_INPUT VS_POLYGON( VS_POLYGON_INPUT input )
 {	
-	PS_POLYGON_INPUT output = (PS_POLYGON_INPUT)0;
+	PS_INPUT output = (PS_INPUT)0;
 
     float4 pos = mul(float4(input.position.x, input.position.y, 0.0f, 1.0f), trans);
 	output.pos = mul(pos, view_proj);
 	
+    output.texCoord = input.texCoord;
+
 	return output;
-}
-
-float4 PS_POLYGON( PS_INPUT input) : SV_Target
-{
-    float4 clr = color;
-    if (clr.a < 0.05f)
-    {
-       discard;
-    }
-
-    return clr;
 }

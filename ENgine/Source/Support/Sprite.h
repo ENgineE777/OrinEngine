@@ -25,6 +25,8 @@ namespace Oak
 
 		static VertexDeclRef _vdecl;
 		static DataBufferRef _quadBuffer;
+
+		static VertexDeclRef _polygonVdecl;
 		static constexpr int _polygonBufferSize = 128;
 		static DataBufferRef _polygonBuffer;
 
@@ -34,6 +36,19 @@ namespace Oak
 
 	public:
 
+		struct PolygonVertex
+		{
+			Math::Vector2 pos;
+			Math::Vector2 uv;
+			
+			PolygonVertex() = default;
+			PolygonVertex(Math::Vector2 setPos, Math::Vector2 setUV = 0.0f)
+			{
+				pos = setPos;
+				uv = setUV;
+			}
+		};
+
 		static RenderTechniqueRef quadPrg;
 		static RenderTechniqueRef quadPrgNoZ;
 
@@ -42,7 +57,7 @@ namespace Oak
 
 		static void Init();
 		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, RenderTechniqueRef prg = quadPrg);
-		static void DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg = polygonPrg);
+		static void DrawConvexPolygon(Texture* texture, PolygonVertex* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg = polygonPrg);
 
 		static Math::Vector2 GetCamPos() { return _camPos; }
 

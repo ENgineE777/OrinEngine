@@ -1,4 +1,4 @@
-
+﻿
 #include "Sprite.h"
 #include "Root/Root.h"
 
@@ -34,7 +34,7 @@ namespace Oak
 	{
 	public:
 		virtual const char* GetVsName() { return "polygon_vs.shd"; };
-		virtual const char* GetPsName() { return "polygon_ps.shd"; };
+		virtual const char* GetPsName() { return "sprite_ps.shd"; };
 
 		virtual void ApplyStates()
 		{
@@ -60,6 +60,8 @@ namespace Oak
 
 	VertexDeclRef Sprite::_vdecl;
 	DataBufferRef Sprite::_quadBuffer;
+
+	VertexDeclRef Sprite::_polygonVdecl;
 	DataBufferRef Sprite::_polygonBuffer;
 
 	float Sprite::_pixelsPerUnit = 50.0f;
@@ -85,8 +87,7 @@ namespace Oak
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float2, ElementSemantic::Position, 0 } };
 		_vdecl = root.render.GetDevice()->CreateVertexDecl(1, desc, _FL_);
 
-		int stride = sizeof(Math::Vector2);
-		_quadBuffer = root.render.GetDevice()->CreateBuffer(4, stride, _FL_);
+		_quadBuffer = root.render.GetDevice()->CreateBuffer(4, sizeof(Math::Vector2), _FL_);
 
 		Math::Vector2* v = (Math::Vector2*)_quadBuffer->Lock();
 
@@ -97,7 +98,10 @@ namespace Oak
 
 		_quadBuffer->Unlock();
 
-		_polygonBuffer = root.render.GetDevice()->CreateBuffer(128, stride, _FL_);
+		VertexDecl::ElemDesc polygonDesc[] = { { ElementType::Float2, ElementSemantic::Position, 0 }, { ElementType::Float2, ElementSemantic::Texcoord, 0 } };
+		_polygonVdecl = root.render.GetDevice()->CreateVertexDecl(2, polygonDesc, _FL_);
+
+		_polygonBuffer = root.render.GetDevice()->CreateBuffer(128, sizeof(PolygonVertex), _FL_);
 
 		quadPrg = root.render.GetRenderTechnique<QuadRenderTechnique>(_FL_);
 		quadPrgNoZ = root.render.GetRenderTechnique<QuadRenderNoZTechnique>(_FL_);
@@ -128,26 +132,29 @@ namespace Oak
 		root.render.GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
-	void Sprite::DrawConvexPolygon(Math::Vector2* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg)
+	void Sprite::DrawConvexPolygon(Texture* texture, PolygonVertex* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg)
 	{
 		root.render.GetDevice()->SetVertexBuffer(0, _polygonBuffer);
-		root.render.GetDevice()->SetVertexDecl(_vdecl);
+		root.render.GetDevice()->SetVertexDecl(_polygonVdecl);
 
 		root.render.GetDevice()->SetRenderTechnique(prg);
 
 		Math::Matrix view_proj;
 		root.render.GetTransform(TransformStage::WrldViewProj, view_proj);
 
-		Math::Vector2* v = (Math::Vector2*)_polygonBuffer->Lock();
+		PolygonVertex* v = (PolygonVertex*)_polygonBuffer->Lock();
 
 		int triangleCount = pointsCount - 2;
 		int index = 0;
 
 		for (int i = 0; i < triangleCount; i++)
 		{
-			v[index++] = points[0] * _pixelsPerUnitInvert;
-			v[index++] = points[i + 1] * _pixelsPerUnitInvert;
-			v[index++] = points[i + 2] * _pixelsPerUnitInvert;
+			for (int j = 0; j < 3; j++)
+			{
+				v[index] = points[j == 0 ? 0 : i + j];
+				v[index].pos *= _pixelsPerUnitInvert;
+				index++;
+			}
 		}
 
 		_polygonBuffer->Unlock();
@@ -155,7 +162,7 @@ namespace Oak
 		prg->SetMatrix(ShaderType::Vertex, "trans", &trans, 1);
 		prg->SetMatrix(ShaderType::Vertex, "view_proj", &view_proj, 1);
 		prg->SetVector(ShaderType::Pixel, "color", (Math::Vector4*)&clr.r, 1);
-		prg->SetTexture(ShaderType::Pixel, "diffuseMap", root.render.GetWhiteTexture());
+		prg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
 
 		root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, pointsCount - 2);
 	}
@@ -182,6 +189,7 @@ namespace Oak
 	{ 
 		_vdecl.ReleaseRef();
 		_quadBuffer.ReleaseRef();
+		_polygonVdecl.ReleaseRef();
 		_polygonBuffer.ReleaseRef();
 		quadPrg.ReleaseRef();
 		quadPrgNoZ.ReleaseRef();
