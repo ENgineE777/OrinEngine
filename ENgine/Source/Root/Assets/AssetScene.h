@@ -80,5 +80,6 @@ namespace Oak
 		void SceneDropTraget(SceneEntity* entity);
 		void SceneTreePopup(bool contextItem);
 		void CopyChilds(SceneEntity* entity, SceneEntity* copy, Scene* sceneOwner);
+		void DeleteSelectedEntity();
 	};
 }

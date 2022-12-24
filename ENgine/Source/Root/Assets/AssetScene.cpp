@@ -377,6 +377,31 @@ namespace Oak
 		}
 	}
 
+	void AssetScene::DeleteSelectedEntity()
+	{
+		if (!selectedEntity)
+		{
+			return;
+		}
+
+		SceneEntity* entity = selectedEntity;
+		SelectEntity(nullptr);
+
+		editor.DeleteActionsFromHistory(entity);
+
+		if (entity->GetParent())
+		{
+			entity->SetParent(nullptr);
+			entity->Release();
+		}
+		else
+		{
+			scene->DeleteEntity(entity, true);
+		}
+
+		containsUnsavedChanges = true;
+	}
+
 	void AssetScene::CreateEntityPopupEntry(const eastl::vector<ClassFactorySceneEntity*>& decls, int& curIndex, int curDepth, bool onlyToCreate)
 	{
 		while (curIndex < decls.size())
@@ -536,26 +561,14 @@ namespace Oak
 				containsUnsavedChanges = true;
 			}
 
-			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Delete"))
+			if (!onlyToCreate && ImGui::MenuItem("Delete"))
 			{
-				SceneEntity* entity = selectedEntity;
-				SelectEntity(nullptr);
-
-				editor.DeleteActionsFromHistory(entity);
-
-				if (entity->GetParent())
+				if (selectedEntity)
 				{
-					entity->SetParent(nullptr);
-					entity->Release();
-				}
-				else
-				{
-					scene->DeleteEntity(entity, true);
-				}
+					DeleteSelectedEntity();
 
-				containsUnsavedChanges = true;
-
-				entityDeletedViaPopup = true;
+					entityDeletedViaPopup = true;
+				}
 			}
 
 			ImGui::EndPopup();
@@ -660,6 +673,14 @@ namespace Oak
 
 	void AssetScene::ImGuiViewport(bool viewportFocused)
 	{
+		if (viewportFocused)
+		{
+			if (root.GetControls()->DebugKeyPressed("KEY_DELETE"))
+			{
+				DeleteSelectedEntity();
+			}
+		}
+
 		if (!blockPopupInViewport)
 		{
 			SceneTreePopup(true);
