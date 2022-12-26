@@ -28,11 +28,6 @@ namespace Oak
 		COLOR_PROP(Lights2DRenderer, ambientColor, COLOR_WHITE, "Visual", "Ambient color")
 	META_DATA_DESC_END()
 
-	Lights2DRenderer::Lights2DRenderer() : SceneEntity()
-	{
-		//inst_class_name = "SpriteInst";
-	}
-
 	void Lights2DRenderer::Init()
 	{
 		transform.objectType = ObjectType::Object2D;

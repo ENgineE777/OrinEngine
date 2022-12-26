@@ -13,11 +13,6 @@ namespace Oak
 		COLOR_PROP(AnimGraph2D, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
 
-	AnimGraph2D::AnimGraph2D() : SceneEntity()
-	{
-		//inst_class_name = "SpriteInst";
-	}
-
 	void AnimGraph2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;

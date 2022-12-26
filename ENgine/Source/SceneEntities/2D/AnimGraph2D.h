@@ -22,7 +22,7 @@ namespace Oak
 
 	#ifndef DOXYGEN_SKIP
 
-		AnimGraph2D();
+		AnimGraph2D() = default;
 		virtual ~AnimGraph2D() = default;
 
 		void Init() override;

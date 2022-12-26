@@ -16,7 +16,7 @@ namespace Oak
 
 	#ifndef DOXYGEN_SKIP
 
-		Node2D();
+		Node2D() = default;
 		virtual ~Node2D() = default;
 
 		void Init() override;

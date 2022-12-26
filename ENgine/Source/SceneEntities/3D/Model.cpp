@@ -11,11 +11,6 @@ namespace Oak
 		FILENAME_PROP(ModelEntity, meshPath, "", "Visual", "Mesh")
 	META_DATA_DESC_END()
 
-	ModelEntity::ModelEntity() : SceneEntity()
-	{
-		//inst_class_name = "SpriteInst";
-	}
-
 	void ModelEntity::Init()
 	{
 		Tasks(false)->AddTask(0, this, (Object::Delegate)& ModelEntity::Update);

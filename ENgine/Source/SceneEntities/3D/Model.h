@@ -18,7 +18,7 @@ namespace Oak
 
 	#ifndef DOXYGEN_SKIP
 
-		ModelEntity();
+		ModelEntity() = default;
 		virtual ~ModelEntity() = default;
 
 		void Init() override;

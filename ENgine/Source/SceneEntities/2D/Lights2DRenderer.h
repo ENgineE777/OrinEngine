@@ -34,7 +34,7 @@ namespace Oak
 
 	#ifndef DOXYGEN_SKIP
 
-		Lights2DRenderer();
+		Lights2DRenderer() = default;
 		virtual ~Lights2DRenderer() = default;
 
 		void Init() override;
