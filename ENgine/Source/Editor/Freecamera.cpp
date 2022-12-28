@@ -23,75 +23,78 @@ namespace Oak
 		alias_reset_view = root.controls.GetAlias("FreeCamera.RESET_VIEW");
 	}
 
-	void FreeCamera::Update(float dt)
+	void FreeCamera::Update(float dt, bool viewportFocused)
 	{
-		if (mode2D)
+		if (viewportFocused)
 		{
-			if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
+			if (mode2D)
 			{
-				float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
-				pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;
-				pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) / zoom2D / k;
-			}
-
-			if (editor.vireportHowered)
-			{
-				zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * (0.015f + rotationSensivity * 0.007f);
-				ClampZoom2D();
-			}
-
-			Sprite::_camPos = pos2D;
-		}
-		else
-		{
-			if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Pressed))
-			{
-				float sensivity = 0.0025f + rotationSensivity * 0.00075f;
-				angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * sensivity;
-				angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * sensivity;
-
-				if (angles.y > Math::HalfPI)
+				if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
 				{
-					angles.y = Math::HalfPI;
+					float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
+					pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;
+					pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) / zoom2D / k;
 				}
 
-				if (angles.y < -Math::HalfPI)
+				if (editor.vireportHowered)
 				{
-					angles.y = -Math::HalfPI;
+					zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * (0.015f + rotationSensivity * 0.007f);
+					ClampZoom2D();
 				}
-			}
 
-			float forward = root.controls.GetAliasValue(alias_forward, false);
-			float strafe = root.controls.GetAliasValue(alias_strafe, false);
-			float fast = root.controls.GetAliasValue(alias_fast, false);
-
-			float speed = (moveSpeed + moveFastSpeed * fast) * Math::Vector2(forward, strafe).Length();
-			float accel = fabsf(speed) > 0.0f ? moveAcceleration : moveDeacceleration;
-
-			if (cur_speed < speed)
-			{
-				cur_speed += dt * accel;
-
-				if (cur_speed > speed)
-				{
-					cur_speed = speed;
-				}
+				Sprite::_camPos = pos2D;
 			}
 			else
 			{
-				cur_speed -= dt * accel;
+				if (root.controls.GetAliasState(alias_rotate_active, AliasAction::Pressed))
+				{
+					float sensivity = 0.0025f + rotationSensivity * 0.00075f;
+					angles.x -= root.controls.GetAliasValue(alias_rotate_x, true) * sensivity;
+					angles.y -= root.controls.GetAliasValue(alias_rotate_y, true) * sensivity;
+
+					if (angles.y > Math::HalfPI)
+					{
+						angles.y = Math::HalfPI;
+					}
+
+					if (angles.y < -Math::HalfPI)
+					{
+						angles.y = -Math::HalfPI;
+					}
+				}
+
+				float forward = root.controls.GetAliasValue(alias_forward, false);
+				float strafe = root.controls.GetAliasValue(alias_strafe, false);
+				float fast = root.controls.GetAliasValue(alias_fast, false);
+
+				float speed = (moveSpeed + moveFastSpeed * fast) * Math::Vector2(forward, strafe).Length();
+				float accel = fabsf(speed) > 0.0f ? moveAcceleration : moveDeacceleration;
 
 				if (cur_speed < speed)
 				{
-					cur_speed = speed;
-				}
-			}
+					cur_speed += dt * accel;
 
-			Math::Vector3 dir = Math::Vector3(cosf(angles.x), sinf(angles.y), sinf(angles.x));
-			pos += dir * cur_speed * forward * dt;
-	
-			Math::Vector3 dir_strafe = Math::Vector3(dir.z, 0,-dir.x);
-			pos += dir_strafe * cur_speed * strafe * dt;
+					if (cur_speed > speed)
+					{
+						cur_speed = speed;
+					}
+				}
+				else
+				{
+					cur_speed -= dt * accel;
+
+					if (cur_speed < speed)
+					{
+						cur_speed = speed;
+					}
+				}
+
+				Math::Vector3 dir = Math::Vector3(cosf(angles.x), sinf(angles.y), sinf(angles.x));
+				pos += dir * cur_speed * forward * dt;
+
+				Math::Vector3 dir_strafe = Math::Vector3(dir.z, 0, -dir.x);
+				pos += dir_strafe * cur_speed * strafe * dt;
+			}
 		}
 
 		if (mode2D)

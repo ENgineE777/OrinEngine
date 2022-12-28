@@ -2290,7 +2290,7 @@ namespace Oak
 
 		if (!projectRunning)
 		{
-			freeCamera.Update(dt);
+			 freeCamera.Update(dt, viewportFocused);
 
 			if (!selectMode)
 			{

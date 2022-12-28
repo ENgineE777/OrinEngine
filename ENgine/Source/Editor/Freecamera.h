@@ -45,7 +45,7 @@ namespace Oak
 
 		void Init();
 
-		void Update(float dt);
+		void Update(float dt, bool viewportFocused);
 
 		void ClampZoom2D();
 	};
