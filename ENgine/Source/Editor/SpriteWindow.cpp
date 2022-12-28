@@ -1129,7 +1129,7 @@ namespace Oak
 
 		prevMs = ms;
 
-		if (!inDragAndDrop && dragMouse && drag == Drag::DragNone)
+		if (!inDragAndDrop && dragMouse && drag == Drag::DragNone && root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed, true))
 		{
 			drag = Drag::DragNewSlice;
 		}
