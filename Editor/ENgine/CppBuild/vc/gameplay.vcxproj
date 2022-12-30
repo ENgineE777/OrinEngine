@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{818CDC6B-1F10-38AF-ABD8-2A903193354E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>gameplay</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\Binaries\Win64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Debug\Obj</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gameplay_Debug</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\Binaries\Win64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Release\Obj</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gameplay_Release</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.dll</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>$EDITOR_DIR\ENgine\CppBuild\lib\eastl_Debug.lib;$EDITOR_DIR\ENgine\CppBuild\lib\Oak_Debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>Debug/gameplay_Debug.lib</ImportLibrary>
+      <ProgramDataBaseFile>../Binaries/Win64/gameplay_Debug.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>$EDITOR_DIR\ENgine\CppBuild\lib\eastl.lib;$EDITOR_DIR\ENgine\CppBuild\lib\Oak.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>Release/gameplay_Release.lib</ImportLibrary>
+      <ProgramDataBaseFile>../Binaries/Win64/gameplay_Release.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+$SOURCES
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
