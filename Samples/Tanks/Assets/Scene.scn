@@ -1,5 +1,4 @@
 ﻿{
-
 	"uid" : 30624,
 	"entities" : [
 		{
@@ -7,6 +6,7 @@
 			"uid" : 980907,
 			"type" : "Terrain",
 			"name" : "Terrain",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -58,6 +58,7 @@
 			"uid" : 524287,
 			"type" : "Tank",
 			"name" : "Tank",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -98,6 +99,7 @@
 			"uid" : 1046458,
 			"type" : "ControlsAliases",
 			"name" : "ControlsAliases",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -139,6 +141,7 @@
 			"uid" : 653309,
 			"type" : "GenericMarker",
 			"name" : "GenericMarker",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -150,7 +153,7 @@
 				},
 				"rotation" :
 				{
-					"x" : -16.746918,
+					"x" : -16.746920,
 					"y" : 9.516846,
 					"z" : 18.922268
 				},
@@ -187,13 +190,13 @@
 							"r" : 1.000000,
 							"g" : 1.000000,
 							"b" : 1.000000,
-							"a" : 1.000000
+							"a" : 0.750000
 						},
 						"Transform" :
 						{
 							"position" :
 							{
-								"x" : -36.612160,
+								"x" : -36.612156,
 								"y" : -13.921412,
 								"z" : -27.692863
 							},
@@ -230,7 +233,7 @@
 							"r" : 1.000000,
 							"g" : 1.000000,
 							"b" : 1.000000,
-							"a" : 1.000000
+							"a" : 0.750000
 						},
 						"Transform" :
 						{
@@ -273,7 +276,7 @@
 							"r" : 1.000000,
 							"g" : 1.000000,
 							"b" : 1.000000,
-							"a" : 1.000000
+							"a" : 0.750000
 						},
 						"Transform" :
 						{
@@ -316,7 +319,7 @@
 							"r" : 1.000000,
 							"g" : 1.000000,
 							"b" : 1.000000,
-							"a" : 1.000000
+							"a" : 0.750000
 						},
 						"Transform" :
 						{
@@ -360,6 +363,7 @@
 			"uid" : 161717,
 			"type" : "TankClient",
 			"name" : "TankClient",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -402,13 +406,14 @@
 			"uid" : 65447,
 			"type" : "PhysBox3D",
 			"name" : "PhysBox3D",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537817,
-					"y" : 8.235728,
+					"x" : 8.537816,
+					"y" : 8.235727,
 					"z" : -1.379792
 				},
 				"rotation" :
@@ -453,13 +458,14 @@
 			"uid" : 456630,
 			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537817,
-					"y" : 8.235728,
+					"x" : 8.537816,
+					"y" : 8.235727,
 					"z" : 1.428889
 				},
 				"rotation" :
@@ -504,13 +510,14 @@
 			"uid" : 751604,
 			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537817,
-					"y" : 8.235728,
+					"x" : 8.537816,
+					"y" : 8.235727,
 					"z" : 4.189838
 				},
 				"rotation" :
@@ -555,12 +562,13 @@
 			"uid" : 96253,
 			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy_copy",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537817,
+					"x" : 8.537816,
 					"y" : 10.704865,
 					"z" : 3.083514
 				},
@@ -606,12 +614,13 @@
 			"uid" : 751523,
 			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy_copy_copy",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537817,
+					"x" : 8.537816,
 					"y" : 10.704865,
 					"z" : 0.262023
 				},
@@ -657,12 +666,13 @@
 			"uid" : 292792,
 			"type" : "PhysBox3D",
 			"name" : "PhysBox3D_copy_copy_copy_copy_copy",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
 				"position" :
 				{
-					"x" : 8.537817,
+					"x" : 8.537816,
 					"y" : 13.224090,
 					"z" : 1.646913
 				},

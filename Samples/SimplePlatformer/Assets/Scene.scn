@@ -1,5 +1,4 @@
 ﻿{
-
 	"uid" : 3200,
 	"entities" : [
 		{
@@ -7,6 +6,7 @@
 			"uid" : 498923,
 			"type" : "TileMap",
 			"name" : "Level",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -42,7 +42,6 @@
 				}
 			},
 			"drawLevel" : 0,
-			"physGroup" : 1,
 			"tileSet" :
 			{
 				"Path" : "Level/Level.tls"
@@ -1526,6 +1525,7 @@
 			"uid" : 835248,
 			"type" : "Camera2D",
 			"name" : "Camera2D",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -1578,6 +1578,7 @@
 			"uid" : 524173,
 			"type" : "SpritesLayer",
 			"name" : "Skies",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -1625,6 +1626,7 @@
 			"uid" : 48608,
 			"type" : "SpritesLayer",
 			"name" : "Mountains",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -1672,6 +1674,7 @@
 			"uid" : 138731,
 			"type" : "SpritesLayer",
 			"name" : "Trees",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -1719,6 +1722,7 @@
 			"uid" : 446100,
 			"type" : "Character/player.prefab",
 			"name" : "player",
+			"layerName" : "",
 			"visible" : true,
 			"Transform" :
 			{
@@ -1754,6 +1758,7 @@
 				}
 			},
 			"childs" : [
+
 			]
 		}
 	]

@@ -1,18 +1,34 @@
 ﻿{
-
 	"export_dir" : "",
 	"iconPath" : "Icon.png",
 	"iconSmallPath" : "Icon.png",
 	"projectName" : "Simple",
 	"start_scene" : "Scene",
-	"alignRect" :
+	"alignGrid" :
 	{
 		"x" : 8.000000,
-		"y" : 8.000000
+		"y" : 8.000000,
+		"z" : 8.000000
 	},
-	"useAlignRect" : false,
+	"useAlignGrid" : false,
+	"alignGridOffset" :
+	{
+		"x" : 8.000000,
+		"y" : 8.000000,
+		"z" : 8.000000
+	},
+	"useAlignGridOffset" : false,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 240.000000,
 	"hideCursor" : false,
-	"edited_asset" : "Scene.scn"
+	"runningInFullscreen" : false,
+	"openedAssets" : [
+		{
+			"path" : "Scene.scn"
+		}
+	],
+	"edited_asset" : "Scene.scn",
+	"layers" : [
+
+	]
 }

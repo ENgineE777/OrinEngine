@@ -1,18 +1,34 @@
 ﻿{
-
 	"export_dir" : "F:/Work/Batman",
 	"iconPath" : "BatIcon.png",
 	"iconSmallPath" : "BatIcon.png",
 	"projectName" : "Beatemup",
 	"start_scene" : "Main",
-	"alignRect" :
+	"alignGrid" :
 	{
 		"x" : 8.000000,
-		"y" : 8.000000
+		"y" : 8.000000,
+		"z" : 8.000000
 	},
-	"useAlignRect" : false,
+	"useAlignGrid" : false,
+	"alignGridOffset" :
+	{
+		"x" : 8.000000,
+		"y" : 8.000000,
+		"z" : 8.000000
+	},
+	"useAlignGridOffset" : false,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 200.000000,
 	"hideCursor" : false,
-	"edited_asset" : "Main.scn"
+	"runningInFullscreen" : false,
+	"openedAssets" : [
+		{
+			"path" : "Main.scn"
+		}
+	],
+	"edited_asset" : "Main.scn",
+	"layers" : [
+
+	]
 }
