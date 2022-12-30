@@ -87,6 +87,10 @@ namespace Oak
 									MESSAGE_BOX("Can't compile script", str.c_str());
 								}
 							}
+							else
+							{
+								editor.MaximizeEditorWindow();
+							}
 						}
 					}
 					else

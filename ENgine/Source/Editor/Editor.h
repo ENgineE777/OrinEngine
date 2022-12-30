@@ -152,6 +152,8 @@ namespace Oak
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) override;
 		void OnResize(int width, int height) override;
 
+		void MaximizeEditorWindow();
+
 		void SelectEditAsset(AssetRef asset);
 
 		void Release() override;

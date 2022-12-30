@@ -1240,10 +1240,15 @@ namespace Oak
 
 		if (project.Load(projectFullName.c_str()))
 		{
-			ShowWindow(hwnd, SW_MAXIMIZE);
+			MaximizeEditorWindow();
 		}
 
 		projectToLoad = nullptr;
+	}
+
+	void Editor::MaximizeEditorWindow()
+	{
+		ShowWindow(hwnd, SW_MAXIMIZE);
 	}
 
 	void Editor::SelectEditAsset(AssetRef asset)
