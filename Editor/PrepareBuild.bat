@@ -40,13 +40,10 @@ del EditorRelease\Editor\projects
 xcopy Samples\*.* EditorRelease\Samples\ /sy
 
 RMDIR /s /q EditorRelease\Samples\Beatemup\VsProj
-RMDIR /s /q EditorRelease\Samples\Beatemup\Binaries
 
 RMDIR /s /q EditorRelease\Samples\Tanks\VsProj
-RMDIR /s /q EditorRelease\Samples\Tanks\Binaries
 
 RMDIR /s /q EditorRelease\Samples\SimplePlatformer\VcProj
-RMDIR /s /q EditorRelease\Samples\SimplePlatformer\Binaries
 
 copy EditorRelease\Samples\projects EditorRelease\Editor\projects
 del EditorRelease\Samples\projects
