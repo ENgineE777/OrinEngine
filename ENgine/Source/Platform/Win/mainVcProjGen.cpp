@@ -19,15 +19,14 @@ struct SourceFile
 
 void ScanSources(const char* basePath, const char* path, eastl::vector<SourceFile>& sources, eastl::vector<eastl::string>& filters)
 {
-	char croppedPath[512];
-	StringUtils::GetCropPath(basePath, path, croppedPath, 512);
-
+	char croppedPath[MAX_PATH];
+	StringUtils::GetCropPath(basePath, path, croppedPath, MAX_PATH);
 
 	for (auto& entry : std::filesystem::directory_iterator(path))
 	{
 		const char* entryPath = entry.path().u8string().c_str();
-		char cropped[512];
-		StringUtils::GetCropPath(basePath, entryPath, cropped, 512);
+		char cropped[MAX_PATH];
+		StringUtils::GetCropPath(basePath, entryPath, cropped, MAX_PATH);
 
 		if (entry.is_directory())
 		{				
@@ -54,21 +53,24 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	char curDir[512];
-	GetCurrentDirectoryA(512, curDir);
+	char exePath[MAX_PATH];
+	GetModuleFileNameA(NULL, exePath, MAX_PATH);
+
+	char curDir[MAX_PATH];
+	StringUtils::GetPath(exePath, curDir);
 	StringUtils::FixSlashes(curDir);
 
 	const char* projectDir = argv[1];
 
-	char vcprojDir[512];
-	StringUtils::Printf(vcprojDir, 512, "%s/VcProj", projectDir);
+	char vcprojDir[MAX_PATH];
+	StringUtils::Printf(vcprojDir, MAX_PATH, "%s/VcProj", projectDir);
 
 	CreateDirectoryA(vcprojDir, nullptr);
 
 	std::cout << vcprojDir << std::endl;
 
-	char codeDir[512];
-	StringUtils::Printf(codeDir, 512, "%s/Code/", projectDir);
+	char codeDir[MAX_PATH];
+	StringUtils::Printf(codeDir, MAX_PATH, "%s/Code/", projectDir);
 	StringUtils::FixSlashes(codeDir);
 
 	eastl::vector<SourceFile> sources;
@@ -81,18 +83,18 @@ int main(int argc, char* argv[])
 
 	ScanSources(codeDir, codeDir, sources, filters);
 
-	char vcslnPath[512];
-	StringUtils::Printf(vcslnPath, 512, "%s/gameplay.sln", vcprojDir);
+	char vcslnPath[MAX_PATH];
+	StringUtils::Printf(vcslnPath, MAX_PATH, "%s/gameplay.sln", vcprojDir);
 	CopyFileA(StringUtils::PrintTemp("%s/ENgine/CppBuild/vc/gameplay.sln", curDir), vcslnPath , false);
 
-	char vcprojPath[512];
-	StringUtils::Printf(vcprojPath, 512, "%s/gameplay.vcxproj", vcprojDir);
+	char vcprojPath[MAX_PATH];
+	StringUtils::Printf(vcprojPath, MAX_PATH, "%s/gameplay.vcxproj", vcprojDir);
 
-	char vcprojFiltersPath[512];
-	StringUtils::Printf(vcprojFiltersPath, 512, "%s/gameplay.vcxproj.filters", vcprojDir);
+	char vcprojFiltersPath[MAX_PATH];
+	StringUtils::Printf(vcprojFiltersPath, MAX_PATH, "%s/gameplay.vcxproj.filters", vcprojDir);
 
-	char vcprojUserPath[512];
-	StringUtils::Printf(vcprojUserPath, 512, "%s/gameplay.vcxproj.user", vcprojDir);
+	char vcprojUserPath[MAX_PATH];
+	StringUtils::Printf(vcprojUserPath, MAX_PATH, "%s/gameplay.vcxproj.user", vcprojDir);
 	CopyFileA(StringUtils::PrintTemp("%s/ENgine/CppBuild/vc/gameplay.vcxproj.user", curDir), vcprojUserPath, false);
 
 	FileInMemory outputFile;
