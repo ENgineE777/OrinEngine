@@ -28,14 +28,13 @@ namespace Oak
 
 		Scene* GetScene();
 
-		bool IsEditable() override;
-		void EnableEditing(bool enable) override;
-
 		void Reload() override;
 
 		void LoadMetaData(JsonReader& loader) override;
 
 #ifdef OAK_EDITOR
+		bool IsEditable() override;
+		void EnableEditing(bool enable) override;
 		SceneEntity* selectedEntity = nullptr;
 		int underSelectionIndex;
 		eastl::vector<SceneEntity*> underSelection;

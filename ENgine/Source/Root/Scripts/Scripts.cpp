@@ -32,44 +32,9 @@ namespace Oak
 	{
 		if (forceCompile || !std::filesystem::exists(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str())))
 		{
-			CreateDirectoryA(root.GetPath(Root::Path::VcProj), nullptr);
-
-			char curDir[256];
-			GetCurrentDirectoryA(256, curDir);
-			StringUtils::FixSlashes(curDir);
-
-			char path[256];
-			StringUtils::Printf(path, 256, "%sCMakeLists.txt", root.GetPath(Root::Path::VcProj));
-			StringUtils::FixSlashes(path);
-
-			CopyFileA(StringUtils::PrintTemp("%s/ENgine/CppBuild/CMakeLists.txt", curDir), path, false);
-
-			FileInMemory cmakeLists;
-
-			if (cmakeLists.Load(path))
+			if (system(StringUtils::PrintTemp("VcProgGen.exe %s", root.GetPath(Root::Path::Project))) != 0)
 			{
-				eastl::string data = (const char*)cmakeLists.GetData();
-
-				StringUtils::FindAndReplace(data, "$EDITOR_DIR", curDir);
-
-				File cmakeOut;
-
-				if (cmakeOut.Open(path, File::ModeType::WriteText))
-				{
-					cmakeOut.Write(data.c_str(), (int)data.size());
-				}
-			}	
-
-			SetCurrentDirectoryA(root.GetPath(Root::Path::VcProj));
-
-			if (system("cmake") != 0)
-			{
-				MESSAGE_BOX("Can't compile script", "Please install cmake");
-			}
-			else
-			if (system("cmake CMakeLists.txt") != 0)
-			{
-				MESSAGE_BOX("Can't compile script", "There were issues with creating a visual studio project");
+				MESSAGE_BOX("Can't compile script", "Can't generate vc proj");
 			}
 			else
 			{
@@ -112,7 +77,7 @@ namespace Oak
 
 							DeleteFileA("errors.txt");
 
-							if (system(StringUtils::PrintTemp("\"%s\" gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), configName.c_str())) != 0)
+							if (system(StringUtils::PrintTemp("\"%s\" %s/gameplay.sln /out errors.txt /Build %s", vsPath.c_str(), root.GetPath(Root::Path::VcProj), configName.c_str())) != 0)
 							{
 								FileInMemory errors;
 
@@ -136,8 +101,6 @@ namespace Oak
 					MESSAGE_BOX("Can't compile script", "Visual Studio was not found. Please install Visual Studio");
 				}
 			}
-
-			SetCurrentDirectoryA(curDir);
 		}
 
 		return CheckGamePlayDll();

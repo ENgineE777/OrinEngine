@@ -37,6 +37,7 @@ namespace Oak
 
 		enum class Path
 		{
+			Project,
 			Assets,
 			Binaries,
 			VcProj

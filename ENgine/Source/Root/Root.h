@@ -41,6 +41,7 @@ namespace Oak
 		float dt = 0.0f;
 		#endif
 
+		eastl::string rootPath;
 		eastl::string rootPathAssets;
 		eastl::string rootPathBinaries;
 		eastl::string rootPathVcProj;

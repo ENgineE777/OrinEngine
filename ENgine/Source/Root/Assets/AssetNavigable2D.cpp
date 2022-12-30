@@ -14,6 +14,7 @@ namespace Oak
 		editorDrawer.DrawCheckerBoard(camPos, Math::Vector2((float)root.render.GetDevice()->GetWidth(), (float)root.render.GetDevice()->GetHeight()), camZoom);
 	}
 
+#ifdef OAK_EDITOR
 	void AssetNavigable2D::OnMouseMove(Math::Vector2 ms)
 	{
 		mousePos = camPos + Math::Vector2(prevMs.x - root.render.GetDevice()->GetWidth() * 0.5f, -prevMs.y + root.render.GetDevice()->GetHeight() * 0.5f) / camZoom;
@@ -38,4 +39,5 @@ namespace Oak
 	{
 		dargField = false;
 	}
+#endif
 };

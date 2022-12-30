@@ -21,10 +21,10 @@ namespace Oak
 	class CLASS_DECLSPEC File
 	{
 		#ifndef DOXYGEN_SKIP
-		uint8_t* data_ptr;
-		uint8_t* ptr;
+		uint8_t* data_ptr = nullptr;
+		uint8_t* ptr = nullptr;
 
-		FILE* file;
+		FILE* file = nullptr;
 	
 		uint32_t size;
 		#endif
