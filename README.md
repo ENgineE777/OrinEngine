@@ -1,17 +1,17 @@
-![Oak Game Engine logo](/logo.png)
+![Orin Game Engine logo](/logo.png)
 
-## Oak Game Engine
+## Orin Game Engine
 
-Oak Game Engine is a cross-platform game engine for creating 2D and 3D
-games from an unified interface. In Oak Game Engine big focus was made on
-usability and functionality of tools. Right now Oak is a small, light weighted
+Orin Game Engine is a cross-platform game engine for creating 2D and 3D
+games from an unified interface. In Orin Game Engine big focus was made on
+usability and functionality of tools. Right now Orin is a small, light weighted
 game engine for indie games. Games can be exported in one click to a number of
 platforms, including desktop platforms like Windows, Unix, macOS as well as
 mobile platforms like iOS and Android.
 
 ## Free and open source
 
-Oak is completely free open source, distributed under the zlib license. That means no royalties.
+Orin is completely free open source, distributed under the zlib license. That means no royalties.
 The users games are theirs.
 
 ## Features
@@ -36,7 +36,7 @@ The users games are theirs.
 
 ## Editor
 
-Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OakEngine/releases
+Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/Orin/releases
 Warning: Visual Studio 2022 are needed for compilation of gameplay code
 
 Draft of manual of editor can be found at https://docs.google.com/document/d/1_EAEGQy1nuIb8RFPIOJuyObBftAFtMRVeiGn9vr8NRI/edit?usp=sharing
@@ -49,4 +49,4 @@ https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/
 
 ## Discord
 
-If you interested in Oak Engine then you can jouin discord server https://discord.gg/dCTzMYZc
+If you interested in Orin Engine then you can jouin discord server https://discord.gg/dCTzMYZc
