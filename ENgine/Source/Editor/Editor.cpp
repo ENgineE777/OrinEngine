@@ -1240,7 +1240,7 @@ namespace Oak
 
 		if (project.Load(projectFullName.c_str()))
 		{
-			MaximizeEditorWindow();
+			hackMaximaize = 10;
 		}
 
 		projectToLoad = nullptr;
@@ -1248,7 +1248,16 @@ namespace Oak
 
 	void Editor::MaximizeEditorWindow()
 	{
-		ShowWindow(hwnd, SW_MAXIMIZE);
+		if (hackMaximaize > 0)
+		{
+			hackMaximaize--;
+
+			if (hackMaximaize == 0)
+			{
+				hackMaximaize = -1;
+				ShowWindow(hwnd, SW_MAXIMIZE);
+			}
+		}		
 	}
 
 	void Editor::SelectEditAsset(AssetRef asset)
@@ -2193,6 +2202,8 @@ namespace Oak
 
 	void Editor::UpdateOak()
 	{
+		MaximizeEditorWindow();
+
 		root.CountDeltaTime();
 
 		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());

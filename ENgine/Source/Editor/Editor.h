@@ -106,6 +106,8 @@ namespace Oak
 		int selectedTheme = 0;
 		eastl::string selectedThemeName = "orange";
 
+		int hackMaximaize = -1;
+
 		struct LogCategory
 		{
 			int selItem = -1;
@@ -151,8 +153,6 @@ namespace Oak
 		void Render(float dt);
 		bool ProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) override;
 		void OnResize(int width, int height) override;
-
-		void MaximizeEditorWindow();
 
 		void SelectEditAsset(AssetRef asset);
 
@@ -214,6 +214,8 @@ namespace Oak
 
 			ImGui::SameLine();
 		}
+
+		void MaximizeEditorWindow();
 
 		bool CreateDeviceD3D();
 		void CleanupDeviceD3D();
