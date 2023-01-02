@@ -10,7 +10,7 @@
 #include <memory.h>
 #include <tchar.h>
 
-#include "../Projects/Windows/Editor/resource.h"
+#include "../Projects/Windows/Resources/resource.h"
 
 #define MAX_LOADSTRING 100
 
@@ -18,7 +18,7 @@ HWND hwnd;
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    if (Oak::GetEditor()->ProcHandler(hWnd, msg, wParam, lParam))
+    if (Orin::GetEditor()->ProcHandler(hWnd, msg, wParam, lParam))
     {
         return true;
     }
@@ -28,7 +28,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_SIZE:
         if (wParam != SIZE_MINIMIZED)
         {
-            Oak::GetEditor()->OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
+            Orin::GetEditor()->OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
         }
         return 0;
     case WM_SYSCOMMAND:
@@ -84,7 +84,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         wcstombs_s(&pReturnValue, buffer, 500, cmdLineBuffer, 499);
     }
 
-    if (!Oak::GetEditor()->Init(hwnd, cmdLineBuffer ? buffer : nullptr))
+    if (!Orin::GetEditor()->Init(hwnd, cmdLineBuffer ? buffer : nullptr))
     {
         UnregisterClass(wcex.lpszClassName, wcex.hInstance);
         return 1;
@@ -104,13 +104,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
             continue;
         }
 
-        if (!Oak::GetEditor()->Update())
+        if (!Orin::GetEditor()->Update())
         {
             break;
         }
     }
 
-    Oak::GetEditor()->Release();
+    Orin::GetEditor()->Release();
 
     DestroyWindow(hwnd);
     UnregisterClass(wcex.lpszClassName, wcex.hInstance);

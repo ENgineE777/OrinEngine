@@ -1,5 +1,5 @@
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 
 #include "TileSetWindow.h"
 #include "SpriteWindow.h"
@@ -18,7 +18,7 @@
 
 #include "Support/ImGuiHelper.h"
 
-namespace Oak
+namespace Orin
 {
 	AssetTileSet* TileSetWindow::tileSet;
 	TileSetWindow* TileSetWindow::instance = nullptr;
@@ -260,7 +260,7 @@ namespace Oak
 
 		DrawViewport(Math::Vector2(size.x, size.y));
 
-		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+		ImGui::Image(root.render.GetDevice()->GetBackBuffer(), size);
 
 		if (imageFocused)
 		{

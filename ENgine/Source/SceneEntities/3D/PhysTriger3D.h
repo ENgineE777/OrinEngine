@@ -3,7 +3,7 @@
 
 #include "PhysBox3D.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC PhysTriger3D : public PhysBox3D
 	{

@@ -4,7 +4,7 @@
 #include <math.h>
 #include "Support/Defines.h"
 
-namespace Oak::Math
+namespace Orin::Math
 {
 	/**
 	\ingroup gr_code_common_math

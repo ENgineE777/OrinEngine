@@ -6,7 +6,7 @@
 #include "Root/Files/JSONReader.h"
 #include "Root/Files/JSONWriter.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/EditorAction.h"
 #endif
 
@@ -14,7 +14,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak
+namespace Orin
 {
 	class Scene;
 
@@ -76,7 +76,7 @@ namespace Oak
 		eastl::vector<MetaDataEnum> enums;
 		eastl::vector<eastl::string> defStrings;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		typedef void(*Callback)(void* owner);
 		typedef void(*EnumStringCallback)(eastl::vector<eastl::string>& names);
 #endif
@@ -85,7 +85,7 @@ namespace Oak
 		{
 			uint8_t* value = nullptr;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 			int64_t selItemOffset = -1;
 			int32_t* selItem = nullptr;
 			Object::DelegateSimple gizmoCallback = nullptr;
@@ -141,7 +141,7 @@ namespace Oak
 			eastl::string name;
 			bool enabledState = true;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 			eastl::string catName;
 			eastl::string propName;
 			eastl::string brief;
@@ -158,7 +158,7 @@ namespace Oak
 		void* root = nullptr;
 		bool checkEnabledState = false;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 
 		class MetaDataPropertyAction : public IEditorAction
 		{
@@ -208,7 +208,7 @@ namespace Oak
 		void Copy(void* source, eastl::vector<Property>& sourceProperties);
 
 #ifndef DOXYGEN_SKIP
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		MetaDataPropertyAction editorAction;
 
 		void ImGuiWidgets(eastl::vector<eastl::string>* whitelistedProprties = nullptr, bool useAsBlacklisted = false);
@@ -295,7 +295,7 @@ namespace Oak
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
 		prop.type = Type::Color;\
-		Oak::Color tmp = Oak::defValue;\
+		Color tmp = defValue;\
 		memcpy(prop.defvalue.color, &tmp.r, sizeof(float) * 4);\
 		prop.name = #classMember;\
 		prop.catName = strCatName;\
@@ -351,7 +351,7 @@ namespace Oak
 		properties.push_back(prop);\
 	}
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #define STRING_ENUM_PROP(className, classMember, set_callback, strCatName, strPropName)\
 	{\
 		Property prop;\
@@ -378,7 +378,7 @@ namespace Oak
 	}
 #endif
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #define CALLBACK_PROP(className, set_callback, strCatName, strPropName)\
 	{\
 		Property prop;\

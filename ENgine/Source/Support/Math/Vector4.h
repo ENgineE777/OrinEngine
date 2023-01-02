@@ -3,7 +3,7 @@
 
 #include "Vector3.h"
 
-namespace Oak::Math
+namespace Orin::Math
 {
 	/**
 	\ingroup gr_code_common_math

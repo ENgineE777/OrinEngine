@@ -2,7 +2,7 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	void Scene::Init()
 	{
@@ -158,7 +158,7 @@ namespace Oak
 
 		JsonReader reader;
 	
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		StringUtils::Copy(projectScenePath, 512, name);
 		#endif
 
@@ -268,7 +268,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	const eastl::vector<SceneEntity*>& Scene::GetEntities()
 	{
 		return entities;

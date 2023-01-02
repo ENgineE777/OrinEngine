@@ -1,6 +1,6 @@
 #include "FontRef.h"
 
-namespace Oak
+namespace Orin
 {
 	FontRef::FontRef(FontRes* setPtr, const char* file, int line) : PointerRef<FontRes>(setPtr, file, line)
 	{

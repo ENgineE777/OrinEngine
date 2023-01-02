@@ -9,11 +9,11 @@
 #include "Root/Physics/PhysObject.h"
 #include "Root/Physics/PhysScene.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/EditorAction.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC TileMap : public SceneEntity
 	{
@@ -55,7 +55,7 @@ namespace Oak
 
 		void Release() override;
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 
 		class TileMapAction : public IEditorAction
 		{

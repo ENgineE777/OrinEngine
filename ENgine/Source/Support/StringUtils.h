@@ -7,7 +7,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak::StringUtils
+namespace Orin::StringUtils
 {
 	CLASS_DECLSPEC void Init();
 	CLASS_DECLSPEC int  GetLen(const char* str);

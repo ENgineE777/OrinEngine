@@ -2,7 +2,7 @@
 #include "SimpleCharacter2D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, SimpleCharacter2D, "Sample", "SimpleCharacter2D")
 

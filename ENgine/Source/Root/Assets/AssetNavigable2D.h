@@ -3,7 +3,7 @@
 #include "Asset.h"
 #include "root/Render/Render.h"
 
-namespace Oak
+namespace Orin
 {
 	class Scene;
 
@@ -19,7 +19,7 @@ namespace Oak
 
 		virtual void Draw(float dt);
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		void OnMouseMove(Math::Vector2 ms) override;
 		void OnMiddleMouseDown() override;
 		void OnMiddleMouseUp() override;

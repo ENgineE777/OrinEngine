@@ -1,11 +1,11 @@
 
 #include "GenericMarker.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 	META_DATA_DESC(GenericMarker::Instance)
 		FLOAT_PROP(GenericMarker::Instance, radius, 1.0f, "Prop", "radius", "radius of a marker")
@@ -81,7 +81,7 @@ namespace Oak
 			return;
 		}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		if (edited)
 		{
 			if (root.controls.DebugKeyPressed("KEY_I") && selInst != -1)
@@ -168,7 +168,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	bool GenericMarker::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
 	{
 		selInst = -1;

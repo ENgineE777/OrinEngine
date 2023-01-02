@@ -1,12 +1,12 @@
 #include "Root/Root.h"
 
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #include "imgui_internal.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 	CLASSREG(Asset, AssetScene, "AssetScene")
 
@@ -43,7 +43,7 @@ namespace Oak
 		reader.Read("camera2DZoom", camera2DZoom);
 	}
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	void AssetScene::GrabEditorData()
 	{
 		camera2DMode = editor.freeCamera.mode2D;

@@ -3,7 +3,7 @@
 
 #include "Root/Root.h"
 
-namespace Oak::DebugTechiques
+namespace Orin::DebugTechiques
 {
 	class LineWithDepth : public RenderTechnique
 	{

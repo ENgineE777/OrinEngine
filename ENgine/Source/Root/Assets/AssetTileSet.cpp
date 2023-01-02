@@ -2,13 +2,13 @@
 #include "SceneEntities/2D/TileMap.h"
 
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "imgui.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	extern void ShowTileSetWindow(AssetTileSet* tileSet);
 #endif
 
@@ -22,7 +22,7 @@ namespace Oak
 
 	void AssetTileSet::StartEditTileSet(void* owner)
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		ShowTileSetWindow((AssetTileSet*)owner);
 #endif
 	}
@@ -63,7 +63,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	bool AssetTileSet::IsTileSelected()
 	{
 		return selTile != -1;
@@ -142,14 +142,14 @@ namespace Oak
 			eastl::string path;
 			if (loader.Read("path", path))
 			{
-				*this = Oak::root.assets.GetAssetRef<AssetTileSetRef>(path);
+				*this = root.assets.GetAssetRef<AssetTileSetRef>(path);
 			}
 
 			loader.LeaveBlock();
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void AssetTileSetRef::SaveData(JsonWriter& saver, const char* name)
 	{
 		if (Get())

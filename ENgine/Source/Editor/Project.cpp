@@ -3,7 +3,7 @@
 #include "shlobj_core.h"
 #include "Support/Perforce.h"
 
-namespace Oak
+namespace Orin
 {
 	bool Project::CanRun()
 	{
@@ -332,7 +332,7 @@ namespace Oak
 		eastl::wstring strings[16];
 
 		StringUtils::Utf8toUtf16(strings[7], projectName.c_str());
-		StringUtils::Utf8toUtf16(strings[13], "Oak");
+		StringUtils::Utf8toUtf16(strings[13], "Orin");
 
 		char buffer[256];
 		int index = 0;
@@ -436,7 +436,7 @@ namespace Oak
 		CpyFile("/eastl.dll");
 		CpyFile("/fmod.dll");
 		CpyFile("/fmodL.dll");
-		CpyFile("/Oak.dll");
+		CpyFile("/Orin.dll");
 		CpyFile("/PhysX_64.dll");
 		CpyFile("/PhysXCommon_64.dll");
 		CpyFile("/PhysXCooking_64.dll");
@@ -446,7 +446,7 @@ namespace Oak
 		CpyFile("/ENgine/low2hi.dat");
 		CpyFile("/ENgine/OpenSans-Regular.ttf");
 
-		auto resource = BeginUpdateResourceA((exportDir + "/Oak.exe").c_str(), FALSE);
+		auto resource = BeginUpdateResourceA((exportDir + "/Orin.exe").c_str(), FALSE);
 		if (resource != NULL)
 		{
 			UpdateExeStrings(resource);
@@ -461,7 +461,7 @@ namespace Oak
 			EndUpdateResourceA(resource, FALSE);
 		}
 
-		rename((exportDir + "/Oak.exe").c_str(), (exportDir + "/" + projectName + ".exe").c_str());
+		rename((exportDir + "/Orin.exe").c_str(), (exportDir + "/" + projectName + ".exe").c_str());
 
 		MESSAGE_BOX("Export finished", (eastl::string("Resources of project were exported to folder:\n") + exportDir).c_str());
 	}

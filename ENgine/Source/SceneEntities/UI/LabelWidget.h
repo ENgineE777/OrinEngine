@@ -8,7 +8,7 @@
 #include "Root/Fonts/FontRef.h"
 #include "ContainerWidget.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC LabelWidget : public ContainerWidget
 	{

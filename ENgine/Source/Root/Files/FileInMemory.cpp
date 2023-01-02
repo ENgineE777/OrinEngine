@@ -3,7 +3,7 @@
 #include "Root/Root.h"
 #include <stdlib.h> 
 
-namespace Oak
+namespace Orin
 {
 	bool FileInMemory::Load(const char* name)
 	{

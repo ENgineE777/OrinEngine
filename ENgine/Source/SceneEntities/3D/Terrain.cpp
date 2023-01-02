@@ -3,7 +3,7 @@
 #include "Root/Root.h"
 #include "Root/Meshes/MeshPrograms.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, Terrain, "3D/Geometry", "Terrain")
 

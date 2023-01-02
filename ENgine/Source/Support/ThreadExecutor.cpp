@@ -1,7 +1,7 @@
 
 #include "ThreadExecutor.h"
 
-namespace Oak
+namespace Orin
 {
 	CriticalSection::CriticalSection()
 	{

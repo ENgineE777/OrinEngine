@@ -20,7 +20,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-namespace Oak
+namespace Orin
 {
 	bool Render::Init(const char* device_name, void* external_device)
 	{

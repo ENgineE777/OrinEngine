@@ -6,7 +6,7 @@
 #include "TextureDX11.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	DeviceDX11* DeviceDX11::instance = nullptr;
 

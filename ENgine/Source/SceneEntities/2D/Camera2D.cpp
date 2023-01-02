@@ -3,7 +3,7 @@
 #include "Root/Root.h"
 #include "Support/Sprite.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, Camera2D, "2D", "Camera2D")
 

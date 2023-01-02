@@ -2,7 +2,7 @@
 #include "Root/Render/Render.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	#ifdef PLATFORM_ANDROID
 	extern "C"

@@ -2,7 +2,7 @@
 #include "PhysTriger3D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 
 	ENTITYREG(SceneEntity, PhysTriger3D, "3D/Physics", "PhysTriger3D")

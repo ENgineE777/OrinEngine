@@ -3,7 +3,7 @@
 #include "Root/Root.h"
 #include "SceneEntities/3D/GenericMarker.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, Tank, "Sample", "Tank")
 

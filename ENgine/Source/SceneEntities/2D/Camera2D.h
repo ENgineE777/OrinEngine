@@ -4,7 +4,7 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Support/MetaData.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC Camera2D : public SceneEntity
 	{

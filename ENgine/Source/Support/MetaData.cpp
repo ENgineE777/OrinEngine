@@ -6,14 +6,14 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "ImGuiHelper.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #include "Editor/TileSetWindow.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	MetaData::MetaDataPropertyAction::MetaDataPropertyAction() : IEditorAction(nullptr)
 	{
 
@@ -251,7 +251,7 @@ namespace Oak
 		owner = set_owner;
 		root = set_root ? set_root : owner;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		StringUtils::Printf(guiID, 64, "%p", owner);
 		#endif
 
@@ -260,7 +260,7 @@ namespace Oak
 			Property& prop = properties[i];
 			prop.value = (uint8_t*)owner + prop.offset;
 
-			#ifdef OAK_EDITOR
+			#ifdef ORIN_EDITOR
 			if (prop.type == Type::Callback)
 			{
 				prop.value = (uint8_t*)prop.callback;
@@ -278,7 +278,7 @@ namespace Oak
 
 			if (prop.adapter)
 			{
-				#ifdef OAK_EDITOR
+				#ifdef ORIN_EDITOR
 				if (prop.adapter->selItemOffset != -1)
 				{
 					prop.adapter->selItem = (int32_t*)((uint8_t*)root + prop.adapter->selItemOffset);
@@ -429,7 +429,7 @@ namespace Oak
 			else
 			if (prop.type == Type::Color)
 			{
-				reader.Read(prop.name.c_str(), *((Oak::Color*)prop.value));
+				reader.Read(prop.name.c_str(), *((Color*)prop.value));
 			}
 			else
 			if (prop.type == Type::Vector2)
@@ -569,7 +569,7 @@ namespace Oak
 			else
 			if (prop.type == Type::Color)
 			{
-				writer.Write(prop.name.c_str(), *((Oak::Color*)prop.value));
+				writer.Write(prop.name.c_str(), *((Color*)prop.value));
 			}
 			else
 			if (prop.type == Type::Vector2)
@@ -801,7 +801,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void MetaData::ConstructCategoriesData()
 	{
 		for (int i = 0; i < properties.size(); i++)
@@ -1232,7 +1232,7 @@ namespace Oak
 								if (fileName)
 								{
 									char relativeName[512];
-									StringUtils::GetCropPath(Oak::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
+									StringUtils::GetCropPath(Orin::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 									str->assign(relativeName);
 									prop.changed = true;

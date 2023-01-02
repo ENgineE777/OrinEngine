@@ -7,7 +7,7 @@
 
 #include "Defines.h"
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\ingroup gr_code_common

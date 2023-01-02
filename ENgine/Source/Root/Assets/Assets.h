@@ -11,7 +11,7 @@
 #include "AssetPrefab.h"
 #include "AssetSpritesLayer.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC Assets : public ThreadCaller
 	{
@@ -83,7 +83,7 @@ namespace Oak
 
 		eastl::map<eastl::string, AssetHolder*> assetsMap;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		std::atomic<bool> scanning;
 		std::atomic<bool> needRescan;
 
@@ -103,7 +103,7 @@ namespace Oak
 			return assetsMap;
 		}
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		template<class T>
 		T* GetAsset(eastl::string& path)
 		{
@@ -127,7 +127,7 @@ namespace Oak
 			return T();
 		};
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		template<class T>
 		void GetAssetsByType(eastl::vector<T*>& assets)
 		{

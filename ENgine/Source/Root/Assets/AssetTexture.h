@@ -5,7 +5,7 @@
 #include "support/Sprite.h"
 #include "support/Transform.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AssetTexture : public Asset
 	{
@@ -60,7 +60,7 @@ namespace Oak
 
 		void LoadMetaData(JsonReader& loader) override;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif
@@ -75,7 +75,7 @@ namespace Oak
 		bool animReversed = false;
 		eastl::function<void(int)> onFrameChange;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		char name[256];
 		int previewAnimPlaySlice = 0;
 		float previewAnimPlayTime = 0.0f;
@@ -121,7 +121,7 @@ namespace Oak
 
 		void LoadData(JsonReader& loader, const char* name);
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		void SaveData(JsonWriter& saver, const char* name);
 		void ImGuiImage(float size);
 	#endif

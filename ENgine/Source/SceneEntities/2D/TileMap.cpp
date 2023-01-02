@@ -2,14 +2,14 @@
 #include "TileMap.h"
 #include "Root/Root.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #include "Editor/TileSetWindow.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	void TileMap::ShowTilsetWindow(void* owner)
 	{
 		TileMap* tileMap = (TileMap*)owner;
@@ -55,7 +55,7 @@ namespace Oak
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		CALLBACK_PROP(TileMap, TileMap::ShowTilsetWindow, "Properties", "Open Tileset")
 #endif
 	META_DATA_DESC_END()
@@ -74,7 +74,7 @@ namespace Oak
 		transform.offset.x = 0.0f;
 		transform.offset.y = 0.0f;
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		Tasks(true)->DelAllTasks(this);
 	#endif
 
@@ -235,7 +235,7 @@ namespace Oak
 		SceneEntity::Release();
 	}
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	Math::Vector2 TileMap::MouseToWorldPos(Math::Vector2 ms)
 	{
 		Math::Vector3 mouseOrigin;

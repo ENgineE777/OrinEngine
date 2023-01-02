@@ -7,7 +7,7 @@
 #include "root/Assets/AssetTexture.h"
 #include "root/Assets/AssetAnimGraph2D.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AnimGraph2D : public SceneEntity
 	{

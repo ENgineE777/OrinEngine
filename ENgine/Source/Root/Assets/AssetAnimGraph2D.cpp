@@ -1,12 +1,12 @@
 #include "Root/Root.h"
 #include "SceneEntities/2D/AnimGraph2D.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/EditorDrawer.h"
 #include "imgui.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 
 	META_DATA_DESC(AssetAnimGraph2D::Link)
@@ -35,7 +35,7 @@ namespace Oak
 
 	void AssetAnimGraph2D::Init()
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		RenderTasks()->AddTask(0, this, (Object::Delegate)& AssetAnimGraph2D::Draw);
 #endif
 	}
@@ -111,7 +111,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void AssetAnimGraph2D::SaveMetaData(JsonWriter& saver)
 	{
 		saver.Write("camPos", camPos);
@@ -879,7 +879,7 @@ namespace Oak
 			eastl::string path;
 			if (loader.Read("path", path))
 			{
-				*this = Oak::root.assets.GetAssetRef<AssetAnimGraph2DRef>(path);
+				*this = root.assets.GetAssetRef<AssetAnimGraph2DRef>(path);
 				Reset();
 			}
 
@@ -887,7 +887,7 @@ namespace Oak
 		}
 	}
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	void AssetAnimGraph2DRef::SaveData(JsonWriter& saver, const char* name)
 	{
 		if (Get())

@@ -2,7 +2,7 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "eastl/algorithm.h"
 
-namespace Oak
+namespace Orin
 {
 	CLASSREG(Asset, AssetPrefab, "AssetPrefab")
 
@@ -41,7 +41,7 @@ namespace Oak
 			CopyChilds(src, instance, sceneOwner);
 			instance->UpdateVisibility();
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 			RegisterIntstance(instance);
 #endif
 		}
@@ -49,7 +49,7 @@ namespace Oak
 		return instance;
 	}
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	void AssetPrefab::RegisterIntstance(SceneEntity* entity)
 	{
 		instances.push_back(entity);

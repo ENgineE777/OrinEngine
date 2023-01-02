@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	class QuadRenderTechnique : public RenderTechnique
 	{

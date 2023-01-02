@@ -2,7 +2,7 @@
 #include "PointLight2D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	const char* PointLight2DProgram::GetVsName()
 	{

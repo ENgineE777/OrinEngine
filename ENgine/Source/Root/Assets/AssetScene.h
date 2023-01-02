@@ -3,7 +3,7 @@
 #include "Asset.h"
 #include "root/Render/Render.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AssetScene : public Asset
 	{
@@ -32,7 +32,7 @@ namespace Oak
 
 		void LoadMetaData(JsonReader& loader) override;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		bool IsEditable() override;
 		void EnableEditing(bool enable) override;
 		SceneEntity* selectedEntity = nullptr;

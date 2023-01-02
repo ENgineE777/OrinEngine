@@ -1,7 +1,7 @@
 #include "MusicPlayer.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, MusicPlayer, "Sound", "MusicPlayer")
 

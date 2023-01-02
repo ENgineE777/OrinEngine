@@ -5,7 +5,7 @@
 #include "Spark.h"
 #include "ParticleSystem.h"
 
-namespace Oak
+namespace Orin
 {
 	class Particles
 	{

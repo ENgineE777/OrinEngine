@@ -1,12 +1,12 @@
 #pragma once
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 
 #include "Root/Assets/AssetTileSet.h"
 #include "Root/Assets/AssetTexture.h"
 #include "eastl/queue.h"
 
-namespace Oak
+namespace Orin
 {
 	class TileSetWindow
 	{

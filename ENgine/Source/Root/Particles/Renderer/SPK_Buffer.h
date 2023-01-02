@@ -31,13 +31,13 @@ namespace SPK
 
 			struct Vertex
 			{
-				Oak::Math::Vector3  pos;
-				Oak::Math::Vector2  uv;
+				Orin::Math::Vector3  pos;
+				Orin::Math::Vector2  uv;
 				uint32_t color;
 			};
 
-			Oak::DataBufferRef vbuffer;
-			Oak::DataBufferRef indices;
+			Orin::DataBufferRef vbuffer;
+			Orin::DataBufferRef indices;
 
 			GLBuffer(size_t nbVertices,size_t nbTexCoords = 0);
 			~GLBuffer();

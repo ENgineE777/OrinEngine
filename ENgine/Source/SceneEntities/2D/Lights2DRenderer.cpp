@@ -3,7 +3,7 @@
 #include "Root/Root.h"
 #include "PointLight2D.h"
 
-namespace Oak
+namespace Orin
 {
 	class LightMap2DProgram : public RenderTechnique
 	{

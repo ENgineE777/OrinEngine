@@ -12,7 +12,7 @@
 \ingroup gr_code_editor
 */
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC EditorDrawer
 	{

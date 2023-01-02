@@ -3,7 +3,7 @@
 
 #include "Root/Render/Render.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC DebugTriangles2D : public Object
 	{

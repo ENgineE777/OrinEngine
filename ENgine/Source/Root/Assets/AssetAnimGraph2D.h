@@ -4,7 +4,7 @@
 #include "root/Render/Render.h"
 #include "support/Sprite.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AssetAnimGraph2D : public Asset
 	{
@@ -79,7 +79,7 @@ namespace Oak
 
 		void LoadMetaData(JsonReader& loader) override;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		Math::Vector2 nodeSize = Math::Vector2(150.0f, 80.0f);
 		Math::Vector2 linkSize = Math::Vector2(15.0f, 15.0f);
 		int selNode = -1;
@@ -149,7 +149,7 @@ namespace Oak
 
 		void LoadData(JsonReader& loader, const char* name);
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		void SaveData(JsonWriter& saver, const char* name);
 	#endif
 	};

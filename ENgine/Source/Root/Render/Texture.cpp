@@ -1,7 +1,7 @@
 
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	void Texture::NextMip(int& width, int& height, int block_size)
 	{

@@ -1,11 +1,11 @@
 #pragma once
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 
 #include "Root/Assets/AssetTexture.h"
 #include "eastl/queue.h"
 
-namespace Oak
+namespace Orin
 {
 	class SpriteWindow
 	{

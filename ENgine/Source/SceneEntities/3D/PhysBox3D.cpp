@@ -2,7 +2,7 @@
 #include "PhysBox3D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 
 	ENTITYREG(SceneEntity, PhysBox3D, "3D/Physics", "PhysBox3D")

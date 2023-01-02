@@ -1,6 +1,6 @@
 #include "Runner.h"
 
-namespace Oak
+namespace Orin
 {
 	IRunner* GetRunner()
 	{
@@ -66,7 +66,7 @@ namespace Oak
 		mousePos.x -= corner.x;
 		mousePos.y -= corner.y;
 
-		Oak::root.controls.OverrideMousePos((int)Math::Clamp((float)mousePos.x, 0.0f, (float)root.render.GetDevice()->GetWidth()), (int)Math::Clamp((float)mousePos.y, 0.0f, (float)root.render.GetDevice()->GetHeight()));
+		root.controls.OverrideMousePos((int)Math::Clamp((float)mousePos.x, 0.0f, (float)root.render.GetDevice()->GetWidth()), (int)Math::Clamp((float)mousePos.y, 0.0f, (float)root.render.GetDevice()->GetHeight()));
 
 		root.Update();
 	}

@@ -10,7 +10,7 @@
 \ingroup gr_code_platform_common
 */
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC IRunner : public Object
 	{

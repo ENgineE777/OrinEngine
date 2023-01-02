@@ -3,7 +3,7 @@
 #include <string>
 #include "windows.h"
 
-namespace Oak::Utils
+namespace Orin::Utils
 {
     bool Execute(const char* command, eastl::vector<eastl::string>& result)
     {

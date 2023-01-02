@@ -2,11 +2,11 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Root/Root.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 	void SceneEntity::FillLayersList(eastl::vector<eastl::string>& names)
 	{
@@ -31,7 +31,7 @@ namespace Oak
 
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void SceneEntity::SetScene(Scene* setScene)
 	{
 		if (scene == setScene)
@@ -124,7 +124,7 @@ namespace Oak
 
 	bool SceneEntity::IsVisible()
 	{
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		if (!GetScene()->IsPlaying() &&
 			editor.project.LayerHiden(prefabInstance ? GetPrefabRoot()->layerName.c_str() : layerName.c_str()))
 		{			
@@ -190,7 +190,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	bool SceneEntity::ContainEntity(SceneEntity* entity)
 	{
 		for (auto* child : childs)
@@ -328,7 +328,7 @@ namespace Oak
 
 		if (scene) scene->DelFromAllGroups(this);
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		if (prefabRef.Get())
 		{
 			prefabRef->UnregisterIntstance(this);

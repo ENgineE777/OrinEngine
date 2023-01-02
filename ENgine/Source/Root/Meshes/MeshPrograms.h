@@ -1,7 +1,7 @@
 
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	class MeshPrograms
 	{

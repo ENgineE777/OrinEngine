@@ -2,7 +2,7 @@
 #include "ParalaxedSpriteEntity.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, ParalaxedSpriteEntity, "2D/Sprites", "ParalaxedSprite")
 

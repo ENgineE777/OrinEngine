@@ -30,7 +30,7 @@
 
 namespace SPK
 {
-	class ParticleProgram : public Oak::RenderTechnique
+	class ParticleProgram : public Orin::RenderTechnique
 	{
 	public:
 		const char* GetVsName() override { return "particle_vs.shd"; };
@@ -59,9 +59,9 @@ namespace SPK
 
 	public :
 
-		Oak::RenderTechniqueRef prg;
-		Oak::VertexDeclRef vdecl;
-		Oak::TextureRef texture;
+		Orin::RenderTechniqueRef prg;
+		Orin::VertexDeclRef vdecl;
+		Orin::TextureRef texture;
 
 		/**
 		* @brief Creates and registers a new GLQuadRenderer
@@ -77,7 +77,7 @@ namespace SPK
 
 		virtual bool setTexturingMode(TextureMode mode);
 
-		void setTexture(Oak::TextureRef texture);
+		void setTexture(Orin::TextureRef texture);
 
 		/////////////
 		// Getters //
@@ -125,7 +125,7 @@ namespace SPK
 		return SPK_NEW(GLQuadRenderer,scaleX,scaleY);
 	}
 		
-	inline void GLQuadRenderer::setTexture(Oak::TextureRef texture)
+	inline void GLQuadRenderer::setTexture(Orin::TextureRef texture)
 	{
 		this->texture = texture;
 	}

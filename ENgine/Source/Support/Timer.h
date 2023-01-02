@@ -6,7 +6,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak::Timer
+namespace Orin::Timer
 {
 	CLASS_DECLSPEC float CountDeltaTime();
 	CLASS_DECLSPEC float GetDeltaTime();

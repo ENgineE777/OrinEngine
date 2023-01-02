@@ -5,7 +5,7 @@
 
 #include "d3d11.h"
 
-namespace Oak
+namespace Orin
 {
 	int TextureDX11::GetFormat(TextureFormat fmt)
 	{

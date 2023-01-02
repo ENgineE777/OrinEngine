@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	JsonReader::JsonReader() : allocator(1 << 10)
 	{

@@ -14,7 +14,7 @@
 
 #endif
 
-namespace Oak
+namespace Orin
 {
 	enum class CLASS_DECLSPEC AliasAction
 	{

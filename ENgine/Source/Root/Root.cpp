@@ -14,12 +14,12 @@
 #include <windows.h>
 #endif
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #include <filesystem>
 #endif
 
-namespace Oak
+namespace Orin
 {
 	Root root;
 
@@ -117,7 +117,7 @@ namespace Oak
 		char path[1024];
 		StringUtils::Printf(path, 1024, "%s/%s.txt", logsDir, name);
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		if (redirectLog)
 		{
 			editor.CaptureLog(name, buffer);

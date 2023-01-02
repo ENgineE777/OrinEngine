@@ -5,7 +5,7 @@
 #include "Support/MetaData.h"
 #include "Root/Meshes/Meshes.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC ModelEntity : public SceneEntity
 	{

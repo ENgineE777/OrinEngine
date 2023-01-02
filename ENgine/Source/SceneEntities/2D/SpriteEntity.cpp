@@ -2,7 +2,7 @@
 #include "SpriteEntity.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, SpriteEntity, "2D/Sprites", "Sprite")
 
@@ -28,7 +28,7 @@ namespace Oak
 		Math::Vector2 size = texture.GetSize();
 		transform.size = Math::Vector3(size.x, size.y, 0.0f);
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		Tasks(true)->DelAllTasks(this);
 #endif
 

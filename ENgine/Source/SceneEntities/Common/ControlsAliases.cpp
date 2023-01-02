@@ -1,7 +1,7 @@
 #include "ControlsAliases.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, ControlsAliases, "Common", "ControlsAliases")
 

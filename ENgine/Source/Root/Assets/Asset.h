@@ -6,11 +6,11 @@
 #include "Support/MetaData.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include <sys/stat.h>
 #endif
 
-namespace Oak
+namespace Orin
 {
 	class SceneEntity;
 
@@ -19,7 +19,7 @@ namespace Oak
 		friend class PointerRef<Asset>;
 	protected:
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		struct stat  fileInfo;
 		eastl::string fullPath;
 		eastl::string name;
@@ -28,7 +28,7 @@ namespace Oak
 		eastl::string path;
 		int refCounter = 0;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		TaskExecutor::SingleTaskPool* taskPool = nullptr;
 		TaskExecutor::SingleTaskPool* renderTaskPool = nullptr;
 		bool containsUnsavedChanges = false;
@@ -44,7 +44,7 @@ namespace Oak
 
 		virtual void LoadMetaData(JsonReader& loader);
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		const eastl::string& GetName();
 		bool SourceFileWasChanged();
 		bool ContainsUnsavedChanges();

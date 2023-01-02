@@ -19,7 +19,7 @@
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-namespace Oak
+namespace Orin
 {
 	Editor editor;
 
@@ -35,14 +35,14 @@ namespace Oak
 		GetCurrentDirectoryA(512, curDir);
 
 		char curDirDialog[512];
-		Oak::StringUtils::Copy(curDirDialog, 512, curDir);
+		StringUtils::Copy(curDirDialog, 512, curDir);
 
 		OPENFILENAMEA ofn;
 
 		static char fileName[512];
 
 		char filter[512];
-		Oak::StringUtils::Copy(filter, 512, extName);
+		StringUtils::Copy(filter, 512, extName);
 
 		int index = (int)strlen(filter);
 
@@ -51,11 +51,11 @@ namespace Oak
 
 		if (ext)
 		{
-			Oak::StringUtils::Copy(&filter[index + 3], 5, ext);
+			StringUtils::Copy(&filter[index + 3], 5, ext);
 		}
 		else
 		{
-			Oak::StringUtils::Copy(&filter[index + 3], 5, "*");
+			StringUtils::Copy(&filter[index + 3], 5, "*");
 		}
 
 		ZeroMemory(&ofn, sizeof(ofn));
@@ -500,14 +500,14 @@ namespace Oak
 
 			ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
 
-			Oak::root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
+			root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
 
 			ImVec2 size = ImGui::GetContentRegionAvail();
-			Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
+			root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
 
-			UpdateOak();
+			UpdateOrin();
 
-			ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+			ImGui::Image(root.render.GetDevice()->GetBackBuffer(), size);
 
 			ImGui::End();
 
@@ -570,14 +570,14 @@ namespace Oak
 
 				ImVec2 viewportPos = ImVec2(io.MousePos.x - ImGui::GetCursorScreenPos().x, io.MousePos.y - ImGui::GetCursorScreenPos().y);
 
-				Oak::root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
+				root.controls.OverrideMousePos((int)viewportPos.x, (int)viewportPos.y);
 
 				ImVec2 size = ImGui::GetContentRegionAvail();
-				Oak::root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
+				root.render.GetDevice()->SetBackBuffer(0, (int)size.x, (int)size.y, &hwnd);
 
-				UpdateOak();
+				UpdateOrin();
 
-				ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+				ImGui::Image(root.render.GetDevice()->GetBackBuffer(), size);
 
 				vireportHowered = ImGui::IsItemHovered();
 
@@ -733,7 +733,7 @@ namespace Oak
 			ImGui::Text("Name");
 			ImGui::SameLine();
 
-			Oak::ImGuiHelper::InputString("##NewName", createAssetName);
+			ImGuiHelper::InputString("##NewName", createAssetName);
 
 			if (assetDialog == AssetDialog::Prefab && !duplicateAsset)
 			{
@@ -861,7 +861,7 @@ namespace Oak
 
 		ImGui::Begin("About", &showAbout, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoResize);
 		ImGui::SetWindowSize(ImVec2(300.0f, 200.0f));
-		ImGui::Text("Oak is awesome!!!");
+		ImGui::Text("Orin is awesome!!!");
 
 		if (ImGui::Button("Ok", ImVec2(40, 30)))
 		{
@@ -917,7 +917,7 @@ namespace Oak
 				if (fileName)
 				{
 					char relativeName[512];
-					StringUtils::GetCropPath(Oak::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
+					StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 					project.iconPath = relativeName;
 					project.icon = root.render.LoadTexture(project.iconPath.c_str(), _FL_);
@@ -938,7 +938,7 @@ namespace Oak
 				if (fileName)
 				{
 					char relativeName[512];
-					StringUtils::GetCropPath(Oak::root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
+					StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
 					project.iconSmallPath = relativeName;
 					project.iconSmall = root.render.LoadTexture(project.iconSmallPath.c_str(), _FL_);
@@ -2200,7 +2200,7 @@ namespace Oak
 		return true;
 	}
 
-	void Editor::UpdateOak()
+	void Editor::UpdateOrin()
 	{
 		MaximizeEditorWindow();
 

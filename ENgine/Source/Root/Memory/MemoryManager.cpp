@@ -4,12 +4,12 @@
 
 void* operator new (size_t size, const char* file, int line)
 {
-	return Oak::root.memory.Alloc(size, file, line);
+	return Orin::root.memory.Alloc(size, file, line);
 }
 
 void* operator new[](size_t size, const char* file, int line)
 {
-	return Oak::root.memory.Alloc(size, file, line);
+	return Orin::root.memory.Alloc(size, file, line);
 }
 
 void operator delete(void* ptr, const char* file, int line)
@@ -24,35 +24,35 @@ void operator delete[](void* ptr, const char* file, int line)
 
 void* operator new(size_t size)
 {
-	return Oak::root.memory.Alloc(size, _FL_);
+	return Orin::root.memory.Alloc(size, _FL_);
 }
 
 void* operator new[](size_t size)
 {
-	return Oak::root.memory.Alloc(size, _FL_);
+	return Orin::root.memory.Alloc(size, _FL_);
 }
 
 void operator delete(void* ptr)
 {
-	Oak::root.memory.Free(ptr);
+	Orin::root.memory.Free(ptr);
 }
 
 void operator delete[](void* ptr)
 {
-	Oak::root.memory.Free(ptr);
+	Orin::root.memory.Free(ptr);
 }
 
 void operator delete(void* ptr, size_t)
 {
-	Oak::root.memory.Free(ptr);
+	Orin::root.memory.Free(ptr);
 }
 
 void operator delete[](void* ptr, size_t)
 {
-	Oak::root.memory.Free(ptr);
+	Orin::root.memory.Free(ptr);
 }
 
-namespace Oak
+namespace Orin
 {
 	void* MemoryManager::Alloc(size_t size, const char* file, int line)
 	{

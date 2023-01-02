@@ -5,7 +5,7 @@
 #include "support/Sprite.h"
 #include "Root/Assets/AssetTexture.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AssetSpritesLayer : public AssetNavigable2D
 	{
@@ -41,7 +41,7 @@ namespace Oak
 
 		void LoadMetaData(JsonReader& loader) override;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		const char* GetSceneEntityType() override;
 		virtual void ImGuiMetaProperties();
 		virtual void ImGuiProperties();
@@ -71,7 +71,7 @@ namespace Oak
 
 		void Draw(Math::Vector3 pos, Color clr, float dt);
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		void SaveData(JsonWriter& saver, const char* name);
 	#endif
 

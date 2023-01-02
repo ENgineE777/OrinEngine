@@ -7,7 +7,7 @@
 \ingroup gr_code_platform_common
 */
 
-namespace Oak
+namespace Orin
 {
 	class Runner : public IRunner
 	{

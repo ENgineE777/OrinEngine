@@ -5,7 +5,7 @@
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
 
-namespace Oak
+namespace Orin
 {
 	int GetPow2(int value)
 	{

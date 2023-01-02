@@ -1,5 +1,5 @@
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 
 #include "SpriteWindow.h"
 #include "Root/Root.h"
@@ -16,7 +16,7 @@
 
 #include "Support/ImGuiHelper.h"
 
-namespace Oak
+namespace Orin
 {
 	AssetTexture* SpriteWindow::texture;
 	SpriteWindow* SpriteWindow::instance = nullptr;
@@ -882,7 +882,7 @@ namespace Oak
 
 		DrawViewport(Math::Vector2(size.x, size.y));
 
-		ImGui::Image(Oak::root.render.GetDevice()->GetBackBuffer(), size);
+		ImGui::Image(root.render.GetDevice()->GetBackBuffer(), size);
 
 		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed, true) && ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{

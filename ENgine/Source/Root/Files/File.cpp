@@ -4,7 +4,7 @@
 #include <stdlib.h> 
 #include "stb_sprintf.h"
 
-namespace Oak
+namespace Orin
 {
 	bool File::Open(const char* name, File::ModeType mode)
 	{

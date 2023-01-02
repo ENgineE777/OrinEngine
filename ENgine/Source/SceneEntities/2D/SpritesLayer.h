@@ -4,7 +4,7 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Root/Assets/AssetSpritesLayer.h"
 
-namespace Oak
+namespace Orin
 {
 	class SpritesLayer : public SceneEntity
 	{

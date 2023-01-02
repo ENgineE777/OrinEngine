@@ -2,7 +2,7 @@
 #include "Node2D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, Node2D, "2D", "Node2D")
 

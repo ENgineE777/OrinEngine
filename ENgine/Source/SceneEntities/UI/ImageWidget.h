@@ -7,7 +7,7 @@
 #include "root/Assets/AssetTexture.h"
 #include "ContainerWidget.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC ImageWidget : public ContainerWidget
 	{

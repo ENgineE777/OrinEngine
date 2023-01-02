@@ -3,7 +3,7 @@
 
 #include "SceneEntities/3D/PhysBox3D.h"
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\page scene_object_3D_PhysBox Physic Box

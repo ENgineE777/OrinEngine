@@ -5,7 +5,7 @@
 #include "support/Sprite.h"
 #include "Root/Assets/AssetTexture.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AssetTileSet : public Asset
 	{
@@ -38,7 +38,7 @@ namespace Oak
 
 		void LoadMetaData(JsonReader& loader) override;
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		bool IsTileSelected();
 		AssetTextureRef GetSelectedTile();
 		void SaveMetaData(JsonWriter& saver) override;
@@ -67,7 +67,7 @@ namespace Oak
 
 		void LoadData(JsonReader& loader, const char* name);
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		void SaveData(JsonWriter& saver, const char* name);
 	#endif
 

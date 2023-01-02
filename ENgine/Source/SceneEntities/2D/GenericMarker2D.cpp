@@ -1,11 +1,11 @@
 
 #include "GenericMarker2D.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/Editor.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, GenericMarker2D, "2D", "GenericMarker2D")
 

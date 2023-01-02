@@ -1,7 +1,7 @@
 
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	void Asset::Init()
 	{
@@ -12,7 +12,7 @@ namespace Oak
 	{
 		path = setPath;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		char strName[512];
 		StringUtils::GetFileName(path.c_str(), strName);
 		name = strName;
@@ -53,7 +53,7 @@ namespace Oak
 
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	const eastl::string& Asset::GetName()
 	{
 		return name;
@@ -220,7 +220,7 @@ namespace Oak
 
 	void Asset::Release()
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		if (taskPool)
 		{
 			delete taskPool;

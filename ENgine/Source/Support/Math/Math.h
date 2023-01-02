@@ -10,7 +10,7 @@
 \ingroup gr_code_common_math
 */
 
-namespace Oak::Math
+namespace Orin::Math
 {
 	constexpr static float Radian = 0.01745329f;
 	constexpr static float PI = 3.14159265f;

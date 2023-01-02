@@ -1,7 +1,7 @@
 
 #include "Math.h"
 
-namespace Oak::Math
+namespace Orin::Math
 {
 	bool Vector3::IsEqual(const Vector3& v)
 	{

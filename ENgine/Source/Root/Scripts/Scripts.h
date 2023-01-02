@@ -6,7 +6,7 @@
 
 #include "Support/Support.h"
 
-namespace Oak
+namespace Orin
 {
 	class Scripts
 	{

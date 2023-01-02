@@ -8,7 +8,7 @@ class  Texture;
 
 struct stbtt_pack_context;
 
-namespace Oak
+namespace Orin
 {
 	class FontRes
 	{

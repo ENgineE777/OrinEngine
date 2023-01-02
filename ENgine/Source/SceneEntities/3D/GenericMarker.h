@@ -3,7 +3,7 @@
 
 #include "Root/Scenes/SceneEntity.h"
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\page scene_object_3D_GenericMarker Generic Marker
@@ -70,7 +70,7 @@ namespace Oak
 
 		void Draw(float dt);
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir) override;
 		void SetEditMode(bool ed) override;
 		void SetGizmo();

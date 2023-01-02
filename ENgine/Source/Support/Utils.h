@@ -6,7 +6,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak::Utils
+namespace Orin::Utils
 {
 	CLASS_DECLSPEC bool Execute(const char* command, eastl::vector<eastl::string>& result);
 }

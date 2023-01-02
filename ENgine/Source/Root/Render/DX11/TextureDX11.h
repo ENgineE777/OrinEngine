@@ -9,7 +9,7 @@ struct ID3D11ShaderResourceView;
 struct ID3D11RenderTargetView;
 struct ID3D11DepthStencilView;
 
-namespace Oak
+namespace Orin
 {
 	class TextureDX11 : public Texture
 	{

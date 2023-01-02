@@ -2,7 +2,7 @@
 #include "Root/Root.h"
 #include "SoundRes.h"
 
-namespace Oak
+namespace Orin
 {
 	bool SoundRes::Load(const char* path, bool streamed)
 	{

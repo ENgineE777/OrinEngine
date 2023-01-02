@@ -7,7 +7,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak::ImGuiHelper
+namespace Orin::ImGuiHelper
 {
 	CLASS_DECLSPEC ImVec4 Vec4ToImVec4(Math::Vector4 value);
 	CLASS_DECLSPEC Math::Vector4 ImVec4ToVec4(ImVec4 value);

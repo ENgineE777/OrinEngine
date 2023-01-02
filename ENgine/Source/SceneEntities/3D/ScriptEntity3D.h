@@ -3,7 +3,7 @@
 
 #include "Root/Scenes/SceneEntity.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC ScriptEntity3D : public SceneEntity
 	{

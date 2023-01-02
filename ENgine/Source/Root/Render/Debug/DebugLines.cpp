@@ -1,7 +1,7 @@
 #include "DebugLines.h"
 #include "DebugTechiques.h"
 
-namespace Oak
+namespace Orin
 {
 	void DebugLines::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{

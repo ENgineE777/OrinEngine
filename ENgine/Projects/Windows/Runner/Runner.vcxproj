@@ -128,7 +128,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Editor\ENgine\CppBuild\lib\Oak_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Editor\ENgine\CppBuild\lib\Orin_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)/../../DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
@@ -150,7 +150,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>..\..\..\..\Editor\ENgine\CppBuild\lib\Oak.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\..\..\Editor\ENgine\CppBuild\lib\Orin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>$(OutDir)/../../DebugInfo/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
@@ -158,7 +158,14 @@
     <ClCompile Include="..\..\..\Source\Platform\Win\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Runner.rc" />
+    <ResourceCompile Include="..\Resources\resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\Oak.ico" />
+    <Image Include="..\Resources\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Resources\resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

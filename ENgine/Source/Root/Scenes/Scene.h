@@ -4,7 +4,7 @@
 #include "Root/TaskExecutor/TaskExecutor.h"
 #include "Root/Files/Files.h"
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\ingroup gr_code_root_scene
@@ -34,7 +34,7 @@ namespace Oak
 
 	#ifndef DOXYGEN_SKIP
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		char projectScenePath[512];
 	#endif
 
@@ -86,7 +86,7 @@ namespace Oak
 		void Play();
 		void AddPostPlay(int level, Object* entity, Object::DelegateSimple call);
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 		const eastl::vector<SceneEntity*>& GetEntities();
 
 		void Export();

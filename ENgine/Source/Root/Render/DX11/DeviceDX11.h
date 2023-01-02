@@ -4,7 +4,7 @@
 #include "Root/Render/Device.h"
 #include "d3d11.h"
 
-namespace Oak
+namespace Orin
 {
 	class DeviceDX11 : public Device
 	{

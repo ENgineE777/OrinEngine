@@ -1,12 +1,12 @@
 #include "Root/Root.h"
 #include "SceneEntities/2D/SpritesLayer.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "Editor/EditorDrawer.h"
 #include "imgui.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
 	CLASSREG(Asset, AssetSpritesLayer, "AssetSpritesLayer")
 
@@ -23,7 +23,7 @@ namespace Oak
 
 	void AssetSpritesLayer::Init()
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		RenderTasks()->AddTask(0, this, (Object::Delegate)&AssetSpritesLayer::Draw);
 #endif
 	}
@@ -80,7 +80,7 @@ namespace Oak
 		CalcInnerValues();
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	const char* AssetSpritesLayer::GetSceneEntityType()
 	{
 		return "SpritesLayer";
@@ -140,7 +140,7 @@ namespace Oak
 			eastl::string path;
 			if (loader.Read("path", path))
 			{
-				*this = Oak::root.assets.GetAssetRef<AssetSpritesLayerRef>(path);
+				*this = root.assets.GetAssetRef<AssetSpritesLayerRef>(path);
 			}
 
 			loader.LeaveBlock();
@@ -170,7 +170,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void AssetSpritesLayerRef::SaveData(JsonWriter& saver, const char* name)
 	{
 		if (Get())

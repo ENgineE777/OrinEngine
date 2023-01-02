@@ -4,11 +4,11 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Editor/Editor.h"
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include <filesystem>
 #endif
 
-namespace Oak
+namespace Orin
 {
 	#ifdef PLATFORM_WIN
 	void register_code(eastl::vector<ClassFactorySceneEntity*> & Decls);

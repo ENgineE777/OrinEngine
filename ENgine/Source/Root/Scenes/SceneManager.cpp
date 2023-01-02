@@ -2,7 +2,7 @@
 #include "Root/Scenes/SceneEntity.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	void SceneManager::Init()
 	{

@@ -8,7 +8,7 @@
 
 #pragma comment(lib, "Rpcrt4.lib")
 
-using namespace Oak;
+using namespace Orin;
 
 struct SourceFile
 {
@@ -76,10 +76,10 @@ int main(int argc, char* argv[])
 	eastl::vector<SourceFile> sources;
 	eastl::vector<eastl::string> filters;
 
-	sources.push_back({ StringUtils::PrintTemp("%s/ENgine/CppBuild/src/gameplay.cpp", curDir), "_Oak" });
-	sources.push_back({StringUtils::PrintTemp("%s/ENgine/CppBuild/src/gameplay.h", curDir), "_Oak" });
+	sources.push_back({ StringUtils::PrintTemp("%s/ENgine/CppBuild/src/gameplay.cpp", curDir), "_Orin" });
+	sources.push_back({StringUtils::PrintTemp("%s/ENgine/CppBuild/src/gameplay.h", curDir), "_Orin" });
 
-	filters.push_back("_Oak");
+	filters.push_back("_Orin");
 
 	ScanSources(codeDir, codeDir, sources, filters);
 

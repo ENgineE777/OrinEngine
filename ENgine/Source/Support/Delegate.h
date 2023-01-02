@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\ingroup gr_code_common

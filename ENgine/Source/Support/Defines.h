@@ -20,7 +20,7 @@ void operator delete[](void* ptr, const char* file, int line);
 
 #define NEW new(__FILE__, __LINE__)
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 
 #define OAK_ASSERT(expression, description) \
 	if (!(expression))\

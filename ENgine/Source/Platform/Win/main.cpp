@@ -10,7 +10,7 @@
 #include <memory.h>
 #include <tchar.h>
 
-#include "../Projects/Windows/Editor/resource.h"
+#include "../Projects/Windows/Resources/resource.h"
 
 #define MAX_LOADSTRING 100
 
@@ -23,7 +23,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_SIZE:
         if (wParam != SIZE_MINIMIZED)
         {
-            Oak::GetRunner()->OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
+            Orin::GetRunner()->OnResize((int)LOWORD(lParam), (int)HIWORD(lParam));
         }
         return 0;
     case WM_SYSCOMMAND:
@@ -78,7 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
     SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, desktopRect.right, desktopRect.bottom, SWP_SHOWWINDOW);
 
-    if (!Oak::GetRunner()->Init(hwnd))
+    if (!Orin::GetRunner()->Init(hwnd))
     {
         UnregisterClass(wcex.lpszClassName, wcex.hInstance);
         return 1;
@@ -98,10 +98,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
             continue;
         }
 
-        Oak::GetRunner()->Update();
+        Orin::GetRunner()->Update();
     }
 
-    Oak::GetRunner()->Release();
+    Orin::GetRunner()->Release();
 
     DestroyWindow(hwnd);
     UnregisterClass(wcex.lpszClassName, wcex.hInstance);

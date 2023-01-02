@@ -2,7 +2,7 @@
 #include "Root/Root.h"
 #include "Renderer/SPK_QuadRenderer.h"
 
-namespace Oak
+namespace Orin
 {
 	void SetupExplosion(SPK::Ref<SPK::System> system)
 	{

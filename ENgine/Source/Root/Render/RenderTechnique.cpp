@@ -1,7 +1,7 @@
 
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	eastl::map<eastl::string, Math::Vector4> RenderTechnique::vectors;
 	eastl::map<eastl::string, Math::Matrix> RenderTechnique::matrixes;

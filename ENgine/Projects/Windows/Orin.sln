@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Oak", "Oak\Oak.vcxproj", "{075CB791-8F70-4A20-A8EE-07FA4612507D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Orin", "Orin\Orin.vcxproj", "{075CB791-8F70-4A20-A8EE-07FA4612507D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F7C64503-0778-4435-B565-2333FB52D6BE} = {F7C64503-0778-4435-B565-2333FB52D6BE}
 	EndProjectSection

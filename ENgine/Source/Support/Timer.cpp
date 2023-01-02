@@ -8,7 +8,7 @@
 #include <Windows.h>
 #endif
 
-namespace Oak::Timer
+namespace Orin::Timer
 {
 	#ifdef PLATFORM_WIN
 	static BOOL g_first_time = 1;

@@ -6,7 +6,7 @@
 
 struct ID3D11Buffer;
 
-namespace Oak
+namespace Orin
 {
 	class DataBufferDX11 : public DataBuffer
 	{

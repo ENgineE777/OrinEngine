@@ -8,7 +8,7 @@
 \ingroup gr_code_editor
 */
 
-namespace Oak
+namespace Orin
 {
 	enum class TransformMode
 	{

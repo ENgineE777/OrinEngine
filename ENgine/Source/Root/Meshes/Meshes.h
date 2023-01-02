@@ -6,7 +6,7 @@
 #include "Support/Support.h"
 #include "MeshRes.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC Meshes
 	{

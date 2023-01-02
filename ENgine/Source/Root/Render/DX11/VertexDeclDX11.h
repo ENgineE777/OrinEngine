@@ -5,7 +5,7 @@
 #include "d3d11.h"
 #include "ShaderDX11.h"
 
-namespace Oak
+namespace Orin
 {
 	class VertexDeclDX11 : public VertexDecl
 	{

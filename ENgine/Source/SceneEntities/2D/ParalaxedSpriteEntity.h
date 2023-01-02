@@ -6,7 +6,7 @@
 #include "Support/Sprite.h"
 #include "root/Assets/AssetTexture.h"
 
-namespace Oak
+namespace Orin
 {
 	class ParalaxedSpriteEntity : public SceneEntity
 	{

@@ -12,23 +12,23 @@ void operator delete(void* ptr, const char* file, int line)
 	free(ptr);
 }
 
-void register_code(eastl::vector<Oak::ClassFactorySceneEntity*>& Decls)
+void register_code(eastl::vector<Orin::ClassFactorySceneEntity*>& Decls)
 {
 	const size_t wasSize = Decls.size();
 
-	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
+	auto& localDecls = Orin::ClassFactorySceneEntity::Decls();
 
 	Decls.resize(wasSize + localDecls.size());
 	eastl::copy(localDecls.begin(), localDecls.end(), Decls.begin() + wasSize);
 }
 
-void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls, 
-				   eastl::vector<Oak::SceneEntity*>& entities,
-				   eastl::vector<Oak::SceneEntity*>& toDelete, eastl::vector<Oak::SceneEntity*>& copies)
+void gather_copies(eastl::vector<Orin::ClassFactorySceneEntity*>& localDecls, 
+				   eastl::vector<Orin::SceneEntity*>& entities,
+				   eastl::vector<Orin::SceneEntity*>& toDelete, eastl::vector<Orin::SceneEntity*>& copies)
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		Oak::SceneEntity* entity = entities[i];
+		Orin::SceneEntity* entity = entities[i];
 
 		gather_copies(localDecls, entity->GetChilds(), toDelete, copies);
 
@@ -45,7 +45,7 @@ void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls,
 
 		if (needRecreate)
 		{
-			Oak::SceneEntity* copy = entity->GetScene()->CreateEntity(entity->className, entity->prefabInstance);
+			Orin::SceneEntity* copy = entity->GetScene()->CreateEntity(entity->className, entity->prefabInstance);
 
 			auto* parent = entity->GetParent();
 
@@ -84,12 +84,12 @@ void gather_copies(eastl::vector<Oak::ClassFactorySceneEntity*>& localDecls,
 	}
 }
 
-void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
+void recreate_entites(eastl::vector<Orin::SceneEntity*>& entities)
 {
-	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
+	auto& localDecls = Orin::ClassFactorySceneEntity::Decls();
 
-	eastl::vector<Oak::SceneEntity*> toDelete;
-	eastl::vector<Oak::SceneEntity*> copies;
+	eastl::vector<Orin::SceneEntity*> toDelete;
+	eastl::vector<Orin::SceneEntity*> copies;
 
 	gather_copies(localDecls, entities, toDelete, copies);
 
@@ -104,11 +104,11 @@ void recreate_entites(eastl::vector<Oak::SceneEntity*>& entities)
 	}
 }
 
-void unregister_code(eastl::vector<Oak::ClassFactorySceneEntity*>& Decls)
+void unregister_code(eastl::vector<Orin::ClassFactorySceneEntity*>& Decls)
 {
-	auto& localDecls = Oak::ClassFactorySceneEntity::Decls();
+	auto& localDecls = Orin::ClassFactorySceneEntity::Decls();
 
-	Decls.erase(eastl::remove_if(Decls.begin(), Decls.end(), [&](Oak::ClassFactorySceneEntity *decl)
+	Decls.erase(eastl::remove_if(Decls.begin(), Decls.end(), [&](Orin::ClassFactorySceneEntity *decl)
 	{
 		return eastl::find(localDecls.begin(), localDecls.end(), decl) != localDecls.end();
 	}),	Decls.end());

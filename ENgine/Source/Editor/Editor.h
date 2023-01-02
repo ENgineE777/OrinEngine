@@ -18,7 +18,7 @@
 \ingroup gr_code_editor
 */
 
-namespace Oak
+namespace Orin
 {
 	class Editor : public IEditor
 	{
@@ -222,7 +222,7 @@ namespace Oak
 		void CreateRenderTarget();
 		void CleanupRenderTarget();
 
-		void UpdateOak();
+		void UpdateOrin();
 	};
 
 	#ifdef OAK_EXPORTING

@@ -7,7 +7,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak
+namespace Orin
 {
 	#define COLOR_WHITE Color()
 	#define COLOR_WHITE_A(alpha) Color(1.0, 1.0f, 1.0f, alpha)

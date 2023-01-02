@@ -2,7 +2,7 @@
 #include "KinematicCapsule2D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, KinematicCapsule2D, "2D/Physics","KinematicCapsule2D")
 

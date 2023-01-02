@@ -12,7 +12,7 @@
 #include "Scene.h"
 #include "Root/Assets/AssetPrefab.h"
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\ingroup gr_code_root_scene
@@ -51,7 +51,7 @@ namespace Oak
 
 		AssetPrefabRef prefabRef;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		bool edited = false;
 #endif
 
@@ -174,7 +174,7 @@ namespace Oak
 		*/
 		virtual void Play();
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		/**
 		\brief Set new scene
 

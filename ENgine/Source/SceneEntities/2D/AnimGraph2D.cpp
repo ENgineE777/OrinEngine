@@ -2,7 +2,7 @@
 #include "AnimGraph2D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, AnimGraph2D, "2D/Sprites","AnimGraph2D")
 
@@ -23,7 +23,7 @@ namespace Oak
 
 	void AnimGraph2D::ApplyProperties()
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		Tasks(true)->DelAllTasks(this);
 #endif
 

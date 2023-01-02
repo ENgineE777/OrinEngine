@@ -2,13 +2,13 @@
 #include "SceneEntities/2D/SpriteEntity.h"
 
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 #include "imgui.h"
 #endif
 
-namespace Oak
+namespace Orin
 {
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 	extern void ShowSpriteWindow(AssetTexture* texture);
 #endif
 
@@ -104,7 +104,7 @@ namespace Oak
 
 	void AssetTexture::StartEditAssetTexture(void* owner)
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		ShowSpriteWindow((AssetTexture*)owner);
 #endif
 	}
@@ -202,7 +202,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void AssetTexture::SaveMetaData(JsonWriter& saver)
 	{
 		saver.StartBlock("spriteSheet");
@@ -484,7 +484,7 @@ namespace Oak
 			eastl::string path;
 			if (loader.Read("path", path))
 			{
-				*this = Oak::root.assets.GetAssetRef<AssetTextureRef>(path);
+				*this = root.assets.GetAssetRef<AssetTextureRef>(path);
 
 				loader.Read("sliceIndex", sliceIndex);
 				loader.Read("animIndex", animIndex);
@@ -494,7 +494,7 @@ namespace Oak
 		}
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void AssetTextureRef::SaveData(JsonWriter& saver, const char* name)
 	{
 		if (Get())

@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <EASTL/string.h>
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\ingroup gr_code_root_files

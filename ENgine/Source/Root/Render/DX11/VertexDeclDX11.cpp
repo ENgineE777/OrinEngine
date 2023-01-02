@@ -2,7 +2,7 @@
 #include "VertexDeclDX11.h"
 #include "DeviceDX11.h"
 
-namespace Oak
+namespace Orin
 {
 	VertexDeclDX11::VertexDeclDX11(int count, VertexDecl::ElemDesc* elems)
 	{

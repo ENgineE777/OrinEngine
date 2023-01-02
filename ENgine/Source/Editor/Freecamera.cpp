@@ -3,7 +3,7 @@
 #include "Support/Sprite.h"
 #include "Editor.h"
 
-namespace Oak
+namespace Orin
 {
 	void FreeCamera::Init()
 	{

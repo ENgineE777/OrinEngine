@@ -2,7 +2,7 @@
 #include "SpritesLayer.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, SpritesLayer, "2D", "SpritesLayer")
 
@@ -22,7 +22,7 @@ namespace Oak
 
 	void SpritesLayer::ApplyProperties()
 	{
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		Tasks(true)->DelAllTasks(this);
 #endif
 

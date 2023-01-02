@@ -1,7 +1,7 @@
 #include "DebugTriangles.h"
 #include "DebugTechiques.h"
 
-namespace Oak
+namespace Orin
 {
 	void DebugTriangles::Init(TaskExecutor::SingleTaskPool* debugTaskPool)
 	{

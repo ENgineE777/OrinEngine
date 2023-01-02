@@ -8,7 +8,7 @@
 \ingroup gr_code_common
 */
 
-namespace Oak
+namespace Orin
 {
 	struct CLASS_DECLSPEC FileLine
 	{

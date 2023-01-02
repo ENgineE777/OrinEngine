@@ -4,13 +4,13 @@
 #include "AssetScene.h"
 #include "root/Render/Render.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC AssetPrefab : public AssetScene
 	{
 		friend class PointerRef<AssetPrefab>;
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		eastl::vector<SceneEntity*> instances;
 #endif
 	public:
@@ -23,7 +23,7 @@ namespace Oak
 
 		SceneEntity* CreateInstance(Scene* sceneOwner);
 
-#ifdef OAK_EDITOR
+#ifdef ORIN_EDITOR
 		void RegisterIntstance(SceneEntity* entity);
 		void UnregisterIntstance(SceneEntity* entity);
 		void Save() override;

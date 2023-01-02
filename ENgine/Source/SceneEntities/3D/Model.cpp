@@ -2,7 +2,7 @@
 #include "Model.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	ENTITYREG(SceneEntity, ModelEntity, "3D/Geometry", "Mesh3D")
 

@@ -7,7 +7,7 @@
 #include "root/Physics/PhysController.h"
 #include "root/Physics/PhysScene.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC KinematicCapsule2D : public SceneEntity
 	{

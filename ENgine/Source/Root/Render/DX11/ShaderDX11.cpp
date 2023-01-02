@@ -7,7 +7,7 @@
 #include "d3d11.h"
 #include "d3dcompiler.h"
 
-namespace Oak
+namespace Orin
 {
 	ShaderDX11::ShaderDX11(ShaderType tp, const char* name) : Shader(tp)
 	{

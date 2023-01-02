@@ -3,7 +3,7 @@
 #include "Support/StringUtils.h"
 #include "Root/Files/JsonReader.h"
 
-namespace Oak
+namespace Orin
 {
 	Controls::AliasMappig::AliasMappig(const char* name)
 	{

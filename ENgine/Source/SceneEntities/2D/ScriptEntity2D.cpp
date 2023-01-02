@@ -1,7 +1,7 @@
 #include "ScriptEntity2D.h"
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	void ScriptEntity2D::Init()
 	{

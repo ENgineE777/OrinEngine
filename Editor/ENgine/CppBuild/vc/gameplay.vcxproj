@@ -70,11 +70,11 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;ORIN_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;ORIN_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -86,7 +86,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>$EDITOR_DIR\ENgine\CppBuild\lib\eastl_Debug.lib;$EDITOR_DIR\ENgine\CppBuild\lib\Oak_Debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>$EDITOR_DIR\ENgine\CppBuild\lib\eastl_Debug.lib;$EDITOR_DIR\ENgine\CppBuild\lib\Orin_Debug.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
@@ -113,13 +113,13 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ORIN_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
     <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;OAK_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ORIN_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
@@ -131,7 +131,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <Link>
-      <AdditionalDependencies>$EDITOR_DIR\ENgine\CppBuild\lib\eastl.lib;$EDITOR_DIR\ENgine\CppBuild\lib\Oak.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>$EDITOR_DIR\ENgine\CppBuild\lib\eastl.lib;$EDITOR_DIR\ENgine\CppBuild\lib\Orin.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>

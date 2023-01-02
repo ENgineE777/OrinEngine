@@ -3,7 +3,7 @@
 
 #include "Root/Render/Render.h"
 
-namespace Oak
+namespace Orin
 {
 	class DebugSpheres : public Object
 	{

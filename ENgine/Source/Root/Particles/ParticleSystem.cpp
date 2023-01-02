@@ -1,7 +1,7 @@
 
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	void ParticleSystem::Init(SPK::Ref<SPK::System> set_res, TaskExecutor::SingleTaskPool* set_taskPool, TaskExecutor::SingleTaskPool* set_renderPool, bool set_autoDelete)
 	{

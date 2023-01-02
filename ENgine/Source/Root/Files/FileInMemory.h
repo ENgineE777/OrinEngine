@@ -5,7 +5,7 @@
 #include <string.h>
 #include "Support/Defines.h"
 
-namespace Oak
+namespace Orin
 {
 	/**
 	\ingroup gr_code_root_files

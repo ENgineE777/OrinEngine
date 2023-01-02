@@ -6,7 +6,7 @@
 #include "imgui.h"
 #include "editor.h"
 
-namespace Oak
+namespace Orin
 {
 	Gizmo::TransformAction::TransformAction(void* owner, Transform* setOwner, Transform& setSavedData) : IEditorAction(owner)
 	{

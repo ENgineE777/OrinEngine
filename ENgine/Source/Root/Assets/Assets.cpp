@@ -1,6 +1,6 @@
 #include "Root/Root.h"
 
-namespace Oak
+namespace Orin
 {
 	eastl::map<eastl::string, eastl::string> Assets::assetCreation = { {"jpg", "AssetTexture"}, {"bmp", "AssetTexture"}, {"png", "AssetTexture"}, {"tga", "AssetTexture"},
 	                                                                   {"psd", "AssetTexture"}, {"ang", "AssetAnimGraph2D"}, {"scn", "AssetScene"}, {"tls", "AssetTileSet"},
@@ -36,7 +36,7 @@ namespace Oak
 			return;
 		}
 
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		LoadAssets(rootPath, &rootFolder, false);
 
 		scanning = true;
@@ -45,7 +45,7 @@ namespace Oak
 		#endif
 	}
 
-	#ifdef OAK_EDITOR
+	#ifdef ORIN_EDITOR
 	void Assets::LoadAssets(const char* path, Folder* folder, bool update)
 	{
 		WIN32_FIND_DATAA ffd;
@@ -198,7 +198,7 @@ namespace Oak
 
 	void Assets::Update()
 	{
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		if (needRescan.load(std::memory_order_acquire))
 		{
 			LoadAssets(root.GetPath(Root::Path::Assets), &rootFolder, true);
@@ -210,7 +210,7 @@ namespace Oak
 
 	void Assets::Clear()
 	{
-		#ifdef OAK_EDITOR
+		#ifdef ORIN_EDITOR
 		scanning.store(false, std::memory_order_release);
 		executor.Terminate();
 		#endif

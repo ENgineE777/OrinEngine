@@ -5,7 +5,7 @@
 #include "SceneEntities/2D/AnimGraph2D.h"
 #include "SceneEntities/2D/KinematicCapsule2D.h"
 
-namespace Oak
+namespace Orin
 {
 	class Character : public ScriptEntity2D
 	{

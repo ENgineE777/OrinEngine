@@ -4,7 +4,7 @@
 
 #include "d3d11.h"
 
-namespace Oak
+namespace Orin
 {
 	DataBufferDX11::DataBufferDX11(int sz, int strd) : DataBuffer(sz, strd)
 	{

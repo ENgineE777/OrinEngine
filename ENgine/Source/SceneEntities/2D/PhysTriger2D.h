@@ -3,7 +3,7 @@
 
 #include "SceneEntities/3D/PhysTriger3D.h"
 
-namespace Oak
+namespace Orin
 {
 	class CLASS_DECLSPEC PhysTriger2D : public PhysTriger3D
 	{

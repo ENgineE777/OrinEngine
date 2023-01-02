@@ -2,7 +2,7 @@
 #include "Root/Root.h"
 #include "Support/Support.h"
 
-namespace Oak::Math
+namespace Orin::Math
 {
 	float Rand()
 	{

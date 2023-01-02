@@ -8,7 +8,7 @@
 #define STB_SPRINTF_IMPLEMENTATION
 #include "stb_sprintf.h"
 
-namespace Oak::StringUtils
+namespace Orin::StringUtils
 {
 	char tempStr[1024];
 	eastl::map<wchar_t, int> upper2lower;
