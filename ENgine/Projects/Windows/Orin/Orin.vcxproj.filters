@@ -152,6 +152,9 @@
     <Filter Include="Source\SceneEntities\UI">
       <UniqueIdentifier>{6b8bd6e8-c0e1-4b3d-ad4e-e23a0805705f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Shaders">
+      <UniqueIdentifier>{d911a5ea-c7f1-4f5c-826a-644be1f5df8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Support\Timer.cpp">
@@ -726,6 +729,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Support\Math\Vector4.cpp">
       <Filter>Source\Support\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\DefferedLight.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1374,6 +1380,9 @@
     <ClInclude Include="..\..\..\Source\Editor\EditorAction.h">
       <Filter>Source\Editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\DefferedLight.h">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc.sh">
@@ -1396,6 +1405,54 @@
     </None>
     <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_typedefs.h.in">
       <Filter>Thirdparty\jemalloc\include</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\blur.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\combine.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\correction.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\debug_line.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\debug_sprite.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\debug_triangle.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\debug_triangle2d.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\deffered_light_2D.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\drawLightMap2D.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\font.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\particle.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\screen.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\sh_triangle.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\sprite.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\triangle.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\Shaders\triangle_simplest.shader">
+      <Filter>Source\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>
