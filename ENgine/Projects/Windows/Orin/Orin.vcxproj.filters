@@ -1406,52 +1406,52 @@
     <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_typedefs.h.in">
       <Filter>Thirdparty\jemalloc\include</Filter>
     </None>
-    <None Include="..\..\..\Shaders\blur.shader">
+    <None Include="..\..\..\Source\Shaders\blur.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\combine.shader">
+    <None Include="..\..\..\Source\Shaders\combine.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\correction.shader">
+    <None Include="..\..\..\Source\Shaders\correction.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\debug_line.shader">
+    <None Include="..\..\..\Source\Shaders\debug_line.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\debug_sprite.shader">
+    <None Include="..\..\..\Source\Shaders\debug_sprite.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\debug_triangle.shader">
+    <None Include="..\..\..\Source\Shaders\debug_triangle.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\debug_triangle2d.shader">
+    <None Include="..\..\..\Source\Shaders\debug_triangle2d.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\deffered_light_2D.shader">
+    <None Include="..\..\..\Source\Shaders\deffered_light_2D.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\drawLightMap2D.shader">
+    <None Include="..\..\..\Source\Shaders\drawLightMap2D.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\font.shader">
+    <None Include="..\..\..\Source\Shaders\font.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\particle.shader">
+    <None Include="..\..\..\Source\Shaders\particle.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\screen.shader">
+    <None Include="..\..\..\Source\Shaders\screen.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\sh_triangle.shader">
+    <None Include="..\..\..\Source\Shaders\sh_triangle.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\sprite.shader">
+    <None Include="..\..\..\Source\Shaders\sprite.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\triangle.shader">
+    <None Include="..\..\..\Source\Shaders\triangle.shader">
       <Filter>Source\Shaders</Filter>
     </None>
-    <None Include="..\..\..\Shaders\triangle_simplest.shader">
+    <None Include="..\..\..\Source\Shaders\triangle_simplest.shader">
       <Filter>Source\Shaders</Filter>
     </None>
   </ItemGroup>

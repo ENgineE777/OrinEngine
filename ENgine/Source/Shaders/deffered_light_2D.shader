@@ -9,7 +9,7 @@ static const float3 v_norm          = float3(0.0, 0.0, 1.0);
 cbuffer ps_params : register( b0 )
 {
 	float4 color;
-	float4 u_lights[2 + 4 * 16];
+	float4 u_lights[3 + 4 * 16];
 };
 
 struct VS_INPUT
@@ -20,7 +20,7 @@ struct VS_INPUT
 struct PS_INPUT
 {
     float4 pos : SV_POSITION;
-    float2 texCoord : TEXCOORD;
+    float2 texCoord : TEXCOORD0;
 };
 
 Texture2D diffuseMap : register(t0);
@@ -118,42 +118,52 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	float3 albedo    = source.rgb;
 	float3 ao        = material.b * albedo;
 	float  metallic  = material.r;
-	float  roughness = material.g;	
+	float  roughness = material.g;
 	float  emissive  = normal.a * 2.0;
 		
 	// THINGS THAT ONLY NEED CALCULATED ONCE
-	float3 world_pos = input.pos.xyz;
 	float3 mat_ref   = lerp(dielectric, albedo, metallic);
-	float3 f_norm    = normalize(normal.rgb * 2.0 - 1.0);
+	float3 f_norm    = normalize(normal.rgb * 2.0f - 1.0f);
 	float  FdotC     = max(dot(f_norm, v_norm), 0.0);
 	float  r_norm    = reflection(FdotC, roughness);
 	FdotC *= 4.0;
 	
 	// AMBIENT LIGHTING PLUS EMISSIVE
-	float ambient			= sqrt(1.0 - pow(abs(u_lights[0].x) - 1.0, 2.0));
-	float ambient_intensity = (ambient + emissive) * 2.0 * float(u_lights[0].x >= 0.0);
-	float3 ambient_color    = float3(u_lights[0].y, u_lights[0].z, u_lights[1].w) * ambient + albedo * emissive;
-	float3 l_norm           = float3(u_lights[1].x, u_lights[1].y, u_lights[1].z); 
+	//float ambient			= sqrt(1.0 - pow(abs(u_lights[0].w) - 1.0, 2.0));
+	float ambient_intensity = u_lights[0].w;
+	float3 ambient_color = float3(u_lights[0].x, u_lights[0].y, u_lights[1].z);// *ambient + albedo * emissive;
+	float3 l_norm           = normalize(float3(u_lights[1].x, u_lights[1].y, u_lights[1].z));
 	float3 h_norm           = normalize(v_norm + l_norm);
 	float FdotL             = max(dot(f_norm, l_norm), 0.0);
 	float3 freq             = fresnel(max(dot(h_norm, v_norm), 0.0), mat_ref);
 	float3 numerator		= distribution(f_norm, h_norm, roughness) * reflection(FdotL, roughness) * r_norm * freq;
 	float3 specular			= numerator / (FdotC * FdotL + 0.0000001);  
 	float3 refraction		= float3((1.0 - freq) * (1.0 - metallic));
-	float3 ambient_lighting = ambient_color * ambient_intensity * FdotL * (refraction * albedo / M_PI + specular) + ao * min(ambient_intensity, 0.3); 
+	float3 ambient_lighting = ambient_color * ambient_intensity * FdotL * (refraction * albedo / M_PI + specular) * 1.0f + ao * min(ambient_intensity, 0.3); 
 	
 		
 	// ITERATE THROUGH LIGHTS
 	int LI = 6;
 	int count = int(u_lights[1].w);
-	int index = 2;
+	int index = 3;
+
+	float3 world_pos = float3(input.texCoord.x * 2.0f - 1.0f, -input.texCoord.y * 2.0f + 1.0f, 0);
+	world_pos = float3(world_pos.x * u_lights[2].x + u_lights[2].z, world_pos.y * u_lights[2].y + u_lights[2].w, 0.0f);
 
 	for (int i = 0; i < count; i++)
-	{
+	{		
+		/*float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
+		index++;
+
+		index++;
+
+		float dist = 1.0f - clamp(length(light_pos.xy - world_pos.xy) / u_lights[index].w, 0.0f, 1.0f);
+
+		color += float3(dist, dist, dist);*/
+
 		// LIGHT ATTRIBUTES
 		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
-
-		float directional = u_lights[index].w; // Sign of the color value used to flag directional lighting
+		float directional = u_lights[index].w; // Sign of the color val1e used to flag directional lighting
 		index++;
 
 		float3 radiance = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
@@ -176,7 +186,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		// LINE LIGHT
 		if (width > 0.0)
 		{
-			float2 line_light = float2(width * sin(angle), width * cos(angle));
+			float2 line_light = float2(width * sin(-angle), width * cos(-angle));
 			width *= width;
 			float pos = line_light.x * (world_pos.x - light_pos.x) + line_light.y * (world_pos.y - light_pos.y);
 			float t = clamp(pos, -width, width) / width;
@@ -185,9 +195,11 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		}
 
 		// NORMALIZE AFTER MOVING FOR LINE
-		float3 l_norm = normalize(light_pos + world_pos * directional - world_pos);
+		float3 l_norm = normalize(light_pos - world_pos);
+		l_norm.x = -l_norm.x;
+		//l_norm.y = -l_norm.y;
 		float3 h_norm = normalize(v_norm + l_norm);
-		float FdotL = max(dot(f_norm, l_norm), 0.0);
+		float FdotL = max(dot(f_norm, l_norm), 0.0f);
 		float fov = 1.0;
 
 		// FOV ARC
@@ -205,9 +217,20 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		//float attenuation = det / (dist * dist) * fov;
 		float attenuation = max((1.0 - intensity) * directional, (1.0 - directional) * det / (dist * dist) * fov);
 
+		//if (attenuation > 0.25)
+		//{
+		//	attenuation = 1.0;
+		//}
+		//else if (attenuation > 0.0)
+		//{
+		//	attenuation = 0.5;
+		//}
+
+		//color += float3(attenuation, attenuation, attenuation);
+
 		// SHADOW AND BLEND
-		float bit = get_bit(shadow[i / 8], i % 8);
-		attenuation *= max(1.0 - bit * 0.998, ceil(blend)) * float(light_depth >= blend);
+		//float bit = get_bit(shadow[i / 8], i % 8);
+		//attenuation *= max(1.0 - bit * 0.998, ceil(blend)) * float(light_depth >= blend);
 
 		// PBR LIGHTING
 		float3 freq = fresnel(max(dot(h_norm, v_norm), 0.0), mat_ref);
@@ -215,12 +238,13 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float3 specular = numerator / (FdotC * FdotL + 0.00000001);
 		float3 refraction = float3((1.0 - freq) * (1.0 - metallic));
 
+
 		// ADD TO FINAL COLOR
-		color += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) + ao * min(attenuation, 0.3);
+		color += radiance * attenuation *FdotL* (refraction * albedo / M_PI + specular) * 5.0f + ao * min(attenuation, 0.3);
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR
-	color = (color + ambient_lighting) * (1.0 + emissive);
+	color = (color  + ambient_lighting) /* * (1.0 + emissive) */;
 
     return float4(color, 1.0f);
 }

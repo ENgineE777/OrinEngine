@@ -24,6 +24,10 @@ namespace Orin
 		META_DATA_DECL_BASE(PointLight2D)
 
 		Color color;
+		float falloff = 0.5f;
+		float intesity = 1.0f;
+		float lineWidth = 0.0f;
+		float viewAngle = 181.0f;
 		RenderTechniqueRef spriteLight;
 
 	#ifndef DOXYGEN_SKIP
