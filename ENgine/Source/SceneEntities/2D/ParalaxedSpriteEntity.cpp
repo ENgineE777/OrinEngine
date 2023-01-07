@@ -8,8 +8,9 @@ namespace Orin
 
 	META_DATA_DESC(ParalaxedSpriteEntity)
 		BASE_SCENE_ENTITY_PROP(ParalaxedSpriteEntity)
-		FLOAT_PROP(ParalaxedSpriteEntity, paralax.x, 0.0f, "Visual", "paralax X", "X-axis paralax")
-		FLOAT_PROP(ParalaxedSpriteEntity, paralax.y, 0.0f, "Visual", "paralax Y", "Y-axis paralax")
+		BOOL_PROP(ParalaxedSpriteEntity, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
+		FLOAT_PROP(ParalaxedSpriteEntity, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
+		FLOAT_PROP(ParalaxedSpriteEntity, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
 		ASSET_TEXTURE_PROP(ParalaxedSpriteEntity, texture, "Visual", "Texture")
 	META_DATA_DESC_END()
 
@@ -45,7 +46,7 @@ namespace Orin
 
 			auto pos = trans.position;
 
-			if (GetScene()->IsPlaying())
+			if (paralaxInEditor || GetScene()->IsPlaying())
 			{
 				pos.x = pos.x + (camPos.x - pos.x) * (1.0f - paralax.x);
 				pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);

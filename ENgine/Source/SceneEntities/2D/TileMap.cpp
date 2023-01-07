@@ -55,6 +55,9 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
+		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
+		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
+		FLOAT_PROP(TileMap, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
 #ifdef ORIN_EDITOR
 		CALLBACK_PROP(TileMap, TileMap::ShowTilsetWindow, "Properties", "Open Tileset")
 #endif
@@ -142,6 +145,19 @@ namespace Orin
 
 			Math::Matrix mat = trans.GetGlobal();
 			auto pos = Sprite::ToPixels(mat.Pos());
+
+
+			Math::Matrix view;
+			root.render.GetTransform(TransformStage::View, view);
+			view.Inverse();
+
+			auto camPos = Sprite::ToPixels(view.Pos());
+
+			if (paralaxInEditor || GetScene()->IsPlaying())
+			{
+				pos.x = pos.x + (camPos.x - pos.x) * (1.0f - paralax.x);
+				pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);
+			}
 
 			for (auto& tile : tiles)
 			{

@@ -27,6 +27,9 @@ namespace Orin
 			AssetTextureRef texture;
 		};
 
+		bool paralaxInEditor = false;
+		Math::Vector2 paralax = 1.0f;
+
 		eastl::vector<Tile> tiles;
 		eastl::vector<PhysObject*> collition;
 
