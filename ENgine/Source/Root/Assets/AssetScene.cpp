@@ -487,6 +487,48 @@ namespace Orin
 		}
 	}
 
+	void AssetScene::DuplicateSelected()
+	{
+		SceneEntity* copy = nullptr;
+
+		if (selectedEntity->prefabInstance)
+		{
+			copy = selectedEntity->prefabRef->CreateInstance(selectedEntity->GetScene());
+		}
+		else
+		{
+			copy = scene->CreateEntity(selectedEntity->className, selectedEntity->prefabInstance);
+		}
+
+		auto* parent = selectedEntity->GetParent();
+
+		if (parent)
+		{
+			copy->SetParent(parent, selectedEntity);
+		}
+		else
+		{
+			scene->AddEntity(copy, selectedEntity);
+		}
+
+		copy->Copy(selectedEntity);
+		copy->PostLoad();
+
+		CopyChilds(selectedEntity, copy, scene);
+
+		copy->UpdateVisibility();
+
+		SelectEntity(copy);
+
+		char temp[1024];
+		StringUtils::Copy(temp, 1024, selectedEntity->GetName());
+		StringUtils::InreaseNumberInName(temp, 1024);
+
+		copy->SetName(temp);
+
+		containsUnsavedChanges = true;
+	}
+
 	void AssetScene::SceneTreePopup(bool contextItem)
 	{
 		if (isPrefab && (selectedEntity == nullptr))
@@ -521,44 +563,7 @@ namespace Orin
 
 			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Duplicate"))
 			{
-				SceneEntity* copy = nullptr;
-
-				if (selectedEntity->prefabInstance)
-				{
-					copy = selectedEntity->prefabRef->CreateInstance(selectedEntity->GetScene());
-				}
-				else
-				{
-					copy = scene->CreateEntity(selectedEntity->className, selectedEntity->prefabInstance);
-				}
-
-				auto* parent = selectedEntity->GetParent();
-
-				if (parent)
-				{
-					copy->SetParent(parent, selectedEntity);
-				}
-				else
-				{
-					scene->AddEntity(copy, selectedEntity);
-				}
-
-				copy->Copy(selectedEntity);
-				copy->PostLoad();
-
-				CopyChilds(selectedEntity, copy, scene);
-
-				copy->UpdateVisibility();
-
-				SelectEntity(copy);
-
-				char temp[1024];
-				StringUtils::Copy(temp, 1024, selectedEntity->GetName());
-				StringUtils::InreaseNumberInName(temp, 1024);
-				
-				copy->SetName(temp);
-
-				containsUnsavedChanges = true;
+				DuplicateSelected();
 			}
 
 			if (!onlyToCreate && ImGui::MenuItem("Delete"))
@@ -678,6 +683,11 @@ namespace Orin
 			if (root.GetControls()->DebugKeyPressed("KEY_DELETE"))
 			{
 				DeleteSelectedEntity();
+			}
+
+			if (selectedEntity && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_D"))
+			{
+				DuplicateSelected();
 			}
 		}
 
