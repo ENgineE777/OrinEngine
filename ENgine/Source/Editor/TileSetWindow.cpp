@@ -360,13 +360,13 @@ namespace Orin
 
 		vireportHowered = ImGui::IsItemHovered();
 
-		if (vireportHowered && ImGui::IsMouseClicked(0))
+		if (imageFocused && vireportHowered && ImGui::IsMouseClicked(0))
 		{
 			OnLeftMouseDown();
 			viewportCaptured = true;
 		}
 		else
-		if (vireportHowered && ImGui::IsMouseClicked(2))
+		if (imageFocused && vireportHowered && ImGui::IsMouseClicked(2))
 		{
 			drag = Drag::DragField;
 			viewportCaptured = true;
