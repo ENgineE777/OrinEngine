@@ -32,11 +32,15 @@ SamplerState materialLinear : register(s1);
 Texture2D normalsMap : register(t2);
 SamplerState normalsLinear : register(s2);
 
+Texture2D selfilumMap : register(t3);
+SamplerState selfilumLinear : register(s3);
+
 struct PS_GBUFFER_OUTPUT
 {
     float4 color : SV_TARGET0;
     float4 material : SV_TARGET1;
     float4 normals : SV_TARGET2;
+	float4 selfilum : SV_TARGET3;
 };
 
 float3 get_radiance(float c)
@@ -87,8 +91,11 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
     PS_GBUFFER_OUTPUT output;
 
     output.color = clr;
-    output.material = materialMap.Sample(materialLinear, input.texCoord);
-    output.normals = normalsMap.Sample(normalsLinear, input.texCoord);
+	float4 material = materialMap.Sample(materialLinear, input.texCoord);
+    output.material = material;
+    output.normals = normalsMap.Sample(normalsLinear, input.texCoord).zyxw;
+	float3 selfilum = material.a * material.rgb;
+	output.selfilum = float4(selfilum, material.a);
 
     return output;
 }
@@ -108,12 +115,15 @@ PS_INPUT VS_DEFFERED_LIGHT( VS_INPUT input )
 float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 {
     // FRAGMENT COLOR
-	float3 color = float3(0.0f.xxx);
+	float3 outColor = float3(0.0f.xxx);
 	
 	// SAMPLES AND MATERIALS
 	float4 source    = diffuseMap.Sample(diffuseLinear, input.texCoord);
 	float4 normal    = normalsMap.Sample(normalsLinear, input.texCoord);
 	float4 material  = materialMap.Sample(materialLinear, input.texCoord);
+
+	float4 selfilum = selfilumMap.Sample(selfilumLinear, input.texCoord);
+
 	//float4 shadow    = shadow_texture.Sample(u_shadow, input.texCoord)*255.0;	
 	float3 albedo    = source.rgb;
 	float3 ao        = material.b * albedo;
@@ -130,7 +140,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	
 	// AMBIENT LIGHTING PLUS EMISSIVE
 	//float ambient			= sqrt(1.0 - pow(abs(u_lights[0].w) - 1.0, 2.0));
-	float ambient_intensity = u_lights[0].w;
+	/*float ambient_intensity = u_lights[0].w;
 	float3 ambient_color = float3(u_lights[0].x, u_lights[0].y, u_lights[1].z);// *ambient + albedo * emissive;
 	float3 l_norm           = normalize(float3(u_lights[1].x, u_lights[1].y, u_lights[1].z));
 	float3 h_norm           = normalize(v_norm + l_norm);
@@ -140,7 +150,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	float3 specular			= numerator / (FdotC * FdotL + 0.0000001);  
 	float3 refraction		= float3((1.0 - freq) * (1.0 - metallic));
 	float3 ambient_lighting = ambient_color * ambient_intensity * FdotL * (refraction * albedo / M_PI + specular) * 1.0f + ao * min(ambient_intensity, 0.3); 
-	
+	*/
 		
 	// ITERATE THROUGH LIGHTS
 	int LI = 6;
@@ -240,11 +250,11 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 
 		// ADD TO FINAL COLOR
-		color += radiance * attenuation *FdotL* (refraction * albedo / M_PI + specular) * 5.0f + ao * min(attenuation, 0.3);
+		outColor += radiance * attenuation *FdotL* (refraction * albedo / M_PI + specular) * 5.0f + ao * min(attenuation, 0.3);
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR
-	color = (color  + ambient_lighting) /* * (1.0 + emissive) */;
+	outColor = (outColor + source.rgb * color.rgb * color.a) * (1 - material.a) + material.a * material.rgb + selfilum.rgb * 8.0f;
 
-    return float4(color, 1.0f);
+    return float4(outColor, 1.0f);
 }

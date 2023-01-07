@@ -10,24 +10,31 @@ namespace Orin
 {
 	class CLASS_DECLSPEC DefferedLight : public SceneEntity
 	{
-		struct Material
-		{
-			TextureRef albedo;
-			TextureRef material;
-			TextureRef normal;
-		};
-
-		Material ground;
-		Material box;
-		
-		TextureRef albedoRT;
-		TextureRef materialRT;
-		TextureRef normalRT;
+		friend class SpriteEntity;
+		friend class TileMap;
 
 		TextureRef sceneDepth;
 
-		RenderTechniqueRef gbufferTech;
+		TextureRef albedoRT;
+		TextureRef materialRT;
+		TextureRef normalRT;
+		TextureRef selfilumRT;
+
+		VertexDeclRef vdecl;
+		DataBufferRef buffer;
+
+		TextureRef tempRT;
+
+		Color ambientColor;
+
+		static bool hackStateEnabled;
+		static RenderTechniqueRef gbufferTech;
+		RenderTechniqueRef blurRTech;
+
 		RenderTechniqueRef defferdLightTech;
+
+		float ComputeGaussian(float n);
+		void BlurTexture(TextureRef src, TextureRef dest, float blurStrength);
 
 	public:
 
@@ -42,7 +49,7 @@ namespace Orin
 
 		void SetRT(float dt);
 		void Draw(float dt);
-
+		void Release() override;
 	#endif
 	};
 }

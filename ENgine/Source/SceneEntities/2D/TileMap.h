@@ -30,6 +30,9 @@ namespace Orin
 		bool paralaxInEditor = false;
 		Math::Vector2 paralax = 1.0f;
 
+		AssetTextureRef normal;
+		AssetTextureRef emission;
+
 		eastl::vector<Tile> tiles;
 		eastl::vector<PhysObject*> collition;
 

@@ -1,5 +1,6 @@
 
 #include "TileMap.h"
+#include "DefferedLight.h"
 #include "Root/Root.h"
 
 #ifdef ORIN_EDITOR
@@ -55,6 +56,8 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
+		ASSET_TEXTURE_PROP(TileMap, normal, "Visual", "normal")
+		ASSET_TEXTURE_PROP(TileMap, emission, "Visual", "emission")
 		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(TileMap, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
@@ -159,6 +162,16 @@ namespace Orin
 				pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);
 			}
 
+			RenderTechniqueRef tech = Sprite::quadPrg;
+
+			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+			{
+				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", emission ? emission.Get()->texture : nullptr);
+				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", normal ? normal.Get()->texture : nullptr);
+
+				tech = DefferedLight::gbufferTech;
+			}
+
 			for (auto& tile : tiles)
 			{
 				mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
@@ -168,6 +181,7 @@ namespace Orin
 				trans.size.x = sz.x;
 				trans.size.y = sz.y;
 
+				tile.texture.prg = tech;
 				tile.texture.Draw(&trans, COLOR_WHITE, dt);
 			}
 
@@ -182,6 +196,7 @@ namespace Orin
 					trans.size.x = sz.x;
 					trans.size.y = sz.y;
 
+					tile.texture.prg = tech;
 					tile.texture.Draw(&trans, COLOR_WHITE, dt);
 				}
 

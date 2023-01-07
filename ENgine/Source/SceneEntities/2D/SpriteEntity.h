@@ -14,6 +14,8 @@ namespace Orin
 
 		Color color;
 		AssetTextureRef texture;
+		AssetTextureRef normal;
+		AssetTextureRef emission;
 
 		/**
 			\brief draw level

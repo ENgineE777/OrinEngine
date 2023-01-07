@@ -1,5 +1,6 @@
 
 #include "SpriteEntity.h"
+#include "DefferedLight.h"
 #include "Root/Root.h"
 
 namespace Orin
@@ -9,6 +10,8 @@ namespace Orin
 	META_DATA_DESC(SpriteEntity)
 		BASE_SCENE_ENTITY_PROP(SpriteEntity)
 		ASSET_TEXTURE_PROP(SpriteEntity, texture, "Visual", "Texture")
+		ASSET_TEXTURE_PROP(SpriteEntity, normal, "Visual", "normal")
+		ASSET_TEXTURE_PROP(SpriteEntity, emission, "Visual", "emission")
 		INT_PROP(SpriteEntity, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
@@ -39,6 +42,18 @@ namespace Orin
 	{
 		if (IsVisible())
 		{
+			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+			{
+				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", emission ? emission.Get()->texture : nullptr);
+				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", normal ? normal.Get()->texture : nullptr);
+
+				texture.prg = DefferedLight::gbufferTech;
+			}
+			else
+			{
+				texture.prg = Sprite::quadPrg;
+			}
+
 			texture.Draw(&transform, color, dt);
 		}
 	}
