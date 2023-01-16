@@ -13,6 +13,7 @@ namespace Orin
 		ASSET_TEXTURE_PROP(SpriteEntity, normal, "Visual", "normal")
 		ASSET_TEXTURE_PROP(SpriteEntity, emission, "Visual", "emission")
 		INT_PROP(SpriteEntity, drawLevel, 0, "Visual", "draw_level", "Draw priority")
+		BOOL_PROP(SpriteEntity, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
 
@@ -51,7 +52,7 @@ namespace Orin
 			}
 			else
 			{
-				texture.prg = Sprite::quadPrg;
+				texture.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
 			}
 
 			texture.Draw(&transform, color, dt);

@@ -42,6 +42,11 @@ PS_INPUT VS( VS_INPUT input )
 
 float4 PS( PS_INPUT input) : SV_Target
 {
+    return diffuseMap.Sample(samLinear, input.texCoord)* color;
+}
+
+float4 PS_DISCARD(PS_INPUT input) : SV_Target
+{
     float4 clr = diffuseMap.Sample(samLinear, input.texCoord) * color;
     if (clr.a < 0.05f)
     {

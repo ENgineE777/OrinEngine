@@ -21,6 +21,7 @@ namespace Orin
 			\brief draw level
 		*/
 		int drawLevel = 0;
+		bool noZ = false;
 
 		META_DATA_DECL_BASE(SpriteEntity)
 

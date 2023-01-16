@@ -8,7 +8,7 @@ namespace Orin
 	{
 	public:
 		virtual const char* GetVsName() { return "sprite_vs.shd"; };
-		virtual const char* GetPsName() { return "sprite_ps.shd"; };
+		virtual const char* GetPsName() { return "sprite_discard_ps.shd"; };
 
 		virtual void ApplyStates()
 		{
@@ -20,6 +20,7 @@ namespace Orin
 	class QuadRenderNoZTechnique : public QuadRenderTechnique
 	{
 	public:
+		virtual const char* GetPsName() { return "sprite_ps.shd"; };
 
 		virtual void ApplyStates()
 		{
