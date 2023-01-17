@@ -73,6 +73,7 @@ namespace Orin
 	#ifdef ORIN_EDITOR
 		bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir) override;
 		void SetEditMode(bool ed) override;
+		void PointAdded();
 		void SetGizmo();
 	#endif
 

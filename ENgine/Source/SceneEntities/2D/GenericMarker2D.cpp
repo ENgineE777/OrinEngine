@@ -14,7 +14,7 @@ namespace Orin
 		STRING_PROP(GenericMarker2D, sceneGroup, "", "Prop", "scene_group")
 		BOOL_PROP(GenericMarker2D, fullShade, true, "Prop", "full_shade", "use full shade")
 		BOOL_PROP(GenericMarker2D, isPath, false, "Prop", "is path", "is path")
-		ARRAY_PROP_INST_CALLGIZMO(GenericMarker2D, instances, Instance, "Prop", "inst", GenericMarker, selInst, SetGizmo)
+		ARRAY_PROP_INST_CALLGIZMO(GenericMarker2D, instances, Instance, "Prop", "inst", GenericMarker, selInst, PointAdded, SetGizmo)
 	META_DATA_DESC_END()
 
 	GenericMarker2D::GenericMarker2D()

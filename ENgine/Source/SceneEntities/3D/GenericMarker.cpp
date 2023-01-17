@@ -20,7 +20,7 @@ namespace Orin
 		STRING_PROP(GenericMarker, sceneGroup, "", "Prop", "scene_group")
 		BOOL_PROP(GenericMarker, fullShade, true, "Prop", "full_shade", "use full shade")
 		BOOL_PROP(GenericMarker, isPath, false, "Prop", "is path", "is path")
-		ARRAY_PROP_INST_CALLGIZMO(GenericMarker, instances, Instance, "Prop", "inst", GenericMarker, selInst, SetGizmo)
+		ARRAY_PROP_INST_CALLGIZMO(GenericMarker, instances, Instance, "Prop", "inst", GenericMarker, selInst, PointAdded, SetGizmo)
 	META_DATA_DESC_END()
 
 	Math::Vector3 GenericMarker::Instance::GetPosition()
@@ -200,6 +200,21 @@ namespace Orin
 		if (ed)
 		{
 			SetGizmo();
+		}
+	}
+
+	void GenericMarker::PointAdded()
+	{
+		auto& inst = instances.back();
+
+		if (is2D)
+		{
+			inst.transform.position = editor.freeCamera.pos2D;
+			inst.radius = 0.3f;
+		}
+		else
+		{
+			inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
 		}
 	}
 

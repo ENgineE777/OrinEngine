@@ -992,6 +992,11 @@ namespace Orin
 							{
 								selItem = prop.adapter->GetSize() - 1;
 							}
+
+							if (prop.adapter->itemAddedCallback)
+							{
+								(((Object*)owner)->*prop.adapter->itemAddedCallback)();
+							}
 						}
 
 						ImGui::NextColumn();

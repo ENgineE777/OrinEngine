@@ -88,6 +88,7 @@ namespace Orin
 #ifdef ORIN_EDITOR
 			int64_t selItemOffset = -1;
 			int32_t* selItem = nullptr;
+			Object::DelegateSimple itemAddedCallback = nullptr;
 			Object::DelegateSimple gizmoCallback = nullptr;
 #endif
 
@@ -390,7 +391,7 @@ namespace Orin
 	}
 #endif
 
-#define ARRAY_PROP_INST(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember)\
+#define ARRAY_PROP_INST(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember, setIitemAddedCallback)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -401,10 +402,11 @@ namespace Orin
 		prop.propName = strPropName;\
 		prop.adapter = new ArrayAdapterImpl<structType>;\
 		prop.adapter->selItemOffset = memberOFFSET(selItemClassName, selItemClassMember);\
+		prop.adapter->itemAddedCallback = (Object::DelegateSimple)&className::setIitemAddedCallback;\
 		properties.push_back(prop);\
 	}
 
-#define ARRAY_PROP_INST_CALLGIZMO(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember, setGizmoCallback)\
+#define ARRAY_PROP_INST_CALLGIZMO(className, classMember, structType, strCatName, strPropName, selItemClassName, selItemClassMember, setIitemAddedCallback, setGizmoCallback)\
 	{\
 		Property prop;\
 		prop.offset = memberOFFSET(className, classMember);\
@@ -415,6 +417,7 @@ namespace Orin
 		prop.propName = strPropName;\
 		prop.adapter = new ArrayAdapterImpl<structType>;\
 		prop.adapter->selItemOffset = memberOFFSET(selItemClassName, selItemClassMember);\
+		prop.adapter->itemAddedCallback = (Object::DelegateSimple)&className::setIitemAddedCallback;\
 		prop.adapter->gizmoCallback = (Object::DelegateSimple)&className::setGizmoCallback;\
 		properties.push_back(prop);\
 	}
