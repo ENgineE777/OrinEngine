@@ -102,6 +102,7 @@ namespace Orin
 				if (is2D)
 				{
 					inst.transform.objectType = ObjectType::Object2D;
+					inst.radius = 0.3f;
 				}
 
 				if (add_copy)
@@ -112,19 +113,18 @@ namespace Orin
 				}
 				else
 				{
+					Math::Matrix mat;
+
 					if (is2D)
 					{
-						inst.transform.position = editor.freeCamera.pos2D;
+						mat.Pos() = Sprite::ToUnits(editor.freeCamera.pos2D);
 					}
 					else
 					{
-						inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
+						mat.Pos() = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
 					}
 
-					Math::Matrix invMat = transform.GetGlobal();
-					invMat.Inverse();
-
-					inst.transform.position = invMat.MulVertex(inst.transform.position);
+					inst.transform.SetGlobal(mat);
 				}
 
 				instances.push_back(inst);
@@ -207,15 +207,21 @@ namespace Orin
 	{
 		auto& inst = instances.back();
 
+		inst.transform.parent = &transform;
+
+		Math::Matrix mat;
+
 		if (is2D)
 		{
-			inst.transform.position = editor.freeCamera.pos2D;
+			mat.Pos() = Sprite::ToUnits(editor.freeCamera.pos2D);
 			inst.radius = 0.3f;
 		}
 		else
 		{
-			inst.transform.position = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
+			mat.Pos() = editor.freeCamera.pos + Math::Vector3(cosf(editor.freeCamera.angles.x), sinf(editor.freeCamera.angles.y), sinf(editor.freeCamera.angles.x)) * 5.0f;
 		}
+
+		inst.transform.SetGlobal(mat);
 	}
 
 	void GenericMarker::SetGizmo()
