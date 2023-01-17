@@ -31,6 +31,7 @@ namespace Orin
 
 		Math::Matrix mat = transform.GetGlobal();
 		mat.Pos() += mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f)));
+		mat.RotateZ(-transform.rotation.z * Math::Radian);
 
 		body.object = this;
 		body.body = root.GetPhysScene()->CreateBox(Sprite::ToUnits(transform.size), mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
