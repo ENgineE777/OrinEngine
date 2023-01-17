@@ -161,7 +161,7 @@ namespace Orin
 					prevPos = Sprite::ToUnits(prevPos);
 				}
 
-				root.render.DebugLine(pos, inst.color, prevPos, prevInst.color);
+				root.render.DebugLine(pos, COLOR_WHITE, prevPos, COLOR_GREEN);
 			}
 
 			index++;
@@ -208,6 +208,8 @@ namespace Orin
 		if (selInst != -1)
 		{
 			instances[selInst].transform.transformFlag = MoveXYZ;
+			instances[selInst].transform.objectType = is2D ? ObjectType::Object2D : ObjectType::Object3D;
+
 			editor.gizmo.SetTransform(this, &instances[selInst].transform);
 		}
 		else
