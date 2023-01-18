@@ -124,6 +124,11 @@ namespace Orin::Math
 		return true;
 	}
 
+	bool IsPointInLineSegment(Vector3 pt, Vector3 p1, Vector3 p2)
+	{
+		return AreApproximatelyEqual((p1 - p2).Length(), (p1 - pt).Length() + (p2 - pt).Length());
+	}
+
 	bool IsPointInTriangle(Vector2 pt, Vector2 p1, Vector2 p2, Vector2 p3, bool debugDraw)
 	{
 		eastl::vector<Vector2> polygon;

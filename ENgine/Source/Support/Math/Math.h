@@ -25,6 +25,7 @@ namespace Orin::Math
 	CLASS_DECLSPEC float AdvanceAngle(float angle, float target_angle, float delta_angle);
 	CLASS_DECLSPEC float GetAnglesDifference(float angle, float target_angle);
 	CLASS_DECLSPEC bool IsSameAngles(float angle, float target_angle);
+	CLASS_DECLSPEC bool IsPointInLineSegment(Vector3 pt, Vector3 p1, Vector3 p2);
 	CLASS_DECLSPEC bool IsPointInTriangle(Vector2 pt, Vector2 p1, Vector2 p2, Vector2 p3, bool debugDraw = false);
 	CLASS_DECLSPEC bool IsPointInSector(Vector2 pt, Vector2 center, float orientation, float distance, float angle, bool debugDraw = false);
 	CLASS_DECLSPEC bool IsPointInPolygon(Vector2 pt, eastl::vector<Vector2>& polygon, bool debugDraw = false);
