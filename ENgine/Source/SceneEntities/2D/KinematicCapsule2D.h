@@ -42,6 +42,7 @@ namespace Orin
 		Math::Vector3 GetPosition();
 		void SetPosition(Math::Vector3 pos);
 		void Move(Math::Vector2 dir, uint32_t group = 0);
+		void UpdateParent(float dt);
 		void EditorDraw(float dt);
 		void DebugDraw();
 

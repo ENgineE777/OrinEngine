@@ -155,12 +155,11 @@ namespace Orin
 		scripts.Update();
 
 		physics.Update(dt);
+		physics.Fetch();
 
 		render.Execute(dt);
 
-		sounds.Update(dt);
-
-		physics.Fetch();
+		sounds.Update(dt);		
 	}
 
 	float Root::GetDeltaTime()

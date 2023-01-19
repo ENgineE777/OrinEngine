@@ -4,7 +4,7 @@
 
 namespace Orin
 {
-	ENTITYREG(SceneEntity, KinematicCapsule2D, "2D/Physics","KinematicCapsule2D")
+	ENTITYREG(SceneEntity, KinematicCapsule2D, "2D/Physics", "KinematicCapsule2D")
 
 	META_DATA_DESC(KinematicCapsule2D)
 		BASE_SCENE_ENTITY_PROP(KinematicCapsule2D)
@@ -73,6 +73,8 @@ namespace Orin
 		bodyData.controller = controller;
 
 		controller->SetUserData(&bodyData);
+
+		Tasks(false)->AddTask(-100, this, (Object::Delegate)&KinematicCapsule2D::UpdateParent);
 	}
 
 	void KinematicCapsule2D::Move(Math::Vector2 dir, uint32_t group)
@@ -88,6 +90,16 @@ namespace Orin
 			pos.z = prevPos.z;
 			controller->SetPosition(pos);
 		}
+	}
+
+	void KinematicCapsule2D::UpdateParent(float dt)
+	{
+		if (!controller->IsActive())
+		{
+			return;
+		}
+
+		Math::Vector3 pos = controller->GetPosition();
 
 		pos *= Sprite::ToPixels(1.0f);
 

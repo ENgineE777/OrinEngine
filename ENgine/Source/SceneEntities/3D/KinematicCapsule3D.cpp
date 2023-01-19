@@ -51,11 +51,21 @@ namespace Orin
 		bodyData.controller = controller;
 
 		controller->SetUserData(&bodyData);
+
+		Tasks(false)->AddTask(-100, this, (Object::Delegate)&KinematicCapsule3D::UpdateParent);
 	}
 
 	void KinematicCapsule3D::Move(Math::Vector3 dir, uint32_t group)
 	{
 		controller->Move(dir * root.GetDeltaTime(), group == 0 ? physGroup : group);
+	}
+
+	void KinematicCapsule3D::UpdateParent(float dt)
+	{
+		if (!controller->IsActive())
+		{
+			return;
+		}
 
 		Math::Vector3 pos = controller->GetFootPosition();
 

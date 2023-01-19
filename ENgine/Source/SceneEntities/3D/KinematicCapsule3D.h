@@ -37,6 +37,7 @@ namespace Orin
 		void Play() override;
 		void Move(Math::Vector3 dir, uint32_t group = 0);
 		void EditorDraw(float dt);
+		void UpdateParent(float dt);
 
 		void Release() override;
 	#endif
