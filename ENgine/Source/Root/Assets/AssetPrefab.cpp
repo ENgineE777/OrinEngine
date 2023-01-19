@@ -25,6 +25,8 @@ namespace Orin
 		auto& entities = GetScene()->GetEntities();
 		SceneEntity* instance = nullptr;
 
+		inCreatingInstance = true;
+
 		if (entities.size() > 0)
 		{
 			auto* src = entities[0];
@@ -45,6 +47,8 @@ namespace Orin
 			RegisterIntstance(instance);
 #endif
 		}
+
+		inCreatingInstance = false;
 
 		return instance;
 	}

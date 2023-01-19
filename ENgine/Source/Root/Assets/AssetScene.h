@@ -73,6 +73,7 @@ namespace Orin
 		bool entityDeletedViaPopup = false;
 		bool allowSceneDropTraget = true;
 		bool isPrefab = false;
+		bool inCreatingInstance = false;
 		bool blockPopupInViewport = true;
 
 		void CreateEntityPopupEntry(const eastl::vector<class ClassFactorySceneEntity*>& decls, int& curIndex, int curDepth, bool onlyToCreate);

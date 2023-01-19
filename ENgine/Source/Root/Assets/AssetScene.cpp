@@ -366,7 +366,7 @@ namespace Orin
 			}
 			else
 			{
-				childCopy = sceneOwner->CreateEntity(child->className, isPrefab);
+				childCopy = sceneOwner->CreateEntity(child->className, inCreatingInstance ? true : child->prefabInstance);
 			}
 
 			childCopy->SetParent(copy, nullptr);
