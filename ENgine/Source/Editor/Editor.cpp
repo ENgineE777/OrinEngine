@@ -1422,7 +1422,7 @@ namespace Orin
 
 				if (scene)
 				{
-					if (ImGui::MenuItem("Mark as start scne") && !scene->IsPrefab())
+					if (!scene->IsPrefab() && ImGui::MenuItem("Mark as start scne") && !scene->IsPrefab())
 					{
 						project.SetStartScene(scene->GetPath());
 					}
