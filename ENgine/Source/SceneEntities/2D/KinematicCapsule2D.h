@@ -15,6 +15,7 @@ namespace Orin
 		uint32_t physGroup;
 
 		bool affectOnParent = false;
+		bool needUpdate = false;
 
 		float height = 16.0f;
 		float radius = 16.0f;

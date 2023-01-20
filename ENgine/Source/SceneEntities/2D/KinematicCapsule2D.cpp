@@ -90,11 +90,13 @@ namespace Orin
 			pos.z = prevPos.z;
 			controller->SetPosition(pos);
 		}
+
+		needUpdate = true;
 	}
 
 	void KinematicCapsule2D::UpdateParent(float dt)
 	{
-		if (!controller->IsActive())
+		if (!controller->IsActive() || !needUpdate)
 		{
 			return;
 		}
@@ -114,6 +116,8 @@ namespace Orin
 
 			transform.SetGlobal(trans);
 		}
+
+		needUpdate = false;
 	}
 
 	Math::Vector3 KinematicCapsule2D::GetPosition()
