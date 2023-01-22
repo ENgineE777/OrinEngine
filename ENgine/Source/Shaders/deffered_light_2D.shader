@@ -9,6 +9,7 @@ static const float3 v_norm          = float3(0.0, 0.0, 1.0);
 cbuffer ps_params : register( b0 )
 {
 	float4 color;
+	float4 params;
 	float4 u_lights[3 + 4 * 16];
 };
 
@@ -93,9 +94,8 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
     output.color = clr;
 	float4 material = materialMap.Sample(materialLinear, input.texCoord);
     output.material = material;
-    output.normals = normalsMap.Sample(normalsLinear, input.texCoord).zyxw;
-	float3 selfilum = material.a * material.rgb;
-	output.selfilum = float4(selfilum, material.a);
+    output.normals = normalsMap.Sample(normalsLinear, input.texCoord);
+	output.selfilum = float4(clr.rgb * material.b, 1.0f);
 
     return output;
 }
@@ -127,9 +127,9 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	//float4 shadow    = shadow_texture.Sample(u_shadow, input.texCoord)*255.0;	
 	float3 albedo    = source.rgb;
 	float3 ao        = material.b * albedo;
-	float  metallic  = material.r;
-	float  roughness = material.g;
-	float  emissive  = normal.a * 2.0;
+	float  metallic = params.x;//material.r;
+	float  roughness = 1.0f - material.r * 0.5f;
+	//float  emissive  = normal.a * 2.0;
 		
 	// THINGS THAT ONLY NEED CALCULATED ONCE
 	float3 mat_ref   = lerp(dielectric, albedo, metallic);
@@ -162,15 +162,6 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 	for (int i = 0; i < count; i++)
 	{		
-		/*float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
-		index++;
-
-		index++;
-
-		float dist = 1.0f - clamp(length(light_pos.xy - world_pos.xy) / u_lights[index].w, 0.0f, 1.0f);
-
-		color += float3(dist, dist, dist);*/
-
 		// LIGHT ATTRIBUTES
 		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
 		float directional = u_lights[index].w; // Sign of the color val1e used to flag directional lighting
@@ -205,9 +196,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		}
 
 		// NORMALIZE AFTER MOVING FOR LINE
-		float3 l_norm = normalize(light_pos - world_pos);
-		l_norm.x = -l_norm.x;
-		//l_norm.y = -l_norm.y;
+		float3 l_norm = normalize(light_pos + world_pos * directional - world_pos);
 		float3 h_norm = normalize(v_norm + l_norm);
 		float FdotL = max(dot(f_norm, l_norm), 0.0f);
 		float fov = 1.0;
@@ -223,9 +212,10 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		// ATTENUATION
 		float dist = length(light_pos.xy - world_pos.xy);
 		float det = step(dist * sign(falloff), radius);
-		dist = dist * intensity / (radius * abs(falloff)) + intensity;
+		//dist = dist * intensity / (radius * abs(falloff)) + intensity;
 		//float attenuation = det / (dist * dist) * fov;
-		float attenuation = max((1.0 - intensity) * directional, (1.0 - directional) * det / (dist * dist) * fov);
+		//float attenuation = max((intensity) * directional, (1.0 - directional) * det / (dist * dist) * fov);
+		float attenuation = max( intensity* directional, (1.0f - min(dist, radius) / radius) * fov * intensity);
 
 		//if (attenuation > 0.25)
 		//{
@@ -254,7 +244,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR
-	outColor = (outColor + source.rgb * color.rgb * color.a) * (1 - material.a) + material.a * material.rgb + selfilum.rgb * 8.0f;
+	outColor = (outColor + source.rgb * color.rgb * color.a) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 6.0f;
 
     return float4(outColor, 1.0f);
 }

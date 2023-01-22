@@ -26,6 +26,10 @@ namespace Orin
 		TextureRef tempRT;
 
 		Color ambientColor;
+		float directionalDir = 0.0f;
+		Color directionalColor;
+
+		float metallic = 0.25f;
 
 		static bool hackStateEnabled;
 		static RenderTechniqueRef gbufferTech;

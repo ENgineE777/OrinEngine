@@ -14,7 +14,6 @@ namespace Orin
 
 		virtual void ApplyStates()
 		{
-			//root.render.GetDevice()->SetAlphaBlend(true);
 			root.render.GetDevice()->SetCulling(CullMode::CullNone);
 		};
 	};
@@ -50,6 +49,9 @@ namespace Orin
 	META_DATA_DESC(DefferedLight)
 		BASE_SCENE_ENTITY_PROP(DefferedLight)
 		COLOR_PROP(DefferedLight, ambientColor, COLOR_WHITE, "Visual", "Ambient")
+		FLOAT_PROP(DefferedLight, metallic, 0.25f, "Visual", "metallic", "metallic")
+		COLOR_PROP(DefferedLight, directionalColor, COLOR_WHITE, "Directional", "Color")
+		FLOAT_PROP(DefferedLight, directionalDir, 0.0f, "Directional", "direction", "")
 	META_DATA_DESC_END()
 
 	bool DefferedLight::hackStateEnabled = false;
@@ -123,7 +125,7 @@ namespace Orin
 
 		root.render.GetDevice()->SetDepth(sceneDepth);
 
-		root.render.GetDevice()->Clear(true, COLOR_BLACK, true, 1.0f);
+		root.render.GetDevice()->Clear(true, COLOR_BLACK_A(0.0f), true, 1.0f);
 	}
 
 	void DefferedLight::BlurTexture(TextureRef src, TextureRef dest, float blurStrength)
@@ -234,7 +236,12 @@ namespace Orin
 		eastl::vector<Scene::Group*> groups;
 		GetScene()->GetGroup(groups, "PointLight2D");
 
-		int lightCount = 0;
+		int lightCount = 1;
+
+		u_lights[index + 0] = { cosf(directionalDir * Math::Radian), sinf(directionalDir * Math::Radian), 0.75f, -1.0f}; //pos, dir
+		u_lights[index + 1] = { directionalColor.r, directionalColor.g, directionalColor.b, directionalColor.a };
+
+		index += 4;
 
 		for (auto* group : groups)
 		{
@@ -250,7 +257,7 @@ namespace Orin
 				auto trans = light->GetTransform();
 				auto pos = Sprite::ToPixels(trans.GetGlobal().Pos());
 
-				u_lights[index + 0] = { pos.x, pos.y, 100.0f, 1.0f }; //pos, dir
+				u_lights[index + 0] = { pos.x, pos.y, 150.0f, 1.0f }; //pos, dir
 				u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
 				u_lights[index + 2] = { 1.0f, light->falloff, trans.rotation.z * Math::Radian, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
 				u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , 0.0f, 0.0f }; //arc, width
@@ -260,9 +267,14 @@ namespace Orin
 			}
 		}
 		
-		u_lights[1].w = (float)lightCount;		
+		u_lights[1].w = (float)lightCount;				
 
 		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 3 + 4 * lightCount);
+
+		u_lights[0].x = metallic;
+
+		defferdLightTech->SetVector(ShaderType::Pixel, "params", u_lights, 1);
+		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 3 + 4 * lightCount);
 
 		Sprite::Draw(albedoRT, ambientColor, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
 
