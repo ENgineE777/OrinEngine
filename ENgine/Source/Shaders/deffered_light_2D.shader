@@ -244,7 +244,11 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR
-	outColor = (outColor + source.rgb * color.rgb * color.a) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 6.0f;
+	float lightFactor = max(outColor.r, outColor.g);
+	lightFactor = max(lightFactor, outColor.b);
+	float3 albedo2 = source.rgb * color.rgb * color.a;
+
+	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 6.0f;
 
     return float4(outColor, 1.0f);
 }
