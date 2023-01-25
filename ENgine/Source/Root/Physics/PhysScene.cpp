@@ -329,16 +329,18 @@ namespace Orin
 		}
 	}
 
-	bool PhysScene::RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize, uint32_t physGroup)
+	bool PhysScene::RayCastBox(RaycastDesc& desc, Math::Matrix boxTrans, Math::Vector3 boxHalfSize)
 	{
+		const Math::Quaternion q(boxTrans);
+
 		PxRaycastHit hit;
 		if (PxGeometryQuery::raycast(PxVec3{desc.origin.x, desc.origin.y, desc.origin.z},
 		                             PxVec3{desc.dir.x, desc.dir.y, desc.dir.z},
 									 PxBoxGeometry(PxVec3{boxHalfSize.x, boxHalfSize.y, boxHalfSize.z}),
-									 PxTransform(PxVec3{boxOrigin.x, boxOrigin.y, boxOrigin.z}),
+									 PxTransform(PxVec3{boxTrans.Pos().x, boxTrans.Pos().y, boxTrans.Pos().z}, PxQuat{q.x, q.y, q.z, q.w}),
 									 desc.length,
 									 PxHitFlags(PxHitFlag::eDEFAULT),
-									 physGroup,
+									 1 /* maxHits */,
 									 &hit))
 		{
 			desc.hitPos    = Math::Vector3{hit.position.x, hit.position.x, hit.position.z};

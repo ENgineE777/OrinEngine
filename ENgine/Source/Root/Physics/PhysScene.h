@@ -142,13 +142,13 @@ namespace Orin
 		bool SphereCast(RaycastDesc& desc, float radius);
 
 		/**
-		\brief Make ray cast against box
+		\brief Make ray cast against given box.
 
 		\param[in] desc Description of a ray
 
 		\return True will be return in case ray hitted given box. Otherwise false will be returned 
 		*/
-		bool RayCastBox(RaycastDesc& desc, Math::Vector3 boxOrigin, Math::Vector3 boxHalfSize, uint32_t physGroup);
+		static bool RayCastBox(RaycastDesc& desc, Math::Matrix boxTrans, Math::Vector3 boxHalfSize);
 
 		bool OverlapWithSphere(Math::Vector3 pos, float radius, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);
 		bool OverlapWithBox(Math::Matrix trans, Math::Vector3 size, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);
