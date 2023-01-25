@@ -387,6 +387,17 @@ namespace Orin
 		return Math::Vector3((float)cpos.x, (float)cpos.y, (float)cpos.z);
 	}
 
+	Math::Vector3 PhysController::GetActorPosition()
+	{
+		if (!active)
+		{
+			return deactivePos;
+		}
+
+		PxTransform tm = controller->getActor()->getGlobalPose();
+		return Math::Vector3((float)tm.p.x, (float)tm.p.y, (float)tm.p.z);
+	}
+
 	void PhysController::Release()
 	{
 		SetUserData(nullptr);

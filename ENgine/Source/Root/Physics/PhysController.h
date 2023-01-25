@@ -216,6 +216,13 @@ namespace Orin
 		Math::Vector3 GetPosition();
 
 		/**
+		\brief Get position of a controller's actor
+
+		\return pos Current position of a controller's actor
+		*/
+		Math::Vector3 GetActorPosition();
+
+		/**
 		\brief PhysController should released only via this mehod
 		*/
 		void Release() override;
