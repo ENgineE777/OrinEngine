@@ -23,6 +23,8 @@ namespace Orin
 	META_DATA_DESC(AssetAnimGraph2D::Node)
 		STRING_PROP(AssetAnimGraph2D::Node, name, "", "Node", "Name")
 		ASSET_TEXTURE_PROP(AssetAnimGraph2D::Node, texture, "Node", "Texture")
+		ASSET_TEXTURE_PROP(AssetAnimGraph2D::Node, normal, "Node", "Normal")
+		ASSET_TEXTURE_PROP(AssetAnimGraph2D::Node, material, "Node", "Material")
 		BOOL_PROP(AssetAnimGraph2D::Node, looped, true, "Node", "Looped", "If animation is looped")
 		BOOL_PROP(AssetAnimGraph2D::Node, reversed, false, "Node", "Reversed", "If node should be fliped horizontally")
 		ARRAY_PROP(AssetAnimGraph2D::Node, events, Event, "Node", "event")
@@ -68,6 +70,8 @@ namespace Orin
 			loader.Read("def_link", node.defLink);
 
 			node.texture.LoadData(loader, "texture");
+			node.normal.LoadData(loader, "normal");
+			node.material.LoadData(loader, "emission");
 
 			int link_count = 0;
 			loader.Read("Count", link_count);
@@ -135,7 +139,10 @@ namespace Orin
 			saver.Write("name", node.name.c_str());
 			saver.Write("object_uid", node.object_uid);
 			saver.Write("def_link", node.defLink);
+			
 			node.texture.SaveData(saver, "texture");
+			node.normal.SaveData(saver, "normal");
+			node.material.SaveData(saver, "emission");
 
 			int link_count = (int)node.links.size();
 			saver.Write("Count", link_count);
@@ -813,6 +820,9 @@ namespace Orin
 			gotoNode = nullptr;
 			curTexture = curNode->texture;
 			curTexture.ResetAnim(curNode->looped, curNode->reversed, fireEvents);
+
+			curNormal = curNode->normal;
+			curMaterial = curNode->material;
 		}
 
 		if (!Get() || !curNode)
@@ -825,6 +835,18 @@ namespace Orin
 			auto size = curTexture.GetSize();
 			trans->size.x = size.x;
 			trans->size.y = size.y;
+
+			curTexture.prg = prg;
+
+			if (curNormal.Get())
+			{
+				prg->SetTexture(ShaderType::Pixel, "normalsMap", curNormal.Get()->texture);
+			}
+
+			if (curMaterial.Get())
+			{
+				prg->SetTexture(ShaderType::Pixel, "materialMap", curMaterial.Get()->texture);
+			}
 
 			curTexture.Draw(trans, clr, dt);
 		}

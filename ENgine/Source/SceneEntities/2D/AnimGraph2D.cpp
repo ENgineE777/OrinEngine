@@ -1,6 +1,7 @@
 
 #include "AnimGraph2D.h"
 #include "Root/Root.h"
+#include "DefferedLight.h"
 
 namespace Orin
 {
@@ -10,6 +11,7 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(AnimGraph2D)
 		ASSET_ANIM_GRAPH_2D_PROP(AnimGraph2D, anim, "Visual", "Anim")
 		INT_PROP(AnimGraph2D, drawLevel, 0, "Visual", "draw_level", "Draw priority")
+		BOOL_PROP(AnimGraph2D, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(AnimGraph2D, color, COLOR_WHITE, "Visual", "Color")
 	META_DATA_DESC_END()
 
@@ -34,6 +36,15 @@ namespace Orin
 	{
 		if (IsVisible() && anim.Get())
 		{
+			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+			{
+				anim.prg = DefferedLight::gbufferTech;
+			}
+			else
+			{
+				anim.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
+			}
+
 			anim.Draw(&transform, color, dt);
 		}
 	}

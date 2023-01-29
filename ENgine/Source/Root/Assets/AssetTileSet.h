@@ -27,6 +27,9 @@ namespace Orin
 			AssetTextureRef texture;
 		};
 
+		AssetTextureRef normal;
+		AssetTextureRef material;
+
 		int sizeX = 16;
 		int sizeY = 16;
 

@@ -58,6 +58,8 @@ namespace Orin
 
 			NodeType type = NodeType::AnimNode;
 			AssetTextureRef texture;
+			AssetTextureRef normal;
+			AssetTextureRef material;
 			bool looped = true;
 			bool reversed = false;
 			Math::Vector2 pos = 0.0f;
@@ -113,6 +115,8 @@ namespace Orin
 	class CLASS_DECLSPEC AssetAnimGraph2DRef : public PointerRef<AssetAnimGraph2D>
 	{
 		AssetTextureRef curTexture;
+		AssetTextureRef curNormal;
+		AssetTextureRef curMaterial;
 		
 		AssetAnimGraph2D::Node* gotoNode = nullptr;
 		AssetAnimGraph2D::Node* curNode = nullptr;
@@ -121,6 +125,8 @@ namespace Orin
 		void GotoNode(int index, bool reset);
 
 	public:
+
+		RenderTechniqueRef prg = Sprite::quadPrg;
 
 		AssetAnimGraph2DRef() : PointerRef() {};
 		AssetAnimGraph2DRef(Asset* setPtr, const char* file, int line) : PointerRef(dynamic_cast<AssetAnimGraph2D*>(setPtr), _FL_) {};

@@ -56,8 +56,6 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
-		ASSET_TEXTURE_PROP(TileMap, normal, "Visual", "normal")
-		ASSET_TEXTURE_PROP(TileMap, emission, "Visual", "emission")
 		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(TileMap, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
@@ -166,8 +164,8 @@ namespace Orin
 
 			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
 			{
-				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", emission ? emission.Get()->texture : nullptr);
-				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", normal ? normal.Get()->texture : nullptr);
+				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
+				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", tileSet->normal ? tileSet->normal.Get()->texture : nullptr);
 
 				tech = DefferedLight::gbufferTech;
 			}

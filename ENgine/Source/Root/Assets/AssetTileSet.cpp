@@ -17,6 +17,11 @@ namespace Orin
 	META_DATA_DESC(AssetTileSet)
 		INT_PROP(AssetTileSet, sizeX, 16, "Properties", "cell size X", "Horizontal size of a cell")
 		INT_PROP(AssetTileSet, sizeY, 16, "Properties", "cell size Y", "Vertical size of a cell")
+		ASSET_TEXTURE_PROP(AssetTileSet, normal, "Visual", "Normal")
+		ASSET_TEXTURE_PROP(AssetTileSet, material, "Visual", "Material")
+		AssetTextureRef normal;
+	AssetTextureRef material;
+
 		CALLBACK_PROP(AssetTileSet, AssetTileSet::StartEditTileSet, "Properties", "Open TileSet Editor")
 	META_DATA_DESC_END()
 
