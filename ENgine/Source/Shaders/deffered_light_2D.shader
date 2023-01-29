@@ -10,7 +10,7 @@ cbuffer ps_params : register( b0 )
 {
 	float4 color;
 	float4 params;
-	float4 u_lights[3 + 4 * 16];
+	float4 u_lights[3 + 4 * 32];
 };
 
 struct VS_INPUT
@@ -95,7 +95,7 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
 	float4 material = materialMap.Sample(materialLinear, input.texCoord);
     output.material = material;
     output.normals = normalsMap.Sample(normalsLinear, input.texCoord);
-	output.selfilum = float4(clr.rgb * material.b, 1.0f);
+	output.selfilum = float4(clr.rgb * material.b * clr.a, 1.0f);
 
     return output;
 }
@@ -248,7 +248,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	lightFactor = max(lightFactor, outColor.b);
 	float3 albedo2 = source.rgb * color.rgb * color.a;
 
-	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 6.0f;
+	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 4.0f;
 
     return float4(outColor, 1.0f);
 }

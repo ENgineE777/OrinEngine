@@ -26,7 +26,8 @@ namespace Orin
 
 		virtual void ApplyStates()
 		{
-			//root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetDepthTest(false);
+			root.render.GetDevice()->SetDepthWriting(false);
 			root.render.GetDevice()->SetCulling(CullMode::CullNone);
 		};
 	};
@@ -110,20 +111,25 @@ namespace Orin
 		if (!albedoRT || albedoRT->GetWidth() != screenWidth || albedoRT->GetHeight() != screenHeight)
 		{
 			albedoRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			materialRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			normalRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			selfilumRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			tempRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			albedoRT->SetAdress(TextureAddress::Clamp);
 
-			sceneDepth = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_D24, 1, true, TextureType::Tex2D, _FL_);
+			materialRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			materialRT->SetAdress(TextureAddress::Clamp);
+
+			normalRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			normalRT->SetAdress(TextureAddress::Clamp);
+
+			selfilumRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			selfilumRT->SetAdress(TextureAddress::Clamp);
+
+			tempRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			tempRT->SetAdress(TextureAddress::Clamp);
 		}
 
 		root.render.GetDevice()->SetRenderTarget(0, albedoRT);
 		root.render.GetDevice()->SetRenderTarget(1, materialRT);
 		root.render.GetDevice()->SetRenderTarget(2, normalRT);
 		root.render.GetDevice()->SetRenderTarget(3, selfilumRT);
-
-		root.render.GetDevice()->SetDepth(sceneDepth);
 
 		root.render.GetDevice()->Clear(true, COLOR_BLACK_A(0.0f), true, 1.0f);
 	}
@@ -215,7 +221,7 @@ namespace Orin
 
 		Math::Vector3 camPos = Sprite::GetCamPos();
 
-		Math::Vector4 u_lights[3 + 4 * 16];
+		Math::Vector4 u_lights[3 + 4 * 32];
 
 		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);
@@ -225,7 +231,7 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
 
-		float scale = editor.freeCamera.zoom2D;
+		float scale = Sprite::GetZoom();
 
 		u_lights[0] = { 0.72f, 1.0f, 1.0f, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
@@ -264,6 +270,11 @@ namespace Orin
 
 				index += 4;
 				lightCount++;
+
+				if (lightCount == 32)
+				{
+					break;
+				}
 			}
 		}
 		
@@ -276,7 +287,7 @@ namespace Orin
 		defferdLightTech->SetVector(ShaderType::Pixel, "params", u_lights, 1);
 		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 3 + 4 * lightCount);
 
-		Sprite::Draw(albedoRT, ambientColor, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
+		Sprite::Draw(albedoRT, COLOR_WHITE, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
 
 		hackStateEnabled = false;
 	}

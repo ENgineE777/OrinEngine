@@ -12,8 +12,7 @@ namespace Orin
 	{
 		friend class SpriteEntity;
 		friend class TileMap;
-
-		TextureRef sceneDepth;
+		friend class AnimGraph2D;
 
 		TextureRef albedoRT;
 		TextureRef materialRT;
