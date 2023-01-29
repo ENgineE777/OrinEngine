@@ -2397,6 +2397,11 @@ namespace Orin
 			entry.icon.ReleaseRef();
 		}
 
+		for (auto& asset : openedAssets)
+		{
+			asset.ReleaseRef();
+		}
+
 		StopProject();
 
 		for (auto& item : logCategories)

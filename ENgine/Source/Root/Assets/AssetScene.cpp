@@ -931,7 +931,8 @@ namespace Orin
 
 	void AssetScene::Release()
 	{
+		RELEASE(scene)
+
 		Asset::Release();
-		DELETE_PTR(scene)
 	}
 };
