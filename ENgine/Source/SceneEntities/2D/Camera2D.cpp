@@ -106,6 +106,8 @@ namespace Orin
 				Sprite::_camPos = Math::Vector2(pos.x, pos.y);
 			}
 
+			Sprite::_zoom = zoom;
+
 			UpdateRenderView();
 		}
 		else

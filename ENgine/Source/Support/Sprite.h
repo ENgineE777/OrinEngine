@@ -22,6 +22,7 @@ namespace Orin
 		static float _pixelsPerUnit;
 		static float _pixelsPerUnitInvert;
 		static float _pixelsHeight;
+		static float _zoom;
 
 		static VertexDeclRef _vdecl;
 		static DataBufferRef _quadBuffer;
@@ -62,6 +63,8 @@ namespace Orin
 		static Math::Vector2 GetCamPos() { return _camPos; }
 
 		static inline float GetPixelsHeight() { return _pixelsHeight; };
+
+		static inline float GetZoom() { return _zoom; };
 
 		template<typename T>
 		static inline T ToUnits(const T& val) { return val * _pixelsPerUnitInvert; }

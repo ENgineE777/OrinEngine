@@ -43,6 +43,7 @@ namespace Orin
 				}
 
 				Sprite::_camPos = pos2D;
+				Sprite::_zoom = zoom2D;
 			}
 			else
 			{

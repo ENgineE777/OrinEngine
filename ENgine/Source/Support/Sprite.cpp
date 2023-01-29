@@ -69,6 +69,7 @@ namespace Orin
 	float Sprite::_pixelsPerUnitInvert = 1.0f / _pixelsPerUnit;
 	float Sprite::_pixelsHeight = 1080.0f;
 	Math::Vector2 Sprite::_camPos;
+	float Sprite::_zoom = 1.0f;
 
 	RenderTechniqueRef Sprite::quadPrg;
 	RenderTechniqueRef Sprite::quadPrgNoZ;
