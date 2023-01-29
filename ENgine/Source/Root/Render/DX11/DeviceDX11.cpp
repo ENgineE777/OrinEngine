@@ -587,24 +587,10 @@ namespace Orin
 	{
 		if (need_set_rt)
 		{
-			ID3D11ShaderResourceView* emties[] = {nullptr, nullptr};
-			DeviceDX11::instance->immediateContext->PSSetShaderResources(0, 2, emties);
+			ID3D11ShaderResourceView* emties[] = {nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+			DeviceDX11::instance->immediateContext->PSSetShaderResources(0, 6, emties);
 
-			int count = 0;
-
-			for (int i = 0; i < 6; i++)
-			{
-				if (cur_rt[i])
-				{
-					count++;
-				}
-				else
-				{
-					break;
-				}
-			}
-
-			immediateContext->OMSetRenderTargets(count, cur_rt, cur_depth);
+			immediateContext->OMSetRenderTargets(6, cur_rt, cur_depth);
 			need_set_rt = false;
 
 			D3D11_VIEWPORT vp;
