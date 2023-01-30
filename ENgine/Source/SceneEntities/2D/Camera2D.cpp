@@ -69,8 +69,7 @@ namespace Orin
 		{
 			if (targetRef)
 			{
-				halfScreenSize.x = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f;
-				halfScreenSize.y = Sprite::GetPixelsHeight() * 0.5f;
+				auto halfScreenSize = Sprite::GetHalfScreenSize();
 
 				Math::Vector3 pos = transform.position;
 				Math::Vector3 targetPos = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
@@ -167,16 +166,5 @@ namespace Orin
 		{
 			transform.position = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 		}
-	}
-
-	bool Camera2D::IsPointVisibile(Math::Vector3 point)
-	{
-		if (transform.position.x - halfScreenSize.x < point.x && point.x < transform.position.x + halfScreenSize.x &&
-			transform.position.y - halfScreenSize.y < point.y && point.y < transform.position.y + halfScreenSize.y)
-		{
-			return true;
-		}
-
-		return false;
 	}
 }

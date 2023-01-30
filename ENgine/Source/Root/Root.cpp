@@ -144,6 +144,8 @@ namespace Orin
 
 	void Root::Update()
 	{
+		Sprite::Update();
+
 		assets.Update();
 
 		controls.Update(dt);

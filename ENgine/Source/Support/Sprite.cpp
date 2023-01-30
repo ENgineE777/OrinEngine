@@ -70,6 +70,7 @@ namespace Orin
 	float Sprite::_pixelsHeight = 1080.0f;
 	Math::Vector2 Sprite::_camPos;
 	float Sprite::_zoom = 1.0f;
+	Math::Vector2 Sprite::_halfScreenSize;
 
 	RenderTechniqueRef Sprite::quadPrg;
 	RenderTechniqueRef Sprite::quadPrgNoZ;
@@ -109,6 +110,12 @@ namespace Orin
 		quadPrgNoZ = root.render.GetRenderTechnique<QuadRenderNoZTechnique>(_FL_);
 		polygonPrg = root.render.GetRenderTechnique<PolygonRenderTechnique> (_FL_);
 		polygonPrgNoZ = root.render.GetRenderTechnique<PolygonRenderNoZTechnique>(_FL_);
+	}
+
+	void Sprite::Update()
+	{
+		_halfScreenSize.x = Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f;
+		_halfScreenSize.y = Sprite::GetPixelsHeight() * 0.5f;
 	}
 
 	void Sprite::Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, RenderTechniqueRef prg)
@@ -167,6 +174,26 @@ namespace Orin
 		prg->SetTexture(ShaderType::Pixel, "diffuseMap", texture ? texture : root.render.GetWhiteTexture());
 
 		root.render.GetDevice()->Draw(PrimitiveTopology::TrianglesList, 0, pointsCount - 2);
+	}
+
+	bool Sprite::IsPointVisibile(Math::Vector2 point)
+	{
+		auto halfScreenSize = GetHalfScreenSize();
+
+		if (_camPos.x - halfScreenSize.x < point.x && point.x < _camPos.x + halfScreenSize.x &&
+			_camPos.y - halfScreenSize.y < point.y && point.y < _camPos.y + halfScreenSize.y)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool Sprite::IsRectVisibile(Math::Vector2 p1, Math::Vector2 p2)
+	{
+		auto halfScreenSize = GetHalfScreenSize();
+
+		return Math::IsRectsOverlap(p1, p2, _camPos - halfScreenSize, _camPos + halfScreenSize);
 	}
 
 	void Sprite::DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color)

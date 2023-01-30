@@ -22,7 +22,6 @@ namespace Orin
 		static float _pixelsPerUnit;
 		static float _pixelsPerUnitInvert;
 		static float _pixelsHeight;
-		static float _zoom;
 
 		static VertexDeclRef _vdecl;
 		static DataBufferRef _quadBuffer;
@@ -34,6 +33,8 @@ namespace Orin
 		static void SetData(float pixelsHeight, float pixelsPerUnit);
 
 		static Math::Vector2 _camPos;
+		static float _zoom;
+		static Math::Vector2 _halfScreenSize;
 
 	public:
 
@@ -57,20 +58,28 @@ namespace Orin
 		static RenderTechniqueRef polygonPrgNoZ;
 
 		static void Init();
+
+		static void Update();
+
 		static void Draw(Texture* texture, Color clr, Math::Matrix trans, Math::Vector2 pos, Math::Vector2 size, Math::Vector2 uv, Math::Vector2 duv, RenderTechniqueRef prg = quadPrg);
 		static void DrawConvexPolygon(Texture* texture, PolygonVertex* points, int pointsCount, Math::Matrix trans, Color clr, RenderTechniqueRef prg = polygonPrg);
 
-		static Math::Vector2 GetCamPos() { return _camPos; }
-
 		static inline float GetPixelsHeight() { return _pixelsHeight; };
 
+		static Math::Vector2 GetCamPos() { return _camPos; }
+
 		static inline float GetZoom() { return _zoom; };
+
+		static Math::Vector2 GetHalfScreenSize() { return _halfScreenSize / _zoom; }
 
 		template<typename T>
 		static inline T ToUnits(const T& val) { return val * _pixelsPerUnitInvert; }
 
 		template<typename T>
 		static inline T ToPixels(const T& val) { return val * _pixelsPerUnit; }
+
+		static bool IsPointVisibile(Math::Vector2 point);
+		static bool IsRectVisibile(Math::Vector2 p1, Math::Vector2 p2);
 
 		static void DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color);
 		static void DebugSphere(const Math::Vector3& pos, float radius, const Color& color);

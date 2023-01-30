@@ -90,6 +90,22 @@ namespace Orin::Math
 		return fabs(GetAnglesDifference(angle, target_angle)) < 0.001f;
 	}
 
+	bool IsRectsOverlap(Vector2 rect1_left, Vector2 rect1_right, Vector2 rect2_left, Vector2 rect2_right)
+	{
+		bool xOverlap = ValueInRange(rect1_left.x, rect2_left.x, rect2_right.x) || ValueInRange(rect1_right.x, rect2_left.x, rect2_right.x) ||
+						ValueInRange(rect2_left.x, rect1_left.x, rect1_right.x) || ValueInRange(rect2_right.x, rect1_left.x, rect1_right.x);
+
+		if (xOverlap)
+		{
+			bool yOverlap = ValueInRange(rect1_left.y, rect2_left.y, rect2_right.y) || ValueInRange(rect1_right.y, rect2_left.y, rect2_right.y) ||
+							ValueInRange(rect2_left.y, rect1_left.y, rect1_right.y) || ValueInRange(rect2_right.y, rect1_left.y, rect1_right.y);
+
+			return yOverlap;
+		}
+
+		return false;
+	}	
+
 	bool IsPointInPolygon(Vector2 pt, eastl::vector<Vector2>& polygon, bool debugDraw)
 	{
 		if (debugDraw)

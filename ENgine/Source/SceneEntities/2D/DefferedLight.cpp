@@ -231,11 +231,12 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
 
-		float scale = Sprite::GetZoom();
-
 		u_lights[0] = { 0.72f, 1.0f, 1.0f, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
-		u_lights[2] = { Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f / scale, Sprite::GetPixelsHeight() * 0.5f / scale, camPos.x, camPos.y };
+
+		auto halfScreenSize = Sprite::GetHalfScreenSize();
+
+		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
 
 		int index = 3;
 
@@ -262,6 +263,12 @@ namespace Orin
 
 				auto trans = light->GetTransform();
 				auto pos = Sprite::ToPixels(trans.GetGlobal().Pos());
+				auto size = trans.size * 0.5f;
+
+				if (!Sprite::IsRectVisibile(Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, -size.y), Math::Vector2(pos.x, pos.y) + Math::Vector2(size.x, -size.y)))
+				{
+					continue;
+				}
 
 				u_lights[index + 0] = { pos.x, pos.y, 150.0f, 1.0f }; //pos, dir
 				u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
@@ -288,6 +295,8 @@ namespace Orin
 		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 3 + 4 * lightCount);
 
 		Sprite::Draw(albedoRT, COLOR_WHITE, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
+
+		//root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_WHITE, "Num lights %i", lightCount);
 
 		hackStateEnabled = false;
 	}

@@ -9,7 +9,6 @@ namespace Orin
 	class CLASS_DECLSPEC Camera2D : public SceneEntity
 	{
 		Math::Matrix view;
-		Math::Vector2 halfScreenSize;
 
 		void UpdateRenderView();
 
@@ -37,7 +36,6 @@ namespace Orin
 		void Play() override;
 		void Update(float dt);
 		void CenterCamera();
-		bool IsPointVisibile(Math::Vector3 point);
 #endif
 	};
 }
