@@ -49,6 +49,8 @@ namespace Orin
 			const Math::Vector3 addPos = Sprite::ToUnits(addPosition);
 			const Math::Vector3 pos    = transform.GetGlobal().Pos() + Math::Vector3{addPos.x, addPos.y, 0.f};
 
+			Sprite::_camPos = Sprite::ToPixels(Math::Vector2(pos.x, pos.y));
+
 			const float angle = Math::HalfPI + addRotation * Math::Radian;
 			const Math::Vector3 upVector{cosf(angle), sinf(angle), 0.f};
 
@@ -100,9 +102,7 @@ namespace Orin
 					pos.y = Math::Clamp(pos.y, rightdown.y + halfScreenSize.y, leftup.y - transform.size.y);
 				}
 
-				transform.position = pos;
-
-				Sprite::_camPos = Math::Vector2(pos.x, pos.y);
+				transform.position = pos;			
 			}
 
 			Sprite::_zoom = zoom;
