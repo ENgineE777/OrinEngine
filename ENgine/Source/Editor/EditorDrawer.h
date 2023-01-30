@@ -38,6 +38,7 @@ namespace Orin
 		TextureRef arrowTex;
 		TextureRef checkerTex;
 		TextureRef projectIconTex;
+		TextureRef lightBulbTex;
 
 		void Init();
 

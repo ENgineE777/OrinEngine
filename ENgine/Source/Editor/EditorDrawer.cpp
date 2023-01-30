@@ -37,6 +37,9 @@ namespace Orin
 		checkerTex = root.render.LoadTexture("ENgine/editor/checker.png", _FL_);
 		checkerTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
+		lightBulbTex = root.render.LoadTexture("ENgine/editor/LightBulp.png", _FL_);
+		lightBulbTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
+
 		projectIconTex = root.render.LoadTexture("ENgine/editor/ProjectIcon.png", _FL_);
 
 		font = root.fonts.LoadFont("ENgine\\DroidSans.ttf", false, false, 12, _FL_);
@@ -243,6 +246,7 @@ namespace Orin
 		arrowTex.ReleaseRef();
 		checkerTex.ReleaseRef();
 		projectIconTex.ReleaseRef();
+		lightBulbTex.ReleaseRef();
 
 		skyBoxPrg.ReleaseRef();
 		skyBoxVbuffer.ReleaseRef();

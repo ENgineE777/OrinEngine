@@ -1,6 +1,7 @@
 
 #include "PointLight2D.h"
 #include "Root/Root.h"
+#include "Editor/EditorDrawer.h"
 
 namespace Orin
 {
@@ -46,20 +47,26 @@ namespace Orin
 
 		spriteLight = root.render.GetRenderTechnique<PointLight2DProgram>(_FL_);
 
-		Tasks(true)->AddTask(5, this, (Object::Delegate) & PointLight2D::Draw);
+		Tasks(true)->AddTask(199, this, (Object::Delegate) & PointLight2D::Draw);
 
 		GetScene()->AddToGroup(this, "PointLight2D");
 	}
 
 	void PointLight2D::Draw(float dt)
 	{
-		//transform.size.y = transform.size.x;
+		if (GetScene()->IsPlaying())
+		{
+			return;
+		}
+
+		transform.size.y = transform.size.x;
 
 		if (IsVisible())
 		{
-			transform.size.y = transform.size.x;
+			auto pos = Sprite::ToPixels(transform.GetGlobal().Pos());
+			auto size = Math::Vector2((float)editorDrawer.lightBulbTex->GetWidth(), (float)editorDrawer.lightBulbTex->GetHeight());
 
-			//Sprite::Draw(nullptr, color, transform.GetGlobal(), Math::Vector2(-transform.size.x, transform.size.x) * 0.5f, transform.size.x, 0.0f, 1.0f, spriteLight);
+			editorDrawer.DrawSprite(editorDrawer.lightBulbTex, Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, -size.y) * 0.5f, size, 0.0f, 0.0f, COLOR_WHITE);
 		}
 	}
 }
