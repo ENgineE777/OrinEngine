@@ -84,6 +84,13 @@ namespace Orin
 			*vectorValue = Math::Vector3();
 		}
 		else
+		if (prop.type == Type::Transform)
+		{
+			Transform* transformValue = (Transform*)dest;
+			memset(transformValue, 0, sizeof(Transform));
+			transformValue->Transform::Transform();
+		}
+		/*else
 		if (prop.type == Type::AssetTexture)
 		{
 			AssetTextureRef* refValue = (AssetTextureRef*)dest;
@@ -112,18 +119,11 @@ namespace Orin
 			refValue->AssetSpritesLayerRef::AssetSpritesLayerRef();
 		}
 		else
-		if (prop.type == Type::Transform)
-		{
-			Transform* transformValue = (Transform*)dest;
-			memset(transformValue, 0, sizeof(Transform));
-			transformValue->Transform::Transform();
-		}
-		else
 		if (prop.type == Type::SceneEntity)
 		{
-			//SceneEntityRefBase* refValue = (SceneEntityRefBase*)dest;
-			//*refValue = SceneEntityRefBase();
-		}
+			SceneEntityRefBase* refValue = (SceneEntityRefBase*)dest;
+			*refValue = SceneEntityRefBase();
+		}*/
 	}
 
 	void MetaData::MetaDataPropertyAction::CopyPropertyData(uint8_t* src, uint8_t* dest)
@@ -163,6 +163,18 @@ namespace Orin
 			memcpy(dest, src, sizeof(float) * 3);
 		}
 		else
+		if (prop.type == Type::Transform)
+		{
+			Transform* transformSrc = (Transform*)src;
+			Transform* transformDest = (Transform*)dest;
+
+			transformDest->position = transformSrc->position;
+			transformDest->rotation = transformSrc->rotation;
+			transformDest->scale = transformSrc->scale;
+			transformDest->size = transformSrc->size;
+			transformDest->offset = transformSrc->offset;
+		}
+		/*else
 		if (prop.type == Type::AssetTexture)
 		{
 			AssetTextureRef* refSrc = reinterpret_cast<AssetTextureRef*>(src);
@@ -196,18 +208,6 @@ namespace Orin
 			*ref = *refSrc;
 		}
 		else
-		if (prop.type == Type::Transform)
-		{
-			Transform* transformSrc = (Transform*)src;
-			Transform* transformDest = (Transform*)dest;
-
-			transformDest->position = transformSrc->position;
-			transformDest->rotation = transformSrc->rotation;
-			transformDest->scale = transformSrc->scale;
-			transformDest->size = transformSrc->size;
-			transformDest->offset = transformSrc->offset;
-		}
-		/*else
 		if (prop.type == Type::SceneEntity)
 		{
 			SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(dest);
@@ -1548,12 +1548,12 @@ namespace Orin
 						ImGui::NextColumn();
 					}
 
-					if (prop.changed)
+					/*if (prop.changed)
 					{
 						editorAction.SaveAsProperty();
 
 						editor.AddAction(new MetaDataPropertyAction(editorAction));
-					}
+					}*/
 				}
 			}
 		}
