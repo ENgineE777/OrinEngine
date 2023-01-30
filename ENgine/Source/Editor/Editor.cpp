@@ -1278,7 +1278,7 @@ namespace Orin
 
 		forceImGUISetViewportFocusCount = 2;
 
-		if (selectedEditAsset.Get())
+		if (selectedEditAsset)
 		{
 			auto iter = eastl::find_if(openedAssets.begin(), openedAssets.end(), [this](const AssetRef& asset) { return asset && StringUtils::IsEqual(asset->GetPath().c_str(), selectedEditAsset->GetPath().c_str()); });
 
@@ -1286,10 +1286,7 @@ namespace Orin
 			{
 				openedAssets.push_back(selectedEditAsset);
 			}
-		}
 
-		if (selectedEditAsset)
-		{
 			selectedEditAsset->EnableEditing(true);
 		}
 	}
@@ -1805,7 +1802,7 @@ namespace Orin
 
 			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
-			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F5"))
+			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F6"))
 			{
 				StartProject();
 			}
@@ -2135,9 +2132,13 @@ namespace Orin
 		}
 
 		ShowCreateAssetDialog();
+
 		ShowAbout();
+
 		ShowProjectSettings();
+
 		ShowEditorSettings();
+
 		ShowViewport();
 
 		if (SpriteWindow::instance)

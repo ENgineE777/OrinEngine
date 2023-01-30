@@ -105,9 +105,9 @@ namespace Orin
 			editor.freeCamera.pos2D = camera2DPos;
 			editor.freeCamera.zoom2D = camera2DZoom;
 
-			if (selectedEntityID != -1)
+			if (auto* entity = GetScene()->FindEntity(selectedEntityID))
 			{
-				SelectEntity(scene->FindEntity(selectedEntityID));
+				SelectEntity(entity);
 			}
 		}
 	}
@@ -187,7 +187,7 @@ namespace Orin
 							}
 							else
 							{
-								scene->DeleteEntity(dragged, false);
+								GetScene()->DeleteEntity(dragged, false);
 							}
 
 							if (parent)
@@ -196,7 +196,7 @@ namespace Orin
 							}
 							else
 							{
-								scene->AddEntity(dragged);
+								GetScene()->AddEntity(dragged);
 							}
 
 							dragged->UpdateVisibility();
@@ -215,7 +215,7 @@ namespace Orin
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
+					assetEntity = GetScene()->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -233,7 +233,7 @@ namespace Orin
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_ANIM_GRAPH_2D", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
+					assetEntity = GetScene()->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -251,7 +251,7 @@ namespace Orin
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_TILE_SET", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
+					assetEntity = GetScene()->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -269,7 +269,7 @@ namespace Orin
 
 				if (ImGui::AcceptDragDropPayload("_ASSET_SPRITES_LAYER", ImGuiDragDropFlags_AcceptNoDrawDefaultRect))
 				{
-					assetEntity = scene->CreateEntity(assetRef->GetSceneEntityType(), false);
+					assetEntity = GetScene()->CreateEntity(assetRef->GetSceneEntityType(), false);
 
 					if (assetEntity)
 					{
@@ -312,7 +312,7 @@ namespace Orin
 					}
 					else
 					{
-						scene->AddEntity(assetEntity);
+						GetScene()->AddEntity(assetEntity);
 					}
 
 					assetEntity->UpdateVisibility();
@@ -396,7 +396,7 @@ namespace Orin
 		}
 		else
 		{
-			scene->DeleteEntity(entity, true);
+			GetScene()->DeleteEntity(entity, true);
 		}
 
 		containsUnsavedChanges = true;
@@ -410,7 +410,7 @@ namespace Orin
 			{
 				if (ImGui::MenuItem(decls[curIndex]->GetShortName()))
 				{
-					auto* entity = scene->CreateEntity(decls[curIndex]->GetName(), false);
+					auto* entity = GetScene()->CreateEntity(decls[curIndex]->GetName(), false);
 
 					if (selectedEntity)
 					{
@@ -424,7 +424,7 @@ namespace Orin
 						{
 							if (!isPrefab)
 							{
-								scene->AddEntity(entity, selectedEntity);
+								GetScene()->AddEntity(entity, selectedEntity);
 							}
 							else
 							{
@@ -434,7 +434,7 @@ namespace Orin
 					}
 					else
 					{
-						scene->AddEntity(entity);
+						GetScene()->AddEntity(entity);
 					}
 
 					if (entity)
@@ -497,7 +497,7 @@ namespace Orin
 		}
 		else
 		{
-			copy = scene->CreateEntity(selectedEntity->className, selectedEntity->prefabInstance);
+			copy = GetScene()->CreateEntity(selectedEntity->className, selectedEntity->prefabInstance);
 		}
 
 		auto* parent = selectedEntity->GetParent();
@@ -508,7 +508,7 @@ namespace Orin
 		}
 		else
 		{
-			scene->AddEntity(copy, selectedEntity);
+			GetScene()->AddEntity(copy, selectedEntity);
 		}
 
 		copy->Copy(selectedEntity);
@@ -667,7 +667,7 @@ namespace Orin
 
 		ImGui::BeginChild("SceneRoot");
 
-		EntitiesTreeView(scene->GetEntities());
+		EntitiesTreeView(GetScene()->GetEntities());
 
 		ImGui::EndChild();
 
@@ -766,7 +766,7 @@ namespace Orin
 	{
 		eastl::vector<SceneEntity*> tmpSelection;
 
-		for (auto* entity : scene->GetEntities())
+		for (auto* entity : GetScene()->GetEntities())
 		{
 			CheckSelection(entity, tmpSelection, ms, start, dir);
 		}
