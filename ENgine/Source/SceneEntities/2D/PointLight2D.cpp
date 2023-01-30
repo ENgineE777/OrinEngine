@@ -64,7 +64,9 @@ namespace Orin
 		if (IsVisible())
 		{
 			auto pos = Sprite::ToPixels(transform.GetGlobal().Pos());
-			auto size = Math::Vector2((float)editorDrawer.lightBulbTex->GetWidth(), (float)editorDrawer.lightBulbTex->GetHeight());
+			float scale = 640.0f / Sprite::GetPixelsHeight();
+
+			auto size = Math::Vector2((float)editorDrawer.lightBulbTex->GetWidth(), (float)editorDrawer.lightBulbTex->GetHeight()) / scale;			
 
 			editorDrawer.DrawSprite(editorDrawer.lightBulbTex, Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, -size.y) * 0.5f, size, 0.0f, 0.0f, COLOR_WHITE);
 		}
