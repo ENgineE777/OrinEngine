@@ -13,6 +13,7 @@ namespace Orin
 		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
 		FLOAT_PROP(Camera2D, border.x, 100.0f, "Properties", "Horizontal border", "Horizontal border of a camera")
 		FLOAT_PROP(Camera2D, border.y, 100.0f, "Properties", "Vertical border", "Vertical border of a camera")
+		FLOAT_PROP(Camera2D, smoothingViscosity, .0f, "Properties", "Smoothing viscosity", "Smoothing viscosity")
 		BOOL_PROP(Camera2D, useLimits, false, "Limits", "Use Limits", "Use limits for a camera")
 		FLOAT_PROP(Camera2D, leftup.x, -1000.0f, "Limits", "Left limit", "Left limit of a camera")
 		FLOAT_PROP(Camera2D, rightdown.x, 1000.0f, "Limits", "Right limit", "Right limit of a camera")
@@ -102,7 +103,7 @@ namespace Orin
 					pos.y = Math::Clamp(pos.y, rightdown.y + halfScreenSize.y, leftup.y - transform.size.y);
 				}
 
-				transform.position = pos;			
+				transform.position = Math::Approach(transform.position, pos, dt, smoothingViscosity);
 			}
 
 			Sprite::_zoom = zoom;

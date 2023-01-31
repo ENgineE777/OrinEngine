@@ -27,6 +27,8 @@ namespace Orin
 		Math::Vector2 addPosition;
 		float addRotation;
 
+		float smoothingViscosity;
+
 #ifndef DOXYGEN_SKIP
 
 		Camera2D();

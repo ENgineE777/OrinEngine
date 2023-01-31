@@ -78,6 +78,14 @@ namespace Orin::Math
 		return ::atan2f(y, x);
 	}
 
+	template<typename T>
+    CLASS_DECLSPEC inline T Approach(T from, T to, float dt, float viscosity)
+    {
+        if (viscosity < 1e-5f)
+            return to;
+        return from + (1.f - ::expf(-dt / viscosity)) * (to - from);
+    }
+
 	CLASS_DECLSPEC inline float EaseInQuad(float k)
 	{
 		return k * k;
