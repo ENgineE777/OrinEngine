@@ -142,6 +142,8 @@ namespace Orin
 
 		AssetRef selectedEditAsset;
 
+		SceneEntityRef<SceneEntity> bufferedSceneEntity;
+
 		bool ownGrid = false;
 		Math::Vector3 gridOrigin = 0.0f;
 		Math::Vector3 gridStep = 0.0f;

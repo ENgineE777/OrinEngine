@@ -45,7 +45,7 @@ namespace Orin
 
 		bool IsPrefab();
 		void Copy(AssetScene* srcScene);
-		void DuplicateSelected();
+		void Duplicate(SceneEntity* soucre);
 
 		void CheckSelection(SceneEntity* entity, eastl::vector<SceneEntity*>& selection, Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 		void CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);

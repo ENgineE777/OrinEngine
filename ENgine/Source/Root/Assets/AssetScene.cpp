@@ -487,20 +487,20 @@ namespace Orin
 		}
 	}
 
-	void AssetScene::DuplicateSelected()
+	void AssetScene::Duplicate(SceneEntity* soucre)
 	{
 		SceneEntity* copy = nullptr;
 
-		if (selectedEntity->prefabInstance)
+		if (soucre->prefabInstance)
 		{
-			copy = selectedEntity->prefabRef->CreateInstance(selectedEntity->GetScene());
+			copy = soucre->prefabRef->CreateInstance(soucre->GetScene());
 		}
 		else
 		{
-			copy = GetScene()->CreateEntity(selectedEntity->className, selectedEntity->prefabInstance);
+			copy = GetScene()->CreateEntity(soucre->className, soucre->prefabInstance);
 		}
 
-		auto* parent = selectedEntity->GetParent();
+		auto* parent = selectedEntity ? selectedEntity->GetParent() : nullptr;
 
 		if (parent)
 		{
@@ -511,10 +511,10 @@ namespace Orin
 			GetScene()->AddEntity(copy, selectedEntity);
 		}
 
-		copy->Copy(selectedEntity);
+		copy->Copy(soucre);
 		copy->PostLoad();
 
-		CopyChilds(selectedEntity, copy, scene);
+		CopyChilds(soucre, copy, scene);
 
 		copy->UpdateVisibility();
 
@@ -561,9 +561,19 @@ namespace Orin
 				ImGui::EndMenu();
 			}
 
+			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Copy"))
+			{
+				editor.bufferedSceneEntity.SetEntity(selectedEntity);
+			}
+
+			if (editor.bufferedSceneEntity && !onlyToCreate && ImGui::MenuItem("Paste"))
+			{
+				Duplicate(editor.bufferedSceneEntity.GetSceneEntity());
+			}
+
 			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Duplicate"))
 			{
-				DuplicateSelected();
+				Duplicate(selectedEntity);
 			}
 
 			if (!onlyToCreate && ImGui::MenuItem("Delete"))
@@ -687,7 +697,17 @@ namespace Orin
 
 			if (selectedEntity && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_D"))
 			{
-				DuplicateSelected();
+				Duplicate(selectedEntity);
+			}
+
+			if (selectedEntity && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_C"))
+			{
+				editor.bufferedSceneEntity.SetEntity(selectedEntity);
+			}
+
+			if (editor.bufferedSceneEntity.GetSceneEntity() && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_V"))
+			{
+				Duplicate(editor.bufferedSceneEntity.GetSceneEntity());
 			}
 		}
 
