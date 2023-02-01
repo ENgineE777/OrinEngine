@@ -19,6 +19,7 @@ namespace Orin
 		virtual bool Init(HWND hwnd) = 0;
 		virtual void Update() = 0;
 		virtual void OnResize(int width, int height) = 0;
+		virtual bool IsQuitRequested() = 0;
 
 		virtual void Release() = 0;
 	};

@@ -23,6 +23,7 @@ namespace Orin
 		void Update() override;
 		void Render(float dt);
 		void OnResize(int width, int height) override;
+		bool IsQuitRequested() override;
 
 		void Release() override;
 	};

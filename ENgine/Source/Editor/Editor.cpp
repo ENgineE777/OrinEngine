@@ -511,8 +511,10 @@ namespace Orin
 
 			ImGui::End();
 
-			if (root.controls.DebugKeyPressed("KEY_ESCAPE"))
+			if (root.controls.DebugKeyPressed("KEY_F6") || root.IsQuitRequested())
 			{
+				root.SetQuitRequest(false);
+
 				StopProject();
 			}
 
@@ -1802,7 +1804,7 @@ namespace Orin
 
 			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
-			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F6"))
+			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F7"))
 			{
 				StartProject();
 			}

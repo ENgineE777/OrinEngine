@@ -50,6 +50,7 @@ namespace Orin
 		#endif
 
 		PhysScene* pscene = nullptr;
+		bool quitRequested = false;
 
 		#endif
 
@@ -155,6 +156,9 @@ namespace Orin
 		const char* GetPath(Path path) override;
 
 		#endif
+
+		void SetQuitRequest(bool set) override { quitRequested = set; };
+		bool IsQuitRequested() override { return quitRequested; };
 
 		void Release();
 	};

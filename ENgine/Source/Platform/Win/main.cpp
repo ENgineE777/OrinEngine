@@ -99,6 +99,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
 
         Orin::GetRunner()->Update();
+
+        if (Orin::GetRunner()->IsQuitRequested())
+        {
+            break;
+        }
     }
 
     Orin::GetRunner()->Release();

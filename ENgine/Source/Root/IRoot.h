@@ -82,6 +82,9 @@ namespace Orin
 		virtual float GetDeltaTime() = 0;
 		virtual int GetFPS() = 0;
 
+		virtual void SetQuitRequest(bool set) = 0;
+		virtual bool IsQuitRequested() = 0;
+
 		virtual const char* GetPath(Path path) = 0;
 	};
 

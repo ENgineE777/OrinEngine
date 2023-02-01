@@ -73,7 +73,7 @@ namespace Orin
 
 	void Runner::Render(float dt)
 	{
-		root.render.GetDevice()->Clear(true, COLOR_GRAY, true, 1.0f);
+		root.render.GetDevice()->Clear(true, COLOR_BLACK, true, 1.0f);
 		
 		root.render.ExecutePool(-10, dt);
 		root.render.ExecutePool(0, dt);
@@ -103,6 +103,11 @@ namespace Orin
 		GetClientRect(hwnd, (LPRECT)&rect);
 
 		root.render.GetDevice()->SetBackBuffer(0, rect.right, rect.bottom, &hwnd);
+	}
+
+	bool Runner::IsQuitRequested()
+	{
+		return root.IsQuitRequested();
 	}
 
 	void Runner::Release()
