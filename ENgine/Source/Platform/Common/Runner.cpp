@@ -1,4 +1,5 @@
 #include "Runner.h"
+#include "Support/Perforce.h"
 
 namespace Orin
 {
@@ -42,6 +43,16 @@ namespace Orin
 		if (!root.scripts.Start())
 		{
 			return false;
+		}
+
+		JsonReader reader;
+
+		if (reader.ParseFile("perforce.cl"))
+		{
+			int cl = -1;
+			reader.Read("CL", cl);
+
+			Perforce::SetCurrentCL(cl);
 		}
 
 		root.PreparePhysScene();

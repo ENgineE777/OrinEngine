@@ -419,6 +419,18 @@ namespace Orin
 
 		root.files.CpyFolder(projectPath, (exportDir + "/project").c_str());
 
+		int cl = Perforce::GetRevision();
+
+		if (cl > 0)
+		{
+			JsonWriter reader;
+
+			if (reader.Start((exportDir + "/project/Assets/perforce.cl").c_str()))
+			{
+				reader.Write("CL", cl);
+			}
+		}
+
 		root.files.DeleteFolder((exportDir + "/project/_Code").c_str());
 
 		{

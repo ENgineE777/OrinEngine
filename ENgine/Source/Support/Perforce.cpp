@@ -8,6 +8,7 @@ namespace Orin
 {
 	bool Perforce::connectionChecked = true;
 	bool Perforce::isConnected = false;
+	int Perforce::currentCL = -1;
 	eastl::string Perforce::config;
 	eastl::vector<eastl::string> Perforce::cmdResult;
 
@@ -15,6 +16,11 @@ namespace Orin
 	{
 		config = StringUtils::PrintTemp("p4.exe -p %s -c %s -u %s ", url, workspace, user);
 		connectionChecked = false;
+	}
+
+	void Perforce::SetCurrentCL(int cl)
+	{
+		currentCL = cl;
 	}
 
 	bool Perforce::CheckConnection()
@@ -76,6 +82,11 @@ namespace Orin
 
 	int Perforce::GetRevision()
 	{
+		if (currentCL != -1)
+		{
+			return currentCL;
+		}
+
 		if (!CheckConnection())
 		{
 			return 0;
