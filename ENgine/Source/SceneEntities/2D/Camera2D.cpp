@@ -13,6 +13,8 @@ namespace Orin
 		SCENEOBJECT_PROP(Camera2D, targetRef, "Properties", "Target")
 		FLOAT_PROP(Camera2D, border.x, 100.0f, "Properties", "Horizontal border", "Horizontal border of a camera")
 		FLOAT_PROP(Camera2D, border.y, 100.0f, "Properties", "Vertical border", "Vertical border of a camera")
+		FLOAT_PROP(Camera2D, borderAbsolute.x, 0.0f, "Properties", "Horizontal absolute border", "Horizontal border of a camera")
+		FLOAT_PROP(Camera2D, borderAbsolute.y, 0.0f, "Properties", "Vertical absolute border", "Vertical border of a camera")
 		FLOAT_PROP(Camera2D, smoothingViscosity, .0f, "Properties", "Smoothing viscosity", "Smoothing viscosity")
 		BOOL_PROP(Camera2D, useLimits, false, "Limits", "Use Limits", "Use limits for a camera")
 		FLOAT_PROP(Camera2D, leftup.x, -1000.0f, "Limits", "Left limit", "Left limit of a camera")
@@ -73,28 +75,31 @@ namespace Orin
 			if (targetRef)
 			{
 				auto halfScreenSize = Sprite::GetHalfScreenSize();
+				auto actualBorder = halfScreenSize * borderAbsolute + border;
+
+				actualBorder.Min(halfScreenSize);
 
 				Math::Vector3 pos = transform.position;
 				Math::Vector3 targetPos = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 
-				if (-halfScreenSize.x + border.x > targetPos.x - pos.x)
+				if (-actualBorder.x > targetPos.x - pos.x)
 				{
-					pos.x = targetPos.x + halfScreenSize.x - border.x;
+					pos.x = targetPos.x + actualBorder.x;
 				}
 
-				if (halfScreenSize.x - border.x < targetPos.x - pos.x)
+				if (actualBorder.x < targetPos.x - pos.x)
 				{
-					pos.x = targetPos.x - halfScreenSize.x + border.x;
+					pos.x = targetPos.x - actualBorder.x;
 				}
 
-				if (-halfScreenSize.y + border.y > targetPos.y - pos.y)
+				if (-actualBorder.y > targetPos.y - pos.y)
 				{
-					pos.y = targetPos.y + halfScreenSize.y - border.y;
+					pos.y = targetPos.y + actualBorder.y;
 				}
 
-				if (halfScreenSize.y - border.y < targetPos.y - pos.y)
+				if (actualBorder.y < targetPos.y - pos.y)
 				{
-					pos.y = targetPos.y - halfScreenSize.y + border.y;
+					pos.y = targetPos.y - actualBorder.y;
 				}
 
 				if (useLimits)
@@ -114,9 +119,15 @@ namespace Orin
 		{
 			Math::Vector3 p1, p2;
 
+			auto halfScreenSize = Sprite::GetHalfScreenSize();
+			auto actualBorder = halfScreenSize * borderAbsolute + border;
+
+			actualBorder.Min(halfScreenSize);
+			actualBorder = halfScreenSize - actualBorder;
+
 			for (int i = 0; i < 8; i++)
 			{
-				Math::Vector2 offset = (i >= 4 ? border * 2.0f : 0.0f);
+				Math::Vector2 offset = (i >= 4 ? actualBorder * 2.0f : 0.0f);
 
 				if (i == 0 || i == 4)
 				{

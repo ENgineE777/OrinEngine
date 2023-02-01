@@ -17,6 +17,7 @@ namespace Orin
 		META_DATA_DECL_BASE(Camera2D)
 
 		float zoom = 1.0f;
+		Math::Vector2 borderAbsolute;
 		Math::Vector2 border;
 
 		bool useLimits = false;
