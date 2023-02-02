@@ -93,7 +93,7 @@ namespace Orin
 		{
 			GrabEditorData();
 
-			SelectEntity(nullptr);
+			SelectEntity(nullptr, true);
 		}
 		else
 		{
@@ -107,7 +107,7 @@ namespace Orin
 
 			if (auto* entity = GetScene()->FindEntity(selectedEntityID))
 			{
-				SelectEntity(entity);
+				SelectEntity(entity, true);
 			}
 		}
 	}
@@ -316,7 +316,7 @@ namespace Orin
 					}
 
 					assetEntity->UpdateVisibility();
-					SelectEntity(assetEntity);
+					SelectEntity(assetEntity, true);
 
 					auto& transform = assetEntity->GetTransform();
 
@@ -385,7 +385,7 @@ namespace Orin
 		}
 
 		SceneEntity* entity = selectedEntity;
-		SelectEntity(nullptr);
+		SelectEntity(nullptr, true);
 
 		editor.DeleteActionsFromHistory(entity);
 
@@ -451,7 +451,7 @@ namespace Orin
 						}
 
 						entity->UpdateVisibility();
-						SelectEntity(entity);
+						SelectEntity(entity, true);
 
 						containsUnsavedChanges = true;
 					}
@@ -518,7 +518,7 @@ namespace Orin
 
 		copy->UpdateVisibility();
 
-		SelectEntity(copy);
+		SelectEntity(copy, true);
 
 		char temp[1024];
 		StringUtils::Copy(temp, 1024, selectedEntity->GetName());
@@ -638,7 +638,7 @@ namespace Orin
 				{
 					if (ImGui::IsMouseReleased(ImGuiMouseButton_Left) || ImGui::IsMouseReleased(ImGuiMouseButton_Right))
 					{
-						SelectEntity(entity);
+						SelectEntity(entity, true);
 					}
 
 					ImGui::BeginTooltip();
@@ -708,6 +708,31 @@ namespace Orin
 			if (editor.bufferedSceneEntity.GetSceneEntity() && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_V"))
 			{
 				Duplicate(editor.bufferedSceneEntity.GetSceneEntity());
+			}
+		}
+
+		if (selectedEntities.size() > 1)
+		{
+			auto delta = Sprite::ToUnits(multislectTransform.position - prevMultislectPos);
+			prevMultislectPos = multislectTransform.position;
+
+			for (auto* entity : selectedEntities)
+			{
+				auto math = entity->GetTransform().GetGlobal();
+
+				math.Pos() += delta;
+
+				entity->GetTransform().SetGlobal(math);
+
+				Math::Vector3 vMinEntity = FLT_MAX;
+				Math::Vector3 vMaxEntity = FLT_MIN;
+
+				entity->GetBBox(vMinEntity, vMaxEntity);
+
+				vMinEntity = Sprite::ToPixels(vMinEntity);
+				vMaxEntity = Sprite::ToPixels(vMaxEntity);
+
+				Sprite::DebugRect({ vMinEntity.x, vMinEntity.y }, { vMaxEntity.x, vMaxEntity.y }, COLOR_YELLOW);
 			}
 		}
 
@@ -826,11 +851,11 @@ namespace Orin
 
 		if (underSelection.size() > 0)
 		{
-			SelectEntity(underSelection[underSelectionIndex]);
+			SelectEntity(underSelection[underSelectionIndex], false);
 		}
 	}
 
-	void AssetScene::SelectEntity(SceneEntity* entity)
+	void AssetScene::SelectEntity(SceneEntity* entity, bool resetMultiSelect)
 	{
 		auto& gizmo = editor.gizmo;
 
@@ -841,6 +866,11 @@ namespace Orin
 		}
 
 		selectedEntity = entity;
+
+		if (resetMultiSelect)
+		{
+			selectedEntities.clear();
+		}
 
 		if (selectedEntity)
 		{
@@ -894,6 +924,60 @@ namespace Orin
 		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed))
 		{
 			CheckSelection({ (float)mx, (float)my }, invView.Pos(), dir);
+
+			if (root.controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Pressed))
+			{
+				if (selectedEntity)
+				{
+					auto iter = eastl::find_if(selectedEntities.begin(), selectedEntities.end(), [this](const SceneEntity* entity) { return entity == selectedEntity; });
+
+					if (iter == selectedEntities.end())
+					{
+						selectedEntities.push_back(selectedEntity);
+					}
+					else
+					if (selectedEntities.size() > 1)
+					{
+						selectedEntities.erase(iter);
+					}
+
+					if (selectedEntities.size() > 1)
+					{
+						SelectEntity(nullptr, false);
+
+						Math::Vector3 vMin = FLT_MAX;
+						Math::Vector3 vMax = FLT_MIN;
+
+						for (auto* entity : selectedEntities)
+						{
+							Math::Vector3 vMinEntity = FLT_MAX;
+							Math::Vector3 vMaxEntity = FLT_MIN;
+
+							entity->GetBBox(vMinEntity, vMaxEntity);
+							vMin.Min(vMinEntity);
+							vMax.Max(vMaxEntity);
+						}
+
+						prevMultislectPos = Sprite::ToPixels((vMin + vMax) * 0.5f);
+
+						multislectTransform.objectType = ObjectType::Object2D;
+						multislectTransform.size = Sprite::ToPixels(vMax - vMin);						
+						multislectTransform.position = prevMultislectPos;
+
+						editor.gizmo.SetTransform(this, &multislectTransform);
+					}
+					else
+					{
+						SelectEntity(selectedEntities[0], false);
+					}
+				}
+			}
+			else
+			{
+				selectedEntities.clear();
+				editor.DeleteActionsFromHistory(this);
+				selectedEntities.push_back(selectedEntity);
+			}
 		}
 		else
 		{

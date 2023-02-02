@@ -35,9 +35,6 @@ namespace Orin
 #ifdef ORIN_EDITOR
 		bool IsEditable() override;
 		void EnableEditing(bool enable) override;
-		SceneEntity* selectedEntity = nullptr;
-		int underSelectionIndex;
-		eastl::vector<SceneEntity*> underSelection;
 
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
@@ -50,7 +47,7 @@ namespace Orin
 		void CheckSelection(SceneEntity* entity, eastl::vector<SceneEntity*>& selection, Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 		void CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 
-		void SelectEntity(SceneEntity* entity);
+		void SelectEntity(SceneEntity* entity, bool resetMultiSelect);
 
 		void ImGuiProperties() override;
 		bool ImGuiHasHierarchy() override;
@@ -75,6 +72,13 @@ namespace Orin
 		bool isPrefab = false;
 		bool inCreatingInstance = false;
 		bool blockPopupInViewport = true;
+		SceneEntity* selectedEntity = nullptr;
+		int underSelectionIndex;
+		Math::Vector3 prevMultislectPos;
+		Transform multislectTransform;
+		eastl::vector<SceneEntity*> underSelection;
+
+		eastl::vector<SceneEntity*> selectedEntities;
 
 		void CreateEntityPopupEntry(const eastl::vector<class ClassFactorySceneEntity*>& decls, int& curIndex, int curDepth, bool onlyToCreate);
 		void EntitiesTreeView(const eastl::vector<SceneEntity*>& entities);
