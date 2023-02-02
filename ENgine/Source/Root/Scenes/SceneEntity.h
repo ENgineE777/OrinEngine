@@ -220,6 +220,8 @@ namespace Orin
 		virtual bool ImGuiProperties();
 		virtual bool CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir);
 
+		virtual void GetBBox(Math::Vector3& vMin, Math::Vector3& vMax);
+
 		virtual void OnMouseMove(Math::Vector2 ms);
 		virtual	void OnLeftMouseDown();
 		virtual void OnLeftMouseUp();

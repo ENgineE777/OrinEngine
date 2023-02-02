@@ -243,25 +243,65 @@ namespace Orin
 
 	bool SceneEntity::CheckSelection(Math::Vector2 ms, Math::Vector3 start, Math::Vector3 dir)
 	{
-		if (transform.objectType == ObjectType::Object2D)
+		Math::Vector3 vMin = FLT_MAX;
+		Math::Vector3 vMax = FLT_MIN;
+
+		GetBBox(vMin, vMax);
+		
+		return Math::IntersectBBoxRay(vMin, vMax, start, dir);
+
+		/*if (transform.objectType == ObjectType::Object2D)
 		{
 			auto mat = transform.GetGlobal();
 
-			auto leftCorner = -mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(transform.offset.x, 1.0f - transform.offset.y, 0.5f)));
-			auto rightCorner = mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f)));
+			Math::Vector3 corners[] = { mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x, transform.offset.y - 1.0f, 0.5f))),
+										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y - 1.0f, 0.5f))),
+										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x, transform.offset.y, 0.5f))),
+										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f))) };
 
 			Math::Vector3 vmin = FLT_MAX;
-			vmin.Min(leftCorner);
-			vmin.Min(rightCorner);
-
 			Math::Vector3 vmax = FLT_MIN;
-			vmax.Max(leftCorner);
-			vmax.Max(rightCorner);
+
+			for (auto corner : corners)
+			{
+				vmin.Min(corner);
+				vmax.Max(corner);
+			}
 
 			return Math::IntersectBBoxRay(mat.Pos() + vmin, mat.Pos() + vmax, start, dir);
 		}
-		
-		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);;
+
+		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);*/
+	}
+
+	void SceneEntity::GetBBox(Math::Vector3& vMin, Math::Vector3& vMax)
+	{
+		auto mat = transform.GetGlobal();
+
+		if (transform.objectType == ObjectType::Object2D)
+		{
+			Math::Vector3 corners[] = { mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x, transform.offset.y - 1.0f, 0.5f))),
+										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y - 1.0f, 0.5f))),
+										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x, transform.offset.y, 0.5f))),
+										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f))) };
+
+			vMin = FLT_MAX;
+			vMax = FLT_MIN;
+
+			for (auto corner : corners)
+			{
+				vMin.Min(corner);
+				vMax.Max(corner);
+			}
+		}
+		else
+		{
+			vMin = -transform.size * 0.5f;
+			vMax =  transform.size * 0.5f;
+		}
+
+		vMin = transform.GetGlobal().Pos() + vMin;
+		vMax = transform.GetGlobal().Pos() + vMax;
 	}
 
 	void SceneEntity::OnMouseMove(Math::Vector2 ms)
