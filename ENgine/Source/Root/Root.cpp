@@ -140,6 +140,28 @@ namespace Orin
 	{
 		Timer::CountDeltaTime();
 		dt = Timer::GetDeltaTime();
+
+		if (controls.DebugKeyPressed("KEY_MINUS", AliasAction::Pressed))
+		{
+			dt *= 0.5f;
+
+			if (controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Pressed) ||
+				controls.DebugKeyPressed("KEY_RSHIFT", AliasAction::Pressed))
+			{
+				dt *= 0.5f;
+			}
+		}
+		else
+		if (controls.DebugKeyPressed("KEY_EQUALS", AliasAction::Pressed))
+		{
+			dt *= 2.0f;
+			
+			if (controls.DebugKeyPressed("KEY_LSHIFT", AliasAction::Pressed) ||
+				controls.DebugKeyPressed("KEY_RSHIFT", AliasAction::Pressed))
+			{
+				dt *= 2.0f;
+			}
+		}
 	}
 
 	void Root::Update()
