@@ -79,13 +79,16 @@ namespace Orin
 						char relativeName[512];
 						StringUtils::GetCropPath(root.GetPath(Root::Path::Assets), fileName, relativeName, 512);
 
+						eastl::string assetPath = relativeName;
+						StringUtils::LowerCase(assetPath);
+
 						bool found = false;
 
 						if (update)
 						{
 							for (auto* item : folder->assets)
 							{
-								if (StringUtils::IsEqual(item->fullName.c_str(), relativeName))
+								if (StringUtils::IsEqual(item->fullName.c_str(), assetPath.c_str()))
 								{
 									if (item->asset && item->asset->SourceFileWasChanged())
 									{
@@ -111,14 +114,14 @@ namespace Orin
 							ref->name = ffd.cFileName;
 
 							ref->ext = extension;
-							ref->fullName = relativeName;
+							ref->fullName = assetPath.c_str();
 
 							if (StringUtils::IsEqual(ref->ext.c_str(), "scn"))
 							{
-								root.scenes.RegisterScene(relativeName, name);
+								root.scenes.RegisterScene(assetPath.c_str(), name);
 							}
 
-							assetsMap[relativeName] = ref;
+							assetsMap[assetPath.c_str()] = ref;
 						}
 					}
 				}

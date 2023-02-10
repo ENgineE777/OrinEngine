@@ -107,6 +107,8 @@ namespace Orin
 		template<class T>
 		T* GetAsset(eastl::string& path)
 		{
+			StringUtils::LowerCase(path);
+
 			if (assetsMap.count(path) > 0)
 			{
 				return assetsMap[path]->GetAsset<T>();
@@ -119,6 +121,8 @@ namespace Orin
 		template<class T>
 		T GetAssetRef(eastl::string& path)
 		{
+			StringUtils::LowerCase(path);
+
 			if (assetsMap.count(path) > 0)
 			{
 				return assetsMap[path]->GetAssetRef<T>();

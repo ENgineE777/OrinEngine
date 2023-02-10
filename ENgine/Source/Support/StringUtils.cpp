@@ -601,12 +601,14 @@ namespace Orin::StringUtils
 				continue;
 			}
 
-			it = upper2lower.find(w);
+			/*it = upper2lower.find(w);
 
 			if (it != upper2lower.end())
 			{
 				w = it->second;
-			}
+			}*/
+
+			w = std::tolower(w);
 
 			BuildUtf8fromUtf16(w, tmp);
 			str += tmp;

@@ -17,8 +17,8 @@ namespace Orin
 		JsonReader reader;
 		if (reader.ParseFile(projectName))
 		{
-			char startScene[128];
-			if (!reader.Read("start_scene", startScene, 128))
+			eastl::string startScene;
+			if (!reader.Read("start_scene", startScene))
 			{
 				return;
 			}
@@ -31,14 +31,21 @@ namespace Orin
 
 			Sprite::SetData(pixelsHeight, pixelsPerUnit);
 
+			StringUtils::LowerCase(startScene);
+
 			LoadScene(&scenes[startScene]);
 		}
 	}
 
 	void SceneManager::RegisterScene(const eastl::string& path, const eastl::string& name)
 	{
-		SceneHolder& sceneHolder = scenes[name];
+		eastl::string nameStr = name;
+		StringUtils::LowerCase(nameStr);
+
+		SceneHolder& sceneHolder = scenes[nameStr];
 		sceneHolder.path = path;
+
+		StringUtils::LowerCase(sceneHolder.path);
 	}
 
 	uint16_t SceneManager::GenerateUID()
@@ -75,7 +82,10 @@ namespace Orin
 
 	void SceneManager::LoadScene(const char* name)
 	{
-		if (scenes.find(name) == scenes.end())
+		eastl::string nameStr = name;
+		StringUtils::LowerCase(nameStr);
+
+		if (scenes.find(nameStr) == scenes.end())
 		{
 			return;
 		}
