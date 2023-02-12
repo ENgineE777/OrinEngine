@@ -24,6 +24,10 @@ namespace Orin
 		ID3D11Texture2D* texture = nullptr;
 		ID3D11ShaderResourceView* srview = nullptr;
 
+		int lockedSubResource = -1;
+		TextureLockFlag lockFlag;
+		ID3D11Texture2D* textureStaging = nullptr;
+
 		ID3D11RenderTargetView* rt = nullptr;
 		ID3D11DepthStencilView* depth = nullptr;
 	
@@ -44,8 +48,11 @@ namespace Orin
 		void SetAdressW(TextureAddress adress) override;
 	
 		void GenerateMips() override;
-
+	
 		void Update(int level, int layer, uint8_t* data, int stride) override;
+
+		MappedTexture Lock(int level, int layer, TextureLockFlag lockFlag) override;
+		void Unlock() override;
 
 		void* GetNativeResource() override;
 

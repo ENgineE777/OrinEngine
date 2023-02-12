@@ -16,6 +16,7 @@ namespace Orin
 		FMT_A8R8,
 		FMT_A8,
 		FMT_R16_FLOAT,
+		FMT_R32_FLOAT,
 		FMT_D16,
 		FMT_D24,
 	};
@@ -64,6 +65,20 @@ namespace Orin
 	This is representation of a texture.
 
 	*/
+
+	enum TextureLockFlag
+	{
+		Read = 0,
+		Write,
+		ReadWrite
+	};
+
+	struct MappedTexture
+	{
+		uint8_t* data = nullptr;
+		int rowStride = 0;
+		int depthStride = 0;
+	};
 
 	class CLASS_DECLSPEC Texture
 	{
@@ -221,6 +236,9 @@ namespace Orin
 		\param[in] stride Stride in data
 		*/
 		virtual void Update(int level, int layer, uint8_t* data, int stride) = 0;
+
+		virtual MappedTexture Lock(int level, int layer, TextureLockFlag lockFlag) = 0;
+		virtual void Unlock() = 0;
 
 		/**
 			\brief Get native resource for a curent OS and GAPI
