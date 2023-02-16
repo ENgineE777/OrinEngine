@@ -39,6 +39,7 @@ namespace Orin
 		#ifdef PLATFORM_WIN
 		char  logsDir[1024];
 		float dt = 0.0f;
+		float dtScale = 1.f;
 		#endif
 
 		eastl::string rootPath;
