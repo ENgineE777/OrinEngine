@@ -16,6 +16,7 @@
 #include "Root/Scripts/Scripts.h"
 #include "Root/Sounds/Sounds.h"
 #include "Root/TaskExecutor/TaskExecutor.h"
+#include "Root/CrashHandler.h"
 
 namespace Orin
 {
@@ -138,6 +139,8 @@ namespace Orin
 
 		*/
 		void Log(const char* name, const char* text, ...);
+
+		CrashHandler crashHandler;
 
 		#ifndef DOXYGEN_SKIP
 

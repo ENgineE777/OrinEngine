@@ -38,6 +38,8 @@ namespace Orin
 		srand((unsigned int)time(nullptr));
 
 		#ifdef PLATFORM_WIN
+		crashHandler.Init();
+
 		char curDir[1024];
 		GetCurrentDirectoryA(1024, curDir);
 		StringUtils::Printf(logsDir, 1024, "%s/Logs", curDir);
@@ -217,6 +219,12 @@ namespace Orin
 		rootPathAssets = eastl::string(setRootPath) + "Assets/";
 		rootPathBinaries = eastl::string(setRootPath) + "Binaries/Win64/";
 		rootPathVcProj = eastl::string(setRootPath) + "VcProj/";
+
+		char searchPath[256];
+		StringUtils::Printf(searchPath, 256, "DebugInfo;%s", rootPathBinaries.c_str());
+
+		crashHandler.SetSearchPath(searchPath);
+
 		#endif
 	}
 
@@ -258,5 +266,7 @@ namespace Orin
 		redirectLog = false;
 
 		memory.LogMemory();
+
+		crashHandler.Release();
 	}
 }
