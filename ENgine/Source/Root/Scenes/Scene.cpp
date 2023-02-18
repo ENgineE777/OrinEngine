@@ -129,7 +129,11 @@ namespace Orin
 			if (prefabInstance)
 			{
 				auto* prefab = root.assets.GetAsset<AssetPrefab>(type);
-				entity = prefab->CreateInstance(this);
+
+				if (prefab)
+				{
+					entity = prefab->CreateInstance(this);
+				}
 			}
 			else
 			{
