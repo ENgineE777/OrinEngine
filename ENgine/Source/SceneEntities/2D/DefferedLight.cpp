@@ -32,6 +32,35 @@ namespace Orin
 		};
 	};
 
+	class ShadowCastTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "cast_shadow_vs.shd"; };
+		virtual const char* GetPsName() { return "cast_shadow_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthTest(false);
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
+	class ShadowRenderTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "deffered_light_vs.shd"; };
+		virtual const char* GetPsName() { return "render_shadow_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthTest(false);
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
 	class BlurTechnique : public RenderTechnique
 	{
 	public:
@@ -68,6 +97,9 @@ namespace Orin
 
 		defferdLightTech = root.render.GetRenderTechnique<DefferdLightTechnique>(_FL_);
 		blurRTech = GetRoot()->GetRender()->GetRenderTechnique<BlurTechnique>(_FL_);
+
+		shadowCastTech = root.render.GetRenderTechnique<ShadowCastTechnique>(_FL_);
+		shadowRenderTech = root.render.GetRenderTechnique<ShadowRenderTechnique>(_FL_);
 
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float2, ElementSemantic::Position, 0 } };
 		vdecl = GetRoot()->GetRender()->GetDevice()->CreateVertexDecl(1, desc, _FL_);
@@ -124,6 +156,12 @@ namespace Orin
 
 			tempRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			tempRT->SetAdress(TextureAddress::Clamp);
+
+			occluderRT = root.render.GetDevice()->CreateTexture(512, 512, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			occluderRT->SetAdress(TextureAddress::Clamp);
+			occluderRT->SetFilters(TextureFilter::Point, TextureFilter::Point);
+
+			shadowRT = root.render.GetDevice()->CreateTexture(360, MAX_LIGHTS, TextureFormat::FMT_R32_FLOAT, 1, true, TextureType::Tex2D, _FL_);
 		}
 
 		root.render.GetDevice()->SetRenderTarget(0, albedoRT);
@@ -198,57 +236,12 @@ namespace Orin
 		GetRoot()->GetRender()->GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
-	void DefferedLight::Draw(float dt)
+	void DefferedLight::GatherLights()
 	{
-		if (!IsVisible())
-		{
-			return;
-		}
-
-		root.render.GetDevice()->RestoreRenderTarget();
-
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-
-		root.render.GetDevice()->RestoreRenderTarget();
-
-		//root.render.DebugSprite(albedoRT, 10.0f, 100.0f);
-		//root.render.DebugSprite(materialRT, {120.0f, 10.0f}, 100.0f);
-		//root.render.DebugSprite(normalRT, { 230.0f, 10.0f }, 100.0f);
-		//root.render.DebugSprite(selfilumRT, { 340.0f, 10.0f }, 100.0f);
-
-		Math::Vector3 camPos = Sprite::GetCamPos();
-
-		Math::Vector4 u_lights[3 + 4 * 32];
-
-		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
-		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);
-		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", selfilumRT);
-
-		u_lights[0] = { Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f, Sprite::GetPixelsHeight() * 0.5f, camPos.x, camPos.y};
-
-		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
-
-		u_lights[0] = { 0.72f, 1.0f, 1.0f, 0.1f };
-		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
-
-		auto halfScreenSize = Sprite::GetHalfScreenSize();
-
-		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
-
-		int index = 3;
+		lights.clear();
 
 		eastl::vector<Scene::Group*> groups;
 		GetScene()->GetGroup(groups, "PointLight2D");
-
-		int lightCount = 1;
-
-		u_lights[index + 0] = { cosf(directionalDir * Math::Radian), sinf(directionalDir * Math::Radian), 0.75f, -1.0f}; //pos, dir
-		u_lights[index + 1] = { directionalColor.r, directionalColor.g, directionalColor.b, directionalColor.a };
-
-		index += 4;
 
 		for (auto* group : groups)
 		{
@@ -265,27 +258,139 @@ namespace Orin
 				auto pos = Sprite::ToPixels(trans.GetGlobal().Pos());
 				auto size = trans.size * 0.5f;
 
-				if (!Sprite::IsRectVisibile(Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, -size.y), Math::Vector2(pos.x, pos.y) + Math::Vector2(size.x, -size.y)))
+				if (!Sprite::IsRectVisibile(Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, size.y), Math::Vector2(pos.x, pos.y) + Math::Vector2(size.x, size.y)))
 				{
 					continue;
 				}
 
-				u_lights[index + 0] = { pos.x, pos.y, 150.0f, 1.0f }; //pos, dir
-				u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
-				u_lights[index + 2] = { 1.0f, light->falloff, trans.rotation.z * Math::Radian, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
-				u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , 0.0f, 0.0f }; //arc, width
+				lights.push_back(light);
 
-				index += 4;
-				lightCount++;
-
-				if (lightCount == 32)
+				if (lights.size() == MAX_LIGHTS - 1)
 				{
 					break;
 				}
 			}
 		}
-		
-		u_lights[1].w = (float)lightCount;				
+	}
+
+	void DefferedLight::GenerateShadows()
+	{
+		Math::Matrix curView;
+		Math::Matrix curProj;
+		auto camPos = Sprite::_camPos;
+		auto zoom = Sprite::_zoom;
+
+		root.render.GetTransform(TransformStage::View, curView);
+		root.render.GetTransform(TransformStage::Projection, curProj);
+
+		Math::Matrix view;
+		Math::Matrix proj;
+
+		for (int i = 0; i < lights.size(); i++)
+		{
+			auto* light = lights[i];
+
+			if (!light->castShadow || light->lineWidth > 0.001f)
+			{
+				continue;
+			}
+
+			auto trans = light->GetTransform();
+			auto pos = trans.GetGlobal().Pos();
+
+			Sprite::_camPos = Sprite::ToPixels(Math::Vector2(pos.x, pos.y));
+
+			const Math::Vector3 upVector{ 0.0f, 1.0f, 0.f };
+
+			float dist = Sprite::ToUnits(trans.size.x * 0.5f) / (tanf(22.5f * Math::Radian));
+			view.BuildView(Math::Vector3(pos.x, pos.y, -dist), Math::Vector3(pos.x, pos.y, -dist + 1.0f), upVector);
+
+			root.render.SetTransform(TransformStage::View, view);
+
+			Math::Matrix proj;
+			proj.BuildProjection(45.0f * Math::Radian, 1.0f, 1.0f, 1000.0f);
+			root.render.SetTransform(TransformStage::Projection, proj);
+			
+			root.render.GetDevice()->SetRenderTarget(0, occluderRT);
+			root.render.GetDevice()->Clear(true, COLOR_WHITE, false, 1.0f);
+			root.render.ExecutePool(500, 0.0f);
+
+			Math::Vector4 params;
+
+			params.x = (float)i;
+			params.y =  1.0f / (float)shadowRT->GetHeight();
+
+			shadowCastTech->SetVector(ShaderType::Vertex, "shadowParams", &params, 1);
+
+			params.x = 1.0f / (float)occluderRT->GetWidth();
+			params.y = 1.0f / (float)occluderRT->GetHeight();
+
+			shadowCastTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+
+			root.render.GetDevice()->SetRenderTarget(0, shadowRT);
+			root.render.GetDevice()->SetDepth(nullptr);
+
+			Sprite::Draw(occluderRT, COLOR_WHITE, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, shadowCastTech);
+		}
+
+		root.render.SetTransform(TransformStage::View, curView);
+		root.render.SetTransform(TransformStage::Projection, curProj);
+
+		Sprite::_camPos = camPos;
+		Sprite::_zoom = zoom;
+	}
+
+	void DefferedLight::BlurSelfIlum()
+	{
+		BlurTexture(selfilumRT, selfilumRT, 0.75f);
+		BlurTexture(selfilumRT, selfilumRT, 0.75f);
+		BlurTexture(selfilumRT, selfilumRT, 0.75f);
+		BlurTexture(selfilumRT, selfilumRT, 0.75f);
+	}
+
+	void DefferedLight::RenderLights()
+	{
+		Math::Vector3 camPos = Sprite::GetCamPos();
+
+		Math::Vector4 u_lights[3 + 4 * MAX_LIGHTS];
+
+		u_lights[0] = { Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f, Sprite::GetPixelsHeight() * 0.5f, camPos.x, camPos.y };
+
+		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
+
+		u_lights[0] = { 0.72f, 1.0f, 1.0f, 0.1f };
+		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
+
+		auto halfScreenSize = Sprite::GetHalfScreenSize();
+
+		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
+
+		int index = 3;
+
+		int lightCount = 1;
+
+		u_lights[index + 0] = { cosf(directionalDir * Math::Radian), sinf(directionalDir * Math::Radian), 0.75f, -1.0f }; //pos, dir
+		u_lights[index + 1] = { directionalColor.r, directionalColor.g, directionalColor.b, directionalColor.a };
+
+		index += 4;
+
+		for (int i = 0; i < lights.size(); i++)
+		{
+			auto* light = lights[i];
+			auto trans = light->GetTransform();
+			auto pos = Sprite::ToPixels(trans.GetGlobal().Pos());
+			auto size = trans.size * 0.5f;
+
+			u_lights[index + 0] = { pos.x, pos.y, 150.0f, 1.0f }; //pos, dir
+			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
+			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, trans.rotation.z * Math::Radian, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
+			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , 0.0f, 0.0f }; //arc, width
+
+			index += 4;
+			lightCount++;
+		}
+
+		u_lights[1].w = (float)lightCount;
 
 		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 3 + 4 * lightCount);
 
@@ -293,10 +398,45 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Pixel, "params", u_lights, 1);
 		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 3 + 4 * lightCount);
+		
+		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
+		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);
+		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", selfilumRT);
+		defferdLightTech->SetTexture(ShaderType::Pixel, "shadowMap", shadowRT);
 
 		Sprite::Draw(albedoRT, ambientColor, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
 
-		//root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_WHITE, "Num lights %i", lightCount);
+		root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_WHITE, "Num lights %i", lightCount);
+	}
+
+	void DefferedLight::Draw(float dt)
+	{
+		if (!IsVisible())
+		{
+			return;
+		}
+
+		GatherLights();
+
+		root.render.GetDevice()->RestoreRenderTarget();
+
+		GenerateShadows();
+
+		BlurSelfIlum();
+
+		root.render.GetDevice()->RestoreRenderTarget();
+
+		RenderLights();
+
+		//root.render.DebugSprite(occluderRT, 10.0f, 100.0f);
+		//root.render.DebugSprite(shadowRT, {120.0f, 10.0f}, 100.0f);
+
+		//root.render.DebugSprite(albedoRT, 10.0f, 100.0f);
+		//root.render.DebugSprite(materialRT, {120.0f, 10.0f}, 100.0f);
+		//root.render.DebugSprite(normalRT, { 230.0f, 10.0f }, 100.0f);
+		//root.render.DebugSprite(selfilumRT, { 340.0f, 10.0f }, 100.0f);
+
+		//Sprite::Draw(shadowRT, COLOR_WHITE_A(0.5f), Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, shadowRenderTech);
 
 		hackStateEnabled = false;
 	}

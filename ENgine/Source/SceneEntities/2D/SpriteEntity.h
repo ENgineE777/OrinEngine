@@ -33,6 +33,7 @@ namespace Orin
 		void Init() override;
 		void ApplyProperties() override;
 		void Draw(float dt);
+		void DrawOccluder(float dt);
 	#endif
 	};
 }

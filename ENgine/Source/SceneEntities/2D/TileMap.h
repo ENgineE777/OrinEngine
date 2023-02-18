@@ -52,6 +52,7 @@ namespace Orin
 
 		void ApplyProperties() override;
 		void Draw(float dt);
+		void DrawOccluders(float dt);
 
 		void Load(JsonReader& reader) override;
 		void Save(JsonWriter& writer) override;

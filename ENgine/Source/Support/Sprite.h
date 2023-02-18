@@ -17,6 +17,7 @@ namespace Orin
 		friend class Editor;
 		friend class FreeCamera;
 		friend class Camera2D;
+		friend class DefferedLight;
 
 #ifndef DOXYGEN_SKIP
 		static float _pixelsPerUnit;

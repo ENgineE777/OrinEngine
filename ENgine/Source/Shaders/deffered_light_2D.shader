@@ -6,9 +6,15 @@
 static const float3 dielectric      = float3(0.4f.xxx); 
 static const float3 v_norm          = float3(0.0, 0.0, 1.0);
 
+cbuffer vs_params : register(b0)
+{
+	float4 shadowParams;
+};
+
 cbuffer ps_params : register( b0 )
 {
 	float4 color;
+	matrix normalTrans;
 	float4 params;
 	float4 u_lights[3 + 4 * 32];
 };
@@ -35,6 +41,10 @@ SamplerState normalsLinear : register(s2);
 
 Texture2D selfilumMap : register(t3);
 SamplerState selfilumLinear : register(s3);
+
+Texture2D shadowMap : register(t4);
+SamplerState shadowLinear : register(s4);
+
 
 struct PS_GBUFFER_OUTPUT
 {
@@ -94,7 +104,14 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
     output.color = clr;
 	float4 material = materialMap.Sample(materialLinear, input.texCoord);
     output.material = material;
-    output.normals = normalsMap.Sample(normalsLinear, input.texCoord);
+	output.material.g = params.x;
+
+	float4 normal = normalsMap.Sample(normalsLinear, input.texCoord);
+	float3 f_norm = normalize(normal.rgb * 2.0f - 1.0f);
+	normal = mul(float4(f_norm.xyz, 1.0f), normalTrans);
+	f_norm = normal.rgb * 0.5f + 0.5f;
+
+    output.normals = float4(f_norm.rgb, 1.0f);
 	output.selfilum = float4(clr.rgb * material.b * clr.a, 1.0f);
 
     return output;
@@ -110,6 +127,96 @@ PS_INPUT VS_DEFFERED_LIGHT( VS_INPUT input )
     output.texCoord = float2(input.position.x, input.position.y);
 	
 	return output;
+}
+
+PS_INPUT VS_CAST_SHADOW(VS_INPUT input)
+{
+	float cell = (shadowParams.x + input.position.y) * shadowParams.y;
+
+	float4 posTemp = float4(input.position.x * 2.0f - 1.0f, -cell * 2.0f + 1.0f, 0, 1.0f);
+
+	PS_INPUT output = (PS_INPUT)0;
+
+	output.pos = float4(posTemp.x, posTemp.y, 0.0f, 1.0f);
+	output.texCoord = float2(input.position.x, input.position.y);
+
+	return output;
+}
+
+float PS_CAST_SHADOW(PS_INPUT input) : SV_Target
+{
+	float2 start_pos = float2(0.5f, 0.5f);
+	float angle = M_PI_2 * input.texCoord.x * 4.0f - M_PI;
+	float2 end_pos = start_pos + float2(cos(angle), sin(angle)) * 0.5f;
+	
+	float2 delta = end_pos - start_pos;
+
+	int steps = (int)(abs(delta.x) > abs(delta.y) ? abs(delta.x / params.x) : abs(delta.y / params.y));
+
+	delta = delta / (float)steps;
+
+	float2 curPoint = start_pos;
+
+	for (int i = 0; i <= steps; i++)
+	{	
+		float4 clr = diffuseMap.SampleLevel(diffuseLinear, curPoint, 0) * color;
+
+		if (clr.r < 0.1f)
+		{
+			break;
+		}
+
+		curPoint += delta;		
+	}
+
+	return length(start_pos - curPoint);
+}
+
+float shadowSample(float2 coord, float r)
+{
+	return step(r, diffuseMap.SampleLevel(diffuseLinear, coord, 0).r);
+}
+
+float4 PS_RENDER_SHADOW(PS_INPUT input) : SV_Target
+{
+	float2 norm = input.texCoord - float2(0.5f, 0.5f);
+	float theta = atan2(norm.y, norm.x);
+	float r = min(length(norm), 0.5f);
+	float coord = (theta + M_PI) / (2.0f * M_PI);
+	
+	float2 tc = float2(coord, 0.0f);
+
+	//the center tex coord, which gives us hard shadows
+	float center = shadowSample(tc, r);
+
+	//we multiply the blur amount by our distance from center
+	//this leads to more blurriness as the shadow "fades away"
+	float blur = (1.0f / 360.0f) * smoothstep(0.0f, 1.0f, r * 2.0f);
+
+	//now we use a simple gaussian blur
+	float sum = 0.0;
+
+	sum += shadowSample(float2(tc.x - 4.0 * blur, tc.y), r) * 0.05;
+	sum += shadowSample(float2(tc.x - 3.0 * blur, tc.y), r) * 0.09;
+	sum += shadowSample(float2(tc.x - 2.0 * blur, tc.y), r) * 0.12;
+	sum += shadowSample(float2(tc.x - 1.0 * blur, tc.y), r) * 0.15;
+
+	sum += center * 0.16;
+
+	sum += shadowSample(float2(tc.x + 1.0 * blur, tc.y), r) * 0.15;
+	sum += shadowSample(float2(tc.x + 2.0 * blur, tc.y), r) * 0.12;
+	sum += shadowSample(float2(tc.x + 3.0 * blur, tc.y), r) * 0.09;
+	sum += shadowSample(float2(tc.x + 4.0 * blur, tc.y), r) * 0.05;
+
+	//1.0 -> in light, 0.0 -> in shadow
+	float shadow = sum * smoothstep(1.0f, 0.0f, r * 2.0f);	
+
+	return float4(shadow, shadow, shadow, 1.0f) * color;
+}
+
+float shadowMapSample(float2 coord, float r)
+{
+	return step(r, shadowMap.SampleLevel(shadowLinear, coord, 0).r);
 }
 
 float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
@@ -173,9 +280,8 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float intensity = u_lights[index].w;
 		index++;
 
-		float light_depth = u_lights[index].x;
-
-		float falloff = u_lights[index].y * intensity;
+		float cast_shadow = u_lights[index].x;
+		float falloff = u_lights[index].y;
 		float angle = u_lights[index].z;
 		float radius = u_lights[index].w;
 		index++;
@@ -187,7 +293,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		// LINE LIGHT
 		if (width > 0.0)
 		{
-			float2 line_light = float2(width * sin(-angle), width * cos(-angle));
+			float2 line_light = float2(width * sin(angle), width * cos(angle));
 			width *= width;
 			float pos = line_light.x * (world_pos.x - light_pos.x) + line_light.y * (world_pos.y - light_pos.y);
 			float t = clamp(pos, -width, width) / width;
@@ -199,23 +305,43 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float3 l_norm = normalize(light_pos + world_pos * directional - world_pos);
 		float3 h_norm = normalize(v_norm + l_norm);
 		float FdotL = max(dot(f_norm, l_norm), 0.0f);
+
+		if (directional < 0.5f && material.g > 0.5f)
+		{
+			FdotL *= FdotL > 0.9f ? 1.55f : 0.6f;
+		}
+
 		float fov = 1.0;
+
+		float ligthRadius = radius;
 
 		// FOV ARC
 		if (arc <= M_PI)
 		{
-			float angle_diff = abs(fmod(angle - atan2(l_norm.y, -l_norm.x) + M_3PI, M_2PI) - M_PI);
+			float angle_diff = abs(fmod(-angle - atan2(l_norm.y, -l_norm.x) + M_3PI, M_2PI) - M_PI);
 			radius = radius / max(0.0000001, abs(cos(angle_diff)));
 			fov = smoothstep(arc, 0.0, angle_diff);
 		}
 
 		// ATTENUATION
-		float dist = length(light_pos.xy - world_pos.xy);
-		float det = step(dist * sign(falloff), radius);
+		float2 dir = world_pos.xy - light_pos.xy;
+		dir.y = -dir.y;
+		float dist = min(length(dir), radius) / radius;
+
+		dist = dist < falloff ? 0.0f : smoothstep(0.0f, 1.0f, (dist - falloff)/ (1.0f - falloff));
+
+		if (material.g > 0.5f)
+		{
+			dist = clamp(dist, 0.375, 1.0f);
+		}
+
+		//float det = step(dist * sign(falloff), radius);
 		//dist = dist * intensity / (radius * abs(falloff)) + intensity;
 		//float attenuation = det / (dist * dist) * fov;
 		//float attenuation = max((intensity) * directional, (1.0 - directional) * det / (dist * dist) * fov);
-		float attenuation = max( intensity* directional, (1.0f - min(dist, radius) / radius) * fov * intensity);
+		float k = (1.0f - dist);
+		float attenuation = max( intensity * directional, (1.0f - dist) * fov * intensity);
+
 
 		//if (attenuation > 0.25)
 		//{
@@ -232,6 +358,42 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		//float bit = get_bit(shadow[i / 8], i % 8);
 		//attenuation *= max(1.0 - bit * 0.998, ceil(blend)) * float(light_depth >= blend);
 
+		float shadow = 1.0f;
+
+		if (cast_shadow > -0.5f && material.g < 0.5f)
+		{
+			float theta = atan2(dir.y, dir.x);
+			float r = 0.5f * min(length(dir), ligthRadius) / ligthRadius;
+			float coord = (theta + M_PI) / (2.0f * M_PI);
+
+			float2 tc = float2(coord, (cast_shadow + 0.5f) / 32.0f);
+
+			//the center tex coord, which gives us hard shadows
+			float center = shadowMapSample(tc, r);
+
+			//we multiply the blur amount by our distance from center
+			//this leads to more blurriness as the shadow "fades away"
+			float blur = (1.0f / 360.0f) * smoothstep(0.0f, 1.0f, r * 2.0f);
+
+			//now we use a simple gaussian blur
+			shadow = 0.0;
+
+			shadow += shadowMapSample(float2(tc.x - 4.0 * blur, tc.y), r) * 0.05;
+			shadow += shadowMapSample(float2(tc.x - 3.0 * blur, tc.y), r) * 0.09;
+			shadow += shadowMapSample(float2(tc.x - 2.0 * blur, tc.y), r) * 0.12;
+			shadow += shadowMapSample(float2(tc.x - 1.0 * blur, tc.y), r) * 0.15;
+
+			shadow += center * 0.16;
+
+			shadow += shadowMapSample(float2(tc.x + 1.0 * blur, tc.y), r) * 0.15;
+			shadow += shadowMapSample(float2(tc.x + 2.0 * blur, tc.y), r) * 0.12;
+			shadow += shadowMapSample(float2(tc.x + 3.0 * blur, tc.y), r) * 0.09;
+			shadow += shadowMapSample(float2(tc.x + 4.0 * blur, tc.y), r) * 0.05;
+			
+			//1.0 -> in light, 0.0 -> in shadow
+			//shadow = sum * smoothstep(1.0f, 0.0f, r * 2.0f);
+		}
+
 		// PBR LIGHTING
 		float3 freq = fresnel(max(dot(h_norm, v_norm), 0.0), mat_ref);
 		float3 numerator = distribution(f_norm, h_norm, roughness) * reflection(FdotL, roughness) * r_norm * freq;
@@ -240,7 +402,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 
 		// ADD TO FINAL COLOR
-		outColor += radiance * attenuation *FdotL* (refraction * albedo / M_PI + specular) * 5.0f + ao * min(attenuation, 0.3);
+		outColor += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) * 5.0f * shadow + ao * min(attenuation, 0.3);
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR

@@ -28,6 +28,7 @@ namespace Orin
 		float intesity = 1.0f;
 		float lineWidth = 0.0f;
 		float viewAngle = 181.0f;
+		bool castShadow = false;
 		RenderTechniqueRef spriteLight;
 
 	#ifndef DOXYGEN_SKIP

@@ -37,6 +37,7 @@ namespace Orin
 #endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&SpriteEntity::Draw);
+		Tasks(true)->AddTask(500, this, (Object::Delegate)&SpriteEntity::DrawOccluder);
 	}
 
 	void SpriteEntity::Draw(float dt)
@@ -49,6 +50,16 @@ namespace Orin
 				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", normal ? normal.Get()->texture : nullptr);
 
 				texture.prg = DefferedLight::gbufferTech;
+
+				Math::Matrix mat = transform.GetGlobal();
+				mat.Pos() = 0.0f;
+
+				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
+
+				Math::Vector4 params;
+				params.x = 1.0f;
+
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
 			}
 			else
 			{
@@ -56,6 +67,15 @@ namespace Orin
 			}
 
 			texture.Draw(&transform, color, dt);
+		}
+	}
+
+	void SpriteEntity::DrawOccluder(float dt)
+	{
+		if (IsVisible() && drawLevel < 8)
+		{
+			texture.prg = Sprite::quadPrgNoZ;
+			texture.Draw(&transform, COLOR_BLACK, 0.0f);
 		}
 	}
 }

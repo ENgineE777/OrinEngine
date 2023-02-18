@@ -31,8 +31,9 @@ namespace Orin
 		COLOR_PROP(PointLight2D, color, COLOR_WHITE, "Visual", "Color")
 		FLOAT_PROP(PointLight2D, falloff, -1.0f, "Visual", "falloff", "falloff")
 		FLOAT_PROP(PointLight2D, intesity, 1.0f, "Visual", "intesity", "intesity")
-		FLOAT_PROP(PointLight2D, lineWidth, 0.0f, "Visual", "lineWidth", "lineWidth")
-		FLOAT_PROP(PointLight2D, viewAngle, 181.0f, "Visual", "viewAngle", "viewAngle")
+		FLOAT_PROP(PointLight2D, lineWidth, 0.0f, "Visual", "Line Width", "Line Width")
+		FLOAT_PROP(PointLight2D, viewAngle, 181.0f, "Visual", "View Angle", "View Angle")
+		BOOL_PROP(PointLight2D, castShadow, false, "Visual", "Cast Shadow", "View Angle")
 	META_DATA_DESC_END()
 
 	PointLight2D::PointLight2D() : SceneEntity()
@@ -66,7 +67,7 @@ namespace Orin
 			auto pos = Sprite::ToPixels(transform.GetGlobal().Pos());
 			float scale = 640.0f / Sprite::GetPixelsHeight();
 
-			auto size = Math::Vector2((float)editorDrawer.lightBulbTex->GetWidth(), (float)editorDrawer.lightBulbTex->GetHeight()) / scale;			
+			auto size = Math::Vector2((float)editorDrawer.lightBulbTex->GetWidth(), (float)editorDrawer.lightBulbTex->GetHeight()) / scale;
 
 			editorDrawer.DrawSprite(editorDrawer.lightBulbTex, Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, -size.y) * 0.5f, size, 0.0f, 0.0f, COLOR_WHITE);
 		}

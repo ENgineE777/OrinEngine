@@ -57,4 +57,10 @@ fxc /E VS /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\drawLightMap2D
 fxc /E PS_AMBIENT /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\drawAmbient2D_ps.shd drawLightMap2D.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\drawLightMap2D_ps.shd drawLightMap2D.shader
 
+fxc /E VS_CAST_SHADOW /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\cast_shadow_vs.shd deffered_light_2D.shader
+fxc /E PS_CAST_SHADOW /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\cast_shadow_ps.shd deffered_light_2D.shader
+fxc /E PS_RENDER_SHADOW /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\render_shadow_ps.shd deffered_light_2D.shader
+
+
+
 pause

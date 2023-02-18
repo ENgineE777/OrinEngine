@@ -83,6 +83,8 @@ namespace Orin
 	#endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&TileMap::Draw);
+
+		Tasks(true)->AddTask(500, this, (Object::Delegate)&TileMap::DrawOccluders);
 	}
 
 	void TileMap::OnVisiblityChange(bool state)
@@ -167,6 +169,16 @@ namespace Orin
 				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
 				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", tileSet->normal ? tileSet->normal.Get()->texture : nullptr);
 
+				Math::Matrix mat;
+				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
+
+				Math::Vector4 params;
+				params.x = 0.0f;
+
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+
+				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
+
 				tech = DefferedLight::gbufferTech;
 			}
 
@@ -204,6 +216,32 @@ namespace Orin
 									  { (tile.x + 1) * transform.size.x, (tile.y - 1) * transform.size.y }, COLOR_WHITE);
 				}
 			}
+		}
+	}
+
+	void TileMap::DrawOccluders(float dt)
+	{
+		auto trans = transform;
+
+		Math::Matrix mat = trans.GetGlobal();
+		auto pos = Sprite::ToPixels(mat.Pos());
+
+		for (auto& tile : tiles)
+		{
+			if (!tile.texture.HasCollision())
+			{
+				continue;
+			}
+
+			mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
+
+			trans.SetGlobal(mat);
+			auto sz = tile.texture.GetSize();
+			trans.size.x = sz.x;
+			trans.size.y = sz.y;
+
+			tile.texture.prg = Sprite::quadPrgNoZ;
+			tile.texture.Draw(&trans, COLOR_BLACK, dt);
 		}
 	}
 

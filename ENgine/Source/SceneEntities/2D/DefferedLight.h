@@ -18,6 +18,9 @@ namespace Orin
 		TextureRef materialRT;
 		TextureRef normalRT;
 		TextureRef selfilumRT;
+		TextureRef occluderRT;
+
+		TextureRef shadowRT;
 
 		VertexDeclRef vdecl;
 		DataBufferRef buffer;
@@ -30,14 +33,23 @@ namespace Orin
 
 		float metallic = 0.25f;
 
+		constexpr static int MAX_LIGHTS = 32;
+
 		static bool hackStateEnabled;
 		static RenderTechniqueRef gbufferTech;
 		RenderTechniqueRef blurRTech;
 
+		eastl::vector<class PointLight2D*> lights;
+		RenderTechniqueRef shadowCastTech;
+		RenderTechniqueRef shadowRenderTech;
 		RenderTechniqueRef defferdLightTech;
 
 		float ComputeGaussian(float n);
 		void BlurTexture(TextureRef src, TextureRef dest, float blurStrength);
+		void GatherLights();
+		void GenerateShadows();
+		void BlurSelfIlum();
+		void RenderLights();
 
 	public:
 

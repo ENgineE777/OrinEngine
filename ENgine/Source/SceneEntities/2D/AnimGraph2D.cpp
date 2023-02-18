@@ -30,6 +30,7 @@ namespace Orin
 #endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&AnimGraph2D::Draw);
+		Tasks(true)->AddTask(500, this, (Object::Delegate)&AnimGraph2D::DrawOccluder);
 	}
 
 	void AnimGraph2D::Draw(float dt)
@@ -39,6 +40,16 @@ namespace Orin
 			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
 			{
 				anim.prg = DefferedLight::gbufferTech;
+
+				Math::Matrix mat = transform.GetGlobal();
+				mat.Pos() = 0.0f;
+
+				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
+
+				Math::Vector4 params;
+				params.x = 1.0f;
+
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
 			}
 			else
 			{
@@ -46,6 +57,15 @@ namespace Orin
 			}
 
 			anim.Draw(&transform, color, dt);
+		}
+	}
+
+	void AnimGraph2D::DrawOccluder(float dt)
+	{
+		if (IsVisible() && anim.Get() && drawLevel < 8)
+		{
+			anim.prg = Sprite::quadPrgNoZ;
+			anim.Draw(&transform, COLOR_BLACK, 0.0f);
 		}
 	}
 }
