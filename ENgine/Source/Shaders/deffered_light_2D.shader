@@ -318,7 +318,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		// FOV ARC
 		if (arc <= M_PI)
 		{
-			float angle_diff = abs(fmod(-angle - atan2(l_norm.y, -l_norm.x) + M_3PI, M_2PI) - M_PI);
+			float angle_diff = abs(fmod( angle - atan2(l_norm.y, -l_norm.x) + M_3PI, M_2PI) - M_PI);
 			radius = radius / max(0.0000001, abs(cos(angle_diff)));
 			fov = smoothstep(arc, 0.0, angle_diff);
 		}
@@ -360,7 +360,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		float shadow = 1.0f;
 
-		if (cast_shadow > -0.5f && material.g < 0.5f)
+		if (directional < 0.5f && cast_shadow > -0.5f && material.g < 0.5f)
 		{
 			float theta = atan2(dir.y, dir.x);
 			float r = 0.5f * min(length(dir), ligthRadius) / ligthRadius;
@@ -389,7 +389,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 			shadow += shadowMapSample(float2(tc.x + 2.0 * blur, tc.y), r) * 0.12;
 			shadow += shadowMapSample(float2(tc.x + 3.0 * blur, tc.y), r) * 0.09;
 			shadow += shadowMapSample(float2(tc.x + 4.0 * blur, tc.y), r) * 0.05;
-			
+
 			//1.0 -> in light, 0.0 -> in shadow
 			//shadow = sum * smoothstep(1.0f, 0.0f, r * 2.0f);
 		}

@@ -29,7 +29,7 @@ namespace Orin
 	META_DATA_DESC(PointLight2D)
 		BASE_SCENE_ENTITY_PROP(PointLight2D)
 		COLOR_PROP(PointLight2D, color, COLOR_WHITE, "Visual", "Color")
-		FLOAT_PROP(PointLight2D, falloff, -1.0f, "Visual", "falloff", "falloff")
+		FLOAT_PROP(PointLight2D, falloff, 0.0f, "Visual", "falloff", "falloff")
 		FLOAT_PROP(PointLight2D, intesity, 1.0f, "Visual", "intesity", "intesity")
 		FLOAT_PROP(PointLight2D, lineWidth, 0.0f, "Visual", "Line Width", "Line Width")
 		FLOAT_PROP(PointLight2D, viewAngle, 181.0f, "Visual", "View Angle", "View Angle")
@@ -60,6 +60,7 @@ namespace Orin
 			return;
 		}
 
+		falloff = Math::Clamp(falloff, 0.0f, 1.0f);
 		transform.size.y = transform.size.x;
 
 		if (IsVisible())
