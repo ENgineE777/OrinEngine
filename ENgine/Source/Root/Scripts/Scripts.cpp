@@ -110,6 +110,8 @@ namespace Orin
 	{
 		HMODULE newModule = LoadLibraryA(path);
 
+		root.crashHandler.LoadDebugInfo(path);
+
 		if (newModule)
 		{
 			AssetRef selectedEditAsset;
@@ -156,10 +158,13 @@ namespace Orin
 					}
 				}
 
-				FreeLibrary((HMODULE)Module);
-
 				char tmpname[256];
 				StringUtils::Printf(tmpname, 256, "%sGameplay_%s.rcpp%i.dll", root.GetPath(Root::Path::Binaries), configName.c_str(), 1 - pingPong);
+
+				root.crashHandler.UnloadDebugInfo(tmpname);
+
+				FreeLibrary((HMODULE)Module);
+
 				DeleteFileA(tmpname);
 			}
 
