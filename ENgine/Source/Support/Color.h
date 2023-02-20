@@ -82,6 +82,11 @@ namespace Orin
 			Set(R,G,B,A);
 		};
 
+		Color(int R, int G, int B, int A)
+		{
+			Set(R, G, B, A);
+		};
+
 		void Set(float R, float G, float B, float A)
 		{
 			r = R;
@@ -92,11 +97,19 @@ namespace Orin
 
 		void Set(uint32_t color)
 		{
-			a = (color >> 24) / 255.0f;
-			b = ((color >> 16) & 0xff) / 255.0f;
-			g = ((color >> 8) & 0xff) / 255.0f;
-			r = ((color) & 0xff) / 255.0f;	
+			a = (float)(color >> 24) / 255.0f;
+			b = (float)((color >> 16) & 0xff) / 255.0f;
+			g = (float)((color >> 8) & 0xff) / 255.0f;
+			r = (float)((color) & 0xff) / 255.0f;
 		};
+
+		void Set(int R, int G, int B, int A)
+		{
+			r = (float)R / 255.0f;
+			g = (float)G / 255.0f;
+			b = (float)B / 255.0f;
+			a = (float)A / 255.0f;
+		}
 
 		uint32_t Get(bool revert = false)
 		{
