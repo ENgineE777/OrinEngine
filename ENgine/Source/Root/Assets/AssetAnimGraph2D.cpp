@@ -884,14 +884,12 @@ namespace Orin
 
 	Math::Vector2 AssetAnimGraph2DRef::GetSize()
 	{
-		Math::Vector2 size(50.0f);
+		return curTexture.Get() ? curTexture.GetSize() : 50.0f;
+	}
 
-		if (curTexture.Get())
-		{
-			size = curTexture.GetSize();
-		}
-
-		return size;
+	Math::Vector2 AssetAnimGraph2DRef::GetFrameOffset()
+	{
+		return curTexture.Get() ? curTexture.GetFrameOffset() : 0.0f;
 	}
 
 	void AssetAnimGraph2DRef::LoadData(JsonReader& loader, const char* name)

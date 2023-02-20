@@ -424,6 +424,26 @@ namespace Orin
 		return slice.size;
 	}
 
+	Math::Vector2 AssetTextureRef::GetFrameOffset()
+	{
+		if (!Get())
+		{
+			return 0.0f;
+		}
+
+		if (animIndex != -1 && animIndex < Get()->animations.size())
+		{
+			auto& anim = Get()->animations[animIndex];
+
+			if (anim.frames.size() > 0)
+			{
+				return anim.frames[animPlayFrame].offset;
+			}
+		}
+
+		return 0.0f;
+	}
+
 	bool AssetTextureRef::HasCollision()
 	{
 		if (!Get())

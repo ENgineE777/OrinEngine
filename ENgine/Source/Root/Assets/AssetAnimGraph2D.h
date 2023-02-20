@@ -152,6 +152,7 @@ namespace Orin
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 
 		Math::Vector2 GetSize();
+		Math::Vector2 GetFrameOffset();
 
 		void LoadData(JsonReader& loader, const char* name);
 

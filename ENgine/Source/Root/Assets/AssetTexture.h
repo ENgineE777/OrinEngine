@@ -113,6 +113,7 @@ namespace Orin
 		void SetupCreatedSceneEntity(SceneEntity* entity);
 
 		Math::Vector2 GetSize();
+		Math::Vector2 GetFrameOffset();
 		bool HasCollision();
 		int  GetPhysGroup();
 
