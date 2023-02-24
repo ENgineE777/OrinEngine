@@ -64,7 +64,16 @@ namespace Orin
 	{
 		retPairFlags = PxPairFlag::eSOLVE_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
 
-		if (!(filterData0.word0 & filterData1.word1))
+		PxU32 group0 = filterData0.word1 != filterData0.word0 ? filterData0.word1 : filterData0.word0;
+		PxU32 group1 = filterData1.word1 != filterData1.word0 ? filterData1.word1 : filterData1.word0;
+
+		if (filterData0.word1 != filterData0.word0 && filterData1.word1 != filterData1.word0)
+		{
+			group0 = filterData0.word0;
+			group1 = filterData1.word1;
+		}
+
+		if (!(group0 & group1))
 		{
 			return PxFilterFlag::eKILL;
 		}
