@@ -31,6 +31,9 @@ namespace Orin
 		PxControllerManager* manager = nullptr;
 		bool inPhysUpdate = false;
 
+		static void SetShapeGroup(PxShape* shape, uint32_t group, uint32_t collideGroup);		
+		PhysObject* CreatePhysObject(const PxGeometry& geometry, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+
 	public:
 
 		/**
@@ -100,7 +103,34 @@ namespace Orin
 
 		\return Pointer to physical object
 		*/
-		PhysObject* CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group);
+		PhysObject* CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+
+		/**
+		\brief Create a physical sphere in a scene
+
+		\param[in] radius Radius of a sphere
+		\param[in] trans Transformation of a sphere
+		\param[in] offset Offset of a orgin in local space
+		\param[in] type Type of a body
+		\param[in] group Belonging to a physical group
+
+		\return Pointer to physical object
+		*/
+		PhysObject* CreateSphere(float radius, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+
+		/**
+		\brief Create a physical capsule in a scene
+
+		\param[in] radius Radius of a capsule
+		\param[in] height Height of a capsule
+		\param[in] trans Transformation of a capsule
+		\param[in] offset Offset of a orgin in local space
+		\param[in] type Type of a body
+		\param[in] group Belonging to a physical group
+
+		\return Pointer to physical object
+		*/
+		PhysObject* CreateCapsule(float radius, float height, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
 
 		/**
 		\brief Create a character controller in a scene
@@ -160,14 +190,6 @@ namespace Orin
 
 		void Simulate(float dt);
 		void FetchResults();
-
-		inline static void SetShapeGroup(PxShape* shape, uint32_t group)
-		{
-			PxFilterData data;
-			data.word0 = group;
-			shape->setSimulationFilterData(data);
-			shape->setQueryFilterData(data);
-		}
 
 		void Release();
 

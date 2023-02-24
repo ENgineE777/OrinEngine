@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "SceneEntities/3D/PhysTriger3D.h"
+#include "SceneEntities/Physics/3D/PhysTriger3D.h"
 
 namespace Orin
 {

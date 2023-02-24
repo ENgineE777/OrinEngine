@@ -75,7 +75,27 @@ namespace Orin
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 
-		PhysScene::SetShapeGroup(shape, group);
+		PhysScene::SetShapeGroup(shape, group, collideGroup);
+	}
+
+	int PhysObject::GetCollideGroup()
+	{
+		return collideGroup;
+	}
+
+	void PhysObject::SetCollideGroup(int setGroup)
+	{
+		if (scene->inPhysUpdate)
+		{
+			root.Log("Physics", "Can't call SetGroup for phys object during phys update");
+			return;
+		}
+
+		group = setGroup;
+		PxShape* shape;
+		actor->getShapes(&shape, 1);
+
+		PhysScene::SetShapeGroup(shape, group, collideGroup);
 	}
 
 	void PhysObject::SetTransform(Math::Matrix& mat)

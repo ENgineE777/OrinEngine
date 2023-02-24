@@ -155,6 +155,15 @@
     <Filter Include="Source\Shaders">
       <UniqueIdentifier>{d911a5ea-c7f1-4f5c-826a-644be1f5df8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\SceneEntities\Physics">
+      <UniqueIdentifier>{3938847b-2885-4343-91a3-ee97069cdf04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SceneEntities\Physics\2D">
+      <UniqueIdentifier>{38e3723c-4b1b-410b-bce4-95dd5f2eddf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\SceneEntities\Physics\3D">
+      <UniqueIdentifier>{006df1aa-174d-48db-a3f5-f967540fd080}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Support\Timer.cpp">
@@ -664,15 +673,6 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\KinematicCapsule3D.cpp">
       <Filter>Source\SceneEntities\3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\SceneEntities\3D\PhysBox3D.cpp">
-      <Filter>Source\SceneEntities\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysBox2D.cpp">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\SceneEntities\2D\KinematicCapsule2D.cpp">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
@@ -709,12 +709,6 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.cpp">
-      <Filter>Source\SceneEntities\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.cpp">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_demo.cpp">
       <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
@@ -735,6 +729,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\DefferedLight.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\3D\PhysBox3D.cpp">
+      <Filter>Source\SceneEntities\Physics\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\3D\PhysTriger3D.cpp">
+      <Filter>Source\SceneEntities\Physics\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\KinematicCapsule2D.cpp">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\PhysEntity2D.cpp">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\PhysTriger2D.cpp">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\PhysEntityBase.cpp">
+      <Filter>Source\SceneEntities\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1326,15 +1338,6 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\KinematicCapsule3D.h">
       <Filter>Source\SceneEntities\3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysBox3D.h">
-      <Filter>Source\SceneEntities\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PhysBox2D.h">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\SceneEntities\2D\KinematicCapsule2D.h">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.h">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
@@ -1368,12 +1371,6 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.h">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\SceneEntities\3D\PhysTriger3D.h">
-      <Filter>Source\SceneEntities\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PhysTriger2D.h">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Support\Perforce.h">
       <Filter>Source\Support</Filter>
     </ClInclude>
@@ -1385,6 +1382,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\DefferedLight.h">
       <Filter>Source\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\3D\PhysBox3D.h">
+      <Filter>Source\SceneEntities\Physics\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\3D\PhysTriger3D.h">
+      <Filter>Source\SceneEntities\Physics\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\KinematicCapsule2D.h">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\PhysEntity2D.h">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\PhysTriger2D.h">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\PhysEntityBase.h">
+      <Filter>Source\SceneEntities\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

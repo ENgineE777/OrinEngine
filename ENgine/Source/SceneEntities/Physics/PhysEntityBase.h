@@ -1,7 +1,8 @@
 
 #pragma once
 
-#include "SceneEntities/3D/PhysBox3D.h"
+#include "Root/Scenes/SceneEntity.h"
+#include "Root/Physics/PhysScene.h"
 
 namespace Orin
 {
@@ -39,20 +40,63 @@ namespace Orin
 
 	*/
 
-	class CLASS_DECLSPEC PhysBox2D : public PhysBox3D
+	class CLASS_DECLSPEC PhysEntityBase : public SceneEntity
 	{
+	protected:
+
+		uint32_t physGroup;
+
+		uint32_t physCollideGroup;
+
+		/**
+		\brief Color of a box.
+		*/
+
+		Color color;
+
+		/**
+			\brief Visualize box during play
+		*/
+		bool visibleDuringPlay;
+
+		/**
+			\brief Affecting on parent
+		*/
+		bool affectOnParent = false;
+
 	public:
 
-	#ifndef DOXYGEN_SKIP
+#ifndef DOXYGEN_SKIP
 
-		META_DATA_DECL(PhysBox2D)
+		enum class BodyType
+		{
+			Static = 0,
+			Dynamic = 1,
+			DynamicCCD = 2,
+			Kinematic = 3,
+			Trigger = 4
+		};
 
-		virtual ~PhysBox2D() = default;
+		BodyType bodyType;
 
-		void Init() override;
-		void Play() override;
-		void Draw(float dt) override;
+		enum class BodyShape
+		{
+			Box = 0,
+			Sphere = 1,
+			Capsule = 2
+		};
 
-	#endif
+		BodyShape bodyShape;
+
+		PhysScene::BodyUserData body;
+
+		virtual ~PhysEntityBase() = default;
+
+		void ApplyProperties() override;
+
+		void OnVisiblityChange(bool set) override;
+
+		void Release() override;
+#endif
 	};
 }

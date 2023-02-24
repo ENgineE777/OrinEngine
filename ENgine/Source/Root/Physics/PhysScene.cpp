@@ -5,7 +5,16 @@
 
 namespace Orin
 {
-	PhysObject* PhysScene::CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group)
+	void PhysScene::SetShapeGroup(PxShape* shape, uint32_t group, uint32_t collideGroup)
+	{
+		PxFilterData data;
+		data.word0 = group;
+		data.word1 = collideGroup;
+		shape->setSimulationFilterData(data);
+		shape->setQueryFilterData(data);
+	}
+
+	PhysObject* PhysScene::CreatePhysObject(const PxGeometry& geometry, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup)
 	{
 		if (inPhysUpdate)
 		{
@@ -18,6 +27,7 @@ namespace Orin
 		obj->scene = this;
 		obj->body_type = type;
 		obj->group = group;
+		obj->collideGroup = collideGroup;
 
 		PxReal density = 1.0f;
 
@@ -25,9 +35,6 @@ namespace Orin
 
 		PxTransform transform(PxVec3(trans.Pos().x, trans.Pos().y, trans.Pos().z), PxQuat(q.x, q.y, q.z, q.w));
 
-		PxVec3 dimensions(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
-
-		PxBoxGeometry geometry(dimensions);
 		PxShape* shape;
 
 		if (type == PhysObject::Static || type == PhysObject::Trigger)
@@ -68,9 +75,31 @@ namespace Orin
 		}
 
 		scene->addActor(*obj->actor);
-		SetShapeGroup(shape, group);
+		SetShapeGroup(shape, group, collideGroup);
 
 		return obj;
+	}
+
+	PhysObject* PhysScene::CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup)
+	{
+		PxVec3 dimensions(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+		PxBoxGeometry geometry(dimensions);
+
+		return CreatePhysObject(geometry, trans, offset, type, group, collideGroup);
+	}
+
+	PhysObject* PhysScene::CreateSphere(float radius, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup)
+	{
+		PxSphereGeometry geometry(radius);
+
+		return CreatePhysObject(geometry, trans, offset, type, group, collideGroup);
+	}
+
+	PhysObject* PhysScene::CreateCapsule(float radius, float height, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup)
+	{
+		PxCapsuleGeometry geometry(radius, height * 0.5f);
+
+		return CreatePhysObject(geometry, trans, offset, type, group, collideGroup);
 	}
 
 	PhysController* PhysScene::CreateController(PhysControllerDesc& desc, uint32_t group)
@@ -105,7 +134,7 @@ namespace Orin
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 
-		SetShapeGroup(shape, group);
+		SetShapeGroup(shape, group, group);
 
 		return controller;
 	}
@@ -137,7 +166,7 @@ namespace Orin
 
 				PxHeightFieldGeometry hfGeom(hm->heightField, PxMeshGeometryFlags(), scale.y, scale.x, scale.x);
 				PxShape* shape = root.physics.physics->createShape(hfGeom, *root.physics.defMaterial, true);
-				SetShapeGroup(shape, group);
+				SetShapeGroup(shape, group, group);
 				shape->setFlag(PxShapeFlag::Enum::eVISUALIZATION, false);
 				hm->actor->attachShape(*shape);
 

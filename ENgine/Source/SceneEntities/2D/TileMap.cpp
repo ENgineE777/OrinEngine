@@ -116,7 +116,7 @@ namespace Orin
 
 			mat.Pos() += Sprite::ToUnits(mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y);
 
-			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, tile.texture.GetPhysGroup());
+			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, tile.texture.GetPhysGroup(), tile.texture.GetPhysGroup());
 			box->SetActive(IsVisible());
 
 			body.object = this;

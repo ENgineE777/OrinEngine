@@ -77,7 +77,7 @@ namespace Orin
 		SceneEntity::Play();
 
 		body.object = this;
-		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.GetGlobal(), Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
+		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.GetGlobal(), Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, physGroup);
 		body.body->SetActive(IsVisible());
 
 		body.body->SetUserData(&body);

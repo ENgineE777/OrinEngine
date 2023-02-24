@@ -156,6 +156,8 @@ namespace Orin
 		const Math::Vector3 top    = mat * (GetTopOffset() - Sprite::ToUnits(Math::Vector3(0.0f, radius, 0.0f)));
 		const Math::Vector3 bottom = mat * (GetBottomOffset() + Sprite::ToUnits(Math::Vector3(0.0f, radius, 0.0f)));
 
+		//root.render.DebugBox(mat, COLOR_CYAN_A(0.25f), Sprite::ToUnits(Math::Vector3(radius * 2.0f, height, radius * 2.0f)));
+
 		root.render.DebugSphere(top, COLOR_CYAN_A(0.25f), Sprite::ToUnits(radius));
 		root.render.DebugSphere(bottom, COLOR_CYAN_A(0.25f), Sprite::ToUnits(radius));
 	}
