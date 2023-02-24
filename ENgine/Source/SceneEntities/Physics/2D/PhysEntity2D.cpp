@@ -91,8 +91,7 @@ namespace Orin
 			if (affectOnParent && parent)
 			{
 				auto& parentTrans = parent->GetTransform();
-				parentTrans.position = mat.Pos();
-				parentTrans.rotation = mat.GetRotation() / Math::Radian;
+				parentTrans.SetGlobal(mat);
 			}
 			else
 			{
