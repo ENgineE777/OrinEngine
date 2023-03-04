@@ -102,7 +102,7 @@ namespace Orin
 			return *this;
 		}
 
-		bool operator==(AssetTextureRef& rhs)
+		bool operator==(const AssetTextureRef& rhs) const
 		{
 			return Get() == rhs.Get() && sliceIndex == rhs.sliceIndex && animIndex == rhs.animIndex;
 		}

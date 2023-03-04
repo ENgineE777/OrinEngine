@@ -57,7 +57,7 @@ namespace Orin
 			return ptr;
 		}
 
-		T* Get()
+		T* Get() const
 		{
 			return ptr;
 		}
