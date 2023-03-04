@@ -75,7 +75,7 @@ namespace Orin
 
 			int index = (int)lists.size() - 1;
 
-			while (index>0 && list[index - 1].level > list->level)
+			while (index>0 && lists[index - 1]->level > list->level)
 			{
 				TaskList* tmp = lists[index];
 				lists[index] = lists[index - 1];
