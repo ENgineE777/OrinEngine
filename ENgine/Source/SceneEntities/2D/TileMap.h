@@ -24,6 +24,7 @@ namespace Orin
 			int x = 0;
 			int y = 0;
 			int data = 0;
+			int index = -1;
 			AssetTextureRef texture;
 		};
 
@@ -38,7 +39,7 @@ namespace Orin
 		int drawLevel = 0;
 		AssetTileSetRef tileSet;
 
-		META_DATA_DECL(SpriteTile)
+		META_DATA_DECL(TileMap)
 
 	#ifndef DOXYGEN_SKIP
 

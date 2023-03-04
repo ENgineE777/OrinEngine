@@ -74,9 +74,27 @@ namespace Orin
 		return selTile != -1;
 	}
 
-	AssetTextureRef AssetTileSet::GetSelectedTile()
+	int AssetTileSet::GetSelectedTileIndex()
 	{
-		return selTile != -1 ? tiles[selTile].texture : AssetTextureRef();
+		return selTile;
+	}
+
+	int AssetTileSet::FindIndexByTextureRef(const AssetTextureRef& texture)
+	{
+		for (int i = 0; i < tiles.size(); i++)
+		{
+			if (tiles[i].texture == texture)
+			{
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
+	AssetTextureRef AssetTileSet::GetTileTexture(int index)
+	{
+		return index != -1 ? tiles[index].texture : AssetTextureRef();
 	}
 
 	void AssetTileSet::SaveMetaData(JsonWriter& saver)

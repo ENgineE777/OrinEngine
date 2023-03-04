@@ -43,7 +43,9 @@ namespace Orin
 
 		#ifdef ORIN_EDITOR
 		bool IsTileSelected();
-		AssetTextureRef GetSelectedTile();
+		int GetSelectedTileIndex();
+		int FindIndexByTextureRef(const AssetTextureRef& texture);
+		AssetTextureRef GetTileTexture(int index);
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif

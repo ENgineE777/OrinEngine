@@ -102,8 +102,10 @@ namespace Orin
 
 		auto size = transform.size;
 		size.z = 16.0f;
-		size *= Sprite::ToUnits(1.0f);
-		
+
+		auto sizeInUnits = size * Sprite::ToUnits(1.0f);
+
+
 		for (auto tile : tiles)
 		{
 			if (!tile.texture.HasCollision())
@@ -114,9 +116,9 @@ namespace Orin
 			Math::Matrix mat = transform.GetGlobal();
 			auto pos = mat.Pos();
 
-			mat.Pos() += Sprite::ToUnits(mat.Vx() * ((float)tile.x + 0.5f) * transform.size.x + mat.Vy() * ((float)tile.y - 0.5f) * transform.size.y);
+			mat.Pos() += Sprite::ToUnits(mat.Vx() * ((float)tile.x + 0.5f) * size.x + mat.Vy() * ((float)tile.y - 0.5f) * size.y);
 
-			PhysObject* box = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), PhysObject::BodyType::Static, tile.texture.GetPhysGroup(), tile.texture.GetPhysGroup());
+			PhysObject* box = root.GetPhysScene()->CreateBox(sizeInUnits, mat, Math::Matrix(), PhysObject::BodyType::Static, tile.texture.GetPhysGroup(), tile.texture.GetPhysGroup());
 			box->SetActive(IsVisible());
 
 			body.object = this;
@@ -182,14 +184,15 @@ namespace Orin
 				tech = DefferedLight::gbufferTech;
 			}
 
+			auto size = transform.size;
+
 			for (auto& tile : tiles)
 			{
-				mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
+				mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * size.x + mat.Vy() * (float)tile.y * size.y);
 
 				trans.SetGlobal(mat);
-				auto sz = tile.texture.GetSize();
-				trans.size.x = sz.x;
-				trans.size.y = sz.y;
+				trans.size.x = size.x;
+				trans.size.y = size.y;
 
 				tile.texture.prg = tech;
 				tile.texture.Draw(&trans, COLOR_WHITE, dt);
@@ -261,7 +264,24 @@ namespace Orin
 
 			reader.Read("x", tile.x);
 			reader.Read("y", tile.y);
-			tile.texture.LoadData(reader, "Texture");
+			reader.Read("index", tile.index);
+
+			if (tile.index == -1)
+			{
+				tile.texture.LoadData(reader, "Texture");
+
+				if (tileSet)
+				{
+					tile.index = tileSet->FindIndexByTextureRef(tile.texture);
+				}
+			}
+			else
+			{
+				if (tileSet)
+				{
+					tile.texture = tileSet->GetTileTexture(tile.index);
+				}
+			}
 
 			reader.LeaveBlock();
 		}
@@ -284,7 +304,7 @@ namespace Orin
 
 			writer.Write("x", tile.x);
 			writer.Write("y", tile.y);
-			tile.texture.SaveData(writer, "Texture");
+			writer.Write("index", tile.index);
 
 			writer.FinishBlock();
 		}
@@ -368,7 +388,8 @@ namespace Orin
 
 				if (mode == Mode::RectPlace && tileSet->IsTileSelected())
 				{
-					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
+					int index = tileSet->GetSelectedTileIndex();
+					tiles.push_back({ x, y, 0, index, tileSet->GetTileTexture(index) });
 					changed = true;
 				}
 			}
@@ -426,7 +447,8 @@ namespace Orin
 
 				if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
 				{
-					tiles.push_back({ x, y, 0, tileSet->GetSelectedTile() });
+					int index = tileSet->GetSelectedTileIndex();
+					tiles.push_back({ x, y, 0, index, tileSet->GetTileTexture(index) });
 					changed = true;
 				}
 			}
