@@ -282,7 +282,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		float cast_shadow = u_lights[index].x;
 		float falloff = u_lights[index].y;
-		float angle = u_lights[index].z;
+		float angle = -u_lights[index].z;
 		float radius = u_lights[index].w;
 		index++;
 
@@ -318,7 +318,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		// FOV ARC
 		if (arc <= M_PI)
 		{
-			float angle_diff = abs(fmod( angle - atan2(l_norm.y, -l_norm.x) + M_3PI, M_2PI) - M_PI);
+			float angle_diff = abs(fmod(angle - atan2(l_norm.y, -l_norm.x) + M_3PI, M_2PI) - M_PI);
 			radius = radius / max(0.0000001, abs(cos(angle_diff)));
 			fov = smoothstep(arc, 0.0, angle_diff);
 		}
