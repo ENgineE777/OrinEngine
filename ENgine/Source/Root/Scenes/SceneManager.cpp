@@ -90,7 +90,7 @@ namespace Orin
 			return;
 		}
 
-		scenesToLoad.push_back(&scenes[name]);
+		scenesToLoad.push_back(&scenes[nameStr]);
 	}
 
 	void SceneManager::LoadScene(SceneHolder* holder)
