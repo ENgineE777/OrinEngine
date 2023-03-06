@@ -9,70 +9,59 @@ namespace Orin::Utils
     {
         result.clear();
 
-        HANDLE childStdRead = nullptr;
-        HANDLE childStdWrite = nullptr;
+        HANDLE stdOutHandles[2];
 
-        STARTUPINFOA si;
-        PROCESS_INFORMATION pi;
         SECURITY_ATTRIBUTES saAttr;
-
-        ZeroMemory(&saAttr, sizeof(saAttr));
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
         saAttr.bInheritHandle = TRUE;
         saAttr.lpSecurityDescriptor = NULL;
 
-        if (!CreatePipe(&childStdRead, &childStdWrite, &saAttr, 0))
+        if (!CreatePipe(&stdOutHandles[0], &stdOutHandles[1], &saAttr, 0))
         {
             return false;
         }
 
-        if (!SetHandleInformation(childStdRead, HANDLE_FLAG_INHERIT, 0))
+        PROCESS_INFORMATION pInfo;
+        ZeroMemory(&pInfo, sizeof(PROCESS_INFORMATION));
+
+        STARTUPINFOA startInfo;
+        ZeroMemory(&startInfo, sizeof(STARTUPINFOA));
+        startInfo.cb = sizeof(STARTUPINFOA);
+        startInfo.hStdOutput = stdOutHandles[1];
+        startInfo.dwFlags |= STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
+        startInfo.wShowWindow = SW_HIDE;
+
+        if (!CreateProcessA(NULL, (char*)command, NULL, NULL, TRUE, 0, NULL, NULL, &startInfo, &pInfo))
         {
-            return false;
+            CloseHandle(stdOutHandles[0]);
+            CloseHandle(stdOutHandles[1]);
+            return FALSE;
         }
 
-        ZeroMemory(&si, sizeof(si));
-        si.cb = sizeof(si);
-        si.hStdError = childStdWrite;
-        si.hStdOutput = childStdWrite;
-        si.hStdInput = childStdRead;
-        si.dwFlags |= STARTF_USESTDHANDLES;
+        WaitForSingleObject(pInfo.hProcess, INFINITE);
 
-        ZeroMemory(&pi, sizeof(pi));
-
-        std::string commandLine = command;
-
-        if (CreateProcessA(nullptr, (char*)commandLine.c_str(), nullptr, nullptr, true, CREATE_NO_WINDOW, nullptr, nullptr, &si, &pi))
+        char buffer[2048];
+        DWORD readBufferSize;
+        BOOL res;
+        if ((res = ReadFile(stdOutHandles[0], buffer, 2048, &readBufferSize, NULL)))
         {
-            CloseHandle(pi.hProcess);
-            CloseHandle(pi.hThread);
+            buffer[readBufferSize] = '\0';
 
-            constexpr int BUFSIZE = 64;
-            DWORD dwRead;
-            char chBuf[BUFSIZE];
-            bool bSuccess = true;
             eastl::string line;
 
-            while (bSuccess)
+            for (int i = 0; i < readBufferSize; i++)
             {
-                bSuccess = ReadFile(childStdRead, chBuf, BUFSIZE, &dwRead, nullptr);
+                char symbol = buffer[i];
 
-                for (DWORD i = 0; i < dwRead; i++)
+                if (symbol == '\n')
                 {
-                    char symbol = chBuf[i];
-
-                    if (symbol == '\n')
-                    {
-                        result.emplace_back(line);
-                        line.clear();
-                    }
-                    else
-                    {
-                        line += symbol;
-                    }
+                    result.emplace_back(line);
+                    line.clear();
                 }
-
-                if (!bSuccess || dwRead < BUFSIZE) break;
+                else
+                {
+                    line += symbol;
+                }
             }
 
             if (!line.empty())
@@ -81,9 +70,11 @@ namespace Orin::Utils
             }
         }
 
-        CloseHandle(childStdRead);
-        CloseHandle(childStdWrite);
+        CloseHandle(stdOutHandles[0]);
+        CloseHandle(stdOutHandles[1]);
+        CloseHandle(pInfo.hProcess);
+        CloseHandle(pInfo.hThread);
 
-		return true;
+        return res;
 	}
 }
