@@ -29,7 +29,13 @@ namespace Orin
 			{
 				if (!Perforce::Checkout(path))
 				{
-					MESSAGE_BOX("Can't rewrite readonly file", "Seems you under perfoce. Please setup p4 in project settings");
+					static bool alreadyShowed = false;
+
+					if (!alreadyShowed)
+					{
+						MESSAGE_BOX("Can't rewrite readonly file", "Seems you under perfoce. Please setup p4 in project settings");
+						alreadyShowed = true;
+					}
 				}
 			}
 		}
