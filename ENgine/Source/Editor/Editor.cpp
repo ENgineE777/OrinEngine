@@ -1885,8 +1885,7 @@ namespace Orin
 			{
 				PushButton("Snap", gizmo.useAlignGrid, [this]() { gizmo.useAlignGrid = !gizmo.useAlignGrid; });
 
-				ImGui::Text("X");
-				ImGui::SameLine();
+				PushButton("X", gizmo.alignGridFlag & Axis::X, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::X); });
 
 				ImGui::SetNextItemWidth(80.0f);
 				int value = (int)gizmo.alignGrid.x;
@@ -1895,8 +1894,7 @@ namespace Orin
 				gizmo.alignGrid.x = (float)value;
 				ImGui::SameLine();
 
-				ImGui::Text("Y");
-				ImGui::SameLine();
+				PushButton("Y", gizmo.alignGridFlag & Axis::Y, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Y); });
 
 				ImGui::SetNextItemWidth(80.0f);
 				value = (int)gizmo.alignGrid.y;
@@ -1905,8 +1903,7 @@ namespace Orin
 				gizmo.alignGrid.y = (float)value;
 				ImGui::SameLine();
 
-				ImGui::Text("Z");
-				ImGui::SameLine();
+				PushButton("Z", gizmo.alignGridFlag & Axis::Z, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Z); });
 
 				ImGui::SetNextItemWidth(80.0f);
 				value = (int)gizmo.alignGrid.z;

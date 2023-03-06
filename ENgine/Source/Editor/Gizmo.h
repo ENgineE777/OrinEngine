@@ -18,6 +18,18 @@ namespace Orin
 		Rectangle
 	};
 
+	enum Axis : uint32_t
+	{
+		None = 0,
+		X = 1,
+		Y = 2,
+		Z = 4,
+		XY = X | Y,
+		XZ = X | Z,
+		YZ = Y | Z,
+		XYZ = X | Y | Z
+	};
+
 	class Gizmo
 	{
 		class TransformAction : public IEditorAction
@@ -31,17 +43,6 @@ namespace Orin
 			TransformAction(void* owner, Transform* target, Transform& savedData);
 			void Apply() override;
 			void Undo() override;
-		};
-
-		enum class Axis
-		{
-			X = 1,
-			Y = 2,
-			Z = 4,
-			XY = X | Y,
-			XZ = X | Z,
-			YZ = Y | Z,
-			XYZ = X | Y | Z
 		};
 
 		struct AxisData
@@ -145,6 +146,7 @@ namespace Orin
 		bool useLocalSpace = false;
 		Math::Vector3 alignGrid = 8.0f;
 		bool useAlignGrid = false;
+		Axis alignGridFlag = Axis::XYZ;
 		Math::Vector3 alignGridOffset = 8.0f;
 		bool useAlignGridOffset = false;
 

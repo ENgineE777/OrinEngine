@@ -912,15 +912,29 @@ namespace Orin
 		{
 			auto rectSize = Sprite::ToUnits(alignGrid);
 
-			pos.x = rectSize.x * ((int)(pos.x / rectSize.x));
-			pos.y = rectSize.y * ((int)(pos.y / rectSize.y));
+			if (alignGridFlag & Axis::X)
+			{
+				pos.x = rectSize.x * ((int)(pos.x / rectSize.x));
+			}
+
+			if (alignGridFlag & Axis::Y)
+			{
+				pos.y = rectSize.y * ((int)(pos.y / rectSize.y));
+			}
 
 			if (useAlignGridOffset)
 			{
 				auto rectOffset = Sprite::ToUnits(alignGridOffset);
 
-				pos.x += rectOffset.x;
-				pos.y += rectOffset.y;
+				if (alignGridFlag & Axis::X)
+				{
+					pos.x += rectOffset.x;
+				}
+
+				if (alignGridFlag & Axis::Y)
+				{
+					pos.y += rectOffset.y;
+				}
 			}
 		}
 
@@ -1294,13 +1308,27 @@ namespace Orin
 
 		if (useAlignGrid)
 		{
-			res.x = alignGrid.x * ((int)(res.x / alignGrid.x));
-			res.y = alignGrid.y * ((int)(res.y / alignGrid.y));
+			if (alignGridFlag & Axis::X)
+			{
+				res.x = alignGrid.x * ((int)(res.x / alignGrid.x));
+			}
+
+			if (alignGridFlag & Axis::Y)
+			{
+				res.y = alignGrid.y * ((int)(res.y / alignGrid.y));
+			}
 
 			if (useAlignGridOffset)
 			{
-				res.x += alignGridOffset.x;
-				res.y += alignGridOffset.y;
+				if (alignGridFlag & Axis::X)
+				{
+					res.x += alignGridOffset.x;
+				}
+
+				if (alignGridFlag & Axis::Y)
+				{
+					res.y += alignGridOffset.y;
+				}
 			}
 		}
 

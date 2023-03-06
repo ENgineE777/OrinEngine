@@ -50,6 +50,7 @@ namespace Orin
 			reader.Read("projectName", projectName);
 			reader.Read("alignGrid", editor.gizmo.alignGrid);
 			reader.Read("useAlignGrid", editor.gizmo.useAlignGrid);
+			reader.Read("alignGridFlag", (int&)editor.gizmo.alignGridFlag);
 			reader.Read("alignGridOffset", editor.gizmo.alignGridOffset);
 			reader.Read("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
 
@@ -150,6 +151,8 @@ namespace Orin
 
 		writer.Write("alignGrid", editor.gizmo.alignGrid);
 		writer.Write("useAlignGrid", editor.gizmo.useAlignGrid);
+		writer.Write("alignGridFlag", (int&)editor.gizmo.alignGridFlag);
+
 		writer.Write("alignGridOffset", editor.gizmo.alignGridOffset);
 		writer.Write("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
 
