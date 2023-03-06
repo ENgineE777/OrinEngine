@@ -134,7 +134,7 @@ namespace Orin
 				const Math::Vector3 top = mat * Math::Vector3(height * 0.5f, 0.0f, 0.0f);
 				const Math::Vector3 bottom = mat * Math::Vector3(-height * 0.5f, 0.0f, 0.0f);
 
-				root.render.DebugBox(mat, color, { height, size.y, size.z });
+				//root.render.DebugBox(mat, color, { height, size.y, size.z });
 				root.render.DebugSphere(top, color, size.y * 0.5f);
 				root.render.DebugSphere(bottom, color, size.y * 0.5f);
 
