@@ -12,6 +12,16 @@ namespace Orin
 	extern void ShowTileSetWindow(AssetTileSet* tileSet);
 #endif
 
+	META_DATA_DESC(AssetTileSet::Tile)
+		ENUM_PROP(AssetTileSet::Tile, rotation, 0, "Properties", "rotation", "Rotation of a tile")
+			ENUM_ELEM("0", 0)
+			ENUM_ELEM("90", 90)
+			ENUM_ELEM("180", 180)
+			ENUM_ELEM("270", 270)
+		ENUM_END
+		ASSET_TEXTURE_PROP(AssetTileSet::Tile, texture, "Properties", "Texture")
+	META_DATA_DESC_END()
+
 	CLASSREG(Asset, AssetTileSet, "AssetTileSet")
 
 	META_DATA_DESC(AssetTileSet)
@@ -59,6 +69,7 @@ namespace Orin
 
 				loader.Read("x", tile.x);
 				loader.Read("y", tile.y);
+				loader.Read("rotation", tile.rotation);
 				tile.texture.LoadData(loader, "Texture");
 
 				loader.LeaveBlock();
@@ -97,6 +108,11 @@ namespace Orin
 		return index != -1 ? tiles[index].texture : AssetTextureRef();
 	}
 
+	float AssetTileSet::GetTileRotation(int index)
+	{
+		return index != -1 ? (float)tiles[index].rotation : 0.0f;
+	}
+
 	void AssetTileSet::SaveMetaData(JsonWriter& saver)
 	{
 		saver.StartBlock("tileSet");
@@ -121,6 +137,7 @@ namespace Orin
 
 			saver.Write("x", tile.x);
 			saver.Write("y", tile.y);
+			saver.Write("rotation", tile.rotation);
 			tile.texture.SaveData(saver, "Texture");
 
 			saver.FinishBlock();

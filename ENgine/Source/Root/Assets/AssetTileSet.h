@@ -18,12 +18,15 @@ namespace Orin
 
 		Math::Vector2 camPos;
 		float camZoom = 1.0f;
-		int selTile = -1;
+		int selTile = -1;		
 
 		struct Tile
 		{
+			META_DATA_DECL_BASE(Tile)
+
 			int x = 0;
 			int y = 0;
+			int rotation = 0;
 			AssetTextureRef texture;
 		};
 
@@ -46,6 +49,7 @@ namespace Orin
 		int GetSelectedTileIndex();
 		int FindIndexByTextureRef(const AssetTextureRef& texture);
 		AssetTextureRef GetTileTexture(int index);
+		float GetTileRotation(int index);
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif

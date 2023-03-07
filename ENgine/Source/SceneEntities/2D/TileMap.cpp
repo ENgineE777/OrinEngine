@@ -146,11 +146,16 @@ namespace Orin
 
 		if (IsVisible())
 		{
-			auto trans = transform;
+			Transform trans;
+			trans.objectType = ObjectType::Object2D;
+			trans.offset.x = 0.5f;
+			trans.offset.y = 0.5f;
+			trans.size = transform.size;
 
-			Math::Matrix mat = trans.GetGlobal();
+			auto size = transform.size;
+
+			Math::Matrix mat = transform.GetGlobal();
 			auto pos = Sprite::ToPixels(mat.Pos());
-
 
 			Math::Matrix view;
 			root.render.GetTransform(TransformStage::View, view);
@@ -184,13 +189,11 @@ namespace Orin
 				tech = DefferedLight::gbufferTech;
 			}
 
-			auto size = transform.size;
-
 			for (auto& tile : tiles)
 			{
-				mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * size.x + mat.Vy() * (float)tile.y * size.y);
+				trans.rotation = tile.rotation;
+				trans.position = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
-				trans.SetGlobal(mat);
 				trans.size.x = size.x;
 				trans.size.y = size.y;
 
@@ -269,6 +272,7 @@ namespace Orin
 			if (tileSet)
 			{
 				tile.texture = tileSet->GetTileTexture(tile.index);
+				tile.rotation = tileSet->GetTileRotation(tile.index);
 			}
 
 			reader.LeaveBlock();
@@ -377,7 +381,7 @@ namespace Orin
 				if (mode == Mode::RectPlace && tileSet->IsTileSelected())
 				{
 					int index = tileSet->GetSelectedTileIndex();
-					tiles.push_back({ x, y, 0, index, tileSet->GetTileTexture(index) });
+					tiles.push_back({ x, y, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
 					changed = true;
 				}
 			}
@@ -436,7 +440,7 @@ namespace Orin
 				if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
 				{
 					int index = tileSet->GetSelectedTileIndex();
-					tiles.push_back({ x, y, 0, index, tileSet->GetTileTexture(index) });
+					tiles.push_back({ x, y, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
 					changed = true;
 				}
 			}

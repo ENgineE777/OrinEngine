@@ -25,6 +25,7 @@ namespace Orin
 			int y = 0;
 			int data = 0;
 			int index = -1;
+			float rotation = 0.0f;
 			AssetTextureRef texture;
 		};
 

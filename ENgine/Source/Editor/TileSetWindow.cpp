@@ -97,29 +97,26 @@ namespace Orin
 			ImGui::DockBuilderAddNode(dockspaceID, ImGuiDockNodeFlags_None);
 
 			ImGuiID dock_main_id = dockspaceID;
-			//ImGuiID dock_top_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.01f, nullptr, &dock_main_id);
-			ImGuiID dock_bottom_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 1.0f, nullptr, &dock_main_id);
-
-			//ImGui::DockBuilderDockWindow("ToolbarTileSet", dock_top_id);
-			ImGui::DockBuilderDockWindow("ImageTileSet", dock_bottom_id);
+			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.8f, nullptr, &dock_main_id);
+			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
+			
+			ImGui::DockBuilderDockWindow("ImageTileSet", dock_left_id);
+			ImGui::DockBuilderDockWindow("TileProperties", dock_right_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
 
 			ImGuiDockNode* node;
 
-			//ImGuiDockNode* node = ImGui::DockBuilderGetNode(dock_top_id);
-			//node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-
-			node = ImGui::DockBuilderGetNode(dock_bottom_id);
+			node = ImGui::DockBuilderGetNode(dock_left_id);
 			node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
 		}
 
 		ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockspaceFlags | ImGuiDockNodeFlags_NoCloseButton | ImGuiDockNodeFlags_NoWindowMenuButton);
 
 		ImGui::End();
-
-		//ShowToolbar();
+		
 		ShowImage();
+		ShowTileProperties();
 	}
 
 	void TileSetWindow::DrawViewport(Math::Vector2 viewportSize)
@@ -169,8 +166,9 @@ namespace Orin
 			}
 
 			Transform transform;
-			transform.offset.x = 0.0f;
-			transform.offset.y = 0.0f;
+			transform.objectType = ObjectType::Object2D;
+			transform.offset.x = 0.5f;
+			transform.offset.y = 0.5f;
 
 			Math::Matrix mat;
 
@@ -178,10 +176,9 @@ namespace Orin
 			{
 				Math::Vector2 size = tile.texture.GetSize();
 				transform.size = Math::Vector3(size.x, size.y, 0.0f);
+				transform.rotation = (float)tile.rotation;
+				transform.position = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3( 0.5f, -0.5f, 0.0f ) * transform.size;
 
-				mat.Pos() = Sprite::ToUnits(mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
-
-				transform.SetGlobal(mat);
 				tile.texture.Draw(&transform, COLOR_WHITE, root.GetDeltaTime());
 			}
 
@@ -224,12 +221,6 @@ namespace Orin
 		root.render.DebugLine(Math::Vector3(p1.x, p2.y, 0.0f), color, p1, color, false);
 	}
 
-	void TileSetWindow::ShowToolbar()
-	{
-		ImGui::Begin("ToolbarTileSet");
-		ImGui::End();
-	}
-
 	void TileSetWindow::TryAddSlice(AssetTextureRef& texture, Math::Vector2 offset, int sliseIndex)
 	{
 		AssetTextureRef subSlice = texture;
@@ -242,7 +233,12 @@ namespace Orin
 
 		if (FindTileIndex(x, y) == -1)
 		{
-			tileSet->tiles.push_back({ x, y, subSlice });
+			AssetTileSet::Tile tile;
+			tile.x = x;
+			tile.y = y;
+			tile.texture = texture;
+
+			tileSet->tiles.push_back(tile);
 		}
 	}
 
@@ -307,7 +303,12 @@ namespace Orin
 				else
 				if (FindTileIndex(dragX, dragY) == -1)
 				{
-					tileSet->tiles.push_back({ dragX, dragY, texture });
+					AssetTileSet::Tile tile;
+					tile.x = dragX;
+					tile.y = dragY;
+					tile.texture = texture;
+
+					tileSet->tiles.push_back(tile);
 					tileSet->Save();
 				}
 
@@ -388,6 +389,34 @@ namespace Orin
 			drag = Drag::DragNone;
 			viewportCaptured = false;
 		}
+
+		ImGui::End();
+	}
+
+	void TileSetWindow::ShowTileProperties()
+	{
+		ImGui::Begin("TileProperties");
+
+		ImGui::Columns(2);
+
+		if (tileSet)
+		{
+			if (tileSet->selTile != -1)
+			{
+				auto* tile = &tileSet->tiles[tileSet->selTile];
+				auto* metaData = tile->GetMetaData();
+
+				metaData->Prepare(tile);
+				metaData->ImGuiWidgets(nullptr);
+
+				if (metaData->IsValueWasChanged())
+				{
+					tileSet->Save();
+				}
+			}
+		}
+
+		ImGui::Columns(1);
 
 		ImGui::End();
 	}

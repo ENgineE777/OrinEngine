@@ -53,8 +53,8 @@ namespace Orin
 		void ImGui();
 		void DrawViewport(Math::Vector2 viewportSize);
 
-		void ShowToolbar();
 		void ShowImage();
+		void ShowTileProperties();
 
 		void OnMouseMove(Math::Vector2 ms, bool drag);
 
