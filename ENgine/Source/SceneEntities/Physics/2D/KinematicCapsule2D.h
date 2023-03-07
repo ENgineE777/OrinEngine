@@ -47,6 +47,9 @@ namespace Orin
 		void EditorDraw(float dt);
 		void DebugDraw();
 
+		float GetHeight() const { return height; }
+		float GetRadius() const { return radius; }
+
 		void Release() override;
 	#endif
 	};
