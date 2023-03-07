@@ -3,17 +3,39 @@
 #include <string>
 #include "windows.h"
 
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <array>
+
 namespace Orin::Utils
 {
     bool Execute(const char* command, eastl::vector<eastl::string>& result)
     {
         result.clear();
 
-        HANDLE stdOutHandles[2];
+        std::array<char, 128> buffer;
+        std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(command, "r"), _pclose);
+
+        if (!pipe)
+        {
+            return false;
+        }
+
+        while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
+        {
+            result.push_back(buffer.data());
+        }
+
+        return true;
+
+        /*HANDLE stdOutHandles[2];
 
         SECURITY_ATTRIBUTES saAttr;
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
-        saAttr.bInheritHandle = TRUE;
+        saAttr.bInheritHandle = false;
         saAttr.lpSecurityDescriptor = NULL;
 
         if (!CreatePipe(&stdOutHandles[0], &stdOutHandles[1], &saAttr, 0))
@@ -39,6 +61,7 @@ namespace Orin::Utils
         }
 
         WaitForSingleObject(pInfo.hProcess, INFINITE);
+        TerminateProcess(pInfo.hProcess, 0);
 
         char buffer[2048];
         DWORD readBufferSize;
@@ -75,6 +98,6 @@ namespace Orin::Utils
         CloseHandle(pInfo.hProcess);
         CloseHandle(pInfo.hThread);
 
-        return res;
+        return res;*/
 	}
 }
