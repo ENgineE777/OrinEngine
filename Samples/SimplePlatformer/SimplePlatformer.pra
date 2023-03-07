@@ -24,10 +24,10 @@
 	"runningInFullscreen" : false,
 	"openedAssets" : [
 		{
-			"path" : "Scene.scn"
+			"path" : "scene.scn"
 		}
 	],
-	"edited_asset" : "Scene.scn",
+	"edited_asset" : "scene.scn",
 	"layers" : [
 
 	]

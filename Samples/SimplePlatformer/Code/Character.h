@@ -3,7 +3,7 @@
 
 #include "SceneEntities/2D/ScriptEntity2D.h"
 #include "SceneEntities/2D/AnimGraph2D.h"
-#include "SceneEntities/2D/KinematicCapsule2D.h"
+#include "SceneEntities/Physics/2D/KinematicCapsule2D.h"
 
 namespace Orin
 {

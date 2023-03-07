@@ -44,1479 +44,747 @@
 			"drawLevel" : 0,
 			"tileSet" :
 			{
-				"Path" : "Level/Level.tls"
+				"Path" : "level/level.tls"
 			},
+			"paralaxInEditor" : false,
+			"paralax.x" : 1.000000,
+			"paralax.y" : 1.000000,
 			"count" : 147,
 			"Tile" : [
 				{
 					"x" : 79,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 78,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 77,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 76,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 75,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 78,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 77,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 76,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 75,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 74,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 0,
-						"animIndex" : -1
-					}
+					"index" : 0
 				},
 				{
 					"x" : 74,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 9,
-						"animIndex" : -1
-					}
+					"index" : 3
 				},
 				{
 					"x" : 73,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 72,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 71,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 70,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 69,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 68,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 67,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 66,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 65,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 64,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 63,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 62,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 61,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 60,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 59,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 58,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 57,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 56,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 0,
-						"animIndex" : -1
-					}
+					"index" : 0
 				},
 				{
 					"x" : 56,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 9,
-						"animIndex" : -1
-					}
+					"index" : 3
 				},
 				{
 					"x" : 56,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 18,
-						"animIndex" : -1
-					}
+					"index" : 8
 				},
 				{
 					"x" : 57,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 58,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 59,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 60,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 61,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 62,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 63,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 64,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 65,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 66,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 67,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 68,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 69,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 70,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 71,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 72,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 73,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 74,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 75,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 76,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 77,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 78,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 79,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 80,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 81,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 82,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 83,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 84,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 85,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 79,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 78,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 77,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 76,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 75,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 74,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 75,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 76,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 77,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 78,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 79,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 80,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 80,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 81,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 82,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 74,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 73,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 72,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 71,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 70,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 69,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 68,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 67,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 66,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 65,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 64,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 63,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 57,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 58,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 59,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 60,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 61,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 62,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 79,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 80,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 81,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 82,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 83,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 84,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 85,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 86,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 87,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 88,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 0,
-						"animIndex" : -1
-					}
+					"index" : 0
 				},
 				{
 					"x" : 89,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 90,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 91,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 92,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 2,
-						"animIndex" : -1
-					}
+					"index" : 5
 				},
 				{
 					"x" : 93,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 94,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 95,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 96,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 97,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 2,
-						"animIndex" : -1
-					}
+					"index" : 5
 				},
 				{
 					"x" : 97,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 11,
-						"animIndex" : -1
-					}
+					"index" : 4
 				},
 				{
 					"x" : 97,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 20,
-						"animIndex" : -1
-					}
+					"index" : 6
 				},
 				{
 					"x" : 96,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 95,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 94,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 93,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 92,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 91,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 90,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 89,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 88,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 86,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 87,
 					"y" : 24,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 19,
-						"animIndex" : -1
-					}
+					"index" : 7
 				},
 				{
 					"x" : 96,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 95,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 94,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 93,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 92,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 91,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 90,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 89,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 88,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 88,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 89,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 90,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 91,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 92,
 					"y" : 26,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 87,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 86,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 85,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 83,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 84,
 					"y" : 25,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 10,
-						"animIndex" : -1
-					}
+					"index" : 1
 				},
 				{
 					"x" : 80,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 1,
-						"animIndex" : -1
-					}
+					"index" : 2
 				},
 				{
 					"x" : 81,
 					"y" : 28,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 2,
-						"animIndex" : -1
-					}
+					"index" : 5
 				},
 				{
 					"x" : 81,
 					"y" : 27,
-					"Texture" :
-					{
-						"Path" : "Level/tileset.png",
-						"sliceIndex" : 11,
-						"animIndex" : -1
-					}
+					"index" : 4
 				}
 			]
 		},
@@ -1567,6 +835,9 @@
 			},
 			"border.x" : 100.000000,
 			"border.y" : 100.000000,
+			"borderAbsolute.x" : 0.000000,
+			"borderAbsolute.y" : 0.000000,
+			"smoothingViscosity" : 0.000000,
 			"useLimits" : false,
 			"leftup.x" : -1000.000000,
 			"rightdown.x" : 1000.000000,
@@ -1618,7 +889,7 @@
 			"drawLevel" : 0,
 			"spritesAsset" :
 			{
-				"Path" : "Background/Skies.spl"
+				"Path" : "background/skies.spl"
 			}
 		},
 		{
@@ -1666,7 +937,7 @@
 			"drawLevel" : 0,
 			"spritesAsset" :
 			{
-				"Path" : "Background/Mountains.spl"
+				"Path" : "background/mountains.spl"
 			}
 		},
 		{
@@ -1714,13 +985,13 @@
 			"drawLevel" : 0,
 			"spritesAsset" :
 			{
-				"Path" : "Background/Trees.spl"
+				"Path" : "background/trees.spl"
 			}
 		},
 		{
 			"prefabInstance" : true,
 			"uid" : 446100,
-			"type" : "Character/player.prefab",
+			"type" : "character/player.prefab",
 			"name" : "player",
 			"layerName" : "",
 			"visible" : true,
