@@ -406,7 +406,7 @@ namespace Orin
 
 		Sprite::Draw(albedoRT, ambientColor, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
 
-		root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_WHITE, "Num lights %i", lightCount);
+		//root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_WHITE, "Num lights %i", lightCount);
 	}
 
 	void DefferedLight::Draw(float dt)
