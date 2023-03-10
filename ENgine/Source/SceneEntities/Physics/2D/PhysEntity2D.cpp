@@ -43,11 +43,13 @@ namespace Orin
 		SceneEntity::Play();
 
 		Math::Matrix mat = transform.GetGlobal();
-		mat.Pos() += Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f));
+		auto scale = mat.GetScale();
+
+		auto size = Sprite::ToUnits(transform.size) * scale;
+
+		mat.Pos() += Sprite::ToUnits(size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f));
 
 		body.object = this;
-
-		auto size = Sprite::ToUnits(transform.size);
 
 		auto curCollideGroup = physCollideGroup == 0 ? physGroup : physCollideGroup;
 

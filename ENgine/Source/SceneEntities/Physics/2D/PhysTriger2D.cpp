@@ -30,10 +30,14 @@ namespace Orin
 		SceneEntity::Play();
 
 		Math::Matrix mat = transform.GetGlobal();
-		mat.Pos() += mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f)));
+		auto scale = mat.GetScale();
+
+		auto size = Sprite::ToUnits(transform.size) * scale;
+		
+		mat.Pos() += mat.MulNormal(Sprite::ToUnits(size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f)));
 
 		body.object = this;
-		body.body = root.GetPhysScene()->CreateBox(Sprite::ToUnits(transform.size), mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, physGroup);
+		body.body = root.GetPhysScene()->CreateBox(Sprite::ToUnits(size), mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, physGroup);
 		body.body->SetActive(IsVisible());
 
 		if (bodyType == BodyType::Dynamic || bodyType == BodyType::DynamicCCD)
