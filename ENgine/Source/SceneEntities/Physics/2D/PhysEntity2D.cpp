@@ -47,7 +47,7 @@ namespace Orin
 
 		auto size = Sprite::ToUnits(transform.size) * scale;
 
-		mat.Pos() += Sprite::ToUnits(size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f));
+		mat.Pos() += size * Sprite::ToUnits(Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f));
 
 		body.object = this;
 
