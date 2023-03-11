@@ -31,31 +31,29 @@ namespace Orin
 	*/
 
 	/**
-	\brief PhysObject
+	\brief PhysJoint
 
-	Just a physical box.
+	Joint
 
 	*/
 
 	using namespace physx;
 
-	class CLASS_DECLSPEC PhysObjectBase
+	class CLASS_DECLSPEC PhysSphericalJoint : public PhysObjectBase
 	{
 		friend class Physics;
 		friend class PhysScene;
 
-	public:		
+	public:
 
-		virtual void SetActive(bool set);
-
-		virtual bool IsActive();
-
-		virtual void Release();
+		void SetActive(bool set) override;
+		void SetConeLimit(float angY, float angZ);
 
 	protected:
-		PhysScene* scene = nullptr;
-		bool is_active = true;
+		PxSphericalJoint* joint = nullptr;
+		PxRigidActor* actorA = nullptr;
+		PxRigidActor* actorB = nullptr;
 
-		virtual void ActualRelease() = 0;
+		void ActualRelease() override;
 	};
 }

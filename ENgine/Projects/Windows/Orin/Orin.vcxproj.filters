@@ -748,6 +748,12 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\Physics\PhysEntityBase.cpp">
       <Filter>Source\SceneEntities\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\Joint2D.cpp">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Physics\PhysSphericalJoint.cpp">
+      <Filter>Source\Root\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1400,6 +1406,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\Physics\PhysEntityBase.h">
       <Filter>Source\SceneEntities\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\Joint2D.h">
+      <Filter>Source\SceneEntities\Physics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Physics\PhysSphericalJoint.h">
+      <Filter>Source\Root\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

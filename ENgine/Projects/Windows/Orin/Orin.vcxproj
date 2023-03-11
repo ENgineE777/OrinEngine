@@ -202,6 +202,7 @@
     <ClInclude Include="..\..\..\Source\Root\Particles\Renderer\SPK_QuadRenderer.h" />
     <ClInclude Include="..\..\..\Source\Root\Physics\PhysController.h" />
     <ClInclude Include="..\..\..\Source\Root\Physics\Physics.h" />
+    <ClInclude Include="..\..\..\Source\Root\Physics\PhysSphericalJoint.h" />
     <ClInclude Include="..\..\..\Source\Root\Physics\PhysObject.h" />
     <ClInclude Include="..\..\..\Source\Root\Physics\PhysObjectBase.h" />
     <ClInclude Include="..\..\..\Source\Root\Physics\PhysScene.h" />
@@ -254,6 +255,7 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\Terrain.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\Common\MusicPlayer.h" />
+    <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\Joint2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\KinematicCapsule2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\PhysEntity2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\Physics\2D\PhysTriger2D.h" />
@@ -417,6 +419,7 @@
     <ClCompile Include="..\..\..\Source\Root\Particles\Renderer\SPK_QuadRenderer.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Physics\PhysController.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Physics\Physics.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Physics\PhysSphericalJoint.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Physics\PhysObject.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Physics\PhysObjectBase.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Physics\PhysScene.cpp" />
@@ -464,6 +467,7 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\Terrain.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\Common\ControlsAliases.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\Common\MusicPlayer.cpp" />
+    <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\Joint2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\KinematicCapsule2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\PhysEntity2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\Physics\2D\PhysTriger2D.cpp" />

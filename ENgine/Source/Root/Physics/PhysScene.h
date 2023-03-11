@@ -3,6 +3,7 @@
 
 #include "PhysObject.h"
 #include "PhysController.h"
+#include "PhysSphericalJoint.h"
 
 using namespace physx;
 
@@ -179,6 +180,8 @@ namespace Orin
 		\return True will be return in case ray hitted given box. Otherwise false will be returned 
 		*/
 		static bool RayCastBox(RaycastDesc& desc, Math::Matrix boxTrans, Math::Vector3 boxHalfSize);
+
+		PhysSphericalJoint* CreateSphericalJoint(PhysObject* bodyA, Math::Matrix transA, PhysObject* bodyB, Math::Matrix transB);
 
 		bool OverlapWithSphere(Math::Vector3 pos, float radius, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);
 		bool OverlapWithBox(Math::Matrix trans, Math::Vector3 size, uint32_t physGroup, eastl::vector<BodyUserData*>& bodies);

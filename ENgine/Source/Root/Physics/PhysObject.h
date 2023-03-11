@@ -41,14 +41,14 @@ namespace Orin
 
 		\param[in] set Active state
 		*/
-		void SetActive(bool set);
+		void SetActive(bool set) override;
 
 		/**
 		\brief Check if a object is active
 
 		\return Returns active state
 		*/
-		bool IsActive();
+		bool IsActive() override;;
 
 		/**
 		\brief Set pointer to a user data
@@ -145,7 +145,7 @@ namespace Orin
 		PxRigidActor* actor = nullptr;
 		int group = 1;
 		int collideGroup = 1;
-		bool is_active = true;
+
 		void ActualRelease() override;
 	};
 }

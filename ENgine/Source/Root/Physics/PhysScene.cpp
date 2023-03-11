@@ -177,6 +177,23 @@ namespace Orin
 		return hm;
 	}
 
+	PhysSphericalJoint* PhysScene::CreateSphericalJoint(PhysObject* bodyA, Math::Matrix transA, PhysObject* bodyB, Math::Matrix transB)
+	{
+		auto* joint = new PhysSphericalJoint();
+
+		Math::Quaternion qA(transA);
+		PxTransform transformA(PxVec3(transA.Pos().x, transA.Pos().y, transA.Pos().z), PxQuat(qA.x, qA.y, qA.z, qA.w));
+
+		Math::Quaternion qB(transB);
+		PxTransform transformB(PxVec3(transB.Pos().x, transB.Pos().y, transB.Pos().z), PxQuat(qA.x, qA.y, qA.z, qA.w));
+
+		joint->joint = physx::PxSphericalJointCreate(*root.physics.physics, bodyA->actor, transformA, bodyB->actor, transformB);
+		joint->actorA = bodyA->actor;
+		joint->actorB = bodyB->actor;
+
+		return joint;
+	}
+
 	void PhysScene::SetVisualization(bool set)
 	{
 		scene->setVisualizationParameter(PxVisualizationParameter::eSCALE, set ? 1.0f : 0.0f);
