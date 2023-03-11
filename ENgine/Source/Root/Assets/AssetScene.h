@@ -7,7 +7,10 @@ namespace Orin
 {
 	class CLASS_DECLSPEC AssetScene : public Asset
 	{
+	protected:
+
 		Scene* scene = nullptr;
+		eastl::map<uint32_t, SceneEntity*> instanceMapping;
 
 	public:
 

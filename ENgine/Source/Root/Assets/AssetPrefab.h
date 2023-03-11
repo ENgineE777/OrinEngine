@@ -12,6 +12,8 @@ namespace Orin
 
 #ifdef ORIN_EDITOR
 		eastl::vector<SceneEntity*> instances;
+
+		void FixReferences(SceneEntity* entity);
 #endif
 	public:
 

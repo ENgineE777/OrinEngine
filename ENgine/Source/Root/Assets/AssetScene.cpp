@@ -373,6 +373,8 @@ namespace Orin
 			childCopy->Copy(child);
 			childCopy->PostLoad();
 
+			instanceMapping[child->GetUID()] = childCopy;
+
 			CopyChilds(child, childCopy, sceneOwner);
 		}
 	}

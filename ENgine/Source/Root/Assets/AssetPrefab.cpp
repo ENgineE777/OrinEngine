@@ -40,8 +40,14 @@ namespace Orin
 
 			instance->SetName(GetName().c_str());
 
+			instanceMapping[src->GetUID()] = instance;
+
 			CopyChilds(src, instance, sceneOwner);
 			instance->UpdateVisibility();
+
+			FixReferences(instance);
+
+			instanceMapping.clear();
 
 #ifdef ORIN_EDITOR
 			RegisterIntstance(instance);
@@ -51,6 +57,29 @@ namespace Orin
 		inCreatingInstance = false;
 
 		return instance;
+	}
+
+	void AssetPrefab::FixReferences(SceneEntity* entity)
+	{
+		entity->GetMetaData()->Prepare(entity);
+
+		for (auto& prop : entity->GetMetaData()->properties)
+		{
+			if (prop.type == MetaData::Type::SceneEntity)
+			{
+				SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(prop.value);
+
+				if (instanceMapping.count(ref->uid) > 0)
+				{
+					ref->SetEntity(instanceMapping[ref->uid]);
+				}
+			}
+		}
+
+		for (auto child : entity->GetChilds())
+		{
+			FixReferences(child);
+		}
 	}
 
 #ifdef ORIN_EDITOR
