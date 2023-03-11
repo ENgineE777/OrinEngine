@@ -526,7 +526,12 @@ namespace Orin
 			if (prop.type == Type::SceneEntity)
 			{
 				SceneEntityRefBase* ref = (SceneEntityRefBase*)prop.value;
-				ref->SetEntity(scene->FindEntity(ref->uid));
+				auto* entity = scene->FindEntity(ref->uid);
+
+				if (entity)
+				{
+					ref->SetEntity(entity);
+				}
 			}
 		}
 	}
