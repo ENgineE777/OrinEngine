@@ -316,6 +316,27 @@ namespace Orin
 		}
 
 		/**
+			\brief Find all childs by type
+			\param[out] list of childs of certein type
+			\return Return pointer to a child
+		*/
+		template<class T>
+		void FindChilds(eastl::vector<T*>& out)
+		{
+			for (auto entity : childs)
+			{
+				T* casted = dynamic_cast<T*>(entity);
+
+				if (casted)
+				{
+					out.push_back(casted);
+				}
+
+				entity->FindChilds<T>(out);
+			}
+		}
+
+		/**
 			\brief Register callback by name
 			\param[in] name Name of a callback
 			\param[in] callback Provided callback
