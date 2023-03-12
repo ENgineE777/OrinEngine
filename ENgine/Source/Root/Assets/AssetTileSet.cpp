@@ -19,6 +19,7 @@ namespace Orin
 			ENUM_ELEM("180", 180)
 			ENUM_ELEM("270", 270)
 		ENUM_END
+		STRING_PROP(AssetTileSet::Tile, meta, "", "Properties", "Meta")
 		ASSET_TEXTURE_PROP(AssetTileSet::Tile, texture, "Properties", "Texture")
 	META_DATA_DESC_END()
 
@@ -70,6 +71,7 @@ namespace Orin
 				loader.Read("x", tile.x);
 				loader.Read("y", tile.y);
 				loader.Read("rotation", tile.rotation);
+				loader.Read("meta", tile.meta);
 				tile.texture.LoadData(loader, "Texture");
 
 				loader.LeaveBlock();
@@ -138,6 +140,7 @@ namespace Orin
 			saver.Write("x", tile.x);
 			saver.Write("y", tile.y);
 			saver.Write("rotation", tile.rotation);
+			saver.Write("meta", tile.meta);
 			tile.texture.SaveData(saver, "Texture");
 
 			saver.FinishBlock();
