@@ -25,6 +25,21 @@ namespace Orin
 
 		SceneEntity* CreateInstance(Scene* sceneOwner);
 
+		template<class T>
+		T* CreateInstance(Scene* sceneOwner)
+		{
+			auto* entity = CreateInstance(sceneOwner);
+
+			T* casted = dynamic_cast<T*>(entity);
+
+			if (!casted)
+			{
+				RELEASE(casted);
+			}
+
+			return casted;
+		}
+
 #ifdef ORIN_EDITOR
 		void RegisterIntstance(SceneEntity* entity);
 		void UnregisterIntstance(SceneEntity* entity);
