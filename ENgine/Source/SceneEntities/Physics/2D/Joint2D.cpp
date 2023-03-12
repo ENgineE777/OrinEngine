@@ -69,7 +69,7 @@ namespace Orin
 
 	void Joint2D::EditorDraw(float dt)
 	{
-		if (!GetScene()->IsPlaying())
+		if (!GetScene()->IsPlaying() && !prefabInstance)
 		{
 			auto mat = GetTransform().GetGlobal();
 			auto center = Sprite::ToPixels(mat.Pos());
@@ -91,6 +91,8 @@ namespace Orin
 
 	void Joint2D::Release()
 	{
+		SceneEntity::Release();
+
 		RELEASE(joint)
 	}
 
