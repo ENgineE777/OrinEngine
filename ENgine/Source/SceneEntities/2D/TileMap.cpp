@@ -191,6 +191,11 @@ namespace Orin
 
 			for (auto& tile : tiles)
 			{
+				if (tile.index == -1)
+				{
+					continue;
+				}
+
 				trans.rotation = tile.rotation;
 				trans.position = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
@@ -234,7 +239,7 @@ namespace Orin
 
 		for (auto& tile : tiles)
 		{
-			if (!tile.texture.HasCollision())
+			if (!tile.texture.HasCollision() || tile.index == -1)
 			{
 				continue;
 			}
