@@ -53,6 +53,7 @@ namespace Orin
 			reader.Read("alignGridFlag", (int&)editor.gizmo.alignGridFlag);
 			reader.Read("alignGridOffset", editor.gizmo.alignGridOffset);
 			reader.Read("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
+			reader.Read("alignOffsetGridFlag", (int&)editor.gizmo.alignOffsetGridFlag);
 
 			float pixelsPerUnit = 50.0f;
 			float pixelsHeight = 1080.0f;
@@ -155,6 +156,7 @@ namespace Orin
 
 		writer.Write("alignGridOffset", editor.gizmo.alignGridOffset);
 		writer.Write("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
+		writer.Write("alignOffsetGridFlag", (int&)editor.gizmo.alignOffsetGridFlag);		
 
 		writer.Write("pixelsPerUnit", Sprite::ToPixels(1.0f));
 		writer.Write("pixelsHeight", Sprite::GetPixelsHeight());

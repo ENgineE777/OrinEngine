@@ -926,12 +926,12 @@ namespace Orin
 			{
 				auto rectOffset = Sprite::ToUnits(alignGridOffset);
 
-				if (alignGridFlag & Axis::X)
+				if (alignGridFlag & Axis::X && alignOffsetGridFlag & Axis::X)
 				{
 					pos.x += rectOffset.x;
 				}
 
-				if (alignGridFlag & Axis::Y)
+				if (alignGridFlag & Axis::Y && alignOffsetGridFlag & Axis::Y)
 				{
 					pos.y += rectOffset.y;
 				}
@@ -1320,12 +1320,12 @@ namespace Orin
 
 			if (useAlignGridOffset)
 			{
-				if (alignGridFlag & Axis::X)
+				if (alignGridFlag & Axis::X && alignOffsetGridFlag & Axis::X)
 				{
 					res.x += alignGridOffset.x;
 				}
 
-				if (alignGridFlag & Axis::Y)
+				if (alignGridFlag & Axis::Y && alignOffsetGridFlag & Axis::Y)
 				{
 					res.y += alignGridOffset.y;
 				}

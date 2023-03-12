@@ -1802,7 +1802,7 @@ namespace Orin
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
 			ImGui::SameLine();
 
-			PushButton("Play", projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
+			PushButton("Play", 50.0f, projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
 
 			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F7"))
 			{
@@ -1816,8 +1816,8 @@ namespace Orin
 
 			ImGui::SameLine();
 
-			PushButton("2D", freeCamera.mode2D, [this]() { freeCamera.mode2D = true; });
-			PushButton("3D", !freeCamera.mode2D, [this]() { freeCamera.mode2D = false; });
+			PushButton("2D", 35.0f, freeCamera.mode2D, [this]() { freeCamera.mode2D = true; });
+			PushButton("3D", 35.0f, !freeCamera.mode2D, [this]() { freeCamera.mode2D = false; });
 
 			if (freeCamera.mode2D)
 			{
@@ -1842,12 +1842,12 @@ namespace Orin
 			{
 				auto* transform = gizmo.transform;
 
-				PushButton("Select", selectMode, [this]() { selectMode = true; });
+				PushButton("Select", 50.0f, selectMode, [this]() { selectMode = true; });
 
-				PushButton("Move", !selectMode && gizmo.mode == TransformMode::Move, [this]() { gizmo.mode = TransformMode::Move; selectMode = false; });
-				PushButton("Rotate", !selectMode && gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) { gizmo.mode = TransformMode::Rotate; selectMode = false; }});
-				PushButton("Scale", !selectMode && gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) { gizmo.mode = TransformMode::Scale; selectMode = false; }});
-				PushButton("Rect", !selectMode && gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) { gizmo.mode = TransformMode::Rectangle; selectMode = false; }});
+				PushButton("Move", 50.0f, !selectMode && gizmo.mode == TransformMode::Move, [this]() { gizmo.mode = TransformMode::Move; selectMode = false; });
+				PushButton("Rotate", 50.0f, !selectMode && gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) { gizmo.mode = TransformMode::Rotate; selectMode = false; }});
+				PushButton("Scale", 50.0f, !selectMode && gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) { gizmo.mode = TransformMode::Scale; selectMode = false; }});
+				PushButton("Rect", 50.0f, !selectMode && gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) { gizmo.mode = TransformMode::Rectangle; selectMode = false; }});
 
 				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
@@ -1883,9 +1883,9 @@ namespace Orin
 
 			if (freeCamera.mode2D)
 			{
-				PushButton("Snap", gizmo.useAlignGrid, [this]() { gizmo.useAlignGrid = !gizmo.useAlignGrid; });
+				PushButton("Snap", 40.0f, gizmo.useAlignGrid, [this]() { gizmo.useAlignGrid = !gizmo.useAlignGrid; });
 
-				PushButton("X", gizmo.alignGridFlag & Axis::X, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::X); });
+				PushButton("X", 30.0f, gizmo.alignGridFlag & Axis::X, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::X); });
 
 				ImGui::SetNextItemWidth(80.0f);
 				int value = (int)gizmo.alignGrid.x;
@@ -1894,7 +1894,7 @@ namespace Orin
 				gizmo.alignGrid.x = (float)value;
 				ImGui::SameLine();
 
-				PushButton("Y", gizmo.alignGridFlag & Axis::Y, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Y); });
+				PushButton("Y", 30.0f, gizmo.alignGridFlag & Axis::Y, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Y); });
 
 				ImGui::SetNextItemWidth(80.0f);
 				value = (int)gizmo.alignGrid.y;
@@ -1903,7 +1903,7 @@ namespace Orin
 				gizmo.alignGrid.y = (float)value;
 				ImGui::SameLine();
 
-				PushButton("Z", gizmo.alignGridFlag & Axis::Z, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Z); });
+				PushButton("Z", 30.0f, gizmo.alignGridFlag & Axis::Z, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Z); });
 
 				ImGui::SetNextItemWidth(80.0f);
 				value = (int)gizmo.alignGrid.z;
@@ -1914,10 +1914,9 @@ namespace Orin
 
 				if (gizmo.useAlignGrid)
 				{
-					PushButton("Offset", gizmo.useAlignGridOffset, [this]() { gizmo.useAlignGridOffset = !gizmo.useAlignGridOffset; });
+					PushButton("Offset", 50.0f, gizmo.useAlignGridOffset, [this]() { gizmo.useAlignGridOffset = !gizmo.useAlignGridOffset; });
 
-					ImGui::Text("X");
-					ImGui::SameLine();
+					PushButton("X ", 30.0f, gizmo.alignOffsetGridFlag & Axis::X, [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::X); });
 
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.x;
@@ -1926,8 +1925,7 @@ namespace Orin
 					gizmo.alignGridOffset.x = (float)value;
 					ImGui::SameLine();
 
-					ImGui::Text("Y");
-					ImGui::SameLine();
+					PushButton("Y ", 30.0f, gizmo.alignOffsetGridFlag& Axis::Y, [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::Y); });
 
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.y;
@@ -1936,8 +1934,7 @@ namespace Orin
 					gizmo.alignGridOffset.y = (float)value;
 					ImGui::SameLine();
 
-					ImGui::Text("Z");
-					ImGui::SameLine();
+					PushButton("Z ", 30.0f, gizmo.alignOffsetGridFlag & Axis::Z, [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::Z); });
 
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.z;

@@ -148,6 +148,7 @@ namespace Orin
 		bool useAlignGrid = false;
 		Axis alignGridFlag = Axis::XYZ;
 		Math::Vector3 alignGridOffset = 8.0f;
+		Axis alignOffsetGridFlag = Axis::XYZ;
 		bool useAlignGridOffset = false;
 
 		Gizmo();
