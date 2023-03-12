@@ -378,12 +378,14 @@ namespace Orin
 		{
 			auto* light = lights[i];
 			auto trans = light->GetTransform();
-			auto pos = Sprite::ToPixels(trans.GetGlobal().Pos());
+			auto mat = trans.GetGlobal();
+			auto rot = mat.GetRotation();
+			auto pos = Sprite::ToPixels(mat.Pos());
 			auto size = trans.size * 0.5f;
 
 			u_lights[index + 0] = { pos.x, pos.y, 150.0f, 1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
-			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, trans.rotation.z * Math::Radian, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
+			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, rot.z, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
 			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , 0.0f, 0.0f }; //arc, width
 
 			index += 4;
