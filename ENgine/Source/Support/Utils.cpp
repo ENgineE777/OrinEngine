@@ -63,6 +63,9 @@ namespace Orin::Utils
         WaitForSingleObject(pInfo.hProcess, INFINITE);
         TerminateProcess(pInfo.hProcess, 0);
 
+        CloseHandle(stdOutHandles[0]);
+        CloseHandle(stdOutHandles[1]);
+
         char buffer[2048];
         DWORD readBufferSize;
         BOOL res;
@@ -93,8 +96,6 @@ namespace Orin::Utils
             }
         }
 
-        CloseHandle(stdOutHandles[0]);
-        CloseHandle(stdOutHandles[1]);
         CloseHandle(pInfo.hProcess);
         CloseHandle(pInfo.hThread);
 
