@@ -35,7 +35,7 @@ namespace Orin::Utils
 
         SECURITY_ATTRIBUTES saAttr;
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
-        saAttr.bInheritHandle = false;
+        saAttr.bInheritHandle = true;
         saAttr.lpSecurityDescriptor = NULL;
 
         if (!CreatePipe(&stdOutHandles[0], &stdOutHandles[1], &saAttr, 0))
