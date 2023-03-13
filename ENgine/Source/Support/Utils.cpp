@@ -16,7 +16,7 @@ namespace Orin::Utils
     {
         result.clear();
 
-        std::array<char, 128> buffer;
+        /*std::array<char, 128> buffer;
         std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(command, "r"), _pclose);
 
         if (!pipe)
@@ -29,9 +29,9 @@ namespace Orin::Utils
             result.push_back(buffer.data());
         }
 
-        return true;
+        return true;*/
 
-        /*HANDLE stdOutHandles[2];
+        HANDLE stdOutHandles[2];
 
         SECURITY_ATTRIBUTES saAttr;
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
@@ -98,6 +98,6 @@ namespace Orin::Utils
         CloseHandle(pInfo.hProcess);
         CloseHandle(pInfo.hThread);
 
-        return res;*/
+        return res;
 	}
 }
