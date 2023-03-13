@@ -99,6 +99,14 @@ namespace Orin
 	void Sounds::SetMasterVolume(float volume)
 	{
 		masterVolume = volume;
+
+		FMOD::ChannelGroup* channelgroup;
+
+		if (system->getMasterChannelGroup(&channelgroup) == FMOD_OK)
+		{
+			channelgroup->setVolume(masterVolume);
+		}
+
 	}
 
 	float Sounds::GetMasterVolume()
