@@ -35,11 +35,18 @@ namespace Orin::Utils
 
         SECURITY_ATTRIBUTES saAttr;
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
-        saAttr.bInheritHandle = true;
+        saAttr.bInheritHandle = TRUE;
         saAttr.lpSecurityDescriptor = NULL;
 
         if (!CreatePipe(&stdOutHandles[0], &stdOutHandles[1], &saAttr, 0))
         {
+            return false;
+        }
+
+        if (!SetHandleInformation(stdOutHandles[0], HANDLE_FLAG_INHERIT, 0))
+        {
+            CloseHandle(stdOutHandles[0]);
+            CloseHandle(stdOutHandles[1]);
             return false;
         }
 
@@ -49,6 +56,7 @@ namespace Orin::Utils
         STARTUPINFOA startInfo;
         ZeroMemory(&startInfo, sizeof(STARTUPINFOA));
         startInfo.cb = sizeof(STARTUPINFOA);
+        startInfo.hStdError  = stdOutHandles[1];
         startInfo.hStdOutput = stdOutHandles[1];
         startInfo.dwFlags |= STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
         startInfo.wShowWindow = SW_HIDE;
@@ -57,13 +65,12 @@ namespace Orin::Utils
         {
             CloseHandle(stdOutHandles[0]);
             CloseHandle(stdOutHandles[1]);
-            return FALSE;
+            return false;
         }
 
         WaitForSingleObject(pInfo.hProcess, INFINITE);
         TerminateProcess(pInfo.hProcess, 0);
 
-        CloseHandle(stdOutHandles[0]);
         CloseHandle(stdOutHandles[1]);
 
         char buffer[2048];
@@ -95,6 +102,8 @@ namespace Orin::Utils
                 result.emplace_back(line);
             }
         }
+
+        CloseHandle(stdOutHandles[0]);
 
         CloseHandle(pInfo.hProcess);
         CloseHandle(pInfo.hThread);

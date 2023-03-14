@@ -55,7 +55,8 @@ namespace Orin
 
 		if (Utils::Execute(cmd.c_str(), cmdResult))
 		{
-			return (cmdResult.size() > 0 && strstr(cmdResult[0].c_str(), "opened for edit"));
+			return (cmdResult.size() > 0 && (strstr(cmdResult[0].c_str(), "opened for edit") ||
+			                                 strstr(cmdResult[0].c_str(), "opened for add")));
 		}
 
 		return false;
