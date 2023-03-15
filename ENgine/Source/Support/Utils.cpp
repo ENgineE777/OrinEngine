@@ -75,14 +75,15 @@ namespace Orin::Utils
 
         char buffer[2048];
         DWORD readBufferSize;
-        BOOL res;
-        if ((res = ReadFile(stdOutHandles[0], buffer, 2048, &readBufferSize, NULL)))
+        bool res;
+
+        if ((res = ReadFile(stdOutHandles[0], buffer, 2048, &readBufferSize, nullptr)))
         {
             buffer[readBufferSize] = '\0';
 
             eastl::string line;
 
-            for (int i = 0; i < readBufferSize; i++)
+            for (int i = 0; i < (int)readBufferSize; i++)
             {
                 char symbol = buffer[i];
 

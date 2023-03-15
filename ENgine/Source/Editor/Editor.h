@@ -193,7 +193,7 @@ namespace Orin
 		void SaveSettings();
 
 		template<typename Func>
-		void PushButton(const char* label, int size, bool pushed, Func callback)
+		void PushButton(const char* label, float size, bool pushed, Func callback)
 		{
 			bool needPopStyle = false;
 
