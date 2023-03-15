@@ -249,29 +249,6 @@ namespace Orin
 		GetBBox(vMin, vMax);
 		
 		return Math::IntersectBBoxRay(vMin, vMax, start, dir);
-
-		/*if (transform.objectType == ObjectType::Object2D)
-		{
-			auto mat = transform.GetGlobal();
-
-			Math::Vector3 corners[] = { mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x, transform.offset.y - 1.0f, 0.5f))),
-										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y - 1.0f, 0.5f))),
-										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(-transform.offset.x, transform.offset.y, 0.5f))),
-										mat.MulNormal(Sprite::ToUnits(transform.size * Math::Vector3(1.0f - transform.offset.x, transform.offset.y, 0.5f))) };
-
-			Math::Vector3 vmin = FLT_MAX;
-			Math::Vector3 vmax = FLT_MIN;
-
-			for (auto corner : corners)
-			{
-				vmin.Min(corner);
-				vmax.Max(corner);
-			}
-
-			return Math::IntersectBBoxRay(mat.Pos() + vmin, mat.Pos() + vmax, start, dir);
-		}
-
-		return Math::IntersectBBoxRay(transform.GetGlobal().Pos() - transform.size * 0.5f, transform.GetGlobal().Pos() + transform.size * 0.5f, start, dir);*/
 	}
 
 	void SceneEntity::GetBBox(Math::Vector3& vMin, Math::Vector3& vMax)
