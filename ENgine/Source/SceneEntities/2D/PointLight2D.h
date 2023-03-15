@@ -38,6 +38,8 @@ namespace Orin
 
 		void Init() override;
 		void Draw(float dt);
+
+		void GetBBox(Math::Vector3& vMin, Math::Vector3& vMax) override;
 	#endif
 	};
 }

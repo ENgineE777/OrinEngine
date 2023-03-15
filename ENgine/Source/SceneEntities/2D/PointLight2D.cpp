@@ -73,4 +73,16 @@ namespace Orin
 			editorDrawer.DrawSprite(editorDrawer.lightBulbTex, Math::Vector2(pos.x, pos.y) - Math::Vector2(size.x, -size.y) * 0.5f, size, 0.0f, 0.0f, COLOR_WHITE);
 		}
 	}
+
+	void PointLight2D::GetBBox(Math::Vector3& vMin, Math::Vector3& vMax)
+	{
+		auto mat = transform.GetGlobal();
+
+		float scale = 640.0f / Sprite::GetPixelsHeight();
+
+		auto size = Sprite::ToUnits(Math::Vector2((float)editorDrawer.lightBulbTex->GetWidth(), (float)editorDrawer.lightBulbTex->GetHeight()) / scale);
+
+		vMin = transform.GetGlobal().Pos() - size * 0.5f;
+		vMax = transform.GetGlobal().Pos() + size * 0.5f;
+	}
 }
