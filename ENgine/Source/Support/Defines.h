@@ -45,3 +45,13 @@ void operator delete[](void* ptr, const char* file, int line);
 #endif
 
 #define _FL_ __FILE__ , __LINE__
+
+namespace Orin
+{
+	template<typename T>
+	struct Optional
+	{
+		T value;
+		bool enabled;
+	};
+}

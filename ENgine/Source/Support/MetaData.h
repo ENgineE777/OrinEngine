@@ -44,6 +44,7 @@ namespace Orin
 			Boolean,
 			Integer,
 			Float,
+			FloatOptional,
 			String,
 			FileName,
 			Color,
@@ -66,6 +67,7 @@ namespace Orin
 			bool  boolean;
 			int   integer;
 			float flt;
+			Optional<float> floatOptional;
 			int   string;
 			float color[4];
 			float vector2[2];
@@ -270,6 +272,20 @@ namespace Orin
 
 #define FLOAT_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
 	BASE_PROP(className, classMember, defValue, strCatName, strPropName, Type::Float, flt, doxy_brief)
+
+#define FLOAT_OPTIONAL_PROP(className, classMember, defValue, strCatName, strPropName, doxy_brief)\
+	{\
+		Property prop;\
+		prop.offset = memberOFFSET(className, classMember);\
+		prop.type = Type::FloatOptional;\
+		prop.defvalue.floatOptional.value = defValue;\
+		prop.defvalue.floatOptional.enabled = false;\
+		prop.name = #classMember;\
+		prop.catName = strCatName;\
+		prop.propName = strPropName;\
+		prop.brief = doxy_brief;\
+		properties.push_back(prop);\
+	}
 
 #define BASE_STRING_PROP(className, classMember, defValue, strCatName, strPropName, tp)\
 	{\

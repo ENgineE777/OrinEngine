@@ -59,6 +59,13 @@ namespace Orin
 			*floatValue = 0.0f;
 		}
 		else
+		if (prop.type == Type::FloatOptional)
+		{
+			Optional<float>* floatValue = (Optional<float>*)dest;
+			floatValue->value = 0.0f;
+			floatValue->enabled = false;
+		}
+		else
 		if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
 		{
 			eastl::string* stringValue = (eastl::string*)dest;
@@ -141,6 +148,11 @@ namespace Orin
 		if (prop.type == Type::Float)
 		{
 			memcpy(dest, src, sizeof(float));
+		}
+		else
+		if (prop.type == Type::FloatOptional)
+		{
+			memcpy(dest, src, sizeof(Optional<float>));
 		}
 		else
 		if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
@@ -311,6 +323,11 @@ namespace Orin
 				memcpy(prop.value, &prop.defvalue.flt, sizeof(float));
 			}
 			else
+			if (prop.type == Type::FloatOptional)
+			{
+				memcpy(prop.value, &prop.defvalue.floatOptional, sizeof(Optional<float>));
+			}
+			else
 			if (prop.type == Type::String || prop.type == Type::FileName)
 			{
 				*((eastl::string*)prop.value) = defStrings[prop.defvalue.string];
@@ -419,6 +436,21 @@ namespace Orin
 				if (reader.Read(prop.name.c_str(), val))
 				{
 					memcpy(prop.value, &val, sizeof(float));
+				}
+			}
+			else
+			if (prop.type == Type::FloatOptional)
+			{
+				Optional<float> val;
+
+				if (reader.EnterBlock(prop.name.c_str()))
+				{
+					reader.Read("value", val.value);
+					reader.Read("enabled", val.enabled);
+
+					memcpy(prop.value, &val, sizeof(Optional<float>));
+
+					reader.LeaveBlock();
 				}
 			}
 			else
@@ -567,6 +599,18 @@ namespace Orin
 				writer.Write(prop.name.c_str(), *((float*)prop.value));
 			}
 			else
+			if (prop.type == Type::FloatOptional)
+			{
+				Optional<float>* val = (Optional<float>*)prop.value;
+
+				writer.StartBlock(prop.name.c_str());
+				
+				writer.Write("value", val->value);
+				writer.Write("enabled", val->enabled);
+				
+				writer.FinishBlock();
+			}
+			else
 			if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
 			{
 				writer.Write(prop.name.c_str(), ((eastl::string*)prop.value)->c_str());
@@ -708,6 +752,11 @@ namespace Orin
 			if (prop.type == Type::Float)
 			{
 				memcpy(prop.value, src, sizeof(float));
+			}
+			else
+			if (prop.type == Type::FloatOptional)
+			{
+				memcpy(prop.value, src, sizeof(Optional<float>));
 			}
 			else
 			if (prop.type == Type::String || prop.type == Type::EnumString || prop.type == Type::FileName)
@@ -1216,6 +1265,29 @@ namespace Orin
 							if (ImGui::InputFloat(propGuiID, (float*)prop.value))
 							{
 								prop.changed = true;
+							}
+						}
+						else
+						if (prop.type == Type::FloatOptional)
+						{
+							Optional<float>* val = (Optional<float>*)prop.value;
+
+							if (ImGui::Checkbox(propGuiID, (bool*)&val->enabled))
+							{
+								prop.changed = true;
+							}
+
+							if (val->enabled)
+							{
+								ImGui::SameLine();
+
+								char propGuiIDVal[256];
+								StringUtils::Printf(propGuiIDVal, 256, "###%s%s%iVal", prop.propName.c_str(), guiID, i);
+
+								if (ImGui::InputFloat(propGuiIDVal, (float*)&val->value))
+								{
+									prop.changed = true;
+								}
 							}
 						}
 						else
