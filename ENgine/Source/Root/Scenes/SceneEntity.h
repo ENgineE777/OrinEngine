@@ -347,31 +347,12 @@ namespace Orin
 		template<class T>
 		void AddDelegate(eastl::string name, void* owner, T callback)
 		{
-			auto typeHash = typeid(T).hash_code();
-
-			bool found = false;
-
-			for (auto& deligate : delegates)
-			{
-				if (deligate.typeHash == typeHash && StringUtils::IsEqual(deligate.name.c_str(), name.c_str()))
-				{
-					found = true;
-					break;
-				}
-			}
-
-			if (!found)
-			{
-				delegates.push_back(Delegate());
-
-				Delegate& entry = delegates.back();
-
-				entry.name = name;
-				entry.typeHash = typeHash;
-				entry.owner = owner;
-				T* call = (T*)entry.data;
-				*call = callback;
-			}
+			Delegate& entry = delegates.emplace_back();
+			entry.name = name;
+			entry.typeHash = typeid(T).hash_code();
+			entry.owner = owner;
+			T* call = (T*)entry.data;
+			*call = callback;
 		}
 
 		/**
