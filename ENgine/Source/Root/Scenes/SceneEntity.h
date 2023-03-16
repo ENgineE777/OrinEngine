@@ -55,13 +55,15 @@ namespace Orin
 		bool edited = false;
 #endif
 
-		struct Holder
+		struct Delegate
 		{
+			eastl::string name;
 			std::size_t typeHash;
+			void* owner;
 			uint8_t data[256];
 		};
 
-		eastl::map<eastl::string, Holder> callbacks;
+		eastl::vector<Delegate> delegates;
 
 	public:
 
@@ -343,18 +345,31 @@ namespace Orin
 			\return Return pointer to a child
 		*/
 		template<class T>
-		void RegisterCallback(eastl::string name, T callback)
+		void AddDelegate(eastl::string name, void* owner, T callback)
 		{
 			auto typeHash = typeid(T).hash_code();
 
-			auto iter = callbacks.find(name);
+			bool found = false;
 
-			if (iter == callbacks.end())
+			for (auto& deligate : delegates)
 			{
-				Holder& holder = callbacks[name];
+				if (deligate.typeHash == typeHash && StringUtils::IsEqual(deligate.name.c_str(), name.c_str()))
+				{
+					found = true;
+					break;
+				}
+			}
 
-				holder.typeHash = typeHash;
-				T* call = (T*)holder.data;
+			if (!found)
+			{
+				delegates.push_back(Delegate());
+
+				Delegate& entry = delegates.back();
+
+				entry.name = name;
+				entry.typeHash = typeHash;
+				entry.owner = owner;
+				T* call = (T*)entry.data;
 				*call = callback;
 			}
 		}
@@ -364,22 +379,33 @@ namespace Orin
 			\param[in] name Name of a callback
 			\return Return a callback
 		*/
-		template<class T>
-		T GetCallback(eastl::string name)
+		template<class T, typename... Args>
+		void CallDelegates(eastl::string name, Args&&... args)
 		{
 			auto typeHash = typeid(T).hash_code();
 
-			auto iter = callbacks.find(name);
-
-			if (iter != callbacks.end())
+			for (auto& delegate : delegates)
 			{
-				if ((*iter).second.typeHash == typeHash)
+				if (delegate.typeHash != typeHash || !StringUtils::IsEqual(delegate.name.c_str(), name.c_str()))
 				{
-					return *((T*)((*iter).second.data));
+					continue;
+				}
+
+				T callable = *((T*)delegate.data);
+				callable(eastl::forward<Args>(args)...);
+			}
+		}
+
+		void DeleteDeligates(void* owner)
+		{
+			for (int index = 0; index < delegates.size(); index++)
+			{
+				if (delegates[index].owner == owner)
+				{
+					delegates.erase(delegates.begin() + index);
+					index--;
 				}
 			}
-
-			return T();
 		}
 
 		eastl::vector<SceneEntityRefBase*> referenced;

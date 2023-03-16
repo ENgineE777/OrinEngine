@@ -25,14 +25,14 @@ namespace Orin
 			this->OnContactStart(index, entity, contactIndex);
 		};
 
-		RegisterCallback<eastl::function<void(int, SceneEntity*, int)>>("OnContactStart", onContactStart);
+		AddDelegate<eastl::function<void(int, SceneEntity*, int)>>("OnContactStart", this, onContactStart);
 
 		auto onConstactEnd = [this](int index, SceneEntity* entity, int contactIndex)
 		{
 			this->OnContactEnd(index, entity, contactIndex);
 		};
 
-		RegisterCallback<eastl::function<void(int, SceneEntity*, int)>>("OnContactEnd", onConstactEnd);
+		AddDelegate<eastl::function<void(int, SceneEntity*, int)>>("OnContactEnd", this, onConstactEnd);
 	}
 
 	void PhysTriger3D::ApplyProperties()

@@ -367,12 +367,7 @@ namespace Orin
 	{
 		eastl::function<void(int, SceneEntity*, int)> callback;
 
-		callback = object->GetCallback<eastl::function<void(int, SceneEntity*, int)>>(callback_name);
-
-		if (callback)
-		{
-			callback(index, contact_object, contact_index);
-		}
+		object->CallDelegates<eastl::function<void(int, SceneEntity*, int)>>(callback_name, index, contact_object, contact_index);
 	}
 
 	bool PhysScene::RayCastBox(RaycastDesc& desc, Math::Matrix boxTrans, Math::Vector3 boxHalfSize)
