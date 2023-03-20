@@ -442,6 +442,11 @@ namespace Orin
 			return entity;
 		}
 
+		T* Get() const
+		{
+			return entity;
+		}
+
 		SceneEntity* GetSceneEntity() override { return entity; };
 	};
 
