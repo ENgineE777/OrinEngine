@@ -107,12 +107,12 @@ namespace Orin
 
 	AssetTextureRef AssetTileSet::GetTileTexture(int index)
 	{
-		return index != -1 ? tiles[index].texture : AssetTextureRef();
+		return index >= 0 && index < tiles.size() ? tiles[index].texture : AssetTextureRef();
 	}
 
 	float AssetTileSet::GetTileRotation(int index)
 	{
-		return index != -1 ? (float)tiles[index].rotation : 0.0f;
+		return index >= 0 && index < tiles.size() ? (float)tiles[index].rotation : 0.0f;
 	}
 
 	void AssetTileSet::SaveMetaData(JsonWriter& saver)
