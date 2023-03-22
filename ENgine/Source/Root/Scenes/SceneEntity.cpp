@@ -164,9 +164,14 @@ namespace Orin
 			child->parent = this;
 
 			child->GetTransform().parent = &transform;
-			transform.childs.push_back(&child->transform);
 
 			child->PostLoad();
+		}
+
+		transform.childs.resize(childs.size());
+		for (int i = 0, sz = (int)childs.size(); i < sz; ++i)
+		{
+			transform.childs[i] = &childs[i]->transform;
 		}
 	}
 
