@@ -132,7 +132,7 @@ namespace Orin
 
 				if (prefab)
 				{
-					entity = prefab->CreateInstance(this);
+					entity = prefab->CreateInstance(this, false);
 				}
 			}
 			else

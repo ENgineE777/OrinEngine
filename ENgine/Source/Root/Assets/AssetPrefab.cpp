@@ -20,7 +20,7 @@ namespace Orin
 		scene->AddEntity(scene->CreateEntity(type, false));
 	}
 
-	SceneEntity* AssetPrefab::CreateInstance(Scene* sceneOwner)
+	SceneEntity* AssetPrefab::CreateInstance(Scene* sceneOwner, bool callPostLoad)
 	{
 		auto& entities = GetScene()->GetEntities();
 		SceneEntity* instance = nullptr;
@@ -34,7 +34,6 @@ namespace Orin
 			instance = sceneOwner->CreateEntity(src->className, true);
 
 			instance->Copy(src);
-			instance->PostLoad();
 
 			instance->prefabRef = AssetPrefabRef(this, _FL_);
 
@@ -43,7 +42,13 @@ namespace Orin
 			instanceMapping[src->GetUID()] = instance;
 
 			CopyChilds(src, instance, sceneOwner);
-			instance->UpdateVisibility();
+
+			if (callPostLoad)
+			{
+				instance->PostLoad();
+			}
+
+			instance->UpdateVisibility();			
 
 			FixReferences(instance);
 

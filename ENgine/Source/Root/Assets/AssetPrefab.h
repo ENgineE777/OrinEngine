@@ -23,12 +23,12 @@ namespace Orin
 
 		void SetRootEntityType(const char* type);
 
-		SceneEntity* CreateInstance(Scene* sceneOwner);
+		SceneEntity* CreateInstance(Scene* sceneOwner, bool callPostLoad = true);
 
 		template<class T>
-		T* CreateInstance(Scene* sceneOwner)
+		T* CreateInstance(Scene* sceneOwner, bool callPostLoad = true)
 		{
-			auto* entity = CreateInstance(sceneOwner);
+			auto* entity = CreateInstance(sceneOwner, callPostLoad);
 
 			T* casted = dynamic_cast<T*>(entity);
 

@@ -362,7 +362,7 @@ namespace Orin
 
 			if (child->prefabInstance)
 			{
-				childCopy = child->prefabRef->CreateInstance(sceneOwner);
+				childCopy = child->prefabRef->CreateInstance(sceneOwner, false);
 			}
 			else
 			{
@@ -371,7 +371,6 @@ namespace Orin
 
 			childCopy->SetParent(copy, nullptr);
 			childCopy->Copy(child);
-			childCopy->PostLoad();
 
 			instanceMapping[child->GetUID()] = childCopy;
 
@@ -495,7 +494,7 @@ namespace Orin
 
 		if (soucre->prefabInstance)
 		{
-			copy = soucre->prefabRef->CreateInstance(soucre->GetScene());
+			copy = soucre->prefabRef->CreateInstance(soucre->GetScene(), false);
 		}
 		else
 		{
@@ -514,10 +513,10 @@ namespace Orin
 		}
 
 		copy->Copy(soucre);
-		copy->PostLoad();
 
 		CopyChilds(soucre, copy, scene);
 
+		copy->PostLoad();
 		copy->UpdateVisibility();
 
 		SelectEntity(copy, true);
@@ -761,7 +760,7 @@ namespace Orin
 
 			if (entity->prefabInstance)
 			{
-				copy = entity->prefabRef->CreateInstance(scene);
+				copy = entity->prefabRef->CreateInstance(scene, false);
 			}
 			else
 			{
@@ -770,11 +769,11 @@ namespace Orin
 
 			scene->AddEntity(copy, nullptr);
 
-			copy->Copy(entity);
-			copy->PostLoad();
+			copy->Copy(entity);		
 
 			CopyChilds(entity, copy, scene);
 
+			copy->PostLoad();
 			copy->UpdateVisibility();
 		}
 	}
