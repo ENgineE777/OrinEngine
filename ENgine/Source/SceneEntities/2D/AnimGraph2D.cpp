@@ -18,7 +18,7 @@ namespace Orin
 	void AnimGraph2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY | RectMoveXY | RectAnchorn;
+		transform.transformFlag = (TransformFlag)(TransformFlag::SpriteTransformFlags ^ TransformFlag::RectSizeXY);
 
 		Tasks(true)->AddTask(0, this, (Object::Delegate)&AnimGraph2D::Draw);
 	}

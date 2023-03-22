@@ -24,7 +24,7 @@ namespace Orin
 	void SpriteEntity::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = SpriteTransformFlags;
+		transform.transformFlag = (TransformFlag)(TransformFlag::SpriteTransformFlags ^ TransformFlag::RectSizeXY);
 	}
 
 	void SpriteEntity::ApplyProperties()
