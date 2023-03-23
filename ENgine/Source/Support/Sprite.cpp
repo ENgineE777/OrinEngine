@@ -1,6 +1,7 @@
 ﻿
 #include "Sprite.h"
 #include "Root/Root.h"
+#include "stb_sprintf.h"
 
 namespace Orin
 {
@@ -212,6 +213,58 @@ namespace Orin
 		DebugLine(Math::Vector2(p2.x, p1.y), Math::Vector2(p2.x, p2.y), color);
 		DebugLine(Math::Vector2(p2.x, p2.y), Math::Vector2(p1.x, p2.y), color);
 		DebugLine(Math::Vector2(p1.x, p2.y), Math::Vector2(p1.x, p1.y), color);
+	}
+
+	void Sprite::DebugBox(Math::Matrix m, Math::Vector3 size, Color color)
+	{
+		Math::Vector3 halfSize = size * 0.5f;
+		Math::Vector3 leftTop = m * (halfSize * Math::Vector3{ -1.f,  1.f, 0.f });
+		Math::Vector3 bottomRight = m * (halfSize * Math::Vector3{ 1.f, -1.f, 0.f });
+
+		DebugLine(leftTop, leftTop + m.MulNormal(Math::Vector3{ size.x, 0.f, 0.f }), color);
+		DebugLine(leftTop + m.MulNormal(Math::Vector3{ size.x, 0.f, 0.f }), bottomRight, color);
+		DebugLine(bottomRight, leftTop + m.MulNormal(Math::Vector3{ 0.f, -size.y, 0.f }), color);
+		DebugLine(leftTop + m.MulNormal(Math::Vector3{ 0.f, -size.y, 0.f }), leftTop, color);
+	}
+
+	void Sprite::DebugText(const Math::Vector2 pos, Color color, const char* text, ...)
+	{
+		char buffer[256];
+		va_list args;
+		va_start(args, text);
+		stbsp_vsnprintf(buffer, 256, text, args);
+		va_end(args);
+
+		float scale = root.render.GetDevice()->GetHeight() / _pixelsHeight;
+
+		auto screenPos = (_camPos - pos) * scale * _zoom;
+		
+		screenPos.x = _halfScreenSize.x * scale - screenPos.x;
+		screenPos.y = 2.0f * _halfScreenSize.y * scale - (_halfScreenSize.y * scale - screenPos.y);
+
+		root.render.DebugPrintText({ screenPos.x, screenPos.y }, ScreenCorner::LeftTop, color, buffer);
+	}
+
+	void Sprite::DebugText(int line, const char* text, ...)
+	{
+		char buffer[256];
+		va_list args;
+		va_start(args, text);
+		stbsp_vsnprintf(buffer, 256, text, args);
+		va_end(args);
+
+		root.render.DebugPrintText({ 10.f, 10.0f + 20.f * float(line) }, ScreenCorner::LeftTop, COLOR_GREEN, buffer);
+	}
+
+	void Sprite::DebugTextBottom(int line, const char* text, ...)
+	{
+		char buffer[256];
+		va_list args;
+		va_start(args, text);
+		stbsp_vsnprintf(buffer, 256, text, args);
+		va_end(args);
+
+		root.render.DebugPrintText({ 10.f, 10.0f + 20.f * float(line) }, ScreenCorner::LeftBottom, COLOR_GREEN, buffer);
 	}
 
 	void Sprite::Release()

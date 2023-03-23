@@ -85,6 +85,11 @@ namespace Orin
 		static void DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color);
 		static void DebugSphere(const Math::Vector3& pos, float radius, const Color& color);
 		static void DebugRect(const Math::Vector2& p1, const Math::Vector2& p2, Color color);
+		static void DebugBox(Math::Matrix m, Math::Vector3 size, Color color);
+
+		static void DebugText(const Math::Vector2 pos, Color color, const char* text, ...);
+		static void DebugText(int line, const char* text, ...);
+		static void DebugTextBottom(int line, const char* text, ...);
 
 		static void Release();
 #endif
