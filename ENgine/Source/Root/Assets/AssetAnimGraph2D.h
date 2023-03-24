@@ -107,8 +107,6 @@ namespace Orin
 		void OnMouseMove(Math::Vector2 ms) override;
 		void OnLeftMouseDown() override;
 		void OnLeftMouseUp() override;
-		void OnMiddleMouseDown() override;
-		void OnMiddleMouseUp() override;
 		#endif
 	};
 

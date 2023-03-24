@@ -3,6 +3,7 @@
 
 #ifdef ORIN_EDITOR
 #include "Editor/EditorDrawer.h"
+#include "Editor/Editor.h"
 #include "imgui.h"
 #endif
 
@@ -518,6 +519,12 @@ namespace Orin
 		{
 			ImGuiIO& io = ImGui::GetIO();
 			camZoom = Math::Clamp(camZoom + io.MouseWheel * 0.5f, 0.4f, 3.0f);
+
+			if (drag == DragMode::None || drag == DragMode::Field)
+			{
+				drag = root.controls.GetAliasState(editor.freeCamera.alias_move2d_active, AliasAction::Pressed) ? DragMode::Field : DragMode::None;
+			}
+
 		}
 
 		if (ImGui::BeginPopupContextItem("AnimGraph2FContext"))
@@ -707,16 +714,6 @@ namespace Orin
 			Save();
 		}
 
-		drag = DragMode::None;
-	}
-
-	void AssetAnimGraph2D::OnMiddleMouseDown()
-	{
-		drag = DragMode::Field;
-	}
-
-	void AssetAnimGraph2D::OnMiddleMouseUp()
-	{
 		drag = DragMode::None;
 	}
 	#endif

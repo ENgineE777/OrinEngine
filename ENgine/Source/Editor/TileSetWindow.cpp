@@ -6,6 +6,7 @@
 
 #include "Root/Root.h"
 
+#include "Editor/Editor.h"
 #include "Editor/EditorDrawer.h"
 
 #include "imgui.h"
@@ -365,9 +366,11 @@ namespace Orin
 		{
 			OnLeftMouseDown();
 			viewportCaptured = true;
-		}
-		else
-		if (imageFocused && vireportHowered && ImGui::IsMouseClicked(2))
+		}		
+
+		root.controls.SetFocused(GetFocus() == editor.hwnd && ImGui::IsWindowFocused());
+
+		if (viewportCaptured && imageFocused && vireportHowered && root.controls.GetAliasState(editor.freeCamera.alias_move2d_active, AliasAction::Pressed))
 		{
 			drag = Drag::DragField;
 			viewportCaptured = true;

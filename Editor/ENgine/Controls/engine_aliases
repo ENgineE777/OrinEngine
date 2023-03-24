@@ -30,7 +30,7 @@
 			"name" : "FreeCamera.MOVE2D_ACTIVE",
 			"AliasesRef" : [
 				{ "names" : ["MS_BTN2"] },
-				{ "names" : ["KEY_LCONTROL", "MS_BTN0"] }
+				{ "names" : ["KEY_LALT", "MS_BTN0"] }
 			]
 		},
 		{

@@ -26,6 +26,8 @@ namespace Orin
 		friend class FreeCamera;
 		friend class EditorDrawer;
 		friend class Root;
+		friend class SpriteWindow;
+		friend class TileSetWindow;
 
 		struct ProjectEntry
 		{
