@@ -238,6 +238,7 @@ namespace Orin
 			tile.x = x;
 			tile.y = y;
 			tile.texture = texture;
+			tile.texture.sliceIndex = sliseIndex;
 
 			tileSet->tiles.push_back(tile);
 		}
