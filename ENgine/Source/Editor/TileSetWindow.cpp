@@ -371,9 +371,9 @@ namespace Orin
 
 		root.controls.SetFocused(GetFocus() == editor.hwnd && ImGui::IsWindowFocused());
 
-		if (viewportCaptured && imageFocused && vireportHowered && root.controls.GetAliasState(editor.freeCamera.alias_move2d_active, AliasAction::Pressed))
+		if (imageFocused && vireportHowered && (drag == Drag::DragNone || drag == Drag::DragField))
 		{
-			drag = Drag::DragField;
+			drag = root.controls.GetAliasState(editor.freeCamera.alias_move2d_active, AliasAction::Pressed) ? Drag::DragField : Drag::DragNone;
 			viewportCaptured = true;
 		}
 
