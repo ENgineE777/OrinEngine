@@ -211,6 +211,11 @@ namespace Orin
 	{
 
 	}
+
+	bool Asset::BlockFreeCamera()
+	{
+		return false;
+	}
 	#endif
 
 	void Asset::Reload()

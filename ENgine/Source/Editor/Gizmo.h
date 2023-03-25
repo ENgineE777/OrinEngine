@@ -12,6 +12,7 @@ namespace Orin
 {
 	enum class TransformMode
 	{
+		None,
 		Move,
 		Scale,
 		Rotate,
@@ -135,6 +136,7 @@ namespace Orin
 
 		Math::Vector3 GetGlobalPos();
 		void SetGlobalPos(Math::Vector3 pos);
+		bool IsValidMode();
 
 	public:
 

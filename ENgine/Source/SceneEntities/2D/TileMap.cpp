@@ -495,6 +495,11 @@ namespace Orin
 
 	void TileMap::OnLeftMouseDown()
 	{
+		if (!editor.InSelectMode())
+		{
+			return;
+		}
+
 		if (tileSet)
 		{
 			changed = false;
@@ -574,6 +579,11 @@ namespace Orin
 
 	bool TileMap::OnRightMouseDown()
 	{
+		if (!editor.InSelectMode())
+		{
+			return false;
+		}
+
 		changed = false;
 		savedTiles = tiles;
 
@@ -606,6 +616,11 @@ namespace Orin
 		{
 			editor.AddAction(new TileMapAction(this, savedTiles, savedSelectedTiles, tiles, tilesSelected));
 		}
+	}
+
+	bool TileMap::BlockFreeCamera()
+	{
+		return IsEditMode();
 	}
 #endif
 }

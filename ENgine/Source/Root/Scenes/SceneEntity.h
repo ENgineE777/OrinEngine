@@ -231,6 +231,8 @@ namespace Orin
 		virtual void OnRightMouseUp();
 		virtual	void OnMiddleMouseDown();
 		virtual void OnMiddleMouseUp();
+
+		virtual bool BlockFreeCamera();
 #endif
 		static void OpenSourcePrefab(void* owner);
 		static void FillLayersList(eastl::vector<eastl::string>& names);

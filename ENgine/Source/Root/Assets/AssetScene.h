@@ -12,6 +12,8 @@ namespace Orin
 		Scene* scene = nullptr;
 		eastl::map<uint32_t, SceneEntity*> instanceMapping;
 
+		float rmbPresesd = 0.0f;
+
 	public:
 
 		uint32_t selectedEntityID = -1;
@@ -64,6 +66,7 @@ namespace Orin
 		void OnRightMouseUp() override;
 		void OnMiddleMouseDown() override;
 		void OnMiddleMouseUp() override;
+		bool BlockFreeCamera() override;
 #endif
 
 		void Release() override;
@@ -74,7 +77,6 @@ namespace Orin
 		bool allowSceneDropTraget = true;
 		bool isPrefab = false;
 		bool inCreatingInstance = false;
-		bool blockPopupInViewport = true;
 		SceneEntity* selectedEntity = nullptr;
 		int underSelectionIndex;
 		Math::Vector3 prevMultislectPos;

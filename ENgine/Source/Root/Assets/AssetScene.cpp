@@ -737,7 +737,12 @@ namespace Orin
 			}
 		}
 
-		if (!blockPopupInViewport)
+		if (rmbPresesd >= 0.0f)
+		{
+			rmbPresesd += root.GetDeltaTime();
+		}
+
+		if (rmbPresesd < 0.2f)
 		{
 			SceneTreePopup(true);
 		}
@@ -922,7 +927,7 @@ namespace Orin
 		dir.z = v.x * invView._13 + v.y * invView._23 + v.z * invView._33;
 		dir.Normalize();
 
-		if (root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed))
+		if (editor.InSelectMode() || (!editor.InSelectMode() && root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed)))
 		{
 			CheckSelection({ (float)mx, (float)my }, invView.Pos(), dir);
 
@@ -999,13 +1004,11 @@ namespace Orin
 
 	void AssetScene::OnRightMouseDown()
 	{
-		if (selectedEntity)
+		rmbPresesd = 0.0f;
+
+		if (selectedEntity && selectedEntity->OnRightMouseDown())
 		{
-			blockPopupInViewport = selectedEntity->OnRightMouseDown();
-		}
-		else
-		{
-			blockPopupInViewport = false;
+			rmbPresesd = 10.0f;
 		}
 	}
 
@@ -1015,6 +1018,8 @@ namespace Orin
 		{
 			selectedEntity->OnRightMouseUp();
 		}
+
+		rmbPresesd = rmbPresesd < 0.2f ? -1.0f : 10.0f;
 	}
 
 	void AssetScene::OnMiddleMouseDown()
@@ -1031,6 +1036,11 @@ namespace Orin
 		{
 			selectedEntity->OnMiddleMouseUp();
 		}
+	}
+
+	bool AssetScene::BlockFreeCamera()
+	{
+		return selectedEntity ? selectedEntity->BlockFreeCamera() : false;
 	}
 #endif
 

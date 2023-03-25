@@ -13,6 +13,13 @@ namespace Orin
 	{
 	public:
 
+		enum UpdateMode
+		{
+			OnlyTransform,
+			Normal,
+			Drag
+		};
+
 		Math::Vector2 angles;
 		Math::Vector3 pos;
 		Math::Matrix view;
@@ -27,6 +34,7 @@ namespace Orin
 		int alias_strafe;
 		int alias_fast;
 		int alias_move2d_active;
+		int alias_move2d_active_drag;
 		int alias_move2d_zoom;
 		int alias_rotate_active;
 		int alias_rotate_x;
@@ -45,7 +53,7 @@ namespace Orin
 
 		void Init();
 
-		void Update(float dt, bool viewportFocused);
+		void Update(float dt, UpdateMode mode);
 
 		void ClampZoom2D();
 	};

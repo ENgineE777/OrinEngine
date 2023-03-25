@@ -16,6 +16,7 @@ namespace Orin
 		alias_strafe = root.controls.GetAlias("FreeCamera.MOVE_STRAFE");
 		alias_fast = root.controls.GetAlias("FreeCamera.MOVE_FAST");
 		alias_move2d_active = root.controls.GetAlias("FreeCamera.MOVE2D_ACTIVE");
+		alias_move2d_active_drag = root.controls.GetAlias("FreeCamera.MOVE2D_ACTIVE_DRAG");
 		alias_move2d_zoom = root.controls.GetAlias("FreeCamera.MOVE2D_ZOOM");
 		alias_rotate_active = root.controls.GetAlias("FreeCamera.ROTATE_ACTIVE");
 		alias_rotate_x = root.controls.GetAlias("FreeCamera.ROTATE_X");
@@ -23,13 +24,13 @@ namespace Orin
 		alias_reset_view = root.controls.GetAlias("FreeCamera.RESET_VIEW");
 	}
 
-	void FreeCamera::Update(float dt, bool viewportFocused)
+	void FreeCamera::Update(float dt, UpdateMode mode)
 	{
-		if (viewportFocused)
+		if (mode != UpdateMode::OnlyTransform)
 		{
 			if (mode2D)
 			{
-				if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed))
+				if (root.controls.GetAliasState(mode == UpdateMode::Drag ? alias_move2d_active_drag : alias_move2d_active, AliasAction::Pressed))
 				{
 					float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
 					pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;

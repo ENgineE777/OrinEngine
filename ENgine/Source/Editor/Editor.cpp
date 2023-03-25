@@ -246,6 +246,11 @@ namespace Orin
 		}
 	}
 
+	bool Editor::InSelectMode()
+	{
+		return editMode == EditMode::Select;
+	}
+
 	void Editor::SetupImGUI()
 	{
 		IMGUI_CHECKVERSION();
@@ -583,6 +588,9 @@ namespace Orin
 
 				vireportHowered = ImGui::IsItemHovered();
 
+				viewportFocused = (projectRunning && project.runningInFullscreen) ? true : ((GetFocus() == hwnd && ImGui::IsWindowFocused()) | vireportHowered);
+				root.controls.SetFocused(viewportFocused);
+
 				if (vireportHowered)
 				{
 					if (projectRunning && project.hideCursor)
@@ -590,10 +598,7 @@ namespace Orin
 						ImGui::SetMouseCursor(ImGuiMouseCursor_None);
 					}
 
-					if (ImGui::IsMouseClicked(1) || ImGui::IsMouseClicked(2) || fabsf(io.MouseWheel > 0.01f))
-					{
-						ImGui::SetWindowFocus();
-					}
+					ImGui::SetWindowFocus();
 
 					if (viewportFocused)
 					{
@@ -604,10 +609,7 @@ namespace Orin
 								selectedEditAsset->OnLeftMouseDown();
 							}
 
-							if (!selectMode)
-							{
-								gizmo.OnLeftMouseDown();
-							}
+							gizmo.OnLeftMouseDown();
 
 							viewportCaptured = ViewportCature::LeftButton;
 						}
@@ -634,10 +636,7 @@ namespace Orin
 					}
 				}
 
-				if (!selectMode)
-				{
-					gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
-				}
+				gizmo.OnMouseMove(Math::Vector2((float)viewportPos.x, (float)viewportPos.y));
 
 				if (selectedEditAsset)
 				{
@@ -647,10 +646,7 @@ namespace Orin
 
 				if (viewportCaptured == ViewportCature::LeftButton && ImGui::IsMouseReleased(0))
 				{
-					if (!selectMode)
-					{
-						gizmo.OnLeftMouseUp();
-					}
+					gizmo.OnLeftMouseUp();
 
 					if (selectedEditAsset)
 					{
@@ -1659,6 +1655,18 @@ namespace Orin
 		projectRunning = false;
 	}
 
+	void Editor::ModeButtonWithHotkey(const char* name, const char* hotKey, EditMode setMode, TransformMode transMode)
+	{
+		auto swicthMode = [this, setMode, transMode]() { editMode = setMode;  gizmo.mode = transMode; };
+
+		PushButton(name, 50.0f, editMode == setMode, swicthMode);
+
+		if (root.controls.DebugKeyPressed(hotKey))
+		{
+			swicthMode();
+		}
+	}
+
 	bool Editor::ShowEditor()
 	{
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
@@ -1838,16 +1846,13 @@ namespace Orin
 			ImGui::Separator();
 			ImGui::SameLine();
 
-			if (gizmo.IsEnabled())
 			{
-				auto* transform = gizmo.transform;
-
-				PushButton("Select", 50.0f, selectMode, [this]() { selectMode = true; });
-
-				PushButton("Move", 50.0f, !selectMode && gizmo.mode == TransformMode::Move, [this]() { gizmo.mode = TransformMode::Move; selectMode = false; });
-				PushButton("Rotate", 50.0f, !selectMode && gizmo.mode == TransformMode::Rotate, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RotateXYZ) { gizmo.mode = TransformMode::Rotate; selectMode = false; }});
-				PushButton("Scale", 50.0f, !selectMode && gizmo.mode == TransformMode::Scale, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::ScaleXYZ || transform->transformFlag & TransformFlag::SizeXYZ) { gizmo.mode = TransformMode::Scale; selectMode = false; }});
-				PushButton("Rect", 50.0f, !selectMode && gizmo.mode == TransformMode::Rectangle, [this, transform]() { if (!transform || transform->transformFlag & TransformFlag::RectFull) { gizmo.mode = TransformMode::Rectangle; selectMode = false; }});
+				ModeButtonWithHotkey("Select", "KEY_Q", EditMode::Select, TransformMode::None);
+				ModeButtonWithHotkey("Drag", "KEY_W", EditMode::DragFiled, TransformMode::None);
+				ModeButtonWithHotkey("Move", "KEY_E", EditMode::Move, TransformMode::Move);
+				ModeButtonWithHotkey("Rotate", "KEY_R", EditMode::Rotate, TransformMode::Rotate);
+				ModeButtonWithHotkey("Scale", "KEY_T", EditMode::Scale, TransformMode::Scale);
+				ModeButtonWithHotkey("Rect", "KEY_Y", EditMode::Rectangle, TransformMode::Rectangle);
 
 				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
@@ -1858,6 +1863,8 @@ namespace Orin
 
 				ImGui::Separator();
 				ImGui::SameLine();
+
+				auto* transform = gizmo.transform;
 
 				if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
 				{
@@ -2283,12 +2290,12 @@ namespace Orin
 
 		float dt = root.GetDeltaTime();
 
-		viewportFocused = (projectRunning && project.runningInFullscreen) ? true : GetFocus() == hwnd && ImGui::IsWindowFocused();
-		root.controls.SetFocused(viewportFocused);
-
-		if (viewportFocused)
+		if (viewportFocused && !projectRunning)
 		{
-			editorDrawer.DrawWindowBorder();
+			if (project.runningInFullscreen)
+			{
+				editorDrawer.DrawWindowBorder();
+			}
 
 			if (root.controls.DebugHotKeyPressed("KEY_LCONTROL", "KEY_LSHIFT", "KEY_Z"))
 			{
@@ -2303,12 +2310,21 @@ namespace Orin
 
 		if (!projectRunning)
 		{
-			 freeCamera.Update(dt, viewportFocused);
+			FreeCamera::UpdateMode mode = FreeCamera::UpdateMode::OnlyTransform;
 
-			if (!selectMode)
+			if (viewportFocused)
 			{
-				gizmo.Render();
+				mode = (editMode == EditMode::DragFiled) ? FreeCamera::UpdateMode::Drag : FreeCamera::UpdateMode::Normal;
+
+				if (InSelectMode() && selectedEditAsset && selectedEditAsset->BlockFreeCamera())
+				{
+					mode = FreeCamera::UpdateMode::OnlyTransform;
+				}
 			}
+				
+			freeCamera.Update(dt, mode);
+
+			gizmo.Render();
 
 			if (root.controls.DebugHotKeyPressed("KEY_LCONTROL", "KEY_S"))
 			{

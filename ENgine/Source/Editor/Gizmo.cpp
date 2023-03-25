@@ -943,6 +943,31 @@ namespace Orin
 		transform->SetGlobal(tr);
 	}
 
+	bool Gizmo::IsValidMode()
+	{
+		if (mode == TransformMode::None || !transform)
+		{
+			return false;
+		}
+
+		if (mode == TransformMode::Rotate && !transform->transformFlag & TransformFlag::RotateXYZ)
+		{
+			return false;
+		}
+
+		if (mode == TransformMode::Scale && !transform->transformFlag & TransformFlag::ScaleXYZ)
+		{
+			return false;
+		}
+
+		if (mode == TransformMode::Rectangle && !transform->transformFlag & TransformFlag::RectFull)
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	void Gizmo::MoveTrans3D(Math::Vector2 ms)
 	{
 		if (selAxis == -1)
@@ -1337,7 +1362,10 @@ namespace Orin
 
 	void Gizmo::Render()
 	{
-		if (!transform) return;
+		if (!IsValidMode())
+		{
+			return;
+		}
 
 		if (mode == TransformMode::Rectangle)
 		{
@@ -1351,7 +1379,10 @@ namespace Orin
 
 	void Gizmo::OnMouseMove(Math::Vector2 ms)
 	{
-		if (!transform) return;
+		if (!IsValidMode())
+		{
+			return;
+		}
 
 		Math::GetMouseRay(ms, mouseOrigin, mouseDirection);
 		Math::IntersectPlaneRay(GetGlobalPos(), Math::Vector3(0.0f, 0.0f, -1.0f), mouseOrigin, mouseDirection, trans2DProjection);
@@ -1388,6 +1419,11 @@ namespace Orin
 
 	void Gizmo::OnLeftMouseDown()
 	{
+		if (!IsValidMode())
+		{
+			return;
+		}
+
 		if (selAxis != -1 && transform)
 		{
 			mousedPressed = true;
@@ -1399,6 +1435,11 @@ namespace Orin
 
 	void Gizmo::OnLeftMouseUp()
 	{
+		if (!IsValidMode())
+		{
+			return;
+		}
+
 		mousedPressed = false;
 
 		if (!transform) return;

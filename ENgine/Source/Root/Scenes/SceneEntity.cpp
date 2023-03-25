@@ -320,6 +320,11 @@ namespace Orin
 	{
 
 	}
+
+	bool SceneEntity::BlockFreeCamera()
+	{
+		return false;
+	}
 	#endif
 
 	void SceneEntity::Release()

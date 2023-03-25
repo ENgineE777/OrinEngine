@@ -81,6 +81,16 @@ namespace Orin
 			MiddleButton
 		};
 
+		enum class EditMode
+		{
+			Select,
+			DragFiled,
+			Move,
+			Scale,
+			Rotate,
+			Rectangle
+		};
+
 		bool projectTreePopup = false;
 		bool assetsTreePopup = false;
 		bool need2openAssetPopup = false;
@@ -101,7 +111,7 @@ namespace Orin
 		bool needSetSizePrjSet = true; 
 		bool needSetSizeEdSet = true;
 
-		bool selectMode = false;
+		EditMode editMode = EditMode::Select;
 
 		eastl::string themeList;
 		eastl::vector<eastl::string> themes;
@@ -169,6 +179,8 @@ namespace Orin
 
 		void Save();
 
+		bool InSelectMode();
+
 	private:
 
 		void RedoAction();
@@ -219,6 +231,7 @@ namespace Orin
 			ImGui::SameLine();
 		}
 
+		void ModeButtonWithHotkey(const char* name, const char* hotKey, EditMode editMode, TransformMode transMode);
 		void MaximizeEditorWindow();
 
 		bool CreateDeviceD3D();
