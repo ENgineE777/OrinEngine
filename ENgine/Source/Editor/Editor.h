@@ -181,6 +181,8 @@ namespace Orin
 
 		eastl::vector<ToolButton> toolButtons;
 
+		bool IsFocused();
+
 	public:
 
 		Project project;

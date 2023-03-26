@@ -684,6 +684,11 @@ namespace Orin
 		ImGui::End();
 	}
 
+	bool Editor::IsFocused()
+	{
+		return (GetFocus() == hwnd && ImGui::IsWindowFocused()) | ImGui::IsItemHovered();
+	}
+
 	void Editor::ShowViewport()
 	{
 		if (openedAssets.size() == 0 || projectRunning)
@@ -792,7 +797,7 @@ namespace Orin
 
 				vireportHowered = ImGui::IsItemHovered();
 
-				viewportFocused = (GetFocus() == hwnd && ImGui::IsWindowFocused()) | vireportHowered;
+				viewportFocused = IsFocused();
 				root.controls.SetFocused(viewportFocused);
 
 				if (vireportHowered)
