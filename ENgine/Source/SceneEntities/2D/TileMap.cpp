@@ -618,7 +618,7 @@ namespace Orin
 		}
 	}
 
-	bool TileMap::BlockFreeCamera()
+	bool TileMap::BlockMouseButtons()
 	{
 		return IsEditMode();
 	}

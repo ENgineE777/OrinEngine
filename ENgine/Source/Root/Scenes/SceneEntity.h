@@ -232,7 +232,7 @@ namespace Orin
 		virtual	void OnMiddleMouseDown();
 		virtual void OnMiddleMouseUp();
 
-		virtual bool BlockFreeCamera();
+		virtual bool BlockMouseButtons();
 #endif
 		static void OpenSourcePrefab(void* owner);
 		static void FillLayersList(eastl::vector<eastl::string>& names);

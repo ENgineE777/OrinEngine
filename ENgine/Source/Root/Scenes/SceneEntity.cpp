@@ -321,7 +321,7 @@ namespace Orin
 
 	}
 
-	bool SceneEntity::BlockFreeCamera()
+	bool SceneEntity::BlockMouseButtons()
 	{
 		return false;
 	}

@@ -68,7 +68,7 @@ namespace Orin
 		virtual void OnRightMouseUp();
 		virtual	void OnMiddleMouseDown();
 		virtual void OnMiddleMouseUp();
-		virtual bool BlockFreeCamera();
+		virtual bool BlockMouseButtons();
 		#endif
 
 		virtual MetaData* GetMetaData() = 0;

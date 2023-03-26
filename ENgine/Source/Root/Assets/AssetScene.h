@@ -66,7 +66,7 @@ namespace Orin
 		void OnRightMouseUp() override;
 		void OnMiddleMouseDown() override;
 		void OnMiddleMouseUp() override;
-		bool BlockFreeCamera() override;
+		bool BlockMouseButtons() override;
 #endif
 
 		void Release() override;

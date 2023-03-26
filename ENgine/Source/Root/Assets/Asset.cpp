@@ -212,7 +212,7 @@ namespace Orin
 
 	}
 
-	bool Asset::BlockFreeCamera()
+	bool Asset::BlockMouseButtons()
 	{
 		return false;
 	}

@@ -2531,7 +2531,7 @@ namespace Orin
 			{
 				mode = (editMode == EditMode::DragFiled) ? FreeCamera::UpdateMode::Drag : FreeCamera::UpdateMode::Normal;
 
-				if (InSelectMode() && selectedEditAsset && selectedEditAsset->BlockFreeCamera())
+				if (InSelectMode() && selectedEditAsset && selectedEditAsset->BlockMouseButtons())
 				{
 					mode = FreeCamera::UpdateMode::OnlyTransform;
 				}
