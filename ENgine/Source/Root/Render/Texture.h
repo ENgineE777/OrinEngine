@@ -124,6 +124,8 @@ namespace Orin
 		*/
 		virtual const char* GetName() { return name.c_str(); };
 
+		virtual void* GetNative() = 0;
+
 		/**
 			\brief Resize Texture
 

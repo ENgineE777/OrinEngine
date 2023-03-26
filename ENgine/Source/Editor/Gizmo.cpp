@@ -950,17 +950,17 @@ namespace Orin
 			return false;
 		}
 
-		if (mode == TransformMode::Rotate && !transform->transformFlag & TransformFlag::RotateXYZ)
+		if (mode == TransformMode::Rotate && !(transform->transformFlag & TransformFlag::RotateXYZ))
 		{
 			return false;
 		}
 
-		if (mode == TransformMode::Scale && !transform->transformFlag & TransformFlag::ScaleXYZ)
+		if (mode == TransformMode::Scale && !(transform->transformFlag & TransformFlag::ScaleXYZ))
 		{
 			return false;
 		}
 
-		if (mode == TransformMode::Rectangle && !transform->transformFlag & TransformFlag::RectFull)
+		if (mode == TransformMode::Rectangle && !(transform->transformFlag & TransformFlag::RectFull))
 		{
 			return false;
 		}

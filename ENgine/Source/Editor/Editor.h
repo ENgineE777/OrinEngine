@@ -86,8 +86,8 @@ namespace Orin
 			Select,
 			DragFiled,
 			Move,
-			Scale,
 			Rotate,
+			Scale,
 			Rectangle
 		};
 
@@ -144,6 +144,42 @@ namespace Orin
 
 		int curAction = -1;
 		eastl::vector<IEditorAction*> actions;
+
+		struct ToolButton
+		{
+			int icon = 0;
+			bool hovered = false;
+			eastl::string name;
+			eastl::string hotKey;
+			eastl::function<bool()> state;
+			eastl::function<void()> callback;
+
+			void Execute();
+		};
+
+		enum Button
+		{
+			Play = 0,
+			Build = 1,
+			Mode2D = 2,
+			Select,
+			Drag,
+			Move,
+			Rotate,
+			Scale,
+			Rectangle,
+			Align,
+			AlignX,
+			AlignY,
+			AlignZ,
+			AlignOffset,
+			AlignOffsetX,
+			AlignOffsetY,
+			AlignOffsetZ,
+			ButtonsCount
+		};
+
+		eastl::vector<ToolButton> toolButtons;
 
 	public:
 
@@ -206,32 +242,6 @@ namespace Orin
 		void LoadSettings();
 		void SaveSettings();
 
-		template<typename Func>
-		void PushButton(const char* label, float size, bool pushed, Func callback)
-		{
-			bool needPopStyle = false;
-
-			if (pushed)
-			{
-				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetColorU32(ImGuiCol_ButtonActive));
-				needPopStyle = true;
-			}
-
-			if (ImGui::Button(label, ImVec2(size, 25.0f)))
-			{
-				callback();
-			}
-
-			if (needPopStyle)
-			{
-				ImGui::PopStyleColor(1);
-				needPopStyle = false;
-			}
-
-			ImGui::SameLine();
-		}
-
-		void ModeButtonWithHotkey(const char* name, const char* hotKey, EditMode editMode, TransformMode transMode);
 		void MaximizeEditorWindow();
 
 		bool CreateDeviceD3D();

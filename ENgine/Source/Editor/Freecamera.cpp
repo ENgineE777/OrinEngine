@@ -30,7 +30,8 @@ namespace Orin
 		{
 			if (mode2D)
 			{
-				if (root.controls.GetAliasState(mode == UpdateMode::Drag ? alias_move2d_active_drag : alias_move2d_active, AliasAction::Pressed))
+				if (root.controls.GetAliasState(alias_move2d_active, AliasAction::Pressed) ||
+					(mode == UpdateMode::Drag && root.controls.GetAliasState(alias_move2d_active_drag, AliasAction::Pressed)))
 				{
 					float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
 					pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;

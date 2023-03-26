@@ -40,6 +40,9 @@ namespace Orin
 		lightBulbTex = root.render.LoadTexture("ENgine/editor/LightBulp.png", _FL_);
 		lightBulbTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
+		iconsTex = root.render.LoadTexture("ENgine/editor/icons.png", _FL_);
+		iconsTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
+
 		projectIconTex = root.render.LoadTexture("ENgine/editor/ProjectIcon.png", _FL_);
 
 		font = root.fonts.LoadFont("ENgine\\DroidSans.ttf", false, false, 12, _FL_);
@@ -247,6 +250,7 @@ namespace Orin
 		checkerTex.ReleaseRef();
 		projectIconTex.ReleaseRef();
 		lightBulbTex.ReleaseRef();
+		iconsTex.ReleaseRef();
 
 		skyBoxPrg.ReleaseRef();
 		skyBoxVbuffer.ReleaseRef();

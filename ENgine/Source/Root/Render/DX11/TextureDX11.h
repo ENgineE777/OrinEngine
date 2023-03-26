@@ -39,6 +39,8 @@ namespace Orin
 
 		public:
 
+		void* GetNative() override { return srview; };
+
 		void Resize(int width, int height) override;
 
 		void SetFilters(TextureFilter magmin, TextureFilter mipmap) override;

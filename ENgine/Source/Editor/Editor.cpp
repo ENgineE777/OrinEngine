@@ -28,6 +28,65 @@ namespace Orin
 		return &editor;
 	}
 
+	void Editor::ToolButton::Execute()
+	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		
+		ImGui::PushID(name.c_str());
+
+		if (icon == -1)
+		{
+			bool needPopStyle = false;
+
+			if (state && state())
+			{
+				ImGui::PushStyleColor(ImGuiCol_Button, ImGui::GetColorU32(ImGuiCol_ButtonActive));
+				needPopStyle = true;
+			}			
+
+			if (ImGui::Button(name.c_str(), ImVec2(25.0f, 25.0f)))
+			{
+				callback();
+			}
+
+			if (needPopStyle)
+			{
+				ImGui::PopStyleColor(1);
+			}
+		}
+		else
+		{
+			ImVec4 color = style.Colors[ImGuiCol_Button];
+
+			if (state && state())
+			{
+				color = style.Colors[ImGuiCol_ButtonActive];
+			}
+
+			int y = (int)((float)icon / 10.0f);
+			int x = icon - y * 10;
+			float du = 24.0f / 240.0f;
+			float dv = 24.0f / 72.0f;
+
+			ImVec2 size = ImVec2(24.0f, 24.0f);
+			ImVec2 uv0 = ImVec2(x * du, y * dv);
+			ImVec2 uv1 = ImVec2((x + 1) * du, (y + 1) * dv);
+			ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+			if (ImGui::ImageButton(editorDrawer.iconsTex->GetNative(), size, uv0, uv1, 0, hovered ? style.Colors[ImGuiCol_ButtonHovered] : color, tint_col) ||
+				root.controls.DebugKeyPressed(hotKey.c_str()))
+			{
+				callback();
+			}
+		}
+
+		ImGui::PopID();
+
+		hovered = ImGui::IsItemHovered();		
+
+		ImGui::SameLine();		
+	}
+
 	CLASS_DECLSPEC IEditor* GetEditor();
 	const char* Editor::OpenFileDialog(const char* extName, const char* ext, bool open)
 	{
@@ -157,6 +216,151 @@ namespace Orin
 		if (startProject)
 		{
 			projectToLoad = startProject;
+		}
+
+		toolButtons.resize(Button::ButtonsCount);
+
+		{
+			auto& button = toolButtons[Button::Play];
+			button.icon = 0;
+			button.name = "Play";
+			button.state = [this]() -> bool { return projectRunning; };
+			button.callback = [this]() { if (!projectRunning) StartProject(); else StopProject(); };
+		}
+
+		{
+			auto& button = toolButtons[Button::Build];
+			button.icon = 7;
+			button.name = "Build";
+			button.callback = [this]() { root.scripts.CompileProjectCode(true); };
+		}
+
+		{
+			auto& button = toolButtons[Button::Mode2D];
+			button.icon = -1;
+			button.name = "2D";
+			button.state = [this]() -> bool { return freeCamera.mode2D; };
+			button.callback = [this]() { freeCamera.mode2D = !freeCamera.mode2D; };
+		}
+
+		{
+			auto& button = toolButtons[Button::Select];
+			button.icon = 1;
+			button.name = "Select";
+			button.state = [this]() -> bool { return editMode == EditMode::Select; };
+			button.callback = [this]() { editMode = EditMode::Select; gizmo.mode = TransformMode::None; };
+			button.hotKey = "KEY_Q";
+		}
+		
+		{
+			auto& button = toolButtons[Button::Drag];
+			button.icon = 2;
+			button.name = "Drag";
+			button.state = [this]() -> bool { return editMode == EditMode::DragFiled; };
+			button.callback = [this]() { editMode = EditMode::DragFiled; gizmo.mode = TransformMode::None; };
+			button.hotKey = "KEY_W";
+		}
+
+		{
+			auto& button = toolButtons[Button::Move];
+			button.icon = 3;
+			button.name = "Move";
+			button.state = [this]() -> bool { return editMode == EditMode::Move; };
+			button.callback = [this]() { editMode = EditMode::Move; gizmo.mode = TransformMode::Move; };
+			button.hotKey = "KEY_E";
+		}
+
+		{
+			auto& button = toolButtons[Button::Rotate];
+			button.icon = 4;
+			button.name = "Rotate";
+			button.state = [this]() -> bool { return editMode == EditMode::Rotate; };
+			button.callback = [this]() { editMode = EditMode::Rotate; gizmo.mode = TransformMode::Rotate; };
+			button.hotKey = "KEY_R";
+		}
+
+		{
+			auto& button = toolButtons[Button::Scale];
+			button.icon = 5;
+			button.name = "Scale";
+			button.state = [this]() -> bool { return editMode == EditMode::Scale; };
+			button.callback = [this]() { editMode = EditMode::Scale; gizmo.mode = TransformMode::Scale; };
+			button.hotKey = "KEY_T";
+		}
+
+		{
+			auto& button = toolButtons[Button::Rectangle];
+			button.icon = 6;
+			button.name = "Rectangle";
+			button.state = [this]() -> bool { return editMode == EditMode::Rectangle; };
+			button.callback = [this]() { editMode = EditMode::Rectangle; gizmo.mode = TransformMode::Rectangle; };
+			button.hotKey = "KEY_Y";
+		}
+
+		{
+			auto& button = toolButtons[Button::Align];
+			button.icon = 8;
+			button.name = "Align";
+			button.state = [this]() -> bool { return gizmo.useAlignGrid; };
+			button.callback = [this]() { gizmo.useAlignGrid = !gizmo.useAlignGrid; };
+			button.hotKey = "KEY_O";
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignX];
+			button.icon = -1;
+			button.name = "X";
+			button.state = [this]() -> bool { return gizmo.alignGridFlag & Axis::X; };
+			button.callback = [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::X); };
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignY];
+			button.icon = -1;
+			button.name = "Y";
+			button.state = [this]() -> bool { return gizmo.alignGridFlag & Axis::Y; };
+			button.callback = [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Y); };
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignZ];
+			button.icon = -1;
+			button.name = "Z";
+			button.state = [this]() -> bool { return gizmo.alignGridFlag & Axis::Z; };
+			button.callback = [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Z); };
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignOffset];
+			button.icon = 9;
+			button.name = "AlignOffset";
+			button.state = [this]() -> bool { return gizmo.useAlignGridOffset; };
+			button.callback = [this]() { gizmo.useAlignGridOffset = !gizmo.useAlignGridOffset; };
+			button.hotKey = "KEY_P";
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignOffsetX];
+			button.icon = -1;
+			button.name = "X ";
+			button.state = [this]() -> bool { return gizmo.alignOffsetGridFlag & Axis::X; };
+			button.callback = [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::X); };
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignOffsetY];
+			button.icon = -1;
+			button.name = "Y ";
+			button.state = [this]() -> bool { return gizmo.alignOffsetGridFlag & Axis::Y; };
+			button.callback = [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::Y); };
+		}
+
+		{
+			auto& button = toolButtons[Button::AlignOffsetZ];
+			button.icon = -1;
+			button.name = "Z ";
+			button.state = [this]() -> bool { return gizmo.alignOffsetGridFlag & Axis::Z; };
+			button.callback = [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::Z); };
 		}
 
 		return true;
@@ -1655,18 +1859,6 @@ namespace Orin
 		projectRunning = false;
 	}
 
-	void Editor::ModeButtonWithHotkey(const char* name, const char* hotKey, EditMode setMode, TransformMode transMode)
-	{
-		auto swicthMode = [this, setMode, transMode]() { editMode = setMode;  gizmo.mode = transMode; };
-
-		PushButton(name, 50.0f, editMode == setMode, swicthMode);
-
-		if (root.controls.DebugKeyPressed(hotKey))
-		{
-			swicthMode();
-		}
-	}
-
 	bool Editor::ShowEditor()
 	{
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
@@ -1810,26 +2002,38 @@ namespace Orin
 			ImGui::Dummy(ImVec2(3.0f, 3.0f));
 			ImGui::SameLine();
 
-			PushButton("Play", 50.0f, projectRunning, [this]() { if (!projectRunning) StartProject(); else StopProject(); });
+			toolButtons[Button::Play].Execute();
 
 			if (!projectRunning && root.controls.DebugKeyPressed("KEY_F7"))
 			{
 				StartProject();
 			}
 
-			if (ImGui::Button("Build Code", ImVec2(75.0f, 25.0f)))
-			{
-				root.scripts.CompileProjectCode(true);
-			}
+			toolButtons[Button::Build].Execute();			
 
 			ImGui::SameLine();
 
-			PushButton("2D", 35.0f, freeCamera.mode2D, [this]() { freeCamera.mode2D = true; });
-			PushButton("3D", 35.0f, !freeCamera.mode2D, [this]() { freeCamera.mode2D = false; });
+			toolButtons[Button::Mode2D].Execute();
 
 			if (freeCamera.mode2D)
 			{
-				ImGui::Text("Zoom");
+				ImGuiStyle& style = ImGui::GetStyle();
+
+				int y = 1;
+				int x = 0;
+				float du = 24.0f / 240.0f;
+				float dv = 24.0f / 72.0f;
+
+				ImVec2 size = ImVec2(24.0f, 24.0f);
+				ImVec2 uv0 = ImVec2(x * du, y * dv);
+				ImVec2 uv1 = ImVec2((x + 1) * du, (y + 1) * dv);
+				ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+				ImGui::PushID("Zoom");
+				ImGui::Image(editorDrawer.iconsTex->GetNative(), size, uv0, uv1, tint_col, style.Colors[ImGuiCol_FrameBg]);
+				ImGui::PopID();
+				
+
 				ImGui::SameLine();
 
 				ImGui::SetNextItemWidth(60.0f);
@@ -1847,14 +2051,14 @@ namespace Orin
 			ImGui::SameLine();
 
 			{
-				ModeButtonWithHotkey("Select", "KEY_Q", EditMode::Select, TransformMode::None);
-				ModeButtonWithHotkey("Drag", "KEY_W", EditMode::DragFiled, TransformMode::None);
-				ModeButtonWithHotkey("Move", "KEY_E", EditMode::Move, TransformMode::Move);
-				ModeButtonWithHotkey("Rotate", "KEY_R", EditMode::Rotate, TransformMode::Rotate);
-				ModeButtonWithHotkey("Scale", "KEY_T", EditMode::Scale, TransformMode::Scale);
-				ModeButtonWithHotkey("Rect", "KEY_Y", EditMode::Rectangle, TransformMode::Rectangle);
+				toolButtons[Button::Select].Execute();
+				toolButtons[Button::Drag].Execute();
+				toolButtons[Button::Move].Execute();
+				toolButtons[Button::Rotate].Execute();
+				toolButtons[Button::Scale].Execute();
+				toolButtons[Button::Rectangle].Execute();
 
-				if (ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
+				if (!freeCamera.mode2D && ImGui::Button(gizmo.useLocalSpace ? "Local" : "Global", ImVec2(50.0f, 25.0f)))
 				{
 					gizmo.useLocalSpace = !gizmo.useLocalSpace;
 				}
@@ -1866,7 +2070,7 @@ namespace Orin
 
 				auto* transform = gizmo.transform;
 
-				if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
+				/*if (ImGui::Button("To Object", ImVec2(75.0f, 25.0f)) && transform)
 				{
 					auto pos = transform->GetGlobal().Pos();
 					freeCamera.pos = pos - Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
@@ -1880,7 +2084,7 @@ namespace Orin
 					transform->position = pos + Math::Vector3(cosf(freeCamera.angles.x), sinf(freeCamera.angles.y), sinf(freeCamera.angles.x)) * 5.0f;
 				}
 
-				ImGui::SameLine();
+				ImGui::SameLine();*/
 
 				ImGui::SameLine();
 
@@ -1888,11 +2092,10 @@ namespace Orin
 				ImGui::SameLine();
 			}
 
-			if (freeCamera.mode2D)
 			{
-				PushButton("Snap", 40.0f, gizmo.useAlignGrid, [this]() { gizmo.useAlignGrid = !gizmo.useAlignGrid; });
+				toolButtons[Button::Align].Execute();
 
-				PushButton("X", 30.0f, gizmo.alignGridFlag & Axis::X, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::X); });
+				toolButtons[Button::AlignX].Execute();
 
 				ImGui::SetNextItemWidth(80.0f);
 				int value = (int)gizmo.alignGrid.x;
@@ -1901,7 +2104,7 @@ namespace Orin
 				gizmo.alignGrid.x = (float)value;
 				ImGui::SameLine();
 
-				PushButton("Y", 30.0f, gizmo.alignGridFlag & Axis::Y, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Y); });
+				toolButtons[Button::AlignY].Execute();
 
 				ImGui::SetNextItemWidth(80.0f);
 				value = (int)gizmo.alignGrid.y;
@@ -1910,7 +2113,7 @@ namespace Orin
 				gizmo.alignGrid.y = (float)value;
 				ImGui::SameLine();
 
-				PushButton("Z", 30.0f, gizmo.alignGridFlag & Axis::Z, [this]() { gizmo.alignGridFlag = (Axis)(gizmo.alignGridFlag ^ Axis::Z); });
+				toolButtons[Button::AlignZ].Execute();
 
 				ImGui::SetNextItemWidth(80.0f);
 				value = (int)gizmo.alignGrid.z;
@@ -1918,12 +2121,13 @@ namespace Orin
 				if (value < 2) value = 2;
 				gizmo.alignGrid.z = (float)value;
 				ImGui::SameLine();
+				ImGui::Separator();
+				ImGui::SameLine();
 
-				if (gizmo.useAlignGrid)
 				{
-					PushButton("Offset", 50.0f, gizmo.useAlignGridOffset, [this]() { gizmo.useAlignGridOffset = !gizmo.useAlignGridOffset; });
+					toolButtons[Button::AlignOffset].Execute();
 
-					PushButton("X ", 30.0f, gizmo.alignOffsetGridFlag & Axis::X, [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::X); });
+					toolButtons[Button::AlignOffsetX].Execute();					
 
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.x;
@@ -1932,7 +2136,7 @@ namespace Orin
 					gizmo.alignGridOffset.x = (float)value;
 					ImGui::SameLine();
 
-					PushButton("Y ", 30.0f, gizmo.alignOffsetGridFlag& Axis::Y, [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::Y); });
+					toolButtons[Button::AlignOffsetY].Execute();
 
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.y;
@@ -1941,7 +2145,7 @@ namespace Orin
 					gizmo.alignGridOffset.y = (float)value;
 					ImGui::SameLine();
 
-					PushButton("Z ", 30.0f, gizmo.alignOffsetGridFlag & Axis::Z, [this]() { gizmo.alignOffsetGridFlag = (Axis)(gizmo.alignOffsetGridFlag ^ Axis::Z); });
+					toolButtons[Button::AlignOffsetZ].Execute();
 
 					ImGui::SetNextItemWidth(80.0f);
 					value = (int)gizmo.alignGridOffset.z;
