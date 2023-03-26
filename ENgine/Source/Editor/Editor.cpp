@@ -792,7 +792,7 @@ namespace Orin
 
 				vireportHowered = ImGui::IsItemHovered();
 
-				viewportFocused = (projectRunning && project.runningInFullscreen) ? true : ((GetFocus() == hwnd && ImGui::IsWindowFocused()) | vireportHowered);
+				viewportFocused = (GetFocus() == hwnd && ImGui::IsWindowFocused()) | vireportHowered;
 				root.controls.SetFocused(viewportFocused);
 
 				if (vireportHowered)
@@ -2493,6 +2493,12 @@ namespace Orin
 		}
 
 		float dt = root.GetDeltaTime();
+
+		if (projectRunning && project.runningInFullscreen)
+		{
+			viewportFocused = true;
+			root.controls.SetFocused(viewportFocused);
+		}
 
 		if (viewportFocused && !projectRunning)
 		{
