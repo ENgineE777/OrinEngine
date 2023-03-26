@@ -927,7 +927,7 @@ namespace Orin
 		dir.z = v.x * invView._13 + v.y * invView._23 + v.z * invView._33;
 		dir.Normalize();
 
-		if (editor.InSelectMode() || (!editor.InSelectMode() && root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed)))
+		if ((editor.InSelectMode() && (!selectedEntity || !selectedEntity->BlockFreeCamera())) || (!editor.InSelectMode() && root.controls.DebugKeyPressed("KEY_LCONTROL", AliasAction::Pressed)))
 		{
 			CheckSelection({ (float)mx, (float)my }, invView.Pos(), dir);
 
