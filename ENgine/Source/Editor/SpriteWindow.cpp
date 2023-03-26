@@ -896,7 +896,7 @@ namespace Orin
 			inDragAndDrop = true;
 		}
 
-		imageFocused = ImGui::IsWindowFocused();
+		imageFocused = editor.IsFocused();
 
 		if (imageFocused)
 		{
@@ -913,9 +913,9 @@ namespace Orin
 
 		root.controls.SetFocused(GetFocus() == editor.hwnd && ImGui::IsWindowFocused());
 
-		if (imageFocused && vireportHowered && (drag == Drag::DragNone || drag == Drag::DragField))
+		if (imageFocused && vireportHowered && drag == Drag::None && ImGui::IsMouseClicked(1))
 		{
-			drag = root.controls.GetAliasState(editor.freeCamera.alias_move2d_active, AliasAction::Pressed) ? Drag::DragField : Drag::DragNone;
+			drag = Drag::Field;
 			viewportCaptured = true;
 		}
 
@@ -924,16 +924,25 @@ namespace Orin
 					fabsf(del.x) > 7.0f && fabsf(del.y) > 7.0f && ImGui::IsWindowFocused() &&
 					viewportPos.x > 0 && viewportPos.x < size.x&& viewportPos.y > 0 && viewportPos.y < size.x);
 
-		if (viewportCaptured && ImGui::IsMouseReleased(0))
+		if (viewportCaptured)
 		{
-			OnLeftMouseUp();
-			viewportCaptured = false;
-		}
-		else
-		if (viewportCaptured && ImGui::IsMouseReleased(2))
-		{
-			drag = Drag::DragNone;
-			viewportCaptured = false;
+			if (ImGui::IsMouseReleased(0))
+			{
+				OnLeftMouseUp();
+				viewportCaptured = false;
+			}
+			else
+			if (ImGui::IsMouseReleased(1))
+			{
+				drag = Drag::None;
+				viewportCaptured = false;
+			}
+			else
+			if (ImGui::IsMouseReleased(2))
+			{
+				drag = Drag::None;
+				viewportCaptured = false;
+			}
 		}
 
 		ImGui::End();
@@ -1055,7 +1064,7 @@ namespace Orin
 			Sprite::DebugRect(pos, pos + Math::Vector2(slice.size.x, -slice.size.y), color);
 		}
 
-		if (drag == Drag::DragNewSlice)
+		if (drag == Drag::NewSlice)
 		{
 			Sprite::DebugRect(rectStart, rectEnd, color);
 		}
@@ -1117,7 +1126,7 @@ namespace Orin
 	{
 		Math::Vector2 delta(prevMs.x - ms.x, prevMs.y - ms.y);
 
-		if (drag == Drag::DragField)
+		if (drag == Drag::Field)
 		{
 			camPos += Math::Vector2(delta.x, -delta.y) / camZoom;
 
@@ -1125,19 +1134,19 @@ namespace Orin
 			camPos.y = Math::Clamp(camPos.y, 0.0f, texture->size.y);
 		}
 		else
-		if (drag == Drag::DragRects)
+		if (drag == Drag::Rects)
 		{
 			MoveRects(Math::Vector2(delta.x, delta.y) / camZoom);
 		}
 
 		prevMs = ms;
 
-		if (!inDragAndDrop && dragMouse && drag == Drag::DragNone && root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed, true))
+		if (!inDragAndDrop && dragMouse && drag == Drag::None && root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed, true))
 		{
-			drag = Drag::DragNewSlice;
+			drag = Drag::NewSlice;
 		}
 
-		if (drag == Drag::DragNewSlice)
+		if (drag == Drag::NewSlice)
 		{
 			rectEnd = camPos + Math::Vector2(prevMs.x - lastViewportSize.x * 0.5f, -prevMs.y + lastViewportSize.y * 0.5f) / camZoom;
 		}
@@ -1232,22 +1241,22 @@ namespace Orin
 
 				if (selSlice == -1)
 				{
-					drag = Drag::DragRects;
+					drag = Drag::Rects;
 				}
 				else
 				{
 					selectedSlices.clear();
-					drag = Drag::DragSelectRect;
+					drag = Drag::SelectRect;
 				}
 			}
 			else
 			if (prevSelSlice != selSlice)
 			{
-				drag = Drag::DragSelectRect;
+				drag = Drag::SelectRect;
 			}
 			else
 			{
-				drag = Drag::DragRects;
+				drag = Drag::Rects;
 
 				selCol = -1;
 				selRow = -1;
@@ -1270,7 +1279,7 @@ namespace Orin
 
 	void SpriteWindow::OnLeftMouseUp()
 	{
-		if (drag == Drag::DragNewSlice)
+		if (drag == Drag::NewSlice)
 		{
 			AssetTexture::Slice slice;
 			slice.pos = Math::Vector2(fminf(rectStart.x, rectEnd.x), texture->size.y - fmaxf(rectStart.y, rectEnd.y));
@@ -1284,7 +1293,7 @@ namespace Orin
 			FillRects();
 		}
 		else
-		if (drag == Drag::DragRects)
+		if (drag == Drag::Rects)
 		{
 			if (selSlice == -1)
 			{
@@ -1304,7 +1313,7 @@ namespace Orin
 
 		selCol = -1;
 		selRow = -1;
-		drag = Drag::DragNone;
+		drag = Drag::None;
 		inDragAndDrop = false;
 	}
 

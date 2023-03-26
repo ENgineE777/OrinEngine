@@ -11,16 +11,16 @@ namespace Orin
 	{
 		enum class Drag
 		{
-			DragNone,
-			DragSelectRect,
-			DragRects,
-			DragField,
-			DragNewSlice
+			None,
+			SelectRect,
+			Rects,
+			Field,
+			NewSlice
 		};
 
 		Math::Vector2 points[16];
 
-		Drag drag = Drag::DragNone;
+		Drag drag = Drag::None;
 		int rectWidth;
 		int rectHeight;
 		int selRow = -1;

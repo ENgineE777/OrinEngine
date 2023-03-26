@@ -189,7 +189,7 @@ namespace Orin
 				DrawCell(tile.x, tile.y);
 			}
 
-			if (drag == Drag::DragTile || drag == Drag::DragDrop)
+			if (drag == Drag::Tile || drag == Drag::Drop)
 			{
 				DrawCell(dragX, dragY);
 			}
@@ -314,7 +314,7 @@ namespace Orin
 					tileSet->Save();
 				}
 
-				drag = Drag::DragNone;
+				drag = Drag::None;
 			}
 			else
 			if (ImGui::AcceptDragDropPayload("_ANIM_FRAMES", ImGuiDragDropFlags_AcceptNoDrawDefaultRect) && tileSet)
@@ -337,24 +337,24 @@ namespace Orin
 
 				tileSet->Save();
 
-				drag = Drag::DragNone;
+				drag = Drag::None;
 			}
 			else
 			{
-				drag = Drag::DragDrop;
+				drag = Drag::Drop;
 			}
 
 			ImGui::EndDragDropTarget();
 		}
 		else
 		{
-			if (drag == Drag::DragDrop)
+			if (drag == Drag::Drop)
 			{
-				drag = Drag::DragNone;
+				drag = Drag::None;
 			}
 		}
 
-		imageFocused = ImGui::IsWindowFocused();
+		imageFocused = editor.IsFocused();
 
 		if (imageFocused)
 		{
@@ -367,13 +367,11 @@ namespace Orin
 		{
 			OnLeftMouseDown();
 			viewportCaptured = true;
-		}		
+		}
 
-		root.controls.SetFocused(GetFocus() == editor.hwnd && ImGui::IsWindowFocused());
-
-		if (imageFocused && vireportHowered && (drag == Drag::DragNone || drag == Drag::DragField))
+		if (imageFocused && vireportHowered && drag == Drag::None && ImGui::IsMouseClicked(1))
 		{
-			drag = root.controls.GetAliasState(editor.freeCamera.alias_move2d_active, AliasAction::Pressed) ? Drag::DragField : Drag::DragNone;
+			drag = Drag::Field;
 			viewportCaptured = true;
 		}
 
@@ -382,16 +380,25 @@ namespace Orin
 					fabsf(del.x) > 7.0f && fabsf(del.y) > 7.0f && ImGui::IsWindowFocused() &&
 					viewportPos.x > 0 && viewportPos.x < size.x&& viewportPos.y > 0 && viewportPos.y < size.x);
 
-		if (viewportCaptured && ImGui::IsMouseReleased(0))
+		if (viewportCaptured)
 		{
-			OnLeftMouseUp();
-			viewportCaptured = false;
-		}
-		else
-		if (viewportCaptured && ImGui::IsMouseReleased(2))
-		{
-			drag = Drag::DragNone;
-			viewportCaptured = false;
+			if (ImGui::IsMouseReleased(0))
+			{
+				OnLeftMouseUp();
+				viewportCaptured = false;
+			}
+			else
+			if (ImGui::IsMouseReleased(1))
+			{
+				drag = Drag::None;
+				viewportCaptured = false;
+			}
+			else	
+			if (ImGui::IsMouseReleased(2))
+			{
+				drag = Drag::None;
+				viewportCaptured = false;
+			}
 		}
 
 		ImGui::End();
@@ -429,7 +436,7 @@ namespace Orin
 	{
 		Math::Vector2 delta(prevMs.x - ms.x, prevMs.y - ms.y);
 
-		if (drag == Drag::DragField)
+		if (drag == Drag::Field)
 		{
 			tileSet->camPos += Math::Vector2(delta.x, -delta.y) / tileSet->camZoom;
 		}
@@ -447,7 +454,7 @@ namespace Orin
 
 			if (tileSet->selTile != -1)
 			{
-				drag = Drag::DragTile;
+				drag = Drag::Tile;
 			}
 		}
 	}
@@ -465,7 +472,7 @@ namespace Orin
 			}
 		}
 
-		drag = Drag::DragNone;
+		drag = Drag::None;
 	}
 
 	void TileSetWindow::MouseToCell(int& x, int& y)

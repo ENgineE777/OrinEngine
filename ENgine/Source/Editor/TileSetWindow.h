@@ -12,13 +12,13 @@ namespace Orin
 	{
 		enum class Drag
 		{
-			DragNone,
-			DragDrop,
-			DragField,
-			DragTile
+			None,
+			Drop,
+			Field,
+			Tile
 		};
 
-		Drag drag = Drag::DragNone;
+		Drag drag = Drag::None;
 
 		int dragX = 0;
 		int dragY = 0;
