@@ -2494,9 +2494,9 @@ namespace Orin
 
 		float dt = root.GetDeltaTime();
 
-		if (projectRunning && project.runningInFullscreen)
+		if (projectRunning)
 		{
-			viewportFocused = true;
+			viewportFocused = project.runningInFullscreen ? true : viewportFocused = (GetFocus() == hwnd && ImGui::IsWindowFocused());
 			root.controls.SetFocused(viewportFocused);
 		}
 
