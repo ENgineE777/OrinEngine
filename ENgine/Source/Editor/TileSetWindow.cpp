@@ -228,6 +228,14 @@ namespace Orin
 		root.render.DebugLine(Math::Vector3(p2.x, p1.y, 0.0f), color, p2, color, false);
 		root.render.DebugLine(p2, color, Math::Vector3(p1.x, p2.y, 0.0f), color, false);
 		root.render.DebugLine(Math::Vector3(p1.x, p2.y, 0.0f), color, p1, color, false);
+
+		p1 += Sprite::ToUnits(Math::Vector3( 1.0f, 1.0f, 0.0f )) / tileSet->camZoom;
+		p2 -= Sprite::ToUnits(Math::Vector3( 1.0f, 1.0f, 0.0f )) / tileSet->camZoom;
+
+		root.render.DebugLine(p1, color, Math::Vector3(p2.x, p1.y, 0.0f), color, false);
+		root.render.DebugLine(Math::Vector3(p2.x, p1.y, 0.0f), color, p2, color, false);
+		root.render.DebugLine(p2, color, Math::Vector3(p1.x, p2.y, 0.0f), color, false);
+		root.render.DebugLine(Math::Vector3(p1.x, p2.y, 0.0f), color, p1, color, false);
 	}
 
 	void TileSetWindow::TryAddSlice(AssetTextureRef& texture, Math::Vector2 offset, int sliseIndex)
