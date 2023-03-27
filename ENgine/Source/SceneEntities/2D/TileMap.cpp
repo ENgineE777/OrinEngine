@@ -11,16 +11,6 @@
 namespace Orin
 {
 #ifdef ORIN_EDITOR
-	void TileMap::ShowTilsetWindow(void* owner)
-	{
-		TileMap* tileMap = (TileMap*)owner;
-
-		if (tileMap->tileSet.Get())
-		{
-			TileSetWindow::StartEdit(tileMap->tileSet.Get());
-		}
-	}
-
 	TileMap::TileMapAction::TileMapAction(void* owner, eastl::vector<Tile>& savedTiles, eastl::vector<Tile>& savedSelectedTiles,
 											eastl::vector<Tile>& tiles, eastl::vector<Tile>& selectedTiles) : IEditorAction(owner)
 	{
@@ -59,9 +49,6 @@ namespace Orin
 		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(TileMap, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
-#ifdef ORIN_EDITOR
-		CALLBACK_PROP(TileMap, TileMap::ShowTilsetWindow, "Properties", "Open Tileset")
-#endif
 	META_DATA_DESC_END()
 
 	void TileMap::Init()
@@ -133,6 +120,15 @@ namespace Orin
 	{
 		if (IsEditMode())
 		{
+			if (tileSet.Get() && editor.InSelectMode())
+			{
+				TileSetWindow::StartEdit(tileSet.Get());
+			}
+			else
+			{
+				TileSetWindow::StopEdit();
+			}
+
 			lastViewportSize = {(float)root.GetRender()->GetDevice()->GetWidth(), (float)root.GetRender()->GetDevice()->GetHeight()};
 
 			if (mode == Mode::RectPlace || mode == Mode::RectErase || mode == Mode::TilesSelection)
@@ -210,12 +206,11 @@ namespace Orin
 			{
 				for (auto& tile : tilesSelected)
 				{
-					mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
+					trans.rotation = tile.rotation;
+					trans.position = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
-					trans.SetGlobal(mat);
-					auto sz = tile.texture.GetSize();
-					trans.size.x = sz.x;
-					trans.size.y = sz.y;
+					trans.size.x = size.x;
+					trans.size.y = size.y;
 
 					tile.texture.prg = tech;
 					tile.texture.Draw(&trans, COLOR_WHITE, dt);

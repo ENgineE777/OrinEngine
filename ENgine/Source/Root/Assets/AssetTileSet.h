@@ -12,8 +12,6 @@ namespace Orin
 		friend class PointerRef<AssetTileSet>;
 		friend class AssetTileSetRef;
 
-		static void StartEditTileSet(void* owner);
-
 	public:
 
 		Math::Vector2 camPos;
@@ -46,7 +44,9 @@ namespace Orin
 		void LoadMetaData(JsonReader& loader) override;
 
 		#ifdef ORIN_EDITOR
+		bool IsEditable() override;
 		bool IsTileSelected();
+		void ImGuiViewport(bool viewportFocused) override;
 		int GetSelectedTileIndex();
 		int FindIndexByTextureRef(const AssetTextureRef& texture);
 		AssetTextureRef GetTileTexture(int index);

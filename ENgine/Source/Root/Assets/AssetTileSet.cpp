@@ -4,14 +4,11 @@
 
 #ifdef ORIN_EDITOR
 #include "imgui.h"
+#include "Editor/TileSetWindow.h"
 #endif
 
 namespace Orin
 {
-#ifdef ORIN_EDITOR
-	extern void ShowTileSetWindow(AssetTileSet* tileSet);
-#endif
-
 	META_DATA_DESC(AssetTileSet::Tile)
 		ENUM_PROP(AssetTileSet::Tile, rotation, 0, "Properties", "rotation", "Rotation of a tile")
 			ENUM_ELEM("0", 0)
@@ -31,17 +28,8 @@ namespace Orin
 		ASSET_TEXTURE_PROP(AssetTileSet, normal, "Visual", "Normal")
 		ASSET_TEXTURE_PROP(AssetTileSet, material, "Visual", "Material")
 		AssetTextureRef normal;
-	AssetTextureRef material;
-
-		CALLBACK_PROP(AssetTileSet, AssetTileSet::StartEditTileSet, "Properties", "Open TileSet Editor")
+		AssetTextureRef material;
 	META_DATA_DESC_END()
-
-	void AssetTileSet::StartEditTileSet(void* owner)
-	{
-#ifdef ORIN_EDITOR
-		ShowTileSetWindow((AssetTileSet*)owner);
-#endif
-	}
 
 	void AssetTileSet::Reload()
 	{
@@ -82,6 +70,19 @@ namespace Orin
 	}
 
 	#ifdef ORIN_EDITOR
+	bool AssetTileSet::IsEditable()
+	{
+		return true;
+	}
+
+	void AssetTileSet::ImGuiViewport(bool viewportFocused)
+	{
+		if (!TileSetWindow::instance || !TileSetWindow::instance ->opened || TileSetWindow::tileSet != this)
+		{
+			TileSetWindow::StartEdit(this);
+		}		
+	}
+
 	bool AssetTileSet::IsTileSelected()
 	{
 		return selTile != -1;

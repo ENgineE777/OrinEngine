@@ -36,6 +36,11 @@ namespace Orin
 			instance = new TileSetWindow();
 		}
 
+		if (instance->opened && tileSet == setTileSet)
+		{
+			return;
+		}
+
 		if (tileSet)
 		{
 			tileSet->Save();
@@ -50,7 +55,7 @@ namespace Orin
 	{
 		tileSet = nullptr;
 
-		if (instance)
+		if (instance && instance->opened)
 		{
 			instance->Prepare();
 			instance->opened = false;
@@ -74,7 +79,7 @@ namespace Orin
 			return;
 		}
 
-		ImGui::Begin("TileSet Editor", &opened, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse);
+		ImGui::Begin("TileSet Editor", &opened, ImGuiWindowFlags_NoCollapse);
 
 		if (needSetSize)
 		{
@@ -98,17 +103,20 @@ namespace Orin
 			ImGui::DockBuilderAddNode(dockspaceID, ImGuiDockNodeFlags_None);
 
 			ImGuiID dock_main_id = dockspaceID;
-			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.8f, nullptr, &dock_main_id);
-			ImGuiID dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
+			ImGuiID dock_up_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.8f, nullptr, &dock_main_id);
+			ImGuiID dock_down_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.2f, nullptr, &dock_main_id);
 			
-			ImGui::DockBuilderDockWindow("ImageTileSet", dock_left_id);
-			ImGui::DockBuilderDockWindow("TileProperties", dock_right_id);
+			ImGui::DockBuilderDockWindow("ImageTileSet", dock_up_id);
+			ImGui::DockBuilderDockWindow("TileProperties", dock_down_id);
 
 			ImGui::DockBuilderFinish(dock_main_id);
 
 			ImGuiDockNode* node;
 
-			node = ImGui::DockBuilderGetNode(dock_left_id);
+			node = ImGui::DockBuilderGetNode(dock_up_id);
+			node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
+
+			node = ImGui::DockBuilderGetNode(dock_down_id);
 			node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
 		}
 
@@ -214,7 +222,7 @@ namespace Orin
 		Math::Vector3 p1 = mat.Vx() * (float)x * step.x + mat.Vy() * (float)y * step.y;
 		Math::Vector3 p2 = mat.Vx() * (float)(x + 1) * step.x + mat.Vy() * (float)(y - 1) * step.y;
 
-		Color color = COLOR_WHITE;
+		Color color = COLOR_YELLOW;
 
 		root.render.DebugLine(p1, color, Math::Vector3(p2.x, p1.y, 0.0f), color, false);
 		root.render.DebugLine(Math::Vector3(p2.x, p1.y, 0.0f), color, p2, color, false);

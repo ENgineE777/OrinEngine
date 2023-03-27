@@ -114,8 +114,6 @@ namespace Orin
 
 		void AddEditorAction();
 
-		static void ShowTilsetWindow(void* owner);
-
 		void SetEditMode(bool ed) override;
 
 		void Copy(SceneEntity* source) override;

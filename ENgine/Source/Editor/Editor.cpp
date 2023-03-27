@@ -1901,7 +1901,7 @@ namespace Orin
 			ImGuiID dock_right_up_id = ImGui::DockBuilderSplitNode(dock_right_id, ImGuiDir_Up, 0.2f, nullptr, &dock_right_id);
 			ImGuiID dock_right_down_id = ImGui::DockBuilderSplitNode(dock_right_id, ImGuiDir_Down, 0.2f, nullptr, &dock_right_id);
 			ImGuiID dock_bottom_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.2f, nullptr, &dock_main_id);
-			ImGuiID dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.2f, nullptr, &dock_main_id);
+			ImGuiID dock_right_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.3f, nullptr, &dock_main_id);
 
 			ImGui::DockBuilderDockWindow("Toolbar", dock_top_id);
 
@@ -1909,6 +1909,8 @@ namespace Orin
 			{
 				ImGui::DockBuilderDockWindow(StringUtils::PrintTemp("###Game%i", i), dock_main_id);
 			}
+
+			ImGui::DockBuilderDockWindow("TileSet Editor", dock_right_right_id);
 
 			ImGui::DockBuilderDockWindow("###Scene", dock_right_up_id);
 			ImGui::DockBuilderDockWindow("Layers", dock_right_up_id);
@@ -2353,14 +2355,14 @@ namespace Orin
 
 		ShowViewport();
 
-		if (SpriteWindow::instance)
-		{
-			SpriteWindow::instance->ImGui();
-		}
-
 		if (TileSetWindow::instance)
 		{
 			TileSetWindow::instance->ImGui();
+		}
+
+		if (SpriteWindow::instance)
+		{
+			SpriteWindow::instance->ImGui();
 		}
 
 		return true;
