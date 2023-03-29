@@ -361,6 +361,7 @@
     <ClInclude Include="..\..\..\Source\Support\Timer.h" />
     <ClInclude Include="..\..\..\Source\Support\Transform.h" />
     <ClInclude Include="..\..\..\Source\Support\Utils.h" />
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imconfig.h" />
     <ClInclude Include="..\..\..\Thirdparty\imgui\imgui.h" />
     <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.h" />
@@ -544,6 +545,7 @@
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\arena.c" />
     <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\background_thread.c" />

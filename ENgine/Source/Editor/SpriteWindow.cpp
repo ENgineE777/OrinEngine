@@ -851,22 +851,22 @@ namespace Orin
 			{
 				Math::Vector2 delta;
 
-				if (ImGui::IsKeyPressed(VK_UP))
+				if (ImGui::IsKeyPressed(ImGuiKey_UpArrow))
 				{
 					delta.y = 1.0f;
 				}
 
-				if (ImGui::IsKeyPressed(VK_DOWN))
+				if (ImGui::IsKeyPressed(ImGuiKey_DownArrow))
 				{
 					delta.y = -1.0f;
 				}
 
-				if (ImGui::IsKeyPressed(VK_LEFT))
+				if (ImGui::IsKeyPressed(ImGuiKey_LeftArrow))
 				{
 					delta.x = 1.0f;
 				}
 
-				if (ImGui::IsKeyPressed(VK_RIGHT))
+				if (ImGui::IsKeyPressed(ImGuiKey_RightArrow))
 				{
 					delta.x = -1.0f;
 				}

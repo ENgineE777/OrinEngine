@@ -358,21 +358,6 @@
     <ClCompile Include="..\..\..\Thirdparty\jemalloc\src\witness.c">
       <Filter>Thirdparty\jemalloc\src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui.cpp">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_draw.cpp">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_widgets.cpp">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.cpp">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.cpp">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Root\Fonts\FontRef.cpp">
       <Filter>Source\Root\Fonts</Filter>
     </ClCompile>
@@ -709,9 +694,6 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_demo.cpp">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Support\Perforce.cpp">
       <Filter>Source\Support</Filter>
     </ClCompile>
@@ -753,6 +735,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Root\Physics\PhysSphericalJoint.cpp">
       <Filter>Source\Root\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_demo.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_draw.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_tables.cpp">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_widgets.cpp">
+      <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -929,27 +932,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc_typedefs.h">
       <Filter>Thirdparty\jemalloc\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui.h">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_internal.h">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_rectpack.h">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_textedit.h">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_truetype.h">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.h">
-      <Filter>Thirdparty\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.h">
-      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Fonts\FontRef.h">
       <Filter>Source\Root\Fonts</Filter>
@@ -1412,6 +1394,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Physics\PhysSphericalJoint.h">
       <Filter>Source\Root\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imconfig.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_dx11.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_impl_win32.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imgui_internal.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_rectpack.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_textedit.h">
+      <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_truetype.h">
+      <Filter>Thirdparty\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

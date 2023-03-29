@@ -139,7 +139,8 @@ namespace Orin
 		{
 			allowSceneDropTraget = false;
 
-			auto rect = window->DC.LastItemRect;
+			auto rect = context->LastItemData.Rect;
+
 			bool asChild = false;
 
 			if (entity && context->IO.MousePos.y > (rect.Min.y + rect.Max.y) * 0.5f)
