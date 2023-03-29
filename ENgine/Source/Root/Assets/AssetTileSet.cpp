@@ -41,7 +41,6 @@ namespace Orin
 		{
 			loader.Read("camPos", camPos);
 			loader.Read("camZoom", camZoom);
-			loader.Read("selTile", selTile);
 
 			loader.Read("sizeX", sizeX);
 			loader.Read("sizeY", sizeY);
@@ -83,14 +82,14 @@ namespace Orin
 		}		
 	}
 
-	bool AssetTileSet::IsTileSelected()
+	bool AssetTileSet::IsTilesSelected()
 	{
-		return selTile != -1;
+		return selTiles.size() > 0;
 	}
 
-	int AssetTileSet::GetSelectedTileIndex()
+	eastl::vector<int> AssetTileSet::GetSelectedTileIndices()
 	{
-		return selTile;
+		return selTiles;
 	}
 
 	int AssetTileSet::FindIndexByTextureRef(const AssetTextureRef& texture)
@@ -116,13 +115,17 @@ namespace Orin
 		return index >= 0 && index < tiles.size() ? (float)tiles[index].rotation : 0.0f;
 	}
 
+	Math::Vector2 AssetTileSet::GetTilePos(int index)
+	{
+		return index >= 0 && index < tiles.size() ? Math::Vector2((float)tiles[index].x, (float)tiles[index].y) : 0.0f;
+	}
+
 	void AssetTileSet::SaveMetaData(JsonWriter& saver)
 	{
 		saver.StartBlock("tileSet");
 
 		saver.Write("camPos", camPos);
 		saver.Write("camZoom", camZoom);
-		saver.Write("selTile", selTile);
 
 		saver.Write("sizeX", sizeX);
 		saver.Write("sizeY", sizeY);

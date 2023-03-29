@@ -16,7 +16,7 @@ namespace Orin
 
 		Math::Vector2 camPos;
 		float camZoom = 1.0f;
-		int selTile = -1;		
+		eastl::vector<int> selTiles;
 
 		struct Tile
 		{
@@ -45,11 +45,12 @@ namespace Orin
 
 		#ifdef ORIN_EDITOR
 		bool IsEditable() override;
-		bool IsTileSelected();
+		bool IsTilesSelected();
 		void ImGuiViewport(bool viewportFocused) override;
-		int GetSelectedTileIndex();
+		eastl::vector<int> GetSelectedTileIndices();
 		int FindIndexByTextureRef(const AssetTextureRef& texture);
 		AssetTextureRef GetTileTexture(int index);
+		Math::Vector2 GetTilePos(int index);
 		float GetTileRotation(int index);
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;

@@ -120,7 +120,7 @@ namespace Orin
 	{
 		if (IsEditMode())
 		{
-			if (tileSet.Get() && editor.InSelectMode())
+			if (tileSet.Get())
 			{
 				TileSetWindow::StartEdit(tileSet.Get());
 			}
@@ -220,6 +220,72 @@ namespace Orin
 				{
 					Sprite::DebugRect({ tile.x * transform.size.x, tile.y * transform.size.y },
 									  { (tile.x + 1) * transform.size.x, (tile.y - 1) * transform.size.y }, COLOR_WHITE);
+				}
+
+				if (tilesSelected.size() == 0 && editor.InSelectMode())
+				{
+					auto indices = tileSet->GetSelectedTileIndices();
+
+					cornerX = 1000000;
+					cornerY = -1000000;
+
+					cornerWidth = -1000000;
+					cornerHeight = 1000000;
+
+					for (auto index : indices)
+					{
+						Math::Vector2 pos = tileSet->GetTilePos(index);
+
+						if (pos.x < cornerX)
+						{
+							cornerX = (int)pos.x;
+						}
+
+						if (pos.y > cornerY)
+						{
+							cornerY = (int)pos.y;
+						}
+
+						if (pos.x > cornerWidth)
+						{
+							cornerWidth = (int)pos.x;
+						}
+
+						if (pos.y < cornerHeight)
+						{
+							cornerHeight = (int)pos.y;
+						}
+					}
+
+					cornerWidth = cornerWidth - cornerX + 1;
+					cornerHeight = cornerY - cornerHeight + 1;
+
+					if (mode == Mode::Inactive && indices.size() > 0)
+					{
+						auto startPos = MouseToTile(prevMs);
+
+						for (auto index : indices)
+						{
+							Math::Vector2 tilePos = tileSet->GetTilePos(index);
+
+							trans.rotation = tileSet->GetTileRotation(index);
+
+							float tileX = startPos.x + tilePos.x - (float)cornerX;
+							float tileY = startPos.y + tilePos.y - (float)cornerY;
+
+							trans.position = Math::Vector3(0.0f, 0.0f, -0.001f) + pos + mat.Vx() * tileX * transform.size.x + mat.Vy() * tileY * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
+
+							trans.size.x = size.x;
+							trans.size.y = size.y;
+
+							AssetTextureRef texRef = tileSet->GetTileTexture(index);
+							texRef.prg = tech;
+							texRef.Draw(&trans, COLOR_WHITE, dt);
+						}
+
+						Sprite::DebugRect({ startPos.x * transform.size.x, startPos.y * transform.size.y },
+										  { (startPos.x + cornerWidth) * transform.size.x, (startPos.y - cornerHeight) * transform.size.y }, COLOR_YELLOW);
+					}
 				}
 			}
 		}
@@ -345,7 +411,10 @@ namespace Orin
 			pos.y += transform.size.x;
 		}
 
-		return { pos.x / transform.size.x, pos.y / transform.size.y };
+		int x = (int)(pos.x / transform.size.x);
+		int y = (int)(pos.y / transform.size.y);
+
+		return { (float)x , (float)y };
 	}
 
 	void TileMap::RectFill()
@@ -356,35 +425,67 @@ namespace Orin
 		int startX = (int)fmin(pos1.x, pos2.x);
 		int endX = (int)fmax(pos1.x, pos2.x);
 
-		int startY = (int)fmin(pos1.y, pos2.y);
-		int endY = (int)fmax(pos1.y, pos2.y);
-
-		for (int y = startY; y <= endY; y++)
-			for (int x = startX; x <= endX; x++)
-			{
-				for (int i = 0; i < tiles.size(); i++)
+		int startY = (int)fmax(pos1.y, pos2.y);
+		int endY = (int)fmin(pos1.y, pos2.y);
+	
+		if (mode == Mode::RectErase)
+		{
+			for (int y = startY; y >= endY; y--)
+				for (int x = startX; x <= endX; x++)
 				{
-					if (tiles[i].x == x && tiles[i].y == y)
+					for (int i = 0; i < tiles.size(); i++)
 					{
-						if (mode == Mode::TilesSelection)
+						if (tiles[i].x == x && tiles[i].y == y)
 						{
-							tilesSelected.push_back(tiles[i]);
+							if (mode == Mode::TilesSelection)
+							{
+								tilesSelected.push_back(tiles[i]);
+							}
+
+							tiles.erase(tiles.begin() + i);
+							changed = true;
+
+							break;
 						}
-
-						tiles.erase(tiles.begin() + i);
-						changed = true;
-
-						break;
 					}
 				}
+		}
+		else
+		{
+			auto indices = tileSet->GetSelectedTileIndices();
 
-				if (mode == Mode::RectPlace && tileSet->IsTileSelected())
-				{
-					int index = tileSet->GetSelectedTileIndex();
-					tiles.push_back({ x, y, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
-					changed = true;
+			for (int y = startY; y >= endY; y -= cornerHeight)
+				for (int x = startX; x <= endX; x += cornerWidth)
+				{											
+					for (auto index : indices)
+					{
+						Math::Vector2 pos = tileSet->GetTilePos(index);
+
+						int tileX = x + (int)pos.x - cornerX;
+						int tileY = y + (int)pos.y - cornerY;
+
+						if (tileX > endX || tileY < endY)
+						{
+							continue;
+						}
+
+						for (int i = 0; i < tiles.size(); i++)
+						{
+							if (tiles[i].x == tileX && tiles[i].y == tileY)
+							{
+								tiles.erase(tiles.begin() + i);
+								changed = true;
+
+								break;
+							}
+						}
+
+						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
+
+						changed = true;
+					}
 				}
-			}
+		}
 	}
 
 	void TileMap::SetEditMode(bool ed)
@@ -426,22 +527,46 @@ namespace Orin
 				int x = (int)pos.x;
 				int y = (int)pos.y;
 
-				for (int i = 0; i < tiles.size(); i++)
+				if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTilesSelected())
 				{
-					if (tiles[i].x == x && tiles[i].y == y)
+					auto indices = tileSet->GetSelectedTileIndices();
+
+					for (auto index : indices)
 					{
-						tiles.erase(tiles.begin() + i);
-						changed = true;
+						Math::Vector2 pos = tileSet->GetTilePos(index);
 
-						break;
+						int tileX = x + (int)pos.x - cornerX;
+						int tileY = y + (int)pos.y - cornerY;
+
+						for (int i = 0; i < tiles.size(); i++)
+						{
+							if (tiles[i].x == tileX && tiles[i].y == tileY)
+							{
+								tiles.erase(tiles.begin() + i);
+								changed = true;
+
+								break;
+							}
+						}
+
+						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
 					}
-				}
 
-				if (mode == Mode::Place && tileSet != nullptr && tileSet->IsTileSelected())
-				{
-					int index = tileSet->GetSelectedTileIndex();
-					tiles.push_back({ x, y, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
 					changed = true;
+				}
+				else
+				if (mode == Mode::Erase)
+				{
+					for (int i = 0; i < tiles.size(); i++)
+					{
+						if (tiles[i].x == x && tiles[i].y == y)
+						{
+							tiles.erase(tiles.begin() + i);
+							changed = true;
+
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -528,19 +653,26 @@ namespace Orin
 			}
 			else
 			{
-				mode = Mode::Place;
-
-				if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
-				{
-					mode = Mode::RectPlace;
-					rectStart = prevMs;
-				}
-				else
 				if (root.controls.DebugKeyPressed("KEY_X", AliasAction::Pressed))
 				{
 					mode = Mode::TilesSelection;
 					rectStart = prevMs;
 				}
+				else
+				{
+					if (tileSet->IsTilesSelected())
+					{
+						auto indices = tileSet->GetSelectedTileIndices();
+
+						mode = Mode::Place;
+
+						if (root.controls.DebugKeyPressed("KEY_Z", AliasAction::Pressed))
+						{
+							mode = Mode::RectPlace;
+							rectStart = prevMs;
+						}
+					}
+				}				
 			}
 		}
 	}

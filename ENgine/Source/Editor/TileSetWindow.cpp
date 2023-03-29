@@ -113,6 +113,9 @@ namespace Orin
 
 			ImGuiDockNode* node;
 
+			node = ImGui::DockBuilderGetNode(dock_main_id);
+			node->LocalFlags |= ImGuiDockNodeFlags_NoDockingOverOther;
+
 			node = ImGui::DockBuilderGetNode(dock_up_id);
 			node->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
 
@@ -186,21 +189,29 @@ namespace Orin
 				Math::Vector2 size = tile.texture.GetSize();
 				transform.size = Math::Vector3(size.x, size.y, 0.0f);
 				transform.rotation = (float)tile.rotation;
-				transform.position = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3( 0.5f, -0.5f, 0.0f ) * transform.size;
+				transform.position = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
 				tile.texture.Draw(&transform, COLOR_WHITE, root.GetDeltaTime());
 			}
 
-			if (tileSet->selTile != -1)
+			for (auto index : tileSet->selTiles)
 			{
-				auto& tile = tileSet->tiles[tileSet->selTile];
-				DrawCell(tile.x, tile.y);
+				auto& tile = tileSet->tiles[index];
+				DrawCell({ (float)tile.x, (float)tile.y });
 			}
 
-			if (drag == Drag::Tile || drag == Drag::Drop)
+			if (mode == Mode::TileSlected || mode == Mode::DragTile)
 			{
-				DrawCell(dragX, dragY);
+				DrawCell(drag);
 			}
+		}
+
+		if (mode == Mode::TilesSelection)
+		{
+			root.render.DebugLine2D({ rectStart.x, rectStart.y }, COLOR_GREEN, { rectEnd.x, rectStart.y }, COLOR_GREEN);
+			root.render.DebugLine2D({ rectStart.x, rectEnd.y }, COLOR_GREEN, { rectEnd.x, rectEnd.y }, COLOR_GREEN);
+			root.render.DebugLine2D({ rectStart.x, rectStart.y }, COLOR_GREEN, { rectStart.x, rectEnd.y }, COLOR_GREEN);
+			root.render.DebugLine2D({ rectEnd.x, rectStart.y }, COLOR_GREEN, { rectEnd.x, rectEnd.y }, COLOR_GREEN);
 		}
 
 		if (imageFocused)
@@ -213,14 +224,14 @@ namespace Orin
 		root.render.GetDevice()->Present();
 	}
 
-	void TileSetWindow::DrawCell(int x, int y)
+	void TileSetWindow::DrawCell(Math::Vector2 pos)
 	{
 		Math::Vector2 step = { (float)tileSet->sizeX, (float)tileSet->sizeY };
 		step *= Sprite::ToUnits(1.0f);
 
 		Math::Matrix mat;
-		Math::Vector3 p1 = mat.Vx() * (float)x * step.x + mat.Vy() * (float)y * step.y;
-		Math::Vector3 p2 = mat.Vx() * (float)(x + 1) * step.x + mat.Vy() * (float)(y - 1) * step.y;
+		Math::Vector3 p1 = mat.Vx() * pos.x * step.x + mat.Vy() * pos.y * step.y;
+		Math::Vector3 p2 = mat.Vx() * (pos.x + 1.0f) * step.x + mat.Vy() * (pos.y - 1.0f) * step.y;
 
 		Color color = COLOR_YELLOW;
 
@@ -244,15 +255,13 @@ namespace Orin
 		subSlice.sliceIndex = sliseIndex;
 
 		auto& slice = texture.Get()->slices[sliseIndex];
+		Math::Vector2 pos = { drag.x + (int)((slice.pos.x - offset.x) / (float)tileSet->sizeX), drag.y - (int)((slice.pos.y - offset.y) / (float)tileSet->sizeY) };
 
-		int x = dragX + (int)((slice.pos.x - offset.x) / (float)tileSet->sizeX);
-		int y = dragY - (int)((slice.pos.y - offset.y) / (float)tileSet->sizeY);
-
-		if (FindTileIndex(x, y) == -1)
+		if (FindTileIndex(pos) == -1)
 		{
 			AssetTileSet::Tile tile;
-			tile.x = x;
-			tile.y = y;
+			tile.x = (int)pos.x;
+			tile.y = (int)pos.y;
 			tile.texture = texture;
 			tile.texture.sliceIndex = sliseIndex;
 
@@ -280,10 +289,10 @@ namespace Orin
 		{
 			if (io.KeysDown[VK_DELETE])
 			{
-				if (tileSet->selTile != -1)
+				//if (tileSet->selTile != -1)
 				{
-					tileSet->tiles.erase(tileSet->tiles.begin() + tileSet->selTile);
-					tileSet->selTile = -1;
+					//tileSet->tiles.erase(tileSet->tiles.begin() + tileSet->selTile);
+					//tileSet->selTile = -1;
 				}
 			}
 		}
@@ -296,7 +305,7 @@ namespace Orin
 			step *= Sprite::ToUnits(1.0f);
 
 			Math::Matrix mat;
-			Math::Vector3 pos = mat.Vx() * (float)dragX * step.x + mat.Vy() * (float)dragY * step.y;
+			Math::Vector3 pos = mat.Vx() * drag.x * step.x + mat.Vy() * drag.y * step.y;
 
 			if (ImGui::AcceptDragDropPayload("_ASSET_TEX", ImGuiDragDropFlags_AcceptNoDrawDefaultRect) && tileSet)
 			{
@@ -319,18 +328,18 @@ namespace Orin
 					tileSet->Save();
 				}
 				else
-				if (FindTileIndex(dragX, dragY) == -1)
+				if (FindTileIndex(drag) == -1)
 				{
 					AssetTileSet::Tile tile;
-					tile.x = dragX;
-					tile.y = dragY;
+					tile.x = (int)drag.x;
+					tile.y = (int)drag.y;
 					tile.texture = texture;
 
 					tileSet->tiles.push_back(tile);
 					tileSet->Save();
 				}
 
-				drag = Drag::None;
+				mode = Mode::None;
 			}
 			else
 			if (ImGui::AcceptDragDropPayload("_ANIM_FRAMES", ImGuiDragDropFlags_AcceptNoDrawDefaultRect) && tileSet)
@@ -353,20 +362,20 @@ namespace Orin
 
 				tileSet->Save();
 
-				drag = Drag::None;
+				mode = Mode::None;
 			}
 			else
 			{
-				drag = Drag::Drop;
+				mode = Mode::DragTile;
 			}
 
 			ImGui::EndDragDropTarget();
 		}
 		else
 		{
-			if (drag == Drag::Drop)
+			if (mode == Mode::DragTile)
 			{
-				drag = Drag::None;
+				mode = Mode::None;
 			}
 		}
 
@@ -385,9 +394,9 @@ namespace Orin
 			viewportCaptured = true;
 		}
 
-		if (imageFocused && vireportHowered && drag == Drag::None && ImGui::IsMouseClicked(1))
+		if (imageFocused && vireportHowered && mode == Mode::None && ImGui::IsMouseClicked(1))
 		{
-			drag = Drag::Field;
+			mode = Mode::DragField;
 			viewportCaptured = true;
 		}
 
@@ -406,13 +415,13 @@ namespace Orin
 			else
 			if (ImGui::IsMouseReleased(1))
 			{
-				drag = Drag::None;
+				mode = Mode::None;
 				viewportCaptured = false;
 			}
 			else	
 			if (ImGui::IsMouseReleased(2))
 			{
-				drag = Drag::None;
+				mode = Mode::None;
 				viewportCaptured = false;
 			}
 		}
@@ -428,9 +437,9 @@ namespace Orin
 
 		if (tileSet)
 		{
-			if (tileSet->selTile != -1)
+			if (tileSet->selTiles.size() == 1)
 			{
-				auto* tile = &tileSet->tiles[tileSet->selTile];
+				auto* tile = &tileSet->tiles[tileSet->selTiles[0]];
 				auto* metaData = tile->GetMetaData();
 
 				metaData->Prepare(tile);
@@ -452,51 +461,117 @@ namespace Orin
 	{
 		Math::Vector2 delta(prevMs.x - ms.x, prevMs.y - ms.y);
 
-		if (drag == Drag::Field)
+		if (mode == Mode::DragField)
 		{
 			tileSet->camPos += Math::Vector2(delta.x, -delta.y) / tileSet->camZoom;
 		}
 		
+		if (mode == Mode::TilesSelection)
+		{
+			rectEnd = ms;
+		}
+
 		prevMs = ms;
 
-		MouseToCell(dragX, dragY);
+		drag = MouseToCell(prevMs);
 	}
 
 	void TileSetWindow::OnLeftMouseDown()
 	{
 		if (tileSet)
 		{
-			tileSet->selTile = FindTileIndex(dragX, dragY);
-
-			if (tileSet->selTile != -1)
+			if (mode == Mode::TilesSelected)
 			{
-				drag = Drag::Tile;
 			}
-		}
+			else
+			if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_X)))
+			{
+				mode = Mode::TilesSelection;
+
+				if (!ImGui::IsKeyPressed(ImGuiKey_LeftShift))
+				{
+					tileSet->selTiles.clear();
+				}
+
+				rectStart = prevMs;
+			}
+			else
+			{
+				tileSet->selTiles.clear();
+
+				int selTile = FindTileIndex(drag);
+
+				if (selTile != -1)
+				{
+					mode = Mode::TileSlected;
+					tileSet->selTiles.push_back(selTile);
+				}
+			}
+		}		
 	}
 
 	void TileSetWindow::OnLeftMouseUp()
 	{
-		if (tileSet->selTile != -1)
+		if (mode == Mode::TilesSelection)
 		{
-			if (FindTileIndex(dragX, dragY) == -1)
-			{
-				auto& tile = tileSet->tiles[tileSet->selTile];
+			auto pos1 = MouseToCell(rectStart);
+			auto pos2 = MouseToCell(rectEnd);
 
-				tile.x = dragX;
-				tile.y = dragY;
+			int startX = (int)fmin(pos1.x, pos2.x);
+			int endX = (int)fmax(pos1.x, pos2.x);
+
+			int startY = (int)fmin(pos1.y, pos2.y);
+			int endY = (int)fmax(pos1.y, pos2.y);
+
+			for (int y = startY; y <= endY; y++)
+				for (int x = startX; x <= endX; x++)
+				{
+					for (int i = 0; i < tileSet->tiles.size(); i++)
+					{
+						if (tileSet->tiles[i].x == x && tileSet->tiles[i].y == y)
+						{
+							bool canAdd = true;
+
+							for (auto index : tileSet->selTiles)
+							{
+								if (index == i)
+								{
+									canAdd = false;
+									break;
+								}
+							}
+							
+							if (canAdd)
+							{
+								tileSet->selTiles.push_back(i);
+							}
+
+							break;
+						}
+					}
+				}
+		}
+		else
+		if (tileSet->selTiles.size() == 1)
+		{
+			if (FindTileIndex(drag) == -1)
+			{
+				auto& tile = tileSet->tiles[tileSet->selTiles[0]];
+
+				tile.x = (int)drag.x;
+				tile.y = (int)drag.y;
 			}
 		}
 
-		drag = Drag::None;
+		mode = Mode::None;
 	}
 
-	void TileSetWindow::MouseToCell(int& x, int& y)
+	Math::Vector2 TileSetWindow::MouseToCell(Math::Vector2 msPos)
 	{
 		Math::Vector3 mouseOrigin;
 		Math::Vector3 mouseDirection;
 
-		Math::GetMouseRay(prevMs, mouseOrigin, mouseDirection);
+		Math::GetMouseRay(msPos, mouseOrigin, mouseDirection);
 
 		Math::Vector3 pos;
 		Math::IntersectPlaneRay(0.0f, { 0.0f, 0.0f, 1.0f }, mouseOrigin, mouseDirection, pos);
@@ -506,18 +581,22 @@ namespace Orin
 			pos.x -= Sprite::ToUnits((float)tileSet->sizeX);
 		}
 
-		x = (int)(pos.x / Sprite::ToUnits((float)tileSet->sizeX));
-
 		if (pos.y > 0.0f)
 		{
 			pos.y += Sprite::ToUnits((float)tileSet->sizeX);
 		}
 
-		y = (int)(pos.y / Sprite::ToUnits((float)tileSet->sizeY));
+		int x = (int)(pos.x / Sprite::ToUnits((float)tileSet->sizeX));
+		int y = (int)(pos.y / Sprite::ToUnits((float)tileSet->sizeY));
+
+		return { (float)x, (float)y };
 	}
 
-	int TileSetWindow::FindTileIndex(int x, int y)
+	int TileSetWindow::FindTileIndex(Math::Vector2 pos)
 	{
+		int x = (int)pos.x;
+		int y = (int)pos.y;
+
 		for (int i = 0; i < tileSet->tiles.size(); i++)
 		{
 			auto& tile = tileSet->tiles[i];

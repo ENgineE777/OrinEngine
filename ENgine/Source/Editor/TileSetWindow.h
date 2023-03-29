@@ -10,32 +10,36 @@ namespace Orin
 {
 	class TileSetWindow
 	{
-		enum class Drag
+		enum class Mode
 		{
 			None,
-			Drop,
-			Field,
-			Tile
+			DragTile,
+			DragField,
+			TileSlected,
+			TilesSelection,
+			TilesSelected,
+			TilesMove
 		};
 
-		Drag drag = Drag::None;
+		Mode mode = Mode::None;
 
-		int dragX = 0;
-		int dragY = 0;
+		Math::Vector2 drag;
 
 		bool needSetSize = true;
 
 		Math::Vector2 prevMs;
-
 		Math::Vector2 lastViewportSize = Math::Vector2(800.f, 600.0f);
+
+		Math::Vector2 rectStart;
+		Math::Vector2 rectEnd;		
 
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
 		bool imageFocused = false;
 
-		void MouseToCell(int& x, int& y);
-		int FindTileIndex(int x, int y);
-		void DrawCell(int x, int y);
+		Math::Vector2 MouseToCell(Math::Vector2 viewportSize);
+		int FindTileIndex(Math::Vector2 pos);
+		void DrawCell(Math::Vector2 pos);
 		void TryAddSlice(AssetTextureRef& texture, Math::Vector2 offset, int sliseIndex);
 
 	public:

@@ -37,6 +37,11 @@ namespace Orin
 
 		PhysScene::BodyUserData body;
 
+		int cornerX = 0;
+		int cornerY = 0;
+		int cornerWidth = 0;
+		int cornerHeight = 0;
+
 		int drawLevel = 0;
 		AssetTileSetRef tileSet;
 
