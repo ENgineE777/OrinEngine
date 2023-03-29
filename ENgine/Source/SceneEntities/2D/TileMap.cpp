@@ -428,7 +428,7 @@ namespace Orin
 		int startY = (int)fmax(pos1.y, pos2.y);
 		int endY = (int)fmin(pos1.y, pos2.y);
 	
-		if (mode == Mode::RectErase)
+		if (mode == Mode::RectErase || mode == Mode::TilesSelection)
 		{
 			for (int y = startY; y >= endY; y--)
 				for (int x = startX; x <= endX; x++)
@@ -451,6 +451,7 @@ namespace Orin
 				}
 		}
 		else
+		if (mode == Mode::RectPlace)
 		{
 			auto indices = tileSet->GetSelectedTileIndices();
 
