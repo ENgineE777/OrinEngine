@@ -93,7 +93,7 @@ namespace Orin
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY;
 
 		Tasks(true)->AddTask(-10, this, (Object::Delegate)&DefferedLight::SetRT);
-		Tasks(true)->AddTask(8, this, (Object::Delegate)&DefferedLight::Draw);
+		Tasks(true)->AddTask(6, this, (Object::Delegate)&DefferedLight::Draw);
 
 		defferdLightTech = root.render.GetRenderTechnique<DefferdLightTechnique>(_FL_);
 		blurRTech = GetRoot()->GetRender()->GetRenderTechnique<BlurTechnique>(_FL_);
