@@ -551,7 +551,7 @@ namespace Orin
 		{
 			auto& asset = openedAssets[i];
 
-			if (asset.Get())
+			if (asset.Get() && asset->ContainsUnsavedChanges())
 			{
 				asset->Save();
 			}
