@@ -547,9 +547,14 @@ namespace Orin
 
 	void Editor::Save()
 	{
-		if (selectedEditAsset)
+		for (int i = 0; i < openedAssets.size(); i++)
 		{
-			selectedEditAsset->Save();
+			auto& asset = openedAssets[i];
+
+			if (asset.Get())
+			{
+				asset->Save();
+			}
 		}
 
 		project.Save();
