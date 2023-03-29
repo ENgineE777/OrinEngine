@@ -13,8 +13,7 @@ namespace Orin
 	void Node2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
+		transform.size = 64.0f;
 		transform.transformFlag = prefabInstance ? (MoveXYZ | TransformFlag::RotateZ | TransformFlag::ScaleX | TransformFlag::ScaleY | TransformFlag::RectMoveXY) : SpriteTransformFlags;
-
-
 	}
 }
