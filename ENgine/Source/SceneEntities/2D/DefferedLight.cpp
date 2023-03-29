@@ -169,7 +169,7 @@ namespace Orin
 		root.render.GetDevice()->SetRenderTarget(2, normalRT);
 		root.render.GetDevice()->SetRenderTarget(3, selfilumRT);
 
-		root.render.GetDevice()->Clear(true, COLOR_BLACK_A(0.0f), true, 1.0f);
+		root.render.GetDevice()->Clear(true, GetScene()->IsPlaying() ? COLOR_BLACK_A(0.0f) : Color(0.095f, 0.095f, 0.095f, 0.0f), true, 1.0f);
 	}
 
 	void DefferedLight::BlurTexture(TextureRef src, TextureRef dest, float blurStrength)
