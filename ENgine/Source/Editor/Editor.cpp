@@ -547,14 +547,9 @@ namespace Orin
 
 	void Editor::Save()
 	{
-		for (int i = 0; i < openedAssets.size(); i++)
+		if (selectedEditAsset)
 		{
-			auto& asset = openedAssets[i];
-
-			if (asset.Get() && asset->ContainsUnsavedChanges())
-			{
-				asset->Save();
-			}
+			selectedEditAsset->Save();
 		}
 
 		project.Save();
@@ -1938,6 +1933,21 @@ namespace Orin
 			{				
 				if (ImGui::MenuItem("Save"))
 				{
+					Save();
+				}
+
+				if (ImGui::Button("Save All"))
+				{
+					for (int i = 0; i < openedAssets.size(); i++)
+					{
+						auto& asset = openedAssets[i];
+
+						if (asset.Get())
+						{
+							asset->Save();
+						}
+					}
+					
 					Save();
 				}
 
