@@ -289,11 +289,14 @@ namespace Orin
 		{
 			if (io.KeysDown[VK_DELETE])
 			{
-				//if (tileSet->selTile != -1)
+				for (auto index : tileSet->selTiles)
 				{
-					//tileSet->tiles.erase(tileSet->tiles.begin() + tileSet->selTile);
-					//tileSet->selTile = -1;
+					tileSet->tiles.erase(tileSet->tiles.begin() + index);
 				}
+
+				tileSet->selTiles.clear();
+
+				tileSet->Save();
 			}
 		}
 
@@ -560,6 +563,8 @@ namespace Orin
 
 				tile.x = (int)drag.x;
 				tile.y = (int)drag.y;
+
+				tileSet->Save();
 			}
 		}
 
