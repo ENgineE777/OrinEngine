@@ -684,9 +684,19 @@ namespace Orin
 		ImGui::End();
 	}
 
-	bool Editor::IsFocused()
+	bool Editor::AllowGrabFocused()
 	{
-		return (GetFocus() == hwnd && ImGui::IsWindowFocused()) | ImGui::IsItemHovered();
+		return viewportCaptured == ViewportCature::None;
+	}	
+
+	void Editor::DisallowMainFocus(bool disallow)
+	{
+		disallowMainFocus = disallow;
+	}
+	
+	void Editor::Unfocus()
+	{
+		viewportFocused = false;
 	}
 
 	void Editor::ShowViewport()
@@ -797,7 +807,7 @@ namespace Orin
 
 				vireportHowered = ImGui::IsItemHovered();
 
-				viewportFocused = IsFocused();
+				viewportFocused = !disallowMainFocus && ImGuiHelper::IsFocused();
 				root.controls.SetFocused(viewportFocused);
 
 				if (vireportHowered)

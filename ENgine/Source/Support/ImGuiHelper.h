@@ -18,4 +18,5 @@ namespace Orin::ImGuiHelper
 	CLASS_DECLSPEC void GetAllStyles(eastl::vector<eastl::string>& names);
 	CLASS_DECLSPEC void LoadStyle(const char* name);
 	CLASS_DECLSPEC void SaveStyle(const char* name);
+	CLASS_DECLSPEC bool IsFocused();
 }

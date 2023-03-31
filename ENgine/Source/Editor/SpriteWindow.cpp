@@ -896,11 +896,12 @@ namespace Orin
 			inDragAndDrop = true;
 		}
 
-		imageFocused = editor.IsFocused();
+		imageFocused = editor.AllowGrabFocused() && ImGuiHelper::IsFocused();
 
 		if (imageFocused)
 		{
 			camZoom = Math::Clamp(camZoom + io.MouseWheel * 0.5f, 0.4f, 3.0f);
+			editor.Unfocus();
 		}
 
 		vireportHowered = ImGui::IsItemHovered();
@@ -909,6 +910,7 @@ namespace Orin
 		{
 			OnLeftMouseDown();
 			viewportCaptured = true;
+			editor.DisallowMainFocus(true);
 		}
 
 		root.controls.SetFocused(GetFocus() == editor.hwnd && ImGui::IsWindowFocused());
@@ -917,6 +919,7 @@ namespace Orin
 		{
 			drag = Drag::Field;
 			viewportCaptured = true;
+			editor.DisallowMainFocus(true);			
 		}
 
 		ImVec2 del = ImGui::GetMouseDragDelta(0);
@@ -930,18 +933,14 @@ namespace Orin
 			{
 				OnLeftMouseUp();
 				viewportCaptured = false;
+				editor.DisallowMainFocus(false);
 			}
 			else
 			if (ImGui::IsMouseReleased(1))
 			{
 				drag = Drag::None;
 				viewportCaptured = false;
-			}
-			else
-			if (ImGui::IsMouseReleased(2))
-			{
-				drag = Drag::None;
-				viewportCaptured = false;
+				editor.DisallowMainFocus(false);
 			}
 		}
 

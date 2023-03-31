@@ -382,11 +382,12 @@ namespace Orin
 			}
 		}
 
-		imageFocused = editor.IsFocused();
+		imageFocused = editor.AllowGrabFocused() && ImGuiHelper::IsFocused();
 
 		if (imageFocused)
 		{
 			tileSet->camZoom = Math::Clamp(tileSet->camZoom + io.MouseWheel * 0.5f, 0.4f, 3.0f);
+			editor.Unfocus();
 		}
 
 		vireportHowered = ImGui::IsItemHovered();
@@ -395,12 +396,14 @@ namespace Orin
 		{
 			OnLeftMouseDown();
 			viewportCaptured = true;
+			editor.DisallowMainFocus(true);
 		}
 
 		if (imageFocused && vireportHowered && mode == Mode::None && ImGui::IsMouseClicked(1))
 		{
 			mode = Mode::DragField;
 			viewportCaptured = true;
+			editor.DisallowMainFocus(true);
 		}
 
 		ImVec2 del = ImGui::GetMouseDragDelta(0);
@@ -414,18 +417,14 @@ namespace Orin
 			{
 				OnLeftMouseUp();
 				viewportCaptured = false;
+				editor.DisallowMainFocus(false);
 			}
 			else
 			if (ImGui::IsMouseReleased(1))
 			{
 				mode = Mode::None;
 				viewportCaptured = false;
-			}
-			else	
-			if (ImGui::IsMouseReleased(2))
-			{
-				mode = Mode::None;
-				viewportCaptured = false;
+				editor.DisallowMainFocus(false);
 			}
 		}
 
@@ -487,7 +486,7 @@ namespace Orin
 			{
 			}
 			else
-			if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_X)))
+			if (ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_X)) || ImGui::IsKeyDown(ImGui::GetKeyIndex(ImGuiKey_Z)))
 			{
 				mode = Mode::TilesSelection;
 

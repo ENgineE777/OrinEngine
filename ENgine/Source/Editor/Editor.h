@@ -103,6 +103,7 @@ namespace Orin
 		AssetDialog assetDialog = AssetDialog::Inactive;
 		ViewportCature viewportCaptured = ViewportCature::None;
 		bool vireportHowered = false;
+		bool disallowMainFocus = false;
 
 		bool projectRunning = false;
 
@@ -181,7 +182,9 @@ namespace Orin
 
 		eastl::vector<ToolButton> toolButtons;
 
-		bool IsFocused();
+		bool AllowGrabFocused();
+		void DisallowMainFocus(bool disallow);
+		void Unfocus();
 
 	public:
 
@@ -218,6 +221,8 @@ namespace Orin
 		void Save();
 
 		bool InSelectMode();
+
+		HWND GetHWND() { return hwnd; }
 
 	private:
 

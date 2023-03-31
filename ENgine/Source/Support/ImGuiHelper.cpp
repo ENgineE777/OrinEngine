@@ -2,6 +2,7 @@
 #include "Root/Files/Files.h"
 #include <filesystem>
 #include "Root/Root.h"
+#include "Editor/Editor.h"
 
 namespace Orin::ImGuiHelper
 {
@@ -127,5 +128,10 @@ namespace Orin::ImGuiHelper
 
 			writer.FinishBlock();
 		}
+	}
+
+	CLASS_DECLSPEC bool IsFocused()
+	{
+		return (GetFocus() == editor.GetHWND() && ImGui::IsWindowFocused()) || ImGui::IsItemHovered();
 	}
 }
