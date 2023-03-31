@@ -455,8 +455,21 @@ namespace Orin
 		{
 			auto indices = tileSet->GetSelectedTileIndices();
 
-			for (int y = startY; y >= endY; y -= cornerHeight)
-				for (int x = startX; x <= endX; x += cornerWidth)
+			int offsetX = startX % cornerWidth;
+			if (startX < 0)
+			{
+				offsetX = cornerWidth + offsetX;
+			}
+
+			int offsetY = cornerHeight - startY % cornerHeight;
+
+			if (offsetY < 0)
+			{
+				offsetY = cornerHeight + offsetY;
+			}
+
+			for (int y = startY + offsetY; y >= endY; y -= cornerHeight)
+				for (int x = startX - offsetX; x <= endX; x += cornerWidth)
 				{											
 					for (auto index : indices)
 					{
@@ -465,7 +478,7 @@ namespace Orin
 						int tileX = x + (int)pos.x - cornerX;
 						int tileY = y + (int)pos.y - cornerY;
 
-						if (tileX > endX || tileY < endY)
+						if (tileX < startX || tileX > endX || tileY > startY || tileY < endY)
 						{
 							continue;
 						}
