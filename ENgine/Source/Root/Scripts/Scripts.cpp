@@ -106,75 +106,79 @@ namespace Orin
 		return CheckGamePlayDll();
 	}
 
-	void Scripts::LoadGamePlayDll(const char* path)
+	bool Scripts::LoadGamePlayDll(const char* path)
 	{
 		HMODULE newModule = LoadLibraryA(path);
 
-		root.crashHandler.LoadDebugInfo(path);
-
-		if (newModule)
+		if (!newModule)
 		{
-			AssetRef selectedEditAsset;
-
-			if (Module && allowDynamicReload)
-			{
-				selectedEditAsset = editor.selectedEditAsset;
-				editor.SelectEditAsset(AssetRef());
-
-				void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
-				auto code_ptr = (decltype(unregister_code)*)Procs;
-
-				code_ptr(ClassFactorySceneEntity::Decls());
-			}
-
-			{
-				void* Procs = GetProcAddress((HMODULE)newModule, "register_code");
-				auto code_ptr = (decltype(register_code)*)Procs;
-
-				code_ptr(ClassFactorySceneEntity::Decls());
-
-				// We must reinit GroupedDecls because it contains dead pointers from old DLL
-				ClassFactorySceneEntity::GropedDecls() = ClassFactorySceneEntity::Decls();
-
-				ClassFactorySceneEntity::Sort();
-				ClassFactorySceneEntity::SortGrouped();
-			}
-
-			if (Module && allowDynamicReload)
-			{
-				root.render.InvalidateNonEngineTechiques();
-
-				{
-					void* Procs = GetProcAddress(newModule, "recreate_entites");
-					auto code_ptr = (decltype(recreate_entites)*)Procs;
-
-					eastl::vector<AssetScene*> scenes;
-
-					root.assets.GetAssetsByType<AssetScene>(scenes);
-
-					for (auto* scene : scenes)
-					{
-						code_ptr((eastl::vector<SceneEntity*>&)scene->GetScene()->GetEntities());
-					}
-				}
-
-				char tmpname[256];
-				StringUtils::Printf(tmpname, 256, "%sGameplay_%s.rcpp%i.dll", root.GetPath(Root::Path::Binaries), configName.c_str(), 1 - pingPong);
-
-				root.crashHandler.UnloadDebugInfo(tmpname);
-
-				FreeLibrary((HMODULE)Module);
-
-				DeleteFileA(tmpname);
-			}
-
-			Module = newModule;
-
-			if (selectedEditAsset)
-			{
-				editor.SelectEditAsset(selectedEditAsset);
-			}
+			return false;
 		}
+		
+		root.crashHandler.LoadDebugInfo(path);
+		
+		AssetRef selectedEditAsset;
+
+		if (Module && allowDynamicReload)
+		{
+			selectedEditAsset = editor.selectedEditAsset;
+			editor.SelectEditAsset(AssetRef());
+
+			void* Procs = GetProcAddress((HMODULE)Module, "unregister_code");
+			auto code_ptr = (decltype(unregister_code)*)Procs;
+
+			code_ptr(ClassFactorySceneEntity::Decls());
+		}
+
+		{
+			void* Procs = GetProcAddress((HMODULE)newModule, "register_code");
+			auto code_ptr = (decltype(register_code)*)Procs;
+
+			code_ptr(ClassFactorySceneEntity::Decls());
+
+			// We must reinit GroupedDecls because it contains dead pointers from old DLL
+			ClassFactorySceneEntity::GropedDecls() = ClassFactorySceneEntity::Decls();
+
+			ClassFactorySceneEntity::Sort();
+			ClassFactorySceneEntity::SortGrouped();
+		}
+
+		if (Module && allowDynamicReload)
+		{
+			root.render.InvalidateNonEngineTechiques();
+
+			{
+				void* Procs = GetProcAddress(newModule, "recreate_entites");
+				auto code_ptr = (decltype(recreate_entites)*)Procs;
+
+				eastl::vector<AssetScene*> scenes;
+
+				root.assets.GetAssetsByType<AssetScene>(scenes);
+
+				for (auto* scene : scenes)
+				{
+					code_ptr((eastl::vector<SceneEntity*>&)scene->GetScene()->GetEntities());
+				}
+			}
+
+			char tmpname[256];
+			StringUtils::Printf(tmpname, 256, "%sGameplay_%s.rcpp%i.dll", root.GetPath(Root::Path::Binaries), configName.c_str(), 1 - pingPong);
+
+			root.crashHandler.UnloadDebugInfo(tmpname);
+
+			FreeLibrary((HMODULE)Module);
+
+			DeleteFileA(tmpname);
+		}
+
+		Module = newModule;
+
+		if (selectedEditAsset)
+		{
+			editor.SelectEditAsset(selectedEditAsset);
+		}
+
+		return true;
 	}
 
 	bool Scripts::CheckGamePlayDll()
@@ -186,6 +190,8 @@ namespace Orin
 			return false;
 		}
 
+		bool res = false;
+
 		uint64_t lastWriteTime;
 		if (GetFileTime(hDLLFile, NULL, NULL, (FILETIME*)&lastWriteTime) && LastWrite != lastWriteTime || root.controls.DebugHotKeyPressed("KEY_Q", "KEY_P"))
 		{
@@ -195,7 +201,7 @@ namespace Orin
 
 			if (CopyFileA(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str()), tmpname, FALSE))
 			{
-				LoadGamePlayDll(tmpname);
+				res = LoadGamePlayDll(tmpname);
 
 				LastWrite = lastWriteTime;
 			}
@@ -203,7 +209,7 @@ namespace Orin
 
 		CloseHandle(hDLLFile);
 
-		return true;
+		return res;
 	}
 	#endif
 
@@ -222,16 +228,14 @@ namespace Orin
 
 	bool Scripts::Start()
 	{
-		if (allowDynamicReload)
+		bool res = true;
+
+		if (!allowDynamicReload)
 		{
-			CheckGamePlayDll();
-		}
-		else
-		{
-			LoadGamePlayDll(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str()));
+			res = LoadGamePlayDll(StringUtils::PrintTemp("%sgameplay_%s.dll", root.GetPath(Root::Path::Binaries), configName.c_str()));
 		}
 
-		return true;
+		return res;
 	}
 
 	void Scripts::Stop()

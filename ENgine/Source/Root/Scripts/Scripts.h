@@ -23,7 +23,7 @@ namespace Orin
 #endif
 
 		bool CheckGamePlayDll();
-		void LoadGamePlayDll(const char* path);
+		bool LoadGamePlayDll(const char* path);
 		#endif
 
 	public:
