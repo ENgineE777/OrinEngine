@@ -412,9 +412,6 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\AnimGraph2D.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.cpp">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Root\Scripts\Scripts.cpp">
       <Filter>Source\Root\Scripts</Filter>
     </ClCompile>
@@ -991,9 +988,6 @@
       <Filter>Source\Root\Assets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\AnimGraph2D.h">
-      <Filter>Source\SceneEntities\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.h">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Scripts\Scripts.h">

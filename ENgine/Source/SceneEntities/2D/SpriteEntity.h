@@ -23,6 +23,9 @@ namespace Orin
 		int drawLevel = 0;
 		bool noZ = false;
 
+		bool paralaxInEditor = false;
+		Math::Vector2 paralax = 1.0f;
+
 		META_DATA_DECL_BASE(SpriteEntity)
 
 	#ifndef DOXYGEN_SKIP

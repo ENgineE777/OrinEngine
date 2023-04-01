@@ -242,7 +242,6 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Node2D.h" />
-    <ClInclude Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\PointLight2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.h" />
@@ -455,7 +454,6 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\GenericMarker2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Node2D.cpp" />
-    <ClCompile Include="..\..\..\Source\SceneEntities\2D\ParalaxedSpriteEntity.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PointLight2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.cpp" />

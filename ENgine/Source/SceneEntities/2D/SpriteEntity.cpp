@@ -15,6 +15,9 @@ namespace Orin
 		INT_PROP(SpriteEntity, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		BOOL_PROP(SpriteEntity, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
+		BOOL_PROP(SpriteEntity, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
+		FLOAT_PROP(SpriteEntity, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
+		FLOAT_PROP(SpriteEntity, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
 	META_DATA_DESC_END()
 
 	SpriteEntity::SpriteEntity() : SceneEntity()
@@ -44,6 +47,26 @@ namespace Orin
 	{
 		if (IsVisible())
 		{
+			Transform trans = transform;
+
+			{
+				Math::Matrix view;
+				root.render.GetTransform(TransformStage::View, view);
+				view.Inverse();
+
+				auto camPos = Sprite::ToPixels(view.Pos());
+
+				auto pos = trans.position;
+
+				if (paralaxInEditor || GetScene()->IsPlaying())
+				{
+					pos.x = pos.x + (camPos.x - pos.x) * (1.0f - paralax.x);
+					pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);
+
+					trans.position = pos;
+				}
+			}
+
 			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
 			{
 				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", material ? material.Get()->texture : nullptr);
@@ -51,7 +74,7 @@ namespace Orin
 
 				texture.prg = DefferedLight::gbufferTech;
 
-				Math::Matrix mat = transform.GetGlobal();
+				Math::Matrix mat = trans.GetGlobal();
 				mat.Pos() = 0.0f;
 
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
@@ -66,7 +89,7 @@ namespace Orin
 				texture.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
 			}
 
-			texture.Draw(&transform, color, dt);
+			texture.Draw(&trans, color, dt);
 		}
 	}
 
