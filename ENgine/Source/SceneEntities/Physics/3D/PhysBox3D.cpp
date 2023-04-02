@@ -72,12 +72,22 @@ namespace Orin
 		}
 	}
 
+	void PhysBox3D::SetPhysGroup(int group)
+	{
+		physGroup = group;
+
+		if (body.body)
+		{
+			body.body->SetGroup(physGroup);
+		}
+	}
+
 	void PhysBox3D::Play()
 	{
 		SceneEntity::Play();
 
 		body.object = this;
-		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.GetGlobal(), Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, physGroup);
+		body.body = root.GetPhysScene()->CreateBox(transform.size, transform.GetGlobal(), Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 		body.body->SetActive(IsVisible());
 
 		body.body->SetUserData(&body);

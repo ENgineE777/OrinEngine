@@ -46,8 +46,6 @@ namespace Orin
 
 		uint32_t physGroup;
 
-		uint32_t physCollideGroup;
-
 		/**
 		\brief Color of a box.
 		*/
@@ -93,6 +91,8 @@ namespace Orin
 		virtual ~PhysEntityBase() = default;
 
 		void ApplyProperties() override;
+
+		void SetPhysGroup(int group);
 
 		void OnVisiblityChange(bool set) override;
 

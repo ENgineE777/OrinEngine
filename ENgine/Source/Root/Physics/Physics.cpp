@@ -2,6 +2,8 @@
 #include "Root/Render/Render.h"
 #include "Root/Root.h"
 
+#include <cmath>
+
 namespace Orin
 {
 	#ifdef PLATFORM_ANDROID
@@ -13,6 +15,53 @@ namespace Orin
 		}
 	}
 	#endif
+
+	uint32_t Physics::groupCollisionFlags[32];
+
+	physx::PxFilterFlags Physics::CollisionFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+														physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+														physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
+	{
+		// let triggers through, and do any other prefiltering you need.
+		if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+		{
+			pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+			return PxFilterFlag::eDEFAULT;
+		}
+		// generate contacts for all that were not filtered above
+		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
+
+		int index1 = (int)log2(filterData0.word0);
+		int index2 = (int)log2(filterData1.word0);
+
+		uint32_t ShapeGroup0 = index1 & 31;
+		uint32_t ShapeGroup1 = index2 & 31;
+
+		if ((groupCollisionFlags[ShapeGroup0] & (1 << ShapeGroup1)) == 0)
+		{
+			return PxFilterFlag::eKILL;
+		}
+
+		return PxFilterFlag::eDEFAULT;
+	}
+
+	void Physics::SetCollisionFlag(PxU32 groups1, PxU32 groups2, bool enable)
+	{
+		groups1 = (int)log2(groups1) & 31;
+		groups2 = (int)log2(groups2) & 31;
+
+		if (enable)
+		{
+			//be symmetric:
+			groupCollisionFlags[groups1] |= (1 << groups2);
+			groupCollisionFlags[groups2] |= (1 << groups1);
+		}
+		else
+		{
+			groupCollisionFlags[groups1] &= ~(1 << groups2);
+			groupCollisionFlags[groups2] &= ~(1 << groups1);
+		}
+	}
 
 	void Physics::Init()
 	{
@@ -26,6 +75,11 @@ namespace Orin
 	#endif
 
 		defMaterial = physics->createMaterial(0.5f, 0.5f, 0.0005f);
+
+		for (unsigned i = 0; i < 32; i++)
+		{
+			groupCollisionFlags[i] = 0xffffffff;
+		}
 	}
 
 	#ifdef PLATFORM_WIN
@@ -58,29 +112,6 @@ namespace Orin
 	}
 	#endif
 
-	physx::PxFilterFlags CollisionFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
-											   physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
-											   physx::PxPairFlags& retPairFlags, const void* constantBlock, PxU32 constantBlockSize)
-	{
-		retPairFlags = PxPairFlag::eSOLVE_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
-
-		PxU32 group0 = filterData0.word1 != filterData0.word0 ? filterData0.word1 : filterData0.word0;
-		PxU32 group1 = filterData1.word1 != filterData1.word0 ? filterData1.word1 : filterData1.word0;
-
-		if (filterData0.word1 != filterData0.word0 && filterData1.word1 != filterData1.word0)
-		{
-			group0 = filterData0.word0;
-			group1 = filterData1.word1;
-		}
-
-		if (!(group0 & group1))
-		{
-			return PxFilterFlag::eKILL;
-		}
-
-		return PxFilterFlag::eDEFAULT;
-	}
-
 	PhysScene* Physics::CreateScene()
 	{
 		PhysScene* scene = new PhysScene();
@@ -89,7 +120,7 @@ namespace Orin
 		sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
 		sceneDesc.simulationEventCallback = scene;
 		sceneDesc.filterShader = CollisionFilterShader;
-		sceneDesc.flags |= physx::PxSceneFlag::eENABLE_CCD;
+		sceneDesc.flags |= physx::PxSceneFlag::eENABLE_CCD;		
 
 		if (!sceneDesc.cpuDispatcher)
 		{

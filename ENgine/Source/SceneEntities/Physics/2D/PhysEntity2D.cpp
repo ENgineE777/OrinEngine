@@ -21,7 +21,6 @@ namespace Orin
 			ENUM_ELEM("Kinematic", 3)
 		ENUM_END
 		INT_PROP(PhysEntity2D, physGroup, 1, "Physics", "group", "Physical group")
-		INT_PROP(PhysEntity2D, physCollideGroup, 0, "Physics", "collide group", "Physical collide group")
 		BOOL_PROP(PhysEntity2D, visibleDuringPlay, true, "Physics", "visibleDuringPlay", "Show collision during play")
 		BOOL_PROP(PhysEntity2D, affectOnParent, false, "Physics", "Affect on parent", "Affect on parent")
 	META_DATA_DESC_END()
@@ -51,18 +50,16 @@ namespace Orin
 
 		body.object = this;
 
-		auto curCollideGroup = physCollideGroup == 0 ? physGroup : physCollideGroup;
-
 		switch (bodyShape)
 		{
 		case Orin::PhysEntityBase::BodyShape::Box:
-			body.body = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, curCollideGroup);
+			body.body = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 			break;
 		case Orin::PhysEntityBase::BodyShape::Sphere:
-			body.body = root.GetPhysScene()->CreateSphere(size.x * 0.5f, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, curCollideGroup);
+			body.body = root.GetPhysScene()->CreateSphere(size.x * 0.5f, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 			break;
 		case Orin::PhysEntityBase::BodyShape::Capsule:			
-			body.body = root.GetPhysScene()->CreateCapsule(size.y * 0.5f, size.x - size.y, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, curCollideGroup);
+			body.body = root.GetPhysScene()->CreateCapsule(size.y * 0.5f, size.x - size.y, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 			break;
 		default:
 			break;

@@ -33,6 +33,12 @@ namespace Orin
 		PxFoundation* foundation = nullptr;
 		PxPhysics*    physics = nullptr;
 
+		static uint32_t groupCollisionFlags[32];
+		static void SetCollisionFlag(uint32_t groups1, uint32_t groups2, bool enable);
+		static physx::PxFilterFlags CollisionFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
+														  physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
+														  physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize);
+
 		bool debugRender = false;
 
 	#ifdef PLATFORM_WIN

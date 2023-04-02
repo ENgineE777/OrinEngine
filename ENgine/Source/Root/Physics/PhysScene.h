@@ -32,8 +32,8 @@ namespace Orin
 		PxControllerManager* manager = nullptr;
 		bool inPhysUpdate = false;
 
-		static void SetShapeGroup(PxShape* shape, uint32_t group, uint32_t collideGroup);		
-		PhysObject* CreatePhysObject(const PxGeometry& geometry, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+		static void SetShapeGroup(PxShape* shape, uint32_t group);
+		PhysObject* CreatePhysObject(const PxGeometry& geometry, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group);
 
 	public:
 
@@ -93,6 +93,8 @@ namespace Orin
 			BodyUserData* userdata = nullptr;
 		};
 
+		void SetCollisionFlag(uint32_t groups1, uint32_t groups2, bool enable);
+
 		/**
 		\brief Create a physical box in a scene
 
@@ -104,7 +106,7 @@ namespace Orin
 
 		\return Pointer to physical object
 		*/
-		PhysObject* CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+		PhysObject* CreateBox(Math::Vector3 size, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group);
 
 		/**
 		\brief Create a physical sphere in a scene
@@ -117,7 +119,7 @@ namespace Orin
 
 		\return Pointer to physical object
 		*/
-		PhysObject* CreateSphere(float radius, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+		PhysObject* CreateSphere(float radius, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group);
 
 		/**
 		\brief Create a physical capsule in a scene
@@ -131,7 +133,7 @@ namespace Orin
 
 		\return Pointer to physical object
 		*/
-		PhysObject* CreateCapsule(float radius, float height, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group, uint32_t collideGroup);
+		PhysObject* CreateCapsule(float radius, float height, Math::Matrix trans, Math::Matrix offset, PhysObject::BodyType type, uint32_t group);
 
 		/**
 		\brief Create a character controller in a scene

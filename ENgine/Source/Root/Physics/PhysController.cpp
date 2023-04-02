@@ -326,7 +326,7 @@ namespace Orin
 		PxShape* shape;
 		actor->getShapes(&shape, 1);
 
-		PhysScene::SetShapeGroup(shape, group, group);
+		PhysScene::SetShapeGroup(shape, group);
 	}
 
 	void PhysController::SetFootPosition(Math::Vector3 pos)

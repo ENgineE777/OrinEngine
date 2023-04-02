@@ -17,6 +17,16 @@ namespace Orin
 		}
 	}	
 
+	void PhysEntityBase::SetPhysGroup(int group)
+	{
+		physGroup = group;
+
+		if (body.body)
+		{
+			body.body->SetGroup(physGroup);
+		}
+	}
+
 	void PhysEntityBase::Release()
 	{
 		RELEASE(body.body);

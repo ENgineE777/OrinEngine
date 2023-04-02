@@ -90,20 +90,6 @@ namespace Orin
 
 		\param[in] group Physical group
 		*/
-		void SetCollideGroup(int group);
-
-		/**
-		\brief Get group
-
-		\return Physical group
-		*/
-		int GetCollideGroup();
-
-		/**
-		\brief Set belonging to a physical group
-
-		\param[in] group Physical group
-		*/
 		void SetGroup(int group);
 
 		/**
@@ -144,7 +130,6 @@ namespace Orin
 		PxHeightField* heightField = nullptr;
 		PxRigidActor* actor = nullptr;
 		int group = 1;
-		int collideGroup = 1;
 
 		void ActualRelease() override;
 	};

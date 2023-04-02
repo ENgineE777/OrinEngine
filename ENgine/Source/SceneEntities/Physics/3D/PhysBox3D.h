@@ -97,6 +97,7 @@ namespace Orin
 		void ApplyProperties() override;
 
 		void OnVisiblityChange(bool set) override;
+		void SetPhysGroup(int group);
 
 		void Play() override;
 		void Release() override;

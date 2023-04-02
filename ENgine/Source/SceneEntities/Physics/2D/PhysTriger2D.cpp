@@ -37,7 +37,7 @@ namespace Orin
 		mat.Pos() += mat.MulNormal(size * Math::Vector3(-transform.offset.x + 0.5f, transform.offset.y - 0.5f, 0.0f));
 
 		body.object = this;
-		body.body = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup, physGroup);
+		body.body = root.GetPhysScene()->CreateBox(size, mat, Math::Matrix(), (PhysObject::BodyType)bodyType, physGroup);
 		body.body->SetActive(IsVisible());
 
 		if (bodyType == BodyType::Dynamic || bodyType == BodyType::DynamicCCD)
