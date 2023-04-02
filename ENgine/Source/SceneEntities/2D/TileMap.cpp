@@ -629,7 +629,7 @@ namespace Orin
 
 	void TileMap::OnLeftMouseDown()
 	{
-		if (!editor.InSelectMode())
+		if (!editor.InSelectMode() && !IsVisible())
 		{
 			return;
 		}
@@ -720,7 +720,7 @@ namespace Orin
 
 	bool TileMap::OnRightMouseDown()
 	{
-		if (!editor.InSelectMode())
+		if (!editor.InSelectMode() || !IsVisible())
 		{
 			return false;
 		}
