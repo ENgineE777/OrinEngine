@@ -22,14 +22,6 @@ namespace Orin
 														physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
 														physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
 	{
-		// let triggers through, and do any other prefiltering you need.
-		//if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
-		//{
-			//pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
-			//return PxFilterFlag::eDEFAULT;
-		//}
-
-		// generate contacts for all that were not filtered above
 		pairFlags = PxPairFlag::eCONTACT_DEFAULT;
 
 		int index1 = (int)log2(filterData0.word0);
@@ -41,6 +33,11 @@ namespace Orin
 		if ((groupCollisionFlags[ShapeGroup0] & (1 << ShapeGroup1)) == 0)
 		{
 			return PxFilterFlag::eKILL;
+		}
+
+		if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
+		{
+			pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
 		}
 
 		return PxFilterFlag::eDEFAULT;
