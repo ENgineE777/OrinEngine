@@ -2647,6 +2647,13 @@ namespace Orin
 		SpriteWindow::Release();
 		TileSetWindow::Release();
 
+		for (int i = 0; i < actions.size(); i++)
+		{
+			RELEASE(actions[i]);
+		}
+
+		actions.clear();
+
 		for (auto& entry : projects)
 		{
 			entry.icon.ReleaseRef();

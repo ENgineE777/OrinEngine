@@ -38,6 +38,17 @@ namespace Orin
 	{
 		ApplyTileSet(savedData, savedSelectedData);
 	}
+
+	void TileMap::TileMapAction::Release()
+	{
+		savedData.clear();
+		savedSelectedData.clear();
+
+		data.clear();
+		selectedData.clear();
+
+		IEditorAction::Release();
+	}	
 #endif
 
 	ENTITYREG(SceneEntity, TileMap, "2D/Sprites", "TileMap")
@@ -323,11 +334,11 @@ namespace Orin
 
 		int count = 0;
 		reader.Read("count", count);
-		tiles.resize(count);
+		tiles.reserve(count);
 
-		for (int i = 0; i < count; i++)
+		while (reader.EnterBlock("Tile"))
 		{
-			Tile& tile = tiles[i];
+			Tile tile;
 
 			reader.EnterBlock("Tile");
 
@@ -342,6 +353,8 @@ namespace Orin
 			}
 
 			reader.LeaveBlock();
+
+			tiles.emplace_back(tile);
 		}
 	}
 

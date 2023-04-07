@@ -83,6 +83,8 @@ namespace Orin
 							eastl::vector<Tile>& tiles, eastl::vector<Tile>& selectedTiles);
 			void Apply() override;
 			void Undo() override;
+
+			void Release() override;
 		};
 
 		bool changed = false;
