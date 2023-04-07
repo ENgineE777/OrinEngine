@@ -1589,7 +1589,7 @@ namespace Orin
 
 							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->GetSceneEntity() ? ref->GetSceneEntity()->GetName() : "None", categoriesData[j].name.c_str(), guiID, i);
 
-							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 30.0f, 0.0f)))
+							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 70.0f, 0.0f)))
 							{
 							}
 
@@ -1611,9 +1611,20 @@ namespace Orin
 
 							ImGui::SameLine();
 
+							StringUtils::Printf(propGuiID, 256, "Set###%s%s%iSet", categoriesData[j].name.c_str(), guiID, i);
+
+							if (ImGui::Button(propGuiID, ImVec2(28.0f, 0.0f)))
+							{
+								ref->SetEntity(editor.bufferedSceneEntity.Get());
+
+								prop.changed = true;
+							}
+
+							ImGui::SameLine();
+
 							StringUtils::Printf(propGuiID, 256, "Del###%s%s%iDel", categoriesData[j].name.c_str(), guiID, i);
 
-							if (ImGui::Button(propGuiID, ImVec2(30.0f, 0.0f)))
+							if (ImGui::Button(propGuiID, ImVec2(28.0f, 0.0f)))
 							{
 								ref->SetEntity(nullptr);
 								ref->uid = 0;
