@@ -29,6 +29,8 @@ namespace Orin
 		Math::Vector2 gizmoAlign2D = 0.0f;
 		uint16_t uid = 0;
 
+		eastl::vector<SceneEntity*> lockedEntities;
+
 		META_DATA_DECL_BASE(AssetPrefab)
 
 		Scene* GetScene();

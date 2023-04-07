@@ -1925,6 +1925,12 @@ namespace Orin
 			ImGui::DockBuilderDockWindow("###Scene", dock_right_up_id);
 			ImGui::DockBuilderDockWindow("Layers", dock_right_up_id);
 			ImGui::DockBuilderDockWindow("Properties", dock_right_down_id);
+
+			for (int i = 0; i < 100; i++)
+			{
+				ImGui::DockBuilderDockWindow(StringUtils::PrintTemp("###Properties%i", i), dock_right_down_id);
+			}
+
 			ImGui::DockBuilderDockWindow("Assets browser", dock_bottom_id); 
 			ImGui::DockBuilderDockWindow("Console", dock_bottom_id);
 
@@ -2212,7 +2218,7 @@ namespace Orin
 					selLayer = (int)project.layers.size() - 1;
 				}
 			}
-			
+
 			ImGui::SameLine();
 			if (ImGui::Button("Ren") && selLayer != -1)
 			{
@@ -2250,7 +2256,7 @@ namespace Orin
 				auto& layer = project.layers[i];
 
 				char label[32];
-				sprintf(label, "%s###%04d", layer.name.c_str(), i);				
+				sprintf(label, "%s###%04d", layer.name.c_str(), i);
 
 				if (ImGui::Selectable(label, selLayer == i, ImGuiSelectableFlags_None))
 				{
@@ -2268,7 +2274,7 @@ namespace Orin
 				{
 					layer.state = (Project::Layer::State)index;
 				}
-				
+
 				ImGui::NextColumn();
 			}
 
@@ -2299,6 +2305,24 @@ namespace Orin
 			ImGui::Columns(1);
 
 			ImGui::End();
+
+			if (auto* assetScene = dynamic_cast<AssetScene*>(selectedEditAsset.Get()))
+			{
+				for (int i = 0; i < assetScene->lockedEntities.size(); i++)
+				{
+					auto* entity = assetScene->lockedEntities[i];
+
+					ImGui::Begin(StringUtils::PrintTemp("%s###Properties%i", entity->GetName(), i));
+
+					ImGui::Columns(2);
+
+					entity->ImGuiProperties();
+
+					ImGui::Columns(1);
+
+					ImGui::End();
+				}
+			}
 		}
 
 		{

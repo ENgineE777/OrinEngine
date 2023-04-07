@@ -578,6 +578,28 @@ namespace Orin
 				Duplicate(selectedEntity);
 			}
 
+			int index = -1;
+
+			for (int i = 0; i < lockedEntities.size(); i++)
+			{
+				if (lockedEntities[i] == selectedEntity)
+				{
+					index = i;
+				}
+			}
+
+			if (selectedEntity && !onlyToCreate && ImGui::MenuItem(index == -1 ? "Lock" : "Unlock"))
+			{
+				if (index == -1)
+				{
+					lockedEntities.push_back(selectedEntity);
+				}
+				else
+				{
+					lockedEntities.erase(lockedEntities.begin() + index);
+				}
+			}
+
 			if (!onlyToCreate && ImGui::MenuItem("Delete"))
 			{
 				if (selectedEntity)
