@@ -436,7 +436,8 @@ namespace Orin
 			}
 		}
 
-		root.files.DeleteFolder((exportDir + "/project/_Code").c_str());
+		root.files.DeleteFolder((exportDir + "/project/Code").c_str());
+		root.files.DeleteFolder((exportDir + "/project/VcProj").c_str());
 
 		{
 			char project_file_name[512];
