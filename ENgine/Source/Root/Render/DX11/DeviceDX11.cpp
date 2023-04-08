@@ -199,6 +199,7 @@ namespace Orin
 				sd.OutputWindow = backbuffer_holder->handle;
 				sd.SampleDesc.Count = 1;
 				sd.SampleDesc.Quality = 0;
+				sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 				sd.Windowed = TRUE;
 
 				hr = factory->CreateSwapChain(pd3dDevice, &sd, &backbuffer_holder->swapChain);
@@ -299,6 +300,15 @@ namespace Orin
 	void* DeviceDX11::GetBackBuffer()
 	{
 		return renderTargetShaderView;
+	}
+
+	void DeviceDX11::SetFullscreenState(bool state)
+	{
+		if (swapChain)
+		{
+			HRESULT hr = swapChain->SetFullscreenState(true, nullptr);
+			root.Log("sdfs", "SetFullscreenState %i", hr);
+		}
 	}
 
 	int DeviceDX11::GetWidth()

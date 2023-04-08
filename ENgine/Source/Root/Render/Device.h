@@ -140,6 +140,8 @@ namespace Orin
 		*/
 		virtual bool SetBackBuffer(int id, int wgt, int hgt, void* data) = 0;
 
+		virtual void SetFullscreenState(bool state) = 0;
+
 		/**
 		\brief Get current back buffer
 

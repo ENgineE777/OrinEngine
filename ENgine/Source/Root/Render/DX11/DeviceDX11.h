@@ -81,6 +81,7 @@ namespace Orin
 
 		bool SetBackBuffer(int id, int wgt, int hgt, void* data) override;
 		void* GetBackBuffer() override;
+		void SetFullscreenState(bool state) override;
 		int GetWidth() override;
 		int GetHeight() override;
 		float GetAspect() override;
