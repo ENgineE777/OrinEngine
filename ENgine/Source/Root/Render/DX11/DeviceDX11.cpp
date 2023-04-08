@@ -200,6 +200,7 @@ namespace Orin
 				sd.SampleDesc.Count = 1;
 				sd.SampleDesc.Quality = 0;
 				sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+				sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 				sd.Windowed = TRUE;
 
 				hr = factory->CreateSwapChain(pd3dDevice, &sd, &backbuffer_holder->swapChain);

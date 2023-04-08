@@ -33,7 +33,7 @@ namespace Orin
 			return false;
 		}
 
-		root.render.GetDevice()->SetFullscreenState(true);
+		//root.render.GetDevice()->SetFullscreenState(true);
 
 		char currDir[512];
 		GetCurrentDirectoryA(512, currDir);

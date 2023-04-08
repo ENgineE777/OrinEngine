@@ -69,6 +69,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     hwnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, desktopRect.right, desktopRect.bottom, nullptr, nullptr, hInstance, nullptr);
 
+    SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_TOPMOST);
+    SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+    SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, desktopRect.right, desktopRect.bottom, SWP_SHOWWINDOW);
+
     if (!hwnd)
     {
         return 1;
