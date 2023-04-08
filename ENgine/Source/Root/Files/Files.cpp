@@ -166,6 +166,8 @@ namespace Orin
 		{
 			std::filesystem::remove_all(path);
 		}
+
+		std::filesystem::remove_all(path);
 	}
 
 	void Files::CpyFolder(const char* path, const char* dest_path)
