@@ -71,7 +71,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     SetWindowLongPtr(hwnd, GWL_EXSTYLE, WS_EX_APPWINDOW | WS_EX_TOPMOST);
     SetWindowLongPtr(hwnd, GWL_STYLE, WS_POPUP | WS_VISIBLE);
-    SetWindowPos(hwnd, HWND_TOPMOST, 0, 0, desktopRect.right, desktopRect.bottom, SWP_SHOWWINDOW);
+    SetWindowPos(hwnd, HWND_TOP, 0, 0, desktopRect.right, desktopRect.bottom, SWP_SHOWWINDOW);
 
     if (!hwnd)
     {
