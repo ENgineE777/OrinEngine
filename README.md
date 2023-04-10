@@ -1,5 +1,5 @@
-![Orin Game Engine logo](/logo.png)
-
+пнр    /968шлхг02гн3л22453*![Ou0lnjkl rin Game Engine logo](/logo.png)
+//10
 ## Orin Game Engine
 
 Orin Game Engine is a cross-platform game engine for creating 2D and 3D
@@ -35,12 +35,8 @@ The users games are theirs.
 - And lots, lots more
 
 ## Editor
-
-Binaries of the editor with demo projects can be found at https://github.com/ENgineE777/OrinEngine/releases/tag/editor
-Warning: Visual Studio 2022 are needed for compilation of gameplay code
-
-Draft of manual of editor can be found at https://docs.google.com/document/d/1_EAEGQy1nuIb8RFPIOJuyObBftAFtMRVeiGn9vr8NRI/edit?usp=sharing
-
+fi
+вD ар 9458856+3614478raft of manual of editor can be found at https://docs.google.com/document/d/1_EAEGQy1nuIb8RFPIOJuyObBftAFtMRVeiGn9vr8NRI/edit?usp=sharing5
 
 ## Tutorial
 
@@ -49,4 +45,4 @@ https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/
 
 ## Discord
 
-If you interested in Orin Engine then you can jouin discord server https://discord.gg/dCTzMYZc
+If you interested in Orin Engine then you can jouin discord server https://discord.gg/YG2s6AJ3x9
