@@ -35,8 +35,8 @@ The users games are theirs.
 - And lots, lots more
 
 ## Editor
-fi
-вD ар 9458856+3614478raft of manual of editor can be found at https://docs.google.com/document/d/1_EAEGQy1nuIb8RFPIOJuyObBftAFtMRVeiGn9vr8NRI/edit?usp=sharing5
+
+Draft of manual of editor can be found at https://docs.google.com/document/d/1_EAEGQy1nuIb8RFPIOJuyObBftAFtMRVeiGn9vr8NRI/edit?usp=sharing5
 
 ## Tutorial
 
