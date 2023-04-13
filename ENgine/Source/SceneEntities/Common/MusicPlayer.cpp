@@ -31,7 +31,7 @@ namespace Orin
 
 		stream = root.sounds.CreateSound(GetScene(), true, soundName.c_str());
 
-		if (IsVisible() && !faded)
+		if (IsVisible() && !faded && stream)
 		{
 			stream->Play(PlaySoundType::Looped);
 			stream->SetVolume(volume);
@@ -47,15 +47,18 @@ namespace Orin
 		curFadeTime = 0.0f;
 		fadeTime = time;
 
-		if (!stream->IsPlaying())
+		if (stream)
 		{
-			stream->SetVolume(0.0f);
-			stream->Play(PlaySoundType::Looped);
-		}
-		else
-		{
-			stream->Pause(false);
-			stream->SetVolume(volume);
+			if (!stream->IsPlaying())
+			{
+				stream->SetVolume(0.0f);
+				stream->Play(PlaySoundType::Looped);
+			}
+			else
+			{
+				stream->Pause(false);
+				stream->SetVolume(volume);
+			}
 		}
 	}
 
