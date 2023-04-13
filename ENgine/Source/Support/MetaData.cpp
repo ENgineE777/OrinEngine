@@ -956,22 +956,13 @@ namespace Orin
 				ImGui::Columns(1);
 			}
 
-			bool is_open = ImGui::CollapsingHeader(propGuiID, ImGuiTreeNodeFlags_DefaultOpen);
+			bool is_open = true;
 			
 			if (root == owner)
 			{
+				is_open = ImGui::CollapsingHeader(propGuiID, ImGuiTreeNodeFlags_DefaultOpen);
+
 				ImGui::Columns(2);
-			}
-			else
-			{
-				ImGui::NextColumn();
-
-				if (ImGui::CollapsingHeader(propGuiID))
-				{
-
-				}
-
-				ImGui::NextColumn();
 			}
 
 			if (is_open)
