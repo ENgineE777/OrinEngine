@@ -28,7 +28,7 @@ namespace Orin
 	void PhysEntity2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = MoveXYZ | RectMoveXY | RectSizeXY;
+		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectMoveXY | TransformFlag::RectSizeXY | TransformFlag::RotateZ;
 
 		transform.size = 50.0f;
 		transform.size.z = 50.0f;
