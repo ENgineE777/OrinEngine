@@ -197,6 +197,25 @@ namespace Orin
 		return Math::IsRectsOverlap(p1, p2, _camPos - halfScreenSize, _camPos + halfScreenSize);
 	}
 
+	bool Sprite::IsTrinagleVisibile(Math::Vector2 p1, Math::Vector2 p2, Math::Vector2 p3)
+	{
+		auto halfScreenSize = GetHalfScreenSize();
+
+		if (Math::IntersectTriangleTriangle(p1, p2, p3,
+											_camPos + Math::Vector2(-halfScreenSize.x, halfScreenSize.y),
+											_camPos + Math::Vector2( halfScreenSize.x, halfScreenSize.y),
+											_camPos + Math::Vector2( halfScreenSize.x, -halfScreenSize.y)) ||
+			Math::IntersectTriangleTriangle(p1, p2, p3,
+											_camPos + Math::Vector2( halfScreenSize.x, -halfScreenSize.y),
+											_camPos + Math::Vector2(-halfScreenSize.x, -halfScreenSize.y),
+											_camPos + Math::Vector2( halfScreenSize.x,  halfScreenSize.y)))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	void Sprite::DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color)
 	{
 		root.render.DebugLine(ToUnits(from), color, ToUnits(to), color, false);

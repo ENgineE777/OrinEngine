@@ -81,6 +81,7 @@ namespace Orin
 
 		static bool IsPointVisibile(Math::Vector2 point);
 		static bool IsRectVisibile(Math::Vector2 p1, Math::Vector2 p2);
+		static bool IsTrinagleVisibile(Math::Vector2 p1, Math::Vector2 p2, Math::Vector2 p3);
 
 		static void DebugLine(const Math::Vector3& from, const Math::Vector3& to, const Color& color);
 		static void DebugSphere(const Math::Vector3& pos, float radius, const Color& color);

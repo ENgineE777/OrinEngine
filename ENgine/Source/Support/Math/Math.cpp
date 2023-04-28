@@ -184,6 +184,72 @@ namespace Orin::Math
 		return IsPointInTriangle(pt, center, p2, p3, debugDraw);
 	}
 
+	float Direction(Vector2 p, Vector2 q, Vector2 r)
+	{
+		return (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+	}
+
+	bool AreCollinearAndOverlapping(Vector2 a1, Vector2 b1, Vector2 a2, Vector2 b2)
+	{
+		// Check if the line segments are collinear
+		if (Direction(a1, b1, a2) == 0)
+		{
+			// Check if the line segments overlap
+			if (a2.x <= max(a1.x, b1.x) && a2.x >= min(a1.x, b1.x) && a2.y <= max(a1.y, b1.y) && a2.y >= min(a1.y, b1.y))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool IntersectSegmentSegemnt(Vector2 a1, Vector2 b1, Vector2 a2, Vector2 b2)
+	{
+		float d1 = Direction(a1, b1, a2);
+		float d2 = Direction(a1, b1, b2);
+		float d3 = Direction(a2, b2, a1);
+		float d4 = Direction(a2, b2, b1);
+
+		// Check if the two line segments intersect
+		if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0)))
+		{
+			return true;
+		}
+
+		// Check if the line segments are collinear and overlapping
+		if (AreCollinearAndOverlapping(a1, b1, a2, b2) || AreCollinearAndOverlapping(a2, b2, a1, b1))
+		{
+			return true;
+		}
+
+		return false;
+	}	
+
+	bool IntersectSegmentTriangle(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2, Vector2 b3)
+	{
+		if (IntersectSegmentSegemnt(a1, a2, b1, b2) || IntersectSegmentSegemnt(a1, a2, b2, b3) || IntersectSegmentSegemnt(a1, a2, b1, b3))
+		{
+			return true;
+		}
+
+		if (IsPointInTriangle(a1, b1, b2, b3) || IsPointInTriangle(a2, b1, b2, b3))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool IntersectTriangleTriangle(Vector2 a1, Vector2 a2, Vector2 a3, Vector2 b1, Vector2 b2, Vector2 b3)
+	{
+		if (IntersectSegmentTriangle(a1, a2, b1, b2, b3) || IntersectSegmentTriangle(a2, a3, b1, b2, b3) || IntersectSegmentTriangle(a1, a3, b1, b2, b3))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir)
 	{
 		Vector3 L = pos - start;

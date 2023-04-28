@@ -27,12 +27,15 @@ namespace Orin::Math
 	CLASS_DECLSPEC bool IsRectsOverlap(Vector2 rect1_left, Vector2 rect1_right, Vector2 rect2_left, Vector2 rect2_right);
 	CLASS_DECLSPEC bool IsSameAngles(float angle, float target_angle);
 	CLASS_DECLSPEC bool IsPointInLineSegment(Vector3 pt, Vector3 p1, Vector3 p2);
-	CLASS_DECLSPEC bool IsPointInTriangle(Vector2 pt, Vector2 p1, Vector2 p2, Vector2 p3, bool debugDraw = false);
+	CLASS_DECLSPEC bool IsPointInTriangle(Vector2 pt, Vector2 p1, Vector2 p2, Vector2 p3, bool debugDraw = false);	
 	CLASS_DECLSPEC bool IsPointInSector(Vector2 pt, Vector2 center, float orientation, float distance, float angle, bool debugDraw = false);
 	CLASS_DECLSPEC bool IsPointInPolygon(Vector2 pt, eastl::vector<Vector2>& polygon, bool debugDraw = false);
 	CLASS_DECLSPEC bool IsPointInRectangle(Vector2 pt, Vector2 center, Vector2 offset, Vector2 size, float angle, bool debugDraw = false);
+	CLASS_DECLSPEC bool IntersectSegmentSegemnt(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2);
+	CLASS_DECLSPEC bool IntersectSegmentTriangle(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2, Vector2 b3);
+	CLASS_DECLSPEC bool IntersectTriangleTriangle(Vector2 a1, Vector2 a2, Vector2 a3, Vector2 b1, Vector2 b2, Vector2 b3);
 	CLASS_DECLSPEC bool IntersectSphereRay(Vector3 pos, float radius, Vector3 start, Vector3 dir);
-	CLASS_DECLSPEC bool IntersectBBoxRay(Vector3 vmin, Vector3 vmax, Vector3 start, Vector3 dir);
+	CLASS_DECLSPEC bool IntersectBBoxRay(Vector3 vmin, Vector3 vmax, Vector3 start, Vector3 dir);	
 	CLASS_DECLSPEC bool IntersectTrianglrRay(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 orig, Vector3 dir, float distance);
 	CLASS_DECLSPEC bool IntersectPlaneRay(Vector3 planeP, Vector3 planeN, Vector3 rayP, Vector3 rayD, Vector3& intersection);
 	CLASS_DECLSPEC void GetMouseRay(Math::Vector2 ms, Math::Vector3& mouseOrigin, Math::Vector3& mouseDirection);
