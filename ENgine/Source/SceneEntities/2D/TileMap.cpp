@@ -196,6 +196,8 @@ namespace Orin
 				tech = DefferedLight::gbufferTech;
 			}
 
+			auto offset = Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
+
 			for (auto& tile : tiles)
 			{
 				if (tile.index == -1)
@@ -203,8 +205,15 @@ namespace Orin
 					continue;
 				}
 
+				auto tilePos = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
+
+				if (!Sprite::IsRectVisibile(Math::Vector2(tilePos.x, tilePos.y), Math::Vector2(tilePos.x, tilePos.y) + Math::Vector2(transform.size.x, -transform.size.y)))
+				{
+					continue;
+				}
+
 				trans.rotation = tile.rotation;
-				trans.position = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
+				trans.position = tilePos + offset;
 
 				trans.size.x = size.x;
 				trans.size.y = size.y;
