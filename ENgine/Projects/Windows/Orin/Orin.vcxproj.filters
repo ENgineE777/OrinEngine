@@ -1484,5 +1484,8 @@
     <None Include="..\..\..\Source\Shaders\triangle_simplest.shader">
       <Filter>Source\Shaders</Filter>
     </None>
+    <None Include="..\..\..\Source\Shaders\sprite_shd.shader">
+      <Filter>Source\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

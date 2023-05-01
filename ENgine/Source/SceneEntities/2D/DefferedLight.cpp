@@ -277,8 +277,8 @@ namespace Orin
 	{
 		Math::Matrix curView;
 		Math::Matrix curProj;
-		auto camPos = Sprite::_camPos;
-		auto zoom = Sprite::_zoom;
+		auto camPos = Sprite::GetCamPos();
+		auto zoom = Sprite::GetCamZoom();
 
 		root.render.GetTransform(TransformStage::View, curView);
 		root.render.GetTransform(TransformStage::Projection, curProj);
@@ -298,7 +298,7 @@ namespace Orin
 			auto trans = light->GetTransform();
 			auto pos = trans.GetGlobal().Pos();
 
-			Sprite::_camPos = Sprite::ToPixels(Math::Vector2(pos.x, pos.y));
+			Sprite::SetCamPos(Sprite::ToPixels(Math::Vector2(pos.x, pos.y)));
 
 			const Math::Vector3 upVector{ 0.0f, 1.0f, 0.f };
 
@@ -314,6 +314,7 @@ namespace Orin
 			root.render.GetDevice()->SetRenderTarget(0, occluderRT);
 			root.render.GetDevice()->Clear(true, COLOR_WHITE, false, 1.0f);
 			root.render.ExecutePool(500, 0.0f);
+			root.render.ExecutePool(501, 0.0f);
 
 			Math::Vector4 params;
 
@@ -336,8 +337,8 @@ namespace Orin
 		root.render.SetTransform(TransformStage::View, curView);
 		root.render.SetTransform(TransformStage::Projection, curProj);
 
-		Sprite::_camPos = camPos;
-		Sprite::_zoom = zoom;
+		Sprite::SetCamPos(camPos);
+		Sprite::SetCamZoom(zoom);
 	}
 
 	void DefferedLight::BlurSelfIlum()

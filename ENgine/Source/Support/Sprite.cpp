@@ -32,6 +32,15 @@ namespace Orin
 		};
 	};
 
+
+	class QuadRenderShdNoZTechnique : public QuadRenderNoZTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "sprite_vs_shd.shd"; };
+		virtual const char* GetPsName() { return "sprite_ps_shd.shd"; };
+	};
+
+	static RenderTechniqueRef quadPrgShdNoZ;
 	class PolygonRenderTechnique : public RenderTechnique
 	{
 	public:
@@ -75,6 +84,7 @@ namespace Orin
 
 	RenderTechniqueRef Sprite::quadPrg;
 	RenderTechniqueRef Sprite::quadPrgNoZ;
+	RenderTechniqueRef Sprite::quadPrgShdNoZ;
 
 	RenderTechniqueRef Sprite::polygonPrg;
 	RenderTechniqueRef Sprite::polygonPrgNoZ;
@@ -109,6 +119,7 @@ namespace Orin
 
 		quadPrg = root.render.GetRenderTechnique<QuadRenderTechnique>(_FL_);
 		quadPrgNoZ = root.render.GetRenderTechnique<QuadRenderNoZTechnique>(_FL_);
+		quadPrgShdNoZ = root.render.GetRenderTechnique<QuadRenderShdNoZTechnique>(_FL_);
 		polygonPrg = root.render.GetRenderTechnique<PolygonRenderTechnique> (_FL_);
 		polygonPrgNoZ = root.render.GetRenderTechnique<PolygonRenderNoZTechnique>(_FL_);
 	}

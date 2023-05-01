@@ -402,7 +402,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 
 		// ADD TO FINAL COLOR
-		outColor += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) * 5.0f * (0.75f + shadow * 0.25f)+ ao * min(attenuation, 0.3);
+		outColor += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) * 5.0f * (0.0f + shadow * 1.0f)+ ao * min(attenuation, 0.3);
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR

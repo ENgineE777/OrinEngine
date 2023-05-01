@@ -30,7 +30,7 @@ namespace Orin
 #endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&AnimGraph2D::Draw);
-		Tasks(true)->AddTask(500, this, (Object::Delegate)&AnimGraph2D::DrawOccluder);
+		Tasks(true)->AddTask(501, this, (Object::Delegate)&AnimGraph2D::DrawOccluder);
 	}
 
 	void AnimGraph2D::Draw(float dt)

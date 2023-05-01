@@ -593,6 +593,7 @@
     <None Include="..\..\..\Source\Shaders\screen.shader" />
     <None Include="..\..\..\Source\Shaders\sh_triangle.shader" />
     <None Include="..\..\..\Source\Shaders\sprite.shader" />
+    <None Include="..\..\..\Source\Shaders\sprite_shd.shader" />
     <None Include="..\..\..\Source\Shaders\triangle.shader" />
     <None Include="..\..\..\Source\Shaders\triangle_simplest.shader" />
     <None Include="..\..\..\Thirdparty\jemalloc\include\jemalloc\jemalloc.sh" />

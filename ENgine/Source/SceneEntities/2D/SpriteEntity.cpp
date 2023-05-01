@@ -40,7 +40,7 @@ namespace Orin
 #endif
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&SpriteEntity::Draw);
-		Tasks(true)->AddTask(500, this, (Object::Delegate)&SpriteEntity::DrawOccluder);
+		Tasks(true)->AddTask(501, this, (Object::Delegate)&SpriteEntity::DrawOccluder);
 	}
 
 	void SpriteEntity::Draw(float dt)

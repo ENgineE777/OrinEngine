@@ -42,10 +42,7 @@ namespace Orin
 				{
 					zoom2D += root.controls.GetAliasValue(alias_move2d_zoom, true) * (0.015f + rotationSensivity * 0.007f);
 					ClampZoom2D();
-				}
-
-				Sprite::_camPos = pos2D;
-				Sprite::_zoom = zoom2D;
+				}				
 			}
 			else
 			{
@@ -102,6 +99,9 @@ namespace Orin
 
 		if (mode2D)
 		{
+			Sprite::SetCamPos(pos2D);
+			Sprite::SetCamZoom(zoom2D);
+
 			float dist = Sprite::GetPixelsHeight() * 0.5f * Sprite::ToUnits(1.0f) / (tanf(22.5f * Math::Radian) * zoom2D);
 			Math::Vector2 pos = Sprite::ToUnits(pos2D);
 

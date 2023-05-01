@@ -15,9 +15,6 @@ namespace Orin
 		friend class SceneManager;
 		friend class Project;
 		friend class Editor;
-		friend class FreeCamera;
-		friend class Camera2D;
-		friend class DefferedLight;
 
 #ifndef DOXYGEN_SKIP
 		static float _pixelsPerUnit;
@@ -54,6 +51,7 @@ namespace Orin
 
 		static RenderTechniqueRef quadPrg;
 		static RenderTechniqueRef quadPrgNoZ;
+		static RenderTechniqueRef quadPrgShdNoZ;
 
 		static RenderTechniqueRef polygonPrg;
 		static RenderTechniqueRef polygonPrgNoZ;
@@ -68,8 +66,10 @@ namespace Orin
 		static inline float GetPixelsHeight() { return _pixelsHeight; };
 
 		static Math::Vector2 GetCamPos() { return _camPos; }
+		static inline float GetCamZoom() { return _zoom; };
 
-		static inline float GetZoom() { return _zoom; };
+		static void SetCamPos(Math::Vector2 camPos) { _camPos = camPos; }
+		static void SetCamZoom(float zoom) {  _zoom = zoom; };
 
 		static Math::Vector2 GetHalfScreenSize() { return _halfScreenSize / _zoom; }
 

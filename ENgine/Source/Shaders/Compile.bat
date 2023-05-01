@@ -43,6 +43,9 @@ fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_ps.shd 
 fxc /E PS_DISCARD /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_discard_ps.shd sprite.shader
 fxc /E PS_LIGHT /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_light_ps.shd sprite.shader
 
+fxc /E VS_SHD /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_vs_shd.shd sprite_shd.shader
+fxc /E PS_SHD /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_ps_shd.shd sprite_shd.shader
+
 fxc /E VS_POLYGON /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\polygon_vs.shd sprite.shader
 
 fxc /E PS_GBUFFER /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\gbuffer_ps.shd deffered_light_2D.shader
