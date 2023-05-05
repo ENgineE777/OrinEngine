@@ -267,7 +267,7 @@ namespace Orin::Math
 
 		Math::Vector3 GetScale()
 		{
-			return Math::Vector3(Vx().Normalize(), Vy().Normalize(), Vz().Normalize());
+			return Math::Vector3(Vx().Length(), Vy().Length(), Vz().Length());
 		}
 
 		void RemoveScale()

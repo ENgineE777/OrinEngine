@@ -31,6 +31,7 @@ namespace Orin
 
 		Math::Matrix mat = transform.GetGlobal();
 		auto scale = mat.GetScale();
+		mat.RemoveScale();
 
 		auto size = Sprite::ToUnits(transform.size) * scale;
 		
