@@ -530,6 +530,7 @@ namespace Orin
 							reader.EnterBlock("Elem");
 
 							prop.adapter->GetMetaData()->Prepare(prop.adapter->GetItem(i), root);
+							prop.adapter->GetMetaData()->SetDefValues();
 							prop.adapter->GetMetaData()->Load(reader);
 
 							reader.LeaveBlock();
