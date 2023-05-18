@@ -126,4 +126,13 @@ namespace Orin::Math
 
 		return c3 * k * k * k - c1 * k * k;
 	}
+
+	CLASS_DECLSPEC inline float EaseOutBack(float t)
+	{
+		const float c1 = 1.70158f;
+		const float c3 = c1 + 1.f;
+		const float k = (t - 1.f);
+
+		return 1.f + c3 * k * k * k + c1 * k * k;
+	}
 }
