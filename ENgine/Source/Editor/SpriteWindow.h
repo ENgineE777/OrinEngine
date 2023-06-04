@@ -35,6 +35,7 @@ namespace Orin
 		Math::Vector2 camPos;
 		float camZoom = 1.0f;
 
+		int alphaTreshold = 128;
 		bool viewportCaptured = false;
 		bool vireportHowered = false;
 		bool imageFocused = false;

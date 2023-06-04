@@ -330,6 +330,8 @@ namespace Orin
 			InputInt(&AutoSliceMinSizeY, "MinSizeY", true);
 		}
 
+		InputInt(&alphaTreshold, "AlphaTreshold", true);
+
 		if (ImGui::Button("Slice###SliceSlice"))
 		{
 			texture->slices.clear();
@@ -367,7 +369,7 @@ namespace Orin
 							{
 								for (int i = posX; i < posX + stepX; i++)
 								{
-									if (data[(j * width + i) * 4 + 3] == 255)
+									if (data[(j * width + i) * 4 + 3] >= alphaTreshold)
 									{
 										empty = false;
 										break;
@@ -411,7 +413,7 @@ namespace Orin
 					{
 						for (int i = 0; i < width; i++)
 						{
-							if (!visited[(j * width + i)] && data[(j * width + i) * 4 + 3] == 255)
+							if (!visited[(j * width + i)] && data[(j * width + i) * 4 + 3] >= alphaTreshold)
 							{
 								posXMin = posXMax = i;
 								posYMin = posYMax = j;
