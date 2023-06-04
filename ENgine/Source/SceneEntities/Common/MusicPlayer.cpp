@@ -41,6 +41,11 @@ namespace Orin
 
 	void MusicPlayer::FadeIn(float time)
 	{
+		if (!faded)
+		{
+			return;
+		}
+
 		faded = false;
 
 		fadeMode = 1;
