@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmodstudio\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -75,10 +75,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;ORIN_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmodstudio\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmodstudio\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -101,7 +101,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmodstudio\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -119,10 +119,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;ORIN_EDITOR;gameplay_EXPORTS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmodstudio\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$EDITOR_DIR\ENgine\CppBuild\include\Libs\vjson;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\eastl\include\Common;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmod\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\fmodstudio\include;$EDITOR_DIR\ENgine\CppBuild\include\Libs\physx\include;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\PugiXml;$EDITOR_DIR\ENgine\CppBuild\include\ENgine\Support\SPARK;$EDITOR_DIR\ENgine\CppBuild\include\ENgine;..\Code;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>

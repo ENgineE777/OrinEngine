@@ -18,11 +18,11 @@ namespace Orin
 		
 		if (streamed)
 		{
-			result = root.sounds.system->createStream((const char*)buffer.GetPtr(), FMOD_OPENMEMORY | FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &sound);
+			result = root.sounds.coreSystem->createStream((const char*)buffer.GetPtr(), FMOD_OPENMEMORY | FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &sound);
 		}
 		else
 		{
-			result = root.sounds.system->createSound((const char*)buffer.GetPtr(), FMOD_OPENMEMORY | FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &sound);
+			result = root.sounds.coreSystem->createSound((const char*)buffer.GetPtr(), FMOD_OPENMEMORY | FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &sound);
 		}
 
 		return result == FMOD_OK;

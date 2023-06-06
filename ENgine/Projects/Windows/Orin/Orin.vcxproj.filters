@@ -754,6 +754,12 @@
     <ClCompile Include="..\..\..\Thirdparty\imgui\imgui_widgets.cpp">
       <Filter>Thirdparty\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Sounds\SoundEvent.cpp">
+      <Filter>Source\Root\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Sounds\SoundEventRes.cpp">
+      <Filter>Source\Root\Sounds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1412,6 +1418,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Thirdparty\imgui\imstb_truetype.h">
       <Filter>Thirdparty\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Sounds\SoundEvent.h">
+      <Filter>Source\Root\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Sounds\SoundEventRes.h">
+      <Filter>Source\Root\Sounds</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

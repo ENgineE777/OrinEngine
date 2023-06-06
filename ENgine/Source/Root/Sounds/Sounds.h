@@ -3,6 +3,8 @@
 
 #include "SoundInstance.h"
 #include "SoundRes.h"
+#include "SoundEvent.h"
+#include "SoundEventRes.h"
 
 namespace Orin
 {
@@ -30,10 +32,13 @@ namespace Orin
 	{
 		friend class SoundInstance;
 		friend class SoundRes;
+		friend class SoundEvent;
+		friend class SoundEventRes;
 
 		float masterVolume = 1.0f;
 
-		FMOD::System* system;
+		FMOD::Studio::System* system = nullptr;
+		FMOD::System* coreSystem = nullptr;
 
 		struct SoundsResRef
 		{
@@ -44,9 +49,21 @@ namespace Orin
 		eastl::map<eastl::string, SoundsResRef> soundResRefs;
 		eastl::vector<SoundInstance*> sounds;
 
+		struct SoundsEventResRef
+		{
+			int count;
+			SoundEventRes* res;
+		};
+
+		eastl::map<eastl::string, SoundsEventResRef> soundEventResRefs;
+		eastl::vector<SoundEvent*> soundsEvents;
+
 		bool DecRef(SoundRes* res);
+		bool DecRef(SoundEventRes* res);
 
 	public:
+
+		bool LoadSoundBank(const char* name);
 
 		/**
 		\brief Create SoundInstance
@@ -58,6 +75,8 @@ namespace Orin
 		\return Pointer to SoundInstance
 		*/
 		SoundInstance* CreateSound(void* scene, bool streamed, const char* name);
+
+		SoundEvent* CreateSoundEvent(void* scene, bool streamed, const char* name);
 
 		/**
 		\brief Set master volume

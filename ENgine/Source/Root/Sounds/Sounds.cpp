@@ -4,23 +4,55 @@ namespace Orin
 {
 	bool Sounds::Init()
 	{
-		FMOD_RESULT result;
+		/*FMOD_RESULT result;
 
-		result = FMOD::System_Create(&system);
+		result = FMOD::System_Create(&coreSystem);
 
 		if (result != FMOD_OK)
 		{
 			return false;
 		}
 
-		result = system->init(32, FMOD_INIT_NORMAL, nullptr);
+		result = coreSystem->init(32, FMOD_INIT_NORMAL, nullptr);
 
 		if (result != FMOD_OK)
+		{
+			return false;
+		}*/
+
+		if (FMOD::Studio::System::create(&system) != FMOD_OK)
+		{
+			return false;
+		}
+
+		system->getCoreSystem(&coreSystem);
+
+		//ERRCHECK(coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
+
+		void* extraDriverData = nullptr;
+		if (system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
 		{
 			return false;
 		}
 
 		return true;
+	}
+
+	//int banksCount = 0;
+	//FMOD::Studio::Bank* banks[3];
+
+	bool Sounds::LoadSoundBank(const char* name)
+	{
+		FMOD::Studio::Bank* masterBank = NULL;
+
+		const char* rootPath = root.GetPath(Root::Path::Assets);
+		
+		char path[1024];
+		StringUtils::Printf(path, 1024, "%s%s", rootPath, name);
+
+		auto result = system->loadBankFile(path, FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
+
+		return result == FMOD_OK;
 	}
 
 	SoundInstance* Sounds::CreateSound(void* scene, bool streamed, const char* name)
@@ -54,8 +86,47 @@ namespace Orin
 
 		SoundInstance* instance = new SoundInstance();
 		instance->res = res;
+		instance->scene = scene;
 
 		sounds.push_back(instance);
+
+		return instance;
+	}
+
+	SoundEvent* Sounds::CreateSoundEvent(void* scene, bool streamed, const char* name)
+	{
+		SoundEventRes* res = nullptr;
+
+		eastl::string key = name + eastl::string(streamed ? "_str" : "_mem");
+
+		if (soundEventResRefs.count(key) > 0)
+		{
+			SoundsEventResRef& ref = soundEventResRefs[key];
+
+			ref.count++;
+			res = ref.res;
+		}
+		else
+		{
+			res = new SoundEventRes();
+
+			if (!res->Load(name, streamed))
+			{
+				delete res;
+				return nullptr;
+			}
+
+			SoundsEventResRef& ref = soundEventResRefs[key];
+
+			ref.count = 1;
+			ref.res = res;
+		}
+
+		SoundEvent* instance = new SoundEvent();
+		instance->res = res;
+		instance->scene = scene;
+
+		soundsEvents.push_back(instance);
 
 		return instance;
 	}
@@ -72,13 +143,32 @@ namespace Orin
 				i--;
 			}
 		}
+
+		for (int i = 0; i < soundsEvents.size(); i++)
+		{
+			auto* sound = soundsEvents[i];
+
+			if (sound->scene == scene)
+			{
+				soundsEvents[i]->Release();
+				i--;
+			}
+		}
 	}
 
 	void Sounds::Update(float dt)
 	{
-		system->update();
+		if (coreSystem)
+		{
+			coreSystem->update();
+		}
 
-		for(int i = 0; i < sounds.size(); i++)
+		if (system)
+		{
+			system->update();
+		}
+
+		for (int i = 0; i < sounds.size(); i++)
 		{
 			auto* sound = sounds[i];
 			if (sound->playing && sound->playType != PlaySoundType::Looped)
@@ -86,6 +176,24 @@ namespace Orin
 				sound->channel->isPlaying(&sound->playing);
 
 				if (!sound->playing && 	sound->playType == PlaySoundType::AutoDelete)
+				{
+					sound->Release();
+					i--;
+				}
+
+				continue;
+			}
+		}
+
+		for (int i = 0; i < soundsEvents.size(); i++)
+		{
+			auto* sound = soundsEvents[i];
+			if (sound->playing && sound->playType != PlayEventType::Looped)
+			{
+				FMOD_STUDIO_PLAYBACK_STATE state;
+				sound->instance->getPlaybackState(&state);
+
+				if (state == FMOD_STUDIO_PLAYBACK_STOPPED && sound->playType == PlayEventType::AutoDelete)
 				{
 					sound->Release();
 					i--;
@@ -102,7 +210,7 @@ namespace Orin
 
 		FMOD::ChannelGroup* channelgroup;
 
-		if (system->getMasterChannelGroup(&channelgroup) == FMOD_OK)
+		if (coreSystem->getMasterChannelGroup(&channelgroup) == FMOD_OK)
 		{
 			channelgroup->setVolume(masterVolume);
 		}
@@ -119,6 +227,12 @@ namespace Orin
 		for (int i = 0; i < sounds.size(); i++)
 		{
 			sounds[i]->Release();
+			i--;
+		}
+
+		for (int i = 0; i < soundsEvents.size(); i++)
+		{
+			soundsEvents[i]->Release();
 			i--;
 		}
 	}
@@ -168,12 +282,37 @@ namespace Orin
 		return true;
 	}
 
+	bool Sounds::DecRef(SoundEventRes* res)
+	{
+		typedef eastl::map<eastl::string, SoundsEventResRef>::iterator it_type;
+
+		for (it_type iterator = soundEventResRefs.begin(); iterator != soundEventResRefs.end(); iterator++)
+		{
+			if (iterator->second.res == res)
+			{
+				iterator->second.count--;
+
+				if (iterator->second.count == 0)
+				{
+					soundEventResRefs.erase(iterator);
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	void Sounds::Release()
 	{
 		ClearAllSounds();
 
 		if (system)
 		{
+			system->unloadAll();
+
 			system->release();
 			system = nullptr;
 		}

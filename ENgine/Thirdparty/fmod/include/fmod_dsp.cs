@@ -1,13 +1,13 @@
 /* ======================================================================================== */
 /* FMOD Core API - DSP header file.                                                         */
-/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2021.                               */
+/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2023.                               */
 /*                                                                                          */
 /* Use this header if you are wanting to develop your own DSP plugin to use with FMODs      */
 /* dsp system.  With this header you can make your own DSP plugin that FMOD can             */
 /* register and use.  See the documentation and examples on how to make a working plugin.   */
 /*                                                                                          */
 /* For more detail visit:                                                                   */
-/* https://fmod.com/resources/documentation-api?version=2.0&page=plugin-api-dsp.html        */
+/* https://fmod.com/docs/2.02/api/plugin-api-dsp.html                                       */
 /* =========================================================================================*/
 
 using System;
@@ -49,11 +49,11 @@ namespace FMOD
     /*
         DSP callbacks
     */
-    public delegate RESULT DSP_CREATECALLBACK                   (ref DSP_STATE dsp_state);
-    public delegate RESULT DSP_RELEASECALLBACK                  (ref DSP_STATE dsp_state);
-    public delegate RESULT DSP_RESETCALLBACK                    (ref DSP_STATE dsp_state);
-    public delegate RESULT DSP_SETPOSITIONCALLBACK              (ref DSP_STATE dsp_state, uint pos);
-    public delegate RESULT DSP_READCALLBACK                     (ref DSP_STATE dsp_state, IntPtr inbuffer, IntPtr outbuffer, uint length, int inchannels, ref int outchannels);
+    public delegate RESULT DSP_CREATE_CALLBACK                  (ref DSP_STATE dsp_state);
+    public delegate RESULT DSP_RELEASE_CALLBACK                 (ref DSP_STATE dsp_state);
+    public delegate RESULT DSP_RESET_CALLBACK                   (ref DSP_STATE dsp_state);
+    public delegate RESULT DSP_SETPOSITION_CALLBACK             (ref DSP_STATE dsp_state, uint pos);
+    public delegate RESULT DSP_READ_CALLBACK                    (ref DSP_STATE dsp_state, IntPtr inbuffer, IntPtr outbuffer, uint length, int inchannels, ref int outchannels);
     public delegate RESULT DSP_SHOULDIPROCESS_CALLBACK          (ref DSP_STATE dsp_state, bool inputsidle, uint length, CHANNELMASK inmask, int inchannels, SPEAKERMODE speakermode);
     public delegate RESULT DSP_PROCESS_CALLBACK                 (ref DSP_STATE dsp_state, uint length, ref DSP_BUFFER_ARRAY inbufferarray, ref DSP_BUFFER_ARRAY outbufferarray, bool inputsidle, DSP_PROCESS_OPERATION op);
     public delegate RESULT DSP_SETPARAM_FLOAT_CALLBACK          (ref DSP_STATE dsp_state, int index, float value);
@@ -75,7 +75,7 @@ namespace FMOD
     public delegate IntPtr DSP_ALLOC_FUNC                         (uint size, MEMORY_TYPE type, IntPtr sourcestr);
     public delegate IntPtr DSP_REALLOC_FUNC                       (IntPtr ptr, uint size, MEMORY_TYPE type, IntPtr sourcestr);
     public delegate void   DSP_FREE_FUNC                          (IntPtr ptr, MEMORY_TYPE type, IntPtr sourcestr);
-    public delegate void   DSP_LOG_FUNC                           (DEBUG_FLAGS level, IntPtr file, int line, IntPtr function, IntPtr format);
+    public delegate void   DSP_LOG_FUNC                           (DEBUG_FLAGS level, IntPtr file, int line, IntPtr function, IntPtr str);
     public delegate RESULT DSP_GETSAMPLERATE_FUNC                 (ref DSP_STATE dsp_state, ref int rate);
     public delegate RESULT DSP_GETBLOCKSIZE_FUNC                  (ref DSP_STATE dsp_state, ref uint blocksize);
     public delegate RESULT DSP_GETSPEAKERMODE_FUNC                (ref DSP_STATE dsp_state, ref int speakermode_mixer, ref int speakermode_output);
@@ -231,7 +231,8 @@ namespace FMOD
         DSP_PARAMETER_DATA_TYPE_3DATTRIBUTES =              -2,
         DSP_PARAMETER_DATA_TYPE_SIDECHAIN =                 -3,
         DSP_PARAMETER_DATA_TYPE_FFT =                       -4,
-        DSP_PARAMETER_DATA_TYPE_3DATTRIBUTES_MULTI =        -5
+        DSP_PARAMETER_DATA_TYPE_3DATTRIBUTES_MULTI =        -5,
+        DSP_PARAMETER_DATA_TYPE_ATTENUATION_RANGE =         -6
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -328,6 +329,13 @@ namespace FMOD
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public struct DSP_PARAMETER_ATTENUATION_RANGE
+    {
+        public float min;
+        public float max;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public struct DSP_DESCRIPTION
     {
         public uint                           pluginsdkversion;
@@ -336,12 +344,12 @@ namespace FMOD
         public uint                           version;
         public int                            numinputbuffers;
         public int                            numoutputbuffers;
-        public DSP_CREATECALLBACK             create;
-        public DSP_RELEASECALLBACK            release;
-        public DSP_RESETCALLBACK              reset;
-        public DSP_READCALLBACK               read;
+        public DSP_CREATE_CALLBACK            create;
+        public DSP_RELEASE_CALLBACK           release;
+        public DSP_RESET_CALLBACK             reset;
+        public DSP_READ_CALLBACK              read;
         public DSP_PROCESS_CALLBACK           process;
-        public DSP_SETPOSITIONCALLBACK        setposition;
+        public DSP_SETPOSITION_CALLBACK       setposition;
 
         public int                            numparameters;
         public IntPtr                         paramdesc;
@@ -515,7 +523,7 @@ namespace FMOD
     public enum DSP_NORMALIZE : int
     {
         FADETIME,
-        THRESHHOLD,
+        THRESHOLD,
         MAXAMP
     }
 
@@ -702,6 +710,8 @@ namespace FMOD
         OVERALL_GAIN,
         SURROUND_SPEAKER_MODE,
         _2D_HEIGHT_BLEND,
+        ATTENUATION_RANGE,
+        OVERRIDE_RANGE
     }
 
     public enum DSP_THREE_EQ_CROSSOVERSLOPE_TYPE : int
@@ -880,6 +890,8 @@ namespace FMOD
         _3D_SOUND_SIZE,
         _3D_MIN_EXTENT,
         OVERALL_GAIN,
-        OUTPUTGAIN
+        OUTPUTGAIN,
+        ATTENUATION_RANGE,
+        OVERRIDE_RANGE
     }
 }

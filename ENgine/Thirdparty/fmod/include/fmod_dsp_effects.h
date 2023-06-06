@@ -1,12 +1,12 @@
 /* ============================================================================================================= */
 /* FMOD Core API - Built-in effects header file.                                                                 */
-/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2021.                                                    */
+/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2023.                                                    */
 /*                                                                                                               */
 /* In this header you can find parameter structures for FMOD system registered DSP effects                       */
 /* and generators.                                                                                               */
 /*                                                                                                               */
 /* For more detail visit:                                                                                        */
-/* https://fmod.com/resources/documentation-api?version=2.0&page=core-api-common-dsp-effects.html#fmod_dsp_type  */
+/* https://fmod.com/docs/2.02/api/core-api-common-dsp-effects.html#fmod_dsp_type                                 */
 /* ============================================================================================================= */
 
 #ifndef _FMOD_DSP_EFFECTS_H
@@ -126,7 +126,7 @@ typedef enum
 typedef enum
 {
     FMOD_DSP_NORMALIZE_FADETIME,
-    FMOD_DSP_NORMALIZE_THRESHHOLD,
+    FMOD_DSP_NORMALIZE_THRESHOLD,
     FMOD_DSP_NORMALIZE_MAXAMP
 } FMOD_DSP_NORMALIZE;
 
@@ -363,6 +363,8 @@ typedef enum
     FMOD_DSP_PAN_OVERALL_GAIN,
     FMOD_DSP_PAN_SURROUND_SPEAKER_MODE,
     FMOD_DSP_PAN_2D_HEIGHT_BLEND,
+    FMOD_DSP_PAN_ATTENUATION_RANGE,
+    FMOD_DSP_PAN_OVERRIDE_RANGE
 } FMOD_DSP_PAN;
 
 
@@ -566,7 +568,9 @@ typedef enum
     FMOD_DSP_OBJECTPAN_3D_SOUND_SIZE,
     FMOD_DSP_OBJECTPAN_3D_MIN_EXTENT,
     FMOD_DSP_OBJECTPAN_OVERALL_GAIN,
-    FMOD_DSP_OBJECTPAN_OUTPUTGAIN
+    FMOD_DSP_OBJECTPAN_OUTPUTGAIN,
+    FMOD_DSP_OBJECTPAN_ATTENUATION_RANGE,
+    FMOD_DSP_OBJECTPAN_OVERRIDE_RANGE
 } FMOD_DSP_OBJECTPAN;
 
 #endif

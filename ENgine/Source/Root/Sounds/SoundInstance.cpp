@@ -16,7 +16,7 @@ namespace Orin
 		playType = type;
 		playing = true;
 
-		root.sounds.system->playSound(res->sound, 0, true, &channel);
+		root.sounds.coreSystem->playSound(res->sound, 0, true, &channel);
 
 		channel->setLoopCount(type == PlaySoundType::Looped ? -1 : 0);
 		channel->setVolume(volume);
