@@ -454,6 +454,8 @@ namespace Orin
 		CpyFile("/eastl.dll");
 		CpyFile("/fmod.dll");
 		CpyFile("/fmodL.dll");
+		CpyFile("/fmodstudio.dll");
+		CpyFile("/fmodstudioL.dll");
 		CpyFile("/Orin.dll");
 		CpyFile("/PhysX_64.dll");
 		CpyFile("/PhysXCommon_64.dll");
