@@ -68,6 +68,12 @@ namespace Orin
 	{
 		Stop();
 
+		if (instance)
+		{
+			instance->release();
+			instance = nullptr;
+		}
+
 		if (root.sounds.DecRef(res))
 		{
 			res->Release();
