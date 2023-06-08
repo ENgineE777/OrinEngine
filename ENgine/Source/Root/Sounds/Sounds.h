@@ -66,6 +66,13 @@ namespace Orin
 		bool LoadSoundBank(const char* name);
 
 		/**
+		\brief Set 3D attributes of a listener
+
+		\param[in] pos Position of a listener
+		*/
+		bool SetListenerAttributes(Math::Vector3 pos);
+
+		/**
 		\brief Create SoundInstance
 
 		\param[in] scene Pointer to a parent scene

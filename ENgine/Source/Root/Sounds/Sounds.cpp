@@ -55,6 +55,22 @@ namespace Orin
 		return result == FMOD_OK;
 	}
 
+	bool Sounds::SetListenerAttributes(Math::Vector3 pos)
+	{
+		if (!system)
+		{
+			return false;
+		}
+
+		FMOD_3D_ATTRIBUTES listenerAttributes;
+		listenerAttributes.position = { pos.x, pos.y, pos.z };
+		listenerAttributes.forward = {1.f, 0.f, 0.f};
+		listenerAttributes.up = {0.f, 1.f, 0.f};
+		listenerAttributes.velocity = {0.f, 0.f, 0.f};
+
+		return system->setListenerAttributes(0, &listenerAttributes) == FMOD_OK;
+	}
+
 	SoundInstance* Sounds::CreateSound(void* scene, bool streamed, const char* name)
 	{
 		SoundRes* res = nullptr;

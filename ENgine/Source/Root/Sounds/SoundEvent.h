@@ -63,6 +63,13 @@ namespace Orin
 		float GetVolume();
 
 		/**
+		\brief Set a 3d attributes to the sound
+
+		\param[in] pos Position of the sound
+		*/
+		bool Set3DAttributes(Math::Vector3 pos);
+
+		/**
 		\brief SoundInstace should released only via this method
 		*/
 		void Release();
