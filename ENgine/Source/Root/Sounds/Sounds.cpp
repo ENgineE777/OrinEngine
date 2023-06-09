@@ -63,8 +63,8 @@ namespace Orin
 		}
 
 		FMOD_3D_ATTRIBUTES listenerAttributes;
-		listenerAttributes.position = { pos.x, pos.y, pos.z };
-		listenerAttributes.forward = {1.f, 0.f, 0.f};
+		listenerAttributes.position = { pos.x, pos.z, pos.y };
+		listenerAttributes.forward = {0.f, 0.f, 1.f};
 		listenerAttributes.up = {0.f, 1.f, 0.f};
 		listenerAttributes.velocity = {0.f, 0.f, 0.f};
 
@@ -174,11 +174,6 @@ namespace Orin
 
 	void Sounds::Update(float dt)
 	{
-		if (coreSystem)
-		{
-			coreSystem->update();
-		}
-
 		if (system)
 		{
 			system->update();

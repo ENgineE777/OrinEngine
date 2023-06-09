@@ -69,8 +69,8 @@ namespace Orin
 		if (instance)
 		{
 			FMOD_3D_ATTRIBUTES attributes = {0};
-			attributes.position = { pos.x, pos.y, pos.z };
-			attributes.forward = {1.f, 0.f, 0.f};
+			attributes.position = { pos.x, pos.z, pos.y };
+			attributes.forward = {0.f, 0.f, 1.f};
 			attributes.up = {0.f, 1.f, 0.f};
 			attributes.velocity = {0.f, 0.f, 0.f};
 			return instance->set3DAttributes(&attributes) == FMOD_OK;
