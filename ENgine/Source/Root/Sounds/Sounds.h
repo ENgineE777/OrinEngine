@@ -100,7 +100,7 @@ namespace Orin
 		float GetMasterVolume();
 
 	#ifndef DOXYGEN_SKIP
-		bool Init();
+		bool Init(bool useStudio);
 
 		void Update(float dt);
 

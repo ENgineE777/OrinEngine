@@ -82,7 +82,7 @@ namespace Orin
 
 		particles.Init();
 
-		sounds.Init();
+		sounds.Init(true);
 
 		assets.Init();
 

@@ -2,47 +2,48 @@
 
 namespace Orin
 {
-	bool Sounds::Init()
+	bool Sounds::Init(bool useStudio)
 	{
-		/*FMOD_RESULT result;
-
-		result = FMOD::System_Create(&coreSystem);
-
-		if (result != FMOD_OK)
+		if (!useStudio)
 		{
-			return false;
+			if (FMOD::System_Create(&coreSystem) != FMOD_OK)
+			{
+				return false;
+			}
+
+			if (coreSystem->init(32, FMOD_INIT_NORMAL, nullptr) != FMOD_OK)
+			{
+				return false;
+			}
 		}
-
-		result = coreSystem->init(32, FMOD_INIT_NORMAL, nullptr);
-
-		if (result != FMOD_OK)
+		else
 		{
-			return false;
-		}*/
+			if (FMOD::Studio::System::create(&system) != FMOD_OK)
+			{
+				return false;
+			}
 
-		if (FMOD::Studio::System::create(&system) != FMOD_OK)
-		{
-			return false;
-		}
+			system->getCoreSystem(&coreSystem);
 
-		system->getCoreSystem(&coreSystem);
+			//ERRCHECK(coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
 
-		//ERRCHECK(coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
-
-		void* extraDriverData = nullptr;
-		if (system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
-		{
-			return false;
+			void* extraDriverData = nullptr;
+			if (system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
+			{
+				return false;
+			}
 		}
 
 		return true;
 	}
 
-	//int banksCount = 0;
-	//FMOD::Studio::Bank* banks[3];
-
 	bool Sounds::LoadSoundBank(const char* name)
 	{
+		if (!system)
+		{
+			return false;
+		}
+
 		FMOD::Studio::Bank* masterBank = NULL;
 
 		const char* rootPath = root.GetPath(Root::Path::Assets);
@@ -177,6 +178,11 @@ namespace Orin
 		if (system)
 		{
 			system->update();
+		}
+		else
+		if (coreSystem)
+		{
+			coreSystem->update();
 		}
 
 		for (int i = 0; i < sounds.size(); i++)
