@@ -838,10 +838,10 @@ namespace Orin
 
 		Alias& alias = aliases[index];
 
+		float val = 0.0f;
+
 		for (auto& aliasRef : alias.aliasesRef)
 		{
-			float val = 1.0f;
-
 			for (auto& ref : aliasRef.refs)
 			{
 				if (ref.aliasIndex == -1)
@@ -849,23 +849,24 @@ namespace Orin
 					continue;
 				}
 
+				float refValue = 1.0;
+
 				if (ref.refer2hardware)
 				{
-					val *= GetHardwareAliasValue(ref.aliasIndex, delta, ref.device_index, false);
+					refValue *= GetHardwareAliasValue(ref.aliasIndex, delta, ref.device_index, false);
 				}
 				else
 				{
-					val *= GetAliasValue(ref.aliasIndex, delta);
+					refValue *= GetAliasValue(ref.aliasIndex, delta);
 				}
-			}
 
-			if (fabs(val) > 0.01f)
-			{
-				return val * aliasRef.modifier;
+				refValue *= aliasRef.modifier;
+
+				val = Math::Clamp(val + refValue, -1.0f, 1.0f);
 			}
 		}
 
-		return 0.0f;
+		return val;
 	}
 
 	const char* Controls::GetActivatedKey(int& device_index)
