@@ -862,7 +862,17 @@ namespace Orin
 
 				refValue *= aliasRef.modifier;
 
-				val = Math::Clamp(val + refValue, -1.0f, 1.0f);
+				val += refValue;
+
+				if (ref.refer2hardware)
+				{
+					HardwareAlias& halias = haliases[ref.aliasIndex];
+					
+					if (halias.device == Device::Keyboard || halias.device == Device::Joystick)
+					{
+						val = Math::Clamp(val, -1.0f, 1.0f);
+					}
+				}
 			}
 		}
 
