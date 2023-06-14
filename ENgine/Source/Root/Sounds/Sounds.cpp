@@ -28,7 +28,7 @@ namespace Orin
 			//ERRCHECK(coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
 
 			void* extraDriverData = nullptr;
-			if (system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
+			if (system->initialize(1024, FMOD_STUDIO_INIT_NORMAL | FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
 			{
 				return false;
 			}
@@ -47,7 +47,7 @@ namespace Orin
 		FMOD::Studio::Bank* masterBank = NULL;
 
 		const char* rootPath = root.GetPath(Root::Path::Assets);
-		
+
 		char path[1024];
 		StringUtils::Printf(path, 1024, "%s%s", rootPath, name);
 
@@ -65,9 +65,9 @@ namespace Orin
 
 		FMOD_3D_ATTRIBUTES listenerAttributes;
 		listenerAttributes.position = { pos.x, pos.z, pos.y };
-		listenerAttributes.forward = {0.f, 0.f, 1.f};
-		listenerAttributes.up = {0.f, 1.f, 0.f};
-		listenerAttributes.velocity = {0.f, 0.f, 0.f};
+		listenerAttributes.forward = { 0.f, 0.f, 1.f };
+		listenerAttributes.up = { 0.f, 1.f, 0.f };
+		listenerAttributes.velocity = { 0.f, 0.f, 0.f };
 
 		return system->setListenerAttributes(0, &listenerAttributes) == FMOD_OK;
 	}
@@ -192,7 +192,7 @@ namespace Orin
 			{
 				sound->channel->isPlaying(&sound->playing);
 
-				if (!sound->playing && 	sound->playType == PlaySoundType::AutoDelete)
+				if (!sound->playing && sound->playType == PlaySoundType::AutoDelete)
 				{
 					sound->Release();
 					i--;
@@ -237,6 +237,42 @@ namespace Orin
 	float Sounds::GetMasterVolume()
 	{
 		return masterVolume;
+	}
+
+	float Sounds::GetVCAVolume(const char* path)
+	{
+		if (!system)
+		{
+			return 0.0f;
+		}
+
+		FMOD::Studio::VCA* vca;
+		system->getVCA(path, &vca);
+
+		float volume = 0.0f;
+
+		if (vca)
+		{
+			vca->getVolume(&volume);
+		}
+
+		return volume;
+	}	
+
+	void Sounds::SetVCAVolume(const char* path, float volume)
+	{
+		if (!system)
+		{
+			return;
+		}
+
+		FMOD::Studio::VCA* vca;
+		system->getVCA(path, &vca);
+
+		if (vca)
+		{
+			vca->setVolume(volume);
+		}
 	}
 
 	void Sounds::ClearAllSounds()

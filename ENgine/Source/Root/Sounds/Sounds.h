@@ -99,6 +99,23 @@ namespace Orin
 		*/
 		float GetMasterVolume();
 
+		/**
+		\brief Get volume of VCA
+
+		\param[in] path path of vca
+		*/
+
+		float GetVCAVolume(const char* path);
+
+		/**
+		\brief Set volume of VCA
+
+		\param[in] path path of vca
+		\param[in] volume Value of a volume
+		*/
+
+		void SetVCAVolume(const char* path, float volume);
+
 	#ifndef DOXYGEN_SKIP
 		bool Init(bool useStudio);
 
