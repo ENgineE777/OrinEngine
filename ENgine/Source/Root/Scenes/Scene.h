@@ -127,7 +127,7 @@ namespace Orin
 		\return Return pointer to a child
 		*/
 		template<class T>
-		T* FindEntity(bool searchInChilds = true, const char* name = nullptr)
+		T* FindEntity(const char* name = nullptr, bool searchInChilds = true)
 		{
 			for (auto entity : entities)
 			{
