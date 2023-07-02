@@ -10,7 +10,7 @@ struct stbtt_pack_context;
 
 namespace Orin
 {
-	class FontRes
+	class CLASS_DECLSPEC FontRes
 	{
 	public:
 

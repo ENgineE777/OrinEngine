@@ -16,7 +16,7 @@ namespace Orin
 
 	*/
 
-	class Fonts
+	class CLASS_DECLSPEC Fonts
 	{
 		#ifndef DOXYGEN_SKIP
 		friend class FontRes;

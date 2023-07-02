@@ -79,6 +79,8 @@ namespace Orin
 		*/
 		Fonts fonts;
 
+		Fonts* GetFonts() override { return &fonts; };
+
 		/**
 		\brief Access to memory manger
 		*/

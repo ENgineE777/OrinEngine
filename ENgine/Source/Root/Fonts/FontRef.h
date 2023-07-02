@@ -16,7 +16,7 @@ namespace Orin
 
 	*/
 
-	class FontRef : public PointerRef<FontRes>
+	class CLASS_DECLSPEC FontRef : public PointerRef<FontRes>
 	{
 		friend class Fonts;
 

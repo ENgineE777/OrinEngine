@@ -265,6 +265,9 @@ namespace Orin
 					if (text[i+1] == 'n')
 					{
 						i++;
+
+						scr_x = 0;
+						scr_y += height;
 						continue;
 					}
 				}
