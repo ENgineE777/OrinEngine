@@ -101,7 +101,7 @@ namespace Orin
 		auto size = transform.size;
 		size.z = 16.0f;
 
-		auto sizeInUnits = size * Sprite::ToUnits(1.0f);
+		auto sizeInUnits = (size + 0.01f) * Sprite::ToUnits(1.0f);
 
 
 		for (auto tile : tiles)
@@ -295,8 +295,8 @@ namespace Orin
 
 							trans.position = Math::Vector3(0.0f, 0.0f, -0.001f) + pos + mat.Vx() * tileX * transform.size.x + mat.Vy() * tileY * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
-							trans.size.x = size.x;
-							trans.size.y = size.y;
+							trans.size.x = size.x + 0.01f;
+							trans.size.y = size.y + 0.01f;
 
 							AssetTextureRef texRef = tileSet->GetTileTexture(index);
 							texRef.prg = tech;
