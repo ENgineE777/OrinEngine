@@ -69,7 +69,7 @@ namespace Orin
 
 		root.CountDeltaTime();
 
-		root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
+		//root.render.DebugPrintText(5.0f, ScreenCorner::RightTop, COLOR_WHITE, "%i", root.GetFPS());
 
 		POINT corner = { 0, 0};
 
