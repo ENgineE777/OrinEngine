@@ -2,7 +2,13 @@
 
 namespace Orin
 {
-	bool Sounds::Init(bool useStudio)
+	void Sounds::SetInitializePrams(bool setUseStudio, bool setUseLiveUpdate)
+	{
+		useStudio = setUseStudio;
+		useLiveUpdate = setUseLiveUpdate;
+	}
+
+	bool Sounds::Init()
 	{
 		if (!useStudio)
 		{
@@ -25,10 +31,8 @@ namespace Orin
 
 			system->getCoreSystem(&coreSystem);
 
-			//ERRCHECK(coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
-
 			void* extraDriverData = nullptr;
-			if (system->initialize(1024, FMOD_STUDIO_INIT_NORMAL | FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
+			if (system->initialize(1024, useLiveUpdate? FMOD_STUDIO_INIT_LIVEUPDATE : FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
 			{
 				return false;
 			}

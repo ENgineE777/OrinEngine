@@ -169,6 +169,8 @@ namespace Orin
 			return false;
 		}
 
+		root.sounds.SetInitializePrams(true, true);
+
 		if (!root.Init(d3dDevice))
 		{
 			return false;

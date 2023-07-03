@@ -61,7 +61,12 @@ namespace Orin
 		bool DecRef(SoundRes* res);
 		bool DecRef(SoundEventRes* res);
 
+		bool useStudio = false;
+		bool useLiveUpdate = false;
+
 	public:
+
+		void SetInitializePrams(bool useStudio, bool useLiveUpdate);
 
 		bool LoadSoundBank(const char* name);
 
@@ -117,7 +122,7 @@ namespace Orin
 		void SetVCAVolume(const char* path, float volume);
 
 	#ifndef DOXYGEN_SKIP
-		bool Init(bool useStudio);
+		bool Init();
 
 		void Update(float dt);
 

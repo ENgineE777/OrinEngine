@@ -14,6 +14,8 @@ namespace Orin
 	{
 		hwnd = setHwnd;
 
+		root.sounds.SetInitializePrams(true, false);
+
 		if (!root.Init(nullptr))
 		{
 			return false;
