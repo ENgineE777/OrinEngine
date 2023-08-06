@@ -152,6 +152,36 @@ namespace Orin
 		return instance;
 	}
 
+	void Sounds::PlaySoundEvent(const char* name, Math::Vector3* pos)
+	{
+		FMOD::Studio::EventDescription* descriptor = nullptr;
+		if (system->getEvent(name, &descriptor) == FMOD_OK)
+		{
+			FMOD::Studio::EventInstance* instance = nullptr;
+
+			if (descriptor->createInstance(&instance) == FMOD_OK)
+			{
+				FMOD::Studio::EventInstance* instance = nullptr;
+				descriptor->createInstance(&instance);
+
+				if (pos)
+				{
+					FMOD_3D_ATTRIBUTES attributes = { 0 };
+					attributes.position = { pos->x, pos->z, pos->y };
+					attributes.forward = { 0.f, 0.f, 1.f };
+					attributes.up = { 0.f, 1.f, 0.f };
+					attributes.velocity = { 0.f, 0.f, 0.f };
+
+					instance->set3DAttributes(&attributes);
+				}
+
+				instance->start();
+
+				instance->release();
+			}
+		}
+	}
+
 	void Sounds::DeleteSceneSounds(void* scene)
 	{
 		for (int i = 0; i < sounds.size(); i++)
@@ -197,24 +227,6 @@ namespace Orin
 				sound->channel->isPlaying(&sound->playing);
 
 				if (!sound->playing && sound->playType == PlaySoundType::AutoDelete)
-				{
-					sound->Release();
-					i--;
-				}
-
-				continue;
-			}
-		}
-
-		for (int i = 0; i < soundsEvents.size(); i++)
-		{
-			auto* sound = soundsEvents[i];
-			if (sound->playing && sound->playType != PlayEventType::Looped)
-			{
-				FMOD_STUDIO_PLAYBACK_STATE state;
-				sound->instance->getPlaybackState(&state);
-
-				if (state == FMOD_STUDIO_PLAYBACK_STOPPED && sound->playType == PlayEventType::AutoDelete)
 				{
 					sound->Release();
 					i--;

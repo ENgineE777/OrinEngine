@@ -6,13 +6,6 @@
 
 namespace Orin
 {
-	enum class CLASS_DECLSPEC PlayEventType
-	{
-		Once = 0 /*!< Sound should be played only once */,
-		Looped /*!< Sound should be played in loop mode */,
-		AutoDelete /*!< Play sound once and thet auto delete insctance */,
-	};
-
 	class CLASS_DECLSPEC SoundEvent
 	{
 		friend class Sounds;
@@ -28,7 +21,7 @@ namespace Orin
 
 		\param[in] type Type of playing
 		*/
-		bool Play(PlayEventType type);
+		bool Play();
 
 		/**
 		\brief Check is souns is playing
@@ -84,7 +77,5 @@ namespace Orin
 		float volume = 1.0f;
 		bool playing = false;
 		bool paused = false;
-
-		PlayEventType playType;
 	};
 }

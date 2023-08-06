@@ -4,24 +4,18 @@
 
 namespace Orin
 {
-	bool SoundEvent::Play(PlayEventType type)
+	bool SoundEvent::Play()
 	{
 		if (playing)
 		{
 			Stop();
 		}
 
-		playType = type;
 		playing = true;
 
 		res->descriptor->createInstance(&instance);
 
 		instance->start();
-		//root.sounds.system->playSound(res->sound, 0, true, &channel);
-
-		//channel->setLoopCount(type == PlaySoundType::Looped ? -1 : 0);
-		//channel->setVolume(volume);
-		//channel->setPaused(false);
     
 		return true;
 	}

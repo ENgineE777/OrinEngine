@@ -90,6 +90,8 @@ namespace Orin
 
 		SoundEvent* CreateSoundEvent(void* scene, bool streamed, const char* name);
 
+		void PlaySoundEvent(const char* name, Math::Vector3* pos = nullptr);
+
 		/**
 		\brief Set master volume
 
