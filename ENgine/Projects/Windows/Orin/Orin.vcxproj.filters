@@ -164,6 +164,9 @@
     <Filter Include="Source\SceneEntities\Physics\3D">
       <UniqueIdentifier>{006df1aa-174d-48db-a3f5-f967540fd080}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Root\Localization">
+      <UniqueIdentifier>{c09a70dc-4cba-4f42-b5ef-f2985a3dd8ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Support\Timer.cpp">
@@ -757,8 +760,8 @@
     <ClCompile Include="..\..\..\Source\Root\Sounds\SoundEvent.cpp">
       <Filter>Source\Root\Sounds</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Root\Sounds\SoundEventRes.cpp">
-      <Filter>Source\Root\Sounds</Filter>
+    <ClCompile Include="..\..\..\Source\Root\Localization\Localization.cpp">
+      <Filter>Source\Root\Localization</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1422,8 +1425,8 @@
     <ClInclude Include="..\..\..\Source\Root\Sounds\SoundEvent.h">
       <Filter>Source\Root\Sounds</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Root\Sounds\SoundEventRes.h">
-      <Filter>Source\Root\Sounds</Filter>
+    <ClInclude Include="..\..\..\Source\Root\Localization\Localization.h">
+      <Filter>Source\Root\Localization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

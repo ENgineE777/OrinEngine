@@ -114,42 +114,31 @@ namespace Orin
 		return instance;
 	}
 
-	SoundEvent* Sounds::CreateSoundEvent(void* scene, bool streamed, const char* name)
+	SoundEvent* Sounds::CreateSoundEvent(const char* name, bool streamed)
 	{
-		SoundEventRes* res = nullptr;
-
-		eastl::string key = name + eastl::string(streamed ? "_str" : "_mem");
-
-		if (soundEventResRefs.count(key) > 0)
+		FMOD::Studio::EventDescription* descriptor = nullptr;
+		
+		if (system->getEvent(name, &descriptor) == FMOD_OK)
 		{
-			SoundsEventResRef& ref = soundEventResRefs[key];
-
-			ref.count++;
-			res = ref.res;
-		}
-		else
-		{
-			res = new SoundEventRes();
-
-			if (!res->Load(name, streamed))
+			if (!streamed)
 			{
-				delete res;
-				return nullptr;
+				FMOD_STUDIO_LOADING_STATE state;
+
+				descriptor->getSampleLoadingState(&state);
+
+				if (state == FMOD_STUDIO_LOADING_STATE_UNLOADED)
+				{
+					descriptor->loadSampleData();
+				}
 			}
 
-			SoundsEventResRef& ref = soundEventResRefs[key];
+			FMOD::Studio::EventInstance* instance = nullptr;
+			descriptor->createInstance(&instance);			
 
-			ref.count = 1;
-			ref.res = res;
+			return new SoundEvent(instance);
 		}
 
-		SoundEvent* instance = new SoundEvent();
-		instance->res = res;
-		instance->scene = scene;
-
-		soundsEvents.push_back(instance);
-
-		return instance;
+		return nullptr;
 	}
 
 	void Sounds::PlaySoundEvent(const char* name, Math::Vector3* pos)
@@ -191,17 +180,6 @@ namespace Orin
 			if (sound->scene == scene)
 			{
 				sounds[i]->Release();
-				i--;
-			}
-		}
-
-		for (int i = 0; i < soundsEvents.size(); i++)
-		{
-			auto* sound = soundsEvents[i];
-
-			if (sound->scene == scene)
-			{
-				soundsEvents[i]->Release();
 				i--;
 			}
 		}
@@ -298,12 +276,6 @@ namespace Orin
 			sounds[i]->Release();
 			i--;
 		}
-
-		for (int i = 0; i < soundsEvents.size(); i++)
-		{
-			soundsEvents[i]->Release();
-			i--;
-		}
 	}
 
 	void Sounds::OnPause()
@@ -341,29 +313,6 @@ namespace Orin
 				if (iterator->second.count == 0)
 				{
 					soundResRefs.erase(iterator);
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	bool Sounds::DecRef(SoundEventRes* res)
-	{
-		typedef eastl::map<eastl::string, SoundsEventResRef>::iterator it_type;
-
-		for (it_type iterator = soundEventResRefs.begin(); iterator != soundEventResRefs.end(); iterator++)
-		{
-			if (iterator->second.res == res)
-			{
-				iterator->second.count--;
-
-				if (iterator->second.count == 0)
-				{
-					soundEventResRefs.erase(iterator);
 					return true;
 				}
 

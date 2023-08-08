@@ -4,6 +4,11 @@
 
 namespace Orin
 {
+	SoundEvent::SoundEvent(FMOD::Studio::EventInstance* setInstance)
+	{
+		instance = setInstance;
+	}
+
 	bool SoundEvent::Play()
 	{
 		if (playing)
@@ -11,9 +16,7 @@ namespace Orin
 			Stop();
 		}
 
-		playing = true;
-
-		res->descriptor->createInstance(&instance);
+		playing = true;		
 
 		instance->start();
     
@@ -80,15 +83,7 @@ namespace Orin
 		{
 			instance->release();
 			instance = nullptr;
-		}
-
-		if (root.sounds.DecRef(res))
-		{
-			res->Release();
-		}
-
-		auto iterator = eastl::find(root.sounds.soundsEvents.begin(), root.sounds.soundsEvents.end(), this);
-		root.sounds.soundsEvents.erase(iterator);
+		}		
 
 		delete this;
 	}

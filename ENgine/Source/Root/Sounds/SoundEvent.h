@@ -14,7 +14,7 @@ namespace Orin
 
 	public:
 
-		SoundEvent() = default;
+		SoundEvent(FMOD::Studio::EventInstance* instance);
 
 		/**
 		\brief Start to play a sound
@@ -69,7 +69,6 @@ namespace Orin
 
 	private:
 
-		class SoundEventRes* res = nullptr;
 		FMOD::Studio::EventInstance* instance = nullptr;
 
 		void* scene = nullptr;		

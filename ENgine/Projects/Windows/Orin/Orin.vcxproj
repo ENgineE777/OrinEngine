@@ -190,6 +190,7 @@
     <ClInclude Include="..\..\..\Source\Root\Fonts\FontRes.h" />
     <ClInclude Include="..\..\..\Source\Root\Fonts\Fonts.h" />
     <ClInclude Include="..\..\..\Source\Root\IRoot.h" />
+    <ClInclude Include="..\..\..\Source\Root\Localization\Localization.h" />
     <ClInclude Include="..\..\..\Source\Root\Memory\MemoryManager.h" />
     <ClInclude Include="..\..\..\Source\Root\Meshes\Meshes.h" />
     <ClInclude Include="..\..\..\Source\Root\Meshes\MeshPrograms.h" />
@@ -233,7 +234,6 @@
     <ClInclude Include="..\..\..\Source\Root\Scenes\SceneManager.h" />
     <ClInclude Include="..\..\..\Source\Root\Scripts\Scripts.h" />
     <ClInclude Include="..\..\..\Source\Root\Sounds\SoundEvent.h" />
-    <ClInclude Include="..\..\..\Source\Root\Sounds\SoundEventRes.h" />
     <ClInclude Include="..\..\..\Source\Root\Sounds\SoundInstance.h" />
     <ClInclude Include="..\..\..\Source\Root\Sounds\SoundRes.h" />
     <ClInclude Include="..\..\..\Source\Root\Sounds\Sounds.h" />
@@ -409,6 +409,7 @@
     <ClCompile Include="..\..\..\Source\Root\Fonts\FontRef.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Fonts\FontRes.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Fonts\Fonts.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Localization\Localization.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Memory\MemoryManager.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Meshes\Meshes.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Meshes\MeshPrograms.cpp" />
@@ -447,7 +448,6 @@
     <ClCompile Include="..\..\..\Source\Root\Scenes\SceneManager.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Scripts\Scripts.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Sounds\SoundEvent.cpp" />
-    <ClCompile Include="..\..\..\Source\Root\Sounds\SoundEventRes.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Sounds\SoundInstance.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Sounds\SoundRes.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Sounds\Sounds.cpp" />

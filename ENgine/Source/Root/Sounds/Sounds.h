@@ -4,7 +4,6 @@
 #include "SoundInstance.h"
 #include "SoundRes.h"
 #include "SoundEvent.h"
-#include "SoundEventRes.h"
 
 namespace Orin
 {
@@ -49,17 +48,7 @@ namespace Orin
 		eastl::map<eastl::string, SoundsResRef> soundResRefs;
 		eastl::vector<SoundInstance*> sounds;
 
-		struct SoundsEventResRef
-		{
-			int count;
-			SoundEventRes* res;
-		};
-
-		eastl::map<eastl::string, SoundsEventResRef> soundEventResRefs;
-		eastl::vector<SoundEvent*> soundsEvents;
-
-		bool DecRef(SoundRes* res);
-		bool DecRef(SoundEventRes* res);
+		bool DecRef(SoundRes* res);		
 
 		bool useStudio = false;
 		bool useLiveUpdate = false;
@@ -88,7 +77,7 @@ namespace Orin
 		*/
 		SoundInstance* CreateSound(void* scene, bool streamed, const char* name);
 
-		SoundEvent* CreateSoundEvent(void* scene, bool streamed, const char* name);
+		SoundEvent* CreateSoundEvent(const char* name, bool streamed);
 
 		void PlaySoundEvent(const char* name, Math::Vector3* pos = nullptr);
 
