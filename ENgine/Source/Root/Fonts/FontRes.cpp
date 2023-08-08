@@ -85,7 +85,7 @@ namespace Orin
 		used_height = height * 1.38f;
 
 		tex_w = 1024;
-		tex_h = 128;// GetPow2((int)((400.0f / nums) * height));
+		tex_h = 1024;
 
 		if (tex_h > 2048)
 		{
