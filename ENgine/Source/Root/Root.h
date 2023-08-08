@@ -82,6 +82,12 @@ namespace Orin
 		Fonts* GetFonts() override { return &fonts; };
 
 		/**
+		\brief Access to fonts service
+		*/
+		Localization localization;
+		Localization* GetLocalization() override  { return &localization; };
+
+		/**
 		\brief Access to memory manger
 		*/
 		MemoryManager memory;

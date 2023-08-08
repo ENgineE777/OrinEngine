@@ -57,10 +57,17 @@ namespace Orin
 			screenHeight = height;
 		}
 		
+		const char* txt = text.c_str();
+
+		if (txt[0] == '$' && txt[1] != 0)
+		{
+			eastl::string key = &txt[1];
+			txt = root.localization.GetLocalized(key);
+		}
 
 		if (horzSize == Size::wrapContext || vertSize == Size::wrapContext)
-		{
-			float height = font.GetLineBreak(line_breaks, text.c_str(), 10000);
+		{						
+			float height = font.GetLineBreak(line_breaks, txt, 10000);
 
 			float width = 1.0f;
 
@@ -96,6 +103,6 @@ namespace Orin
 		mat.Pos().x = pos3d.x;
 		mat.Pos().y = pos3d.y;
 
-		font.Print(mat, 1.0f, curColor, text.c_str());
+		font.Print(mat, 1.0f, curColor, txt);
 	}
 }

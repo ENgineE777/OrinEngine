@@ -5,6 +5,7 @@
 #include "Root/Controls/Controls.h"
 //#include "Root/Files/Files.h"
 #include "Root/Fonts/Fonts.h"
+#include "Root/Localization/Localization.h"
 //#include "Root/Memory/MemoryManager.h"
 #include "Root/Meshes/Meshes.h"
 //#include "Root/Particles/Particles.h"
@@ -57,6 +58,8 @@ namespace Orin
 		\brief Access to font service
 		*/
 		virtual Fonts* GetFonts() = 0;
+
+		virtual Localization* GetLocalization() = 0;
 
 		/**
 		\brief Access to meshes service

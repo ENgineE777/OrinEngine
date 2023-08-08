@@ -27,6 +27,7 @@ namespace Orin
 
 		root.SetRootPath(projectPath);
 		root.assets.LoadAssets();
+		root.localization.LoadLocale();
 
 		if (!root.scripts.CompileProjectCode(false))
 		{
