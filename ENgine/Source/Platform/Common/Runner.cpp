@@ -42,6 +42,8 @@ namespace Orin
 
 		root.SetRootPath(StringUtils::PrintTemp("%s/project/", currDir));
 
+		root.localization.LoadLocale();
+
 		root.assets.LoadAssets();
 
 		if (!root.scripts.Start())
