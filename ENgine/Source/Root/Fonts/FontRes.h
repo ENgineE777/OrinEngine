@@ -63,6 +63,8 @@ namespace Orin
 		int refCounter = 0;
 		eastl::map<int, Glyph> glyphs;
 
+		eastl::wstring buffer;
+
 	public:
 
 		FontRes(const char* name, const char* fl_name, int hgt);

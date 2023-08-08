@@ -120,9 +120,6 @@ namespace Orin
 	{
 		float scr_y =(float) height;
 
-		int w = 0;
-		int bytes = 0;
-
 		int line = -1;
 
 		line_breaks.clear();
@@ -132,14 +129,12 @@ namespace Orin
 
 		int last_whitespace = -1;
 
-		int len = StringUtils::GetLen(text);
+		StringUtils::Utf8toUtf16(buffer, text);
+		int len = buffer.size();
 
 		for (int i = 0; i<len; i++)
 		{
-			if (!StringUtils::BuildUtf16fromUtf8(text[i], bytes, w))
-			{
-				continue;
-			}
+			int w = buffer[i];
 
 			if (w > 65000) continue;
 
@@ -187,10 +182,12 @@ namespace Orin
 		if (!tex) return;
 
 		//render.DebugSprite(tex, 0.0f, 1024.0f);
+		
+		StringUtils::Utf8toUtf16(buffer, text);
 
 		int len = 0;
 
-		len = StringUtils::GetLen(text);
+		len = buffer.size();
 
 		if (len == 0) return;
 
@@ -238,20 +235,12 @@ namespace Orin
 	
 		Fonts::FontVertex* v = (Fonts::FontVertex*)root.fonts.vbuffer->Lock();
 
-		int w = 0;
-		int bytes = 0;
-
 		int line = -1;
 		int x_offset = 0;
 
 		for (int i=0;i<len;i++)
 		{
-			if (!StringUtils::BuildUtf16fromUtf8(text[i], bytes, w))
-			{
-				continue;
-			}
-
-			if (w > 65000) continue;
+			int w = buffer[i];
 
 			if (w == 10)
 			{
