@@ -130,13 +130,11 @@ namespace Orin
 		int last_whitespace = -1;
 
 		StringUtils::Utf8toUtf16(buffer, text);
-		int len = buffer.size();
+		int len = (int)buffer.size();
 
 		for (int i = 0; i<len; i++)
 		{
 			int w = buffer[i];
-
-			if (w > 65000) continue;
 
 			if (w == 10)
 			{
@@ -187,7 +185,7 @@ namespace Orin
 
 		int len = 0;
 
-		len = buffer.size();
+		len = (int)buffer.size();
 
 		if (len == 0) return;
 
