@@ -178,12 +178,6 @@ namespace Orin::StringUtils
 
 	void GetCropPath(const char* relativePath, const char* fullPath, char* path, int len)
 	{
-		if (fullPath[1] != ':')
-		{
-			Copy(path, len, fullPath);
-			return;
-		}
-
 		int len1 = GetLen(fullPath);
 		int len2 = GetLen(relativePath);
 
