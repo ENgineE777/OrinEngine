@@ -1339,7 +1339,7 @@ namespace Orin
 						{
 							SceneEntityRefBase* ref = reinterpret_cast<SceneEntityRefBase*>(prop.value);
 
-							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->GetSceneEntity() ? ref->GetSceneEntity()->GetName() : "None", categoriesData[j].name.c_str(), guiID, i);
+							StringUtils::Printf(propGuiID, 256, "%s###%s%s%i", ref->entity ? ref->entity->GetName() : "None", categoriesData[j].name.c_str(), guiID, i);
 
 							if (ImGui::Button(propGuiID, ImVec2(ImGui::GetContentRegionAvail().x - 70.0f, 0.0f)))
 							{

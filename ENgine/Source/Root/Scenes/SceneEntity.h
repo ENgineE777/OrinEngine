@@ -402,14 +402,13 @@ namespace Orin
 	struct SceneEntityRefBase
 	{
 		uint32_t uid = 0;
+		SceneEntity* entity = nullptr;
 		virtual void SetEntity(SceneEntity* setEntity) = 0;
-		virtual SceneEntity* GetSceneEntity() = 0;
 	};
 
 	template<class T>
 	struct SceneEntityRef : SceneEntityRefBase
-	{
-		T* entity = nullptr;
+	{		
 		void SetEntity(SceneEntity* setEntity) override
 		{
 			if (entity)
@@ -441,15 +440,13 @@ namespace Orin
 
 		T* operator->() const
 		{
-			return entity;
+			return dynamic_cast<T*>(entity);
 		}
 
 		T* Get() const
 		{
-			return entity;
+			return dynamic_cast<T*>(entity);
 		}
-
-		SceneEntity* GetSceneEntity() override { return entity; };
 	};
 
 	CLASSFACTORYDEF(SceneEntity)
