@@ -43,11 +43,11 @@ namespace Orin
 		char curDir[1024];
 		GetCurrentDirectoryA(1024, curDir);
 		StringUtils::Printf(logsDir, 1024, "%s/Logs", curDir);
+
+		root.files.DeleteFolder(logsDir);
 		CreateDirectoryA(logsDir, nullptr);
 
 		time_t t = time(0);
-
-		root.files.DeleteFolder(logsDir);
 
 		#endif
 
