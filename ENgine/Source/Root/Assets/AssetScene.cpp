@@ -368,6 +368,12 @@ namespace Orin
 			else
 			{
 				childCopy = sceneOwner->CreateEntity(child->className, inCreatingInstance ? true : child->prefabInstance);
+
+				//FIX ME!!!
+				if (inCreatingInstance)
+				{
+					childCopy->uid = 0;
+				}
 			}
 
 			childCopy->SetParent(copy, nullptr);
@@ -570,7 +576,7 @@ namespace Orin
 
 			if (editor.bufferedSceneEntity && !onlyToCreate && ImGui::MenuItem("Paste"))
 			{
-				Duplicate(editor.bufferedSceneEntity.GetSceneEntity());
+				Duplicate(editor.bufferedSceneEntity.Get());
 			}
 
 			if (selectedEntity && !onlyToCreate && ImGui::MenuItem("Duplicate"))
@@ -729,9 +735,9 @@ namespace Orin
 				editor.bufferedSceneEntity.SetEntity(selectedEntity);
 			}
 
-			if (editor.bufferedSceneEntity.GetSceneEntity() && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_V"))
+			if (editor.bufferedSceneEntity.Get() && root.GetControls()->DebugHotKeyPressed("KEY_LCONTROL", "KEY_V"))
 			{
-				Duplicate(editor.bufferedSceneEntity.GetSceneEntity());
+				Duplicate(editor.bufferedSceneEntity.Get());
 			}
 		}
 
