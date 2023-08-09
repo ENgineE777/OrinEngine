@@ -134,10 +134,19 @@ namespace Orin
 				{
 					entity = prefab->CreateInstance(this, false);
 				}
+				else
+				{
+					root.Log("Scene", "Can't create prefab instance %s", type.c_str());
+				}
 			}
 			else
 			{
 				entity = CreateEntity(type.c_str(), false);
+
+				if (!entity)
+				{
+					root.Log("Scene", "Can't create entity type of %s", type.c_str());
+				}
 			}
 
 			if (entity)
@@ -316,8 +325,8 @@ namespace Orin
 		while (!objUid.id)
 		{
 			float koef = Math::Rand() * 0.99f;
-			objUid.id = (uint32_t)(koef * 1048576);
-			objUid.id1 |= uid;
+			objUid.id1 = uid;
+			objUid.id2 = (uint32_t)(koef * 65536);
 			objUid.id = FindEntity(objUid.id) ? 0 : objUid.id;
 		}
 
