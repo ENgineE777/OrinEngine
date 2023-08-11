@@ -159,8 +159,6 @@ namespace Orin
 
 	bool Editor::Init(HWND setHwnd, const char* startProject)
 	{
-		ImGui_ImplWin32_EnableDpiAwareness();
-
 		hwnd = setHwnd;
 
 		if (!CreateDeviceD3D())
