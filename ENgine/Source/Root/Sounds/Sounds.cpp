@@ -32,7 +32,7 @@ namespace Orin
 			system->getCoreSystem(&coreSystem);
 
 			void* extraDriverData = nullptr;
-			if (system->initialize(1024, useLiveUpdate? FMOD_STUDIO_INIT_LIVEUPDATE : FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData) != FMOD_OK)
+			if (system->initialize(1024, (useLiveUpdate ? FMOD_STUDIO_INIT_LIVEUPDATE : FMOD_STUDIO_INIT_NORMAL) | FMOD_STUDIO_INIT_MEMORY_TRACKING, FMOD_INIT_NORMAL | FMOD_INIT_MEMORY_TRACKING, extraDriverData) != FMOD_OK)
 			{
 				return false;
 			}
@@ -57,7 +57,14 @@ namespace Orin
 
 		auto result = system->loadBankFile(path, FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank);
 
-		return result == FMOD_OK;
+		if (result == FMOD_OK)
+		{
+			masterBank->loadSampleData();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	bool Sounds::SetListenerAttributes(Math::Vector3 pos)
@@ -150,9 +157,6 @@ namespace Orin
 
 			if (descriptor->createInstance(&instance) == FMOD_OK)
 			{
-				FMOD::Studio::EventInstance* instance = nullptr;
-				descriptor->createInstance(&instance);
-
 				if (pos)
 				{
 					FMOD_3D_ATTRIBUTES attributes = { 0 };
@@ -165,7 +169,6 @@ namespace Orin
 				}
 
 				instance->start();
-
 				instance->release();
 			}
 		}
@@ -187,6 +190,11 @@ namespace Orin
 
 	void Sounds::Update(float dt)
 	{
+		/*FMOD_STUDIO_MEMORY_USAGE memoryusage;
+		system->getMemoryUsage(&memoryusage);
+
+		root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_GREEN,  "Exc: %i, inc: %i, sample: %i", memoryusage.exclusive, memoryusage.inclusive, memoryusage.sampledata);*/		
+
 		if (system)
 		{
 			system->update();
