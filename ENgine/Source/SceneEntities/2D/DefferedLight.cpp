@@ -82,6 +82,9 @@ namespace Orin
 		FLOAT_PROP(DefferedLight, metallic, 0.25f, "Visual", "metallic", "metallic")
 		COLOR_PROP(DefferedLight, directionalColor, COLOR_WHITE, "Directional", "Color")
 		FLOAT_PROP(DefferedLight, directionalDir, 0.0f, "Directional", "direction", "")
+
+		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")		
+
 	META_DATA_DESC_END()
 
 	bool DefferedLight::hackStateEnabled = false;
@@ -359,7 +362,7 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
 
-		u_lights[0] = { 0.72f, 1.0f, 1.0f, 0.1f };
+		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, 1.0f, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
 
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
@@ -418,6 +421,8 @@ namespace Orin
 		{
 			return;
 		}
+
+		timer += dt;
 
 		GatherLights();
 

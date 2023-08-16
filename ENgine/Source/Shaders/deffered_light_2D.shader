@@ -219,6 +219,79 @@ float shadowMapSample(float2 coord, float r)
 	return step(r, shadowMap.SampleLevel(shadowLinear, coord, 0).r);
 }
 
+
+//a random texture generator, but you can also use a pre-computed perturbation texture
+float4 rnm(float2 tc)
+{
+	float noise = sin(dot(tc + float2(u_lights[0].x, u_lights[0].x), float2(12.9898f, 78.233f))) * 43758.5453f;
+	float noiseR = frac(noise) * 2.0f - 1.0f;
+	float noiseG = frac(noise * 1.2154f) * 2.0f - 1.0f;
+	float noiseB = frac(noise * 1.3453f) * 2.0f - 1.0f;
+	float noiseA = frac(noise * 1.3647f) * 2.0f - 1.0f;
+
+	return float4(noiseR, noiseG, noiseB, noiseA);
+}
+
+float fade(float t)
+{
+	return t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f);
+}
+
+float pnoise3D(float3 p)
+{
+	float3 pi = 0.00390625 * floor(p);
+	pi = float3(pi.x + 0.001953125, pi.y + 0.001953125, pi.z + 0.001953125);
+	float3 pf = frac(p);     // Fractional part for interpolation
+
+	// Noise contributions from (x=0, y=0), z=0 and z=1
+	float perm00 = rnm(pi.xy).a;
+	float3 grad000 = rnm(float2(perm00, pi.z)).rgb * 4.0;
+	grad000 = float3(grad000.x - 1.0, grad000.y - 1.0, grad000.z - 1.0);
+	float n000 = dot(grad000, pf);
+	float3 grad001 = rnm(float2(perm00, pi.z + 0.00390625)).rgb * 4.0;
+	grad001 = float3(grad001.x - 1.0, grad001.y - 1.0, grad001.z - 1.0);
+	float n001 = dot(grad001, pf - float3(0.0, 0.0, 1.0));
+
+	// Noise contributions from (x=0, y=1), z=0 and z=1
+	float perm01 = rnm(pi.xy + float2(0.0, 0.00390625)).a;
+	float3 grad010 = rnm(float2(perm01, pi.z)).rgb * 4.0;
+	grad010 = float3(grad010.x - 1.0, grad010.y - 1.0, grad010.z - 1.0);
+	float n010 = dot(grad010, pf - float3(0.0, 1.0, 0.0));
+	float3 grad011 = rnm(float2(perm01, pi.z + 0.00390625)).rgb * 4.0;
+	grad011 = float3(grad011.x - 1.0, grad011.y - 1.0, grad011.z - 1.0);
+	float n011 = dot(grad011, pf - float3(0.0, 1.0, 1.0));
+
+	// Noise contributions from (x=1, y=0), z=0 and z=1
+	float perm10 = rnm(pi.xy + float2(0.00390625, 0.0)).a;
+	float3  grad100 = rnm(float2(perm10, pi.z)).rgb * 4.0;
+	grad100 = float3(grad100.x - 1.0, grad100.y - 1.0, grad100.z - 1.0);
+	float n100 = dot(grad100, pf - float3(1.0, 0.0, 0.0));
+	float3  grad101 = rnm(float2(perm10, pi.z + 0.00390625)).rgb * 4.0;
+	grad101 = float3(grad101.x - 1.0, grad101.y - 1.0, grad101.z - 1.0);
+	float n101 = dot(grad101, pf - float3(1.0, 0.0, 1.0));
+
+	// Noise contributions from (x=1, y=1), z=0 and z=1
+	float perm11 = rnm(pi.xy + float2(0.00390625, 0.00390625)).a;
+	float3  grad110 = rnm(float2(perm11, pi.z)).rgb * 4.0;
+	grad110 = float3(grad110.x - 1.0, grad110.y - 1.0, grad110.z - 1.0);
+	float n110 = dot(grad110, pf - float3(1.0, 1.0, 0.0));
+	float3  grad111 = rnm(float2(perm11, pi.z + 0.00390625)).rgb * 4.0;
+	grad111 = float3(grad111.x - 1.0, grad111.y - 1.0, grad111.z - 1.0);
+	float n111 = dot(grad111, pf - float3(1.0, 1.0, 1.0));
+
+	// Blend contributions along x
+	float4 n_x = lerp(float4(n000, n001, n010, n011), float4(n100, n101, n110, n111), fade(pf.x));
+
+	// Blend contributions along y
+	float2 n_xy = lerp(n_x.xy, n_x.zw, fade(pf.y));
+
+	// Blend contributions along z
+	float n_xyz = lerp(n_xy.x, n_xy.y, fade(pf.z));
+
+	// We're done, return the final noise value.
+	return n_xyz;
+}
+
 float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 {
     // FRAGMENT COLOR
@@ -410,7 +483,40 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	lightFactor = max(lightFactor, outColor.b);
 	float3 albedo2 = source.rgb * color.rgb * color.a;
 
-	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 4.0f;
+	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 4.0f;	
+
+	if (u_lights[0].y > 0.5f)
+	{
+		float lum = outColor.r * 0.299 + outColor.g * 0.587 + outColor.b * 0.114;
+		outColor = float3(lum, lum, lum);
+
+		float grain_amount = 0.05;
+		float color_amount = 0.6;
+		float grain_size = 1.2;
+		float lum_amount = 1.0f;
+
+		float sx_y = (u_lights[2].y * 2.0f);
+		float uv_y = input.texCoord.y * sx_y;
+		int uv_k = (int)(uv_y / 4.0f);
+		uv_y = uv_y - uv_k * 4.0f;
+
+		float2 sz = float2(u_lights[2].x / grain_size, u_lights[2].y / grain_size) * input.texCoord;
+		float3 noise = pnoise3D(float3(sz.x, sz.y, 0.0));
+		
+		float3 lumcoeff = float3(0.299, 0.587, 0.114);
+		float luminance = lerp(0.0, dot(outColor, lumcoeff), lum_amount);
+		lum = smoothstep(0.2, 0.0, luminance);
+		lum += luminance;
+	
+		noise = lerp(noise, float3(0.0f, 0.0f, 0.0f), pow(lum, 4.0));
+
+		outColor *= float3(102.0f / 255.0f, 100.0f / 255.0f, 138.0f / 255.0f) * 1.5f;
+
+		outColor *= sin(uv_y * 1.54f) * 0.2f + 0.8f;
+		outColor *= 2.0f - max(length(input.texCoord - float2(0.5f, 0.5f)), 0.35f) * 2.85f;
+
+		outColor = outColor + noise * grain_amount;		
+	}
 
     return float4(outColor, 1.0f);
 }

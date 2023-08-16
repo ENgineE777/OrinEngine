@@ -51,7 +51,11 @@ namespace Orin
 		void BlurSelfIlum();
 		void RenderLights();
 
+		float timer = 0.0f;
+
 	public:
+
+		bool useFilter = false;
 
 		META_DATA_DECL_BASE(DefferedLight)
 
