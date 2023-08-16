@@ -145,7 +145,7 @@ namespace Orin
 			{
 				if (i <len - 1)
 				{
-					if (text[i + 1] == 'n')
+					if (buffer[i + 1] == 'n')
 					{
 						i++;
 
@@ -249,12 +249,12 @@ namespace Orin
 			{
 				if (i <len-1)
 				{
-					if (text[i+1] == 'n')
+					if (buffer[i+1] == 'n')
 					{
 						i++;
 
 						scr_x = 0;
-						scr_y += height;
+						scr_y += height * 1.2f;
 						continue;
 					}
 				}
