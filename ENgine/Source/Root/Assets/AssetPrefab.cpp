@@ -39,6 +39,8 @@ namespace Orin
 
 			instance->SetName(GetName().c_str());
 
+			uidOffset++;
+
 			instanceMapping[src->GetUID()] = instance;
 
 			CopyChilds(src, instance, sceneOwner);

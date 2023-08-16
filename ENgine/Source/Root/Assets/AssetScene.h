@@ -10,6 +10,7 @@ namespace Orin
 	protected:
 
 		Scene* scene = nullptr;
+		int uidOffset = 0;
 		eastl::map<uint32_t, SceneEntity*> instanceMapping;
 
 		float rmbPresesd = 0.0f;

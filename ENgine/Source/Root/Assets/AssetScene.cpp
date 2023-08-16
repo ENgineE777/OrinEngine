@@ -372,7 +372,7 @@ namespace Orin
 				//FIX ME!!!
 				if (inCreatingInstance)
 				{
-					childCopy->uid = 0;
+					childCopy->uid = child->uid + uidOffset;
 				}
 			}
 
