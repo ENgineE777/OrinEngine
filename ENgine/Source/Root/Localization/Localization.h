@@ -19,6 +19,7 @@ namespace Orin
 		void LoadLocale();
 		void DetectAndSetLocale();
 		void SetCurrentLocale(const char* locale);
+		const char* GetCurrentLocale();
 		const char* GetLocalized(eastl::string& key);
 	};
 }

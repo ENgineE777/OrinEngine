@@ -45,6 +45,11 @@ namespace Orin
 		curLocale = locale;
 	}
 
+	const char* Localization::GetCurrentLocale()
+	{
+		return curLocale.c_str();
+	}
+
 	const char* Localization::GetLocalized(eastl::string& key)
 	{
 		auto iter = items.find(key);
