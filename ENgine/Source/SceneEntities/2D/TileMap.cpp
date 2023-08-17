@@ -313,6 +313,11 @@ namespace Orin
 
 	void TileMap::DrawOccluders(float dt)
 	{
+		if (!IsVisible())
+		{
+			return;
+		}
+
 		auto trans = transform;
 
 		Math::Matrix mat = trans.GetGlobal();
