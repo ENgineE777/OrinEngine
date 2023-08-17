@@ -213,13 +213,13 @@ namespace Orin
 		auto halfScreenSize = GetHalfScreenSize();
 
 		if (Math::IntersectTriangleTriangle(p1, p2, p3,
-											_camPos + Math::Vector2(-halfScreenSize.x, halfScreenSize.y),
-											_camPos + Math::Vector2( halfScreenSize.x, halfScreenSize.y),
+											_camPos + Math::Vector2(-halfScreenSize.x,  halfScreenSize.y),
+											_camPos + Math::Vector2( halfScreenSize.x,  halfScreenSize.y),
 											_camPos + Math::Vector2( halfScreenSize.x, -halfScreenSize.y)) ||
 			Math::IntersectTriangleTriangle(p1, p2, p3,
+											_camPos + Math::Vector2(-halfScreenSize.x,  halfScreenSize.y),
 											_camPos + Math::Vector2( halfScreenSize.x, -halfScreenSize.y),
-											_camPos + Math::Vector2(-halfScreenSize.x, -halfScreenSize.y),
-											_camPos + Math::Vector2( halfScreenSize.x,  halfScreenSize.y)))
+											_camPos + Math::Vector2(-halfScreenSize.x, -halfScreenSize.y)))
 		{
 			return true;
 		}
