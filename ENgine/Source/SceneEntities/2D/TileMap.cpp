@@ -213,6 +213,7 @@ namespace Orin
 				}
 
 				trans.rotation = tile.rotation;
+				trans.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
 				trans.position = tilePos + offset;
 
 				trans.size.x = size.x;
@@ -227,6 +228,7 @@ namespace Orin
 				for (auto& tile : tilesSelected)
 				{
 					trans.rotation = tile.rotation;
+					trans.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
 					trans.position = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
 					trans.size.x = size.x;
@@ -289,6 +291,7 @@ namespace Orin
 							Math::Vector2 tilePos = tileSet->GetTilePos(index);
 
 							trans.rotation = tileSet->GetTileRotation(index);
+							trans.scale = Math::Vector3(tileSet->IsFlippedHorrizontaly(index) ? -1.0f : 1.0f, tileSet->IsFlippedVertically(index) ? -1.0f : 1.0f, 1.0f);
 
 							float tileX = startPos.x + tilePos.x - (float)cornerX;
 							float tileY = startPos.y + tilePos.y - (float)cornerY;
@@ -364,6 +367,8 @@ namespace Orin
 			{
 				tile.texture = tileSet->GetTileTexture(tile.index);
 				tile.rotation = tileSet->GetTileRotation(tile.index);
+				tile.flipH = tileSet->IsFlippedHorrizontaly(tile.index);
+				tile.flipV = tileSet->IsFlippedVertically(tile.index);
 			}
 
 			reader.LeaveBlock();
@@ -521,7 +526,7 @@ namespace Orin
 							}
 						}
 
-						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
+						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->IsFlippedHorrizontaly(index), tileSet->IsFlippedVertically(index), tileSet->GetTileTexture(index) });
 
 						changed = true;
 					}
@@ -590,7 +595,7 @@ namespace Orin
 							}
 						}
 
-						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->GetTileTexture(index) });
+						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->IsFlippedHorrizontaly(index), tileSet->IsFlippedVertically(index), tileSet->GetTileTexture(index) });
 					}
 
 					changed = true;

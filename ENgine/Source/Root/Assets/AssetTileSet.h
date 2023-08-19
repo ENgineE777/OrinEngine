@@ -25,6 +25,8 @@ namespace Orin
 			int x = 0;
 			int y = 0;
 			int rotation = 0;
+			bool flipH = false;
+			bool flipV = false;
 			eastl::string meta;
 			AssetTextureRef texture;
 		};
@@ -52,6 +54,8 @@ namespace Orin
 		AssetTextureRef GetTileTexture(int index);
 		Math::Vector2 GetTilePos(int index);
 		float GetTileRotation(int index);
+		bool IsFlippedHorrizontaly(int index);
+		bool IsFlippedVertically(int index);
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif

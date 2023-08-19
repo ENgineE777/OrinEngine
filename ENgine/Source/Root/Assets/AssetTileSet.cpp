@@ -16,6 +16,8 @@ namespace Orin
 			ENUM_ELEM("180", 180)
 			ENUM_ELEM("270", 270)
 		ENUM_END
+		BOOL_PROP(AssetTileSet::Tile, flipH, false, "Properties", "flipH", "flip horizontaly")
+		BOOL_PROP(AssetTileSet::Tile, flipV, false, "Properties", "flipV", "flip verticaly")
 		STRING_PROP(AssetTileSet::Tile, meta, "", "Properties", "Meta")
 		ASSET_TEXTURE_PROP(AssetTileSet::Tile, texture, "Properties", "Texture")
 	META_DATA_DESC_END()
@@ -58,6 +60,8 @@ namespace Orin
 				loader.Read("x", tile.x);
 				loader.Read("y", tile.y);
 				loader.Read("rotation", tile.rotation);
+				loader.Read("flipH", tile.flipH);
+				loader.Read("flipV", tile.flipV);
 				loader.Read("meta", tile.meta);
 				tile.texture.LoadData(loader, "Texture");
 
@@ -115,6 +119,16 @@ namespace Orin
 		return index >= 0 && index < tiles.size() ? (float)tiles[index].rotation : 0.0f;
 	}
 
+	bool AssetTileSet::IsFlippedHorrizontaly(int index)
+	{
+		return index >= 0 && index < tiles.size() ? (float)tiles[index].flipH : false;
+	}
+
+	bool AssetTileSet::IsFlippedVertically(int index)
+	{
+		return index >= 0 && index < tiles.size() ? (float)tiles[index].flipV : false;
+	}
+
 	Math::Vector2 AssetTileSet::GetTilePos(int index)
 	{
 		return index >= 0 && index < tiles.size() ? Math::Vector2((float)tiles[index].x, (float)tiles[index].y) : 0.0f;
@@ -144,6 +158,8 @@ namespace Orin
 			saver.Write("x", tile.x);
 			saver.Write("y", tile.y);
 			saver.Write("rotation", tile.rotation);
+			saver.Write("flipH", tile.flipH);
+			saver.Write("flipV", tile.flipV);
 			saver.Write("meta", tile.meta);
 			tile.texture.SaveData(saver, "Texture");
 

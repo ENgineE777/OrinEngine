@@ -189,6 +189,7 @@ namespace Orin
 				Math::Vector2 size = tile.texture.GetSize();
 				transform.size = Math::Vector3(size.x, size.y, 0.0f);
 				transform.rotation = (float)tile.rotation;
+				transform.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
 				transform.position = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
 				tile.texture.Draw(&transform, COLOR_WHITE, root.GetDeltaTime());
