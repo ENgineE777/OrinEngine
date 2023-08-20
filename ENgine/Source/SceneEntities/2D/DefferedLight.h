@@ -27,9 +27,18 @@ namespace Orin
 
 		TextureRef tempRT;
 
-		Color ambientColor;
-		float directionalDir = 0.0f;
-		Color directionalColor;
+		struct GlobalLight
+		{
+			Color ambientColor;
+			float directionalDir = 0.0f;
+			Color directionalColor;
+
+			int numBlurSelfIlum = 4;
+			float streangthBlurSelfIlum = 0.75f;
+			float powerSelfIlum = 4.0f;
+		};
+
+		GlobalLight globalLights[2];		
 
 		float metallic = 0.25f;
 
@@ -51,11 +60,7 @@ namespace Orin
 		void BlurSelfIlum();
 		void RenderLights();
 
-		float timer = 0.0f;
-
-		int numBlurSelfIlum = 4;
-		float streangthBlurSelfIlum = 0.75f;
-		float powerSelfIlum = 4.0f;
+		float timer = 0.0f;		
 
 	public:
 

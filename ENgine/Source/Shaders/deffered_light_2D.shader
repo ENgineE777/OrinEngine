@@ -341,7 +341,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	world_pos = float3(world_pos.x * u_lights[2].x + u_lights[2].z, world_pos.y * u_lights[2].y + u_lights[2].w, 0.0f);
 
 	for (int i = 0; i < count; i++)
-	{		
+	{
 		// LIGHT ATTRIBUTES
 		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
 		float directional = u_lights[index].w; // Sign of the color val1e used to flag directional lighting
@@ -474,16 +474,23 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float3 refraction = float3((1.0 - freq) * (1.0 - metallic));
 
 
-		// ADD TO FINAL COLOR
-		outColor += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) * 5.0f * (0.0f + shadow * 1.0f)+ ao * min(attenuation, 0.3);
+		if ((i == 0 && material.g > 0.5f) || (i == 1 && material.g < 0.5f))
+		{
+
+		}
+		else
+		{
+			// ADD TO FINAL COLOR
+			outColor += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) * 5.0f * (0.0f + shadow * 1.0f) + ao * min(attenuation, 0.3);
+		}
 	}
 
 	// ADD AREAS TO BLOOM AND BLUR
 	float lightFactor = max(outColor.r, outColor.g);
 	lightFactor = max(lightFactor, outColor.b);
-	float3 albedo2 = source.rgb * color.rgb * color.a;
+	float3 albedo2 = (material.g < 0.5f) ? (u_lights[5].rgb * u_lights[5].a) : (u_lights[9].rgb * u_lights[9].a);
 
-	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
+	outColor = (outColor * lightFactor + source.rgb * albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
 
 	if (u_lights[0].y > 0.5f)
 	{

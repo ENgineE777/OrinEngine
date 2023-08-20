@@ -78,16 +78,27 @@ namespace Orin
 
 	META_DATA_DESC(DefferedLight)
 		BASE_SCENE_ENTITY_PROP(DefferedLight)
-		COLOR_PROP(DefferedLight, ambientColor, COLOR_WHITE, "Visual", "Ambient")
+		
 		FLOAT_PROP(DefferedLight, metallic, 0.25f, "Visual", "metallic", "metallic")
-		COLOR_PROP(DefferedLight, directionalColor, COLOR_WHITE, "Directional", "Color")
-		FLOAT_PROP(DefferedLight, directionalDir, 0.0f, "Directional", "direction", "")
+		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")
 
-		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")		
+		COLOR_PROP(DefferedLight, globalLights[0].ambientColor, COLOR_WHITE, "Main", "Ambient")
 
-		INT_PROP(DefferedLight, numBlurSelfIlum, 4, "Self-Ilum", "numBlurSelfIlum", "")
-		FLOAT_PROP(DefferedLight, streangthBlurSelfIlum, 0.75f, "Self-Ilum", "streangthBlurSelfIlum", "")
-		FLOAT_PROP(DefferedLight, powerSelfIlum, 4.0f, "Self-Ilum", "powerSelfIlum", "")
+		COLOR_PROP(DefferedLight, globalLights[0].directionalColor, COLOR_WHITE, "Main", "Color")
+		FLOAT_PROP(DefferedLight, globalLights[0].directionalDir, 0.0f, "Main", "direction", "")
+		
+		INT_PROP(DefferedLight, globalLights[0].numBlurSelfIlum, 4, "Main", "numBlurSelfIlum", "")
+		FLOAT_PROP(DefferedLight, globalLights[0].streangthBlurSelfIlum, 0.75f, "Main", "streangthBlurSelfIlum", "")
+		FLOAT_PROP(DefferedLight, globalLights[0].powerSelfIlum, 4.0f, "Main", "powerSelfIlum", "")
+
+		COLOR_PROP(DefferedLight, globalLights[1].ambientColor, COLOR_WHITE, "Secondary", "AmbientSec")
+
+		COLOR_PROP(DefferedLight, globalLights[1].directionalColor, COLOR_WHITE, "Secondary", "ColorSec")
+		FLOAT_PROP(DefferedLight, globalLights[1].directionalDir, 0.0f, "Secondary", "directionSec", "")
+
+		INT_PROP(DefferedLight, globalLights[1].numBlurSelfIlum, 4, "Secondary", "numBlurSelfIlumSec", "")
+		FLOAT_PROP(DefferedLight, globalLights[1].streangthBlurSelfIlum, 0.75f, "Secondary", "streangthBlurSelfIlumSec", "")
+		FLOAT_PROP(DefferedLight, globalLights[1].powerSelfIlum, 4.0f, "Secondary", "powerSelfIlumSec", "")
 
 	META_DATA_DESC_END()
 
@@ -272,7 +283,7 @@ namespace Orin
 
 				lights.push_back(light);
 
-				if (lights.size() == MAX_LIGHTS - 1)
+				if (lights.size() == MAX_LIGHTS - 2)
 				{
 					break;
 				}
@@ -350,9 +361,9 @@ namespace Orin
 
 	void DefferedLight::BlurSelfIlum()
 	{
-		for (int i = 0; i < numBlurSelfIlum; i++)
+		for (int i = 0; i < globalLights[0].numBlurSelfIlum; i++)
 		{
-			BlurTexture(selfilumRT, selfilumRT, streangthBlurSelfIlum);
+			BlurTexture(selfilumRT, selfilumRT, globalLights[0].streangthBlurSelfIlum);
 		}
 	}
 
@@ -366,19 +377,26 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
 
-		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, powerSelfIlum, 0.1f };
+		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, globalLights[0].powerSelfIlum, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
 
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
 
 		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
 
-		int index = 3;
+		int index = 3;		
 
-		int lightCount = 1;
+		//First directional
+		u_lights[index + 0] = { cosf(globalLights[0].directionalDir * Math::Radian), sinf(globalLights[0].directionalDir * Math::Radian), 0.75f, -1.0f }; //pos, dir
+		u_lights[index + 1] = { globalLights[0].directionalColor.r, globalLights[0].directionalColor.g, globalLights[0].directionalColor.b, globalLights[0].directionalColor.a };
+		u_lights[index + 2] = { globalLights[0].ambientColor.r, globalLights[0].ambientColor.g, globalLights[0].ambientColor.b, globalLights[0].ambientColor.a };
 
-		u_lights[index + 0] = { cosf(directionalDir * Math::Radian), sinf(directionalDir * Math::Radian), 0.75f, -1.0f }; //pos, dir
-		u_lights[index + 1] = { directionalColor.r, directionalColor.g, directionalColor.b, directionalColor.a };
+		index += 4;
+
+		//Second directional
+		u_lights[index + 0] = { cosf(globalLights[1].directionalDir * Math::Radian), sinf(globalLights[1].directionalDir * Math::Radian), 0.75f, -1.0f }; //pos, dir
+		u_lights[index + 1] = { globalLights[1].directionalColor.r, globalLights[1].directionalColor.g, globalLights[1].directionalColor.b, globalLights[1].directionalColor.a };
+		u_lights[index + 2] = { globalLights[1].ambientColor.r, globalLights[1].ambientColor.g, globalLights[1].ambientColor.b, globalLights[1].ambientColor.a };
 
 		index += 4;
 
@@ -391,15 +409,15 @@ namespace Orin
 			auto pos = Sprite::ToPixels(mat.Pos());
 			auto size = trans.size * 0.5f;
 
-			u_lights[index + 0] = { pos.x, pos.y, 40.0f, 1.0f }; //pos, dir
+			u_lights[index + 0] = { pos.x, pos.y, 30.0f, 1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
 			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, rot.z, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
 			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , 0.0f, 0.0f }; //arc, width
 
 			index += 4;
-			lightCount++;
 		}
 
+		int lightCount = (int)lights.size() + 2;
 		u_lights[1].w = (float)lightCount;
 
 		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 3 + 4 * lightCount);
@@ -414,7 +432,7 @@ namespace Orin
 		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", selfilumRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "shadowMap", shadowRT);
 
-		Sprite::Draw(albedoRT, ambientColor, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
+		Sprite::Draw(albedoRT, COLOR_WHITE, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
 
 		//root.render.DebugPrintText(10.0f, ScreenCorner::LeftTop, COLOR_WHITE, "Num lights %i", lightCount);
 	}

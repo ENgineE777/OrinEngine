@@ -47,6 +47,8 @@ namespace Orin
 		int drawLevel = 0;
 		AssetTileSetRef tileSet;
 
+		bool useSecondaryLight = false;
+
 		META_DATA_DECL(TileMap)
 
 	#ifndef DOXYGEN_SKIP
