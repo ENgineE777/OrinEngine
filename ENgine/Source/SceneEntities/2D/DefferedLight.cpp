@@ -85,6 +85,10 @@ namespace Orin
 
 		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")		
 
+		INT_PROP(DefferedLight, numBlurSelfIlum, 4, "Self-Ilum", "numBlurSelfIlum", "")
+		FLOAT_PROP(DefferedLight, streangthBlurSelfIlum, 0.75f, "Self-Ilum", "streangthBlurSelfIlum", "")
+		FLOAT_PROP(DefferedLight, powerSelfIlum, 4.0f, "Self-Ilum", "powerSelfIlum", "")
+
 	META_DATA_DESC_END()
 
 	bool DefferedLight::hackStateEnabled = false;
@@ -346,10 +350,10 @@ namespace Orin
 
 	void DefferedLight::BlurSelfIlum()
 	{
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
-		BlurTexture(selfilumRT, selfilumRT, 0.75f);
+		for (int i = 0; i < numBlurSelfIlum; i++)
+		{
+			BlurTexture(selfilumRT, selfilumRT, streangthBlurSelfIlum);
+		}
 	}
 
 	void DefferedLight::RenderLights()
@@ -362,7 +366,7 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
 
-		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, 1.0f, 0.1f };
+		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, powerSelfIlum, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
 
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
@@ -387,7 +391,7 @@ namespace Orin
 			auto pos = Sprite::ToPixels(mat.Pos());
 			auto size = trans.size * 0.5f;
 
-			u_lights[index + 0] = { pos.x, pos.y, 150.0f, 1.0f }; //pos, dir
+			u_lights[index + 0] = { pos.x, pos.y, 40.0f, 1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
 			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, rot.z, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
 			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , 0.0f, 0.0f }; //arc, width

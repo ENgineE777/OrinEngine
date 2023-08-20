@@ -53,6 +53,10 @@ namespace Orin
 
 		float timer = 0.0f;
 
+		int numBlurSelfIlum = 4;
+		float streangthBlurSelfIlum = 0.75f;
+		float powerSelfIlum = 4.0f;
+
 	public:
 
 		bool useFilter = false;

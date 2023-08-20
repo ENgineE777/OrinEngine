@@ -381,7 +381,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		if (directional < 0.5f && material.g > 0.5f)
 		{
-			FdotL *= FdotL > 0.9f ? 1.55f : 0.6f;
+			//FdotL *= FdotL > 0.9f ? 1.55f : 0.6f;
 		}
 
 		float fov = 1.0;
@@ -405,7 +405,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		if (material.g > 0.5f)
 		{
-			dist = clamp(dist, 0.375, 1.0f);
+			//dist = clamp(dist, 0.375, 1.0f);
 		}
 
 		//float det = step(dist * sign(falloff), radius);
@@ -483,7 +483,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	lightFactor = max(lightFactor, outColor.b);
 	float3 albedo2 = source.rgb * color.rgb * color.a;
 
-	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * 4.0f;	
+	outColor = (outColor * lightFactor + albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
 
 	if (u_lights[0].y > 0.5f)
 	{
