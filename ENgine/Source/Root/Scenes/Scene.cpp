@@ -355,6 +355,8 @@ namespace Orin
 
 	void Scene::GetGroup(eastl::vector<Group*>& outGroups, const char* name)
 	{
+		outGroups.clear();
+
 		if (groups.find(name) != groups.end())
 		{
 			outGroups.push_back(&groups[name]);

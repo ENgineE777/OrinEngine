@@ -30,8 +30,7 @@ namespace Orin
 		struct GlobalLight
 		{
 			Color ambientColor;
-			float directionalDir = 0.0f;
-			Color directionalColor;
+			float ambientIntensity = 1.0f;
 
 			int numBlurSelfIlum = 4;
 			float streangthBlurSelfIlum = 0.75f;
@@ -48,6 +47,7 @@ namespace Orin
 		static RenderTechniqueRef gbufferTech;
 		RenderTechniqueRef blurRTech;
 
+		eastl::vector<class DirectionLight2D*> dirLights;
 		eastl::vector<class PointLight2D*> lights;
 		RenderTechniqueRef shadowCastTech;
 		RenderTechniqueRef shadowRenderTech;

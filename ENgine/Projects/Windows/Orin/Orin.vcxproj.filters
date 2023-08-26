@@ -763,6 +763,9 @@
     <ClCompile Include="..\..\..\Source\Root\Localization\Localization.cpp">
       <Filter>Source\Root\Localization</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\DirectionLight2D.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1427,6 +1430,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Root\Localization\Localization.h">
       <Filter>Source\Root\Localization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\DirectionLight2D.h">
+      <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

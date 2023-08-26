@@ -335,7 +335,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	// ITERATE THROUGH LIGHTS
 	int LI = 6;
 	int count = int(u_lights[1].w);
-	int index = 3;
+	int index = 5;
 
 	float3 world_pos = float3(input.texCoord.x * 2.0f - 1.0f, -input.texCoord.y * 2.0f + 1.0f, 0);
 	world_pos = float3(world_pos.x * u_lights[2].x + u_lights[2].z, world_pos.y * u_lights[2].y + u_lights[2].w, 0.0f);
@@ -377,12 +377,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		// NORMALIZE AFTER MOVING FOR LINE
 		float3 l_norm = normalize(light_pos + world_pos * directional - world_pos);
 		float3 h_norm = normalize(v_norm + l_norm);
-		float FdotL = max(dot(f_norm, l_norm), 0.0f);
-
-		if (directional < 0.5f && material.g > 0.5f)
-		{
-			//FdotL *= FdotL > 0.9f ? 1.55f : 0.6f;
-		}
+		float FdotL = max(dot(f_norm, l_norm), 0.0f);		
 
 		float fov = 1.0;
 
@@ -402,11 +397,6 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float dist = min(length(dir), radius) / radius;
 
 		dist = dist < falloff ? 0.0f : smoothstep(0.0f, 1.0f, (dist - falloff)/ (1.0f - falloff));
-
-		if (material.g > 0.5f)
-		{
-			//dist = clamp(dist, 0.375, 1.0f);
-		}
 
 		//float det = step(dist * sign(falloff), radius);
 		//dist = dist * intensity / (radius * abs(falloff)) + intensity;
@@ -474,7 +464,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float3 refraction = float3((1.0 - freq) * (1.0 - metallic));
 
 
-		if ((i == 0 && material.g > 0.5f) || (i == 1 && material.g < 0.5f))
+		if (directional > 0.5f && (material.g < 0.5f && cast_shadow > 0.5f || material.g > 0.5f && cast_shadow < 0.5f))
 		{
 
 		}
@@ -488,7 +478,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	// ADD AREAS TO BLOOM AND BLUR
 	float lightFactor = max(outColor.r, outColor.g);
 	lightFactor = max(lightFactor, outColor.b);
-	float3 albedo2 = (material.g < 0.5f) ? (u_lights[5].rgb * u_lights[5].a) : (u_lights[9].rgb * u_lights[9].a);
+	float3 albedo2 = (material.g < 0.5f) ? (u_lights[3].rgb * u_lights[3].a) : (u_lights[4].rgb * u_lights[4].a);
 
 	outColor = (outColor * lightFactor + source.rgb * albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
 

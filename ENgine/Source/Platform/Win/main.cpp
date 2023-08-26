@@ -1,9 +1,11 @@
 ﻿
 #include <SDKDDKVer.h>
 
+#include "Root/IRoot.h"
 #include "Platform/Common/IRunner.h"
 
 #define WIN32_LEAN_AND_MEAN
+
 #include <windows.h>
 #include <stdlib.h>
 #include <malloc.h>
@@ -11,6 +13,12 @@
 #include <tchar.h>
 
 #include "../Projects/Windows/Resources/resource.h"
+
+
+#pragma warning (disable : 4996 )
+#include "steam_api.h"
+
+#include <tchar.h>
 
 #define MAX_LOADSTRING 100
 
@@ -61,7 +69,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     wcex.cbWndExtra = 0;
     wcex.hInstance = hInstance;
     wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_OAK));
-    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hCursor = NULL;
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wcex.lpszClassName = szWindowClass;
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -88,10 +96,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     {
         UnregisterClass(wcex.lpszClassName, wcex.hInstance);
         return 1;
+    }    
+
+    if (SteamAPI_RestartAppIfNecessary(2546100)) // Replace with your App ID
+    {
+        return 1;
     }
+
+    if (!SteamAPI_Init())
+    {
+        UnregisterClass(wcex.lpszClassName, wcex.hInstance);
+        return 1;
+    }    
+
+    Orin::GetRoot()->GetLocalization()->SetCurrentLocale(SteamApps()->GetCurrentGameLanguage());
 
     ShowWindow(hwnd, SW_NORMAL);
     UpdateWindow(hwnd);
+
+    SetCursor(NULL);
 
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -112,6 +135,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
     }
 
+    SteamAPI_Shutdown();
     Orin::GetRunner()->Release();
 
     DestroyWindow(hwnd);

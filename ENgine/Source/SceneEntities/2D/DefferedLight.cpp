@@ -1,6 +1,7 @@
 
 #include "DefferedLight.h"
 #include "PointLight2D.h"
+#include "DirectionLight2D.h"
 #include "Root/Root.h"
 #include "Editor/Editor.h"
 
@@ -82,19 +83,15 @@ namespace Orin
 		FLOAT_PROP(DefferedLight, metallic, 0.25f, "Visual", "metallic", "metallic")
 		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")
 
-		COLOR_PROP(DefferedLight, globalLights[0].ambientColor, COLOR_WHITE, "Main", "Ambient")
-
-		COLOR_PROP(DefferedLight, globalLights[0].directionalColor, COLOR_WHITE, "Main", "Color")
-		FLOAT_PROP(DefferedLight, globalLights[0].directionalDir, 0.0f, "Main", "direction", "")
+		COLOR_PROP(DefferedLight, globalLights[0].ambientColor, COLOR_WHITE, "Main", "AmbientColor")
+		FLOAT_PROP(DefferedLight, globalLights[0].ambientIntensity, 1.0f, "Main", "AmbientIntensity", "")
 		
 		INT_PROP(DefferedLight, globalLights[0].numBlurSelfIlum, 4, "Main", "numBlurSelfIlum", "")
 		FLOAT_PROP(DefferedLight, globalLights[0].streangthBlurSelfIlum, 0.75f, "Main", "streangthBlurSelfIlum", "")
 		FLOAT_PROP(DefferedLight, globalLights[0].powerSelfIlum, 4.0f, "Main", "powerSelfIlum", "")
 
-		COLOR_PROP(DefferedLight, globalLights[1].ambientColor, COLOR_WHITE, "Secondary", "AmbientSec")
-
-		COLOR_PROP(DefferedLight, globalLights[1].directionalColor, COLOR_WHITE, "Secondary", "ColorSec")
-		FLOAT_PROP(DefferedLight, globalLights[1].directionalDir, 0.0f, "Secondary", "directionSec", "")
+		COLOR_PROP(DefferedLight, globalLights[1].ambientColor, COLOR_WHITE, "Secondary", "AmbientColorSec")
+		FLOAT_PROP(DefferedLight, globalLights[1].ambientIntensity, 1.0f, "Secondary", "AmbientIntensitySec", "")
 
 		INT_PROP(DefferedLight, globalLights[1].numBlurSelfIlum, 4, "Secondary", "numBlurSelfIlumSec", "")
 		FLOAT_PROP(DefferedLight, globalLights[1].streangthBlurSelfIlum, 0.75f, "Secondary", "streangthBlurSelfIlumSec", "")
@@ -259,6 +256,28 @@ namespace Orin
 		lights.clear();
 
 		eastl::vector<Scene::Group*> groups;
+		dirLights.clear();
+
+		GetScene()->GetGroup(groups, "DirectionLight2D");
+
+		for (auto* group : groups)
+		{
+			for (auto* entity : group->entities)
+			{
+				if (!entity->IsVisible())
+				{
+					continue;
+				}
+
+				dirLights.push_back(dynamic_cast<DirectionLight2D*>(entity));
+
+				if (dirLights.size() == MAX_LIGHTS)
+				{
+					break;
+				}
+			}
+		}
+		
 		GetScene()->GetGroup(groups, "PointLight2D");
 
 		for (auto* group : groups)
@@ -283,7 +302,7 @@ namespace Orin
 
 				lights.push_back(light);
 
-				if (lights.size() == MAX_LIGHTS - 2)
+				if (lights.size() == MAX_LIGHTS)
 				{
 					break;
 				}
@@ -383,22 +402,35 @@ namespace Orin
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
 
 		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
+		u_lights[3] = { globalLights[0].ambientColor.r, globalLights[0].ambientColor.g, globalLights[0].ambientColor.b, globalLights[0].ambientColor.a };
+		u_lights[4] = { globalLights[1].ambientColor.r, globalLights[1].ambientColor.g, globalLights[1].ambientColor.b, globalLights[1].ambientColor.a };
 
-		int index = 3;		
+		int index = 5;
 
-		//First directional
-		u_lights[index + 0] = { cosf(globalLights[0].directionalDir * Math::Radian), sinf(globalLights[0].directionalDir * Math::Radian), 0.75f, -1.0f }; //pos, dir
-		u_lights[index + 1] = { globalLights[0].directionalColor.r, globalLights[0].directionalColor.g, globalLights[0].directionalColor.b, globalLights[0].directionalColor.a };
-		u_lights[index + 2] = { globalLights[0].ambientColor.r, globalLights[0].ambientColor.g, globalLights[0].ambientColor.b, globalLights[0].ambientColor.a };
+		for (int i = 0; i < dirLights.size(); i++)
+		{
+			auto* light = dirLights[i];
+			
+			float rot = light->GetTransform().rotation.z;
 
-		index += 4;
+			while (rot > 360.0f)
+			{
+				rot -= 360.0f;
+			}
 
-		//Second directional
-		u_lights[index + 0] = { cosf(globalLights[1].directionalDir * Math::Radian), sinf(globalLights[1].directionalDir * Math::Radian), 0.75f, -1.0f }; //pos, dir
-		u_lights[index + 1] = { globalLights[1].directionalColor.r, globalLights[1].directionalColor.g, globalLights[1].directionalColor.b, globalLights[1].directionalColor.a };
-		u_lights[index + 2] = { globalLights[1].ambientColor.r, globalLights[1].ambientColor.g, globalLights[1].ambientColor.b, globalLights[1].ambientColor.a };
+			while (rot < 0.0f)
+			{
+				rot += 360.0f;
+			}
 
-		index += 4;
+			rot = Math::PI + Math::Radian * rot;
+
+			u_lights[index + 0] = { cosf(rot), sinf(rot), 0.75f, -1.0f }; //pos, dir
+			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity };
+			u_lights[index + 2] = { light->isSecondaryLight ? 1.0f : 0.0f };
+
+			index += 4;
+		}
 
 		for (int i = 0; i < lights.size(); i++)
 		{
@@ -417,7 +449,7 @@ namespace Orin
 			index += 4;
 		}
 
-		int lightCount = (int)lights.size() + 2;
+		int lightCount = (int)lights.size() + (int)dirLights.size();
 		u_lights[1].w = (float)lightCount;
 
 		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 3 + 4 * lightCount);

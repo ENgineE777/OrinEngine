@@ -40,6 +40,9 @@ namespace Orin
 		lightBulbTex = root.render.LoadTexture("ENgine/editor/LightBulp.png", _FL_);
 		lightBulbTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
+		directionalTex = root.render.LoadTexture("ENgine/editor/LightBulpDir.png", _FL_);
+		directionalTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
+
 		iconsTex = root.render.LoadTexture("ENgine/editor/icons.png", _FL_);
 		iconsTex->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
