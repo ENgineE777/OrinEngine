@@ -361,6 +361,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		float arc = u_lights[index].x;
 		float width = u_lights[index].y;
+		float isSecondary = u_lights[index].z;
 		index++;
 
 		// LINE LIGHT
@@ -464,7 +465,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float3 refraction = float3((1.0 - freq) * (1.0 - metallic));
 
 
-		if (directional > 0.5f && (material.g < 0.5f && cast_shadow > 0.5f || material.g > 0.5f && cast_shadow < 0.5f))
+		if (material.g < 0.5f && isSecondary > 0.5f || material.g > 0.5f && isSecondary < 0.5f)
 		{
 
 		}

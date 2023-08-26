@@ -29,6 +29,7 @@ namespace Orin
 		float lineWidth = 0.0f;
 		float viewAngle = 181.0f;
 		bool castShadow = false;
+		bool isSecondaryLight = false;
 		RenderTechniqueRef spriteLight;
 
 	#ifndef DOXYGEN_SKIP
