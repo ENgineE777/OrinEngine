@@ -77,7 +77,7 @@ namespace Orin
 		*/
 		SoundInstance* CreateSound(void* scene, bool streamed, const char* name);
 
-		SoundEvent* CreateSoundEvent(const char* name, bool streamed);
+		SoundEvent* CreateSoundEvent(const char* name);
 
 		void PlaySoundEvent(const char* name, Math::Vector3* pos = nullptr);
 

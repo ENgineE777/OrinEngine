@@ -121,24 +121,12 @@ namespace Orin
 		return instance;
 	}
 
-	SoundEvent* Sounds::CreateSoundEvent(const char* name, bool streamed)
+	SoundEvent* Sounds::CreateSoundEvent(const char* name)
 	{
 		FMOD::Studio::EventDescription* descriptor = nullptr;
 		
 		if (system->getEvent(name, &descriptor) == FMOD_OK)
-		{
-			if (!streamed)
-			{
-				FMOD_STUDIO_LOADING_STATE state;
-
-				descriptor->getSampleLoadingState(&state);
-
-				if (state == FMOD_STUDIO_LOADING_STATE_UNLOADED)
-				{
-					descriptor->loadSampleData();
-				}
-			}
-
+		{	
 			FMOD::Studio::EventInstance* instance = nullptr;
 			descriptor->createInstance(&instance);			
 
