@@ -44,6 +44,7 @@ namespace Orin
 		int cornerWidth = 0;
 		int cornerHeight = 0;
 
+		Color color;
 		int drawLevel = 0;
 		AssetTileSetRef tileSet;
 

@@ -57,6 +57,7 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(TileMap)
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
+		COLOR_PROP(TileMap, color, COLOR_WHITE, "Visual", "Color")
 		BOOL_PROP(TileMap, useSecondaryLight, false, "Visual", "useSecondaryLight", "useSecondaryLight")
 		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
@@ -221,7 +222,7 @@ namespace Orin
 				trans.size.y = size.y;
 
 				tile.texture.prg = tech;
-				tile.texture.Draw(&trans, COLOR_WHITE, dt);
+				tile.texture.Draw(&trans, color, dt);
 			}
 
 			if (IsEditMode())
@@ -236,7 +237,7 @@ namespace Orin
 					trans.size.y = size.y;
 
 					tile.texture.prg = tech;
-					tile.texture.Draw(&trans, COLOR_WHITE, dt);
+					tile.texture.Draw(&trans, color, dt);
 				}
 
 				for (auto& tile : tilesSelected)
@@ -304,7 +305,7 @@ namespace Orin
 
 							AssetTextureRef texRef = tileSet->GetTileTexture(index);
 							texRef.prg = tech;
-							texRef.Draw(&trans, COLOR_WHITE, dt);
+							texRef.Draw(&trans, color, dt);
 						}
 
 						Sprite::DebugRect({ startPos.x * transform.size.x, startPos.y * transform.size.y },
