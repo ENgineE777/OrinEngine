@@ -402,8 +402,8 @@ namespace Orin
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
 
 		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
-		u_lights[3] = { globalLights[0].ambientColor.r, globalLights[0].ambientColor.g, globalLights[0].ambientColor.b, globalLights[0].ambientColor.a };
-		u_lights[4] = { globalLights[1].ambientColor.r, globalLights[1].ambientColor.g, globalLights[1].ambientColor.b, globalLights[1].ambientColor.a };
+		u_lights[3] = { globalLights[0].ambientColor.r, globalLights[0].ambientColor.g, globalLights[0].ambientColor.b, globalLights[0].ambientIntensity };
+		u_lights[4] = { globalLights[1].ambientColor.r, globalLights[1].ambientColor.g, globalLights[1].ambientColor.b, globalLights[1].ambientIntensity };
 
 		int index = 5;
 
