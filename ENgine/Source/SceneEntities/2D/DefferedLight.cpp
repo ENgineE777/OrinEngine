@@ -252,12 +252,10 @@ namespace Orin
 	}
 
 	void DefferedLight::GatherLights()
-	{
-		lights.clear();
-
+	{		
 		eastl::vector<Scene::Group*> groups;
-		dirLights.clear();
 
+		dirLights.clear();
 		GetScene()->GetGroup(groups, "DirectionLight2D");
 
 		for (auto* group : groups)
@@ -278,6 +276,7 @@ namespace Orin
 			}
 		}
 		
+		lights.clear();
 		GetScene()->GetGroup(groups, "PointLight2D");
 
 		for (auto* group : groups)
@@ -452,12 +451,12 @@ namespace Orin
 		int lightCount = (int)lights.size() + (int)dirLights.size();
 		u_lights[1].w = (float)lightCount;
 
-		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 3 + 4 * lightCount);
+		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 5 + 4 * lightCount);
 
 		u_lights[0].x = metallic;
 
 		defferdLightTech->SetVector(ShaderType::Pixel, "params", u_lights, 1);
-		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 3 + 4 * lightCount);
+		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 5 + 4 * lightCount);
 		
 		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);
