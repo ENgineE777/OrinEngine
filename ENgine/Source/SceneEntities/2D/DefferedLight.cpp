@@ -389,7 +389,7 @@ namespace Orin
 	{
 		Math::Vector3 camPos = Sprite::GetCamPos();
 
-		Math::Vector4 u_lights[3 + 4 * MAX_LIGHTS];
+		Math::Vector4 u_lights[5 + 4 * MAX_LIGHTS];
 
 		u_lights[0] = { Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f, Sprite::GetPixelsHeight() * 0.5f, camPos.x, camPos.y };
 
