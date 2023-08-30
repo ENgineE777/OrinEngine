@@ -301,7 +301,7 @@ namespace Orin
 
 				lights.push_back(light);
 
-				if (lights.size() == MAX_LIGHTS)
+				if (lights.size() == MAX_LIGHTS - dirLights.size())
 				{
 					break;
 				}
