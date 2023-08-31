@@ -93,11 +93,14 @@ float reflection(float num, float roughness)
 
 PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
 {
-    float4 clr = diffuseMap.Sample(diffuseLinear, input.texCoord) * color;
-    if (clr.a < 0.05f)
-    {
-       discard;
-    }
+    float4 clr = diffuseMap.Sample(diffuseLinear, input.texCoord);
+
+	if (clr.a < 0.05f)
+	{
+		discard;
+	}
+
+	clr = lerp(float4(clr.rgb, 1.0f), float4(color.rgb, 1.0f), 1.0f - color.a);
 
     PS_GBUFFER_OUTPUT output;
 
@@ -105,6 +108,7 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
 	float4 material = materialMap.Sample(materialLinear, input.texCoord);
     output.material = material;
 	output.material.g = params.x;
+	output.material.a = params.y;
 
 	float4 normal = normalsMap.Sample(normalsLinear, input.texCoord);
 	float3 f_norm = normalize(normal.rgb * 2.0f - 1.0f);
@@ -343,7 +347,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	for (int i = 0; i < count; i++)
 	{
 		// LIGHT ATTRIBUTES
-		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z);
+		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z * (material.a > 0.5f ? -1.0f : 1.0f));
 		float directional = u_lights[index].w; // Sign of the color val1e used to flag directional lighting
 		index++;
 

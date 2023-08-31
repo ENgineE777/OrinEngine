@@ -49,6 +49,7 @@ namespace Orin
 
 				Math::Vector4 params;
 				params.x = useSecondaryLight ? 1.0f : 0.0f;
+				params.y = 1.0f;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
 			}
