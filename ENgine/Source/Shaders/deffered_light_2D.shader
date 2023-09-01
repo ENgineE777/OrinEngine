@@ -306,6 +306,8 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	float4 normal    = normalsMap.Sample(normalsLinear, input.texCoord);
 	float4 material  = materialMap.Sample(materialLinear, input.texCoord);
 
+	int selfLightGroup = round(material.g * 16.0f);
+
 	float4 selfilum = selfilumMap.Sample(selfilumLinear, input.texCoord);
 
 	//float4 shadow    = shadow_texture.Sample(u_shadow, input.texCoord)*255.0;	
@@ -365,7 +367,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		float arc = u_lights[index].x;
 		float width = u_lights[index].y;
-		float isSecondary = u_lights[index].z;
+		int lightGroup = round(u_lights[index].z * 16.0f);
 		index++;
 
 		// LINE LIGHT
@@ -469,11 +471,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		float3 refraction = float3((1.0 - freq) * (1.0 - metallic));
 
 
-		if (material.g < 0.5f && isSecondary > 0.5f || material.g > 0.5f && isSecondary < 0.5f)
-		{
-
-		}
-		else
+		if (selfLightGroup & lightGroup)
 		{
 			// ADD TO FINAL COLOR
 			outColor += radiance * attenuation * FdotL * (refraction * ( material.a > 0.5f ? 0.75f : albedo) / M_PI + specular) * 5.0f * (0.0f + shadow * 1.0f) + ao * min(attenuation, 0.3);
@@ -483,7 +481,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	// ADD AREAS TO BLOOM AND BLUR
 	float lightFactor = max(outColor.r, outColor.g);
 	lightFactor = max(lightFactor, outColor.b);
-	float3 albedo2 = (material.g < 0.5f) ? (u_lights[3].rgb * u_lights[3].a) : (u_lights[4].rgb * u_lights[4].a);
+	float3 albedo2 = (selfLightGroup & 2) ? (u_lights[4].rgb * u_lights[4].a) : (u_lights[3].rgb * u_lights[3].a);
 
 	outColor = (outColor * lightFactor + source.rgb * albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
 

@@ -13,7 +13,8 @@ namespace Orin
 		INT_PROP(AnimGraph2D, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		BOOL_PROP(AnimGraph2D, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(AnimGraph2D, color, COLOR_WHITE, "Visual", "Color")
-		BOOL_PROP(AnimGraph2D, useSecondaryLight, false, "Visual", "useSecondaryLight", "useSecondaryLight")
+		INT_PROP(AnimGraph2D, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
+		BOOL_PROP(AnimGraph2D, useRimLight, false, "Visual", "useRimLight", "useRimLight")
 	META_DATA_DESC_END()
 
 	void AnimGraph2D::Init()
@@ -48,8 +49,8 @@ namespace Orin
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
 
 				Math::Vector4 params;
-				params.x = useSecondaryLight ? 1.0f : 0.0f;
-				params.y = 1.0f;
+				params.x = (float)lightGroup / 16.0f;
+				params.y = useRimLight ? 1.0f : 0.0f;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
 			}

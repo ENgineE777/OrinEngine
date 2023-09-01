@@ -11,7 +11,7 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(DirectionLight2D)
 		COLOR_PROP(DirectionLight2D, color, COLOR_WHITE, "Visual", "Color")
 		FLOAT_PROP(DirectionLight2D, intesity, 1.0f, "Visual", "intesity", "intesity")
-		BOOL_PROP(DirectionLight2D, isSecondaryLight, false, "Visual", "isSecondaryLight", "isSecondaryLight")
+		INT_PROP(DirectionLight2D, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
 	META_DATA_DESC_END()
 
 	DirectionLight2D::DirectionLight2D() : SceneEntity()

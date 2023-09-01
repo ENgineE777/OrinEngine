@@ -15,7 +15,8 @@ namespace Orin
 		INT_PROP(SpriteEntity, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		BOOL_PROP(SpriteEntity, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
-		BOOL_PROP(SpriteEntity, useSecondaryLight, false, "Visual", "useSecondaryLight", "useSecondaryLight")
+		INT_PROP(SpriteEntity, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
+		BOOL_PROP(SpriteEntity, useRimLight, false, "Visual", "useRimLight", "useRimLight")
 		BOOL_PROP(SpriteEntity, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(SpriteEntity, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(SpriteEntity, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
@@ -81,8 +82,8 @@ namespace Orin
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
 
 				Math::Vector4 params;
-				params.x = useSecondaryLight ? 1.0f : 0.0f;
-				params.y = 1.0f;
+				params.x = (float)lightGroup / 16.0f;
+				params.y = useRimLight ? 1.0f : 0.0f;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
 			}

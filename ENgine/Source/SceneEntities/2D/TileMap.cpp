@@ -58,7 +58,7 @@ namespace Orin
 		INT_PROP(TileMap, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
 		ASSET_TILE_SET_PROP(TileMap, tileSet, "Visual", "TileSet")
 		COLOR_PROP(TileMap, color, COLOR_WHITE, "Visual", "Color")
-		BOOL_PROP(TileMap, useSecondaryLight, false, "Visual", "useSecondaryLight", "useSecondaryLight")
+		INT_PROP(TileMap, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
 		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(TileMap, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
@@ -189,7 +189,7 @@ namespace Orin
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
 
 				Math::Vector4 params;
-				params.x = useSecondaryLight ? 1.0f : 0.0f;
+				params.x = (float)lightGroup / 16.0f;
 				params.y = 0.0f;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);

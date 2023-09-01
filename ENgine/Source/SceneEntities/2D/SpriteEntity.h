@@ -23,7 +23,8 @@ namespace Orin
 		int drawLevel = 0;
 		bool noZ = false;
 
-		bool useSecondaryLight = false;
+		int lightGroup = 1;
+		bool useRimLight = false;
 
 		bool paralaxInEditor = false;
 		Math::Vector2 paralax = 1.0f;

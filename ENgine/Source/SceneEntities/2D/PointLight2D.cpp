@@ -34,7 +34,7 @@ namespace Orin
 		FLOAT_PROP(PointLight2D, lineWidth, 0.0f, "Visual", "Line Width", "Line Width")
 		FLOAT_PROP(PointLight2D, viewAngle, 181.0f, "Visual", "View Angle", "View Angle")
 		BOOL_PROP(PointLight2D, castShadow, false, "Visual", "Cast Shadow", "View Angle")
-		BOOL_PROP(PointLight2D, isSecondaryLight, false, "Visual", "isSecondaryLight", "isSecondaryLight")
+		INT_PROP(PointLight2D, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
 	META_DATA_DESC_END()
 
 	PointLight2D::PointLight2D() : SceneEntity()

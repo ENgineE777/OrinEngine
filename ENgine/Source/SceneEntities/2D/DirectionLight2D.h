@@ -16,7 +16,7 @@ namespace Orin
 
 		Color color;
 		float intesity = 1.0f;
-		bool isSecondaryLight = false;
+		int lightGroup = 1;
 
 	#ifndef DOXYGEN_SKIP
 

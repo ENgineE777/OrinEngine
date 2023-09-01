@@ -426,7 +426,7 @@ namespace Orin
 
 			u_lights[index + 0] = { cosf(rot), sinf(rot), 0.75f, -1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity };
-			u_lights[index + 3] = { 0.0f, 0.0f, light->isSecondaryLight ? 1.0f : 0.0f, 0.0f };
+			u_lights[index + 3] = { 0.0f, 0.0f, (float)light->lightGroup / 16.0f, 0.0f };
 
 			index += 4;
 		}
@@ -443,7 +443,7 @@ namespace Orin
 			u_lights[index + 0] = { pos.x, pos.y, 30.0f, 1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
 			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, rot.z, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
-			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , light->isSecondaryLight ? 1.0f : 0.0f, 0.0f }; //arc, width
+			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , (float)light->lightGroup / 16.0f, 0.0f }; //arc, width
 
 			index += 4;
 		}

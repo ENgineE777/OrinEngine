@@ -16,7 +16,8 @@ namespace Orin
 		Color color;
 		AssetAnimGraph2DRef anim;
 
-		bool useSecondaryLight = false;
+		int lightGroup = 1;
+		bool useRimLight = false;
 
 		int drawLevel = 0;
 		bool noZ = false;
