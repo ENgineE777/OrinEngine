@@ -476,7 +476,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 		else
 		{
 			// ADD TO FINAL COLOR
-			outColor += radiance * attenuation * FdotL * (refraction * albedo / M_PI + specular) * 5.0f * (0.0f + shadow * 1.0f) + ao * min(attenuation, 0.3);
+			outColor += radiance * attenuation * FdotL * (refraction * ( material.a > 0.5f ? 0.75f : albedo) / M_PI + specular) * 5.0f * (0.0f + shadow * 1.0f) + ao * min(attenuation, 0.3);
 		}
 	}
 
