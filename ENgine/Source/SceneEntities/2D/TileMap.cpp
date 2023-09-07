@@ -219,8 +219,8 @@ namespace Orin
 				trans.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
 				trans.position = tilePos + offset;
 
-				trans.size.x = size.x;
-				trans.size.y = size.y;
+				trans.size.x = size.x + 0.1f;
+				trans.size.y = size.y + 0.1f;
 
 				tile.texture.prg = tech;
 				tile.texture.Draw(&trans, color, dt);
