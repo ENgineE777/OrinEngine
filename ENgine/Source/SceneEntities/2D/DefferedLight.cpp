@@ -75,6 +75,11 @@ namespace Orin
 		};
 	};
 
+	META_DATA_DESC(DefferedLight::GlobalLight)
+		COLOR_PROP(DefferedLight::GlobalLight, ambientColor, COLOR_WHITE, "Ambient", "AmbientColor")
+		FLOAT_PROP(DefferedLight::GlobalLight, ambientIntensity, 1.0f, "Ambient", "AmbientIntensity", "")
+	META_DATA_DESC_END()
+
 	ENTITYREG(SceneEntity, DefferedLight, "2D/Lights", "DefferedLight")
 
 	META_DATA_DESC(DefferedLight)
@@ -83,19 +88,11 @@ namespace Orin
 		FLOAT_PROP(DefferedLight, metallic, 0.25f, "Visual", "metallic", "metallic")
 		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")
 
-		COLOR_PROP(DefferedLight, globalLights[0].ambientColor, COLOR_WHITE, "Main", "AmbientColor")
-		FLOAT_PROP(DefferedLight, globalLights[0].ambientIntensity, 1.0f, "Main", "AmbientIntensity", "")
+		ARRAY_PROP(DefferedLight, globalLights, GlobalLight, "Prop", "Ambinet")
 		
-		INT_PROP(DefferedLight, globalLights[0].numBlurSelfIlum, 4, "Main", "numBlurSelfIlum", "")
-		FLOAT_PROP(DefferedLight, globalLights[0].streangthBlurSelfIlum, 0.75f, "Main", "streangthBlurSelfIlum", "")
-		FLOAT_PROP(DefferedLight, globalLights[0].powerSelfIlum, 4.0f, "Main", "powerSelfIlum", "")
-
-		COLOR_PROP(DefferedLight, globalLights[1].ambientColor, COLOR_WHITE, "Secondary", "AmbientColorSec")
-		FLOAT_PROP(DefferedLight, globalLights[1].ambientIntensity, 1.0f, "Secondary", "AmbientIntensitySec", "")
-
-		INT_PROP(DefferedLight, globalLights[1].numBlurSelfIlum, 4, "Secondary", "numBlurSelfIlumSec", "")
-		FLOAT_PROP(DefferedLight, globalLights[1].streangthBlurSelfIlum, 0.75f, "Secondary", "streangthBlurSelfIlumSec", "")
-		FLOAT_PROP(DefferedLight, globalLights[1].powerSelfIlum, 4.0f, "Secondary", "powerSelfIlumSec", "")
+		INT_PROP(DefferedLight, numBlurSelfIlum, 4, "SelfIllum", "numBlurSelfIlum", "")
+		FLOAT_PROP(DefferedLight, streangthBlurSelfIlum, 0.75f, "SelfIllum", "streangthBlurSelfIlum", "")
+		FLOAT_PROP(DefferedLight, powerSelfIlum, 4.0f, "SelfIllum", "powerSelfIlum", "")		
 
 	META_DATA_DESC_END()
 
@@ -379,32 +376,36 @@ namespace Orin
 
 	void DefferedLight::BlurSelfIlum()
 	{
-		for (int i = 0; i < globalLights[0].numBlurSelfIlum; i++)
+		for (int i = 0; i < numBlurSelfIlum; i++)
 		{
-			BlurTexture(selfilumRT, selfilumRT, globalLights[0].streangthBlurSelfIlum);
+			BlurTexture(selfilumRT, selfilumRT, streangthBlurSelfIlum);
 		}
 	}
 
 	void DefferedLight::RenderLights()
 	{
 		Math::Vector3 camPos = Sprite::GetCamPos();
-
-		Math::Vector4 u_lights[5 + 4 * MAX_LIGHTS];
+		int lightData = 7 + 4 * MAX_LIGHTS;
+		eastl::vector<Math::Vector4> u_lights;
+		u_lights.resize(lightData);
 
 		u_lights[0] = { Sprite::GetPixelsHeight() / root.render.GetDevice()->GetAspect() * 0.5f, Sprite::GetPixelsHeight() * 0.5f, camPos.x, camPos.y };
 
-		defferdLightTech->SetVector(ShaderType::Vertex, "desc", u_lights, 1);
+		defferdLightTech->SetVector(ShaderType::Vertex, "desc", &u_lights[0], 1);
 
-		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, globalLights[0].powerSelfIlum, 0.1f };
+		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, powerSelfIlum, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
 
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
 
 		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
-		u_lights[3] = { globalLights[0].ambientColor.r, globalLights[0].ambientColor.g, globalLights[0].ambientColor.b, globalLights[0].ambientIntensity };
-		u_lights[4] = { globalLights[1].ambientColor.r, globalLights[1].ambientColor.g, globalLights[1].ambientColor.b, globalLights[1].ambientIntensity };
 
-		int index = 5;
+		for (int i = 0; i < 4; i++)
+		{
+			u_lights[3 + i] = (i < globalLights.size()) ? Math::Vector4(globalLights[i].ambientColor.r, globalLights[i].ambientColor.g, globalLights[i].ambientColor.b, globalLights[i].ambientIntensity) : 1.0f;
+		}
+
+		int index = 7;
 
 		for (int i = 0; i < dirLights.size(); i++)
 		{
@@ -451,12 +452,12 @@ namespace Orin
 		int lightCount = (int)lights.size() + (int)dirLights.size();
 		u_lights[1].w = (float)lightCount;
 
-		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", u_lights, 5 + 4 * lightCount);
+		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", &u_lights[0], lightData);
 
 		u_lights[0].x = metallic;
 
-		defferdLightTech->SetVector(ShaderType::Pixel, "params", u_lights, 1);
-		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", u_lights, 5 + 4 * lightCount);
+		defferdLightTech->SetVector(ShaderType::Pixel, "params", &u_lights[0], 1);
+		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", &u_lights[0], lightData);
 		
 		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);

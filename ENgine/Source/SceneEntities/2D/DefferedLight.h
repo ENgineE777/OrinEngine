@@ -27,17 +27,19 @@ namespace Orin
 
 		TextureRef tempRT;
 
+		int numBlurSelfIlum = 4;
+		float streangthBlurSelfIlum = 0.75f;
+		float powerSelfIlum = 4.0f;
+
 		struct GlobalLight
 		{
-			Color ambientColor;
-			float ambientIntensity = 1.0f;
+			META_DATA_DECL_BASE(GlobalLight)
 
-			int numBlurSelfIlum = 4;
-			float streangthBlurSelfIlum = 0.75f;
-			float powerSelfIlum = 4.0f;
+			Color ambientColor;
+			float ambientIntensity = 1.0f;			
 		};
 
-		GlobalLight globalLights[2];		
+		eastl::vector<GlobalLight> globalLights;
 
 		float metallic = 0.25f;
 

@@ -341,7 +341,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	// ITERATE THROUGH LIGHTS
 	int LI = 6;
 	int count = int(u_lights[1].w);
-	int index = 5;
+	int index = 7;
 
 	float3 world_pos = float3(input.texCoord.x * 2.0f - 1.0f, -input.texCoord.y * 2.0f + 1.0f, 0);
 	world_pos = float3(world_pos.x * u_lights[2].x + u_lights[2].z, world_pos.y * u_lights[2].y + u_lights[2].w, 0.0f);
@@ -349,7 +349,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	for (int i = 0; i < count; i++)
 	{
 		// LIGHT ATTRIBUTES
-		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z * (material.a > 0.5f ? -1.0f : 1.0f));
+		float3 light_pos = float3(u_lights[index].x, u_lights[index].y, u_lights[index].z * (material.a > 0.5f ? -0.0f : 1.0f));
 		float directional = u_lights[index].w; // Sign of the color val1e used to flag directional lighting
 		index++;
 
@@ -481,7 +481,14 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	// ADD AREAS TO BLOOM AND BLUR
 	float lightFactor = max(outColor.r, outColor.g);
 	lightFactor = max(lightFactor, outColor.b);
-	float3 albedo2 = (selfLightGroup & 2) ? (u_lights[4].rgb * u_lights[4].a) : (u_lights[3].rgb * u_lights[3].a);
+
+	int lightIndex = 0;
+	while (selfLightGroup >>= 1)
+	{
+		lightIndex++;
+	}
+
+	float3 albedo2 = u_lights[lightIndex + 3].rgb * u_lights[lightIndex + 3].a;
 
 	outColor = (outColor * lightFactor + source.rgb * albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
 
