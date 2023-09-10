@@ -18,15 +18,21 @@ namespace Orin
 		TextureRef materialRT;
 		TextureRef normalRT;
 		TextureRef selfilumRT;
+
+		TextureRef downSelfilumRT;
+		TextureRef tempRT;
+
 		TextureRef occluderRT;
 
 		TextureRef shadowRT;
 
+		int downSelfilumRTWidth = -1;
+		int downSelfilumRTHeight = -1;
+
 		VertexDeclRef vdecl;
-		DataBufferRef buffer;
+		DataBufferRef buffer;		
 
-		TextureRef tempRT;
-
+		float selfilumScaleRT = 1.0f;
 		int numBlurSelfIlum = 4;
 		float streangthBlurSelfIlum = 0.75f;
 		float powerSelfIlum = 4.0f;

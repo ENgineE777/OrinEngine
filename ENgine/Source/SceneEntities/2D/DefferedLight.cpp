@@ -90,6 +90,7 @@ namespace Orin
 
 		ARRAY_PROP(DefferedLight, globalLights, GlobalLight, "Prop", "Ambinet")
 		
+		FLOAT_PROP(DefferedLight, selfilumScaleRT, 1.0f, "SelfIllum", "selfilumScaleRT", "")
 		INT_PROP(DefferedLight, numBlurSelfIlum, 4, "SelfIllum", "numBlurSelfIlum", "")
 		FLOAT_PROP(DefferedLight, streangthBlurSelfIlum, 0.75f, "SelfIllum", "streangthBlurSelfIlum", "")
 		FLOAT_PROP(DefferedLight, powerSelfIlum, 4.0f, "SelfIllum", "powerSelfIlum", "")		
@@ -156,7 +157,7 @@ namespace Orin
 		{
 			albedoRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			albedoRT->SetAdress(TextureAddress::Clamp);
-
+			
 			materialRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			materialRT->SetAdress(TextureAddress::Clamp);
 
@@ -165,15 +166,24 @@ namespace Orin
 
 			selfilumRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			selfilumRT->SetAdress(TextureAddress::Clamp);
-
-			tempRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			tempRT->SetAdress(TextureAddress::Clamp);
-
+			
 			occluderRT = root.render.GetDevice()->CreateTexture(512, 512, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			occluderRT->SetAdress(TextureAddress::Clamp);
 			occluderRT->SetFilters(TextureFilter::Point, TextureFilter::Point);
 
 			shadowRT = root.render.GetDevice()->CreateTexture(360, MAX_LIGHTS, TextureFormat::FMT_R32_FLOAT, 1, true, TextureType::Tex2D, _FL_);
+		}
+
+		if (selfilumScaleRT > 0.1f && (!downSelfilumRT || (int)(screenWidth * selfilumScaleRT) != downSelfilumRTWidth))
+		{
+			downSelfilumRTWidth = (int)(selfilumScaleRT * screenWidth);
+			downSelfilumRTHeight = (int)(selfilumScaleRT * screenHeight);
+
+			tempRT = root.render.GetDevice()->CreateTexture(downSelfilumRTWidth, downSelfilumRTHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			tempRT->SetAdress(TextureAddress::Clamp);
+
+			downSelfilumRT = root.render.GetDevice()->CreateTexture(downSelfilumRTWidth, downSelfilumRTHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+			downSelfilumRT->SetAdress(TextureAddress::Clamp);
 		}
 
 		root.render.GetDevice()->SetRenderTarget(0, albedoRT);
@@ -375,10 +385,23 @@ namespace Orin
 	}
 
 	void DefferedLight::BlurSelfIlum()
-	{
+	{		
+		GetRoot()->GetRender()->GetDevice()->SetRenderTarget(0, downSelfilumRT);
+		GetRoot()->GetRender()->GetDevice()->SetDepth(nullptr);
+
+		Math::Matrix mat;
+
+		auto camPos = Sprite::GetCamPos();
+		auto viewportSize = Sprite::GetHalfScreenSize();
+
+		Sprite::Draw(selfilumRT, COLOR_WHITE, mat,
+					 Math::Vector2(camPos.x - viewportSize.x, camPos.y + viewportSize.y), viewportSize * 2.0f,
+					 0.0f, 1.0f, Sprite::quadPrgNoZ);
+	
+
 		for (int i = 0; i < numBlurSelfIlum; i++)
 		{
-			BlurTexture(selfilumRT, selfilumRT, streangthBlurSelfIlum);
+			BlurTexture(downSelfilumRT, downSelfilumRT, streangthBlurSelfIlum);
 		}
 	}
 
@@ -461,7 +484,7 @@ namespace Orin
 		
 		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);
-		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", selfilumRT);
+		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", downSelfilumRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "shadowMap", shadowRT);
 
 		Sprite::Draw(albedoRT, COLOR_WHITE, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
@@ -495,7 +518,7 @@ namespace Orin
 
 		//root.render.DebugSprite(albedoRT, 10.0f, 100.0f);
 		//root.render.DebugSprite(materialRT, {120.0f, 10.0f}, 100.0f);
-		//root.render.DebugSprite(normalRT, { 230.0f, 10.0f }, 100.0f);
+		//root.render.DebugSprite(downSelfilumRT, { 230.0f, 10.0f }, 100.0f);
 		//root.render.DebugSprite(selfilumRT, { 340.0f, 10.0f }, 100.0f);
 
 		//Sprite::Draw(shadowRT, COLOR_WHITE_A(0.5f), Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, shadowRenderTech);
@@ -506,6 +529,10 @@ namespace Orin
 	void DefferedLight::Release()
 	{
 		gbufferTech.ReleaseRef();
+		blurRTech.ReleaseRef();
+		shadowCastTech.ReleaseRef();
+		shadowRenderTech.ReleaseRef();
+
 		SceneEntity::Release();
 	}
 }
