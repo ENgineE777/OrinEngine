@@ -16,7 +16,7 @@ cbuffer ps_params : register( b0 )
 	float4 color;
 	matrix normalTrans;
 	float4 params;
-	float4 u_lights[3 + 4 * 32];
+	float4 u_lights[7 + 4 * 40];
 };
 
 struct VS_INPUT

@@ -49,7 +49,7 @@ namespace Orin
 
 		float metallic = 0.25f;
 
-		constexpr static int MAX_LIGHTS = 32;
+		constexpr static int MAX_LIGHTS = 40;
 
 		static bool hackStateEnabled;
 		static RenderTechniqueRef gbufferTech;
