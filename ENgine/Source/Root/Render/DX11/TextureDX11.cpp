@@ -202,6 +202,8 @@ namespace Orin
 			sampDesc.MinLOD = 0;
 			sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
+			memcpy(sampDesc.BorderColor, borderColor, sizeof(float) * 4);
+
 			DeviceDX11::instance->pd3dDevice->CreateSamplerState( &sampDesc, &sampler );
 
 			sampler_need_recrete = false;

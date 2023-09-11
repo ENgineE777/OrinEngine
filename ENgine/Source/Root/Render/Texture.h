@@ -113,6 +113,11 @@ namespace Orin
 			adressU = TextureAddress::Wrap;
 			adressV = TextureAddress::Wrap;
 			adressW = TextureAddress::Wrap;
+
+			borderColor[0] = 0.0f;
+			borderColor[1] = 0.0f;
+			borderColor[2] = 0.0f;
+			borderColor[3] = 0.0f;
 		};
 		virtual ~Texture() = default;
 		#endif
@@ -224,6 +229,11 @@ namespace Orin
 			adressW = adress;
 		};
 
+		virtual void SetBorderColor(float* setBorderColor)
+		{
+			memcpy(borderColor, setBorderColor, sizeof(float) * 4);
+		};
+
 		/**
 		\brief Generate full mip map chain
 		*/
@@ -261,6 +271,7 @@ namespace Orin
 		TextureAddress adressV;
 		TextureAddress adressW;
 		TextureType type;
+		float borderColor[4];
 		int refCounter = 0;
 
 		virtual void Release() = 0;
