@@ -165,7 +165,7 @@ namespace Orin
 			normalRT->SetAdress(TextureAddress::Clamp);
 
 			selfilumRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			selfilumRT->SetAdress(TextureAddress::Clamp);
+			selfilumRT->SetAdress(TextureAddress::Border);
 			
 			occluderRT = root.render.GetDevice()->CreateTexture(512, 512, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			occluderRT->SetAdress(TextureAddress::Clamp);
@@ -180,10 +180,10 @@ namespace Orin
 			downSelfilumRTHeight = (int)(selfilumScaleRT * screenHeight);
 
 			tempRT = root.render.GetDevice()->CreateTexture(downSelfilumRTWidth, downSelfilumRTHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			tempRT->SetAdress(TextureAddress::Clamp);
+			tempRT->SetAdress(TextureAddress::Border);
 
 			downSelfilumRT = root.render.GetDevice()->CreateTexture(downSelfilumRTWidth, downSelfilumRTHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			downSelfilumRT->SetAdress(TextureAddress::Clamp);
+			downSelfilumRT->SetAdress(TextureAddress::Border);
 		}
 
 		root.render.GetDevice()->SetRenderTarget(0, albedoRT);
@@ -191,7 +191,7 @@ namespace Orin
 		root.render.GetDevice()->SetRenderTarget(2, normalRT);
 		root.render.GetDevice()->SetRenderTarget(3, selfilumRT);
 
-		root.render.GetDevice()->Clear(true, GetScene()->IsPlaying() ? COLOR_BLACK_A(0.0f) : Color(0.095f, 0.095f, 0.095f, 0.0f), true, 1.0f);
+		root.render.GetDevice()->Clear(true, GetScene()->IsPlaying() ? COLOR_BLACK_A(0.0f) : Color(0.35f, 0.35f, 0.35f, 0.0f), true, 1.0f);
 	}
 
 	void DefferedLight::BlurTexture(TextureRef src, TextureRef dest, float blurStrength)
