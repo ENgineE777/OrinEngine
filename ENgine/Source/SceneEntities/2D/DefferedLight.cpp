@@ -98,6 +98,7 @@ namespace Orin
 	META_DATA_DESC_END()
 
 	bool DefferedLight::hackStateEnabled = false;
+	float DefferedLight::lightGroupDivider = 64.0f;
 	RenderTechniqueRef DefferedLight::gbufferTech;
 
 	void DefferedLight::Init()
@@ -408,7 +409,7 @@ namespace Orin
 	void DefferedLight::RenderLights()
 	{
 		Math::Vector3 camPos = Sprite::GetCamPos();
-		int lightData = 7 + 4 * MAX_LIGHTS;
+		int lightData = 9 + 4 * MAX_LIGHTS;
 		eastl::vector<Math::Vector4> u_lights;
 		u_lights.resize(lightData);
 
@@ -423,12 +424,12 @@ namespace Orin
 
 		u_lights[2] = { halfScreenSize.x, halfScreenSize.y, camPos.x, camPos.y };
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			u_lights[3 + i] = (i < globalLights.size()) ? Math::Vector4(globalLights[i].ambientColor.r, globalLights[i].ambientColor.g, globalLights[i].ambientColor.b, globalLights[i].ambientIntensity) : 1.0f;
 		}
 
-		int index = 7;
+		int index = 9;
 
 		for (int i = 0; i < dirLights.size(); i++)
 		{
@@ -450,7 +451,7 @@ namespace Orin
 
 			u_lights[index + 0] = { cosf(rot), sinf(rot), 0.75f, -1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity };
-			u_lights[index + 3] = { 0.0f, 0.0f, (float)light->lightGroup / 16.0f, 0.0f };
+			u_lights[index + 3] = { 0.0f, 0.0f, (float)light->lightGroup / lightGroupDivider, 0.0f };
 
 			index += 4;
 		}
@@ -467,7 +468,7 @@ namespace Orin
 			u_lights[index + 0] = { pos.x, pos.y, 30.0f, 1.0f }; //pos, dir
 			u_lights[index + 1] = { light->color.r, light->color.g, light->color.b, light->intesity }; //color, intesity		
 			u_lights[index + 2] = { light->castShadow && light->lineWidth < 0.001f ? (float)i : -1.0f, light->falloff, rot.z, trans.size.x * 0.5f }; //light_depth, falloff, angle, radius
-			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , (float)light->lightGroup / 16.0f, 0.0f }; //arc, width
+			u_lights[index + 3] = { light->viewAngle * Math::Radian, light->lineWidth , (float)light->lightGroup / lightGroupDivider, 0.0f }; //arc, width
 
 			index += 4;
 		}

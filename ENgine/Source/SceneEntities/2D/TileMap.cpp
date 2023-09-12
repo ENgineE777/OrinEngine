@@ -189,7 +189,7 @@ namespace Orin
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
 
 				Math::Vector4 params;
-				params.x = (float)lightGroup / 16.0f;
+				params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
 				params.y = 0.0f;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);

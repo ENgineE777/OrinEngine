@@ -52,6 +52,7 @@ namespace Orin
 		constexpr static int MAX_LIGHTS = 40;
 
 		static bool hackStateEnabled;
+		static float lightGroupDivider;
 		static RenderTechniqueRef gbufferTech;
 		RenderTechniqueRef blurRTech;
 

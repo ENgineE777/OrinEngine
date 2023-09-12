@@ -16,7 +16,7 @@ cbuffer ps_params : register( b0 )
 	float4 color;
 	matrix normalTrans;
 	float4 params;
-	float4 u_lights[7 + 4 * 40];
+	float4 u_lights[9 + 4 * 40];
 };
 
 struct VS_INPUT
@@ -306,7 +306,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	float4 normal    = normalsMap.Sample(normalsLinear, input.texCoord);
 	float4 material  = materialMap.Sample(materialLinear, input.texCoord);
 
-	int selfLightGroup = round(material.g * 16.0f);
+	int selfLightGroup = round(material.g * 64.0f);
 
 	float4 selfilum = selfilumMap.Sample(selfilumLinear, input.texCoord);
 
@@ -341,7 +341,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	// ITERATE THROUGH LIGHTS
 	int LI = 6;
 	int count = int(u_lights[1].w);
-	int index = 7;
+	int index = 9;
 
 	float3 world_pos = float3(input.texCoord.x * 2.0f - 1.0f, -input.texCoord.y * 2.0f + 1.0f, 0);
 	world_pos = float3(world_pos.x * u_lights[2].x + u_lights[2].z, world_pos.y * u_lights[2].y + u_lights[2].w, 0.0f);
@@ -367,7 +367,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 		float arc = u_lights[index].x;
 		float width = u_lights[index].y;
-		int lightGroup = round(u_lights[index].z * 16.0f);
+		int lightGroup = round(u_lights[index].z * 64.0f);
 		index++;
 
 		// LINE LIGHT
