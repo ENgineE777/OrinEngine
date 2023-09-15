@@ -17,6 +17,7 @@ namespace Orin
 		FMT_A8,
 		FMT_R16_FLOAT,
 		FMT_R32_FLOAT,
+		FMT_R11G11B10_FLOAT,
 		FMT_D16,
 		FMT_D24,
 	};
