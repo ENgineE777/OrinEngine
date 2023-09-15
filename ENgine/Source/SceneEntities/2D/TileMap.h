@@ -28,6 +28,8 @@ namespace Orin
 			float rotation = 0.0f;
 			bool flipH = false;
 			bool flipV = false;
+			Color emmisive = COLOR_WHITE;
+			float emmisiveIntencity = 1.0f;
 			AssetTextureRef texture;
 		};
 

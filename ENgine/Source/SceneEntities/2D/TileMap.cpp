@@ -133,6 +133,21 @@ namespace Orin
 	{
 		if (IsEditMode())
 		{
+			for (auto& tile : tiles)
+			{
+				if (tile.index == -1)
+				{
+					continue;
+				}
+
+				tile.texture = tileSet->GetTileTexture(tile.index);
+				tile.rotation = tileSet->GetTileRotation(tile.index);
+				tile.flipH = tileSet->IsFlippedHorrizontaly(tile.index);
+				tile.flipV = tileSet->IsFlippedVertically(tile.index);
+				tile.emmisive = tileSet->GetEmmisive(tile.index);
+				tile.emmisiveIntencity = tileSet->GetEmmisiveIntencity(tile.index);
+			}
+
 			if (tileSet.Get())
 			{
 				TileSetWindow::StartEdit(tileSet.Get());
@@ -180,6 +195,11 @@ namespace Orin
 
 			RenderTechniqueRef tech = Sprite::quadPrg;
 
+			Math::Vector4 params;
+			params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
+			params.y = 0.0f;
+			params.z = 1.0f;
+
 			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
 			{
 				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
@@ -187,12 +207,6 @@ namespace Orin
 
 				Math::Matrix mat;
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
-
-				Math::Vector4 params;
-				params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
-				params.y = 0.0f;
-
-				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
 
 				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
 
@@ -223,6 +237,15 @@ namespace Orin
 				trans.size.y = size.y + 0.1f;
 
 				tile.texture.prg = tech;
+
+				if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+				{					
+					params.z = tile.emmisiveIntencity;
+
+					DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+					DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&tile.emmisive.r, 1);
+				}
+
 				tile.texture.Draw(&trans, color, dt);
 			}
 
@@ -372,6 +395,8 @@ namespace Orin
 				tile.rotation = tileSet->GetTileRotation(tile.index);
 				tile.flipH = tileSet->IsFlippedHorrizontaly(tile.index);
 				tile.flipV = tileSet->IsFlippedVertically(tile.index);
+				tile.emmisive = tileSet->GetEmmisive(tile.index);
+				tile.emmisiveIntencity = tileSet->GetEmmisiveIntencity(tile.index);
 			}
 
 			reader.LeaveBlock();
@@ -529,7 +554,7 @@ namespace Orin
 							}
 						}
 
-						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->IsFlippedHorrizontaly(index), tileSet->IsFlippedVertically(index), tileSet->GetTileTexture(index) });
+						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->IsFlippedHorrizontaly(index), tileSet->IsFlippedVertically(index), tileSet->GetEmmisive(index), tileSet->GetEmmisiveIntencity(index), tileSet->GetTileTexture(index) });
 
 						changed = true;
 					}
@@ -598,7 +623,7 @@ namespace Orin
 							}
 						}
 
-						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->IsFlippedHorrizontaly(index), tileSet->IsFlippedVertically(index), tileSet->GetTileTexture(index) });
+						tiles.push_back({ tileX, tileY, 0, index, tileSet->GetTileRotation(index), tileSet->IsFlippedHorrizontaly(index), tileSet->IsFlippedVertically(index), tileSet->GetEmmisive(index), tileSet->GetEmmisiveIntencity(index), tileSet->GetTileTexture(index) });
 					}
 
 					changed = true;

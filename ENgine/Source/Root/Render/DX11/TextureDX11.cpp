@@ -16,6 +16,7 @@ namespace Orin
 			case TextureFormat::FMT_A8: return DXGI_FORMAT_R8_UNORM;
 			case TextureFormat::FMT_R16_FLOAT: return DXGI_FORMAT_R16_FLOAT;
 			case TextureFormat::FMT_R32_FLOAT: return DXGI_FORMAT_R32_FLOAT;
+			case TextureFormat::FMT_R11G11B10_FLOAT: return DXGI_FORMAT_R11G11B10_FLOAT;
 			case TextureFormat::FMT_D16: return DXGI_FORMAT_R16_TYPELESS;
 			case TextureFormat::FMT_D24: return DXGI_FORMAT_R24G8_TYPELESS;
 		}

@@ -27,6 +27,8 @@ namespace Orin
 			int rotation = 0;
 			bool flipH = false;
 			bool flipV = false;
+			Color emmisive = COLOR_WHITE;
+			float emmisiveIntencity = 1.0f;
 			eastl::string meta;
 			AssetTextureRef texture;
 		};
@@ -56,6 +58,9 @@ namespace Orin
 		float GetTileRotation(int index);
 		bool IsFlippedHorrizontaly(int index);
 		bool IsFlippedVertically(int index);
+		Color GetEmmisive(int index);
+		float GetEmmisiveIntencity(int index);
+
 		void SaveMetaData(JsonWriter& saver) override;
 		const char* GetSceneEntityType() override;
 		#endif

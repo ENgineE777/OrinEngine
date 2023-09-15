@@ -65,8 +65,8 @@ namespace Orin
 	class BlurTechnique : public RenderTechnique
 	{
 	public:
-		virtual const char* GetVsName() { return "Shaders\\blur_vs.shd"; };
-		virtual const char* GetPsName() { return "Shaders\\blur_ps.shd"; };
+		virtual const char* GetVsName() { return "blur_vs.shd"; };
+		virtual const char* GetPsName() { return "blur_ps.shd"; };
 
 		virtual void ApplyStates()
 		{
@@ -74,6 +74,36 @@ namespace Orin
 			GetRoot()->GetRender()->GetDevice()->SetDepthTest(false);
 		};
 	};
+
+	class BlurDownTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "blur_vs.shd"; };
+		virtual const char* GetPsName() { return "blur_down_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			GetRoot()->GetRender()->GetDevice()->SetDepthWriting(false);
+			GetRoot()->GetRender()->GetDevice()->SetDepthTest(false);
+		};
+	};
+
+	class BlurUpTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "blur_vs.shd"; };
+		virtual const char* GetPsName() { return "blur_up_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			GetRoot()->GetRender()->GetDevice()->SetDepthWriting(false);
+			GetRoot()->GetRender()->GetDevice()->SetDepthTest(false);
+
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetBlendFunc(BlendArg::ArgOne, BlendArg::ArgOne);
+		};
+	};
+
 
 	META_DATA_DESC(DefferedLight::GlobalLight)
 		COLOR_PROP(DefferedLight::GlobalLight, ambientColor, COLOR_WHITE, "Ambient", "AmbientColor")
@@ -89,11 +119,6 @@ namespace Orin
 		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")
 
 		ARRAY_PROP(DefferedLight, globalLights, GlobalLight, "Prop", "Ambinet")
-		
-		FLOAT_PROP(DefferedLight, selfilumScaleRT, 1.0f, "SelfIllum", "selfilumScaleRT", "")
-		INT_PROP(DefferedLight, numBlurSelfIlum, 4, "SelfIllum", "numBlurSelfIlum", "")
-		FLOAT_PROP(DefferedLight, streangthBlurSelfIlum, 0.75f, "SelfIllum", "streangthBlurSelfIlum", "")
-		FLOAT_PROP(DefferedLight, powerSelfIlum, 4.0f, "SelfIllum", "powerSelfIlum", "")		
 
 	META_DATA_DESC_END()
 
@@ -110,7 +135,10 @@ namespace Orin
 		Tasks(true)->AddTask(6, this, (Object::Delegate)&DefferedLight::Draw);
 
 		defferdLightTech = root.render.GetRenderTechnique<DefferdLightTechnique>(_FL_);
+
 		blurRTech = GetRoot()->GetRender()->GetRenderTechnique<BlurTechnique>(_FL_);
+		blurDownRTech = GetRoot()->GetRender()->GetRenderTechnique<BlurDownTechnique>(_FL_);
+		blurUpRTech = GetRoot()->GetRender()->GetRenderTechnique<BlurUpTechnique>(_FL_);
 
 		shadowCastTech = root.render.GetRenderTechnique<ShadowCastTechnique>(_FL_);
 		shadowRenderTech = root.render.GetRenderTechnique<ShadowRenderTechnique>(_FL_);
@@ -129,13 +157,6 @@ namespace Orin
 
 		buffer->Unlock();
 
-	}
-
-	float DefferedLight::ComputeGaussian(float n)
-	{
-		float theta = 4.0f;
-
-		return (float)((1.0 / sqrtf(2 * Math::PI * theta)) * expf(-(n * n) / (2 * theta * theta)));
 	}
 
 	void DefferedLight::SetRT(float dt)
@@ -165,8 +186,21 @@ namespace Orin
 			normalRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			normalRT->SetAdress(TextureAddress::Clamp);
 
-			selfilumRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			selfilumRT->SetAdress(TextureAddress::Border);
+			selfilumRTs.clear();
+
+			int curWidth = screenWidth;
+			int curHeight = screenHeight;
+
+			while (curWidth > 4 && curHeight > 4)
+			{
+				auto selfilumRT = root.render.GetDevice()->CreateTexture(curWidth, curHeight, TextureFormat::FMT_R11G11B10_FLOAT, 1, true, TextureType::Tex2D, _FL_);
+				selfilumRT->SetAdress(TextureAddress::Border);
+
+				selfilumRTs.push_back(selfilumRT);
+
+				curWidth = (int)(curWidth / 2);
+				curHeight = (int)(curHeight / 2);
+			}			
 			
 			occluderRT = root.render.GetDevice()->CreateTexture(512, 512, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
 			occluderRT->SetAdress(TextureAddress::Clamp);
@@ -175,88 +209,12 @@ namespace Orin
 			shadowRT = root.render.GetDevice()->CreateTexture(360, MAX_LIGHTS, TextureFormat::FMT_R32_FLOAT, 1, true, TextureType::Tex2D, _FL_);
 		}
 
-		if (selfilumScaleRT > 0.1f && (!downSelfilumRT || (int)(screenWidth * selfilumScaleRT) != downSelfilumRTWidth))
-		{
-			downSelfilumRTWidth = (int)(selfilumScaleRT * screenWidth);
-			downSelfilumRTHeight = (int)(selfilumScaleRT * screenHeight);
-
-			tempRT = root.render.GetDevice()->CreateTexture(downSelfilumRTWidth, downSelfilumRTHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			tempRT->SetAdress(TextureAddress::Border);
-
-			downSelfilumRT = root.render.GetDevice()->CreateTexture(downSelfilumRTWidth, downSelfilumRTHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
-			downSelfilumRT->SetAdress(TextureAddress::Border);
-		}
-
 		root.render.GetDevice()->SetRenderTarget(0, albedoRT);
 		root.render.GetDevice()->SetRenderTarget(1, materialRT);
 		root.render.GetDevice()->SetRenderTarget(2, normalRT);
-		root.render.GetDevice()->SetRenderTarget(3, selfilumRT);
+		root.render.GetDevice()->SetRenderTarget(3, selfilumRTs[0]);
 
 		root.render.GetDevice()->Clear(true, GetScene()->IsPlaying() ? COLOR_BLACK_A(0.0f) : Color(0.35f, 0.35f, 0.35f, 0.0f), true, 1.0f);
-	}
-
-	void DefferedLight::BlurTexture(TextureRef src, TextureRef dest, float blurStrength)
-	{
-		GetRoot()->GetRender()->GetDevice()->SetVertexDecl(vdecl);
-		GetRoot()->GetRender()->GetDevice()->SetVertexBuffer(0, buffer);
-
-		GetRoot()->GetRender()->GetDevice()->SetRenderTarget(0, tempRT);
-		GetRoot()->GetRender()->GetDevice()->SetDepth(nullptr);
-
-		GetRoot()->GetRender()->GetDevice()->SetRenderTechnique(blurRTech);
-		blurRTech->SetTexture(ShaderType::Pixel, "rt", src);
-
-		Math::Vector4 samples[15];
-
-		samples[0].z = ComputeGaussian(0);
-		samples[0].x = 0;
-		samples[0].y = 0;
-
-		float totalWeights = samples[0].z;
-
-		for (int i = 0; i < 7; i++)
-		{
-			float weight = ComputeGaussian((float)i + 1.0f);
-
-			samples[i * 2 + 1].z = weight;
-			samples[i * 2 + 2].z = weight;
-
-			totalWeights += weight * 2;
-
-			float sampleOffset = i * 2 + 1.5f;
-
-			Math::Vector2 delta = Math::Vector2(1.0f / (float)tempRT->GetWidth(), 1.0f / (float)tempRT->GetHeight()) * sampleOffset * blurStrength;
-
-			samples[i * 2 + 1].x = delta.x;
-			samples[i * 2 + 1].y = 0.0f;
-			samples[i * 2 + 1].w = delta.y;
-
-			samples[i * 2 + 2].x = -delta.x;
-			samples[i * 2 + 2].y = 0.0f;
-			samples[i * 2 + 2].w = -delta.y;
-		}
-
-		for (int i = 0; i < 15; i++)
-		{
-			samples[i].z /= totalWeights;
-		}
-
-		blurRTech->SetVector(ShaderType::Pixel, "samples", samples, 15);
-
-		GetRoot()->GetRender()->GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
-
-		GetRoot()->GetRender()->GetDevice()->SetRenderTarget(0, dest);
-
-		for (int i = 0; i < 15; i++)
-		{
-			samples[i].x = 0;
-			samples[i].y = samples[i].w;
-		}
-
-		blurRTech->SetTexture(ShaderType::Pixel, "rt", tempRT);
-		blurRTech->SetVector(ShaderType::Pixel, "samples", samples, 15);
-
-		GetRoot()->GetRender()->GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 	}
 
 	void DefferedLight::GatherLights()
@@ -386,23 +344,46 @@ namespace Orin
 	}
 
 	void DefferedLight::BlurSelfIlum()
-	{		
-		GetRoot()->GetRender()->GetDevice()->SetRenderTarget(0, downSelfilumRT);
-		GetRoot()->GetRender()->GetDevice()->SetDepth(nullptr);
+	{				
+		for (int i = 0; i < selfilumRTs.size() - 1; i++)
+		{			
+			GetRoot()->GetRender()->GetDevice()->SetVertexDecl(vdecl);
+			GetRoot()->GetRender()->GetDevice()->SetVertexBuffer(0, buffer);
 
-		Math::Matrix mat;
+			GetRoot()->GetRender()->GetDevice()->SetRenderTarget(0, selfilumRTs[i+1]);
+			GetRoot()->GetRender()->GetDevice()->SetDepth(nullptr);
+			
+			GetRoot()->GetRender()->GetDevice()->SetRenderTechnique(blurDownRTech);
 
-		auto camPos = Sprite::GetCamPos();
-		auto viewportSize = Sprite::GetHalfScreenSize();
+			blurDownRTech->SetTexture(ShaderType::Pixel, "rt", selfilumRTs[i]);
 
-		Sprite::Draw(selfilumRT, COLOR_WHITE, mat,
-					 Math::Vector2(camPos.x - viewportSize.x, camPos.y + viewportSize.y), viewportSize * 2.0f,
-					 0.0f, 1.0f, Sprite::quadPrgNoZ);
-	
+			Math::Vector4 texelSize;
+			texelSize.x = 1.0f / (float)selfilumRTs[i]->GetWidth();
+			texelSize.y = 1.0f / (float)selfilumRTs[i]->GetHeight();
 
-		for (int i = 0; i < numBlurSelfIlum; i++)
+			blurDownRTech->SetVector(ShaderType::Pixel, "texelSize", &texelSize, 1);
+
+			GetRoot()->GetRender()->GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
+		}
+
+		for (int i = selfilumRTs.size() - 1; i > 0; i--)
 		{
-			BlurTexture(downSelfilumRT, downSelfilumRT, streangthBlurSelfIlum);
+			GetRoot()->GetRender()->GetDevice()->SetVertexDecl(vdecl);
+			GetRoot()->GetRender()->GetDevice()->SetVertexBuffer(0, buffer);
+
+			GetRoot()->GetRender()->GetDevice()->SetRenderTarget(0, selfilumRTs[i - 1]);
+			GetRoot()->GetRender()->GetDevice()->SetDepth(nullptr);
+
+			GetRoot()->GetRender()->GetDevice()->SetRenderTechnique(blurUpRTech);
+
+			blurUpRTech->SetTexture(ShaderType::Pixel, "rt", selfilumRTs[i]);
+
+			Math::Vector4 texelSize;
+			texelSize.x = 0.002f;
+
+			blurUpRTech->SetVector(ShaderType::Pixel, "texelSize", &texelSize, 1);
+
+			GetRoot()->GetRender()->GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 		}
 	}
 
@@ -417,7 +398,7 @@ namespace Orin
 
 		defferdLightTech->SetVector(ShaderType::Vertex, "desc", &u_lights[0], 1);
 
-		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, powerSelfIlum, 0.1f };
+		u_lights[0] = { timer, useFilter ? 1.0f : 0.0f, 1.0f, 0.1f };
 		u_lights[1] = { 0.6f, 1.0f, 0.0f, 1.0f };
 
 		auto halfScreenSize = Sprite::GetHalfScreenSize();
@@ -485,7 +466,7 @@ namespace Orin
 		
 		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);
-		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", downSelfilumRT);
+		defferdLightTech->SetTexture(ShaderType::Pixel, "selfilumMap", selfilumRTs[0]);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "shadowMap", shadowRT);
 
 		Sprite::Draw(albedoRT, COLOR_WHITE, Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, defferdLightTech);
@@ -520,7 +501,7 @@ namespace Orin
 		//root.render.DebugSprite(albedoRT, 10.0f, 100.0f);
 		//root.render.DebugSprite(materialRT, {120.0f, 10.0f}, 100.0f);
 		//root.render.DebugSprite(downSelfilumRT, { 230.0f, 10.0f }, 100.0f);
-		//root.render.DebugSprite(selfilumRT, { 340.0f, 10.0f }, 100.0f);
+		//root.render.DebugSprite(selfilumRTs[0], { 340.0f, 10.0f }, 100.0f);		
 
 		//Sprite::Draw(shadowRT, COLOR_WHITE_A(0.5f), Math::Matrix(), 0.0f, 100.0f, 0.0f, 1.0f, shadowRenderTech);
 
@@ -531,6 +512,8 @@ namespace Orin
 	{
 		gbufferTech.ReleaseRef();
 		blurRTech.ReleaseRef();
+		blurUpRTech.ReleaseRef();
+		blurDownRTech.ReleaseRef();
 		shadowCastTech.ReleaseRef();
 		shadowRenderTech.ReleaseRef();
 

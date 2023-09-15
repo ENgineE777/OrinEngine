@@ -14,6 +14,7 @@ cbuffer vs_params : register(b0)
 cbuffer ps_params : register( b0 )
 {
 	float4 color;
+	float4 emmisive;
 	matrix normalTrans;
 	float4 params;
 	float4 u_lights[9 + 4 * 40];
@@ -51,7 +52,7 @@ struct PS_GBUFFER_OUTPUT
     float4 color : SV_TARGET0;
     float4 material : SV_TARGET1;
     float4 normals : SV_TARGET2;
-	float4 selfilum : SV_TARGET3;
+	float3 selfilum : SV_TARGET3;
 };
 
 float3 get_radiance(float c)
@@ -116,7 +117,7 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
 	f_norm = normal.rgb * 0.5f + 0.5f;
 
     output.normals = float4(f_norm.rgb, 1.0f);
-	output.selfilum = float4(clr.rgb * material.b * clr.a, 1.0f);
+	output.selfilum = float3(emmisive.rgb * material.b * params.z);
 
     return output;
 }
@@ -308,7 +309,7 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 
 	int selfLightGroup = round(material.g * 64.0f);
 
-	float4 selfilum = selfilumMap.Sample(selfilumLinear, input.texCoord);
+	float3 selfilum = selfilumMap.Sample(selfilumLinear, input.texCoord).rgb;
 
 	//float4 shadow    = shadow_texture.Sample(u_shadow, input.texCoord)*255.0;	
 	float3 albedo    = source.rgb;

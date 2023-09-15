@@ -13,6 +13,8 @@ namespace Orin
 	public:
 
 		Color color;
+		Color emmisive;
+		float emmisiveIntencity = 1.0f;
 		AssetTextureRef texture;
 		AssetTextureRef normal;
 		AssetTextureRef material;

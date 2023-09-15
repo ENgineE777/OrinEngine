@@ -15,6 +15,8 @@ namespace Orin
 		INT_PROP(SpriteEntity, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		BOOL_PROP(SpriteEntity, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
+		COLOR_PROP(SpriteEntity, emmisive, COLOR_WHITE, "Visual", "Emmisive")
+		FLOAT_PROP(SpriteEntity, emmisiveIntencity, 1.0f, "Visual", "emmisiveIntencity", "emmisiveIntencity")
 		INT_PROP(SpriteEntity, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
 		BOOL_PROP(SpriteEntity, useRimLight, false, "Visual", "useRimLight", "useRimLight")
 		BOOL_PROP(SpriteEntity, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
@@ -84,8 +86,11 @@ namespace Orin
 				Math::Vector4 params;
 				params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
 				params.y = useRimLight ? 1.0f : 0.0f;
+				params.z = emmisiveIntencity;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&emmisive.r, 1);
 			}
 			else
 			{

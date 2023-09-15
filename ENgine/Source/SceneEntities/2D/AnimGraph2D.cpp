@@ -13,6 +13,8 @@ namespace Orin
 		INT_PROP(AnimGraph2D, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		BOOL_PROP(AnimGraph2D, noZ, false, "Visual", "noZ", "no use Z during render")
 		COLOR_PROP(AnimGraph2D, color, COLOR_WHITE, "Visual", "Color")
+		COLOR_PROP(AnimGraph2D, emmisive, COLOR_WHITE, "Visual", "Emmisive")
+		FLOAT_PROP(AnimGraph2D, emmisiveIntencity, 1.0f, "Visual", "emmisiveIntencity", "emmisiveIntencity")
 		INT_PROP(AnimGraph2D, lightGroup, 1, "Visual", "lightGroup", "lightGroup")
 		BOOL_PROP(AnimGraph2D, useRimLight, false, "Visual", "useRimLight", "useRimLight")
 	META_DATA_DESC_END()
@@ -51,8 +53,11 @@ namespace Orin
 				Math::Vector4 params;
 				params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
 				params.y = useRimLight ? 1.0f : 0.0f;
+				params.z = emmisiveIntencity;
 
 				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&emmisive.r, 1);
 			}
 			else
 			{

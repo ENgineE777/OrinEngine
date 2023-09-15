@@ -17,32 +17,21 @@ namespace Orin
 		TextureRef albedoRT;
 		TextureRef materialRT;
 		TextureRef normalRT;
-		TextureRef selfilumRT;
-
-		TextureRef downSelfilumRT;
-		TextureRef tempRT;
+		eastl::vector<TextureRef> selfilumRTs;
 
 		TextureRef occluderRT;
 
 		TextureRef shadowRT;
 
-		int downSelfilumRTWidth = -1;
-		int downSelfilumRTHeight = -1;
-
 		VertexDeclRef vdecl;
-		DataBufferRef buffer;		
-
-		float selfilumScaleRT = 1.0f;
-		int numBlurSelfIlum = 4;
-		float streangthBlurSelfIlum = 0.75f;
-		float powerSelfIlum = 4.0f;
+		DataBufferRef buffer;
 
 		struct GlobalLight
 		{
 			META_DATA_DECL_BASE(GlobalLight)
 
 			Color ambientColor;
-			float ambientIntensity = 1.0f;			
+			float ambientIntensity = 1.0f;
 		};
 
 		eastl::vector<GlobalLight> globalLights;
@@ -55,6 +44,8 @@ namespace Orin
 		static float lightGroupDivider;
 		static RenderTechniqueRef gbufferTech;
 		RenderTechniqueRef blurRTech;
+		RenderTechniqueRef blurDownRTech;
+		RenderTechniqueRef blurUpRTech;
 
 		eastl::vector<class DirectionLight2D*> dirLights;
 		eastl::vector<class PointLight2D*> lights;
@@ -62,8 +53,6 @@ namespace Orin
 		RenderTechniqueRef shadowRenderTech;
 		RenderTechniqueRef defferdLightTech;
 
-		float ComputeGaussian(float n);
-		void BlurTexture(TextureRef src, TextureRef dest, float blurStrength);
 		void GatherLights();
 		void GenerateShadows();
 		void BlurSelfIlum();

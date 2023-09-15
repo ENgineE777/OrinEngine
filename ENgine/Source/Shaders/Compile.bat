@@ -16,6 +16,8 @@ fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\combine_ps.shd
 
 fxc /E VS /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\blur_vs.shd blur.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\blur_ps.shd blur.shader
+fxc /E PS_UP /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\blur_up_ps.shd blur_scale.shader
+fxc /E PS_DOWN /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\blur_down_ps.shd blur_scale.shader
 
 fxc /E VS /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\debug_line_vs.shd debug_line.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\debug_line_ps.shd debug_line.shader

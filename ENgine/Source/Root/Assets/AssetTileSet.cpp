@@ -18,6 +18,8 @@ namespace Orin
 		ENUM_END
 		BOOL_PROP(AssetTileSet::Tile, flipH, false, "Properties", "flipH", "flip horizontaly")
 		BOOL_PROP(AssetTileSet::Tile, flipV, false, "Properties", "flipV", "flip verticaly")
+		COLOR_PROP(AssetTileSet::Tile, emmisive, COLOR_WHITE, "Visual", "Emmisive")
+		FLOAT_PROP(AssetTileSet::Tile, emmisiveIntencity, 1.0f, "Visual", "emmisiveIntencity", "emmisiveIntencity")
 		STRING_PROP(AssetTileSet::Tile, meta, "", "Properties", "Meta")
 		ASSET_TEXTURE_PROP(AssetTileSet::Tile, texture, "Properties", "Texture")
 	META_DATA_DESC_END()
@@ -62,6 +64,9 @@ namespace Orin
 				loader.Read("rotation", tile.rotation);
 				loader.Read("flipH", tile.flipH);
 				loader.Read("flipV", tile.flipV);
+				loader.Read("emmisive", tile.emmisive);
+				loader.Read("emmisiveIntencity", tile.emmisiveIntencity);
+
 				loader.Read("meta", tile.meta);
 				tile.texture.LoadData(loader, "Texture");
 
@@ -128,6 +133,16 @@ namespace Orin
 	{
 		return index >= 0 && index < tiles.size() ? (float)tiles[index].flipV : false;
 	}
+	
+	Color AssetTileSet::GetEmmisive(int index)
+	{
+		return index >= 0 && index < tiles.size() ? tiles[index].emmisive : COLOR_WHITE;
+	}
+
+	float AssetTileSet::GetEmmisiveIntencity(int index)
+	{
+		return index >= 0 && index < tiles.size() ? tiles[index].emmisiveIntencity : 1.0f;
+	}
 
 	Math::Vector2 AssetTileSet::GetTilePos(int index)
 	{
@@ -160,6 +175,8 @@ namespace Orin
 			saver.Write("rotation", tile.rotation);
 			saver.Write("flipH", tile.flipH);
 			saver.Write("flipV", tile.flipV);
+			saver.Write("emmisive", tile.emmisive);
+			saver.Write("emmisiveIntencity", tile.emmisiveIntencity);
 			saver.Write("meta", tile.meta);
 			tile.texture.SaveData(saver, "Texture");
 

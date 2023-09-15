@@ -14,6 +14,8 @@ namespace Orin
 	public:
 
 		Color color;
+		Color emmisive;
+		float emmisiveIntencity = 1.0f;
 		AssetAnimGraph2DRef anim;
 
 		int lightGroup = 1;
