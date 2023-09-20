@@ -117,7 +117,7 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
 	f_norm = normal.rgb * 0.5f + 0.5f;
 
     output.normals = float4(f_norm.rgb, 1.0f);
-	output.selfilum = float3(emmisive.rgb * material.b * params.z);
+	output.selfilum = float3(clr.rgb * emmisive.rgb * material.b * params.z);
 
     return output;
 }
@@ -497,34 +497,38 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	{
 		float lum = outColor.r * 0.299 + outColor.g * 0.587 + outColor.b * 0.114;
 		outColor = float3(lum, lum, lum);
+	}
 
-		float grain_amount = 0.05;
-		float color_amount = 0.6;
-		float grain_size = 1.2;
-		float lum_amount = 1.0f;
+	float grain_amount = u_lights[0].y > 0.5f ? 0.05 : 0.02;
+	float color_amount = 0.6;
+	float grain_size = u_lights[0].y > 0.5f ? 1.2 : 0.333f;
+	float lum_amount = 1.0f;
 
-		float sx_y = (u_lights[2].y * 2.0f);
-		float uv_y = input.texCoord.y * sx_y;
-		int uv_k = (int)(uv_y / 4.0f);
-		uv_y = uv_y - uv_k * 4.0f;
+	float sx_y = (u_lights[2].y * 2.0f);
+	float uv_y = input.texCoord.y * sx_y;
+	int uv_k = (int)(uv_y / 4.0f);
+	uv_y = uv_y - uv_k * 4.0f;
 
-		float2 sz = float2(u_lights[2].x / grain_size, u_lights[2].y / grain_size) * input.texCoord;
-		float3 noise = pnoise3D(float3(sz.x, sz.y, 0.0));
+	float2 sz = float2(u_lights[2].x / grain_size, u_lights[2].y / grain_size) * input.texCoord;
+	float3 noise = pnoise3D(float3(sz.x, sz.y, 0.0));
 		
-		float3 lumcoeff = float3(0.299, 0.587, 0.114);
-		float luminance = lerp(0.0, dot(outColor, lumcoeff), lum_amount);
-		lum = smoothstep(0.2, 0.0, luminance);
-		lum += luminance;
+	float3 lumcoeff = float3(0.299, 0.587, 0.114);
+	float luminance = lerp(0.0, dot(outColor, lumcoeff), lum_amount);
+	float lum = smoothstep(0.2, 0.0, luminance);
+	lum += luminance;
 	
-		noise = lerp(noise, float3(0.0f, 0.0f, 0.0f), pow(lum, 4.0));
+	noise = lerp(noise, float3(0.0f, 0.0f, 0.0f), pow(lum, 4.0));
 
+	if (u_lights[0].y > 0.5f)
+	{
 		outColor *= float3(102.0f / 255.0f, 100.0f / 255.0f, 138.0f / 255.0f) * 1.5f;
 
 		outColor *= sin(uv_y * 1.54f) * 0.2f + 0.8f;
 		outColor *= 2.0f - max(length(input.texCoord - float2(0.5f, 0.5f)), 0.35f) * 2.85f;
-
-		outColor = outColor + noise * grain_amount;		
 	}
+
+	outColor = outColor + noise * grain_amount;		
+
 
     return float4(outColor, 1.0f);
 }
