@@ -82,14 +82,30 @@ namespace Orin
 				Math::Vector3 pos = transform.position;
 				Math::Vector3 targetPos = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 
-				if (-actualBorder.x > targetPos.x - pos.x)
+				if (lastTargetPos.x - targetPos.x < -2.1f)
 				{
-					pos.x = targetPos.x + actualBorder.x;
+					horzState = 1;
+				}
+				else
+				if (lastTargetPos.x - targetPos.x > 2.1f)
+				{
+					horzState = -1;
 				}
 
-				if (actualBorder.x < targetPos.x - pos.x)
+				if (horzState == 1)
 				{
-					pos.x = targetPos.x - actualBorder.x;
+					if (-actualBorder.x < targetPos.x - pos.x)
+					{
+						pos.x = targetPos.x + actualBorder.x;
+					}
+				}
+				else
+				if (horzState == -1)
+				{
+					if (actualBorder.x > targetPos.x - pos.x)
+					{
+						pos.x = targetPos.x - actualBorder.x;
+					}
 				}
 
 				if (-actualBorder.y > targetPos.y - pos.y)
@@ -109,6 +125,8 @@ namespace Orin
 				}
 
 				transform.position = Math::Approach(transform.position, pos, dt, smoothingViscosity);
+
+				lastTargetPos = targetPos;
 			}
 
 			Sprite::SetCamZoom(zoom);
@@ -175,8 +193,10 @@ namespace Orin
 	void Camera2D::CenterCamera()
 	{
 		if (targetRef)
-		{
+		{			
 			transform.position = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
+			lastTargetPos = transform.position;
+			horzState = 0;
 		}
 	}
 }

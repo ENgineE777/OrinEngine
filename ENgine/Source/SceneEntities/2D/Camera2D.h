@@ -24,6 +24,8 @@ namespace Orin
 		Math::Vector2 leftup;
 		Math::Vector2 rightdown;
 		SceneEntityRef<SceneEntity> targetRef;
+		Math::Vector3 lastTargetPos;
+		int horzState = 0;
 
 		Math::Vector2 addPosition;
 		float addRotation;
