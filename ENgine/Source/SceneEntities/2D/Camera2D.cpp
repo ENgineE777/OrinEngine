@@ -82,7 +82,7 @@ namespace Orin
 				Math::Vector3 pos = transform.position;
 				Math::Vector3 targetPos = Sprite::ToPixels(targetRef->GetTransform().GetGlobal().Pos());
 
-				if (lastTargetPos.x - targetPos.x < -2.1f)
+				/*if (lastTargetPos.x - targetPos.x < -2.1f)
 				{
 					horzState = 1;
 				}
@@ -106,6 +106,16 @@ namespace Orin
 					{
 						pos.x = targetPos.x - actualBorder.x;
 					}
+				}*/
+
+				if (-actualBorder.x > targetPos.x - pos.x)
+				{
+					pos.x = targetPos.x + actualBorder.x;
+				}
+
+				if (actualBorder.x < targetPos.x - pos.x)
+				{
+					pos.x = targetPos.x - actualBorder.x;
 				}
 
 				if (-actualBorder.y > targetPos.y - pos.y)
