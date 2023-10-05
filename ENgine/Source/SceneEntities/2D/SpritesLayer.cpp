@@ -69,7 +69,7 @@ namespace Orin
 
 			root.render.GetDevice()->RestoreRenderTarget();
 
-			root.render.DebugSprite(maskRT, 10.0f, 100.0f);
+			//root.render.DebugSprite(maskRT, 10.0f, 100.0f);
 
 			quadMaskedPrg->SetTexture(ShaderType::Pixel, "maskMap", maskRT);
 		}
