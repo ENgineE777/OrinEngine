@@ -85,6 +85,16 @@ namespace Orin
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&TileMap::Draw);
 
 		Tasks(true)->AddTask(500, this, (Object::Delegate)&TileMap::DrawOccluders);
+
+		if (edited)
+		{
+			TileSetWindow::StopEdit();
+
+			if (tileSet.Get())
+			{
+				TileSetWindow::StartEdit(tileSet.Get());
+			}
+		}
 	}
 
 	void TileMap::OnVisiblityChange(bool state)
