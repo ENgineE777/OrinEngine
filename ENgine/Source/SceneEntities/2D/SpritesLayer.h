@@ -8,6 +8,9 @@ namespace Orin
 {
 	class SpritesLayer : public SceneEntity
 	{
+		TextureRef maskRT;
+		RenderTechniqueRef quadMaskedPrg;
+
 	public:
 		META_DATA_DECL(SpritesLayer)
 
@@ -20,6 +23,8 @@ namespace Orin
 		\brief Strength of paralax
 		*/
 		Math::Vector2 paralax = 1.0f;
+
+		bool usePortlas = false;
 
 		AssetSpritesLayerRef spritesAsset;
 

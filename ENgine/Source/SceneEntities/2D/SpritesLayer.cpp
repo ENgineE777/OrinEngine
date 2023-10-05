@@ -4,13 +4,27 @@
 
 namespace Orin
 {
-	ENTITYREG(SceneEntity, SpritesLayer, "2D", "SpritesLayer")
+	class QuadRenderMaskedTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "sprite_masked_vs.shd"; };
+		virtual const char* GetPsName() { return "sprite_masked_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
+	ENTITYREG(SceneEntity, SpritesLayer, "2D/Sprites", "SpritesLayer")
 
 	META_DATA_DESC(SpritesLayer)
 		BASE_SCENE_ENTITY_PROP(SpritesLayer)
 		FLOAT_PROP(SpritesLayer, paralax.x, 0.0f, "Geometry", "paralax X", "X-axis paralax")
 		FLOAT_PROP(SpritesLayer, paralax.y, 0.0f, "Geometry", "paralax Y", "Y-axis paralax")
 		INT_PROP(SpritesLayer, drawLevel, 0, "Geometry", "draw_level", "Draw priority")
+		BOOL_PROP(SpritesLayer, usePortlas, false, "Geometry", "usePortlas", "Draw priority")
 		ASSET_SPRITES_LAYER_PROP(SpritesLayer, spritesAsset, "Visual", "SpritesLayer")
 	META_DATA_DESC_END()
 
@@ -18,6 +32,8 @@ namespace Orin
 	{
 		transform.objectType = ObjectType::Object2D;
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectMoveXY;
+
+		quadMaskedPrg = root.render.GetRenderTechnique<QuadRenderMaskedTechnique>(_FL_);
 	}
 
 	void SpritesLayer::ApplyProperties()
@@ -34,6 +50,30 @@ namespace Orin
 	{
 		Math::Vector2 size = spritesAsset.GetSize();
 		transform.size = size;
+
+		if (usePortlas && drawLevel == 7)
+		{
+			int screenWidth = root.render.GetDevice()->GetWidth();
+			int screenHeight = root.render.GetDevice()->GetHeight();;
+
+			if (!maskRT || maskRT->GetWidth() != screenWidth || maskRT->GetHeight() != screenHeight)
+			{
+				maskRT = root.render.GetDevice()->CreateTexture(screenWidth, screenHeight, TextureFormat::FMT_A8R8G8B8, 1, true, TextureType::Tex2D, _FL_);
+				maskRT->SetAdress(TextureAddress::Clamp);
+			}
+
+			root.render.GetDevice()->SetRenderTarget(0, maskRT);
+			root.render.GetDevice()->Clear(true, COLOR_BLACK_A(1.0f), false, 1.0f);
+
+			root.render.ExecutePool(550, 0.0f);
+
+			root.render.GetDevice()->RestoreRenderTarget();
+
+			root.render.DebugSprite(maskRT, 10.0f, 100.0f);
+
+			quadMaskedPrg->SetTexture(ShaderType::Pixel, "maskMap", maskRT);
+		}
+		
 
 		if (IsVisible())
 		{
@@ -67,6 +107,7 @@ namespace Orin
 					pos.y = transform.position.y + (camPos.y - transform.position.y) * (1.0f - paralax.y);
 				}
 
+				spritesAsset.prg = usePortlas ? quadMaskedPrg : Sprite::quadPrg;
 				spritesAsset.Draw(pos, COLOR_WHITE, dt);
 			}
 		}

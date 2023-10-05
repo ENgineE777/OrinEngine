@@ -56,6 +56,8 @@ namespace Orin
 		AssetSpritesLayerRef(Asset* setPtr, const char* file, int line) : PointerRef(dynamic_cast<AssetSpritesLayer*>(setPtr), _FL_) {};
 		AssetSpritesLayerRef(AssetSpritesLayer* setPtr, const char* file, int line) : PointerRef(setPtr, _FL_) {};
 
+		RenderTechniqueRef prg = Sprite::quadPrg;
+
 		AssetSpritesLayerRef& operator=(const AssetSpritesLayerRef& ref)
 		{
 			Copy(ref);

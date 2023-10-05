@@ -248,6 +248,7 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\PointLight2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.h" />
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteLayerPortal.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpritesLayer.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\TileMap.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\3D\GenericMarker.h" />
@@ -463,6 +464,7 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PointLight2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.cpp" />
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteLayerPortal.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpritesLayer.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\TileMap.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\3D\GenericMarker.cpp" />

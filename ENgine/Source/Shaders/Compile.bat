@@ -43,6 +43,8 @@ fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\particle_ps.sh
 fxc /E VS /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_vs.shd sprite.shader
 fxc /E PS /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_ps.shd sprite.shader
 fxc /E PS_DISCARD /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_discard_ps.shd sprite.shader
+fxc /E VS_MASKED /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_masked_vs.shd sprite.shader
+fxc /E PS_MASKED /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_masked_ps.shd sprite.shader
 fxc /E PS_LIGHT /T ps_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_light_ps.shd sprite.shader
 
 fxc /E VS_SHD /T vs_4_0 /Zi /Od /Fo ..\..\..\Editor\ENgine\Shaders\PC\sprite_vs_shd.shd sprite_shd.shader

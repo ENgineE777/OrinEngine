@@ -18,6 +18,19 @@ namespace Orin
 		};
 	};
 
+	class QuadRenderNoDepthWriteTechnique : public QuadRenderTechnique
+	{
+	public:
+		virtual const char* GetPsName() { return "sprite_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
 	class QuadRenderNoZTechnique : public QuadRenderTechnique
 	{
 	public:
@@ -84,6 +97,7 @@ namespace Orin
 
 	RenderTechniqueRef Sprite::quadPrg;
 	RenderTechniqueRef Sprite::quadPrgNoZ;
+	RenderTechniqueRef Sprite::quadPrgNoDepthWrite;
 	RenderTechniqueRef Sprite::quadPrgShdNoZ;
 
 	RenderTechniqueRef Sprite::polygonPrg;
@@ -118,6 +132,7 @@ namespace Orin
 		_polygonBuffer = root.render.GetDevice()->CreateBuffer(128, sizeof(PolygonVertex), _FL_);
 
 		quadPrg = root.render.GetRenderTechnique<QuadRenderTechnique>(_FL_);
+		quadPrgNoDepthWrite = root.render.GetRenderTechnique<QuadRenderNoDepthWriteTechnique>(_FL_);
 		quadPrgNoZ = root.render.GetRenderTechnique<QuadRenderNoZTechnique>(_FL_);
 		quadPrgShdNoZ = root.render.GetRenderTechnique<QuadRenderShdNoZTechnique>(_FL_);
 		polygonPrg = root.render.GetRenderTechnique<PolygonRenderTechnique> (_FL_);

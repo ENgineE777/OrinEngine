@@ -69,6 +69,7 @@ namespace Orin
 			transform.position = sprite.pos;
 			transform.size = sprite.texture.GetSize() * sprite.scale;
 
+			sprite.texture.prg = Sprite::quadPrg;
 			sprite.texture.Draw(&transform, COLOR_WHITE, dt);
 		}
 	}
@@ -165,6 +166,7 @@ namespace Orin
 				trans.size = sprite.texture.GetSize();
 				trans.scale = sprite.scale;
 
+				sprite.texture.prg = prg;
 				sprite.texture.Draw(&trans, COLOR_WHITE, dt);
 			}
 		}
