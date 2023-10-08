@@ -366,7 +366,7 @@ namespace Orin
 			GetRoot()->GetRender()->GetDevice()->Draw(PrimitiveTopology::TriangleStrip, 0, 2);
 		}
 
-		for (int i = selfilumRTs.size() - 1; i > 0; i--)
+		for (int i = (int)selfilumRTs.size() - 1; i > 0; i--)
 		{
 			GetRoot()->GetRender()->GetDevice()->SetVertexDecl(vdecl);
 			GetRoot()->GetRender()->GetDevice()->SetVertexBuffer(0, buffer);
