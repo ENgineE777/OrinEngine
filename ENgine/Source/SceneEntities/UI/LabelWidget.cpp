@@ -9,6 +9,7 @@ namespace Orin
 	META_DATA_DESC(LabelWidget)
 		BASE_SCENE_ENTITY_PROP(LabelWidget)
 		INT_PROP(LabelWidget, fontHeight, 20, "Property", "Font Height", "Font Height")
+		FLOAT_PROP(LabelWidget, linesGapMul, 1.0f, "Property", "Lines Gap Mul", "Lines Gap Mul")
 		FILENAME_PROP(LabelWidget, fontName, "", "Property", "Font Name")
 		STRING_PROP(LabelWidget, text, "Text", "Property", "Text")
 		ENUM_PROP(LabelWidget, horzAlign, 0, "Prop", "Horz align", "Horizontal aligment of a widget")
@@ -52,7 +53,7 @@ namespace Orin
 		if (height != screenHeight)
 		{
 			int calculatedFontHeight = (int)(k * (float)fontHeight);
-			font = root.fonts.LoadFont(fontName.c_str(), false, false, calculatedFontHeight, _FL_);
+			font = root.fonts.LoadFont(fontName.c_str(), false, false, calculatedFontHeight, linesGapMul, _FL_);
 
 			screenHeight = height;
 		}

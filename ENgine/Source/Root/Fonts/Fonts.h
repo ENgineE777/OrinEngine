@@ -47,7 +47,7 @@ namespace Orin
 
 		\return Instance of a font. Nullptr will returned if it is impossible to load a font.
 		*/
-		FontRef LoadFont(const char* file_name, bool is_bold, bool is_italic, int height, const char* file, int line);
+		FontRef LoadFont(const char* file_name, bool is_bold, bool is_italic, int height, float linesGapMul, const char* file, int line);
 
 		#ifndef DOXYGEN_SKIP
 		bool Init();

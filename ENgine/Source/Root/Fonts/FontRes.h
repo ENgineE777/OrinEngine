@@ -52,6 +52,7 @@ namespace Orin
 
 		int height;
 		float used_height;
+		float linesGapMul = 1.0f;
 
 		int tex_w;
 		int tex_h;
@@ -67,7 +68,7 @@ namespace Orin
 
 	public:
 
-		FontRes(const char* name, const char* fl_name, int hgt);
+		FontRes(const char* name, const char* fl_name, int hgt, float setLinesGapMul);
 		virtual bool Load();
 		Glyph* GenerateChar(int ch);
 

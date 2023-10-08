@@ -16,7 +16,7 @@ namespace Orin
 	{
 		debugTaskPool->AddTask(1000, this, (Object::Delegate)&DebugFont::Draw);
 
-		font = root.fonts.LoadFont("ENgine/helvetica", false, false, font_size, _FL_);
+		font = root.fonts.LoadFont("ENgine/helvetica", false, false, font_size, 1.25f, _FL_);
 
 		return true;
 	}

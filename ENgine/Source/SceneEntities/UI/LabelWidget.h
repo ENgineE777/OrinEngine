@@ -21,6 +21,7 @@ namespace Orin
 		int fontHeight = 20;
 		eastl::string fontName;
 
+		float linesGapMul = 1.0f;
 		eastl::string text;
 
 		int screenHeight = -1;

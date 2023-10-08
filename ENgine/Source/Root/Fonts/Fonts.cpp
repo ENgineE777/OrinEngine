@@ -29,7 +29,7 @@ namespace Orin
 		return true;
 	}
 
-	FontRef Fonts::LoadFont(const char* file_name, bool is_bold, bool is_italic, int height, const char* file, int line)
+	FontRef Fonts::LoadFont(const char* file_name, bool is_bold, bool is_italic, int height, float linesGapMul, const char* file, int line)
 	{
 		if (!file_name[0]) return FontRef();
 
@@ -71,7 +71,7 @@ namespace Orin
 
 		if (!res)
 		{
-			res = NEW FontRes(nm, font_path, height);
+			res = NEW FontRes(nm, font_path, height, linesGapMul);
 
 			if (!res->Load())
 			{

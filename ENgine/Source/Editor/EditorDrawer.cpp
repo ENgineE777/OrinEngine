@@ -48,7 +48,7 @@ namespace Orin
 
 		projectIconTex = root.render.LoadTexture("ENgine/editor/ProjectIcon.png", _FL_);
 
-		font = root.fonts.LoadFont("ENgine\\DroidSans.ttf", false, false, 12, _FL_);
+		font = root.fonts.LoadFont("ENgine\\DroidSans.ttf", false, false, 12, 1.2f, _FL_);
 
 		VertexDecl::ElemDesc desc[] = { { ElementType::Float3, ElementSemantic::Position, 0 },{ ElementType::Float2, ElementSemantic::Texcoord, 0 } };
 		skyBoxVdecl = root.render.GetDevice()->CreateVertexDecl(2, desc, _FL_);

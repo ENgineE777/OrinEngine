@@ -19,7 +19,7 @@ namespace Orin
 		return 1024;
 	}
 
-	FontRes::FontRes(const char* setName, const char* fl_name, int hgt)
+	FontRes::FontRes(const char* setName, const char* fl_name, int hgt, float setLinesGapMul)
 	{
 		name = setName;
 		fileName = fl_name;
@@ -28,6 +28,7 @@ namespace Orin
 		tex_h = -1;
 
 		height = hgt;
+		linesGapMul = setLinesGapMul;
 
 		need_update_tex = false;
 		tex_buffer = nullptr;
@@ -152,7 +153,7 @@ namespace Orin
 						breaker.index = i;
 						line_breaks.push_back(breaker);
 						breaker.width = 0.5f;
-						scr_y += height;
+						scr_y += height * linesGapMul;
 						last_whitespace = -1;
 						continue;
 					}
@@ -254,7 +255,7 @@ namespace Orin
 						i++;
 
 						scr_x = 0;
-						scr_y += height * 1.2f;
+						scr_y += height * linesGapMul;
 						continue;
 					}
 				}
