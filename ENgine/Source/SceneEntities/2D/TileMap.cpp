@@ -62,12 +62,15 @@ namespace Orin
 		BOOL_PROP(TileMap, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(TileMap, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(TileMap, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
+		BOOL_PROP(TileMap, autoTileH, false, "Visual", "autoTileH", "autoTileH")
+		BOOL_PROP(TileMap, autoTileV, false, "Visual", "autoTileV", "autoTileV")
+		BOOL_PROP(TileMap, autoCalcTileZone, true, "Visual", "autoCalcTileZone", "autoCalcTileZone")
 	META_DATA_DESC_END()
 
 	void TileMap::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = MoveXYZ;
+		transform.transformFlag = MoveXYZ | RectMoveXY | RectSizeXY;
 	}
 
 	void TileMap::ApplyProperties()
@@ -94,6 +97,46 @@ namespace Orin
 			{
 				TileSetWindow::StartEdit(tileSet.Get());
 			}
+		}
+
+		CalcAutoTileData();
+	}
+
+	void TileMap::CalcAutoTileData()
+	{		
+		zoneSize = { transform.size.x, transform.size.y };
+		zoneCenter = 0.0f;
+
+		if (!autoCalcTileZone)
+		{
+			return;
+		}
+
+		if (tiles.size() > 0)
+		{
+			Math::Matrix mat = transform.GetGlobal();			
+
+			auto tilePos = mat.Vx() * (float)tiles[0].x * transform.size.x + mat.Vy() * (float)tiles[0].y * transform.size.y;
+
+			Math::Vector2 minPos = { tilePos.x, tilePos.y };
+			Math::Vector2 maxPos = { tilePos.x, tilePos.y };
+
+			auto offset = Math::Vector3(1.0f, 1.0f, 0.0f) * transform.size;
+
+			for (auto& tile : tiles)
+			{
+				Math::Vector3 tmpMinPos = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tiles[0].y * transform.size.y;
+				Math::Vector3 tmpMaxPos = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tiles[0].y * transform.size.y + offset;
+
+				minPos.x = fmin(minPos.x, tmpMinPos.x);
+				minPos.y = fmin(minPos.y, tmpMinPos.y);
+
+				maxPos.x = fmax(maxPos.x, tmpMaxPos.x);
+				maxPos.y = fmax(maxPos.y, tmpMaxPos.y);
+			}
+
+			zoneSize = maxPos - minPos;
+			zoneCenter = (maxPos + minPos) * 0.5f;
 		}
 	}
 
@@ -139,6 +182,70 @@ namespace Orin
 		}
 	}
 
+	void TileMap::DrawTiles(float dt, Math::Vector3 pos)
+	{
+		RenderTechniqueRef tech = Sprite::quadPrg;
+
+		Math::Vector4 params;
+		params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
+		params.y = 0.0f;
+		params.z = 1.0f;
+
+		if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+		{
+			DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
+			DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", tileSet->normal ? tileSet->normal.Get()->texture : nullptr);
+
+			Math::Matrix mat;
+			DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
+
+			DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
+
+			tech = DefferedLight::gbufferTech;
+		}
+
+		Transform trans;
+		trans.objectType = ObjectType::Object2D;
+		trans.offset.x = 0.5f;
+		trans.offset.y = 0.5f;
+		trans.size = transform.size + 0.1f;
+
+		Math::Matrix mat = transform.GetGlobal();
+
+		auto offset = Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
+
+		for (auto& tile : tiles)
+		{
+			if (tile.index == -1)
+			{
+				continue;
+			}
+
+			auto tilePos = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
+
+			if (!Sprite::IsRectVisibile(Math::Vector2(tilePos.x, tilePos.y), Math::Vector2(tilePos.x, tilePos.y) + Math::Vector2(transform.size.x, -transform.size.y)))
+			{
+				continue;
+			}
+
+			trans.rotation = tile.rotation;
+			trans.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
+			trans.position = tilePos + offset;
+
+			tile.texture.prg = tech;
+
+			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+			{
+				params.z = tile.emmisiveIntencity;
+
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&tile.emmisive.r, 1);
+			}
+
+			tile.texture.Draw(&trans, color, dt);
+		}
+	}
+
 	void TileMap::Draw(float dt)
 	{
 		if (IsEditMode())
@@ -179,98 +286,76 @@ namespace Orin
 		}
 
 		if (IsVisible())
-		{
-			Transform trans;
-			trans.objectType = ObjectType::Object2D;
-			trans.offset.x = 0.5f;
-			trans.offset.y = 0.5f;
-			trans.size = transform.size;
-
-			auto size = transform.size;
+		{			
+			auto camPos = Sprite::GetCamPos();	
 
 			Math::Matrix mat = transform.GetGlobal();
 			auto pos = Sprite::ToPixels(mat.Pos());
 
-			Math::Matrix view;
-			root.render.GetTransform(TransformStage::View, view);
-			view.Inverse();
-
-			auto camPos = Sprite::ToPixels(view.Pos());
-
-			if (paralaxInEditor || GetScene()->IsPlaying())
+			if (autoTileH || autoTileV)
 			{
-				pos.x = pos.x + (camPos.x - pos.x) * (1.0f - paralax.x);
-				pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);
-			}
+				
 
-			RenderTechniqueRef tech = Sprite::quadPrg;
+				Math::Matrix mat = transform.GetGlobal();
 
-			Math::Vector4 params;
-			params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
-			params.y = 0.0f;
-			params.z = 1.0f;
+				int fromX = 0;
+				int toX = 0;
 
-			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
-			{
-				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
-				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", tileSet->normal ? tileSet->normal.Get()->texture : nullptr);
-
-				Math::Matrix mat;
-				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
-
-				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
-
-				tech = DefferedLight::gbufferTech;
-			}
-
-			auto offset = Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
-
-			for (auto& tile : tiles)
-			{
-				if (tile.index == -1)
+				if (autoTileH)
 				{
-					continue;
+					float scale = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
+					toX = (int)(((root.render.GetDevice()->GetWidth() / scale) / zoneSize.x + 1) * 0.5f);
+					fromX = -toX;
 				}
+				
+				int fromY = 0;
+				int toY = 0;
 
-				auto tilePos = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
-
-				if (!Sprite::IsRectVisibile(Math::Vector2(tilePos.x, tilePos.y), Math::Vector2(tilePos.x, tilePos.y) + Math::Vector2(transform.size.x, -transform.size.y)))
+				if (autoTileV)
 				{
-					continue;
+					toY = (int)((Sprite::GetPixelsHeight() / zoneSize.y + 1) * 0.5f);
+					fromY = -toY;					
 				}
 
-				trans.rotation = tile.rotation;
-				trans.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
-				trans.position = tilePos + offset;
+				auto paralaxed = pos + (camPos - pos) * (1.0f - paralax);
+				int camOffsetX = autoTileH ? (int)((camPos.x - paralaxed.x) / zoneSize.x) : 0;
+				int camOffsetY = autoTileV ? (int)((camPos.y - paralaxed.y) / zoneSize.y) : 0;
 
-				trans.size.x = size.x + 0.1f;
-				trans.size.y = size.y + 0.1f;
-
-				tile.texture.prg = tech;
-
-				if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
-				{					
-					params.z = tile.emmisiveIntencity;
-
-					DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
-					DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&tile.emmisive.r, 1);
+				for (int y = fromY - 1; y <= toY + 1; y++)
+				{
+					for (int x = fromX - 1; x <= toX + 1; x++)
+					{					
+						DrawTiles(dt, Math::Vector3(paralaxed.x + (x + camOffsetX) * zoneSize.x - zoneCenter.x,
+													paralaxed.y + (y + camOffsetY) * zoneSize.y - zoneCenter.y, 0.0f));
+					}
+				}
+			}
+			else
+			{
+				if (paralaxInEditor || GetScene()->IsPlaying())
+				{
+					pos.x = pos.x + (camPos.x - pos.x) * (1.0f - paralax.x);
+					pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);
 				}
 
-				tile.texture.Draw(&trans, color, dt);
+				DrawTiles(dt, pos);
 			}
 
 			if (IsEditMode())
 			{
+				Transform trans;
+				trans.objectType = ObjectType::Object2D;
+				trans.offset.x = 0.5f;
+				trans.offset.y = 0.5f;
+				trans.size = transform.size + 0.1f;
+
 				for (auto& tile : tilesSelected)
 				{
 					trans.rotation = tile.rotation;
 					trans.scale = Math::Vector3(tile.flipH ? -1.0f : 1.0f, tile.flipV ? -1.0f : 1.0f, 1.0f);
 					trans.position = pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
-					trans.size.x = size.x;
-					trans.size.y = size.y;
-
-					tile.texture.prg = tech;
+					tile.texture.prg = Sprite::quadPrg;
 					tile.texture.Draw(&trans, color, dt);
 				}
 
@@ -334,11 +419,8 @@ namespace Orin
 
 							trans.position = Math::Vector3(0.0f, 0.0f, -0.001f) + pos + mat.Vx() * tileX * transform.size.x + mat.Vy() * tileY * transform.size.y + Math::Vector3(0.5f, -0.5f, 0.0f) * transform.size;
 
-							trans.size.x = size.x + 0.01f;
-							trans.size.y = size.y + 0.01f;
-
 							AssetTextureRef texRef = tileSet->GetTileTexture(index);
-							texRef.prg = tech;
+							texRef.prg = Sprite::quadPrg;
 							texRef.Draw(&trans, color, dt);
 						}
 

@@ -17,6 +17,9 @@ namespace Orin
 {
 	class CLASS_DECLSPEC TileMap : public SceneEntity
 	{
+		Math::Vector2 zoneSize;
+		Math::Vector2 zoneCenter;
+
 	public:
 
 		struct Tile
@@ -52,7 +55,13 @@ namespace Orin
 
 		int lightGroup = 1;
 
+		bool autoTileH = false;
+		bool autoTileV = false;
+		bool autoCalcTileZone = true;
+
 		META_DATA_DECL(TileMap)
+
+		void CalcAutoTileData();
 
 	#ifndef DOXYGEN_SKIP
 
@@ -67,6 +76,7 @@ namespace Orin
 		void ApplyProperties() override;
 		void Draw(float dt);
 		void DrawOccluders(float dt);
+		void DrawTiles(float dt, Math::Vector3 pos);
 
 		void Load(JsonReader& reader) override;
 		void Save(JsonWriter& writer) override;
