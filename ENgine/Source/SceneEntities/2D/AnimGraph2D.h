@@ -35,6 +35,7 @@ namespace Orin
 		void ApplyProperties() override;
 		void Draw(float dt);
 		void DrawOccluder(float dt);
+		void DrawMask(float dt);
 	#endif
 	};
 }

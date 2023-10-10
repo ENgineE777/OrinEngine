@@ -246,6 +246,7 @@
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\Node2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\PointLight2D.h" />
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PortalMask.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.h" />
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteLayerPortal.h" />
@@ -462,6 +463,7 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Lights2DRenderer.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\Node2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PointLight2D.cpp" />
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PortalMask.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\ScriptEntity2D.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteEntity.cpp" />
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteLayerPortal.cpp" />

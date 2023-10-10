@@ -35,6 +35,7 @@ namespace Orin
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&AnimGraph2D::Draw);
 		Tasks(true)->AddTask(501, this, (Object::Delegate)&AnimGraph2D::DrawOccluder);
+		Tasks(true)->AddTask(550, this, (Object::Delegate)&AnimGraph2D::DrawMask);
 	}
 
 	void AnimGraph2D::Draw(float dt)
@@ -73,6 +74,15 @@ namespace Orin
 		if (IsVisible() && anim.Get() && drawLevel < 8)
 		{
 			anim.prg = Sprite::quadPrgNoZ;
+			anim.Draw(&transform, COLOR_BLACK, 0.0f);
+		}
+	}
+
+	void AnimGraph2D::DrawMask(float dt)
+	{
+		if (IsVisible() && anim.Get() && drawLevel < 8)
+		{
+			anim.prg = Sprite::quadPrg;
 			anim.Draw(&transform, COLOR_BLACK, 0.0f);
 		}
 	}

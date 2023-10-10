@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "PortalMask.h"
 #include "Root/Scenes/SceneEntity.h"
 #include "Root/Assets/AssetSpritesLayer.h"
 
@@ -8,8 +9,7 @@ namespace Orin
 {
 	class SpritesLayer : public SceneEntity
 	{
-		TextureRef maskRT;
-		RenderTechniqueRef quadMaskedPrg;
+		SceneEntityRef<PortalMask> portlaMask;
 
 	public:
 		META_DATA_DECL(SpritesLayer)

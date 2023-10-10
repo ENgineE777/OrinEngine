@@ -31,6 +31,13 @@ struct PS_INPUT
     float2 texCoord : TEXCOORD0;
 };
 
+struct PS_MASKED_INPUT
+{
+    float4 pos : SV_POSITION;
+    float2 texCoord : TEXCOORD;
+    float2 texCoord2 : TEXCOORD1;
+};
+
 Texture2D diffuseMap : register(t0);
 SamplerState diffuseLinear : register(s0);
 
@@ -46,6 +53,8 @@ SamplerState selfilumLinear : register(s3);
 Texture2D shadowMap : register(t4);
 SamplerState shadowLinear : register(s4);
 
+Texture2D maskMap : register(t4);
+SamplerState maskLinear : register(s4);
 
 struct PS_GBUFFER_OUTPUT
 {
@@ -117,7 +126,46 @@ PS_GBUFFER_OUTPUT PS_GBUFFER( PS_INPUT input)
 	f_norm = normal.rgb * 0.5f + 0.5f;
 
     output.normals = float4(f_norm.rgb, 1.0f);
-	output.selfilum = float3(clr.rgb * emmisive.rgb * material.b * params.z);
+    output.selfilum = float3(clr.rgb * emmisive.rgb * material.b * params.z);
+
+    return output;
+}
+
+PS_GBUFFER_OUTPUT PS_MASKED_GBUFFER(PS_MASKED_INPUT input)
+{
+    float2 screenCoord = 0.5f * float2(input.texCoord2.x, -input.texCoord2.y) + 0.5f;
+    
+    float4 clr = maskMap.Sample(maskLinear, screenCoord.xy);
+    
+    if (clr.r < 0.05f)
+    {
+        discard;
+    }
+
+    clr = diffuseMap.Sample(diffuseLinear, input.texCoord);
+
+    if (clr.a < 0.05f)
+    {
+        discard;
+    }
+
+    clr = lerp(float4(clr.rgb, 1.0f), float4(color.rgb, 1.0f), 1.0f - color.a);
+
+    PS_GBUFFER_OUTPUT output;
+
+    output.color = clr;
+    float4 material = materialMap.Sample(materialLinear, input.texCoord);
+    output.material = material;
+    output.material.g = params.x;
+    output.material.a = params.y;
+
+    float4 normal = normalsMap.Sample(normalsLinear, input.texCoord);
+    float3 f_norm = normalize(normal.rgb * 2.0f - 1.0f);
+    normal = mul(float4(f_norm.xyz, 1.0f), normalTrans);
+    f_norm = normal.rgb * 0.5f + 0.5f;
+
+    output.normals = float4(f_norm.rgb, 1.0f);
+    output.selfilum = float3(clr.rgb * emmisive.rgb * material.b * params.z);
 
     return output;
 }

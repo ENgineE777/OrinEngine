@@ -2615,6 +2615,8 @@ namespace Orin
 			editorDrawer.DrawSkyBox();
 		}
 
+		root.render.ExecutePool(-20, dt);
+		root.render.ExecutePool(-15, dt);
 		root.render.ExecutePool(-10, dt);
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(1, dt);

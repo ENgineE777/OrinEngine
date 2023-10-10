@@ -66,6 +66,7 @@ namespace Orin
 		BOOL_PROP(TileMap, autoTileV, false, "Visual", "autoTileV", "autoTileV")
 		BOOL_PROP(TileMap, autoCalcTileZone, true, "Visual", "autoCalcTileZone", "autoCalcTileZone")
 		VECTOR2_PROP(TileMap, zoneSize, 100.0f, "Visual", "zoneSize")
+		BOOL_PROP(TileMap, usePortlas, false, "Visual", "usePortlas", "Draw priority")
 	META_DATA_DESC_END()
 
 	void TileMap::Init()
@@ -89,6 +90,8 @@ namespace Orin
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&TileMap::Draw);
 
 		Tasks(true)->AddTask(500, this, (Object::Delegate)&TileMap::DrawOccluders);
+
+		Tasks(true)->AddTask(550, this, (Object::Delegate)&TileMap::DrawMask);
 
 		if (edited)
 		{
@@ -191,17 +194,22 @@ namespace Orin
 		params.y = 0.0f;
 		params.z = 1.0f;
 
-		if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+		if (DefferedLight::hackStateEnabled)
 		{
-			DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
-			DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", tileSet->normal ? tileSet->normal.Get()->texture : nullptr);
+			if (usePortlas && !portlaMask)
+			{				
+				portlaMask.SetEntity(GetScene()->FindEntity<PortalMask>());
+			}
+
+			tech = (usePortlas && portlaMask) ? portlaMask->quadMaskedDefferedPrg : DefferedLight::gbufferTech;
+
+			tech->SetTexture(ShaderType::Pixel, "materialMap", tileSet->material ? tileSet->material.Get()->texture : nullptr);
+			tech->SetTexture(ShaderType::Pixel, "normalsMap", tileSet->normal ? tileSet->normal.Get()->texture : nullptr);
 
 			Math::Matrix mat;
-			DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
+			tech->SetMatrix(ShaderType::Pixel, "trans", &mat, 1);
 
-			DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
-
-			tech = DefferedLight::gbufferTech;
+			tech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
 		}
 
 		Transform trans;
@@ -234,12 +242,12 @@ namespace Orin
 
 			tile.texture.prg = tech;
 
-			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
+			if (DefferedLight::hackStateEnabled)
 			{
 				params.z = tile.emmisiveIntencity;
 
-				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
-				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&tile.emmisive.r, 1);
+				tech->SetVector(ShaderType::Pixel, "params", &params, 1);
+				tech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&tile.emmisive.r, 1);
 			}
 
 			tile.texture.Draw(&trans, color, dt);
@@ -293,7 +301,7 @@ namespace Orin
 			auto pos = Sprite::ToPixels(mat.Pos());
 
 			if (autoTileH || autoTileV)
-			{
+			{				
 				Math::Matrix mat = transform.GetGlobal();
 
 				int fromX = 0;
@@ -457,6 +465,37 @@ namespace Orin
 			trans.size.y = sz.y;
 
 			tile.texture.prg = Sprite::quadPrgNoZ;
+			tile.texture.Draw(&trans, COLOR_BLACK, dt);
+		}
+	}
+
+	void TileMap::DrawMask(float dt)
+	{
+		if (!IsVisible())
+		{
+			return;
+		}
+
+		auto trans = transform;
+
+		Math::Matrix mat = trans.GetGlobal();
+		auto pos = Sprite::ToPixels(mat.Pos());
+
+		for (auto& tile : tiles)
+		{
+			if (tile.index == -1)
+			{
+				continue;
+			}
+
+			mat.Pos() = Sprite::ToUnits(pos + mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y);
+
+			trans.SetGlobal(mat);
+			auto sz = tile.texture.GetSize();
+			trans.size.x = sz.x;
+			trans.size.y = sz.y;
+
+			tile.texture.prg = Sprite::quadPrg;
 			tile.texture.Draw(&trans, COLOR_BLACK, dt);
 		}
 	}

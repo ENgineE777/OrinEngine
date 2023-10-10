@@ -8,6 +8,7 @@
 #include "Root/Assets/AssetTexture.h"
 #include "Root/Physics/PhysObject.h"
 #include "Root/Physics/PhysScene.h"
+#include "PortalMask.h"
 
 #ifdef ORIN_EDITOR
 #include "Editor/EditorAction.h"
@@ -59,6 +60,9 @@ namespace Orin
 		bool autoTileV = false;
 		bool autoCalcTileZone = true;
 
+		bool usePortlas = false;
+		SceneEntityRef<PortalMask> portlaMask;
+
 		META_DATA_DECL(TileMap)
 
 		void CalcAutoTileData();
@@ -76,6 +80,7 @@ namespace Orin
 		void ApplyProperties() override;
 		void Draw(float dt);
 		void DrawOccluders(float dt);
+		void DrawMask(float dt);
 		void DrawTiles(float dt, Math::Vector3 pos);
 
 		void Load(JsonReader& reader) override;

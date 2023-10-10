@@ -34,7 +34,7 @@ namespace Orin
 		transform.size.y = Sprite::GetPixelsHeight();
 		transform.transformFlag = TransformFlag::MoveX | TransformFlag::MoveY | RectMoveXY;
 
-		Tasks(true)->AddTask(-10, this, (Object::Delegate)&Camera2D::Update);
+		Tasks(true)->AddTask(-20, this, (Object::Delegate)&Camera2D::Update);
 	}
 
 	void Camera2D::Play()

@@ -769,6 +769,9 @@
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\SpriteLayerPortal.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\SceneEntities\2D\PortalMask.cpp">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\Support\Timer.h">
@@ -1438,6 +1441,9 @@
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\SpriteLayerPortal.h">
+      <Filter>Source\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\SceneEntities\2D\PortalMask.h">
       <Filter>Source\SceneEntities\2D</Filter>
     </ClInclude>
   </ItemGroup>
