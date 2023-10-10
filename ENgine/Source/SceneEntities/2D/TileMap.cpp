@@ -65,12 +65,13 @@ namespace Orin
 		BOOL_PROP(TileMap, autoTileH, false, "Visual", "autoTileH", "autoTileH")
 		BOOL_PROP(TileMap, autoTileV, false, "Visual", "autoTileV", "autoTileV")
 		BOOL_PROP(TileMap, autoCalcTileZone, true, "Visual", "autoCalcTileZone", "autoCalcTileZone")
+		VECTOR2_PROP(TileMap, zoneSize, 100.0f, "Visual", "zoneSize")
 	META_DATA_DESC_END()
 
 	void TileMap::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
-		transform.transformFlag = MoveXYZ | RectMoveXY | RectSizeXY;
+		transform.transformFlag = MoveXYZ | RectMoveXY;
 	}
 
 	void TileMap::ApplyProperties()
@@ -104,7 +105,6 @@ namespace Orin
 
 	void TileMap::CalcAutoTileData()
 	{		
-		zoneSize = { transform.size.x, transform.size.y };
 		zoneCenter = 0.0f;
 
 		if (!autoCalcTileZone)
@@ -125,8 +125,8 @@ namespace Orin
 
 			for (auto& tile : tiles)
 			{
-				Math::Vector3 tmpMinPos = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tiles[0].y * transform.size.y;
-				Math::Vector3 tmpMaxPos = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tiles[0].y * transform.size.y + offset;
+				Math::Vector3 tmpMinPos = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y;
+				Math::Vector3 tmpMaxPos = mat.Vx() * (float)tile.x * transform.size.x + mat.Vy() * (float)tile.y * transform.size.y + offset;
 
 				minPos.x = fmin(minPos.x, tmpMinPos.x);
 				minPos.y = fmin(minPos.y, tmpMinPos.y);
@@ -294,8 +294,6 @@ namespace Orin
 
 			if (autoTileH || autoTileV)
 			{
-				
-
 				Math::Matrix mat = transform.GetGlobal();
 
 				int fromX = 0;
@@ -326,7 +324,7 @@ namespace Orin
 					for (int x = fromX - 1; x <= toX + 1; x++)
 					{					
 						DrawTiles(dt, Math::Vector3(paralaxed.x + (x + camOffsetX) * zoneSize.x - zoneCenter.x,
-													paralaxed.y + (y + camOffsetY) * zoneSize.y - zoneCenter.y, 0.0f));
+													paralaxed.y + (y + camOffsetY) * zoneSize.y - zoneCenter.y, pos.z));
 					}
 				}
 			}
