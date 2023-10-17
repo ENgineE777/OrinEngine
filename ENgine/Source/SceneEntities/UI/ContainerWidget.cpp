@@ -113,8 +113,8 @@ namespace Orin
 				
 			if (vertSize == Size::wrapContext)
 			{
-
-			}transform.size.y = height;
+				transform.size.y = height;
+			}
 		}
 
 		transform.axis.x = (horzAlign == Align::alignRight) ? -1.0f : 1.0f;
@@ -140,12 +140,12 @@ namespace Orin
 		else
 		if (horzAlign == Align::alignCenter)
 		{
-			globalPos.x += leftPadding.x + (parentSize.x - rightPadding.x - leftPadding.x) * 0.5f + transform.size.x * (transform.offset.x - 0.5f);
+			globalPos.x += leftPadding.x + (parentSize.x - rightPadding.x - leftPadding.x) * 0.5f + transform.size.x * (transform.offset.x - 0.5f) * transform.scale.x;
 		}
 		else
 		if (horzAlign == Align::alignRight)
 		{
-			globalPos.x += -rightPadding.x - transform.size.x + parentSize.x;
+			globalPos.x += -rightPadding.x - transform.size.x * (transform.offset.x - 0.5f) * transform.scale.x + parentSize.x;
 		}
 
 		if (vertAlign == Align::alignTop)
@@ -155,12 +155,12 @@ namespace Orin
 		else
 		if (vertAlign == Align::alignCenter)
 		{
-			globalPos.y -= leftPadding.y + (parentSize.y - rightPadding.y - leftPadding.y) * 0.5f + transform.size.y * (transform.offset.y - 0.5f);
+			globalPos.y -= leftPadding.y + (parentSize.y - rightPadding.y - leftPadding.y) * 0.5f + transform.size.y * (transform.offset.y - 0.5f) * transform.scale.y;
 		}
 		else
 		if (vertAlign == Align::alignBottom)
 		{
-			globalPos.y -= -rightPadding.y - transform.size.y + parentSize.y;
+			globalPos.y -= -rightPadding.y - transform.size.y * transform.scale.y * (transform.offset.y - 0.5f) + parentSize.y;
 		}
 
 		global.Pos() = Sprite::ToUnits(globalPos);
