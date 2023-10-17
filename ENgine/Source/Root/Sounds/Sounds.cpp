@@ -142,10 +142,13 @@ namespace Orin
 		if (system->getEvent(name, &descriptor) == FMOD_OK)
 		{
 			FMOD::Studio::EventInstance* instance = nullptr;
-
+			
 			if (descriptor->createInstance(&instance) == FMOD_OK)
 			{
-				if (pos)
+				bool is3D = false;
+				descriptor->is3D(&is3D);
+
+				if (pos && is3D)
 				{
 					FMOD_3D_ATTRIBUTES attributes = { 0 };
 					attributes.position = { pos->x, pos->z, pos->y };
