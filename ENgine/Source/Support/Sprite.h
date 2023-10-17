@@ -50,6 +50,7 @@ namespace Orin
 		};
 
 		static RenderTechniqueRef quadPrg;
+		static RenderTechniqueRef quadLightenPrg;
 		static RenderTechniqueRef quadPrgNoZ;
 		static RenderTechniqueRef quadPrgNoDepthWrite;
 		static RenderTechniqueRef quadPrgShdNoZ;

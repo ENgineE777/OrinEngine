@@ -14,6 +14,7 @@ namespace Orin
 		ASSET_TEXTURE_PROP(SpriteEntity, material, "Visual", "Material")
 		INT_PROP(SpriteEntity, drawLevel, 0, "Visual", "draw_level", "Draw priority")
 		BOOL_PROP(SpriteEntity, noZ, false, "Visual", "noZ", "no use Z during render")
+		BOOL_PROP(SpriteEntity, lighten, false, "Visual", "lighten", "lighten")
 		COLOR_PROP(SpriteEntity, color, COLOR_WHITE, "Visual", "Color")
 		COLOR_PROP(SpriteEntity, emmisive, COLOR_WHITE, "Visual", "Emmisive")
 		FLOAT_PROP(SpriteEntity, emmisiveIntencity, 1.0f, "Visual", "emmisiveIntencity", "emmisiveIntencity")
@@ -94,7 +95,14 @@ namespace Orin
 			}
 			else
 			{
-				texture.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
+				if (lighten)
+				{
+					texture.prg = Sprite::quadLightenPrg;
+				}
+				else
+				{
+					texture.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
+				}
 			}
 
 			texture.Draw(&trans, color, dt);

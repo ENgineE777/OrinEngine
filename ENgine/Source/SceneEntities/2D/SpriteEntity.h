@@ -24,6 +24,7 @@ namespace Orin
 		*/
 		int drawLevel = 0;
 		bool noZ = false;
+		bool lighten = false;
 
 		int lightGroup = 1;
 		bool useRimLight = false;

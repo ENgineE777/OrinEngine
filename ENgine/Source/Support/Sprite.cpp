@@ -13,7 +13,22 @@ namespace Orin
 
 		virtual void ApplyStates()
 		{
+			root.render.GetDevice()->SetAlphaBlend(true);			
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
+	class QuadRenderLightenTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "sprite_vs.shd"; };
+		virtual const char* GetPsName() { return "sprite_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthWriting(false);
 			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgOne);
 			root.render.GetDevice()->SetCulling(CullMode::CullNone);
 		};
 	};
@@ -96,6 +111,7 @@ namespace Orin
 	Math::Vector2 Sprite::_halfScreenSize;
 
 	RenderTechniqueRef Sprite::quadPrg;
+	RenderTechniqueRef Sprite::quadLightenPrg;
 	RenderTechniqueRef Sprite::quadPrgNoZ;
 	RenderTechniqueRef Sprite::quadPrgNoDepthWrite;
 	RenderTechniqueRef Sprite::quadPrgShdNoZ;
@@ -132,6 +148,7 @@ namespace Orin
 		_polygonBuffer = root.render.GetDevice()->CreateBuffer(128, sizeof(PolygonVertex), _FL_);
 
 		quadPrg = root.render.GetRenderTechnique<QuadRenderTechnique>(_FL_);
+		quadLightenPrg = root.render.GetRenderTechnique<QuadRenderLightenTechnique>(_FL_);
 		quadPrgNoDepthWrite = root.render.GetRenderTechnique<QuadRenderNoDepthWriteTechnique>(_FL_);
 		quadPrgNoZ = root.render.GetRenderTechnique<QuadRenderNoZTechnique>(_FL_);
 		quadPrgShdNoZ = root.render.GetRenderTechnique<QuadRenderShdNoZTechnique>(_FL_);
