@@ -123,6 +123,9 @@ namespace Orin
 					pos.y += (camPos.y - pos.y) * (1.0f - paralax.y);
 				}
 
+				int x_offset = (int)((camPos.x - pos.x) / zoneSize.x);
+				int y_offset = (int)((camPos.y - pos.y) / zoneSize.y);
+
 				int fromX = 0;
 				int toX = 0;
 
@@ -151,8 +154,8 @@ namespace Orin
 				{
 					for (int x = fromX - 1; x <= toX + 1; x++)
 					{
-						localTrans.position = Math::Vector3(pos.x + x * zoneSize.x - zoneCenter.x,
-															pos.y + y * zoneSize.y - zoneCenter.y, pos.z);
+						localTrans.position = Math::Vector3(pos.x + (x_offset + x) * zoneSize.x - zoneCenter.x,
+															pos.y + (y_offset + y) * zoneSize.y - zoneCenter.y, pos.z);
 
 						texture.Draw(&localTrans, color, dt);
 					}
