@@ -295,14 +295,18 @@ namespace Orin
 
 		if (IsVisible())
 		{			
-			auto camPos = Sprite::GetCamPos();	
-
-			Math::Matrix mat = transform.GetGlobal();
-			auto pos = Sprite::ToPixels(mat.Pos());
+			auto camPos = Sprite::GetCamPos();				
+			auto pos = Sprite::ToPixels(transform.GetGlobal().Pos());
 
 			if (autoTileH || autoTileV)
 			{				
-				Math::Matrix mat = transform.GetGlobal();
+				auto pos = transform.parent ? Sprite::ToPixels(transform.parent->GetGlobal().Pos()) : 0.0f;
+
+				if (paralaxInEditor || GetScene()->IsPlaying())
+				{
+					pos.x += (camPos.x - pos.x) * (1.0f - paralax.x);
+					pos.y += (camPos.y - pos.y) * (1.0f - paralax.y);
+				}
 
 				int fromX = 0;
 				int toX = 0;
@@ -320,19 +324,17 @@ namespace Orin
 				if (autoTileV)
 				{
 					toY = (int)((Sprite::GetPixelsHeight() / zoneSize.y + 1) * 0.5f);
-					fromY = -toY;					
+					fromY = -toY;
 				}
 
-				auto paralaxed = pos + (camPos - pos) * (1.0f - paralax);
-				int camOffsetX = autoTileH ? (int)((camPos.x - paralaxed.x) / zoneSize.x) : 0;
-				int camOffsetY = autoTileV ? (int)((camPos.y - paralaxed.y) / zoneSize.y) : 0;
+				pos += transform.position;
 
 				for (int y = fromY - 1; y <= toY + 1; y++)
 				{
 					for (int x = fromX - 1; x <= toX + 1; x++)
 					{					
-						DrawTiles(dt, Math::Vector3(paralaxed.x + (x + camOffsetX) * zoneSize.x - zoneCenter.x,
-													paralaxed.y + (y + camOffsetY) * zoneSize.y - zoneCenter.y, pos.z));
+						DrawTiles(dt, Math::Vector3(pos.x + x * zoneSize.x - zoneCenter.x,
+													pos.y + y * zoneSize.y - zoneCenter.y, pos.z));
 					}
 				}
 			}
@@ -349,6 +351,8 @@ namespace Orin
 
 			if (IsEditMode())
 			{
+				auto mat = transform.GetGlobal();
+
 				Transform trans;
 				trans.objectType = ObjectType::Object2D;
 				trans.offset.x = 0.5f;
@@ -471,7 +475,7 @@ namespace Orin
 
 	void TileMap::DrawMask(float dt)
 	{
-		if (!IsVisible())
+		if (!IsVisible() || paralax.x < 1.0f)
 		{
 			return;
 		}

@@ -23,6 +23,11 @@ namespace Orin
 		BOOL_PROP(SpriteEntity, paralaxInEditor, false, "Visual", "paralaxInEditor", "paralaxInEditor")
 		FLOAT_PROP(SpriteEntity, paralax.x, 1.0f, "Visual", "paralax X", "X-axis paralax")
 		FLOAT_PROP(SpriteEntity, paralax.y, 1.0f, "Visual", "paralax Y", "Y-axis paralax")
+		BOOL_PROP(SpriteEntity, autoTileH, false, "Visual", "autoTileH", "autoTileH")
+		BOOL_PROP(SpriteEntity, autoTileV, false, "Visual", "autoTileV", "autoTileV")
+		BOOL_PROP(SpriteEntity, autoCalcTileZone, true, "Visual", "autoCalcTileZone", "autoCalcTileZone")
+		VECTOR2_PROP(SpriteEntity, zoneSize, 100.0f, "Visual", "zoneSize")
+		BOOL_PROP(SpriteEntity, usePortlas, false, "Visual", "usePortlas", "Draw priority")
 	META_DATA_DESC_END()
 
 	SpriteEntity::SpriteEntity() : SceneEntity()
@@ -46,6 +51,18 @@ namespace Orin
 
 		Tasks(true)->AddTask(0 + drawLevel, this, (Object::Delegate)&SpriteEntity::Draw);
 		Tasks(true)->AddTask(501, this, (Object::Delegate)&SpriteEntity::DrawOccluder);
+		
+		if (autoCalcTileZone)
+		{
+			auto pos = Sprite::ToPixels(transform.GetGlobal().Pos());
+
+			zoneCenter = { pos.x, pos.y };
+			zoneSize = size;
+		}
+		else
+		{
+			zoneCenter = 0.0f;
+		}
 	}
 
 	void SpriteEntity::Draw(float dt)
@@ -53,59 +70,110 @@ namespace Orin
 		if (IsVisible())
 		{
 			Transform trans = transform;
-
+			
+			if (usePortlas && !portlaMask)
 			{
-				Math::Matrix view;
-				root.render.GetTransform(TransformStage::View, view);
-				view.Inverse();
-
-				auto camPos = Sprite::ToPixels(view.Pos());
-
-				auto pos = trans.position;
-
-				if (paralaxInEditor || GetScene()->IsPlaying())
-				{
-					pos.x = pos.x + (camPos.x - pos.x) * (1.0f - paralax.x);
-					pos.y = pos.y + (camPos.y - pos.y) * (1.0f - paralax.y);
-
-					trans.position = pos;
-				}
+				portlaMask.SetEntity(GetScene()->FindEntity<PortalMask>());
 			}
 
 			if (DefferedLight::hackStateEnabled && DefferedLight::gbufferTech)
-			{
-				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "materialMap", material ? material.Get()->texture : nullptr);
-				DefferedLight::gbufferTech->SetTexture(ShaderType::Pixel, "normalsMap", normal ? normal.Get()->texture : nullptr);
+			{				
+				RenderTechniqueRef tech = (usePortlas && portlaMask) ? portlaMask->quadMaskedDefferedPrg : DefferedLight::gbufferTech;
 
-				texture.prg = DefferedLight::gbufferTech;
+				tech->SetTexture(ShaderType::Pixel, "materialMap", material ? material.Get()->texture : nullptr);
+				tech->SetTexture(ShaderType::Pixel, "normalsMap", normal ? normal.Get()->texture : nullptr);
 
 				Math::Matrix mat = trans.GetGlobal();
 				mat.Pos() = 0.0f;
 
-				DefferedLight::gbufferTech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
+				tech->SetMatrix(ShaderType::Pixel, "normalTrans", &mat, 1);
 
 				Math::Vector4 params;
 				params.x = (float)lightGroup / DefferedLight::lightGroupDivider;
 				params.y = useRimLight ? 1.0f : 0.0f;
 				params.z = emmisiveIntencity;
 
-				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "params", &params, 1);
+				tech->SetVector(ShaderType::Pixel, "params", &params, 1);
 
-				DefferedLight::gbufferTech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&emmisive.r, 1);
+				tech->SetVector(ShaderType::Pixel, "emmisive", (Math::Vector4*)&emmisive.r, 1);
+
+				texture.prg = tech;
 			}
 			else
 			{
 				if (lighten)
 				{
-					texture.prg = Sprite::quadLightenPrg;
+					texture.prg = (usePortlas && portlaMask) ? portlaMask->quadMaskedLightenPrg : Sprite::quadLightenPrg;
 				}
 				else
 				{
 					texture.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
 				}
-			}
+			}			
 
-			texture.Draw(&trans, color, dt);
+			auto camPos = Sprite::GetCamPos();
+
+			if (autoTileH || autoTileV)	
+			{
+				auto pos = trans.parent ? Sprite::ToPixels(trans.parent->GetGlobal().Pos()) : 0.0f;
+
+				if (paralaxInEditor || GetScene()->IsPlaying())
+				{
+					pos.x += (camPos.x - pos.x) * (1.0f - paralax.x);
+					pos.y += (camPos.y - pos.y) * (1.0f - paralax.y);
+				}
+
+				int fromX = 0;
+				int toX = 0;
+
+				if (autoTileH)
+				{
+					float scale = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
+					toX = (int)(((root.render.GetDevice()->GetWidth() / scale) / zoneSize.x + 1) * 0.5f);
+					fromX = -toX;
+				}
+
+				int fromY = 0;
+				int toY = 0;
+
+				if (autoTileV)
+				{
+					toY = (int)((Sprite::GetPixelsHeight() / zoneSize.y + 1) * 0.5f);
+					fromY = -toY;
+				}
+				
+				Transform localTrans = transform;
+				localTrans.parent = nullptr;
+
+				pos += transform.position;
+
+				for (int y = fromY - 1; y <= toY + 1; y++)
+				{
+					for (int x = fromX - 1; x <= toX + 1; x++)
+					{
+						localTrans.position = Math::Vector3(pos.x + x * zoneSize.x - zoneCenter.x,
+															pos.y + y * zoneSize.y - zoneCenter.y, pos.z);
+
+						texture.Draw(&localTrans, color, dt);
+					}
+				}
+			}
+			else
+			{
+				auto pos = Sprite::ToPixels(trans.GetGlobal().Pos());
+
+				if (paralaxInEditor || GetScene()->IsPlaying())
+				{
+					auto localPos = trans.position;
+
+					localPos.x += (camPos.x - pos.x) * (1.0f - paralax.x);
+					localPos.y += (camPos.y - pos.y) * (1.0f - paralax.y);
+
+					trans.position = localPos;
+				}
+
+				texture.Draw(&trans, color, dt);
+			}
 		}
 	}
 

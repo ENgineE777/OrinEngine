@@ -5,11 +5,15 @@
 #include "Support/MetaData.h"
 #include "Support/Sprite.h"
 #include "root/Assets/AssetTexture.h"
+#include "PortalMask.h"
 
 namespace Orin
 {
 	class SpriteEntity : public SceneEntity
 	{
+		Math::Vector2 zoneSize;
+		Math::Vector2 zoneCenter;
+
 	public:
 
 		Color color;
@@ -31,6 +35,13 @@ namespace Orin
 
 		bool paralaxInEditor = false;
 		Math::Vector2 paralax = 1.0f;
+
+		bool autoTileH = false;
+		bool autoTileV = false;
+		bool autoCalcTileZone = true;
+
+		bool usePortlas = false;
+		SceneEntityRef<PortalMask> portlaMask;
 
 		META_DATA_DECL_BASE(SpriteEntity)
 

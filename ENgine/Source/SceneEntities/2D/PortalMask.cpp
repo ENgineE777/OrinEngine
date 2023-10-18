@@ -17,6 +17,21 @@ namespace Orin
 		};
 	};
 
+	class QuadRenderMaskedLightenTechnique : public RenderTechnique
+	{
+	public:
+		virtual const char* GetVsName() { return "sprite_masked_vs.shd"; };
+		virtual const char* GetPsName() { return "sprite_masked_ps.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgOne);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
+	};
+
 	class QuadRenderMaskedDefferedTechnique : public RenderTechnique
 	{
 	public:
@@ -41,6 +56,7 @@ namespace Orin
 		transform.transformFlag = TransformFlag::MoveXYZ | TransformFlag::RectMoveXY;
 
 		quadMaskedPrg = root.render.GetRenderTechnique<QuadRenderMaskedTechnique>(_FL_);
+		quadMaskedLightenPrg = root.render.GetRenderTechnique<QuadRenderMaskedLightenTechnique>(_FL_);
 		quadMaskedDefferedPrg = root.render.GetRenderTechnique<QuadRenderMaskedDefferedTechnique>(_FL_);
 	}
 
@@ -74,6 +90,7 @@ namespace Orin
 		root.render.GetDevice()->RestoreRenderTarget();
 
 		quadMaskedPrg->SetTexture(ShaderType::Pixel, "maskMap", maskRT);
+		quadMaskedLightenPrg->SetTexture(ShaderType::Pixel, "maskMap", maskRT);
 		quadMaskedDefferedPrg->SetTexture(ShaderType::Pixel, "maskMap", maskRT);
 	}
 }

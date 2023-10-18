@@ -13,6 +13,7 @@ namespace Orin
 	public:
 		
 		RenderTechniqueRef quadMaskedPrg;
+		RenderTechniqueRef quadMaskedLightenPrg;
 		RenderTechniqueRef quadMaskedDefferedPrg;
 
 		META_DATA_DECL(SpritesLayer)
