@@ -66,6 +66,14 @@ namespace Orin
 	public:
 		virtual const char* GetVsName() { return "sprite_vs_shd.shd"; };
 		virtual const char* GetPsName() { return "sprite_ps_shd.shd"; };
+
+		virtual void ApplyStates()
+		{
+			root.render.GetDevice()->SetDepthWriting(false);
+			root.render.GetDevice()->SetAlphaBlend(true);
+			root.render.GetDevice()->SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgOne);
+			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+		};
 	};
 
 	static RenderTechniqueRef quadPrgShdNoZ;
