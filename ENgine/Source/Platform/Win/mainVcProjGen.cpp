@@ -22,6 +22,11 @@ void ScanSources(const char* basePath, const char* path, eastl::vector<SourceFil
 	char croppedPath[MAX_PATH];
 	StringUtils::GetCropPath(basePath, path, croppedPath, MAX_PATH);
 
+	if (!std::filesystem::exists(path))
+	{
+		return;
+	}
+
 	for (auto& entry : std::filesystem::directory_iterator(path))
 	{
 		const char* entryPath = entry.path().u8string().c_str();
