@@ -1,0 +1,88 @@
+﻿{
+
+	"camPos" :
+	{
+		"x" : 0.000000,
+		"y" : 0.000000
+	},
+	"camZoom" : 1.000000,
+	"def_node" : 0,
+	"Count" : 3,
+	"Node" : [
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -73.000000,
+				"y" : 107.500000
+			},
+			"name" : "Idle",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "player.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -69.000000,
+				"y" : -10.500000
+			},
+			"name" : "Run",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "player.png",
+				"sliceIndex" : -1,
+				"animIndex" : 2
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -75.000000,
+				"y" : -131.500000
+			},
+			"name" : "Jump",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "player.png",
+				"sliceIndex" : -1,
+				"animIndex" : 1
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		}
+	]
+}

@@ -1,0 +1,129 @@
+﻿{
+
+	"camPos" :
+	{
+		"x" : 0.000000,
+		"y" : 0.000000
+	},
+	"camZoom" : 1.000000,
+	"def_node" : 0,
+	"Count" : 4,
+	"Node" : [
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -428.000000,
+				"y" : 37.000000
+			},
+			"name" : "closed",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Prefabs/enemy_turret.png",
+				"sliceIndex" : 0,
+				"animIndex" : -1
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 2,
+					"name" : "open"
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : true,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : 195.000000,
+				"y" : 22.000000
+			},
+			"name" : "close",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "Prefabs/enemy_turret.png",
+				"sliceIndex" : 4,
+				"animIndex" : -1
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 3,
+					"name" : "close"
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -138.000000,
+				"y" : 143.000000
+			},
+			"name" : "Open",
+			"object_uid" : 0,
+			"def_link" : 0,
+			"texture" :
+			{
+				"Path" : "Prefabs/enemy_turret.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 1,
+					"name" : ""
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		},
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -135.000000,
+				"y" : -70.000000
+			},
+			"name" : "close",
+			"object_uid" : 0,
+			"def_link" : 0,
+			"texture" :
+			{
+				"Path" : "Prefabs/enemy_turret.png",
+				"sliceIndex" : -1,
+				"animIndex" : 1
+			},
+			"Count" : 1,
+			"Link" : [
+				{
+					"index" : 0,
+					"name" : ""
+				}
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		}
+	]
+}

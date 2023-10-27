@@ -11,6 +11,7 @@
 		"z" : 8.000000
 	},
 	"useAlignGrid" : false,
+	"alignGridFlag" : 7,
 	"alignGridOffset" :
 	{
 		"x" : 8.000000,
@@ -18,6 +19,7 @@
 		"z" : 8.000000
 	},
 	"useAlignGridOffset" : false,
+	"alignOffsetGridFlag" : 7,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 240.000000,
 	"hideCursor" : false,

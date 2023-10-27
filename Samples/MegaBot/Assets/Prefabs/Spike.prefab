@@ -1,0 +1,56 @@
+﻿{
+
+	"uid" : 0,
+	"entities" : [
+		{
+			"prefabInstance" : false,
+			"uid" : 619521,
+			"type" : "InstantPlayerKiller",
+			"name" : "InstantPlayerKiller",
+			"layerName" : "",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 16.000000,
+					"y" : 16.000000,
+					"z" : 20.000000
+				},
+				"offset" :
+				{
+					"x" : 0.000000,
+					"y" : 1.000000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 0.518987,
+				"g" : 0.205843,
+				"b" : 0.205862,
+				"a" : 0.250000
+			},
+			"physGroup" : 1,
+			"visibleDuringPlay" : true
+		}
+	]
+}

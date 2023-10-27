@@ -46,9 +46,26 @@
 			{
 				"Path" : "level/level.tls"
 			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 1.000000,
+				"a" : 1.000000
+			},
+			"lightGroup" : 1,
 			"paralaxInEditor" : false,
 			"paralax.x" : 1.000000,
 			"paralax.y" : 1.000000,
+			"autoTileH" : false,
+			"autoTileV" : false,
+			"autoCalcTileZone" : true,
+			"zoneSize" :
+			{
+				"x" : 672.000000,
+				"y" : 80.000000
+			},
+			"usePortlas" : false,
 			"count" : 147,
 			"Tile" : [
 				{
@@ -887,6 +904,7 @@
 			"paralax.x" : 0.250000,
 			"paralax.y" : 0.050000,
 			"drawLevel" : 0,
+			"usePortlas" : false,
 			"spritesAsset" :
 			{
 				"Path" : "background/skies.spl"
@@ -935,6 +953,7 @@
 			"paralax.x" : 0.500000,
 			"paralax.y" : 0.100000,
 			"drawLevel" : 0,
+			"usePortlas" : false,
 			"spritesAsset" :
 			{
 				"Path" : "background/mountains.spl"
@@ -983,6 +1002,7 @@
 			"paralax.x" : 0.600000,
 			"paralax.y" : 0.150000,
 			"drawLevel" : 0,
+			"usePortlas" : false,
 			"spritesAsset" :
 			{
 				"Path" : "background/trees.spl"

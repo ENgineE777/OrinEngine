@@ -1,0 +1,16 @@
+﻿{
+
+	"textureFilter" : 0,
+	"texturMode" : 0,
+	"spriteSheet" :
+	{
+		"sizeX" : 16.000000,
+		"sizeY" : 16.000000,
+		"count" : 0,
+		"Sheet" : [
+		],
+		"anim_count" : 0,
+		"Animations" : [
+		]
+	}
+}

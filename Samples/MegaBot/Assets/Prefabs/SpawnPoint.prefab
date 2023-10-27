@@ -1,0 +1,57 @@
+﻿{
+
+	"uid" : 0,
+	"entities" : [
+		{
+			"prefabInstance" : false,
+			"uid" : 989079,
+			"type" : "SpawnPoint",
+			"name" : "SpawnPoint",
+			"layerName" : "",
+			"visible" : true,
+			"Transform" :
+			{
+				"position" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"rotation" :
+				{
+					"x" : 0.000000,
+					"y" : 0.000000,
+					"z" : 0.000000
+				},
+				"scale" :
+				{
+					"x" : 1.000000,
+					"y" : 1.000000,
+					"z" : 1.000000
+				},
+				"size" :
+				{
+					"x" : 16.000000,
+					"y" : 16.000000,
+					"z" : 20.000000
+				},
+				"offset" :
+				{
+					"x" : 0.000000,
+					"y" : 1.000000,
+					"z" : 0.500000
+				}
+			},
+			"color" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 0.000000,
+				"a" : 0.250000
+			},
+			"physGroup" : 1,
+			"visibleDuringPlay" : true,
+			"nextLevel" : ""
+		}
+	]
+}

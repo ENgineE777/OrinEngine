@@ -48,13 +48,37 @@
 				"animIndex" : -1
 			},
 			"drawLevel" : 0,
+			"noZ" : false,
+			"lighten" : false,
 			"color" :
 			{
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 1.000000,
 				"a" : 1.000000
-			}
+			},
+			"emmisive" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 1.000000,
+				"a" : 1.000000
+			},
+			"emmisiveIntencity" : 1.000000,
+			"lightGroup" : 1,
+			"useRimLight" : false,
+			"paralaxInEditor" : false,
+			"paralax.x" : 1.000000,
+			"paralax.y" : 1.000000,
+			"autoTileH" : false,
+			"autoTileV" : false,
+			"autoCalcTileZone" : true,
+			"zoneSize" :
+			{
+				"x" : 634.000000,
+				"y" : 64.000000
+			},
+			"usePortlas" : false
 		},
 		{
 			"prefabInstance" : false,
@@ -103,13 +127,37 @@
 				"animIndex" : -1
 			},
 			"drawLevel" : 0,
+			"noZ" : false,
+			"lighten" : false,
 			"color" :
 			{
 				"r" : 1.000000,
 				"g" : 1.000000,
 				"b" : 1.000000,
 				"a" : 1.000000
-			}
+			},
+			"emmisive" :
+			{
+				"r" : 1.000000,
+				"g" : 1.000000,
+				"b" : 1.000000,
+				"a" : 1.000000
+			},
+			"emmisiveIntencity" : 1.000000,
+			"lightGroup" : 1,
+			"useRimLight" : false,
+			"paralaxInEditor" : false,
+			"paralax.x" : 1.000000,
+			"paralax.y" : 1.000000,
+			"autoTileH" : false,
+			"autoTileV" : false,
+			"autoCalcTileZone" : true,
+			"zoneSize" :
+			{
+				"x" : 634.000000,
+				"y" : 136.000000
+			},
+			"usePortlas" : false
 		},
 		{
 			"prefabInstance" : false,
@@ -140,7 +188,7 @@
 				},
 				"size" :
 				{
-					"x" : 36.000000,
+					"x" : 38.000000,
 					"y" : 72.000000,
 					"z" : 0.000000
 				},
@@ -153,7 +201,7 @@
 			},
 			"animGraph" :
 			{
-				"Path" : "Batman/Batman.ang"
+				"Path" : "batman/batman.ang"
 			},
 			"speed" : 70.000000,
 			"is_enemy" : false,
@@ -203,7 +251,7 @@
 			},
 			"animGraph" :
 			{
-				"Path" : "Enemy/EnemyGraph.ang"
+				"Path" : "enemy/enemygraph.ang"
 			},
 			"speed" : 50.000000,
 			"is_enemy" : true,
@@ -258,6 +306,9 @@
 			},
 			"border.x" : 35.000000,
 			"border.y" : 0.000000,
+			"borderAbsolute.x" : 0.000000,
+			"borderAbsolute.y" : 0.000000,
+			"smoothingViscosity" : 0.000000,
 			"useLimits" : false,
 			"leftup.x" : -317.000000,
 			"rightdown.x" : 317.000000,

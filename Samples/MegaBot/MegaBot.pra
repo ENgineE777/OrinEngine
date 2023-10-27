@@ -1,8 +1,8 @@
 ﻿{
 	"export_dir" : "",
-	"iconPath" : "TankIcon.png",
-	"iconSmallPath" : "TankIcon.png",
-	"projectName" : "Tanks",
+	"iconPath" : "boss.png",
+	"iconSmallPath" : "boss.png",
+	"projectName" : "MegaBot",
 	"start_scene" : "Scene",
 	"alignGrid" :
 	{
@@ -21,7 +21,7 @@
 	"useAlignGridOffset" : false,
 	"alignOffsetGridFlag" : 7,
 	"pixelsPerUnit" : 50.000000,
-	"pixelsHeight" : 1080.000000,
+	"pixelsHeight" : 192.000000,
 	"hideCursor" : false,
 	"runningInFullscreen" : false,
 	"openedAssets" : [

@@ -1,0 +1,38 @@
+﻿{
+
+	"camPos" :
+	{
+		"x" : 0.000000,
+		"y" : 0.000000
+	},
+	"camZoom" : 1.000000,
+	"def_node" : 0,
+	"Count" : 1,
+	"Node" : [
+		{
+			"type" : 0,
+			"looped" : false,
+			"reverse" : false,
+			"pos" :
+			{
+				"x" : -30.000000,
+				"y" : 3.500000
+			},
+			"name" : "Exp",
+			"object_uid" : 0,
+			"def_link" : -1,
+			"texture" :
+			{
+				"Path" : "explosion.png",
+				"sliceIndex" : -1,
+				"animIndex" : 0
+			},
+			"Count" : 0,
+			"Link" : [
+			],
+			"CountEvent" : 0,
+			"Event" : [
+			]
+		}
+	]
+}

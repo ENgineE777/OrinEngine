@@ -11,6 +11,7 @@
 		"z" : 8.000000
 	},
 	"useAlignGrid" : false,
+	"alignGridFlag" : 7,
 	"alignGridOffset" :
 	{
 		"x" : 8.000000,
@@ -18,16 +19,17 @@
 		"z" : 8.000000
 	},
 	"useAlignGridOffset" : false,
+	"alignOffsetGridFlag" : 7,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 200.000000,
 	"hideCursor" : false,
 	"runningInFullscreen" : false,
 	"openedAssets" : [
 		{
-			"path" : "Main.scn"
+			"path" : "main.scn"
 		}
 	],
-	"edited_asset" : "Main.scn",
+	"edited_asset" : "main.scn",
 	"layers" : [
 
 	]
