@@ -39,6 +39,11 @@ namespace Orin
 			moveDir.x = 1.0f;
 		}
 
+		if (GetRoot()->GetControls()->DebugKeyPressed("KEY_R", AliasAction::Pressed))
+		{
+			GetRoot()->GetSceneManager()->ReloadScene("Scene");
+		}
+
 		if (fabs(moveDir.x) > 0.1f)
 		{
 			animRef->GetTransform().scale = Math::Vector3(moveDir.x, 1.0f, 1.0f);

@@ -72,6 +72,13 @@ namespace Orin
 		Scene* GetScene(const char* name);
 
 		/**
+		\brief Reload already loaded scene
+
+		\param[in] name Name of a scene (filename without extension)
+		*/
+		void ReloadScene(const char* name);
+
+		/**
 		\brief Set visibility for scene objects from scene groups in all loaded scenes
 
 		\param[in] group Name of a group

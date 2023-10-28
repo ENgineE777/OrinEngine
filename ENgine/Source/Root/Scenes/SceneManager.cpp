@@ -169,6 +169,27 @@ namespace Orin
 		}
 	}
 
+	void SceneManager::ReloadScene(const char* name)
+	{
+		eastl::string nameStr = name;
+		StringUtils::LowerCase(nameStr);
+
+		if (scenes.find(nameStr) == scenes.end())
+		{
+			return;
+		}
+
+		auto* holder = &scenes[nameStr];
+
+		if (!holder->scene)
+		{
+			return;
+		}
+
+		scenesToLoad.push_back(holder);
+		scenesToDelete.push_back(holder);
+	}
+
 	void SceneManager::UnloadScene(const char* name)
 	{
 		if (scenes.find(name) == scenes.end())
