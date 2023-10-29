@@ -145,7 +145,7 @@ namespace Orin
 		else
 		if (horzAlign == Align::alignRight)
 		{
-			globalPos.x += -rightPadding.x - transform.size.x * (transform.offset.x - 0.5f) * transform.scale.x + parentSize.x;
+			globalPos.x += -rightPadding.x - transform.size.x * transform.scale.x + parentSize.x;
 		}
 
 		if (vertAlign == Align::alignTop)
@@ -155,12 +155,12 @@ namespace Orin
 		else
 		if (vertAlign == Align::alignCenter)
 		{
-			globalPos.y -= leftPadding.y + (parentSize.y - rightPadding.y - leftPadding.y) * 0.5f + transform.size.y * (transform.offset.y - 0.5f) * transform.scale.y;
+			globalPos.y -= leftPadding.y + (parentSize.y - rightPadding.y - leftPadding.y) * 0.5f + transform.size.y * (transform.offset.y - 0.5f);
 		}
 		else
 		if (vertAlign == Align::alignBottom)
 		{
-			globalPos.y -= -rightPadding.y - transform.size.y * transform.scale.y * (transform.offset.y - 0.5f) + parentSize.y;
+			globalPos.y -= -rightPadding.y - transform.size.y * transform.scale.y + parentSize.y;
 		}
 
 		global.Pos() = Sprite::ToUnits(globalPos);

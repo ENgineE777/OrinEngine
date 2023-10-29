@@ -94,6 +94,8 @@ namespace Orin
 	{
 		root.render.GetDevice()->Clear(true, COLOR_BLACK, true, 1.0f);
 		
+		root.render.ExecutePool(-20, dt);
+		root.render.ExecutePool(-15, dt);
 		root.render.ExecutePool(-10, dt);
 		root.render.ExecutePool(0, dt);
 		root.render.ExecutePool(1, dt);

@@ -1,4 +1,4 @@
-[Game Engine logo](/logo.png)
+![Orin Game Engine logo](/logo.png)
 
 ## Orin Game Engine
 

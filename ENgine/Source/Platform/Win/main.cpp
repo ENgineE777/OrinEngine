@@ -16,7 +16,7 @@
 
 
 #pragma warning (disable : 4996 )
-#include "steam_api.h"
+//#include "steam_api.h"
 
 #include <tchar.h>
 
@@ -98,7 +98,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return 1;
     }    
 
-    if (SteamAPI_RestartAppIfNecessary(2546100)) // Replace with your App ID
+    /*if (SteamAPI_RestartAppIfNecessary(2546100)) // Replace with your App ID
     {
         return 1;
     }
@@ -107,9 +107,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     {
         UnregisterClass(wcex.lpszClassName, wcex.hInstance);
         return 1;
-    }    
+    } */   
 
-    Orin::GetRoot()->GetLocalization()->SetCurrentLocale(SteamApps()->GetCurrentGameLanguage());
+   // Orin::GetRoot()->GetLocalization()->SetCurrentLocale(SteamApps()->GetCurrentGameLanguage());
 
     ShowWindow(hwnd, SW_NORMAL);
     UpdateWindow(hwnd);
@@ -135,7 +135,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
     }
 
-    SteamAPI_Shutdown();
+    //SteamAPI_Shutdown();
     Orin::GetRunner()->Release();
 
     DestroyWindow(hwnd);

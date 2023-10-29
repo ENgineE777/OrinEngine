@@ -523,7 +523,25 @@ namespace Orin
 
 			reader.Read("x", tile.x);
 			reader.Read("y", tile.y);
+
 			reader.Read("index", tile.index);
+
+			if (tile.index == -1)
+			{
+				tile.texture.LoadData(reader, "Texture");
+
+				if (tileSet)
+				{
+					tile.index = tileSet->FindIndexByTextureRef(tile.texture);
+				}
+			}
+			else
+			{
+				if (tileSet)
+				{
+					tile.texture = tileSet->GetTileTexture(tile.index);
+				}
+			}
 
 			if (tileSet)
 			{
