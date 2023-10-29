@@ -1,5 +1,5 @@
-пнр    /968шлхг02гн3л22453*![Ou0lnjkl rin Game Engine logo](/logo.png)
-//10
+[Game Engine logo](/logo.png)
+
 ## Orin Game Engine
 
 Orin Game Engine is a cross-platform game engine for creating 2D and 3D
@@ -29,8 +29,8 @@ The users games are theirs.
 - Animation graphs with events
 - Scripting system based on using C++ as scripting language
 - Hot reload of gameplay code
-- Render system with support of DX11, OpenGL ES 3(WIP), Metal(WIP) and Vulkan (WIP)
-- Support of iOS and Android
+- Render system with support of DX11, Metal(WIP) and Vulkan (WIP)
+- Support of iOS and Android (WIP)
 - Physics system based on PhysX 4 (https://developer.nvidia.com/gameworks-physx-overview)
 - And lots, lots more
 
@@ -42,7 +42,3 @@ Draft of manual of editor can be found at https://docs.google.com/document/d/1_E
 
 Small tutorial how to make simple platformer can be found at
 https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/edit?usp=sharing
-
-## Discord
-
-If you interested in Orin Engine then you can jouin discord server https://discord.gg/YG2s6AJ3x9
