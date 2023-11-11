@@ -116,6 +116,11 @@ namespace Orin
 		BASE_SCENE_ENTITY_PROP(DefferedLight)
 		
 		FLOAT_PROP(DefferedLight, metallic, 0.25f, "Visual", "metallic", "metallic")
+		
+		FLOAT_PROP(DefferedLight, brightness, 0.0f, "Visual", "brightness", "brightness")		
+		FLOAT_PROP(DefferedLight, contrast, 0.0f, "Visual", "contrast", "contrast")
+		FLOAT_PROP(DefferedLight, saturate, 1.0f, "Visual", "saturate", "saturate")
+
 		BOOL_PROP(DefferedLight, useFilter, false, "Filter", "useFilter", "")
 
 		ARRAY_PROP(DefferedLight, globalLights, GlobalLight, "Prop", "Ambinet")
@@ -460,9 +465,11 @@ namespace Orin
 		defferdLightTech->SetVector(ShaderType::Pixel, "u_lights", &u_lights[0], lightData);
 
 		u_lights[0].x = metallic;
+		u_lights[0].y = brightness;
+		u_lights[0].z = contrast;
+		u_lights[0].w = saturate;
 
-		defferdLightTech->SetVector(ShaderType::Pixel, "params", &u_lights[0], 1);
-		defferdLightTech->SetVector(ShaderType::Pixel, "g_rougness", &u_lights[0], lightData);
+		defferdLightTech->SetVector(ShaderType::Pixel, "params", &u_lights[0], 1);		
 		
 		defferdLightTech->SetTexture(ShaderType::Pixel, "materialMap", materialRT);
 		defferdLightTech->SetTexture(ShaderType::Pixel, "normalsMap", normalRT);

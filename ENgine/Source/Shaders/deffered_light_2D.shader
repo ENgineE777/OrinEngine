@@ -17,7 +17,7 @@ cbuffer ps_params : register( b0 )
 	float4 emmisive;
 	matrix normalTrans;
 	float4 params;
-	float4 u_lights[9 + 4 * 40];
+	float4 u_lights[9 + 4 * 64];
 };
 
 struct VS_INPUT
@@ -540,7 +540,14 @@ float4 PS_DEFFERED_LIGHT( PS_INPUT input) : SV_Target
 	float3 albedo2 = u_lights[lightIndex + 3].rgb * u_lights[lightIndex + 3].a;
 
 	outColor = (outColor * lightFactor + source.rgb * albedo2 * ((1.0f - lightFactor) * 0.7f + 0.3f)) * (1 - material.b) + source.rgb * material.b + selfilum.rgb * u_lights[0].z;
-
+   	
+    float greyscale = dot(outColor.rgb, float3(0.3, 0.59, 0.11));
+    outColor.rgb = lerp(greyscale, outColor.rgb, params.w);
+	
+    outColor.rgb = outColor.rgb + params.y;
+    outColor.rgb = ((outColor.rgb - 0.5f) * max(params.z + 1.0, 0)) + 0.5f;
+	
+	
 	if (u_lights[0].y > 0.5f)
 	{
 		float lum = outColor.r * 0.299 + outColor.g * 0.587 + outColor.b * 0.114;

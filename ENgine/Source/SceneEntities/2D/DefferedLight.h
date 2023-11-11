@@ -26,6 +26,10 @@ namespace Orin
 		VertexDeclRef vdecl;
 		DataBufferRef buffer;
 
+		float contrast = 0.0f;
+		float brightness = 0.0f;
+		float saturate = 1.0f;
+
 		struct GlobalLight
 		{
 			META_DATA_DECL_BASE(GlobalLight)
@@ -38,7 +42,7 @@ namespace Orin
 
 		float metallic = 0.25f;
 
-		constexpr static int MAX_LIGHTS = 40;
+		constexpr static int MAX_LIGHTS = 64;
 
 		static bool hackStateEnabled;
 		static float lightGroupDivider;
