@@ -20,6 +20,7 @@
 	},
 	"useAlignGridOffset" : false,
 	"alignOffsetGridFlag" : 7,
+	"useFMODStudio" : false,
 	"pixelsPerUnit" : 50.000000,
 	"pixelsHeight" : 1080.000000,
 	"hideCursor" : false,

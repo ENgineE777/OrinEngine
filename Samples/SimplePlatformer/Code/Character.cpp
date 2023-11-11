@@ -84,6 +84,8 @@ namespace Orin
 
 			if (GetRoot()->GetControls()->DebugKeyPressed("KEY_W", AliasAction::JustPressed))
 			{
+				GetRoot()->GetSounds()->PlaySFX("SFX/jump.mp3");
+
 				gravity = 200.0f;
 			}
 		}
