@@ -34,8 +34,20 @@ namespace Orin
 					(mode == UpdateMode::Drag && root.controls.GetAliasState(alias_move2d_active_drag, AliasAction::Pressed)))
 				{
 					float k = root.render.GetDevice()->GetHeight() / Sprite::GetPixelsHeight();
-					pos2D.x -= root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;
-					pos2D.y += root.controls.GetAliasValue(alias_rotate_y, true) / zoom2D / k;
+
+					float delta = root.controls.GetAliasValue(alias_rotate_x, true) / zoom2D / k;
+
+					if (fabs(delta) < 1024.0f)
+					{
+						pos2D.x -= delta;
+					}
+
+					delta = root.controls.GetAliasValue(alias_rotate_y, true) / zoom2D / k;
+
+					if (fabs(delta) < 1024.0f)
+					{
+						pos2D.y += delta;
+					}
 				}
 
 				if (editor.vireportHowered)
