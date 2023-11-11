@@ -174,6 +174,16 @@ namespace Orin
 		}
 	}
 
+	void Sounds::PlaySFX(const char* name)
+	{
+		SoundInstance* sound = CreateSound(nullptr, false, name);
+
+		if (sound)
+		{
+			sound->Play(PlaySoundType::AutoDelete);
+		}
+	}
+
 	void Sounds::DeleteSceneSounds(void* scene)
 	{
 		for (int i = 0; i < sounds.size(); i++)

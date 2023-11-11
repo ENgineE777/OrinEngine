@@ -78,6 +78,8 @@ namespace Orin
 
 		void PlaySoundEvent(const char* name, Math::Vector3* pos = nullptr);
 
+		void PlaySFX(const char* name);
+
 		/**
 		\brief Set master volume
 
