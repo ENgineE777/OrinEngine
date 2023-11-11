@@ -56,6 +56,10 @@ namespace Orin
 			reader.Read("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
 			reader.Read("alignOffsetGridFlag", (int&)editor.gizmo.alignOffsetGridFlag);
 
+			reader.Read("useFMODStudio", useFMODStudio);
+
+			root.sounds.InitFMOD(useFMODStudio, true);
+
 			float pixelsPerUnit = 50.0f;
 			float pixelsHeight = 1080.0f;
 
@@ -158,6 +162,8 @@ namespace Orin
 		writer.Write("alignGridOffset", editor.gizmo.alignGridOffset);
 		writer.Write("useAlignGridOffset", editor.gizmo.useAlignGridOffset);
 		writer.Write("alignOffsetGridFlag", (int&)editor.gizmo.alignOffsetGridFlag);		
+
+		writer.Write("useFMODStudio", useFMODStudio);
 
 		writer.Write("pixelsPerUnit", Sprite::ToPixels(1.0f));
 		writer.Write("pixelsHeight", Sprite::GetPixelsHeight());

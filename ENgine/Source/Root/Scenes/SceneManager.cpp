@@ -31,6 +31,11 @@ namespace Orin
 
 			Sprite::SetData(pixelsHeight, pixelsPerUnit);
 
+			bool useFMODStudio = false;
+			reader.Read("useFMODStudio", useFMODStudio);
+
+			root.sounds.InitFMOD(useFMODStudio, false);
+
 			StringUtils::LowerCase(startScene);
 
 			LoadScene(&scenes[startScene]);

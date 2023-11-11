@@ -167,8 +167,6 @@ namespace Orin
 			return false;
 		}
 
-		root.sounds.SetInitializePrams(true, true);
-
 		if (!root.Init(d3dDevice))
 		{
 			return false;
@@ -1174,6 +1172,8 @@ namespace Orin
 		if (is_open)
 		{
 			ImGui::Checkbox("Hide Cursor", &project.hideCursor);
+
+			ImGui::Checkbox("Use FMOD Studio", &project.useFMODStudio);
 		}
 
 		is_open = ImGui::CollapsingHeader("2D###ProjectSettings2D", ImGuiTreeNodeFlags_DefaultOpen);
@@ -1212,7 +1212,7 @@ namespace Orin
 			ImGui::NextColumn();
 
 			ImGui::Columns(1);
-		}
+		}		
 
 		is_open = ImGui::CollapsingHeader("Export###ProjectSettingsExport", ImGuiTreeNodeFlags_DefaultOpen);
 

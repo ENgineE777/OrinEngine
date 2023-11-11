@@ -44,6 +44,8 @@ namespace Orin
 		eastl::string iconSmallPath;
 		TextureRef iconSmall;
 
+		bool useFMODStudio = false;
+
 		eastl::string startScene;
 
 		eastl::string p4URL;

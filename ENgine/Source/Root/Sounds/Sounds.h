@@ -48,14 +48,11 @@ namespace Orin
 		eastl::map<eastl::string, SoundsResRef> soundResRefs;
 		eastl::vector<SoundInstance*> sounds;
 
-		bool DecRef(SoundRes* res);		
-
-		bool useStudio = false;
-		bool useLiveUpdate = false;
+		bool DecRef(SoundRes* res);
 
 	public:
 
-		void SetInitializePrams(bool useStudio, bool useLiveUpdate);
+		bool InitFMOD(bool useStudio, bool useLiveUpdate);
 
 		bool LoadSoundBank(const char* name);
 

@@ -2,16 +2,18 @@
 
 namespace Orin
 {
-	void Sounds::SetInitializePrams(bool setUseStudio, bool setUseLiveUpdate)
+	bool Sounds::InitFMOD(bool useStudio, bool useLiveUpdate)
 	{
-		useStudio = setUseStudio;
-		useLiveUpdate = setUseLiveUpdate;
-	}
+		if (coreSystem || system)
+		{
+			root.Log("Sounds", "FMOD already inited, InitFMOD was called twice");
+			return false;
+		}
 
-	bool Sounds::Init()
-	{
 		if (!useStudio)
 		{
+			root.Log("Sounds", "useStudio = 0, creating core FMOD System");
+
 			if (FMOD::System_Create(&coreSystem) != FMOD_OK)
 			{
 				return false;
@@ -24,6 +26,8 @@ namespace Orin
 		}
 		else
 		{
+			root.Log("Sounds", "useStudio = 1, creating FMOD Studio System");
+
 			if (FMOD::Studio::System::create(&system) != FMOD_OK)
 			{
 				return false;
@@ -38,6 +42,11 @@ namespace Orin
 			}
 		}
 
+		return true;
+	}
+
+	bool Sounds::Init()
+	{		
 		return true;
 	}
 
