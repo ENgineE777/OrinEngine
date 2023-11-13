@@ -87,6 +87,7 @@ namespace Orin
 		{
 			root.render.GetDevice()->SetAlphaBlend(true);
 			root.render.GetDevice()->SetCulling(CullMode::CullNone);
+			root.render.GetDevice()->SetBlendFunc(BlendArg::ArgSrcAlpha, BlendArg::ArgOne);
 			root.render.GetDevice()->SetDepthWriting(false);
 		};
 	};

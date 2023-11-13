@@ -1,5 +1,6 @@
 
 #include "SpriteEntity.h"
+#include "AnimGraph2D.h"
 #include "DefferedLight.h"
 #include "Root/Root.h"
 
@@ -28,7 +29,7 @@ namespace Orin
 		BOOL_PROP(SpriteEntity, autoCalcTileZone, true, "Visual", "autoCalcTileZone", "autoCalcTileZone")
 		VECTOR2_PROP(SpriteEntity, zoneSize, 100.0f, "Visual", "zoneSize")
 		BOOL_PROP(SpriteEntity, usePortlas, false, "Visual", "usePortlas", "Draw priority")
-	META_DATA_DESC_END()
+	META_DATA_DESC_END()	
 
 	SpriteEntity::SpriteEntity() : SceneEntity()
 	{
@@ -175,7 +176,7 @@ namespace Orin
 					trans.position = localPos;
 				}
 
-				texture.Draw(&trans, color, dt);
+				texture.Draw(&trans, color, AnimGraph2D::pause ? 0.0f : dt);
 			}
 		}
 	}

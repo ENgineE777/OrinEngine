@@ -19,6 +19,8 @@ namespace Orin
 		BOOL_PROP(AnimGraph2D, useRimLight, false, "Visual", "useRimLight", "useRimLight")
 	META_DATA_DESC_END()
 
+	bool AnimGraph2D::pause = false;
+
 	void AnimGraph2D::Init()
 	{
 		transform.objectType = ObjectType::Object2D;
@@ -65,7 +67,7 @@ namespace Orin
 				anim.prg = noZ ? Sprite::quadPrgNoZ : Sprite::quadPrg;
 			}
 
-			anim.Draw(&transform, color, dt);
+			anim.Draw(&transform, color, pause ? 0.0f : dt);
 		}
 	}
 

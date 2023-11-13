@@ -13,6 +13,8 @@ namespace Orin
 	{
 	public:
 
+		static bool pause;
+
 		Color color;
 		Color emmisive;
 		float emmisiveIntencity = 1.0f;
