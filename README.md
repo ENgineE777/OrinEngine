@@ -42,3 +42,10 @@ Draft of manual of editor can be found at https://docs.google.com/document/d/1_E
 
 Small tutorial how to make simple platformer can be found at
 https://docs.google.com/document/d/15zW1aLqAOQr4NL4WtiuiXEhIUN6A5cUpNDGK-53gbrk/edit?usp=sharing
+
+
+## Used in games
+
+Orin was used in Project ION.
+Here is gameplay trailer - https://www.youtube.com/watch?v=09gQGet9Ios&feature=youtu.be
+Here is a link to a playbale build - https://drive.google.com/file/d/1P0qaXdxxCMiVXYc3BQ9PnxjNs66_qtrI
