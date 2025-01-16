@@ -14,6 +14,10 @@ mobile platforms like iOS and Android.
 Orin is completely free open source, distributed under the zlib license. That means no royalties.
 The users games are theirs.
 
+## Discord server
+
+You can join Orin's discord server via link https://discord.gg/hMUag6JwRW
+
 ## Features
 
 - Editor with ability to play test edited scenes
