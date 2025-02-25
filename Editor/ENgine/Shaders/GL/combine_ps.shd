@@ -1,0 +1,34 @@
+#version 300 es
+
+precision mediump float;
+in vec2 vTexCoord;
+layout(location = 0) out vec4 outColor;
+uniform sampler2D rt;
+uniform sampler2D rt1;
+
+
+vec4 AdjustSaturation(vec4 color, float saturation)
+{
+	float grey = dot(vec3(color.x, color.y, color.z), vec3(0.3f, 0.59f, 0.11f));
+
+	return grey * (1.0f - saturation) + color * saturation;
+}
+
+void main()
+{
+	vec2 texCoord = vTexCoord;
+	texCoord = texCoord * 0.5f + 0.5f;
+	texCoord.y = 1.0f - texCoord.y;
+
+	vec4 bloom = texture(rt, texCoord);
+
+	texCoord.y = 1.0f - texCoord.y;
+    vec4 base = texture(rt1, texCoord);
+
+   	bloom = AdjustSaturation(bloom, 2.0f) * 1.0f;
+   	base = AdjustSaturation(base, 1.0f) * 1.0f;
+
+   	base *= (1.0f - clamp(bloom, 0.0f, 1.0f));
+
+    outColor = base + bloom;
+}

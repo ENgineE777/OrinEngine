@@ -1,0 +1,26 @@
+#version 300 es
+
+precision mediump float;
+in vec2 vTexCoord;
+layout(location = 0) out vec4 outColor;
+
+#define SAMPLE_COUNT 15
+
+uniform sampler2D rt;
+uniform vec4 samples[SAMPLE_COUNT];
+
+void main()
+{
+	vec2 texCoord = vTexCoord;
+	texCoord = texCoord * 0.5f + 0.5f;
+	texCoord.y = 1.0f - texCoord.y;
+
+	vec4 c = vec4(0.0f);
+
+	for (int i = 0; i < SAMPLE_COUNT; i++)
+	{
+		c += texture(rt, texCoord + vec2(samples[i].x, samples[i].y)) * samples[i].z;
+	}
+
+	outColor = c;
+}
