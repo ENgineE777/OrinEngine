@@ -33,7 +33,7 @@ namespace Orin
 		Shader* pshader = nullptr;
 
 		friend class DeviceDX11;
-		friend class DeviceGLES;
+		friend class DeviceGL;
 
 	protected:
 
@@ -48,6 +48,8 @@ namespace Orin
 		#endif
 
 	public:
+
+		int program = -1;
 
 		/**
 		\brief Initialize program

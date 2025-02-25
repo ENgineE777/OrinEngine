@@ -119,10 +119,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;ORIN_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;ORIN_EDITOR;PLATFORM_WINDOWS;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\SPARK;..\..\..\Source\Support\PugiXml;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\fmodstudio\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\SPARK;..\..\..\Source\Support\PugiXml;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\fmodstudio\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\glfw\include;..\..\..\Thirdparty\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
     </ClCompile>
@@ -140,10 +140,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;ORIN_EDITOR;PLATFORM_WIN;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;ORIN_EDITOR;PLATFORM_WINDOWS;JEMALLOC_NO_PRIVATE_NAMESPACE;OAK_EXPORTING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\PugiXml;..\..\..\Source\Support\SPARK;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\fmodstudio\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\PugiXml;..\..\..\Source\Support\SPARK;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\fmodstudio\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\glfw\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\stb;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -223,6 +223,12 @@
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\ShaderDX11.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\TextureDX11.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\DataBufferGL.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\DeviceGL.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\glad.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\ShaderGL.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\TextureGL.h" />
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\VertexDeclGL.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\RenderTechnique.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Render.h" />
     <ClInclude Include="..\..\..\Source\Root\Render\Shader.h" />
@@ -441,6 +447,12 @@
     <ClCompile Include="..\..\..\Source\Root\Render\DX11\ShaderDX11.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\DX11\TextureDX11.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\DX11\VertexDeclDX11.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\DataBufferGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\DeviceGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\glad.c" />
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\ShaderGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\TextureGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\VertexDeclGL.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\RenderTechnique.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Render.cpp" />
     <ClCompile Include="..\..\..\Source\Root\Render\Texture.cpp" />

@@ -51,7 +51,7 @@ namespace Orin
 		friend class RenderTechnique;
 		friend class Texture;
 		friend class TextureDX11;
-		friend class TextureGLES;
+		friend class TextureGL;
 
 #ifndef DOXYGEN_SKIP
 

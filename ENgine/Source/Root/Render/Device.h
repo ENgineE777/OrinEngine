@@ -96,7 +96,7 @@ namespace Orin
 		friend class Render;
 		friend class RenderTechnique;
 		friend class DeviceDX11;
-		friend class DeviceGLES;
+		friend class DeviceGL;
 
 		#ifndef DOXYGEN_SKIP
 

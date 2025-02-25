@@ -8,7 +8,7 @@
 
 #include "stb_sprintf.h"
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #include "DX11/DeviceDX11.h"
 #endif
 
@@ -24,7 +24,7 @@ namespace Orin
 {
 	bool Render::Init(const char* device_name, void* external_device)
 	{
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		device = NEW DeviceDX11();
 		#endif
 

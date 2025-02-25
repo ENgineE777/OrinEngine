@@ -167,6 +167,9 @@
     <Filter Include="Source\Root\Localization">
       <UniqueIdentifier>{c09a70dc-4cba-4f42-b5ef-f2985a3dd8ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Root\Render\GL">
+      <UniqueIdentifier>{eea7aa7e-0eb7-4a8a-83ac-1b7654f6130b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Support\Timer.cpp">
@@ -771,6 +774,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\SceneEntities\2D\PortalMask.cpp">
       <Filter>Source\SceneEntities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\DataBufferGL.cpp">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\DeviceGL.cpp">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\ShaderGL.cpp">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\TextureGL.cpp">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\VertexDeclGL.cpp">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Root\Render\GL\glad.c">
+      <Filter>Source\Root\Render\GL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1445,6 +1466,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\SceneEntities\2D\PortalMask.h">
       <Filter>Source\SceneEntities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\DataBufferGL.h">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\DeviceGL.h">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\ShaderGL.h">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\TextureGL.h">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\VertexDeclGL.h">
+      <Filter>Source\Root\Render\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Root\Render\GL\glad.h">
+      <Filter>Source\Root\Render\GL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

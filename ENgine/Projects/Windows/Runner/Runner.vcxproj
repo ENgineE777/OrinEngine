@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\PugiXml;..\..\..\Source\Support\SPARK;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\PugiXml;..\..\..\Source\Support\SPARK;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\fmodstudio\include;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
@@ -141,7 +141,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\PugiXml;..\..\..\Source\Support\SPARK;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\steam\public\steam;..\..\..\Thirdparty\stb;..\..\..\Thirdparty\fmodstudio\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\Source;..\..\..\Source\Support\PugiXml;..\..\..\Source\Support\SPARK;..\..\..\Thirdparty\jemalloc\include\msvc_compat;..\..\..\Thirdparty\jemalloc\include;..\..\..\Thirdparty\fmod\include;..\..\..\Thirdparty\fmodstudio\include;..\..\..\Thirdparty\vjson;..\..\..\Thirdparty\eastl\include\Common;..\..\..\Thirdparty\eastl\include;..\..\..\Thirdparty\physx\include;..\..\..\Thirdparty\imgui;..\..\..\Thirdparty\steam\public\steam;..\..\..\Thirdparty\stb;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
     </ClCompile>
