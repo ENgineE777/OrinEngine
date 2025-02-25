@@ -253,6 +253,7 @@ namespace Orin
 		checkerTex.ReleaseRef();
 		projectIconTex.ReleaseRef();
 		lightBulbTex.ReleaseRef();
+		directionalTex.ReleaseRef();
 		iconsTex.ReleaseRef();
 
 		skyBoxPrg.ReleaseRef();
