@@ -37,7 +37,7 @@ namespace Orin
 	{
 		#ifndef DOXYGEN_SKIP
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		char  logsDir[1024];
 		float dt = 0.0f;
 		float dtScale = 1.f;
@@ -47,7 +47,7 @@ namespace Orin
 		eastl::string rootPathAssets;
 		eastl::string rootPathBinaries;
 		eastl::string rootPathVcProj;
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		bool redirectLog = true;
 		#endif
 

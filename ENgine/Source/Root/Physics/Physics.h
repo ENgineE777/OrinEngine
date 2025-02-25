@@ -41,7 +41,7 @@ namespace Orin
 
 		bool debugRender = false;
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		PxCooking*    cooking = nullptr;
 
 		class StreamWriter : public PxOutputStream
@@ -91,7 +91,7 @@ namespace Orin
 		void DeleteObjects();
 	#endif
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		void CookHeightmap(int width, int height, uint8_t* hmap, const char* name);
 	#endif
 

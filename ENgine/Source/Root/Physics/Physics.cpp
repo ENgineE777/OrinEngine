@@ -68,7 +68,7 @@ namespace Orin
 		foundation = PxCreateFoundation(PX_PHYSICS_VERSION, defaultAllocatorCallback, defaultErrorCallback);
 		physics = PxCreatePhysics(PX_PHYSICS_VERSION, *foundation, tolerancesScale, true);
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		cooking = PxCreateCooking(PX_PHYSICS_VERSION, *foundation, PxCookingParams(tolerancesScale));
 	#endif
 
@@ -80,7 +80,7 @@ namespace Orin
 		}
 	}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	void Physics::CookHeightmap(int width, int height, uint8_t* hmap, const char* name)
 	{
 		PxHeightFieldSample* samples = new PxHeightFieldSample[width * height];

@@ -2,7 +2,7 @@
 #include "CrashHandler.h"
 #include "IRoot.h"
 
-#ifndef PLATFORM_WIN
+#ifndef PLATFORM_WINDOWS
 #error Crash handler supported only on Windows
 #endif
 

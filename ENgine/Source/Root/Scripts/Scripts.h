@@ -10,7 +10,7 @@ namespace Orin
 {
 	class Scripts
 	{
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		HMODULE Module = nullptr;
 		uint64_t LastWrite = 0;
 		int pingPong = 0;
@@ -28,7 +28,7 @@ namespace Orin
 
 	public:
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		bool CompileProjectCode(bool forceCompile);
 		void SetAllowDynamicReload(bool val);
 		#endif

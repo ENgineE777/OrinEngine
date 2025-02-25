@@ -6,7 +6,7 @@
 #include <EASTL/vector.h>
 #include <EASTL/map.h>
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
@@ -84,7 +84,7 @@ namespace Orin
 
 		eastl::vector<int> supressed_aliases;
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		uint8_t                 btns[256];
 
 		LPDIRECTINPUT8          pDI;
@@ -212,7 +212,7 @@ namespace Orin
 
 		void SetFocused(bool set_focused);
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		void OverrideMousePos(int mx, int my);
 		#endif
 

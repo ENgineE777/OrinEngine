@@ -2,7 +2,7 @@
 #include "Root/Root.h"
 
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #pragma comment (lib, "Ws2_32.lib")
 #endif
 
@@ -22,7 +22,7 @@ namespace Orin
 
 	bool NetworkClient::Connect(const char* ip, int port)
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		struct addrinfo *result = nullptr, *ptr = nullptr;
 		struct addrinfo hints;
 
@@ -97,7 +97,7 @@ namespace Orin
 		return true;
 	}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	void NetworkClient::SetSocket(int id, SOCKET socket)
 	{
 		this->tcpSocket = socket;
@@ -115,7 +115,7 @@ namespace Orin
 
 	void NetworkClient::Recive()
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		char chunk[CHUNKSIZE];
 
 		char* buffer = recv_buffer;
@@ -165,7 +165,7 @@ namespace Orin
 			recv_len = 0;
 		}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		if (send_len)
 		{
 			send(tcpSocket, send_buffer, send_len, 0);
@@ -176,7 +176,7 @@ namespace Orin
 
 	bool NetworkServer::Start(int port)
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		WSADATA wsaData;
 
 		int res = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -254,7 +254,7 @@ namespace Orin
 
 	void NetworkServer::Update()
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		SOCKET clientSocket = accept(listenSocket, NULL, NULL);
 
 		if (clientSocket != INVALID_SOCKET)

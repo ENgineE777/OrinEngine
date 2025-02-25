@@ -62,7 +62,7 @@ namespace Orin
 	{
 		this->allowDebugKeys = allowDebugKeys;
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		for (int i = 0; i< XUSER_MAX_COUNT; i++)
 		{
 			joy_active[i] = false;
@@ -413,7 +413,7 @@ namespace Orin
 
 		switch (halias.device)
 		{ 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 			case Device::Joystick:
 			{
 				if (halias.index<100 || halias.index > 109)
@@ -604,7 +604,7 @@ namespace Orin
 
 		switch (halias.device)
 		{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 			case Device::Joystick:
 			{
 				if (halias.index >= 100 && halias.index <= 109)
@@ -887,7 +887,7 @@ namespace Orin
 
 			int count = 1;
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 			if (halias.device == Device::Joystick)
 			{
 				count = XUSER_MAX_COUNT;
@@ -963,7 +963,7 @@ namespace Orin
 
 	bool Controls::IsGamepadConnected()
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		for (int i = 0; i < XUSER_MAX_COUNT; i++)
 		{
 			if (joy_active[i])
@@ -976,7 +976,7 @@ namespace Orin
 		return false;
 	}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	void Controls::OverrideMousePos(int mx, int my)
 	{
 		if (prev_ms_x == -1000)
@@ -1049,7 +1049,7 @@ namespace Orin
 
 		supressed_aliases.clear();
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		static byte tmp_diks[256];
 		ZeroMemory(tmp_diks, sizeof(tmp_diks));
 		HRESULT hr = pKeyboard->GetDeviceState(sizeof(tmp_diks), tmp_diks);

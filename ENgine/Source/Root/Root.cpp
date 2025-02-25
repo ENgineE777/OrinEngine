@@ -10,7 +10,7 @@
 #include <stdarg.h>
 #include "stb_sprintf.h"
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #include <windows.h>
 #endif
 
@@ -37,7 +37,7 @@ namespace Orin
 	{
 		srand((unsigned int)time(nullptr));
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		crashHandler.Init();
 
 		char curDir[1024];
@@ -112,7 +112,7 @@ namespace Orin
 
 		va_end(args);
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		OutputDebugStringA(buffer);
 		OutputDebugStringA("\n");
 
@@ -214,7 +214,7 @@ namespace Orin
 
 	void Root::SetRootPath(const char* setRootPath)
 	{
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		rootPath = eastl::string(setRootPath);
 		rootPathAssets = eastl::string(setRootPath) + "Assets/";
 		rootPathBinaries = eastl::string(setRootPath) + "Binaries/Win64/";
@@ -230,7 +230,7 @@ namespace Orin
 
 	const char* Root::GetPath(Path path)
 	{
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		switch (path)
 		{
 			case Path::Project:

@@ -10,7 +10,7 @@
 
 namespace Orin
 {
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	void register_code(eastl::vector<ClassFactorySceneEntity*> & Decls);
 	void recreate_entites(eastl::vector<SceneEntity*> & entities);
 	void unregister_code(eastl::vector<ClassFactorySceneEntity*> & Decls);

@@ -1,5 +1,5 @@
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #include "Windows.h"
 #include <sys/stat.h>
 #include "Support/Perforce.h"
@@ -20,7 +20,7 @@ namespace Orin
 	FILE* Files::FileOpenInner(const char* path, const char* mode)
 	{
 		FILE* file = nullptr;
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		if (StringUtils::IsEqual(mode, "wb") && IsFileExist(path))
 		{
 			auto attr = GetFileAttributesA(path) & FILE_ATTRIBUTE_READONLY;
@@ -55,7 +55,7 @@ namespace Orin
 
 		FILE* file = nullptr;
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		const char* rootPath = root.GetPath(Root::Path::Assets);
 
 		if (rootPath[0])
@@ -82,7 +82,7 @@ namespace Orin
 		return file;
 	}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	bool Files::IsFileExist(const char* name)
 	{
 		const char* rootPath = root.GetPath(Root::Path::Assets);

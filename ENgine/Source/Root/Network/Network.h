@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #endif
@@ -61,7 +61,7 @@ namespace Orin
 			BUFFSIZE = 16384
 		};
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		SOCKET tcpSocket = INVALID_SOCKET;
 	#endif
 		char* send_buffer = nullptr;
@@ -105,7 +105,7 @@ namespace Orin
 			\return True will be returned on successfull conection to a server. Otherwise false will be returned.
 		*/
 		bool Connect(const char* ip, int port);
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		void SetSocket(int id, SOCKET tcpSocket);
 		#endif
 
@@ -137,7 +137,7 @@ namespace Orin
 	class CLASS_DECLSPEC NetworkServer
 	{
 	#ifndef DOXYGEN_SKIP
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		SOCKET listenSocket = INVALID_SOCKET;
 		#endif
 		eastl::vector<NetworkClient*> clients;

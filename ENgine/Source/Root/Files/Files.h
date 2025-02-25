@@ -33,7 +33,7 @@ namespace Orin
 		bool Init();
 		#endif
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		/**
 		\brief Check if file exist
 
