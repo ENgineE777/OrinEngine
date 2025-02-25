@@ -73,7 +73,7 @@ namespace Orin
 			ImVec2 uv1 = ImVec2((x + 1) * du, (y + 1) * dv);
 			ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 
-			if (ImGui::ImageButton(editorDrawer.iconsTex->GetNative(), size, uv0, uv1, 0, hovered ? style.Colors[ImGuiCol_ButtonHovered] : color, tint_col) ||
+			if (ImGui::ImageButton(editorDrawer.iconsTex->GetNativeResource(), size, uv0, uv1, 0, hovered ? style.Colors[ImGuiCol_ButtonHovered] : color, tint_col) ||
 				root.controls.DebugKeyPressed(hotKey.c_str()))
 			{
 				callback();
@@ -2068,7 +2068,7 @@ namespace Orin
 				ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 				ImGui::PushID("Zoom");
-				ImGui::Image(editorDrawer.iconsTex->GetNative(), size, uv0, uv1, tint_col, style.Colors[ImGuiCol_FrameBg]);
+				ImGui::Image(editorDrawer.iconsTex->GetNativeResource(), size, uv0, uv1, tint_col, style.Colors[ImGuiCol_FrameBg]);
 				ImGui::PopID();
 				
 
