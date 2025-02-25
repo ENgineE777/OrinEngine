@@ -88,6 +88,8 @@ namespace Orin
 		friend class Render;
 		friend class DeviceDX11;
 		friend class TextureDX11;
+		friend class DeviceGL;
+		friend class TextureGL;
 		friend class PointerRef<Texture>;
 
 		#ifndef DOXYGEN_SKIP
@@ -129,8 +131,6 @@ namespace Orin
 			\return Name of a texture
 		*/
 		virtual const char* GetName() { return name.c_str(); };
-
-		virtual void* GetNative() = 0;
 
 		/**
 			\brief Resize Texture

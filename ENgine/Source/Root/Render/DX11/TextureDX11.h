@@ -37,9 +37,7 @@ namespace Orin
 
 		void CreateTexture();
 
-		public:
-
-		void* GetNative() override { return srview; };
+	public:
 
 		void Resize(int width, int height) override;
 
