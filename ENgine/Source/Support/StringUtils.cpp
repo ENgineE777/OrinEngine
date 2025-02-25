@@ -54,7 +54,7 @@ namespace Orin::StringUtils
 
 	bool IsEqual(const char* str1, const char* str2)
 	{ 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		return (_stricmp(str1, str2) == 0);
 		#endif
 	}
@@ -75,7 +75,7 @@ namespace Orin::StringUtils
 
 	void Cat(char* str1, int len, const char* str2)
 	{
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		strcat_s(str1, len, str2);
 		#endif
 	}

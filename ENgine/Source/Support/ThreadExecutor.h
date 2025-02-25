@@ -1,7 +1,7 @@
 
 #pragma once
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #include <windows.h>
 #endif
 
@@ -39,7 +39,7 @@ namespace Orin
 		void UnLock();
 	#ifndef DOXYGEN_SKIP
 	private:
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		CRITICAL_SECTION critSection;
 	#endif
 	#endif
@@ -72,7 +72,7 @@ namespace Orin
 
 		State state = State::Idle;
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		HANDLE thread = 0;
 
 		static DWORD WINAPI Entry(void* arg);

@@ -234,7 +234,7 @@ namespace Orin
 			}
 		}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		eastl::string cooked_name = hgt_name + eastl::string("hm");
 
 		if (!root.files.IsFileExist(cooked_name.c_str()))

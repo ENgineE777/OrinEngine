@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "stb_sprintf.h"
 
-#ifdef PLATFORM_WIN
+#ifdef PLATFORM_WINDOWS
 #define WIN32_LEAN_AND_MEAN
 #include <time.h>
 #include <Windows.h>
@@ -10,7 +10,7 @@
 
 namespace Orin::Timer
 {
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	static BOOL g_first_time = 1;
 	static LARGE_INTEGER g_counts_per_sec;
 
@@ -56,7 +56,7 @@ namespace Orin::Timer
 	{
 		struct timespec currTime;
 
-		#ifdef PLATFORM_WIN
+		#ifdef PLATFORM_WINDOWS
 		clock_gettime(&currTime);
 		#endif
 

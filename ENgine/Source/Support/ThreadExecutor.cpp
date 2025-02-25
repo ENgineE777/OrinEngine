@@ -12,21 +12,21 @@ namespace Orin
 
 	CriticalSection::~CriticalSection()
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		DeleteCriticalSection(&critSection);
 	#endif
 	}
 
 	void CriticalSection::Enter()
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		EnterCriticalSection(&critSection);
 	#endif
 	}
 
 	void CriticalSection::UnLock()
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		LeaveCriticalSection(&critSection);
 	#endif
 	}
@@ -41,7 +41,7 @@ namespace Orin
 			return;
 		}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		thread = CreateThread (0, 256*1024, Entry, this, CREATE_SUSPENDED, NULL);
 		SetThreadPriority(thread, THREAD_PRIORITY_NORMAL);
 
@@ -72,12 +72,12 @@ namespace Orin
 
 	void ThreadExecutor::Sleep(int mili_sec)
 	{
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 		::Sleep(mili_sec);
 	#endif
 	}
 
-	#ifdef PLATFORM_WIN
+	#ifdef PLATFORM_WINDOWS
 	DWORD WINAPI ThreadExecutor::Entry(void* arg)
 	{
 		ThreadExecutor* executor = (ThreadExecutor*)arg;
